@@ -1,8 +1,3 @@
-expression SourceRoot = "<set-me>\TMDB" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
-	lineageTag: 640e4229-9fce-4c45-adeb-0e472ca2a495
-
-	annotation PBI_ResultType = Text
-
 expression Source = ```
 		let
 		    // Data downloaded on 7/24/2026 from: https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies?resource=download
@@ -35,4 +30,11 @@ expression Schema = ```
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
+
+expression SourceRoot = "E:\PowerBI Set-up\wc-round-3\project\data\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 640e4229-9fce-4c45-adeb-0e472ca2a495
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigatie
 

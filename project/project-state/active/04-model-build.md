@@ -121,6 +121,29 @@ at baseline).
 - [ ] (f) Spot-check one 06-Display measure in a card: it should render the
       text "s5 fills value" (confirms the `@` format behaves).
 
+## Post-refresh close-out (2026-08-04, after user follow-ups)
+
+Entrant completed (a)–(c): CSV placed at `project\data\TMDB_movie_dataset_v11.csv`
+(added to .gitignore), `SourceRoot` set, refresh run, saved from Desktop.
+Desktop's TMDL round-trip: SourceRoot block moved to file end with the real
+value + a `Navigatie` annotation (Dutch UI); trailing-newline churn on
+Release Year.tmdl. All benign — accepted as-is.
+
+**STANDING WAIVER (entrant, 2026-08-04):** the committed `SourceRoot` value is
+a drive-letter path (`E:\PowerBI Set-up\wc-round-3\project\data\`), which
+`validate_tmdl --strict` flags as its one error. Waived standing by the
+entrant: it is the working local value, Desktop rewrites it on every save, the
+path is the repo's own data folder, and no client-identifiable content is
+involved. G6/G7 sweeps cite this waiver; expected steady-state is exactly
+1 error at expressions.tmdl (SourceRoot line) and no others. Framework
+feedback (for the template repo): the validator needs an allowlist mechanism
+for the active source parameter's local value.
+
+**Verify at s6 entry (Desktop open + MCP):** `Genres` and `Production Company`
+came back from the round-trip with `PBI_ResultType = Exception` annotations —
+possibly a transient pre-parameter preview error, but confirm both tables
+have plausible row counts after refresh before building on them.
+
 ## Open questions
 
 None new. Routed question 5 (Profit rename vs starter binding) resolved above:

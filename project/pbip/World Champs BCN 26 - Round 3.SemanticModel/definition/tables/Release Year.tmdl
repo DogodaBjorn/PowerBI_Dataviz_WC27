@@ -74,3 +74,4 @@ table 'Release Year'
 				    #"Changed Type"
 
 	annotation PBI_ResultType = Table
+
