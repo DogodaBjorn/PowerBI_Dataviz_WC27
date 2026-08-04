@@ -1,0 +1,23 @@
+table _Measures
+	lineageTag: 3ee311af-b225-4e80-9ba9-593a395047f0
+
+	measure Profit = SUM(Movies[Revenue]) - SUM(Movies[Budget])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 50583f61-b426-40a3-ae68-94b0d4bca216
+
+	column Value
+		isHidden
+		formatString: 0
+		lineageTag: 9536d1f3-e247-4a87-9192-8cbab3d8930b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = { BLANK() }
+
+	annotation PBI_Id = 376588de630949899750b5f427626314
+

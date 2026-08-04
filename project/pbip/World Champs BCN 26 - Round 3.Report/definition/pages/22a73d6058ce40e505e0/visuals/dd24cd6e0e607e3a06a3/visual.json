@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "dd24cd6e0e607e3a06a3",
+  "position": {
+    "x": 315.78947368421052,
+    "y": 1003.6363636363636,
+    "z": 4004,
+    "height": 76.9377990430622,
+    "width": 1569.7607655502393,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Data sourced from TMDB and ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "20pt",
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "value": "distributed via Kaggle",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "20pt",
+                      "color": "#000000"
+                    },
+                    "url": "https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies"
+                  },
+                  {
+                    "value": " under the Open Data Commons Attribution License (ODC-By 1.0).",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "20pt",
+                      "color": "#000000"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

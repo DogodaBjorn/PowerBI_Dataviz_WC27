@@ -3,6 +3,20 @@
 Source of truth for stage 0. Facts verified 2026-08-04 against the official
 rules PDF in this folder and the contest repo.
 
+## Round theme (BINDING — from the organizers, relayed by the entrant 2026-08-04)
+
+> "For Round 3, we're focusing on one of the most important skills a data
+> professional can develop: **Using data responsibly.** The best analysts
+> don't just create beautiful visuals. They understand the limitations of
+> data, question assumptions, communicate uncertainty, and avoid misleading
+> conclusions."
+
+Practical translation for this build: mark outliers, communicate uncertainty
+and probability honestly, show why correlation is not causation, name what
+the data cannot say. The theme must be *shown* in the visuals and the story,
+not lectured in a footnote. Every s2 metric contract's edge-case section and
+the do-not-fabricate list are direct scoring assets this round.
+
 ## Hard facts
 
 | Fact | Value | Source |

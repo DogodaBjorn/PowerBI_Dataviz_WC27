@@ -1,0 +1,77 @@
+table 'Production Company'
+	lineageTag: c2cdba18-67fd-4a50-96ef-362ed34d9e45
+
+	column 'Production Company'
+		dataType: string
+		lineageTag: a3053c07-3748-430e-a694-5dd55aa7ed72
+		summarizeBy: none
+		sourceColumn: Production Company
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Production Company ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9fdf39ff-9a41-448a-a9c9-f8de31246669
+		summarizeBy: none
+		sourceColumn: Production Company ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Production Company' = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Source,
+				
+				    Companies =
+				        Table.SelectColumns(Source, {"production_companies"}),
+				
+				    SplitCompanies =
+				        Table.ExpandListColumn(
+				            Table.TransformColumns(
+				                Companies,
+				                {
+				                    {
+				                        "production_companies",
+				                        each List.Transform(
+				                            Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_),
+				                            Text.Trim
+				                        ),
+				                        type {text}
+				                    }
+				                }
+				            ),
+				            "production_companies"
+				        ),
+				
+				    ProductionCompanyDimension =
+				        Table.RenameColumns(
+				            Table.AddIndexColumn(
+				                Table.Sort(
+				                    Table.Distinct(
+				                        Table.SelectRows(
+				                            SplitCompanies,
+				                            each [production_companies] <> null and [production_companies] <> ""
+				                        )
+				                    ),
+				                    {{"production_companies", Order.Ascending}}
+				                ),
+				                "Production Company ID",
+				                1,
+				                1,
+				                Int64.Type
+				            ),
+				            {{"production_companies", "Production Company"}}
+				        )
+				in
+				    ProductionCompanyDimension
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,91 @@
+table 'Production Company Bridge'
+	isHidden
+	lineageTag: 3fb9868a-1a6f-47b4-880b-101b680f8698
+
+	column 'Movie ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: db569807-1e0b-4d74-b7ff-cab6268cdd6a
+		summarizeBy: none
+		sourceColumn: Movie ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Production Company ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 774543ac-32a0-4103-b195-b2721911f02b
+		summarizeBy: none
+		sourceColumn: Production Company ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Production Company Bridge' = m
+		mode: import
+		queryGroup: 'Bridge Tables'
+		source =
+				let
+				    Source = Source,
+				
+				    MovieCompanies =
+				        Table.SelectColumns(Source, {"id", "production_companies"}),
+				
+				    SplitCompanies =
+				        Table.SelectRows(
+				            Table.ExpandListColumn(
+				                Table.TransformColumns(
+				                    MovieCompanies,
+				                    {
+				                        {
+				                            "production_companies",
+				                            each List.Transform(
+				                                Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_),
+				                                Text.Trim
+				                            ),
+				                            type {text}
+				                        }
+				                    }
+				                ),
+				                "production_companies"
+				            ),
+				            each [production_companies] <> null and [production_companies] <> ""
+				        ),
+				
+				    MergeCompanies =
+				        Table.NestedJoin(
+				            SplitCompanies,
+				            {"production_companies"},
+				            #"Production Company",
+				            {"Production Company"},
+				            "CompanyLookup",
+				            JoinKind.LeftOuter
+				        ),
+				
+				    BridgeMovieProductionCompany =
+				        Table.RenameColumns(
+				            Table.RemoveColumns(
+				                Table.ExpandTableColumn(
+				                    MergeCompanies,
+				                    "CompanyLookup",
+				                    {"Production Company ID"},
+				                    {"Production Company ID"}
+				                ),
+				                {"production_companies"}
+				            ),
+				            {{"id", "Movie ID"}}
+				        )
+				in
+				    BridgeMovieProductionCompany
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

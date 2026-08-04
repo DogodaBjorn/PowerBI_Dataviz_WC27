@@ -5,6 +5,11 @@ Champs BCN 26 with a report built end-to-end through this toolkit — the first
 full stress test of the integrated pipeline. Deadline: **Aug 7, 2026,
 11:59 p.m. PT**. Read `project/contest/contest-brief.md` before anything else.
 
+**Round theme (binding): Using data responsibly.** Limitations, questioned
+assumptions, honest uncertainty, no misleading conclusions — shown, not
+lectured. This toolkit's contracts and do-not-fabricate discipline are the
+entry's competitive edge; let the report demonstrate what it preaches.
+
 ## The 3-day battle plan (express lifecycle, gates still real)
 
 **Day 1 — story and model (stages 0–4).**

@@ -1,0 +1,74 @@
+table Genres
+	lineageTag: 811ee407-3ae8-459f-9e69-d60159ae5d01
+
+	column Genre
+		dataType: string
+		lineageTag: 589dc3e6-9ca2-4a67-b0dd-ef9418341890
+		summarizeBy: none
+		sourceColumn: Genre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Genre ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d5f2c730-9511-4174-82fe-5b7e43ead4cc
+		summarizeBy: none
+		sourceColumn: Genre ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Genres = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Source,
+				    Genres =
+				        Table.SelectColumns(Source, {"genres"}),
+				
+				    SplitGenres =
+				        Table.ExpandListColumn(
+				            Table.TransformColumns(
+				                Genres,
+				                {
+				                    {
+				                        "genres",
+				                        each List.Transform(
+				                            Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_),
+				                            each Text.Clean(Text.Trim(_))
+				                        ),
+				                        type {text}
+				                    }
+				                }
+				            ),
+				            "genres"
+				        ),
+				
+				    GenreDimension =
+				        Table.AddIndexColumn(
+				            Table.Sort(
+				                Table.Distinct(
+				                    Table.SelectRows(
+				                        SplitGenres,
+				                        each [genres] <> null and [genres] <> ""
+				                    )
+				                ),
+				                {{"genres", Order.Ascending}}
+				            ),
+				            "GenreID",
+				            1,
+				            1,
+				            Int64.Type
+				        ),
+				    #"Renamed Columns" = Table.RenameColumns(GenreDimension,{{"GenreID", "Genre ID"}, {"genres", "Genre"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

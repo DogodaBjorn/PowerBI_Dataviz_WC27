@@ -1,0 +1,31 @@
+relationship AutoDetected_db10af0c-2003-4792-a6cc-920538a9fca7
+	fromColumn: 'Production Company Bridge'.'Production Company ID'
+	toColumn: 'Production Company'.'Production Company ID'
+
+relationship AutoDetected_01aab567-0edd-4aa7-9adb-cd540f9fc540
+	fromColumn: 'Genre Bridge'.'Genre ID'
+	toColumn: Genres.'Genre ID'
+
+relationship AutoDetected_f573bf5a-e3d7-4506-8f05-a1285110022b
+	fromColumn: 'Keyword Bridge'.'Keyword ID'
+	toColumn: Keyword.'Keyword ID'
+
+relationship 3f83484d-7c6f-2bcb-b467-78ccbb7b540d
+	toCardinality: many
+	fromColumn: Movies.'Movie ID'
+	toColumn: 'Genre Bridge'.'Movie ID'
+
+relationship d4cdff09-ef07-1d54-8fb0-ac773e1aa4f5
+	toCardinality: many
+	fromColumn: Movies.'Movie ID'
+	toColumn: 'Keyword Bridge'.'Movie ID'
+
+relationship d98489c6-d78c-d2d9-0225-abb5f5673157
+	toCardinality: many
+	fromColumn: Movies.'Movie ID'
+	toColumn: 'Production Company Bridge'.'Movie ID'
+
+relationship 1320b508-e51e-c957-1171-6c24f5b2af4d
+	fromColumn: Movies.'Release Date'
+	toColumn: Date.Date
+

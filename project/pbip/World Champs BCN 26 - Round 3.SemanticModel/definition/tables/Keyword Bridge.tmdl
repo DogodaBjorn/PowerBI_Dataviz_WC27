@@ -1,0 +1,91 @@
+table 'Keyword Bridge'
+	isHidden
+	lineageTag: b662c8ed-309a-4e98-8daf-da81e16c96e9
+
+	column 'Movie ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3608100a-4126-460c-90ab-996e84e5fedf
+		summarizeBy: none
+		sourceColumn: Movie ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Keyword ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 88f662b6-24c8-485f-925e-97ad9acbbf97
+		summarizeBy: none
+		sourceColumn: Keyword ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Keyword Bridge' = m
+		mode: import
+		queryGroup: 'Bridge Tables'
+		source =
+				let
+				    Source = Source,
+				
+				    MovieKeywords =
+				        Table.SelectColumns(Source, {"id", "keywords"}),
+				
+				    SplitKeywords =
+				        Table.SelectRows(
+				            Table.ExpandListColumn(
+				                Table.TransformColumns(
+				                    MovieKeywords,
+				                    {
+				                        {
+				                            "keywords",
+				                            each List.Transform(
+				                                Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_),
+				                                Text.Trim
+				                            ),
+				                            type {text}
+				                        }
+				                    }
+				                ),
+				                "keywords"
+				            ),
+				            each [keywords] <> null and [keywords] <> ""
+				        ),
+				
+				    MergeKeywords =
+				        Table.NestedJoin(
+				            SplitKeywords,
+				            {"keywords"},
+				            Keyword,
+				            {"Keywords"},
+				            "KeywordLookup",
+				            JoinKind.LeftOuter
+				        ),
+				
+				    BridgeMovieKeyword =
+				        Table.RenameColumns(
+				            Table.RemoveColumns(
+				                Table.ExpandTableColumn(
+				                    MergeKeywords,
+				                    "KeywordLookup",
+				                    {"Keyword ID"},
+				                    {"Keyword ID"}
+				                ),
+				                {"keywords"}
+				            ),
+				            {{"id", "Movie ID"}}
+				        )
+				in
+				    BridgeMovieKeyword
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

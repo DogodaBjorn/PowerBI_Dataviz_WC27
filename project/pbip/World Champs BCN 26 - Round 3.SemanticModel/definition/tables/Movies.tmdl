@@ -1,0 +1,173 @@
+table Movies
+	lineageTag: d4c664cd-e0ab-4a70-b0ce-f740be555e86
+
+	column 'Movie ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e271353a-ee1f-4f40-8970-43488ea4f0a1
+		summarizeBy: none
+		sourceColumn: Movie ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Title
+		dataType: string
+		lineageTag: e8527f82-7566-4fc6-a41b-3ac3bea43535
+		summarizeBy: none
+		sourceColumn: Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vote Average'
+		dataType: double
+		lineageTag: f2f73d8c-a443-40d9-8a09-8618ef00e9c5
+		summarizeBy: sum
+		sourceColumn: Vote Average
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Vote Count'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7975a0dc-0e53-4e78-b64f-9a75e1208507
+		summarizeBy: sum
+		sourceColumn: Vote Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Release Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ff61ee22-f936-411d-a301-34049dfd981f
+		summarizeBy: none
+		sourceColumn: Release Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Revenue
+		dataType: int64
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: ca429a64-183e-4b3a-99de-78021d9c4608
+		summarizeBy: sum
+		sourceColumn: Revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column Runtime
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ad181c5-1620-41d5-bb40-cff4c146e1fc
+		summarizeBy: sum
+		sourceColumn: Runtime
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget
+		dataType: int64
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 16ef44c2-5fe0-4669-9675-1a8a08d78b37
+		summarizeBy: sum
+		sourceColumn: Budget
+
+		annotation SummarizationSetBy = Automatic
+
+	column Popularity
+		dataType: double
+		lineageTag: 38345c78-56d4-46d9-88e0-6c0a96656a47
+		summarizeBy: sum
+		sourceColumn: Popularity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Status
+		dataType: string
+		lineageTag: edfd9145-c4e2-4240-a0b4-525b2f142562
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adult
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 771a9aca-b34c-4304-96cc-66f9bf02cd95
+		summarizeBy: none
+		sourceColumn: Adult
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Backdrop Path'
+		dataType: string
+		lineageTag: 6ebd403a-016d-461c-acb8-eb7184d2406a
+		summarizeBy: none
+		sourceColumn: Backdrop Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Homepage
+		dataType: string
+		lineageTag: 7e7273cb-5e7e-4272-ab79-ad9e9d2eb6b7
+		summarizeBy: none
+		sourceColumn: Homepage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Original Language'
+		dataType: string
+		lineageTag: 68571118-53f6-4ecb-b9f4-dbfcdfeed850
+		summarizeBy: none
+		sourceColumn: Original Language
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Original Title'
+		dataType: string
+		lineageTag: d33a5bbd-9af7-48de-ab23-c1d7f7faf033
+		summarizeBy: none
+		sourceColumn: Original Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Poster Path'
+		dataType: string
+		lineageTag: 30e4cca1-b372-4758-a381-a6c557aee9dc
+		summarizeBy: none
+		sourceColumn: Poster Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tagline
+		dataType: string
+		lineageTag: 77b67f10-2552-4cf4-988f-16032a53a4ce
+		summarizeBy: none
+		sourceColumn: Tagline
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Movies = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Source,
+				    #"Filtered Rows" = Table.SelectRows(Source, each [budget] > 0),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"id", "Movie ID"}, {"title", "Title"}, {"vote_average", "Vote Average"}, {"vote_count", "Vote Count"}, {"release_date", "Release Date"}, {"revenue", "Revenue"}, {"backdrop_path", "Backdrop Path"}, {"budget", "Budget"}, {"homepage", "Homepage"}, {"popularity", "Popularity"}, {"runtime", "Runtime"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Movie ID", "Title", "Vote Average", "Vote Count", "status", "Release Date", "Revenue", "Runtime", "adult", "Backdrop Path", "Budget", "Homepage", "original_language", "original_title", "Popularity", "poster_path", "tagline", "genres"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns",{{"genres", "genres"}, {"adult", "Adult"}, {"original_language", "Original Language"}, {"original_title", "Original Title"}, {"tagline", "Tagline"}, {"poster_path", "Poster Path"}, {"status", "Status"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{"genres"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
