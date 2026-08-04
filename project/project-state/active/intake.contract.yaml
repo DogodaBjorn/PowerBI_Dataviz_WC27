@@ -58,5 +58,5 @@ out_of_scope:
   - "External data joins unless the chosen story requires one (decide at s1)"
 
 gate_g0:
-  user_confirmed: false
-  confirmation_note: "pending — presented for confirmation 2026-08-04"
+  user_confirmed: true
+  confirmation_note: "Confirmed 2026-08-04 in-session (AskUserQuestion): 'Confirmed, proceed'; story spine left open for s1 to propose fresh."

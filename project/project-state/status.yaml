@@ -1,15 +1,15 @@
 # pbi-atelier project state — schema: lifecycle/status.schema.yaml
 project: wc-round-3
 template_version: 0.3.1
-current_stage: 0
+current_stage: 1
 updated: 2026-08-04
 stages:
   s0_intake:
-    status: in_progress
-    evidence: ""
-    gate_note: ""
+    status: complete
+    evidence: "active/00-intake.md + active/intake.contract.yaml (commit 4f147b2)"
+    gate_note: "G0 confirmed by entrant 2026-08-04 via in-session question: scope as filed; story spine deliberately left to s1 to propose fresh."
   s1_requirements:
-    status: pending
+    status: in_progress
     evidence: ""
     gate_note: ""
   s2_metrics:
