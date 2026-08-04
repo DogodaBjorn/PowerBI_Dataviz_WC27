@@ -1,0 +1,29 @@
+contract: page-purpose
+page_id: "p2-evidence-timeline"
+page_name: "Evidence Over Time"
+date: "2026-08-04"
+
+audience: "A1"
+question: "Why do the lies work — how thin and how recent is the evidence, per release year?"
+archetype: "drivers"
+
+three_second_message: "26,166 listings (30.6%) have no date at all — and credible financials and real vote evidence exist only in recent decades."
+three_minute_path: "The 'No date on record' bucket is a labeled, counted block left of the axis (never a silent (Blank)); year axis window 1900–2030 disclosed on canvas with out-of-window counts; sentinels 1800-01-01 / 2099-12-31 annotated as suspect; 320 future-dated flagged via Year Status; coverage % and evidence % lines carry their definitions (floor $10k; votes >= m=100) in axis subtitles; footer scope stamp; button to p3-method."
+
+hero: "hero_listings_by_year — listings per release year with the labeled no-date block beside it; it earns hero because the shape of missingness IS this page's message."
+supporting_visuals:
+  - id: "kpi_nodate_bucket"
+    intent: "1 Magnitude (the labeled unknown: 26,166 / 30.6%)"
+    metric_ids: ["M-001"]
+  - id: "ch_coverage_evidence_by_year"
+    intent: "2 Change over time (coverage % and evidence % by release year)"
+    metric_ids: ["M-002", "M-006"]
+  - id: "kpi_nodate_coverage"
+    intent: "1 Magnitude (coverage/evidence within the dateless bucket — PLACEHOLDER-AT-BUILD)"
+    metric_ids: ["M-002", "M-001"]
+  - id: "c_sentinels / c_future_note"
+    intent: "annotation (S2 — sentinel dates and 320 future-dated disclosure)"
+    metric_ids: ["M-001"]
+
+interactions: "btn_home (to p1), btn_method (to p3); no slicers; locked Adult filter as p1."
+leaves_out: "Day/month grain (year is the honest grain given 30.6% dateless), genre splits over time, any smoothing or interpolation across sparse years, dual-axis count-vs-percent overlay (two aligned panels instead)."

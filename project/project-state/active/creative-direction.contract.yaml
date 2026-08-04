@@ -1,0 +1,56 @@
+# Creative-direction contract — filled at stage 5, one per project.
+contract: creative-direction
+project: "wc-round-3"
+date: "2026-08-04"
+
+directions:
+  - id: D1
+    name: "The Projection Room"
+    concept: "A dark screening room. Each lie plays as a dimmed trailer — struck through, TRAP-tagged — and the house lights come up on the honest read beside it. Coverage becomes a 100-seat cinema with 13 seats lit; the report ends where the method panel turns the lights fully on."
+    visual_language: "Dark indigo canvas (#0F0F23) with spotlight gold accent (#CA8A04); Bahnschrift Light display + Georgia Italic takeaway + Segoe UI body + Consolas meta; balanced triptych of three 400px 'screens'; dim-trap vs gold-ruled lit-truth card states."
+    signature_moment: "The 100-seat house with 13 seats lit — 13.1% financial coverage you can feel — inside the dim/lit house-lights grammar."
+    risk: "Deneb dependency (seat map + rank slope) under a 3-day deadline, inside the contest's most crowded dark-cinema lane; fallback demotes the signature to a native stacked bar."
+    design_read: "A gold-lit takeaway over three dimmed, struck-through lies — the eye lands on the truth because it is literally the brightest thing in the room."
+    dials:
+      density: "balanced"
+      variance: "strict"
+    comp: "project/design-prototypes/d1-projection-room.html"
+  - id: D2
+    name: "The Working Papers"
+    concept: "An auditor's file on paper. Each lie is a schedule row — the claim, the figure struck in red pencil as UNVERIFIED, the figure agreed to source with a green tick — and the Key Takeaway is the signed opinion. Every page cross-foots its basis: 85,394 − 1,358 = 84,036 ✓."
+    visual_language: "Warm paper (#F7F5F0), archival blue accent (#1D4ED8), red-pencil/green tick semantics; Georgia display + Segoe UI body + Consolas mono numerals; airy horizontal schedule rows, 0px radius, 1px rules; audit tick-mark notation declared once, used everywhere."
+    signature_moment: "The cross-foot reconciliation strip on every page and the Key Takeaway framed as the auditor's signed opinion — responsibility as chrome, not caption."
+    risk: "Quietness: the most on-theme frame with the lowest Creativity ceiling — a minutes-long judge pass may file it as 'just a clean report'; text-heavy rows need ruthless copy discipline."
+    design_read: "A signed opinion and three ledger rows that each read claim → misstated → agreed-to-source, left to right, three times."
+    dials:
+      density: "airy"
+      variance: "strict"
+    comp: "project/design-prototypes/d2-working-papers.html"
+  - id: D3
+    name: "Front Page / Corrections Edition"
+    concept: "A tabloid front page that shouts each lie in headline type — 'MOVIES LOSE MONEY', 'OBSCURE FILM BEATS THE GODFATHER', 'MOST POPULAR = BEST' — each struck with a heavy rule, each retracted in a full-width CORRECTIONS band that carries the Key Takeaway. The reader watches the retraction happen."
+    visual_language: "Newsprint canvas (#EFEDE6), ink blocks (#1A1A1A) with reversed type, marker-yellow highlight (#F2C230, never text); Bahnschrift SemiCondensed Bold headlines + Segoe UI body; compact front-page hierarchy — one lead, two below the fold, corrections band; 4px strike rules."
+    signature_moment: "The struck 44pt lead headline with its yellow-barred correction — the retraction as the hero image of the report."
+    risk: "The trap is typeset larger than the truth: if the corrections band under-delivers, judges remember the lie; two compact 480×180 blocks flirt with the 10pt text floor (Accessibility is 25% of the score); Lie 2 trades the scatter for a two-point fall."
+    design_read: "A headline you instantly disbelieve because a red rule has already struck it — then the corrections column tells you what to believe instead."
+    dials:
+      density: "compact"
+      variance: "expressive"
+    comp: "project/design-prototypes/d3-front-page-corrections.html"
+
+design_intelligence:               # queried BEFORE any direction was drafted (s5 step 2)
+  queries: "search.py style domain: 'entertainment media dashboard' -> 'Vibrant & Block-based', 'Gen Z Chaos / Maximalism'; color domain: 'entertainment cinema' -> dark #0F0F23/#1E1B4B + spotlight gold #CA8A04 set; 'video streaming OTT' -> near-duplicate dark set; scripts/learnings.py search --type taste -> empty (first project, no prior learnings to apply)"
+  cited: "Theater/Cinema color hit USED in D1 with AA corrections (border #4338CA muted to #34305A; gold verified 6.4:1 canvas / 5.7:1 card). 'Vibrant & Block-based' TRANSLATED SELECTIVELY into D3 (blocks, duotone contrast; 48px gaps compressed to 16/24 for 1280 canvas; WCAG caution enforced — yellow demoted to non-text). 'Gen Z Chaos / Maximalism' OVERRULED — accessibility-hostile, anti-doctrine (hard rule 6). 'Video Streaming/OTT' OVERRULED as a near-duplicate of Theater/Cinema — a second dark direction would fail the divergence test. ADDENDUM (entrant-supplied, same day): contest judge intelligence from prior rounds — see 05-design.md 'Judge intelligence' — applied as critique input across all three directions."
+
+critique:
+  method: "each direction argued against design/design-doctrine.md, per audience; seven scored passes in 05-design.md"
+  notes: "D1 (52/70): strongest theme-fit and a genuinely felt signature (13 lit seats), disciplined triptych; fails if the two Deneb specs slip (signature demotes to a stacked bar) or if dark-genre familiarity dulls the Creativity read; dark theme demands the strictest small-text discipline of the three. D2 (54/70): the most honest embodiment of 'using data responsibly' — the audit frame makes disclosure the aesthetic; best reading path (row grammar) and best accessibility (all pairs >=4.6:1, all native, zero deadline risk); its failure mode is the Creativity ceiling — the signature is retold as an idea, not an image, and rows can drift toward wall-of-text. D3 (49/70): the most retellable single image (a front page correcting itself) at the lightest build cost, fully native; its failure modes are structural — the lie outweighs the truth typographically, Lie 2 loses the correlation view, and compact blocks put real film titles against the 10pt floor where 25% of the score lives."
+
+chosen: ""                       # PENDING — the entrant decides; scores inform, they do not decide
+chosen_because: ""               # to be recorded in the entrant's own words
+user_decided: false
+
+fidelity_checklist:              # fill with the winner's list at choice time; candidates below
+  # D1: (1) 10x10 seat grid with exactly 13 gold seats + printed 13.1%; (2) dim-trap/lit-truth card states with strike + TRAP/HONEST tags on every pair; (3) gold as the only accent, used as spotlight rules; (4) gold-ruled Key Takeaway block top-right of p1; (5) dark canvas #0F0F23 identical on all three pages.
+  # D2: (1) claim->trap->honest row grammar on p1, three times, same zone widths; (2) cross-foot reconciliation strip present and correct on every page; (3) tick-mark legend in the masthead and ticks used on every semantic mark; (4) Georgia/Segoe/Consolas system with mono numerals in all tables; (5) red-pencil strike + [UNVERIFIED] tag on every trap figure.
+  # D3: (1) struck 44pt lead headline with 4px rule and yellow-barred correction; (2) CORRECTIONS band carrying the Key Takeaway verbatim; (3) ink-block nameplate identical on all pages; (4) yellow never as text anywhere; (5) every trap block headline paired with its white inset honest card.

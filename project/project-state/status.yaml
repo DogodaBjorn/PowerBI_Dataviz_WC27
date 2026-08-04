@@ -26,8 +26,8 @@ stages:
     gate_note: "G4 closed 2026-08-04: built per blueprint (33 measures, Release Year dim, SourceRoot, Date 1800-2099 marked, Profit (naive) + rebind); strict 0/0 at close. User set SourceRoot + refreshed same day. ENTRANT WAIVER (standing): committed SourceRoot drive-letter value = the expected 1 strict error at G6/G7 sweeps (see 04-model-build.md close-out). Verify Genres/Production Company loads at s6 entry."
   s5_design:
     status: in_progress
-    evidence: ""
-    gate_note: ""
+    evidence: "project-state/active/05-design.md"
+    gate_note: "Story + 3 page contracts + 3 directions drafted (contract: active/creative-direction.contract.yaml); judge intel from prior rounds folded into critique; 3 comps building; G5 blocked on entrant pick + unresolved-decisions table in 05-design.md."
   s6_report_build:
     status: pending
     evidence: ""

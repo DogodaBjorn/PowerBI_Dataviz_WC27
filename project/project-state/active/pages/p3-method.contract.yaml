@@ -1,0 +1,32 @@
+contract: page-purpose
+page_id: "p3-method"
+page_name: "Method & Refusals"
+date: "2026-08-04"
+
+audience: "A1"
+question: "What exactly am I reading — definitions, parameters, exclusions, and what does this report refuse to claim?"
+archetype: "definitions"
+
+three_second_message: "Every number in this report states its scope: here is the reconciliation, the seven definitions, the disclosed parameters, and the claims we refuse to make."
+three_minute_path: "Reconciliation cross-foots 85,394 − 1,358 = 84,036; each glossary entry carries its TRAP/HONEST/OPAQUE badge and plain-language definition from the signed metric contracts; parameters block shows floor $10k (robustness: 13.1% vs 11.9% at $100k), m=100, C=6.96, anchor 2026-07-24, axis window; the refusals list mirrors blueprint §7; data-health block: 1,697 dup listings (2.0%), 101 dup IDs, 26,166 dateless, 320 future-dated, 1 negative revenue (−$12); TMDB credit."
+
+hero: "hero_reconciliation — the cross-footed basis ledger (85,394 − 1,358 = 84,036); it earns hero because every other number inherits this scope."
+supporting_visuals:
+  - id: "c_glossary"
+    intent: "10 Detail lookup (typographic glossary of M-001..M-007 — plain typography, no charts per archetype)"
+    metric_ids: ["M-001","M-002","M-003","M-004","M-005","M-006","M-007"]
+  - id: "c_params"
+    intent: "annotation (disclosed assumptions block)"
+    metric_ids: ["M-002", "M-004", "M-006"]
+  - id: "c_refusals"
+    intent: "annotation (the not-available list — do not fabricate)"
+    metric_ids: ["M-003", "M-007"]
+  - id: "c_data_health"
+    intent: "annotation (duplicates, dateless, future-dated, negative revenue)"
+    metric_ids: ["M-001"]
+  - id: "c_credits"
+    intent: "annotation (TMDB attribution + contest starter credit)"
+    metric_ids: []
+
+interactions: "btn_home (to p1), btn_timeline (to p2); nothing else."
+leaves_out: "Charts of any kind (archetype discipline), interactive glossary filtering, DAX formula dumps (plain language only; formulas live in the model)."

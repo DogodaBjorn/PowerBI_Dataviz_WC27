@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>D1 · The Projection Room · 1280×720 comp</title>
+<!--
+  D1 — "The Projection Room" design comp, 1280×720, for 1:1 PBIR recreation.
+  Rect table (x, y, w, h on canvas):
+    z_masthead            24,  24,  728, 104
+    hero_takeaway        768,  24,  488, 104
+    c_lie1_headline       24, 144,  400,  64
+    kpi_profit_naive      24, 216,  400, 128
+    ch_coverage_waffle    24, 360,  400, 248
+    c_lie1_correction     24, 624,  400,  32
+    c_lie2_headline      440, 144,  400,  64
+    kpi_rating_naive     440, 216,  400, 128
+    ch_votes_scatter     440, 360,  400, 248
+    c_lie2_correction    440, 624,  400,  32
+    c_lie3_headline      856, 144,  400,  64
+    kpi_popularity_naive 856, 216,  400, 128
+    ch_rank_slope        856, 360,  400, 248
+    c_lie3_correction    856, 624,  400,  32
+    z_footer              24, 672, 1232,  24
+  Palette: canvas #0F0F23 · lit #1B1B30 · dim #16162B · hairline #34305A
+           ink #E8E6F0 · ink-2 #A9A6C0 · gold #CA8A04 · mint #4ECBA0
+           coral #E8705F · slate #94A3B8
+-->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background:#333333; }
+  body {
+    min-height:100vh;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:24px 0;
+  }
+  .caption {
+    width:1280px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:10pt; color:#A6A6A6;
+    margin:0 0 8px 0;
+  }
+  #canvas {
+    position:relative; width:1280px; height:720px;
+    background:#0F0F23; overflow:hidden;
+  }
+  .abs { position:absolute; }
+
+  /* ---- type ---- */
+  .disp  { font-family:"Bahnschrift Light",Bahnschrift,"Segoe UI",sans-serif; font-weight:300; }
+  .body  { font-family:"Segoe UI",sans-serif; }
+  .serif { font-family:Georgia,serif; font-style:italic; }
+  .k     { font-family:Consolas,"Courier New",monospace; }
+  .kick  { font-size:10pt; letter-spacing:.08em; }
+
+  /* ---- cards ---- */
+  .card { position:absolute; border:1px solid #34305A; border-radius:8px; overflow:hidden; }
+  .card.dim { background:#16162B; }
+  .card.lit { background:#1B1B30; }
+  .card.lit::before {
+    content:""; position:absolute; top:0; left:0; right:0;
+    height:2px; background:#CA8A04;
+  }
+  .tag {
+    position:absolute; top:10px; right:12px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:10pt; letter-spacing:.08em;
+  }
+  .tag.trap   { color:#E8705F; }
+  .tag.honest { color:#4ECBA0; }
+
+  .cardlabel {
+    position:absolute; top:12px; left:12px; right:88px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:10pt; color:#A9A6C0;
+  }
+  .bigval {
+    position:absolute; top:26px; left:12px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:40pt; line-height:1; color:#A9A6C0;
+    letter-spacing:0;
+  }
+  .strikebar { position:absolute; height:2px; background:#E8705F; top:48px; left:12px; }
+  .cardsub {
+    position:absolute; left:12px; right:12px; bottom:10px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:10pt; line-height:13px; color:#A9A6C0;
+  }
+  .charttitle {
+    position:absolute; top:12px; left:14px; right:88px;
+    font-family:"Segoe UI",sans-serif; font-weight:600;
+    font-size:12pt; line-height:18px; color:#E8E6F0;
+  }
+  .chartnote {
+    position:absolute; left:14px; right:14px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:10pt; line-height:14px; color:#A9A6C0;
+  }
+
+  /* ---- headline blocks ---- */
+  .lie-kick { position:absolute; top:0; left:0; font-family:Consolas,"Courier New",monospace;
+              font-size:10pt; letter-spacing:.08em; color:#E8705F; }
+  .lie-claim { position:absolute; top:16px; left:0; right:0;
+               font-family:"Bahnschrift Light",Bahnschrift,"Segoe UI",sans-serif; font-weight:300;
+               font-size:20pt; line-height:25px; color:#E8E6F0; }
+
+  /* ---- corrections ---- */
+  .correction {
+    position:absolute; width:400px; height:32px;
+    border-left:2px solid #4ECBA0; padding-left:12px;
+    display:flex; align-items:center;
+    font-family:"Segoe UI",sans-serif; font-size:12pt; line-height:16px; color:#E8E6F0;
+  }
+
+  /* ---- strikes inside text rows ---- */
+  .s10 {
+    text-decoration:line-through;
+    text-decoration-color:#E8705F;
+    text-decoration-thickness:1px;
+  }
+  .x { color:#E8705F; }
+
+  /* ---- footer ---- */
+  #z_footer {
+    position:absolute; left:24px; top:672px; width:1232px; height:24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  #z_footer .meta {
+    font-family:Consolas,"Courier New",monospace;
+    font-size:10pt; color:#A9A6C0; white-space:nowrap;
+  }
+  .pills { display:flex; gap:8px; }
+  .pill {
+    height:22px; display:flex; align-items:center;
+    padding:0 10px;
+    border:1px solid #34305A; border-radius:8px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:10pt; color:#CA8A04; white-space:nowrap;
+  }
+
+  /* ---- svg text ---- */
+  svg text { font-family:Consolas,"Courier New",monospace; }
+  .axl  { font-size:10pt; fill:#A9A6C0; }
+  .goldt{ font-size:10pt; fill:#CA8A04; }
+  .inkt { font-size:10pt; fill:#E8E6F0; }
+</style>
+</head>
+<body>
+
+<div class="caption">D1 · The Projection Room · 1280×720 comp</div>
+
+<div id="canvas">
+
+  <!-- ============ z_masthead 24,24,728,104 ============ -->
+  <div id="z_masthead" class="abs" style="left:24px; top:24px; width:728px; height:104px;">
+    <div class="k kick abs" style="top:6px; left:0; color:#A9A6C0;">A SCREENING IN THREE ACTS &middot; TMDB SNAPSHOT 2026-07-24</div>
+    <div class="disp abs" style="top:32px; left:0; font-size:28pt; line-height:44px; color:#E8E6F0;">Three Seductive Lies About the Movies</div>
+  </div>
+
+  <!-- ============ hero_takeaway 768,24,488,104 ============ -->
+  <div id="hero_takeaway" class="abs" style="left:768px; top:24px; width:488px; min-height:104px; border-left:2px solid #CA8A04; padding-left:14px;">
+    <div class="k kick" style="padding-top:4px; color:#CA8A04;">KEY TAKEAWAY</div>
+    <div class="serif" style="margin-top:4px; font-size:14pt; line-height:20px; color:#E8E6F0;">The data is not wrong &mdash; the reading is. 87% of 85,394 listings have no credible financials, the median listing has zero votes, and &lsquo;popularity&rsquo; has no published formula. Every honest number here states what it excludes.</div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- COLUMN 1 — LIE Nº 1                                  -->
+  <!-- ==================================================== -->
+
+  <!-- c_lie1_headline 24,144,400,64 -->
+  <div id="c_lie1_headline" class="abs" style="left:24px; top:144px; width:400px; height:64px;">
+    <div class="lie-kick">LIE N&ordm; 1</div>
+    <div class="lie-claim">&ldquo;The movie business loses money.&rdquo;</div>
+  </div>
+
+  <!-- kpi_profit_naive 24,216,400,128 (dim) -->
+  <div id="kpi_profit_naive" class="card dim" style="left:24px; top:216px; width:400px; height:128px;">
+    <div class="tag trap">&#10005; TRAP</div>
+    <div class="cardlabel">Profit, all 85,394 listings (naive)</div>
+    <div class="bigval">$ &mdash;&middot;&mdash;&mdash;&mdash;&middot;&mdash;&mdash;&mdash;</div>
+    <div class="strikebar" style="width:326px;"></div>
+    <div class="cardsub">computed at build &middot; counts 67,436 unknown revenues (79.0%) as $0 &middot; Budget is never 0 &mdash; unknowns arrive as junk (min $1, median $2,800)</div>
+  </div>
+
+  <!-- ch_coverage_waffle 24,360,400,248 (lit) -->
+  <div id="ch_coverage_waffle" class="card lit" style="left:24px; top:360px; width:400px; height:248px;">
+    <div class="tag honest">&#10003; HONEST</div>
+    <div class="charttitle">13.1% have credible financials (Budget &ge; $10k, Revenue &gt; 0)</div>
+    <svg class="abs" style="left:71px; top:56px;" width="256" height="110" viewBox="0 0 256 110" aria-label="Coverage waffle: 13 of 100 seats lit">
+      <defs><rect id="seat" width="20" height="8" rx="2"/></defs>
+      <!-- 87 dim seats -->
+      <g fill="#16162B" stroke="#34305A" stroke-width="1">
+        <use href="#seat" x="1" y="1"/><use href="#seat" x="27" y="1"/><use href="#seat" x="53" y="1"/><use href="#seat" x="79" y="1"/><use href="#seat" x="105" y="1"/><use href="#seat" x="131" y="1"/><use href="#seat" x="157" y="1"/><use href="#seat" x="183" y="1"/><use href="#seat" x="209" y="1"/><use href="#seat" x="235" y="1"/>
+        <use href="#seat" x="1" y="12"/><use href="#seat" x="27" y="12"/><use href="#seat" x="53" y="12"/><use href="#seat" x="79" y="12"/><use href="#seat" x="105" y="12"/><use href="#seat" x="131" y="12"/><use href="#seat" x="157" y="12"/><use href="#seat" x="183" y="12"/><use href="#seat" x="209" y="12"/><use href="#seat" x="235" y="12"/>
+        <use href="#seat" x="1" y="23"/><use href="#seat" x="27" y="23"/><use href="#seat" x="53" y="23"/><use href="#seat" x="79" y="23"/><use href="#seat" x="105" y="23"/><use href="#seat" x="131" y="23"/><use href="#seat" x="157" y="23"/><use href="#seat" x="183" y="23"/><use href="#seat" x="209" y="23"/><use href="#seat" x="235" y="23"/>
+        <use href="#seat" x="1" y="34"/><use href="#seat" x="27" y="34"/><use href="#seat" x="53" y="34"/><use href="#seat" x="79" y="34"/><use href="#seat" x="105" y="34"/><use href="#seat" x="131" y="34"/><use href="#seat" x="157" y="34"/><use href="#seat" x="183" y="34"/><use href="#seat" x="209" y="34"/><use href="#seat" x="235" y="34"/>
+        <use href="#seat" x="1" y="45"/><use href="#seat" x="27" y="45"/><use href="#seat" x="53" y="45"/><use href="#seat" x="79" y="45"/><use href="#seat" x="105" y="45"/><use href="#seat" x="131" y="45"/><use href="#seat" x="157" y="45"/><use href="#seat" x="183" y="45"/><use href="#seat" x="209" y="45"/><use href="#seat" x="235" y="45"/>
+        <use href="#seat" x="1" y="56"/><use href="#seat" x="27" y="56"/><use href="#seat" x="53" y="56"/><use href="#seat" x="79" y="56"/><use href="#seat" x="105" y="56"/><use href="#seat" x="131" y="56"/><use href="#seat" x="157" y="56"/><use href="#seat" x="183" y="56"/><use href="#seat" x="209" y="56"/><use href="#seat" x="235" y="56"/>
+        <use href="#seat" x="1" y="67"/><use href="#seat" x="27" y="67"/><use href="#seat" x="53" y="67"/><use href="#seat" x="79" y="67"/><use href="#seat" x="105" y="67"/><use href="#seat" x="131" y="67"/><use href="#seat" x="157" y="67"/><use href="#seat" x="183" y="67"/><use href="#seat" x="209" y="67"/><use href="#seat" x="235" y="67"/>
+        <use href="#seat" x="1" y="78"/><use href="#seat" x="27" y="78"/><use href="#seat" x="53" y="78"/><use href="#seat" x="79" y="78"/><use href="#seat" x="105" y="78"/><use href="#seat" x="157" y="78"/><use href="#seat" x="183" y="78"/><use href="#seat" x="209" y="78"/><use href="#seat" x="235" y="78"/>
+        <use href="#seat" x="1" y="89"/><use href="#seat" x="27" y="89"/><use href="#seat" x="53" y="89"/><use href="#seat" x="209" y="89"/><use href="#seat" x="235" y="89"/>
+        <use href="#seat" x="1" y="100"/><use href="#seat" x="27" y="100"/><use href="#seat" x="235" y="100"/>
+      </g>
+      <!-- 13 credible seats, front-centre -->
+      <g fill="#CA8A04">
+        <use href="#seat" x="131" y="78"/>
+        <use href="#seat" x="79" y="89"/><use href="#seat" x="105" y="89"/><use href="#seat" x="131" y="89"/><use href="#seat" x="157" y="89"/><use href="#seat" x="183" y="89"/>
+        <use href="#seat" x="53" y="100"/><use href="#seat" x="79" y="100"/><use href="#seat" x="105" y="100"/><use href="#seat" x="131" y="100"/><use href="#seat" x="157" y="100"/><use href="#seat" x="183" y="100"/><use href="#seat" x="209" y="100"/>
+      </g>
+    </svg>
+    <div class="chartnote" style="top:180px;">median profit (credible): $&mdash;&mdash; &middot; mean: $&mdash;&mdash; &mdash; the mean is dragged by blockbusters &middot; USD as recorded, not inflation-adjusted</div>
+  </div>
+
+  <!-- c_lie1_correction 24,624,400,32 -->
+  <div id="c_lie1_correction" class="correction" style="left:24px; top:624px;">87% of the money story is missing. Claim only the 13% we can verify.</div>
+
+  <!-- ==================================================== -->
+  <!-- COLUMN 2 — LIE Nº 2                                  -->
+  <!-- ==================================================== -->
+
+  <!-- c_lie2_headline 440,144,400,64 -->
+  <div id="c_lie2_headline" class="abs" style="left:440px; top:144px; width:400px; height:64px;">
+    <div class="lie-kick">LIE N&ordm; 2</div>
+    <div class="lie-claim">&ldquo;This obscure film beats The Godfather.&rdquo;</div>
+  </div>
+
+  <!-- kpi_rating_naive 440,216,400,128 (dim) -->
+  <div id="kpi_rating_naive" class="card dim" style="left:440px; top:216px; width:400px; height:128px;">
+    <div class="tag trap">&#10005; TRAP</div>
+    <div class="cardlabel">Highest-rated films (raw average)</div>
+    <div class="abs" style="left:12px; right:12px; top:34px; font-family:Consolas,'Courier New',monospace; font-size:12pt; line-height:19px; letter-spacing:-.02em; color:#A9A6C0;">
+      <div>Las mujeres deciden &mdash; <span class="s10">10.0</span> &middot; 2 votes <span class="x">&#10005;</span></div>
+      <div>Logos &mdash; <span class="s10">10.0</span> &middot; 3 votes <span class="x">&#10005;</span></div>
+      <div>+ at least 18 more perfect 10s on 2&ndash;3 votes</div>
+    </div>
+  </div>
+
+  <!-- ch_votes_scatter 440,360,400,248 (lit) -->
+  <div id="ch_votes_scatter" class="card lit" style="left:440px; top:360px; width:400px; height:248px;">
+    <div class="tag honest">&#10003; HONEST</div>
+    <div class="charttitle">Evidence, weighted: votes vs rating</div>
+    <svg class="abs" style="left:14px; top:36px;" width="360" height="150" viewBox="0 0 360 150" aria-label="Scatter: votes (log) vs rating, funnel toward 7">
+      <!-- axes -->
+      <line x1="26" y1="8"   x2="26"  y2="118" stroke="#34305A" stroke-width="1"/>
+      <line x1="26" y1="118" x2="350" y2="118" stroke="#34305A" stroke-width="1"/>
+      <text class="axl" x="22" y="13"  text-anchor="end">10</text>
+      <text class="axl" x="22" y="121" text-anchor="end">0</text>
+      <text class="axl" x="30"  y="133" text-anchor="middle">1</text>
+      <text class="axl" x="100" y="133" text-anchor="middle">10</text>
+      <text class="axl" x="170" y="133" text-anchor="middle">100</text>
+      <text class="axl" x="240" y="133" text-anchor="middle">1k</text>
+      <text class="axl" x="310" y="133" text-anchor="middle">10k</text>
+      <text class="axl" x="324" y="133" text-anchor="start">votes</text>
+      <!-- Bayesian prior reference -->
+      <line x1="26" y1="41" x2="350" y2="41" stroke="#CA8A04" stroke-width="1" stroke-dasharray="5 4"/>
+      <text class="goldt" x="348" y="35" text-anchor="end">C = 6.96</text>
+      <!-- 35 slate listings: funnel -->
+      <g fill="#94A3B8">
+        <circle cx="30" cy="96" r="2.5"/><circle cx="30" cy="19" r="2.5"/><circle cx="30" cy="57.5" r="2.5"/>
+        <circle cx="51" cy="79.5" r="2.5"/><circle cx="51" cy="41" r="2.5"/>
+        <circle cx="63" cy="101.5" r="2.5"/><circle cx="63" cy="24.5" r="2.5"/>
+        <circle cx="72" cy="52" r="2.5"/>
+        <circle cx="79" cy="23.4" r="2.5"/><circle cx="79" cy="74" r="2.5"/>
+        <circle cx="89" cy="85" r="2.5"/>
+        <circle cx="100" cy="90.5" r="2.5"/><circle cx="105.5" cy="30" r="2.5"/>
+        <circle cx="112" cy="63" r="2.5"/><circle cx="121" cy="35.5" r="2.5"/>
+        <circle cx="128" cy="68.5" r="2.5"/><circle cx="133" cy="27.8" r="2.5"/>
+        <circle cx="142" cy="76" r="2.5"/><circle cx="149" cy="46.5" r="2.5"/>
+        <circle cx="170" cy="61" r="2.5"/><circle cx="175.5" cy="32" r="2.5"/>
+        <circle cx="182" cy="65" r="2.5"/><circle cx="191" cy="43" r="2.5"/>
+        <circle cx="203" cy="54" r="2.5"/><circle cx="212" cy="36.5" r="2.5"/>
+        <circle cx="219" cy="50" r="2.5"/>
+        <circle cx="240" cy="42" r="2.5"/><circle cx="245.5" cy="38" r="2.5"/>
+        <circle cx="252" cy="47.5" r="2.5"/><circle cx="261" cy="40" r="2.5"/>
+        <circle cx="273" cy="44" r="2.5"/><circle cx="282" cy="35.5" r="2.5"/>
+        <circle cx="289" cy="42" r="2.5"/><circle cx="303" cy="39" r="2.5"/>
+        <circle cx="310" cy="41" r="2.5"/>
+      </g>
+      <!-- the 10.0-on-2-votes trap -->
+      <circle cx="51" cy="8" r="5" fill="none" stroke="#E8705F" stroke-width="1.5"/>
+      <circle cx="51" cy="8" r="2" fill="#E8705F"/>
+      <line x1="57" y1="10" x2="104" y2="14" stroke="#E8705F" stroke-width="1"/>
+      <text class="inkt" x="108" y="18" text-anchor="start">evidence-weighted: ~7.02 (m=100)</text>
+    </svg>
+    <div class="chartnote" style="top:192px;">55,958 zero-vote listings (65.5%) excluded &mdash; they have no rating at all</div>
+  </div>
+
+  <!-- c_lie2_correction 440,624,400,32 -->
+  <div id="c_lie2_correction" class="correction" style="left:440px; top:624px;">A 10.0 on 2 votes reads 7.02 once evidence is weighted (m=100, C=6.96).</div>
+
+  <!-- ==================================================== -->
+  <!-- COLUMN 3 — LIE Nº 3                                  -->
+  <!-- ==================================================== -->
+
+  <!-- c_lie3_headline 856,144,400,64 -->
+  <div id="c_lie3_headline" class="abs" style="left:856px; top:144px; width:400px; height:64px;">
+    <div class="lie-kick">LIE N&ordm; 3</div>
+    <div class="lie-claim">&ldquo;Popularity says what&rsquo;s good.&rdquo;</div>
+  </div>
+
+  <!-- kpi_popularity_naive 856,216,400,128 (dim) -->
+  <div id="kpi_popularity_naive" class="card dim" style="left:856px; top:216px; width:400px; height:128px;">
+    <div class="tag trap">&#10005; TRAP</div>
+    <div class="cardlabel">Most &lsquo;popular&rsquo; film &mdash; score</div>
+    <div class="bigval">&mdash;&mdash;&mdash;&middot;&mdash;</div>
+    <div class="strikebar" style="width:156px;"></div>
+    <div class="cardsub">computed at build &middot; &dagger; formula not published &mdash; TMDB does not define this number</div>
+  </div>
+
+  <!-- ch_rank_slope 856,360,400,248 (lit) -->
+  <div id="ch_rank_slope" class="card lit" style="left:856px; top:360px; width:400px; height:248px;">
+    <div class="tag honest">&#10003; HONEST</div>
+    <div class="charttitle">Same films, three rankings</div>
+    <svg class="abs" style="left:14px; top:36px;" width="360" height="160" viewBox="0 0 360 160" aria-label="Slopegraph: popularity rank vs evidence-weighted rating rank">
+      <text class="goldt" x="2" y="14" text-anchor="start">Popularity rank</text>
+      <text class="goldt" x="358" y="14" text-anchor="end">Evidence-weighted rating rank</text>
+      <!-- slate slopes -->
+      <g stroke="#94A3B8" stroke-width="1">
+        <line x1="182" y1="47"  x2="316" y2="60"/>
+        <line x1="182" y1="73"  x2="316" y2="34"/>
+        <line x1="182" y1="86"  x2="316" y2="47"/>
+        <line x1="182" y1="99"  x2="316" y2="151"/>
+        <line x1="182" y1="112" x2="316" y2="73"/>
+        <line x1="182" y1="125" x2="316" y2="99"/>
+        <line x1="182" y1="138" x2="316" y2="86"/>
+        <line x1="182" y1="151" x2="316" y2="125"/>
+      </g>
+      <!-- two largest divergences -->
+      <g stroke="#CA8A04" stroke-width="2">
+        <line x1="182" y1="34" x2="316" y2="112"/>
+        <line x1="182" y1="60" x2="316" y2="138"/>
+      </g>
+      <!-- endpoint dots -->
+      <g fill="#94A3B8">
+        <circle cx="182" cy="47" r="2"/><circle cx="182" cy="73" r="2"/><circle cx="182" cy="86" r="2"/><circle cx="182" cy="99" r="2"/><circle cx="182" cy="112" r="2"/><circle cx="182" cy="125" r="2"/><circle cx="182" cy="138" r="2"/><circle cx="182" cy="151" r="2"/>
+        <circle cx="316" cy="60" r="2"/><circle cx="316" cy="34" r="2"/><circle cx="316" cy="47" r="2"/><circle cx="316" cy="151" r="2"/><circle cx="316" cy="73" r="2"/><circle cx="316" cy="99" r="2"/><circle cx="316" cy="86" r="2"/><circle cx="316" cy="125" r="2"/>
+      </g>
+      <g fill="#CA8A04">
+        <circle cx="182" cy="34" r="2.5"/><circle cx="316" cy="112" r="2.5"/>
+        <circle cx="182" cy="60" r="2.5"/><circle cx="316" cy="138" r="2.5"/>
+      </g>
+      <!-- left rank labels (film names computed at build) -->
+      <g class="axl" text-anchor="start">
+        <text x="2" y="38">#1 &mdash;computed at build&mdash;</text>
+        <text x="2" y="51">#2 &mdash;computed at build&mdash;</text>
+        <text x="2" y="64">#3 &mdash;computed at build&mdash;</text>
+        <text x="2" y="77">#4 &mdash;computed at build&mdash;</text>
+        <text x="2" y="90">#5 &mdash;computed at build&mdash;</text>
+        <text x="2" y="103">#6 &mdash;computed at build&mdash;</text>
+        <text x="2" y="116">#7 &mdash;computed at build&mdash;</text>
+        <text x="2" y="129">#8 &mdash;computed at build&mdash;</text>
+        <text x="2" y="142">#9 &mdash;computed at build&mdash;</text>
+        <text x="2" y="155">#10 &mdash;computed at build&mdash;</text>
+      </g>
+      <!-- right rank numbers -->
+      <g class="axl" text-anchor="start">
+        <text x="324" y="38">1</text><text x="324" y="51">2</text><text x="324" y="64">3</text><text x="324" y="77">4</text><text x="324" y="90">5</text><text x="324" y="103">6</text><text x="324" y="116">7</text><text x="324" y="129">8</text><text x="324" y="142">9</text><text x="324" y="155">10</text>
+      </g>
+    </svg>
+    <div class="chartnote" style="top:202px;">ranked only &mdash; never colored good or bad</div>
+  </div>
+
+  <!-- c_lie3_correction 856,624,400,32 -->
+  <div id="c_lie3_correction" class="correction" style="left:856px; top:624px;">A number nobody can define ranks nothing &mdash; shown ranked-only, never colored good or bad.</div>
+
+  <!-- ============ z_footer 24,672,1232,24 ============ -->
+  <div id="z_footer">
+    <div class="meta">TMDB snapshot 2026-07-24 &middot; Adult titles excluded (1,358) &middot; &lsquo;listings&rsquo;, not films: 1,697 duplicate (title, date) pairs (2.0%)</div>
+    <div class="pills">
+      <div class="pill">Evidence over time &rarr;</div>
+      <div class="pill">Method &#9432;</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
