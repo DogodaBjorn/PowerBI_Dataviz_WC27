@@ -6,15 +6,15 @@ updated: 2026-08-04
 stages:
   s0_intake:
     status: passed
-    evidence: "active/00-intake.md"
+    evidence: "project-state/active/00-intake.md"
     gate_note: "G0 confirmed by entrant 2026-08-04 in-session (contract: active/intake.contract.yaml, commit 4f147b2); story spine left to s1."
   s1_requirements:
     status: passed
-    evidence: "active/01-requirements.md"
+    evidence: "project-state/active/01-requirements.md"
     gate_note: "G1 closed 2026-08-04: entrant picked Angle 3 'Three seductive lies' in-session (contract: active/requirements.contract.yaml, commit 5032c37); Q2 profiling assigned to G2."
   s2_metrics:
     status: in_progress
-    evidence: "active/02-metrics.md"
+    evidence: "project-state/active/02-metrics.md"
     gate_note: "Contracts M-001..M-007 drafted; G2 blocked on Q2 profiling numbers + entrant glossary signature"
   s3_model_design:
     status: pending
