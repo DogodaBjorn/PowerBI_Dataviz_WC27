@@ -21,4 +21,4 @@ owner: "entrant (definition steward)"
 synonyms: "vote average, score"
 conflicts_checked: true
 
-implementation: { measure_name: "", display_folder: "", format_string: "" }
+implementation: { measure_name: 'Rating (raw)', display_folder: '03 Lie 2 · Ratings', format_string: '0.00' }

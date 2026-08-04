@@ -20,4 +20,4 @@ owner: "entrant (definition steward)"
 synonyms: "starter 'Profit' measure (same formula — rename in s4 to keep the trap explicit)"
 conflicts_checked: true
 
-implementation: { measure_name: "", display_folder: "", format_string: "" }
+implementation: { measure_name: 'Profit (naive)', display_folder: '02 Lie 1 · Financials\Trap — kept as exhibit', format_string: '\$#,0;(\$#,0)' }

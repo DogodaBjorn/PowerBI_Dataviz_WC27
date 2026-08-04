@@ -1,7 +1,7 @@
 # pbi-atelier project state — schema: lifecycle/status.schema.yaml
 project: wc-round-3
 template_version: 0.3.1
-current_stage: 4
+current_stage: 5
 updated: 2026-08-04
 stages:
   s0_intake:
@@ -21,11 +21,11 @@ stages:
     evidence: "project-state/active/03-model-blueprint.md"
     gate_note: "G3 closed 2026-08-04: entrant accepted blueprint in-session incl. not-available list, snapshot anchor 2026-07-24, report-level Adult filter (contract: active/model-blueprint.contract.yaml, user_accepted: true)."
   s4_model_build:
-    status: in_progress
-    evidence: ""
-    gate_note: ""
+    status: passed
+    evidence: "project-state/active/04-model-build.md"
+    gate_note: "G4 closed 2026-08-04: built by pbir-operator per blueprint (33 measures, Release Year dim, SourceRoot param, Date 1800-2099 marked, Profit->Profit (naive) + visual rebound). validate_tmdl --strict 0/0, no machine paths, all 7 implementation blocks filled, inventory diff explained. PENDING USER: reopen Desktop w/o saving, download TMDB v11 CSV + set SourceRoot, refresh — required before s6 verification."
   s5_design:
-    status: pending
+    status: in_progress
     evidence: ""
     gate_note: ""
   s6_report_build:

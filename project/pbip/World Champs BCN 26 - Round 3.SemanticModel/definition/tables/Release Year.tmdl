@@ -1,0 +1,76 @@
+table 'Release Year'
+	lineageTag: 6b5bcbd1-9a02-43c9-9cce-fc7c6622490f
+
+	/// Surrogate year key; -1 is the explicit "No date on record" unknown member (Kimball pattern). Hidden FK target.
+	column 'Year Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 17f55fd3-5a1c-4622-a355-38226aa34357
+		summarizeBy: none
+		sourceColumn: Year Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	/// Year-axis label; dateless listings appear as the first-class bucket "No date on record", never "(Blank)".
+	column 'Year Label'
+		dataType: string
+		lineageTag: 1886a67c-5912-4481-a51b-c0e4c87ed0b1
+		summarizeBy: none
+		sourceColumn: Year Label
+		sortByColumn: 'Year Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = User
+
+	/// Sort order for Year Label; the unknown member sorts last by default (s5 may flip). Hidden technical column.
+	column 'Year Sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 99582dd3-e5d5-4875-b9a2-74a190f26aa9
+		summarizeBy: none
+		sourceColumn: Year Sort
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	/// Past / Current / Future / No date, relative to the disclosed snapshot anchor 2026-07-24 (year grain).
+	column 'Year Status'
+		dataType: string
+		lineageTag: 0794ca7a-236c-4dfb-b7db-ab0fd11d7379
+		summarizeBy: none
+		sourceColumn: Year Status
+
+		annotation SummarizationSetBy = User
+
+	partition 'Release Year' = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    // Deterministic year buckets covering the verified Release Date span (1800..2099, blueprint §4)
+				    // plus the explicit unknown member (key -1) for listings with no release date.
+				    YearStart = 1800,
+				    YearEnd = 2099,
+				    AnchorYear = 2026, // year of the disclosed snapshot anchor #date(2026, 7, 24) — never LocalNow
+				    KnownYears = List.Transform(
+				        {YearStart..YearEnd},
+				        each [
+				            #"Year Key" = _,
+				            #"Year Label" = Text.From(_),
+				            #"Year Sort" = _,
+				            #"Year Status" = if _ < AnchorYear then "Past" else if _ = AnchorYear then "Current" else "Future"
+				        ]
+				    ),
+				    UnknownMember = {[#"Year Key" = -1, #"Year Label" = "No date on record", #"Year Sort" = YearEnd + 1, #"Year Status" = "No date"]},
+				    AsTable = Table.FromRecords(KnownYears & UnknownMember),
+				    #"Changed Type" = Table.TransformColumnTypes(AsTable, {{"Year Key", Int64.Type}, {"Year Label", type text}, {"Year Sort", Int64.Type}, {"Year Status", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table

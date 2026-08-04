@@ -7,7 +7,7 @@ date: "2026-08-04"
 
 facts:
   - name: "Movies"
-    grain: "ONE ROW MEANS: one TMDB movie listing (one Movie ID) from the starter's load, which keeps only rows with budget > 0 (starter M filter; 85,394 rows). Movie ID uniqueness assumed, verified at s4; 2.0% duplicate (Title, Release Date) pairs -> say 'listings'."
+    grain: "ONE ROW MEANS: one TMDB movie listing from the starter's load, which keeps only rows with budget > 0 (starter M filter; 85,394 rows). Movie ID NOT unique (verified s4: 85,293 distinct, 101 dup-ID rows); 2.0% duplicate (Title, Release Date) pairs -> say 'listings'."
     source: "Kaggle TMDB Movies Dataset v11 CSV via shared expression 'Source' — to be parameterized through SourceRoot (currently a machine path: validator error)"
     date_keys: ["Release Date", "Release Year Key (ADD)"]
     expected_rows: "~85k (exactly 85,394 at Q2)"
@@ -15,17 +15,17 @@ facts:
     grain: "ONE ROW MEANS: one (movie listing, genre) assignment parsed from the raw CSV genres field. Factless bridge; built from the UNFILTERED Source, so it carries Movie IDs absent from Movies."
     source: "same CSV via 'Source' expression"
     date_keys: []
-    expected_rows: "~100k–300k (verify at s4 inventory)"
+    expected_rows: "1,237,679 (verified s4 via MCP)"
   - name: "Keyword Bridge"
     grain: "ONE ROW MEANS: one (movie listing, keyword) assignment; same construction and unfiltered-source caveat."
     source: "same CSV via 'Source' expression"
     date_keys: []
-    expected_rows: "~200k–600k (verify at s4 inventory)"
+    expected_rows: "1,155,522 (verified s4 via MCP)"
   - name: "Production Company Bridge"
     grain: "ONE ROW MEANS: one (movie listing, production company) credit; same construction and caveat."
     source: "same CSV via 'Source' expression"
     date_keys: []
-    expected_rows: "~100k–300k (verify at s4 inventory)"
+    expected_rows: "876,581 (verified s4 via MCP)"
 
 dimensions:
   - name: "Genres"
@@ -47,7 +47,7 @@ dimensions:
 
 date_dimension:
   marked: true   # REQUIRED state — currently NOT marked (CHANGE at s4; exact TMDL syntax verified per research-first)
-  range: "Jan 1 of min(Release Date) year through Dec 31 of max(Release Date) year — deterministic, data-anchored, covers the 320 future-dated rows; replaces the starter's 1937-01-01..DateTime.LocalNow() drift. Contiguous via List.Dates."
+  range: "1800-01-01 through 2099-12-31 (verified s4 min/max, both sentinel-suspect — kept, they are part of the data-health story) — deterministic, covers all future-dated rows; replaces the starter's 1937-01-01..DateTime.LocalNow() drift. Contiguous via List.Dates."
   business_flags: ["Month Name sorted by Month Number (fix)", "future/unknown handling deliberately NOT on Date: Movies[Is Future Release] (fact-side, anchor 2026-07-24) + Release Year unknown member (-1) carry it, because a marked contiguous date column cannot host a labeled unknown row"]
 
 relationships:

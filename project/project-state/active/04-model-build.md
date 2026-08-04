@@ -1,0 +1,127 @@
+# 04 — Model build (stage 4, built 2026-08-04)
+
+Built by pbir-operator, exactly per `03-model-blueprint.md` §9 build order.
+Validators green at close: `validate_tmdl.py --strict` = 15 files, **0 errors,
+0 warnings**; all 32 report/model JSON files well-formed, UTF-8 without BOM.
+Desktop had the pbip open during the build — disk-only edits; the user must
+close-without-saving and reopen (follow-ups below).
+
+## What was built, per build-order step
+
+1. **SourceRoot parameter + expression rewrites** (`definition/expressions.tmdl`)
+   — new shared expression `SourceRoot` (text parameter, default `<set-me>\TMDB`);
+   both hardcoded `C:\Users\shlindsay\...` paths in `Source` (was line 5) and
+   `Schema` (was line 21) rewritten to
+   `File.Contents(SourceRoot & "\TMDB_movie_dataset_v11.csv")`. Cleared both
+   validator errors. `SourceRoot` added to `PBI_QueryOrder` in `model.tmdl`.
+2. **Date table** (`definition/tables/Date.tmdl`) — partition M rewritten to
+   deterministic `List.Dates` over **1800-01-01..2099-12-31** (verified min/max
+   Release Date; no `DateTime.LocalNow()`); columns and their names unchanged
+   (Date, Week Number, Month Number, Month Name, Year). Marked as date table:
+   `dataCategory: Time` on the table + `isKey` on `Date[Date]` — syntax verified
+   this session against Microsoft Learn TOM docs (`Table.DataCategory` value
+   `Time`; `Column.IsKey`). `Month Name` now `sortByColumn: 'Month Number'`.
+3. **Movies** (`definition/tables/Movies.tmdl`) — partition M steps added:
+   `Release Year Key` (Date.Year of Release Date, null → −1, Int64, hidden
+   column) and `Is Future Release` (Release Date > `#date(2026, 7, 24)`, null →
+   false, Boolean). Column hygiene: `summarizeBy: none` on Vote Average, Vote
+   Count, Revenue, Budget, Runtime, Popularity (with `SummarizationSetBy = User`
+   so Desktop keeps the choice); Budget/Revenue formatString normalized to
+   `\$#,0;(\$#,0)`. **New M columns materialize only at next refresh** — the CSV
+   is not on this machine (verified); TMDL is complete and refresh-ready.
+4. **Release Year dimension** (`definition/tables/Release Year.tmdl`, new) —
+   M-generated per blueprint §4: `Year Key` (int, −1 unknown member, hidden),
+   `Year Label` (text, "No date on record" for −1, sorted by `Year Sort`),
+   `Year Sort` (int, unknown sorts last, hidden), `Year Status` (Past / Current
+   / Future / No date vs anchor year 2026). `queryGroup: Dimensions`. Registered
+   in `model.tmdl` (ref + query order). **Relationship #8** added:
+   `Movies[Release Year Key]` *:1 `'Release Year'[Year Key]`, single direction
+   (TMDL defaults), name `Movies_ReleaseYearKey_to_ReleaseYear_YearKey`.
+5. **Profit trap** — starter measure renamed to `Profit (naive)`; DAX formula
+   byte-identical (`SUM(Movies[Revenue]) - SUM(Movies[Budget])`); lineageTag
+   preserved; trap docstring added; displayFolder
+   `02 Lie 1 · Financials\Trap — kept as exhibit`; formatString normalized to
+   `\$#,0;(\$#,0)`. **Routed question 5 resolved: same-batch binding update** —
+   the one starter visual binding `[Profit]`
+   (`…Report/definition/pages/22a73d6058ce40e505e0/visuals/e21488a8d900077091bd/visual.json`)
+   updated in the same batch (projection, sort, filter, queryRef,
+   nativeQueryRef); zero dangling `"Profit"` references confirmed by scan.
+6. **`_Measures` build-out** — 32 new measures, every §5 row, each with `///`
+   docstring, explicit formatString, and numbered displayFolder exactly per the
+   taxonomy (01 Core ×3; 02 Lie 1 · Financials ×3 + kept trap; 03 Lie 2 ·
+   Ratings ×8; 04 Lie 3 · Popularity ×4; 05 Data health · Time ×6; 06 Display
+   ×8 stubs). Layering holds: base measures touch columns; everything else
+   references measures. Duplicate-ID tolerance: `Popularity (as-is)` guards with
+   HASONEVALUE + MAX; all RANKX measures rank over `ALLSELECTED(Movies[Movie
+   ID])` with `CALCULATE(MAX/SUM(...))` per ID, so the 101 dup-ID rows collapse
+   per ID instead of erroring; ALLSELECTED usage commented in-DAX per
+   dax-patterns.
+
+## Decisions and assumptions (none contradict the blueprint)
+
+- **SourceRoot default is `<set-me>\TMDB`, not a drive-letter path.** The
+  validator/hook errors on any `X:\` literal (hard floor); the blueprint only
+  requires "placeholder default, never a committed user path". A drive-letter
+  placeholder would have re-introduced the error the step exists to clear.
+  Note: once the entrant sets a real local path, their local expressions.tmdl
+  will carry a machine path — local-only state, not for commit.
+- **Parameter meta record** `meta [IsParameterQuery=true, Type="Text",
+  IsParameterQueryRequired=true]` is the Desktop serialization convention; the
+  exact field names were not re-verifiable against reachable docs this session.
+  Conservative by construction: M's `meta` is value-preserving, so worst case
+  SourceRoot behaves as a plain text query and the parameterization still works.
+  Desktop confirmation is in the follow-ups.
+- **Measure count 33 vs "~28"** — blueprint arithmetic approximation; amendment
+  note written into §9 of the blueprint. No scope added.
+- **`formatString: @` on the eight 06-Display text measures** — tmdl-style
+  demands an explicit formatString on every measure; `@` is the standard text
+  placeholder token. Desktop normally leaves text measures format-less, so
+  verify in Desktop (follow-ups).
+- **`VAR m` readability variable** in `Rating (evidence-weighted)` — identical
+  semantics to the blueprint's sketch, per dax-patterns VAR discipline.
+- **`Rank · Revenue`** implements "Revenue > 0 only" as: rank population =
+  revenue-known listings within the viewer's selection; BLANK for listings
+  whose revenue is unknown (no rank fabricated from a 0).
+- **Relationship #8 has a human-readable name** (new object; readable diffs).
+  All existing Desktop hash identifiers untouched.
+- **`SummarizationSetBy = User` / `changedProperty`** written where properties
+  were deliberately set, so Desktop treats them as user choices and does not
+  re-infer implicit aggregations.
+- Display-stub value is the literal text `"s5 fills value"` — obviously
+  unfinished by design; s5 supplies real values via the design contract.
+
+## Inventory vs blueprint gate targets
+
+`tmdl_inventory.py` (2026-08-04): **10 tables** (target 10 ✓), **8
+relationships** (target 8 ✓), **33 measures** (target ~28 — see §9 build note
+✓), **Movies 19 columns** (17 + 2 new ✓), **SourceRoot** shared expression
+present (✓; the script's headline "1 shared expression" counts only the
+file-head expression — `EXPR_RE` lacks `re.M` — actual count is 3: SourceRoot,
+Source, Schema). `validate_tmdl.py --strict`: 0 errors, 0 warnings (was 2 + 2
+at baseline).
+
+## Desktop follow-ups (user checklist)
+
+- [ ] (a) Close Power BI Desktop **without saving**, then reopen the pbip —
+      Desktop currently holds the pre-build state in memory and would overwrite
+      this build on save.
+- [ ] (b) Download the Kaggle "TMDB Movies Dataset v11" CSV (not on this
+      machine — verified) and set `SourceRoot` to its folder (Transform data →
+      Edit parameters). The file must be named `TMDB_movie_dataset_v11.csv`
+      inside that folder. Do not commit the local path.
+- [ ] (c) Refresh to materialize: `Movies[Release Year Key]`,
+      `Movies[Is Future Release]`, the 1800–2099 Date range, and the
+      `Release Year` table.
+- [ ] (d) Confirm Date is marked as date table (Table tools → Mark as date
+      table shows Date[Date]) — TMDL marking verified against TOM docs, but a
+      Desktop-side confirmation closes the loop.
+- [ ] (e) Confirm `SourceRoot` appears under Manage Parameters as a Text
+      parameter; if it shows as a plain query, recreate it via Manage
+      Parameters under the same name (value semantics identical).
+- [ ] (f) Spot-check one 06-Display measure in a card: it should render the
+      text "s5 fills value" (confirms the `@` format behaves).
+
+## Open questions
+
+None new. Routed question 5 (Profit rename vs starter binding) resolved above:
+same-batch binding update, nothing dangles.

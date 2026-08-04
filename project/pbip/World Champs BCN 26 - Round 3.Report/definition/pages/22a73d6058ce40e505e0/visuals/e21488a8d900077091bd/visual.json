@@ -75,11 +75,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Profit"
+                  "Property": "Profit (naive)"
                 }
               },
-              "queryRef": "_Measures.Profit",
-              "nativeQueryRef": "Profit"
+              "queryRef": "_Measures.Profit (naive)",
+              "nativeQueryRef": "Profit (naive)"
             }
           ]
         }
@@ -94,7 +94,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Profit"
+                "Property": "Profit (naive)"
               }
             },
             "direction": "Descending"
@@ -219,7 +219,7 @@
                 "Entity": "_Measures"
               }
             },
-            "Property": "Profit"
+            "Property": "Profit (naive)"
           }
         },
         "type": "Advanced"

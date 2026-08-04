@@ -1,9 +1,211 @@
 table _Measures
 	lineageTag: 3ee311af-b225-4e80-9ba9-593a395047f0
 
-	measure Profit = SUM(Movies[Revenue]) - SUM(Movies[Budget])
-		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+	/// TRAP — Lie #1 exhibit: treats unknown financials as real money. Never present as a finding.
+	measure 'Profit (naive)' = SUM(Movies[Revenue]) - SUM(Movies[Budget])
+		formatString: \$#,0;(\$#,0)
+		displayFolder: 02 Lie 1 · Financials\Trap — kept as exhibit
 		lineageTag: 50583f61-b426-40a3-ae68-94b0d4bca216
+
+	/// Count of movie listings in context — rows, not distinct films (2.0% duplicate title+date pairs; see Duplicate listings).
+	measure Movies = COUNTROWS(Movies)
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: d152a59a-f989-4850-b011-bfac31efae38
+
+	/// Listings whose financials pass the disclosed credibility floor: Budget at least $10k and Revenue above zero.
+	measure 'Movies (credible financials)' = CALCULATE([Movies], Movies[Budget] >= 10000, Movies[Revenue] > 0)
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: 639e749b-2c97-4265-921f-868a5c26739c
+
+	/// Method-panel reconciliation: listing count with the report-level Adult exclusion lifted.
+	measure 'Movies (all listings incl. adult)' = CALCULATE([Movies], REMOVEFILTERS(Movies[Adult]))
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: 08658434-3805-4f19-8e2c-50db5c1a11a2
+
+	/// Share of listings whose budget and revenue are credibly known — the honesty denominator behind every financial claim.
+	measure 'Financial coverage %' = DIVIDE([Movies (credible financials)], [Movies])
+		formatString: 0.0%
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: 5a5e5e8b-719c-4629-aa8a-9847266090f4
+
+	/// Honest counterpart to the trap: median per-listing gross gap (Revenue minus Budget) over the credible set only.
+	measure 'Median profit (credible)' = CALCULATE(MEDIANX(Movies, Movies[Revenue] - Movies[Budget]), Movies[Budget] >= 10000, Movies[Revenue] > 0)
+		formatString: \$#,0;(\$#,0)
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: b24cd887-af67-4b97-835b-9bffa87b2c76
+
+	/// Mean gross gap over the credible set — shown only beside the median as outlier-drag evidence, never alone.
+	measure 'Mean profit (credible)' = CALCULATE(AVERAGEX(Movies, Movies[Revenue] - Movies[Budget]), Movies[Budget] >= 10000, Movies[Revenue] > 0)
+		formatString: \$#,0;(\$#,0)
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: 3d222496-814f-40f3-8c0b-e65bec089649
+
+	/// Total votes cast in context — the evidence mass behind any rating claim.
+	measure Votes = SUM(Movies[Vote Count])
+		formatString: #,0
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: f3d73e3c-d563-4b72-afb1-d030f6351046
+
+	/// Vote-weighted mean rating at every grain (per movie it equals Vote Average); BLANK with zero votes — a 0 would be a claim.
+	measure 'Rating (raw)' = DIVIDE(SUMX(Movies, Movies[Vote Average] * Movies[Vote Count]), SUM(Movies[Vote Count]))
+		formatString: 0.00
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 66d57369-c5fe-402a-9229-cb89a01f0f75
+
+	/// Disclosed reliability threshold m — signed assumption: roughly the evidence of the top vote-count decile.
+	measure 'Rating m (disclosed)' = 100
+		formatString: #,0
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 9fc8bb23-82f2-436d-8090-32a4fc0cfd56
+
+	/// Disclosed global vote-weighted mean rating C, computed once at Q2 — the shrinkage target, a constant.
+	measure 'Rating C (disclosed)' = 6.96
+		formatString: 0.00
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 5dd04324-9e4e-49ad-bfb1-25fbe0000ed9
+
+	/// Bayesian-shrunk rating: pulled toward C in proportion to missing vote evidence; BLANK at zero votes ("no evidence"), never C.
+	measure 'Rating (evidence-weighted)' =
+			VAR v = SUM(Movies[Vote Count])
+			VAR m = [Rating m (disclosed)]
+			RETURN
+			IF(v = 0, BLANK(), DIVIDE(v, v + m) * [Rating (raw)] + DIVIDE(m, v + m) * [Rating C (disclosed)])
+		formatString: 0.00
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 8cab7d96-3404-4059-b246-736fb458b3e4
+
+	/// Raw minus evidence-weighted rating — how far a thin-evidence score falls once evidence is required.
+	measure 'Rating gap (raw − weighted)' = [Rating (raw)] - [Rating (evidence-weighted)]
+		formatString: +0.00;-0.00;0.00
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: db1cfb85-60a6-4d4d-b773-4fe0f6546613
+
+	/// Listings clearing the disclosed evidence bar (Vote Count at least m = 100).
+	measure 'Movies with evidence (votes ≥ m)' = CALCULATE([Movies], Movies[Vote Count] >= 100)
+		formatString: #,0
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 5035af3e-7024-4653-875c-71a3f074703c
+
+	/// Share of listings clearing the evidence bar — the vote-evidence-by-year axis.
+	measure 'Evidence share %' = DIVIDE([Movies with evidence (votes ≥ m)], [Movies])
+		formatString: 0.0%
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 7a67ead1-c7c1-4591-912b-e6ff5d903916
+
+	/// TMDB's popularity as-is for a single listing — formula unpublished, so it is displayed, never aggregated or graded.
+	measure 'Popularity (as-is)' = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Popularity])) -- HASONEVALUE guard: BLANK at any group grain; MAX tolerates the 101 duplicate-ID rows
+		formatString: 0.0
+		displayFolder: 04 Lie 3 · Popularity
+		lineageTag: adb7ceb7-118c-42e8-af3b-272c338babf7
+
+	/// Rank of the listing by Popularity — the divergence view's undefended ranking, never a quality claim.
+	measure 'Rank · Popularity' = RANKX(ALLSELECTED(Movies[Movie ID]), CALCULATE(MAX(Movies[Popularity]))) -- ALLSELECTED: ranks within the viewer's current slicer/filter selection; MAX per ID tolerates duplicate-ID rows
+		formatString: 0
+		displayFolder: 04 Lie 3 · Popularity
+		lineageTag: f868e8b9-eee8-42ae-a05b-094f82e4e636
+
+	/// Rank of the listing by evidence-weighted rating — the responsible ranking placed beside Popularity's.
+	measure 'Rank · Rating (weighted)' = RANKX(ALLSELECTED(Movies[Movie ID]), [Rating (evidence-weighted)]) -- ALLSELECTED: ranks within the viewer's current slicer/filter selection
+		formatString: 0
+		displayFolder: 04 Lie 3 · Popularity
+		lineageTag: 4da8b67f-4d4e-4700-b3b6-41e5fa513313
+
+	/// Rank of the listing by total revenue, among revenue-known listings only; BLANK when the listing's revenue is unknown.
+	measure 'Rank · Revenue' =
+			VAR CurrentRevenue = CALCULATE(SUM(Movies[Revenue]))
+			VAR RevenueKnown = FILTER(ALLSELECTED(Movies[Movie ID]), CALCULATE(SUM(Movies[Revenue])) > 0) -- ALLSELECTED: rank population is the viewer's current selection, restricted to revenue-known listings
+			RETURN
+			IF(CurrentRevenue > 0, RANKX(RevenueKnown, CALCULATE(SUM(Movies[Revenue]))))
+		formatString: 0
+		displayFolder: 04 Lie 3 · Popularity
+		lineageTag: 75e63c56-2295-4107-8286-4f7d2915b232
+
+	/// Listings with no release date on record — a first-class, labeled data-health bucket, never dropped.
+	measure 'Movies (undated)' = CALCULATE([Movies], ISBLANK(Movies[Release Date]))
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: b9a2daab-2c6d-4442-afa4-ef0025349700
+
+	/// Share of listings with no release date on record.
+	measure 'Undated share %' = DIVIDE([Movies (undated)], [Movies])
+		formatString: 0.0%
+		displayFolder: 05 Data health · Time
+		lineageTag: 3427c975-9823-4b4c-b0b2-7a2054821cfb
+
+	/// Listings dated after the disclosed snapshot anchor 2026-07-24 — announced, not released.
+	measure 'Movies (future-dated)' = CALCULATE([Movies], Movies[Is Future Release] = TRUE)
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: f152f116-2e53-425b-91b2-44df48d4e21b
+
+	/// Distinct (Title, Release Date) pairs — the closest honest stand-in for "distinct films" this source supports.
+	measure 'Movies (distinct title + date)' = COUNTROWS(SUMMARIZE(Movies, Movies[Title], Movies[Release Date]))
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: 07002fd0-5809-43fa-b0f0-70a493e3b334
+
+	/// Listing rows beyond distinct (Title, Release Date) pairs — the duplication the word "listings" accounts for.
+	measure 'Duplicate listings' = [Movies] - [Movies (distinct title + date)]
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: d8097045-50c9-4db5-9f61-bba51cef90eb
+
+	/// Rows sharing a Movie ID with another row (verified 101 at s4) — method-panel data health.
+	measure 'Duplicate Movie IDs' = [Movies] - DISTINCTCOUNT(Movies[Movie ID])
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: fa2ed19f-998c-4f38-b50f-b2e288079702
+
+	/// Semantic color for the trap/lie emphasis — STUB: s5 fills value from the design-contract theme.
+	measure 'Color · Trap' = "s5 fills value"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 2a2fe019-1816-4fac-9f52-d8643f00c50c
+
+	/// Semantic color for the honest counterpart — STUB: s5 fills value from the design-contract theme.
+	measure 'Color · Honest' = "s5 fills value"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: c4f24e6b-315e-4ad3-a746-d303eadc07ee
+
+	/// Semantic color for neutral/context series — STUB: s5 fills value from the design-contract theme.
+	measure 'Color · Neutral' = "s5 fills value"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 9faedfbd-7fad-4768-924d-5475a0a8867a
+
+	/// Dynamic insight title for the Lie 1 page — STUB: s5 fills value (copy contracted at design).
+	measure 'Title · Lie 1' = "s5 fills value"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: e562f4ff-d44d-4eb9-9d37-0ebd0afb378b
+
+	/// Dynamic insight title for the Lie 2 page — STUB: s5 fills value (copy contracted at design).
+	measure 'Title · Lie 2' = "s5 fills value"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 8fc6684a-7f5f-4054-b991-910d1b8b7099
+
+	/// Dynamic insight title for the Lie 3 page — STUB: s5 fills value (copy contracted at design).
+	measure 'Title · Lie 3' = "s5 fills value"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 98b7fbce-f4e9-498b-a5e8-ae3d6923d4ab
+
+	/// Dynamic insight title for the landing page — STUB: s5 fills value (copy contracted at design).
+	measure 'Title · Landing' = "s5 fills value"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 80057dd2-e358-46ed-9e73-25952f29963a
+
+	/// Method-panel disclosure line (floor $10k, m=100, C=6.96, anchor 2026-07-24, Adult excluded) — STUB: s5 fills value.
+	measure 'Label · Method' = "s5 fills value"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: b424e7e9-8996-4554-b28a-6b289ff3abc5
 
 	column Value
 		isHidden

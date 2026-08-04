@@ -21,4 +21,4 @@ owner: "entrant (definition steward)"
 synonyms: "honest profit, typical profit"
 conflicts_checked: true
 
-implementation: { measure_name: "", display_folder: "", format_string: "" }
+implementation: { measure_name: 'Median profit (credible)', display_folder: '02 Lie 1 · Financials', format_string: '\$#,0;(\$#,0)' }

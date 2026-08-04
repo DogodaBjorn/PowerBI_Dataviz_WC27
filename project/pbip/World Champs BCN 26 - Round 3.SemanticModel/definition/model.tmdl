@@ -20,7 +20,7 @@ queryGroup 'Bridge Tables'
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["Source","Schema","Movies","Production Company","Genres","Genre Bridge","Production Company Bridge","Keyword","Keyword Bridge","Date"]
+annotation PBI_QueryOrder = ["SourceRoot","Source","Schema","Movies","Production Company","Genres","Genre Bridge","Production Company Bridge","Keyword","Keyword Bridge","Date","Release Year"]
 
 annotation PBI_ProTooling = ["CopilotTooling","Copilot","CopilotMeasureDescriptions","DevMode"]
 
@@ -33,6 +33,7 @@ ref table 'Production Company Bridge'
 ref table Keyword
 ref table 'Keyword Bridge'
 ref table Date
+ref table 'Release Year'
 
 ref cultureInfo en-US
 

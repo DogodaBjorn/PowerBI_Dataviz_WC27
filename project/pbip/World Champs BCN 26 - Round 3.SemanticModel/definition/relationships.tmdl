@@ -29,3 +29,7 @@ relationship 1320b508-e51e-c957-1171-6c24f5b2af4d
 	fromColumn: Movies.'Release Date'
 	toColumn: Date.Date
 
+relationship Movies_ReleaseYearKey_to_ReleaseYear_YearKey
+	fromColumn: Movies.'Release Year Key'
+	toColumn: 'Release Year'.'Year Key'
+

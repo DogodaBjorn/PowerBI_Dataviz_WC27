@@ -19,4 +19,4 @@ owner: "entrant (definition steward)"
 synonyms: "titles, listings, films"
 conflicts_checked: true
 
-implementation: { measure_name: "", display_folder: "", format_string: "" }
+implementation: { measure_name: 'Movies', display_folder: '01 Core', format_string: '#,0' }

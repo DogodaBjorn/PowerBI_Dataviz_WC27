@@ -24,10 +24,10 @@ table Movies
 	column 'Vote Average'
 		dataType: double
 		lineageTag: f2f73d8c-a443-40d9-8a09-8618ef00e9c5
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Vote Average
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
@@ -35,10 +35,10 @@ table Movies
 		dataType: int64
 		formatString: 0
 		lineageTag: 7975a0dc-0e53-4e78-b64f-9a75e1208507
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Vote Count
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column 'Release Date'
 		dataType: dateTime
@@ -53,38 +53,38 @@ table Movies
 
 	column Revenue
 		dataType: int64
-		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		formatString: \$#,0;(\$#,0)
 		lineageTag: ca429a64-183e-4b3a-99de-78021d9c4608
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Revenue
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column Runtime
 		dataType: int64
 		formatString: 0
 		lineageTag: 9ad181c5-1620-41d5-bb40-cff4c146e1fc
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Runtime
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column Budget
 		dataType: int64
-		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		formatString: \$#,0;(\$#,0)
 		lineageTag: 16ef44c2-5fe0-4669-9675-1a8a08d78b37
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Budget
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column Popularity
 		dataType: double
 		lineageTag: 38345c78-56d4-46d9-88e0-6c0a96656a47
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Popularity
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
@@ -153,6 +153,29 @@ table Movies
 
 		annotation SummarizationSetBy = Automatic
 
+	/// FK to 'Release Year'; -1 = "No date on record" unknown member. Hidden — filter via the Release Year dimension.
+	column 'Release Year Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ba0ceee7-ae57-41d7-ba00-bbeab8113ad0
+		summarizeBy: none
+		sourceColumn: Release Year Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	/// TRUE when Release Date is after the disclosed snapshot anchor 2026-07-24; dateless rows are FALSE, not future.
+	column 'Is Future Release'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2f9f41a6-1583-485a-b93c-38f46963117f
+		summarizeBy: none
+		sourceColumn: Is Future Release
+
+		annotation SummarizationSetBy = User
+
 	partition Movies = m
 		mode: import
 		queryGroup: Facts
@@ -163,9 +186,13 @@ table Movies
 				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"id", "Movie ID"}, {"title", "Title"}, {"vote_average", "Vote Average"}, {"vote_count", "Vote Count"}, {"release_date", "Release Date"}, {"revenue", "Revenue"}, {"backdrop_path", "Backdrop Path"}, {"budget", "Budget"}, {"homepage", "Homepage"}, {"popularity", "Popularity"}, {"runtime", "Runtime"}}),
 				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Movie ID", "Title", "Vote Average", "Vote Count", "status", "Release Date", "Revenue", "Runtime", "adult", "Backdrop Path", "Budget", "Homepage", "original_language", "original_title", "Popularity", "poster_path", "tagline", "genres"}),
 				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns",{{"genres", "genres"}, {"adult", "Adult"}, {"original_language", "Original Language"}, {"original_title", "Original Title"}, {"tagline", "Tagline"}, {"poster_path", "Poster Path"}, {"status", "Status"}}),
-				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{"genres"})
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{"genres"}),
+				    // Release Year Key: FK to the Release Year dimension; -1 = Kimball unknown member for dateless rows (blueprint §4).
+				    #"Added Release Year Key" = Table.AddColumn(#"Removed Columns", "Release Year Key", each if [Release Date] = null then -1 else Date.Year([Release Date]), Int64.Type),
+				    // Is Future Release: anchored to the dataset download date 2026-07-24 (disclosed snapshot anchor, never LocalNow); dateless rows -> false.
+				    #"Added Is Future Release" = Table.AddColumn(#"Added Release Year Key", "Is Future Release", each if [Release Date] = null then false else [Release Date] > #date(2026, 7, 24), type logical)
 				in
-				    #"Removed Columns"
+				    #"Added Is Future Release"
 
 	annotation PBI_NavigationStepName = Navigation
 

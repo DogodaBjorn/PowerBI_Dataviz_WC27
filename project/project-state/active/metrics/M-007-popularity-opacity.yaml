@@ -21,4 +21,4 @@ owner: "entrant (definition steward)"
 synonyms: "TMDB popularity"
 conflicts_checked: true
 
-implementation: { measure_name: "", display_folder: "", format_string: "" }
+implementation: { measure_name: 'Popularity (as-is)', display_folder: '04 Lie 3 · Popularity', format_string: '0.0' }

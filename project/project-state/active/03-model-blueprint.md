@@ -13,11 +13,12 @@ Drafted by model-auditor; written by main thread (auditor is read-only).
 - **Movies** (fact) — ONE ROW MEANS: one TMDB movie *listing* (one `Movie ID`) from
   the contest starter's load, which keeps only rows with a populated `budget > 0`
   (filter is in the starter's own M partition — this is why the table is 85,394
-  rows, not ~930k). `Movie ID` uniqueness is assumed (TMDB primary key) but not
-  enforced by any relationship in the current model (the bridge relationships are
-  declared m:m) — s4 verifies with `COUNTROWS` vs `DISTINCTCOUNT`. 2.0% of rows
-  share a (Title, Release Date) pair across distinct IDs, so the word is
-  "listings", never "films", where precision matters (M-001).
+  rows, not ~930k). `Movie ID` is **NOT unique** — VERIFIED s4 (2026-08-04, MCP):
+  85,394 rows vs 85,293 distinct IDs = 101 duplicate-ID rows. The starter's m:m
+  bridge declarations are therefore factually accurate, not sloppy. Grain stands
+  as "one listing row"; ID-keyed logic (RANKX, HASONEVALUE guards) must tolerate
+  ID ties. Additionally 2.0% of rows share a (Title, Release Date) pair, so the
+  word is "listings", never "films", where precision matters (M-001).
 - **Genre Bridge** (factless bridge) — ONE ROW MEANS: one (movie listing, genre)
   assignment parsed from the raw CSV's comma-separated `genres` field. Built from
   the UNFILTERED `Source` expression: it contains Movie IDs that do not exist in
@@ -101,9 +102,11 @@ no sortByColumn. No business flags. Columns: Date, Week Number, Month Number,
 Month Name, Year.
 
 **Required:**
-1. **Deterministic, data-anchored range** — start = Jan 1 of min(Release Date)
-   year, end = Dec 31 of max(Release Date) year (covers all future-dated rows).
-   Contiguous by construction; no `DateTime.LocalNow()`.
+1. **Deterministic, data-anchored range** — VERIFIED s4 (MCP): min Release Date
+   = 1800-01-01, max = 2099-12-31 (both sentinel-suspect extremes — part of the
+   data-health story, not excluded). Range: **1800-01-01 through 2099-12-31**
+   (~109.6k rows, fine for a date dim). Contiguous by construction; no
+   `DateTime.LocalNow()`.
 2. **Marked as date table** on `Date[Date]` (exact TMDL syntax verified against
    current docs at s4, per research-first — do not write from memory).
 3. `Month Name` sorted by `Month Number`.
@@ -190,6 +193,7 @@ batch or the s6 page retirement — never leaves it dangling.
 | 05 | Movies (future-dated) | `CALCULATE([Movies], Movies[Is Future Release] = TRUE)` | `#,0` |
 | 05 | Movies (distinct title + date) | `COUNTROWS(SUMMARIZE(Movies, Movies[Title], Movies[Release Date]))` | `#,0` |
 | 05 | Duplicate listings | `[Movies] - [Movies (distinct title + date)]` | `#,0` |
+| 05 | Duplicate Movie IDs | `[Movies] - DISTINCTCOUNT(Movies[Movie ID])` — verified 101 at s4; method-panel data health | `#,0` |
 | 06 | Color · Trap / Color · Honest / Color · Neutral | semantic color hex from the s5 theme (placeholders until the design contract lands) | text |
 | 06 | Title · Lie 1 / Lie 2 / Lie 3 / Landing | dynamic insight titles; copy contracted at s5 | text |
 | 06 | Label · Method | concatenated disclosure string (floor $10k, m=100, C=6.96, anchor 2026-07-24, Adult excluded) | text |
@@ -253,14 +257,20 @@ Gate-4 diff targets: **10 tables** (9 + Release Year), **8 relationships**,
 **~28 measures** (1 kept + ~27 new incl. display stubs), 2 new Movies columns,
 1 new shared expression parameter, 0 validator errors.
 
+> **s4 build note (2026-08-04, pbir-operator):** exact measure count is **33**
+> (1 kept + 32 new). The §5 table compresses the eight 06-Display measures
+> (3 colors + 4 titles + 1 label) into three rows, which is where "~28" came
+> from. Every §5 row is implemented; nothing was added beyond §5.
+
 ## Open questions
 
 None blocking G3. Entrant accepted the blueprint 2026-08-04 in-session,
 including the not-available list, the snapshot anchor 2026-07-24 (was Q2), and
 the report-level Adult filter mechanism (was Q3). Routed onward, not open:
 
-1. **True minimum Release Date** — s4 verifies via Modeling MCP; the new Date
-   range anchors to the verified min either way.
+1. ~~True minimum Release Date~~ — RESOLVED s4 (MCP): 1800-01-01..2099-12-31;
+   Date range set accordingly (§4). Bridge row counts verified: Genre 1,237,679;
+   Keyword 1,155,522; Production Company 876,581 (contract updated).
 4. **"No date on record" position on year axes** (first or last) — s5 design
    call; the model supports either via `Year Sort`.
 5. **Timing of the Profit rename** vs the one starter visual binding `[Profit]` —
