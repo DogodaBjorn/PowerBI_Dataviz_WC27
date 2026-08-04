@@ -106,17 +106,49 @@ resolutions on record (measured rects at extraction are truth):
 | 6 | p2 axis window 1900–2030 with out-of-window counts disclosed | Accepted (full 1800–2099 axis is a slop finding) |
 | 7 | Type-scale exceptions (D1 40pt numerals / D3 44pt headline) | Granted as documented brief exceptions |
 | 8 | D3 only: Lie 2 as dumbbell (drops the scatter) | Acknowledged as D3's contracted trade-off |
-| 9 | "Read naively / Read responsibly" bookmark toggle (judge-intel option) | NOT included (deadline safety) |
+| 9 | ~~"Read naively / Read responsibly" bookmark toggle~~ | DECIDED 2026-08-04: **YES** — entrant wants it "with animations"; contracted as native bookmark transition tweening only (no custom animation exists in PBI); two designed p1 states, responsible state default; both states in the asset-fidelity inventory |
 
 `{PLACEHOLDER-AT-BUILD}` batch (not decisions — contracted s6 tasks, filled
 from profiling, never memory): naive profit + sign, median/mean credible
 profit, top-10 popularity film names, The Godfather weighted score, p2
 out-of-window counts, dateless-bucket coverage.
 
+## ROUND 2 (2026-08-04) — after full round-1 rejection
+
+Entrant rejected D1–D3, verbatim: "I don't like either three.. they don't
+look and feel movie related to be fair" — logged to taste memory (3 keys) and
+applied as Prior Learning: cinema must be carried by ARTIFACT FORM, not
+palette; every round-2 direction passes a grayscale test. Toggle DECIDED yes
+("with animations") → contracted as native bookmark transition tween only;
+p1 has two designed states, responsible = default; naive state carries M-003
+equivalent marking (state banner + persistent naive tag). No Deneb this round.
+
+| | D4 One-Sheet | D5 Contact Sheet | D6 Main Titles |
+|---|---|---|---|
+| Artifact | theatrical quad poster (billing block, rating plate, star-quotes) | sprocketed film strip + grease-pencil pass on a light table | title-sequence credits + end-credits method roll |
+| Toggle skin | rating plate R / N | EDITOR'S PASS / AS SHOT | THE PICTURE / THE TRAILER |
+| Dials | balanced · expressive | balanced · expressive | airy · strict |
+| Critique /70 | 55 | 56 | 52 |
+| Named risk | AI key-art slot could cheapen the sheet; 320px chrome column | small-text compression in dark frames/prints vs the manual a11y judge; 1 SVG chrome asset | landing insight density — analysis one click away |
+
+New decisions (delta; full detail in the designer's round-2 spec):
+- Naive-state M-003 equivalent marking (banner + tag, no strike) — needs ack.
+- Toggle dim mechanism = paired bright/dim element variants (element count
+  roughly doubles in affected zones) — build-cost ack.
+- D4: im-imagery key-art route (duotone, no text, 2–3 candidates, entrant
+  picks; typographic fallback in comp) + 320px chrome column ack.
+- D5: sprocket chrome as one ca-canvas SVG per page (shape-built fallback).
+- D6: Lie-2 scatter→dumbbell acknowledged deviation from p1 contract.
+- Carried from round 1: coverage basis, sign-variant headline, axis window,
+  locked filter, type-scale exceptions (36pt), placeholder batch (+ Godfather
+  weighted score). Removed: all Deneb rows, ex-D1 card-state exception.
+- px-prototype note: each p1 comp holds BOTH toggle states as two stacked
+  1280×720 artboards — still three comps, one approval point.
+
 ## Open questions
 
-- The entrant's direction pick (D1 / D2 / D3) + answers or default-acceptance
-  on the table above. Recorded to `chosen` / `chosen_because` in the
+- The entrant's direction pick (D4 / D5 / D6) + acks/answers on the round-2
+  decisions delta above. Recorded to `chosen` / `chosen_because` in the
   creative-direction contract and to taste memory (learnings.py) on decision.
 
 ## After the pick (contracted next steps)

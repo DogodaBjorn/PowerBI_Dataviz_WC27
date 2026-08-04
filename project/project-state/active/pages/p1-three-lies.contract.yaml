@@ -34,5 +34,5 @@ supporting_visuals:
     intent: "annotation (S2 — the correction sentence per lie)"
     metric_ids: ["M-004", "M-006", "M-007"]
 
-interactions: "btn_method (to p3), btn_timeline (to p2); report-level Adult=FALSE filter visible in the filter pane and LOCKED (static copy stays in sync with visuals); no slicers, no essential hover content."
+interactions: "sl_read_toggle segmented control (nv-navigation): two bookmark states — bm_p1_naive ('Read naively': traps full-dress, page-level state banner + persistent 'naive' tag per M-003, honest reads dimmed via paired visibility variants) and bm_p1_responsible ('Read responsibly': traps struck + corrected — DEFAULT/landing state); native bookmark transition tween only, comps static, no custom animation promised; btn_method (to p3), btn_timeline (to p2); report-level Adult=FALSE filter visible in the filter pane and LOCKED; no slicers; nothing essential in hover; both toggle states enter the asset-fidelity inventory with state-specific alt text."
 leaves_out: "Genre/company breakdowns, any Popularity aggregation, per-lie detail pages, tooltips carrying story content, mean profit as a headline (it appears only as outlier-drag evidence beside the median)."

@@ -27,7 +27,7 @@ stages:
   s5_design:
     status: in_progress
     evidence: "project-state/active/05-design.md"
-    gate_note: "Story + 3 page contracts + 3 directions drafted (contract: active/creative-direction.contract.yaml); judge intel from prior rounds folded into critique; 3 comps building; G5 blocked on entrant pick + unresolved-decisions table in 05-design.md."
+    gate_note: "Round-2 directions D4 One-Sheet / D5 Contact Sheet / D6 Main Titles designed (critique 55/56/52), cinema-as-artifact per taste memory; toggle contracted (native tween, 2 states, responsible default); comps building with both states as stacked artboards. G5 blocked on entrant pick from D4-D6."
   s6_report_build:
     status: pending
     evidence: ""
