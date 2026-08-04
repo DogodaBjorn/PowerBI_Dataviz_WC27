@@ -145,6 +145,24 @@ New decisions (delta; full detail in the designer's round-2 spec):
 - px-prototype note: each p1 comp holds BOTH toggle states as two stacked
   1280×720 artboards — still three comps, one approval point.
 
+## Round-2 comp build record (2026-08-04 — three comps, both toggle states each)
+
+All three verified free of non-reproducible ingredients. Author resolutions:
+- **D4:** two-line SVG title at 36pt; billing block as condensed SVG text
+  (authentic squish) with stacked nav buttons; **a11y flag for s6: cream
+  inside-bar label on #78716C measures ~4.2:1 (< 4.5 floor) — move label
+  outside the bar or re-ink at build (D5's comp already exteriorized its
+  equivalent label); naive-state dimming intentionally sub-floor** (paired
+  full-contrast counterpart state — same rationale as D6).
+- **D5:** frame values 20pt treated as the one sanctioned scale exception
+  (spec-internal contradiction resolved; log in handoff if D5 wins); 13.1%
+  label exteriorized above the bar; grease marks as imperfect two-arc
+  ellipses / overshooting X-es with per-frame variation.
+- **D6:** aligned 8-dot leader columns across bands; footer centered in the
+  space left of the buttons; trailer-state dimming to #6B6558 (~3.2:1)
+  documented as de-emphasis with full-contrast counterpart; rank-strip ✓/✕
+  kept monochrome per that visual's own "never colored" contract.
+
 ## Open questions
 
 - The entrant's direction pick (D4 / D5 / D6) + acks/answers on the round-2

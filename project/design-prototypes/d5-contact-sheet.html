@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>D5 · The Contact Sheet — design comp</title>
+<style>
+  /* D5 "The Contact Sheet" — editor's light table. Two 1280x720 artboards.
+     Power BI rebuild 1:1 — solid fills, rules, text, simple inline SVG only.
+     No radius (sprocket rx=3 is SVG shape detail), no shadow, no gradient,
+     no rotation, no opacity, no animation. */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#333333; padding:32px 0 48px; }
+
+  .abcap { width:1280px; margin:0 auto 8px; font:10pt Consolas,monospace; color:#B8B2A6; }
+  .abcap.mt { margin-top:19px; } /* 19 + 13 line + 8 = 40px between artboards */
+
+  .board { position:relative; width:1280px; height:720px; margin:0 auto;
+           background:#EDEBE6; overflow:hidden;
+           font-family:'Segoe UI',sans-serif; color:#232019; }
+
+  /* ---- masthead ---- */
+  .mast { position:absolute; left:24px; top:24px; width:1232px; height:56px;
+          display:flex; align-items:center; justify-content:space-between; }
+  .mast-title { font-family:Bahnschrift,'Segoe UI',sans-serif; font-stretch:condensed;
+                font-size:28pt; line-height:1; color:#232019; white-space:nowrap; overflow:hidden; }
+  .mast-code { font:10pt Consolas,monospace; color:#57534E; text-align:right; line-height:13px; }
+  .code-warn { color:#A63A28; }
+
+  /* ---- hero takeaway ---- */
+  .hero { position:absolute; left:24px; top:96px; width:992px; height:64px;
+          font:italic 14pt Georgia,serif; color:#232019; line-height:24px; }
+  .hero-rule { position:absolute; left:0; bottom:0; width:100%; height:2px; background:#A63A28; }
+
+  /* ---- read toggle ---- */
+  .toggle { position:absolute; left:1032px; top:96px; width:224px; height:64px; }
+  .seg { position:absolute; top:0; width:112px; height:64px;
+         display:flex; align-items:center; justify-content:center;
+         font-family:Bahnschrift,'Segoe UI',sans-serif; font-size:10pt; letter-spacing:0.5px; }
+  .seg-off { border:1px solid #232019; color:#232019; }
+  .seg-on  { background:#A63A28; color:#F2F0EA; }
+  .seg-mark { position:absolute; left:0; right:0; bottom:0; height:3px; background:#232019; }
+
+  /* ---- film strip ---- */
+  .strip { position:absolute; left:24px; top:176px; width:1232px; height:280px; background:#26231F; }
+  .spr { position:absolute; left:0; display:block; }
+
+  .frame { position:absolute; top:208px; width:376px; height:216px;
+           background:#26231F; border:1px solid #F2F0EA; }
+  .etch   { position:absolute; top:6px; left:10px; font:10pt Consolas,monospace; color:#F2F0EA; }
+  .f-label{ position:absolute; top:32px; left:12px; right:12px; font:10pt 'Segoe UI',sans-serif; color:#F2F0EA; }
+  .f-value{ position:absolute; top:64px; left:12px; font:20pt Consolas,monospace; color:#F2F0EA; }
+  .f-rows { position:absolute; top:68px; left:12px; font:12pt Consolas,monospace; color:#F2F0EA;
+            line-height:24px; white-space:nowrap; }
+  .f-cap  { position:absolute; bottom:10px; left:12px; width:280px;
+            font:10pt 'Segoe UI',sans-serif; color:#F2F0EA; line-height:13px; }
+
+  /* grease-pencil marks */
+  .gx { position:absolute; left:-14px; top:-14px; }
+  .gx line { stroke:#A63A28; stroke-width:4; stroke-linecap:round; }
+  .gc { position:absolute; left:-14px; top:-16px; }
+  .gc path { stroke:#A63A28; stroke-width:3; fill:none; stroke-linecap:round; }
+  .tag { position:absolute; bottom:8px; right:8px; font:10pt Consolas,monospace;
+         color:#A63A28; border:1px solid #A63A28; background:#EDEBE6; padding:1px 6px; }
+  .print .tag { background:#FFFFFF; bottom:6px; right:6px; }
+  .note { position:absolute; top:626px; font:italic 12pt Georgia,serif; color:#A63A28; line-height:14px; }
+
+  /* ---- prints ---- */
+  .print { position:absolute; top:472px; width:376px; height:152px;
+           background:#FFFFFF; border:1px solid #D8D4C8; padding:8px 12px; }
+  .p-title  { font-family:'Segoe UI',sans-serif; font-weight:600; font-size:12pt; line-height:17px; color:#232019; }
+  .bar-label{ font:10pt 'Segoe UI',sans-serif; color:#232019; margin:3px 0 2px; line-height:14px; }
+  .stat     { font:12pt Consolas,monospace; color:#232019; line-height:17px; margin-top:4px; }
+  .cap      { font:10pt 'Segoe UI',sans-serif; color:#57534E; margin-top:3px; line-height:13px; }
+
+  .tbl { display:grid; grid-template-columns:148px 44px 64px 72px 18px;
+         font:10pt Consolas,monospace; color:#232019; line-height:14px; margin-top:4px; }
+  .tbl .h { color:#57534E; }
+  .tbl .n { text-align:right; padding-right:6px; }
+  .tbl .x { color:#A63A28; text-align:center; }
+
+  /* SVG chart classes */
+  .dot   { fill:#78716C; }
+  .redf  { fill:#A63A28; }
+  .grayf { fill:#D8D4C8; }
+  .redl  { stroke:#A63A28; }
+  .hairl { stroke:#D8D4C8; stroke-width:1; }
+  .svt-sec { font:10pt 'Segoe UI',sans-serif; fill:#57534E; }
+  .svt-ink { font:10pt 'Segoe UI',sans-serif; fill:#232019; }
+  .svt-red { font:10pt Consolas,monospace; fill:#A63A28; }
+
+  /* ---- footer ---- */
+  .footer { position:absolute; left:24px; top:640px; width:1232px; height:56px;
+            display:flex; align-items:center; justify-content:space-between; }
+  .edge { width:840px; font:10pt Consolas,monospace; color:#57534E; line-height:14px; }
+  .btn  { display:inline-block; border:1px solid #A63A28; color:#A63A28;
+          font:10pt Consolas,monospace; padding:6px 12px; margin-left:8px; white-space:nowrap; }
+
+  /* ---- AS SHOT (naive) state ---- */
+  .shot .grease { display:none; }
+  .shot .print .p-title, .shot .print .bar-label, .shot .print .stat,
+  .shot .print .cap, .shot .print .tbl div { color:#8A867C; }
+  .shot .print .dot  { fill:#B8B2A6; }
+  .shot .print .redf { fill:#B8B2A6; }
+  .shot .print .redl { stroke:#B8B2A6; }
+  .shot .print .svt-red { fill:#B8B2A6; }
+  .shot .print .svt-ink, .shot .print .svt-sec { fill:#8A867C; }
+</style>
+</head>
+<body>
+
+<!-- ================= ARTBOARD 1 — EDITOR'S PASS (responsible, default) ================= -->
+<div class="abcap">D5 · The Contact Sheet · EDITOR'S PASS (responsible, default)</div>
+<div class="board pass">
+
+  <div class="mast">
+    <div class="mast-title">CONTACT SHEET — THREE SEDUCTIVE LIES ABOUT THE MOVIES</div>
+    <div class="mast-code">ROLL TMDB·2026·07·24 · 85,394 EXPOSURES<br>BASIS 84,036 (ADULT 1,358 EXCLUDED)</div>
+  </div>
+
+  <div class="hero">The data is not wrong — the reading is. 87% of 85,394 listings have no credible financials, the median listing has zero votes, and 'popularity' has no published formula. Every honest number here states what it excludes.<div class="hero-rule"></div></div>
+
+  <div class="toggle">
+    <div class="seg seg-off" style="left:0">AS SHOT</div>
+    <div class="seg seg-on" style="left:112px">EDITOR'S PASS<div class="seg-mark"></div></div>
+  </div>
+
+  <div class="strip">
+    <svg class="spr" style="top:0" width="1232" height="24" viewBox="0 0 1232 24">
+      <g id="holes" fill="#EDEBE6">
+        <rect x="16.7"   y="7" width="14" height="10" rx="3"/><rect x="64.1"   y="7" width="14" height="10" rx="3"/>
+        <rect x="111.5"  y="7" width="14" height="10" rx="3"/><rect x="158.9"  y="7" width="14" height="10" rx="3"/>
+        <rect x="206.2"  y="7" width="14" height="10" rx="3"/><rect x="253.6"  y="7" width="14" height="10" rx="3"/>
+        <rect x="301.0"  y="7" width="14" height="10" rx="3"/><rect x="348.4"  y="7" width="14" height="10" rx="3"/>
+        <rect x="395.8"  y="7" width="14" height="10" rx="3"/><rect x="443.2"  y="7" width="14" height="10" rx="3"/>
+        <rect x="490.5"  y="7" width="14" height="10" rx="3"/><rect x="537.9"  y="7" width="14" height="10" rx="3"/>
+        <rect x="585.3"  y="7" width="14" height="10" rx="3"/><rect x="632.7"  y="7" width="14" height="10" rx="3"/>
+        <rect x="680.1"  y="7" width="14" height="10" rx="3"/><rect x="727.5"  y="7" width="14" height="10" rx="3"/>
+        <rect x="774.8"  y="7" width="14" height="10" rx="3"/><rect x="822.2"  y="7" width="14" height="10" rx="3"/>
+        <rect x="869.6"  y="7" width="14" height="10" rx="3"/><rect x="917.0"  y="7" width="14" height="10" rx="3"/>
+        <rect x="964.4"  y="7" width="14" height="10" rx="3"/><rect x="1011.8" y="7" width="14" height="10" rx="3"/>
+        <rect x="1059.2" y="7" width="14" height="10" rx="3"/><rect x="1106.5" y="7" width="14" height="10" rx="3"/>
+        <rect x="1153.9" y="7" width="14" height="10" rx="3"/><rect x="1201.3" y="7" width="14" height="10" rx="3"/>
+      </g>
+    </svg>
+    <svg class="spr" style="top:256px" width="1232" height="24" viewBox="0 0 1232 24"><use href="#holes"/></svg>
+  </div>
+
+  <!-- frames (traps, as shot) -->
+  <div class="frame" style="left:64px">
+    <div class="etch">F01</div>
+    <div class="f-label">Profit, all 85,394 listings (naive)</div>
+    <div class="f-value">$ —,———,———</div>
+    <div class="f-cap">counts 67,436 unknown revenues (79.0%) as $0 · Budget never 0 — junk min $1, median $2,800 · computed at build</div>
+    <svg class="gx grease" width="404" height="244" viewBox="0 0 404 244">
+      <line x1="8" y1="10" x2="396" y2="234"/><line x1="394" y1="6" x2="4" y2="232"/>
+    </svg>
+    <div class="tag grease">REJECT</div>
+  </div>
+
+  <div class="frame" style="left:456px">
+    <div class="etch">F02</div>
+    <div class="f-label">Highest-rated films (raw average)</div>
+    <div class="f-rows">Las mujeres deciden · 10.0 · 2 votes<br>Logos · 10.0 · 3 votes<br>+ 18 more perfect 10s on 2–3 votes</div>
+    <svg class="gx grease" width="404" height="244" viewBox="0 0 404 244">
+      <line x1="6" y1="14" x2="398" y2="230"/><line x1="396" y1="10" x2="8" y2="236"/>
+    </svg>
+    <div class="tag grease">REJECT</div>
+  </div>
+
+  <div class="frame" style="left:848px">
+    <div class="etch">F03</div>
+    <div class="f-label">Most 'popular' film — score</div>
+    <div class="f-value">———·—</div>
+    <div class="f-cap">† formula not published — TMDB does not define this number</div>
+    <svg class="gx grease" width="404" height="244" viewBox="0 0 404 244">
+      <line x1="10" y1="6" x2="392" y2="236"/><line x1="398" y1="12" x2="6" y2="228"/>
+    </svg>
+    <div class="tag grease">REJECT</div>
+  </div>
+
+  <!-- prints (honest, on the light table) -->
+  <div class="print" style="left:64px">
+    <div class="p-title">Financial coverage — floor $10k</div>
+    <div class="bar-label">13.1% credible ✓</div>
+    <svg width="328" height="24" viewBox="0 0 328 24">
+      <rect class="redf" x="0" y="0" width="43" height="24"/>
+      <rect class="grayf" x="43" y="0" width="285" height="24"/>
+      <text class="svt-sec" x="51" y="16.5">86.9% — no credible financials</text>
+    </svg>
+    <div class="stat">median $ ——,——— · mean $ ———,———,——— (dragged by blockbusters)</div>
+    <div class="cap">USD as recorded · not inflation-adjusted</div>
+    <svg class="gc grease" width="404" height="184" viewBox="0 0 404 184">
+      <path d="M 50,96 A 154,54 0 0 1 356,92 A 156,58 0 0 1 58,108"/>
+    </svg>
+    <div class="tag grease">PRINT</div>
+  </div>
+
+  <div class="print" style="left:456px">
+    <div class="p-title">Votes (log) vs rating</div>
+    <svg width="328" height="84" viewBox="0 0 328 84" style="margin-top:2px">
+      <line class="hairl" x1="0" y1="83.5" x2="328" y2="83.5"/>
+      <circle class="dot" cx="18" cy="70" r="2.5"/><circle class="dot" cx="24" cy="30" r="2.5"/>
+      <circle class="dot" cx="30" cy="58" r="2.5"/><circle class="dot" cx="38" cy="44" r="2.5"/>
+      <circle class="dot" cx="44" cy="76" r="2.5"/><circle class="dot" cx="50" cy="22" r="2.5"/>
+      <circle class="dot" cx="56" cy="64" r="2.5"/><circle class="dot" cx="64" cy="36" r="2.5"/>
+      <circle class="dot" cx="70" cy="52" r="2.5"/><circle class="dot" cx="78" cy="68" r="2.5"/>
+      <circle class="dot" cx="86" cy="28" r="2.5"/><circle class="dot" cx="94" cy="56" r="2.5"/>
+      <circle class="dot" cx="102" cy="40" r="2.5"/><circle class="dot" cx="112" cy="60" r="2.5"/>
+      <circle class="dot" cx="122" cy="30" r="2.5"/><circle class="dot" cx="132" cy="50" r="2.5"/>
+      <circle class="dot" cx="142" cy="37" r="2.5"/><circle class="dot" cx="154" cy="55" r="2.5"/>
+      <circle class="dot" cx="166" cy="33" r="2.5"/><circle class="dot" cx="178" cy="46" r="2.5"/>
+      <circle class="dot" cx="190" cy="40" r="2.5"/><circle class="dot" cx="204" cy="44" r="2.5"/>
+      <circle class="dot" cx="218" cy="36" r="2.5"/><circle class="dot" cx="234" cy="42" r="2.5"/>
+      <circle class="dot" cx="252" cy="38" r="2.5"/><circle class="dot" cx="272" cy="41" r="2.5"/>
+      <circle class="dot" cx="292" cy="44" r="2.5"/><circle class="dot" cx="314" cy="40" r="2.5"/>
+      <line class="redl" x1="0" y1="39.5" x2="328" y2="39.5" stroke-width="2"/>
+      <text class="svt-red" x="324" y="32" text-anchor="end">C = 6.96</text>
+      <circle class="dot" cx="16" cy="8" r="2.5"/>
+      <circle class="redl" cx="16.5" cy="8.5" r="7" stroke-width="2.2" fill="none"/>
+      <line class="redl" x1="24" y1="10" x2="68" y2="12" stroke-width="2"/>
+      <text class="svt-ink" x="72" y="15">→ 7.02 weighted (m=100)</text>
+    </svg>
+    <div class="cap">zero-vote listings (65.5%) have no rating at all</div>
+    <svg class="gc grease" width="404" height="184" viewBox="0 0 404 184">
+      <path d="M 48,90 A 156,56 0 0 1 358,94 A 154,52 0 0 1 56,86"/>
+    </svg>
+    <div class="tag grease">PRINT</div>
+  </div>
+
+  <div class="print" style="left:848px">
+    <div class="p-title">Same films, three rankings</div>
+    <div class="tbl">
+      <div class="h">FILM</div><div class="h n">POP†</div><div class="h n">RATING</div><div class="h n">REVENUE</div><div></div>
+      <div>— at build —</div><div class="n">1</div><div class="n">6</div><div class="n">2</div><div></div>
+      <div>— at build —</div><div class="n">2</div><div class="n">1</div><div class="n">9</div><div></div>
+      <div>— at build —</div><div class="n">3</div><div class="n">11</div><div class="n">1</div><div class="x grease">✕</div>
+      <div>— at build —</div><div class="n">4</div><div class="n">3</div><div class="n">12</div><div class="x grease">✕</div>
+    </div>
+    <div class="cap">ranked only — never colored good or bad</div>
+    <svg class="gc grease" width="404" height="184" viewBox="0 0 404 184">
+      <path d="M 52,94 A 152,58 0 0 1 354,88 A 156,54 0 0 1 62,102"/>
+    </svg>
+    <div class="tag grease">PRINT</div>
+  </div>
+
+  <!-- editor's notes -->
+  <div class="note grease" style="left:76px">only 13.1% is developable</div>
+  <div class="note grease" style="left:468px">10.0 on 2 votes reads 7.02 (m=100, C=6.96)</div>
+  <div class="note grease" style="left:860px">an unpublished formula ranks nothing</div>
+
+  <div class="footer">
+    <div class="edge">EDGE PRINT · LISTINGS≠FILMS — 1,697 DUPLICATE (TITLE,DATE) PAIRS (2.0%) · 101 DUPLICATE IDS · USD AS RECORDED · FULL PROCESSING LOG: PAGE 3</div>
+    <div class="btns"><span class="btn">EVIDENCE OVER TIME →</span><span class="btn">PROCESSING LOG ⓘ</span></div>
+  </div>
+</div>
+
+<!-- ================= ARTBOARD 2 — AS SHOT (naive) ================= -->
+<div class="abcap mt">D5 · The Contact Sheet · AS SHOT (naive)</div>
+<div class="board shot">
+
+  <div class="mast">
+    <div class="mast-title">CONTACT SHEET — THREE SEDUCTIVE LIES ABOUT THE MOVIES</div>
+    <div class="mast-code">ROLL TMDB·2026·07·24 · 85,394 EXPOSURES<br>BASIS 84,036 (ADULT 1,358 EXCLUDED)<br><span class="code-warn">— UNGRADED: unknowns counted as facts</span></div>
+  </div>
+
+  <div class="hero">The data is not wrong — the reading is. 87% of 85,394 listings have no credible financials, the median listing has zero votes, and 'popularity' has no published formula. Every honest number here states what it excludes.<div class="hero-rule"></div></div>
+
+  <div class="toggle">
+    <div class="seg seg-on" style="left:0">AS SHOT<div class="seg-mark"></div></div>
+    <div class="seg seg-off" style="left:112px">EDITOR'S PASS</div>
+  </div>
+
+  <div class="strip">
+    <svg class="spr" style="top:0" width="1232" height="24" viewBox="0 0 1232 24"><use href="#holes"/></svg>
+    <svg class="spr" style="top:256px" width="1232" height="24" viewBox="0 0 1232 24"><use href="#holes"/></svg>
+  </div>
+
+  <!-- frames (full-dress, unmarked) -->
+  <div class="frame" style="left:64px">
+    <div class="etch">F01 · naive</div>
+    <div class="f-label">Profit, all 85,394 listings (naive)</div>
+    <div class="f-value">$ —,———,———</div>
+    <div class="f-cap">counts 67,436 unknown revenues (79.0%) as $0 · Budget never 0 — junk min $1, median $2,800 · computed at build</div>
+    <svg class="gx grease" width="404" height="244" viewBox="0 0 404 244">
+      <line x1="8" y1="10" x2="396" y2="234"/><line x1="394" y1="6" x2="4" y2="232"/>
+    </svg>
+    <div class="tag grease">REJECT</div>
+  </div>
+
+  <div class="frame" style="left:456px">
+    <div class="etch">F02 · naive</div>
+    <div class="f-label">Highest-rated films (raw average)</div>
+    <div class="f-rows">Las mujeres deciden · 10.0 · 2 votes<br>Logos · 10.0 · 3 votes<br>+ 18 more perfect 10s on 2–3 votes</div>
+    <svg class="gx grease" width="404" height="244" viewBox="0 0 404 244">
+      <line x1="6" y1="14" x2="398" y2="230"/><line x1="396" y1="10" x2="8" y2="236"/>
+    </svg>
+    <div class="tag grease">REJECT</div>
+  </div>
+
+  <div class="frame" style="left:848px">
+    <div class="etch">F03 · naive</div>
+    <div class="f-label">Most 'popular' film — score</div>
+    <div class="f-value">———·—</div>
+    <div class="f-cap">† formula not published — TMDB does not define this number</div>
+    <svg class="gx grease" width="404" height="244" viewBox="0 0 404 244">
+      <line x1="10" y1="6" x2="392" y2="236"/><line x1="398" y1="12" x2="6" y2="228"/>
+    </svg>
+    <div class="tag grease">REJECT</div>
+  </div>
+
+  <!-- prints (dimmed) -->
+  <div class="print" style="left:64px">
+    <div class="p-title">Financial coverage — floor $10k</div>
+    <div class="bar-label">13.1% credible ✓</div>
+    <svg width="328" height="24" viewBox="0 0 328 24">
+      <rect class="redf" x="0" y="0" width="43" height="24"/>
+      <rect class="grayf" x="43" y="0" width="285" height="24"/>
+      <text class="svt-sec" x="51" y="16.5">86.9% — no credible financials</text>
+    </svg>
+    <div class="stat">median $ ——,——— · mean $ ———,———,——— (dragged by blockbusters)</div>
+    <div class="cap">USD as recorded · not inflation-adjusted</div>
+    <svg class="gc grease" width="404" height="184" viewBox="0 0 404 184">
+      <path d="M 50,96 A 154,54 0 0 1 356,92 A 156,58 0 0 1 58,108"/>
+    </svg>
+    <div class="tag grease">PRINT</div>
+  </div>
+
+  <div class="print" style="left:456px">
+    <div class="p-title">Votes (log) vs rating</div>
+    <svg width="328" height="84" viewBox="0 0 328 84" style="margin-top:2px">
+      <line class="hairl" x1="0" y1="83.5" x2="328" y2="83.5"/>
+      <circle class="dot" cx="18" cy="70" r="2.5"/><circle class="dot" cx="24" cy="30" r="2.5"/>
+      <circle class="dot" cx="30" cy="58" r="2.5"/><circle class="dot" cx="38" cy="44" r="2.5"/>
+      <circle class="dot" cx="44" cy="76" r="2.5"/><circle class="dot" cx="50" cy="22" r="2.5"/>
+      <circle class="dot" cx="56" cy="64" r="2.5"/><circle class="dot" cx="64" cy="36" r="2.5"/>
+      <circle class="dot" cx="70" cy="52" r="2.5"/><circle class="dot" cx="78" cy="68" r="2.5"/>
+      <circle class="dot" cx="86" cy="28" r="2.5"/><circle class="dot" cx="94" cy="56" r="2.5"/>
+      <circle class="dot" cx="102" cy="40" r="2.5"/><circle class="dot" cx="112" cy="60" r="2.5"/>
+      <circle class="dot" cx="122" cy="30" r="2.5"/><circle class="dot" cx="132" cy="50" r="2.5"/>
+      <circle class="dot" cx="142" cy="37" r="2.5"/><circle class="dot" cx="154" cy="55" r="2.5"/>
+      <circle class="dot" cx="166" cy="33" r="2.5"/><circle class="dot" cx="178" cy="46" r="2.5"/>
+      <circle class="dot" cx="190" cy="40" r="2.5"/><circle class="dot" cx="204" cy="44" r="2.5"/>
+      <circle class="dot" cx="218" cy="36" r="2.5"/><circle class="dot" cx="234" cy="42" r="2.5"/>
+      <circle class="dot" cx="252" cy="38" r="2.5"/><circle class="dot" cx="272" cy="41" r="2.5"/>
+      <circle class="dot" cx="292" cy="44" r="2.5"/><circle class="dot" cx="314" cy="40" r="2.5"/>
+      <line class="redl" x1="0" y1="39.5" x2="328" y2="39.5" stroke-width="2"/>
+      <text class="svt-red" x="324" y="32" text-anchor="end">C = 6.96</text>
+      <circle class="dot" cx="16" cy="8" r="2.5"/>
+      <circle class="redl" cx="16.5" cy="8.5" r="7" stroke-width="2.2" fill="none"/>
+      <line class="redl" x1="24" y1="10" x2="68" y2="12" stroke-width="2"/>
+      <text class="svt-ink" x="72" y="15">→ 7.02 weighted (m=100)</text>
+    </svg>
+    <div class="cap">zero-vote listings (65.5%) have no rating at all</div>
+    <svg class="gc grease" width="404" height="184" viewBox="0 0 404 184">
+      <path d="M 48,90 A 156,56 0 0 1 358,94 A 154,52 0 0 1 56,86"/>
+    </svg>
+    <div class="tag grease">PRINT</div>
+  </div>
+
+  <div class="print" style="left:848px">
+    <div class="p-title">Same films, three rankings</div>
+    <div class="tbl">
+      <div class="h">FILM</div><div class="h n">POP†</div><div class="h n">RATING</div><div class="h n">REVENUE</div><div></div>
+      <div>— at build —</div><div class="n">1</div><div class="n">6</div><div class="n">2</div><div></div>
+      <div>— at build —</div><div class="n">2</div><div class="n">1</div><div class="n">9</div><div></div>
+      <div>— at build —</div><div class="n">3</div><div class="n">11</div><div class="n">1</div><div class="x grease">✕</div>
+      <div>— at build —</div><div class="n">4</div><div class="n">3</div><div class="n">12</div><div class="x grease">✕</div>
+    </div>
+    <div class="cap">ranked only — never colored good or bad</div>
+    <svg class="gc grease" width="404" height="184" viewBox="0 0 404 184">
+      <path d="M 52,94 A 152,58 0 0 1 354,88 A 156,54 0 0 1 62,102"/>
+    </svg>
+    <div class="tag grease">PRINT</div>
+  </div>
+
+  <!-- editor's notes (hidden in this state) -->
+  <div class="note grease" style="left:76px">only 13.1% is developable</div>
+  <div class="note grease" style="left:468px">10.0 on 2 votes reads 7.02 (m=100, C=6.96)</div>
+  <div class="note grease" style="left:860px">an unpublished formula ranks nothing</div>
+
+  <div class="footer">
+    <div class="edge">EDGE PRINT · LISTINGS≠FILMS — 1,697 DUPLICATE (TITLE,DATE) PAIRS (2.0%) · 101 DUPLICATE IDS · USD AS RECORDED · FULL PROCESSING LOG: PAGE 3</div>
+    <div class="btns"><span class="btn">EVIDENCE OVER TIME →</span><span class="btn">PROCESSING LOG ⓘ</span></div>
+  </div>
+</div>
+
+</body>
+</html>

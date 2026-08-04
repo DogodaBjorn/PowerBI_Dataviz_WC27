@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>D4 · The One-Sheet — stage-5 design comp</title>
+<!--
+  pbi-atelier · stage 5 design comp · Direction D4 "The One-Sheet"
+  Landscape theatrical quad poster for "Three Seductive Lies (About the Movies)".
+  Two 1280x720 artboards: RESPONSIBLE (default) and NAIVE ("N — NAIVE READ").
+  Build constraints honoured: solid fills only, 1/2/3/4px rules, text, simple
+  inline SVG; no radius, no shadows, no gradients, no rotation, no external assets.
+  data-name attributes carry the px-prototype rect names.
+-->
+<style>
+:root{
+  --cream:#F3EFE4; --ink:#201D1A; --sec:#57534E; --red:#B3402E;
+  --green:#2F6B4F; --neutral:#78716C; --tint:#E4C7C0; --dim:#B8B2A6;
+}
+*{margin:0;padding:0;box-sizing:border-box;border-radius:0;}
+body{background:#333;padding:40px;display:flex;flex-direction:column;align-items:center;gap:40px;}
+.frame{width:1280px;}
+.frame>.cap{font:10pt Consolas,monospace;color:#C8C4BD;letter-spacing:1px;margin-bottom:6px;}
+.board{position:relative;width:1280px;height:720px;background:var(--cream);overflow:hidden;
+       color:var(--ink);font-family:"Segoe UI",sans-serif;}
+.z{position:absolute;}
+.disp{font-family:"Bahnschrift SemiCondensed",Bahnschrift,"Segoe UI",sans-serif;font-stretch:87.5%;}
+.geo{font-family:Georgia,serif;}
+.mono{font-family:Consolas,monospace;}
+.t-ink{color:var(--ink);} .t-sec{color:var(--sec);} .t-red{color:var(--red);}
+.num{font-variant-numeric:tabular-nums;}
+svg{display:block;}
+svg .f-ink{fill:var(--ink);} svg .f-sec{fill:var(--sec);} svg .f-cream{fill:var(--cream);}
+svg .f-red{fill:var(--red);} svg .f-neutral{fill:var(--neutral);} svg .f-green{fill:var(--green);}
+svg .s-ink{stroke:var(--ink);} svg .s-red{stroke:var(--red);} svg .s-axis{stroke:var(--sec);}
+
+/* ---- trap (quote-zone) grammar ---- */
+.bigquote{position:absolute;top:-26px;left:-8px;font:80px Georgia,serif;line-height:1;color:var(--tint);}
+.qtext{position:absolute;left:34px;width:306px;font:italic 20pt Georgia,serif;line-height:30px;color:var(--ink);}
+.attr{position:absolute;left:34px;font:10pt Consolas,monospace;color:var(--sec);white-space:nowrap;}
+.qcap{position:absolute;left:34px;font:10pt "Segoe UI",sans-serif;line-height:13px;color:var(--sec);}
+.trapval{font:20pt "Segoe UI",sans-serif;font-variant-numeric:tabular-nums;color:var(--ink);}
+.stamp{display:inline-block;font:10pt Consolas,monospace;color:var(--red);border:1px solid var(--red);
+       padding:1px 6px;letter-spacing:2px;margin-left:10px;vertical-align:4px;}
+.struck{position:relative;display:inline-block;}
+.struck::after{content:"";position:absolute;left:-3px;right:-3px;top:54%;height:2px;background:var(--red);}
+.tag-naive{display:none;font:10pt Consolas,monospace;color:var(--sec);border:1px solid var(--sec);
+       padding:1px 6px;letter-spacing:1px;margin-left:10px;vertical-align:4px;}
+.correction{display:inline-block;font:600 12pt "Segoe UI",sans-serif;color:var(--ink);
+       border-bottom:2px solid var(--red);padding-bottom:1px;}
+
+/* ---- honest-zone furniture ---- */
+.htitle{font:600 12pt "Segoe UI",sans-serif;line-height:18px;color:var(--ink);}
+.hbody{font:12pt "Segoe UI",sans-serif;line-height:20px;color:var(--ink);}
+.hcap{font:10pt "Segoe UI",sans-serif;line-height:13px;color:var(--sec);}
+.rank{display:grid;grid-template-columns:196px 56px 68px 78px 102px;font:10pt Consolas,monospace;line-height:15px;color:var(--ink);}
+.rank .hd{border-bottom:1px solid var(--ink);padding-bottom:2px;margin-bottom:3px;letter-spacing:1px;}
+.rank .r{text-align:right;padding-right:14px;}
+.r-mark{color:var(--red);}
+
+/* ---- rating plate ---- */
+.plate-cap{font:10pt Consolas,monospace;letter-spacing:1.5px;color:var(--sec);}
+.plate-box{position:absolute;top:16px;left:0;width:320px;height:40px;border:2px solid var(--ink);
+       display:flex;gap:4px;padding:3px;background:var(--cream);}
+.pseg{flex:1;display:flex;align-items:center;justify-content:center;white-space:nowrap;
+       font-family:"Bahnschrift SemiCondensed",Bahnschrift,"Segoe UI",sans-serif;font-stretch:87.5%;
+       font-size:10pt;font-weight:600;letter-spacing:.5px;}
+.seg-r{background:var(--red);color:var(--cream);border:1px solid var(--red);}
+.seg-n{background:transparent;color:var(--ink);border:1px solid var(--ink);}
+.plate-under{position:absolute;top:58px;height:3px;width:153px;left:5px;background:var(--ink);}
+
+/* ---- billing block ---- */
+.bbtn{width:110px;height:20px;border:1px solid var(--ink);font:10pt Consolas,monospace;color:var(--ink);
+       display:flex;align-items:center;justify-content:center;letter-spacing:1px;background:var(--cream);}
+
+/* ---- NAIVE state (differences only, CSS-driven) ---- */
+.naive .stamp{display:none;}
+.naive .struck::after{content:none;}
+.naive .tag-naive{display:inline-block;}
+.naive .correction{display:none;}
+.sub-naive{display:none;}
+.naive .sub-naive{display:block;}
+.naive .sub-meta{display:none;}
+.naive .seg-r{background:transparent;color:var(--ink);border:1px solid var(--ink);}
+.naive .seg-n{background:var(--red);color:var(--cream);border:1px solid var(--red);}
+.naive .plate-under{left:162px;}
+.naive .honest{color:var(--sec);}
+.naive .honest .htitle,.naive .honest .hbody,.naive .honest .t-ink,.naive .honest .rank{color:var(--sec);}
+.naive .honest .r-mark{color:var(--dim);}
+.naive .honest .rank .hd{border-color:var(--dim);}
+.naive .honest svg text{fill:var(--sec);}
+.naive .honest svg .f-green{fill:var(--sec);}
+.naive .honest svg text.f-red{fill:var(--dim);}
+.naive .honest svg rect.f-red,.naive .honest svg rect.f-neutral,
+.naive .honest svg circle.f-neutral{fill:var(--dim);}
+.naive .honest svg .s-red{stroke:var(--dim);}
+.naive .honest svg .s-ink{stroke:var(--sec);}
+</style>
+</head>
+<body>
+
+<!-- ================= ARTBOARD 1 · RESPONSIBLE ================= -->
+<div class="frame">
+  <div class="cap">D4 · The One-Sheet · RESPONSIBLE state (default)</div>
+  <div class="board" data-state="responsible">
+
+    <!-- img_key_art 24,24,320,280 -->
+    <div class="z" data-name="img_key_art" style="left:24px;top:24px;width:320px;height:280px;">
+      <svg width="320" height="280" viewBox="0 0 320 280">
+        <rect x="3" y="3" width="314" height="274" fill="none" class="s-ink" stroke-width="2"/>
+        <rect x="9" y="9" width="302" height="262" fill="none" class="s-ink" stroke-width="1"/>
+        <!-- giant numeral 3 -->
+        <text x="224" y="228" text-anchor="middle" class="disp f-ink" font-size="230" font-weight="700">3</text>
+        <!-- three stacked film reels, duotone ink/cream -->
+        <g>
+          <circle cx="110" cy="60" r="46" class="s-ink" fill="var(--cream)" stroke-width="4"/>
+          <circle cx="135" cy="60" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="81.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="81.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="85" cy="60" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="38.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="38.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="110" cy="60" r="8" class="f-ink"/>
+        </g>
+        <g>
+          <circle cx="110" cy="130" r="46" class="s-ink" fill="var(--cream)" stroke-width="4"/>
+          <circle cx="135" cy="130" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="151.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="151.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="85" cy="130" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="108.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="108.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="110" cy="130" r="8" class="f-ink"/>
+        </g>
+        <g>
+          <circle cx="110" cy="200" r="46" class="s-ink" fill="var(--cream)" stroke-width="4"/>
+          <circle cx="135" cy="200" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="221.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="221.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="85" cy="200" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="178.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="178.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="110" cy="200" r="8" class="f-ink"/>
+        </g>
+        <text x="306" y="264" text-anchor="end" font-family="Consolas" font-size="10.5" class="f-sec">KEY ART SLOT — im-imagery candidates pending</text>
+      </svg>
+    </div>
+
+    <!-- hero_takeaway 24,320,320,120 -->
+    <div class="z geo" data-name="hero_takeaway" style="left:24px;top:320px;width:320px;height:120px;font:italic 14pt Georgia,serif;line-height:19px;color:var(--ink);">
+      The data is not wrong — the reading is. 87% of 85,394 listings have no credible financials, the median listing has zero votes, and &lsquo;popularity&rsquo; has no published formula. Every honest number here states what it excludes.
+    </div>
+
+    <!-- z_title_treatment 24,456,320,96 -->
+    <div class="z" data-name="z_title_treatment" style="left:24px;top:456px;width:320px;height:110px;">
+      <svg width="320" height="72" viewBox="0 0 320 72">
+        <text x="1" y="34" class="disp f-ink" font-size="48" font-weight="700" textLength="318" lengthAdjust="spacing">THREE</text>
+        <text x="1" y="70" class="disp f-ink" font-size="48" font-weight="700" textLength="318" lengthAdjust="spacingAndGlyphs">SEDUCTIVE LIES</text>
+      </svg>
+      <div class="disp t-ink" style="position:absolute;top:76px;font-size:14pt;letter-spacing:6px;line-height:16px;white-space:nowrap;">ABOUT THE MOVIES</div>
+      <div class="mono t-sec sub-meta" style="position:absolute;top:96px;font-size:10pt;white-space:nowrap;">A TMDB DATA STORY · 85,394 LISTINGS</div>
+      <svg class="sub-naive" style="position:absolute;top:94px;" width="320" height="18" viewBox="0 0 320 18">
+        <text x="0" y="13" font-family="Segoe UI" font-size="16" font-weight="600" fill="var(--red)" textLength="318" lengthAdjust="spacingAndGlyphs">NOW SHOWING: THE HYPE CUT — quotes as printed, unknowns as facts</text>
+      </svg>
+    </div>
+
+    <!-- sl_read_toggle 24,568,320,64 -->
+    <div class="z" data-name="sl_read_toggle" style="left:24px;top:568px;width:320px;height:64px;">
+      <div class="plate-cap">THIS PRESENTATION IS RATED</div>
+      <div class="plate-box">
+        <div class="pseg seg-r">R — READ RESPONSIBLY</div>
+        <div class="pseg seg-n">N — NAIVE READ</div>
+      </div>
+      <div class="plate-under"></div>
+    </div>
+
+    <!-- ============ LIE ROW 1 · money ============ -->
+    <div class="z quote" data-name="z_lie1_quote" style="left:360px;top:24px;width:344px;height:192px;">
+      <div class="bigquote">&ldquo;</div>
+      <div class="qtext" style="top:8px;">The movie business loses money.</div>
+      <div class="attr" style="top:76px;">— EVERY NAIVE SUM, ALL 85,394 LISTINGS</div>
+      <div style="position:absolute;left:34px;top:100px;white-space:nowrap;">
+        <span class="trapval struck">$ —,———,———</span><span class="stamp">MISREAD</span><span class="tag-naive">naive</span>
+      </div>
+      <div class="qcap" style="top:144px;width:304px;">counts 67,436 unknown revenues (79.0%) as $0 · computed at build</div>
+    </div>
+
+    <div class="z honest" data-name="c_lie1_honest" style="left:720px;top:24px;width:536px;height:192px;">
+      <div class="htitle">Financial coverage — Budget ≥ $10k AND Revenue &gt; 0</div>
+      <svg width="536" height="28" viewBox="0 0 536 28" style="margin-top:6px;">
+        <text x="104" y="18.5" text-anchor="end" font-family="Segoe UI" font-size="13.3" class="f-ink">13.1% credible <tspan class="f-green">✓</tspan></text>
+        <rect class="f-red" x="112" y="0" width="55.5" height="28"/>
+        <rect class="f-neutral" x="169" y="0" width="367" height="28"/>
+        <text x="181" y="18.5" font-family="Segoe UI" font-size="13.3" class="f-cream">86.9% — no credible financials</text>
+      </svg>
+      <div class="hbody num" style="margin-top:6px;">median profit (credible) $ ——,——— · mean $ ———,———,——— — dragged by blockbusters</div>
+      <div class="hcap" style="margin-top:3px;">USD as recorded · not inflation-adjusted · gross gap, not P&amp;L</div>
+      <div style="margin-top:6px;"><span class="correction">87% of the money story is missing. Claim only the 13% we can verify.</span></div>
+    </div>
+
+    <!-- ============ LIE ROW 2 · ratings ============ -->
+    <div class="z quote" data-name="z_lie2_quote" style="left:360px;top:232px;width:344px;height:192px;">
+      <div class="bigquote">&ldquo;</div>
+      <div class="qtext" style="top:8px;white-space:nowrap;">★★★★★ <span class="struck">10.0!</span><span class="stamp">MISREAD</span><span class="tag-naive">naive</span></div>
+      <div class="attr" style="top:52px;">— 2 VOTERS · &lsquo;LAS MUJERES DECIDEN&rsquo; (2017)</div>
+      <div class="mono t-sec" style="position:absolute;left:34px;top:80px;font-size:10pt;line-height:16px;white-space:nowrap;">Logos — 10.0 · 3 votes<br>+ at least 18 more perfect 10s on 2–3 votes</div>
+    </div>
+
+    <div class="z honest" data-name="c_lie2_honest" style="left:720px;top:232px;width:536px;height:192px;">
+      <div class="htitle" style="margin-bottom:2px;">Evidence, weighted: votes vs rating</div>
+      <svg width="536" height="120" viewBox="0 0 536 120">
+        <line x1="22" y1="2" x2="22" y2="104" class="s-axis" stroke-width="1"/>
+        <line x1="22" y1="104" x2="532" y2="104" class="s-axis" stroke-width="1"/>
+        <text x="16" y="11" text-anchor="end" font-family="Segoe UI" font-size="13.3" class="f-sec">10</text>
+        <text x="16" y="107" text-anchor="end" font-family="Segoe UI" font-size="13.3" class="f-sec">0</text>
+        <text x="22" y="117" text-anchor="middle" font-family="Segoe UI" font-size="13.3" class="f-sec">1</text>
+        <text x="148" y="117" text-anchor="middle" font-family="Segoe UI" font-size="13.3" class="f-sec">10</text>
+        <text x="275" y="117" text-anchor="middle" font-family="Segoe UI" font-size="13.3" class="f-sec">100</text>
+        <text x="401" y="117" text-anchor="middle" font-family="Segoe UI" font-size="13.3" class="f-sec">1k</text>
+        <text x="528" y="117" text-anchor="end" font-family="Segoe UI" font-size="13.3" class="f-sec">10k votes</text>
+        <!-- funnel of listings -->
+        <circle class="f-neutral" cx="22" cy="92.5" r="3"/><circle class="f-neutral" cx="22" cy="70.6" r="3"/>
+        <circle class="f-neutral" cx="22" cy="31.4" r="3"/><circle class="f-neutral" cx="22" cy="17.1" r="3"/>
+        <circle class="f-neutral" cx="60" cy="81.1" r="3"/><circle class="f-neutral" cx="60" cy="55.3" r="3"/>
+        <circle class="f-neutral" cx="60" cy="39.1" r="3"/><circle class="f-neutral" cx="83" cy="20.9" r="3"/>
+        <circle class="f-neutral" cx="83" cy="63.9" r="3"/>
+        <circle class="f-neutral" cx="136" cy="71.5" r="3"/><circle class="f-neutral" cx="143" cy="43.8" r="3"/>
+        <circle class="f-neutral" cx="148" cy="19" r="3"/><circle class="f-neutral" cx="158" cy="50.5" r="3"/>
+        <circle class="f-neutral" cx="167" cy="29.5" r="3"/><circle class="f-neutral" cx="171" cy="35.2" r="3"/>
+        <circle class="f-neutral" cx="148" cy="62" r="3"/>
+        <circle class="f-neutral" cx="263" cy="54.3" r="3"/><circle class="f-neutral" cx="269" cy="38.1" r="3"/>
+        <circle class="f-neutral" cx="275" cy="28.6" r="3"/><circle class="f-neutral" cx="280" cy="49.6" r="3"/>
+        <circle class="f-neutral" cx="285" cy="45.7" r="3"/><circle class="f-neutral" cx="298" cy="30.5" r="3"/>
+        <circle class="f-neutral" cx="389" cy="44.8" r="3"/><circle class="f-neutral" cx="396" cy="37.2" r="3"/>
+        <circle class="f-neutral" cx="401" cy="31.4" r="3"/><circle class="f-neutral" cx="407" cy="41.9" r="3"/>
+        <circle class="f-neutral" cx="411" cy="39.1" r="3"/><circle class="f-neutral" cx="424" cy="34.3" r="3"/>
+        <circle class="f-neutral" cx="500" cy="33.3" r="3"/><circle class="f-neutral" cx="508" cy="38.1" r="3"/>
+        <circle class="f-neutral" cx="516" cy="40" r="3"/><circle class="f-neutral" cx="519" cy="34.3" r="3"/>
+        <circle class="f-neutral" cx="525" cy="36.2" r="3"/><circle class="f-neutral" cx="528" cy="37.2" r="3"/>
+        <!-- global mean reference -->
+        <line x1="22" y1="37.5" x2="532" y2="37.5" class="s-red" stroke-width="2"/>
+        <text x="312" y="32.5" font-family="Segoe UI" font-size="13.3" class="f-red">C = 6.96</text>
+        <!-- the trap listing, evidence-weighted -->
+        <circle class="f-neutral" cx="60" cy="8.5" r="3"/>
+        <circle cx="60" cy="8.5" r="6.5" fill="none" class="s-red" stroke-width="2"/>
+        <line x1="67" y1="10.5" x2="168" y2="14" class="s-ink" stroke-width="1"/>
+        <text x="172" y="17.5" font-family="Segoe UI" font-size="13.3" class="f-ink">evidence-weighted: ~7.02 (m = 100)</text>
+      </svg>
+      <div class="hcap" style="margin-top:2px;">55,958 zero-vote listings (65.5%) excluded — they have no rating at all</div>
+      <div style="margin-top:5px;"><span class="correction">A 10.0 on 2 votes reads 7.02 once evidence is weighted.</span></div>
+    </div>
+
+    <!-- ============ LIE ROW 3 · popularity ============ -->
+    <div class="z quote" data-name="z_lie3_quote" style="left:360px;top:440px;width:344px;height:192px;">
+      <div class="bigquote">&ldquo;</div>
+      <div class="qtext" style="top:8px;">The people&rsquo;s favorite.</div>
+      <div class="attr" style="top:48px;">— &lsquo;POPULARITY&rsquo;, † FORMULA NOT PUBLISHED</div>
+      <div style="position:absolute;left:34px;top:72px;white-space:nowrap;">
+        <span class="trapval struck">———·—</span><span class="stamp">MISREAD</span><span class="tag-naive">naive</span>
+      </div>
+      <div class="qcap" style="top:114px;width:304px;">TMDB does not define this number</div>
+    </div>
+
+    <div class="z honest" data-name="c_lie3_honest" style="left:720px;top:440px;width:536px;height:192px;">
+      <div class="htitle">Same films, three rankings</div>
+      <div class="rank" style="margin-top:4px;width:500px;">
+        <div class="hd">FILM</div><div class="hd r">POP†</div><div class="hd r">RATING</div><div class="hd r">REVENUE</div><div class="hd"></div>
+        <div class="t-sec">— computed at build —</div><div class="r">1</div><div class="r">7</div><div class="r">3</div><div class="r-mark">✕ diverges</div>
+        <div class="t-sec">— computed at build —</div><div class="r">2</div><div class="r">2</div><div class="r">8</div><div class="r-mark">✕ diverges</div>
+        <div class="t-sec">— computed at build —</div><div class="r">3</div><div class="r">12</div><div class="r">1</div><div class="r-mark">✕ diverges</div>
+        <div class="t-sec">— computed at build —</div><div class="r">4</div><div class="r">1</div><div class="r">15</div><div class="r-mark">✕ diverges</div>
+        <div class="t-sec">— computed at build —</div><div class="r">5</div><div class="r">9</div><div class="r">4</div><div></div>
+      </div>
+      <div class="hcap" style="margin-top:4px;">ranked only — never aggregated, never colored good or bad</div>
+      <div style="margin-top:5px;"><span class="correction">A number nobody can define ranks nothing.</span></div>
+    </div>
+
+    <!-- z_billing 24,648,1232,48 -->
+    <div class="z" data-name="z_billing" style="left:24px;top:648px;width:1232px;height:48px;">
+      <svg width="1232" height="48" viewBox="0 0 1232 48">
+        <text x="560" y="18" text-anchor="middle" class="disp f-ink" font-size="13" letter-spacing="1" textLength="1080" lengthAdjust="spacingAndGlyphs">TMDB SNAPSHOT 2026·07·24 · BASIS 84,036 LISTINGS (ADULT 1,358 EXCLUDED) · FINANCIAL FLOOR $10,000 · m=100 · C=6.96 · LISTINGS≠FILMS: 1,697 DUPLICATE (TITLE,DATE) PAIRS</text>
+        <text x="560" y="38" text-anchor="middle" class="disp f-ink" font-size="13" letter-spacing="1" textLength="900" lengthAdjust="spacing">USD AS RECORDED — NOT INFLATION-ADJUSTED · FULL METHOD: PAGE 3 · EVIDENCE OVER TIME: PAGE 2</text>
+      </svg>
+      <div style="position:absolute;right:0;top:3px;display:flex;flex-direction:column;gap:3px;">
+        <div class="bbtn">EVIDENCE →</div>
+        <div class="bbtn">METHOD ⓘ</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= ARTBOARD 2 · NAIVE ================= -->
+<div class="frame">
+  <div class="cap">D4 · The One-Sheet · NAIVE state ('N — NAIVE READ')</div>
+  <div class="board naive" data-state="naive">
+
+    <!-- img_key_art 24,24,320,280 -->
+    <div class="z" data-name="img_key_art" style="left:24px;top:24px;width:320px;height:280px;">
+      <svg width="320" height="280" viewBox="0 0 320 280">
+        <rect x="3" y="3" width="314" height="274" fill="none" class="s-ink" stroke-width="2"/>
+        <rect x="9" y="9" width="302" height="262" fill="none" class="s-ink" stroke-width="1"/>
+        <text x="224" y="228" text-anchor="middle" class="disp f-ink" font-size="230" font-weight="700">3</text>
+        <g>
+          <circle cx="110" cy="60" r="46" class="s-ink" fill="var(--cream)" stroke-width="4"/>
+          <circle cx="135" cy="60" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="81.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="81.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="85" cy="60" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="38.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="38.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="110" cy="60" r="8" class="f-ink"/>
+        </g>
+        <g>
+          <circle cx="110" cy="130" r="46" class="s-ink" fill="var(--cream)" stroke-width="4"/>
+          <circle cx="135" cy="130" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="151.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="151.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="85" cy="130" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="108.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="108.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="110" cy="130" r="8" class="f-ink"/>
+        </g>
+        <g>
+          <circle cx="110" cy="200" r="46" class="s-ink" fill="var(--cream)" stroke-width="4"/>
+          <circle cx="135" cy="200" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="221.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="221.65" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="85" cy="200" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="97.5" cy="178.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="122.5" cy="178.35" r="9" class="s-ink" fill="var(--cream)" stroke-width="2"/>
+          <circle cx="110" cy="200" r="8" class="f-ink"/>
+        </g>
+        <text x="306" y="264" text-anchor="end" font-family="Consolas" font-size="10.5" class="f-sec">KEY ART SLOT — im-imagery candidates pending</text>
+      </svg>
+    </div>
+
+    <!-- hero_takeaway 24,320,320,120 -->
+    <div class="z geo" data-name="hero_takeaway" style="left:24px;top:320px;width:320px;height:120px;font:italic 14pt Georgia,serif;line-height:19px;color:var(--ink);">
+      The data is not wrong — the reading is. 87% of 85,394 listings have no credible financials, the median listing has zero votes, and &lsquo;popularity&rsquo; has no published formula. Every honest number here states what it excludes.
+    </div>
+
+    <!-- z_title_treatment 24,456,320,96 -->
+    <div class="z" data-name="z_title_treatment" style="left:24px;top:456px;width:320px;height:110px;">
+      <svg width="320" height="72" viewBox="0 0 320 72">
+        <text x="1" y="34" class="disp f-ink" font-size="48" font-weight="700" textLength="318" lengthAdjust="spacing">THREE</text>
+        <text x="1" y="70" class="disp f-ink" font-size="48" font-weight="700" textLength="318" lengthAdjust="spacingAndGlyphs">SEDUCTIVE LIES</text>
+      </svg>
+      <div class="disp t-ink" style="position:absolute;top:76px;font-size:14pt;letter-spacing:6px;line-height:16px;white-space:nowrap;">ABOUT THE MOVIES</div>
+      <div class="mono t-sec sub-meta" style="position:absolute;top:96px;font-size:10pt;white-space:nowrap;">A TMDB DATA STORY · 85,394 LISTINGS</div>
+      <svg class="sub-naive" style="position:absolute;top:94px;" width="320" height="18" viewBox="0 0 320 18">
+        <text x="0" y="13" font-family="Segoe UI" font-size="16" font-weight="600" fill="var(--red)" textLength="318" lengthAdjust="spacingAndGlyphs">NOW SHOWING: THE HYPE CUT — quotes as printed, unknowns as facts</text>
+      </svg>
+    </div>
+
+    <!-- sl_read_toggle 24,568,320,64 -->
+    <div class="z" data-name="sl_read_toggle" style="left:24px;top:568px;width:320px;height:64px;">
+      <div class="plate-cap">THIS PRESENTATION IS RATED</div>
+      <div class="plate-box">
+        <div class="pseg seg-r">R — READ RESPONSIBLY</div>
+        <div class="pseg seg-n">N — NAIVE READ</div>
+      </div>
+      <div class="plate-under"></div>
+    </div>
+
+    <!-- ============ LIE ROW 1 · money ============ -->
+    <div class="z quote" data-name="z_lie1_quote" style="left:360px;top:24px;width:344px;height:192px;">
+      <div class="bigquote">&ldquo;</div>
+      <div class="qtext" style="top:8px;">The movie business loses money.</div>
+      <div class="attr" style="top:76px;">— EVERY NAIVE SUM, ALL 85,394 LISTINGS</div>
+      <div style="position:absolute;left:34px;top:100px;white-space:nowrap;">
+        <span class="trapval struck">$ —,———,———</span><span class="stamp">MISREAD</span><span class="tag-naive">naive</span>
+      </div>
+      <div class="qcap" style="top:144px;width:304px;">counts 67,436 unknown revenues (79.0%) as $0 · computed at build</div>
+    </div>
+
+    <div class="z honest" data-name="c_lie1_honest" style="left:720px;top:24px;width:536px;height:192px;">
+      <div class="htitle">Financial coverage — Budget ≥ $10k AND Revenue &gt; 0</div>
+      <svg width="536" height="28" viewBox="0 0 536 28" style="margin-top:6px;">
+        <text x="104" y="18.5" text-anchor="end" font-family="Segoe UI" font-size="13.3" class="f-ink">13.1% credible <tspan class="f-green">✓</tspan></text>
+        <rect class="f-red" x="112" y="0" width="55.5" height="28"/>
+        <rect class="f-neutral" x="169" y="0" width="367" height="28"/>
+        <text x="181" y="18.5" font-family="Segoe UI" font-size="13.3" class="f-cream">86.9% — no credible financials</text>
+      </svg>
+      <div class="hbody num" style="margin-top:6px;">median profit (credible) $ ——,——— · mean $ ———,———,——— — dragged by blockbusters</div>
+      <div class="hcap" style="margin-top:3px;">USD as recorded · not inflation-adjusted · gross gap, not P&amp;L</div>
+      <div style="margin-top:6px;"><span class="correction">87% of the money story is missing. Claim only the 13% we can verify.</span></div>
+    </div>
+
+    <!-- ============ LIE ROW 2 · ratings ============ -->
+    <div class="z quote" data-name="z_lie2_quote" style="left:360px;top:232px;width:344px;height:192px;">
+      <div class="bigquote">&ldquo;</div>
+      <div class="qtext" style="top:8px;white-space:nowrap;">★★★★★ <span class="struck">10.0!</span><span class="stamp">MISREAD</span><span class="tag-naive">naive</span></div>
+      <div class="attr" style="top:52px;">— 2 VOTERS · &lsquo;LAS MUJERES DECIDEN&rsquo; (2017)</div>
+      <div class="mono t-sec" style="position:absolute;left:34px;top:80px;font-size:10pt;line-height:16px;white-space:nowrap;">Logos — 10.0 · 3 votes<br>+ at least 18 more perfect 10s on 2–3 votes</div>
+    </div>
+
+    <div class="z honest" data-name="c_lie2_honest" style="left:720px;top:232px;width:536px;height:192px;">
+      <div class="htitle" style="margin-bottom:2px;">Evidence, weighted: votes vs rating</div>
+      <svg width="536" height="120" viewBox="0 0 536 120">
+        <line x1="22" y1="2" x2="22" y2="104" class="s-axis" stroke-width="1"/>
+        <line x1="22" y1="104" x2="532" y2="104" class="s-axis" stroke-width="1"/>
+        <text x="16" y="11" text-anchor="end" font-family="Segoe UI" font-size="13.3" class="f-sec">10</text>
+        <text x="16" y="107" text-anchor="end" font-family="Segoe UI" font-size="13.3" class="f-sec">0</text>
+        <text x="22" y="117" text-anchor="middle" font-family="Segoe UI" font-size="13.3" class="f-sec">1</text>
+        <text x="148" y="117" text-anchor="middle" font-family="Segoe UI" font-size="13.3" class="f-sec">10</text>
+        <text x="275" y="117" text-anchor="middle" font-family="Segoe UI" font-size="13.3" class="f-sec">100</text>
+        <text x="401" y="117" text-anchor="middle" font-family="Segoe UI" font-size="13.3" class="f-sec">1k</text>
+        <text x="528" y="117" text-anchor="end" font-family="Segoe UI" font-size="13.3" class="f-sec">10k votes</text>
+        <circle class="f-neutral" cx="22" cy="92.5" r="3"/><circle class="f-neutral" cx="22" cy="70.6" r="3"/>
+        <circle class="f-neutral" cx="22" cy="31.4" r="3"/><circle class="f-neutral" cx="22" cy="17.1" r="3"/>
+        <circle class="f-neutral" cx="60" cy="81.1" r="3"/><circle class="f-neutral" cx="60" cy="55.3" r="3"/>
+        <circle class="f-neutral" cx="60" cy="39.1" r="3"/><circle class="f-neutral" cx="83" cy="20.9" r="3"/>
+        <circle class="f-neutral" cx="83" cy="63.9" r="3"/>
+        <circle class="f-neutral" cx="136" cy="71.5" r="3"/><circle class="f-neutral" cx="143" cy="43.8" r="3"/>
+        <circle class="f-neutral" cx="148" cy="19" r="3"/><circle class="f-neutral" cx="158" cy="50.5" r="3"/>
+        <circle class="f-neutral" cx="167" cy="29.5" r="3"/><circle class="f-neutral" cx="171" cy="35.2" r="3"/>
+        <circle class="f-neutral" cx="148" cy="62" r="3"/>
+        <circle class="f-neutral" cx="263" cy="54.3" r="3"/><circle class="f-neutral" cx="269" cy="38.1" r="3"/>
+        <circle class="f-neutral" cx="275" cy="28.6" r="3"/><circle class="f-neutral" cx="280" cy="49.6" r="3"/>
+        <circle class="f-neutral" cx="285" cy="45.7" r="3"/><circle class="f-neutral" cx="298" cy="30.5" r="3"/>
+        <circle class="f-neutral" cx="389" cy="44.8" r="3"/><circle class="f-neutral" cx="396" cy="37.2" r="3"/>
+        <circle class="f-neutral" cx="401" cy="31.4" r="3"/><circle class="f-neutral" cx="407" cy="41.9" r="3"/>
+        <circle class="f-neutral" cx="411" cy="39.1" r="3"/><circle class="f-neutral" cx="424" cy="34.3" r="3"/>
+        <circle class="f-neutral" cx="500" cy="33.3" r="3"/><circle class="f-neutral" cx="508" cy="38.1" r="3"/>
+        <circle class="f-neutral" cx="516" cy="40" r="3"/><circle class="f-neutral" cx="519" cy="34.3" r="3"/>
+        <circle class="f-neutral" cx="525" cy="36.2" r="3"/><circle class="f-neutral" cx="528" cy="37.2" r="3"/>
+        <line x1="22" y1="37.5" x2="532" y2="37.5" class="s-red" stroke-width="2"/>
+        <text x="312" y="32.5" font-family="Segoe UI" font-size="13.3" class="f-red">C = 6.96</text>
+        <circle class="f-neutral" cx="60" cy="8.5" r="3"/>
+        <circle cx="60" cy="8.5" r="6.5" fill="none" class="s-red" stroke-width="2"/>
+        <line x1="67" y1="10.5" x2="168" y2="14" class="s-ink" stroke-width="1"/>
+        <text x="172" y="17.5" font-family="Segoe UI" font-size="13.3" class="f-ink">evidence-weighted: ~7.02 (m = 100)</text>
+      </svg>
+      <div class="hcap" style="margin-top:2px;">55,958 zero-vote listings (65.5%) excluded — they have no rating at all</div>
+      <div style="margin-top:5px;"><span class="correction">A 10.0 on 2 votes reads 7.02 once evidence is weighted.</span></div>
+    </div>
+
+    <!-- ============ LIE ROW 3 · popularity ============ -->
+    <div class="z quote" data-name="z_lie3_quote" style="left:360px;top:440px;width:344px;height:192px;">
+      <div class="bigquote">&ldquo;</div>
+      <div class="qtext" style="top:8px;">The people&rsquo;s favorite.</div>
+      <div class="attr" style="top:48px;">— &lsquo;POPULARITY&rsquo;, † FORMULA NOT PUBLISHED</div>
+      <div style="position:absolute;left:34px;top:72px;white-space:nowrap;">
+        <span class="trapval struck">———·—</span><span class="stamp">MISREAD</span><span class="tag-naive">naive</span>
+      </div>
+      <div class="qcap" style="top:114px;width:304px;">TMDB does not define this number</div>
+    </div>
+
+    <div class="z honest" data-name="c_lie3_honest" style="left:720px;top:440px;width:536px;height:192px;">
+      <div class="htitle">Same films, three rankings</div>
+      <div class="rank" style="margin-top:4px;width:500px;">
+        <div class="hd">FILM</div><div class="hd r">POP†</div><div class="hd r">RATING</div><div class="hd r">REVENUE</div><div class="hd"></div>
+        <div class="t-sec">— computed at build —</div><div class="r">1</div><div class="r">7</div><div class="r">3</div><div class="r-mark">✕ diverges</div>
+        <div class="t-sec">— computed at build —</div><div class="r">2</div><div class="r">2</div><div class="r">8</div><div class="r-mark">✕ diverges</div>
+        <div class="t-sec">— computed at build —</div><div class="r">3</div><div class="r">12</div><div class="r">1</div><div class="r-mark">✕ diverges</div>
+        <div class="t-sec">— computed at build —</div><div class="r">4</div><div class="r">1</div><div class="r">15</div><div class="r-mark">✕ diverges</div>
+        <div class="t-sec">— computed at build —</div><div class="r">5</div><div class="r">9</div><div class="r">4</div><div></div>
+      </div>
+      <div class="hcap" style="margin-top:4px;">ranked only — never aggregated, never colored good or bad</div>
+      <div style="margin-top:5px;"><span class="correction">A number nobody can define ranks nothing.</span></div>
+    </div>
+
+    <!-- z_billing 24,648,1232,48 -->
+    <div class="z" data-name="z_billing" style="left:24px;top:648px;width:1232px;height:48px;">
+      <svg width="1232" height="48" viewBox="0 0 1232 48">
+        <text x="560" y="18" text-anchor="middle" class="disp f-ink" font-size="13" letter-spacing="1" textLength="1080" lengthAdjust="spacingAndGlyphs">TMDB SNAPSHOT 2026·07·24 · BASIS 84,036 LISTINGS (ADULT 1,358 EXCLUDED) · FINANCIAL FLOOR $10,000 · m=100 · C=6.96 · LISTINGS≠FILMS: 1,697 DUPLICATE (TITLE,DATE) PAIRS</text>
+        <text x="560" y="38" text-anchor="middle" class="disp f-ink" font-size="13" letter-spacing="1" textLength="900" lengthAdjust="spacing">USD AS RECORDED — NOT INFLATION-ADJUSTED · FULL METHOD: PAGE 3 · EVIDENCE OVER TIME: PAGE 2</text>
+      </svg>
+      <div style="position:absolute;right:0;top:3px;display:flex;flex-direction:column;gap:3px;">
+        <div class="bbtn">EVIDENCE →</div>
+        <div class="bbtn">METHOD ⓘ</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
