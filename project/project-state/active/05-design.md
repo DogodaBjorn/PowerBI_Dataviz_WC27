@@ -227,6 +227,34 @@ with fallback (HTML Content tear = VERIFY, pre-torn fallback; 2 Deneb with
 native fallbacks; posters = Image URL from Poster Path; ≥1 core visual rule
 satisfied by the scatter).
 
+## D7 prototype build record (2026-08-04)
+
+`project/design-prototypes/d7-trilogy.html` (51 KB, self-contained, system
+fonts, UTF-8 no BOM). Full five-page flow simulation: tearable tickets
+(translate + 8° rotate + fade, 380 ms) → two screenplay acts with cumulative
+scene bookmarks → premiere with an 8-keyframe year sweep (opens resolved;
+PLAY re-runs) → static credits → floating 320×420 tooltip. Keyboard loop
+complete in DOM order, Enter activates every control, Escape dismisses the
+tooltip, `prefers-reduced-motion` honored. **14 mechanism chips verified**,
+incl. "HTML Content tear — VERIFY; fallback pre-torn stub", both Deneb
+fallbacks, and "native scatter play axis (core visual)". Conformance scan
+clean: no gradients/blur/shadow/blend/parallax/elastic easing/external refs
+(only the SVG namespace string, not a network call).
+
+Builder deviations worth carrying to the handoff:
+- **Strike fades in, never "draws"** — a width-draw is outside the honest
+  motion vocabulary; a fade is what a bookmark-toggled line shape actually
+  does. (Same discipline applied to every effect.)
+- **Do-not-fabricate held**: dumbbell rows 3–4 and the tooltip's year/rank
+  render as marked placeholders rather than invented film names.
+- Waffle mini-tickets 36×14 (grid step 18) — 16 px overflowed the card by
+  ~11 px; p3 beat rail defined (SC.1/SC.2 dim the scatter and spotlight the
+  adjustments/refusal cards, SC.3 restores the premiere); Act II gained an
+  action line + smash-cut slug for screenplay-grammar symmetry; credits
+  source/closing lines moved to a centered closing block for roll rhythm.
+- Torn stubs reset on return to the Box Office (demo replay); the real
+  report's fallback is a static pre-torn stub, already disclosed on the chip.
+
 ## Ack table (entrant, at prototype approval — defaults recommended)
 
 | # | Decision | Default |

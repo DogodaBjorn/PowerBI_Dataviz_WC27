@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>D7 · The Seductive Lies: A Trilogy · interactive prototype</title>
+<!--
+  D7 — "The Seductive Lies: A Trilogy" — WORKING flow simulation, one 1280×720 viewport,
+  five simulated report pages + one tooltip card. JS is prototype-only; every animated
+  effect maps to a real Power BI mechanism and carries a visible legend chip naming it.
+
+  Motion vocabulary (all <=400ms, standard easing only):
+    opacity fades / translate slides  -> native bookmark tween
+    ticket-stub tear (translate + ~8deg rotate + fade) -> HTML Content visual (VERIFY) or pre-torn fallback
+    Act III scatter year-by-year population -> NATIVE scatter play axis
+  Forbidden and absent: parallax, blur, gradients, shadows, elastic easing, border-radius
+  except tickets + chips (8px).
+
+  Rect ledger (x, y, w, h):
+    p0 BOX OFFICE (night):
+      z_marquee        24,  24, 1232, 112
+      hero_takeaway    24, 152, 1232,  72
+      tickets 384×312 @ x=24 / 448 / 872, y=248  (perforation at 76% width = 292px)
+      chip_tear        right-aligned in the 560..592 gap
+      z_billing        24, 592, 1232,  56
+      footer           24, 664, 1232,  32
+    p1/p2 SCREENPLAY (paper, shared template):
+      z_scriptheader   24,  24, 1232,  56
+      sl_beat_rail     24,  96, 1232,  40   (rail chip in the 136..152 gap)
+      c_script_body    24, 152,  760, 464   (main col 490 + 216 margin-note gutter)
+      Act I inserts:   kpi_profit_naive 800,152,456,144 · dn_ticket_waffle 800,312,456,296
+      Act II inserts:  tbl_perfect_tens 800,152,456,200 · dn_rating_fall  800,368,456,248
+      c_verdict        24, 632, 1232,  64
+    p3 PREMIERE (night):
+      header/rail as acts · hero_premiere_scatter 24,152,896,464
+      c_adjustments 936,152,320,136 · c_refusal_popularity 936,304,320,152
+      c_nodate_chip 936,472,320,144 · c_verdict_act3 24,632,1232,64
+    p9 END CREDITS (night, static):
+      title 24,24,1232,64 · columns 240,104,360,~488 / 680,104,360,~488
+      closing block centered ~600..652 · btn_home 24,664
+
+  Palette: night #171418 · paper #F5F2E9 · ink/paper #211E1A · sec/paper #57534E
+           ink/night #F2EFE6 · sec/night #B5AFA0 · red/paper #B3402E · red/night text #E8705F
+           good #2F6B4F (paper) / #4ECBA0 (night) always with ✓ + word
+           neutral fill #78716C (paper) / #B5AFA0 (night)
+  Placeholders {LIKE_THIS} are dashed-outlined, title="computed at build — never fabricated".
+-->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background:#333333; }
+  body {
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:24px 0;
+  }
+  .caption {
+    width:1280px;
+    font-family:"Segoe UI",sans-serif; font-size:11px; color:#A6A6A6;
+    margin:0 0 8px 0;
+  }
+  #stage {
+    position:relative; width:1280px; height:720px;
+    background:#171418; overflow:hidden;
+  }
+  .abs { position:absolute; }
+
+  /* ---------- type roles ---------- */
+  .bahn { font-family:"Bahnschrift SemiCondensed",Bahnschrift,"Arial Narrow","Segoe UI",sans-serif; font-stretch:75%; }
+  .mono { font-family:Consolas,"Courier New",monospace; }
+  .serif{ font-family:Georgia,serif; font-style:italic; }
+  .ui   { font-family:"Segoe UI",sans-serif; }
+
+  /* ---------- pages + bookmark tween ---------- */
+  .page { position:absolute; inset:0; opacity:0; visibility:hidden;
+          transition:opacity .3s ease, visibility 0s linear .3s; }
+  .page.active { opacity:1; visibility:visible; transition:opacity .3s ease; }
+  .page:focus { outline:none; }
+  .night { background:#171418; color:#F2EFE6; }
+  .paper { background:#F5F2E9; color:#211E1A; }
+
+  /* focus — keyboard support is part of the demo */
+  .night :focus-visible { outline:2px solid #F2EFE6; outline-offset:2px; }
+  .paper :focus-visible { outline:2px solid #211E1A; outline-offset:2px; }
+
+  button { cursor:pointer; }
+  button:disabled { cursor:default; opacity:.45; }
+
+  /* ---------- legend chips ---------- */
+  .chip {
+    position:absolute;
+    font-family:Consolas,monospace; font-size:8.5pt; line-height:1.2;
+    padding:2px 7px; border-radius:8px; border:1px solid;
+    pointer-events:none; white-space:nowrap;
+  }
+  .night .chip, .chip.n { color:#756E63; border-color:#332E36; }
+  .paper .chip, .chip.p { color:#A19B8E; border-color:#DDD8CB; }
+
+  /* ---------- placeholders ---------- */
+  .ph { border:1px dashed currentColor; padding:0 3px; white-space:nowrap; }
+
+  /* ---------- generic buttons ---------- */
+  .btn { font-family:"Segoe UI",sans-serif; font-size:10pt; letter-spacing:.08em;
+         background:transparent; border:1px solid; padding:6px 14px;
+         transition:background .15s ease; }
+  .night .btn { color:#E8705F; border-color:#E8705F; }
+  .night .btn:hover { background:#241E26; }
+  .paper .btn { color:#B3402E; border-color:#211E1A; }
+  .paper .btn:hover { background:#ECE7D8; }
+
+  /* ════════ p0 — BOX OFFICE ════════ */
+  #z_marquee { left:24px; top:24px; width:1232px; height:112px;
+               border:2px solid #F2EFE6; }
+  #z_marquee .inner { position:absolute; inset:4px; border:1px solid #F2EFE6;
+               display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  #z_marquee h1 { font-size:40pt; line-height:1; color:#F2EFE6;
+                  letter-spacing:.14em; font-weight:600; }
+  #z_marquee .sub { font-size:12pt; color:#B5AFA0; letter-spacing:.32em; margin-top:7px; }
+
+  #hero_takeaway { left:24px; top:152px; width:1232px; height:72px;
+    display:flex; align-items:center; justify-content:center; text-align:center; }
+  #hero_takeaway p { font-size:14pt; line-height:22px; color:#F2EFE6; max-width:1180px; }
+
+  .ticket { position:absolute; top:248px; width:384px; height:312px;
+            background:transparent; border:none; padding:0; text-align:left;
+            font-family:inherit; }
+  #tk1 { left:24px; } #tk2 { left:448px; } #tk3 { left:872px; }
+  .t-main { position:absolute; top:0; left:0; bottom:0; right:92px;
+            background:#F5F2E9; border-radius:8px 0 0 8px;
+            transition:background .15s ease; }
+  .t-stub { position:absolute; top:0; right:0; width:92px; height:100%;
+            background:#F5F2E9; border-radius:0 8px 8px 0;
+            border-left:1px dashed #9A9284;
+            display:flex; align-items:center; justify-content:center; gap:8px;
+            transform-origin:left bottom;
+            transition:background .15s ease, transform .38s ease-out, opacity .38s ease-out; }
+  .ticket:hover .t-main, .ticket:hover .t-stub { background:#ECE7D8; }
+  .ticket.torn .t-stub { transform:translateX(74px) rotate(8deg); opacity:0; }
+  .rule-m { position:absolute; top:6px; left:6px; bottom:6px; right:0;
+            border:2px solid #B3402E; border-right:none; pointer-events:none; }
+  .rule-s { position:absolute; top:6px; right:6px; bottom:6px; left:0;
+            border:2px solid #B3402E; border-left:none; pointer-events:none; }
+  .t-body { position:absolute; inset:0; padding:38px 30px; color:#211E1A; }
+  .t-act  { font-size:36pt; line-height:1; font-weight:600; }
+  .t-rule { width:34px; height:1px; background:#211E1A; margin:14px 0; }
+  .t-title{ font-size:20pt; line-height:1.1; font-weight:600; letter-spacing:.03em; }
+  .t-tease{ font-family:Georgia,serif; font-style:italic; font-size:12pt;
+            color:#57534E; margin-top:12px; }
+  .t-admit{ writing-mode:vertical-rl; font-size:10pt; letter-spacing:.35em;
+            color:#211E1A; font-weight:600; }
+  .t-serial{ writing-mode:vertical-rl; font-family:Consolas,monospace;
+            font-size:8pt; color:#57534E; letter-spacing:.12em; }
+
+  #chip_tear { right:24px; top:566px; }
+
+  #z_billing { left:24px; top:592px; width:1232px; height:56px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; }
+  #z_billing div { font-size:10pt; letter-spacing:.03em; color:#B5AFA0; line-height:17px; }
+
+  #p0_footer { left:24px; top:664px; width:1232px; height:32px;
+    display:flex; align-items:center; justify-content:space-between; }
+  #p0_footer .credit { font-size:10pt; color:#B5AFA0; letter-spacing:.04em; }
+
+  /* ════════ acts p1/p2 — shared screenplay template ════════ */
+  .z_scriptheader { left:24px; top:24px; width:1232px; height:56px;
+    display:flex; align-items:center; justify-content:space-between; }
+  .z_scriptheader .h-title { font-family:Consolas,monospace; font-size:12pt; color:#211E1A; }
+  .night .z_scriptheader .h-title { color:#F2EFE6; }
+  .chip-hdr { position:static; margin-right:12px; }
+
+  .sl_beat_rail { left:24px; top:96px; width:1232px; height:40px;
+    display:flex; align-items:center; gap:10px; }
+  .beat { font-family:"Bahnschrift SemiCondensed",Bahnschrift,"Arial Narrow",sans-serif;
+    font-stretch:75%; font-size:10pt; letter-spacing:.1em;
+    padding:6px 14px; border:1px solid #211E1A; background:transparent; color:#211E1A;
+    border-bottom-width:1px; transition:background .2s ease, color .2s ease; }
+  .beat.cur { background:#B3402E; color:#F5F2E9; border-color:#B3402E;
+    border-bottom:3px solid #7E2A1D; padding-bottom:4px; }
+  .beat.cur::before { content:"● "; }
+  .night .beat { border-color:#B5AFA0; color:#F2EFE6; }
+  .night .beat.cur { background:#B3402E; color:#F5F2E9; border-color:#B3402E;
+    border-bottom-color:#7E2A1D; }
+  .next-scene { margin-left:auto; }
+  .chip-rail { top:138px; left:24px; }
+
+  .c_script_body { left:24px; top:152px; width:760px; height:464px;
+    font-family:Consolas,monospace; font-size:12pt; line-height:19px;
+    padding:10px 226px 10px 10px; }
+  .slug { text-transform:uppercase; margin-bottom:14px; }
+  .cut-tag { color:#B3402E; font-size:10pt; margin-left:10px; }
+  .action { max-width:470px; margin-bottom:14px; }
+  .cue { text-align:center; max-width:470px; margin-top:4px; }
+  .dlg { margin:0 60px 14px 95px; max-width:315px; }
+  .trans { text-align:right; max-width:470px; text-transform:uppercase; margin:6px 0 14px; }
+  .note { position:absolute; left:544px; width:206px;
+    font-size:10pt; line-height:14px; color:#B3402E;
+    border-left:2px solid #B3402E; padding-left:8px; }
+
+  /* scene reveals — bookmark show/hide, fixed layout, fade only */
+  .act .r2, .act .r3 { opacity:0; visibility:hidden;
+    transition:opacity .32s ease, visibility 0s linear .32s; }
+  .act[data-scene="2"] .r2,
+  .act[data-scene="3"] .r2,
+  .act[data-scene="3"] .r3 { opacity:1; visibility:visible; transition:opacity .32s ease; }
+
+  /* insert panels */
+  .card { position:absolute; background:#FFFFFF; border:1px solid #D8D4C8; }
+  .kicker { font-family:Consolas,monospace; font-size:9pt; letter-spacing:.14em;
+    color:#57534E; text-transform:uppercase; }
+
+  .kpi { left:800px; top:152px; width:456px; height:144px; padding:14px 16px; }
+  .kpi .lbl { font-family:"Segoe UI",sans-serif; font-size:10pt; color:#57534E; margin-top:8px; }
+  .kpi .val { font-family:Consolas,monospace; font-size:28pt; line-height:1.15;
+    color:#211E1A; position:relative; display:inline-block; margin-top:2px; }
+  .kpi .strike { position:absolute; left:-6px; right:-6px; top:52%; height:2px;
+    background:#B3402E; }
+  .kpi .misread { font-family:"Segoe UI",sans-serif; font-size:9pt; color:#B3402E;
+    letter-spacing:.08em; margin-top:4px; }
+  .chip-kpi { right:10px; bottom:8px; }
+
+  .waffle { left:800px; top:312px; width:456px; height:296px; padding:12px 16px; }
+  .waffle .w-title { font-family:"Segoe UI",sans-serif; font-size:12pt; font-weight:600;
+    color:#211E1A; margin-top:6px; }
+  .waffle .w-cap { font-family:"Segoe UI",sans-serif; font-size:9pt; color:#57534E; margin:2px 0 6px; }
+  .waffle .w-foot { font-family:"Segoe UI",sans-serif; font-size:10pt; color:#57534E; margin-top:6px; }
+  .chip-waffle { right:10px; top:12px; }
+
+  .board456 { display:block; }
+
+  .lb { left:800px; top:152px; width:456px; height:200px; padding:8px 16px 6px; }
+  .lb-row { display:flex; align-items:center; gap:10px; height:48px;
+    border-top:1px solid #EBE7DC; }
+  .lb-row:first-of-type { border-top:none; }
+  .lb-row[tabindex] { cursor:default; }
+  .poster { width:32px; height:44px; background:#E5E1D6; border:1px solid #C8C3B4;
+    display:flex; align-items:center; justify-content:center; flex:none;
+    font-family:"Segoe UI",sans-serif; font-size:7pt; color:#78716C; }
+  .lb-name { font-family:"Segoe UI",sans-serif; font-size:12pt; color:#211E1A; flex:1;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .lb-score { font-family:Consolas,monospace; font-size:12pt; color:#B3402E; font-weight:700; }
+  .lb-votes { font-family:"Segoe UI",sans-serif; font-size:10pt; color:#57534E; width:74px;
+    text-align:right; }
+  .lb-more { font-family:Georgia,serif; font-style:italic; font-size:10pt; color:#57534E;
+    padding-top:5px; }
+  .chip-lb { right:10px; top:10px; }
+
+  .fall { left:800px; top:368px; width:456px; height:248px; padding:10px 12px; }
+  .fall .f-title { font-family:"Segoe UI",sans-serif; font-size:12pt; font-weight:600;
+    color:#211E1A; margin:4px 0 2px 4px; }
+  .chip-fall { right:10px; top:10px; }
+
+  .c_verdict { left:24px; top:632px; width:1232px; height:64px;
+    display:flex; align-items:center; gap:24px; }
+  .c_verdict p { font-size:14pt; line-height:20px; flex:1; }
+  .paper .c_verdict p { color:#211E1A; }
+  .night .c_verdict p { color:#F2EFE6; }
+
+  /* ════════ p3 — THE PREMIERE ════════ */
+  #hero_sc { position:absolute; left:24px; top:152px; width:896px; height:464px;
+    background:#1D1A20; border:1px solid #2E2933;
+    transition:opacity .35s ease; }
+  #pg3[data-scene="1"] #hero_sc, #pg3[data-scene="2"] #hero_sc { opacity:.35; }
+  #sc_pop { position:absolute; left:16px; top:12px; font-family:"Segoe UI",sans-serif;
+    font-size:10pt; color:#B5AFA0; }
+  #sc_year { position:absolute; right:16px; top:6px; font-size:28pt; color:#B5AFA0;
+    font-weight:600; letter-spacing:.05em; }
+  #btn_play { position:absolute; left:16px; top:38px; }
+  #sc_dots circle { transition:opacity .3s ease; }
+  #win_ring, #win_label { opacity:0; transition:opacity .35s ease; }
+  #pg3.resolved #win_ring, #pg3.resolved #win_label { opacity:1; }
+  #win_label { position:absolute; left:474px; top:96px; width:336px; text-align:right;
+    font-family:"Segoe UI",sans-serif; font-size:10pt; color:#F2EFE6; line-height:15px; }
+  .chip-sc { right:12px; bottom:10px; }
+
+  .rrail-card { position:absolute; left:936px; width:320px;
+    background:#1D1A20; border:1px solid #2E2933; padding:14px 16px;
+    transition:background .35s ease, border-color .35s ease; }
+  #c_adjustments { top:152px; height:136px; display:flex; flex-direction:column;
+    justify-content:center; gap:7px; }
+  .adj { align-self:flex-start; font-family:"Segoe UI",sans-serif; font-size:10pt;
+    color:#F2EFE6; border:1px solid #3A3441; border-radius:8px; padding:3px 12px; }
+  .adj b { color:#4ECBA0; font-weight:400; }
+  #c_refusal_popularity { top:304px; height:152px; border:2px solid #E8705F; }
+  #c_refusal_popularity h3 { font-family:"Segoe UI",sans-serif; font-size:12pt;
+    color:#E8705F; letter-spacing:.04em; }
+  #c_refusal_popularity .why { font-family:"Segoe UI",sans-serif; font-size:9.5pt;
+    color:#B5AFA0; line-height:14px; margin:4px 0 7px; }
+  #c_refusal_popularity .row { font-family:Consolas,monospace; font-size:10pt;
+    color:#F2EFE6; line-height:16px; }
+  #c_refusal_popularity .row .x { color:#E8705F; }
+  #c_refusal_popularity .at { font-family:Consolas,monospace; font-size:9pt;
+    color:#B5AFA0; margin-top:5px; }
+  #c_nodate_chip { top:472px; height:144px; border-radius:8px;
+    display:flex; align-items:center;
+    font-family:"Segoe UI",sans-serif; font-size:10.5pt; color:#B5AFA0; line-height:17px; }
+  #pg3[data-scene="1"] #c_adjustments,
+  #pg3[data-scene="2"] #c_refusal_popularity { background:#282331; border-color:#B5AFA0; }
+
+  /* ════════ p9 — END CREDITS ════════ */
+  #cr_title { left:24px; top:24px; width:1232px; height:64px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20pt; letter-spacing:.3em; color:#F2EFE6; }
+  .cr-col { position:absolute; top:104px; width:360px;
+    font-family:Consolas,monospace; font-size:12pt; line-height:19px; color:#F2EFE6; }
+  #cr_left { left:240px; } #cr_right { left:680px; }
+  .cr-h { font-family:"Bahnschrift SemiCondensed",Bahnschrift,"Arial Narrow",sans-serif;
+    font-stretch:75%; font-size:10pt; letter-spacing:.28em; color:#B5AFA0;
+    margin:16px 0 6px; }
+  .cr-h:first-child { margin-top:0; }
+  .cr-row { display:flex; align-items:baseline; flex-wrap:wrap; }
+  .cr-row .dots { flex:1; min-width:24px; border-bottom:1px dotted #57534E;
+    margin:0 6px 4px; }
+  .cr-row .v { text-align:right; margin-left:auto; }
+  .cr-row .v.wrapfull { width:100%; }
+  .cr-good { color:#4ECBA0; }
+  .cr-tag-trap { color:#E8705F; }
+  .cr-tag-opq { color:#B5AFA0; }
+  .cr-gl { font-size:11pt; line-height:17px; }
+  #cr_close { left:24px; top:598px; width:1232px; text-align:center; }
+  #cr_close .src { font-family:"Bahnschrift SemiCondensed",Bahnschrift,sans-serif;
+    font-stretch:75%; font-size:10pt; letter-spacing:.24em; color:#B5AFA0; }
+  #cr_close .last { font-size:14pt; color:#F2EFE6; margin-top:8px; }
+  #btn_home { position:absolute; left:24px; top:664px; }
+  .chip-cr { right:24px; top:672px; }
+
+  /* ════════ tooltip card (single, shared) ════════ */
+  #tt_poster_card { position:absolute; width:320px; height:420px;
+    background:#FFFFFF; border:1px solid #211E1A; padding:14px 16px;
+    opacity:0; visibility:hidden; transition:opacity .18s ease, visibility 0s linear .18s;
+    z-index:40; color:#211E1A; }
+  #tt_poster_card.on { opacity:1; visibility:visible; transition:opacity .18s ease; }
+  #tt_big_poster { width:170px; height:240px; margin:4px auto 10px;
+    background:#E5E1D6; border:1px solid #C8C3B4;
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Segoe UI",sans-serif; font-size:9pt; color:#78716C; }
+  #tt_name { font-family:"Bahnschrift SemiCondensed",Bahnschrift,sans-serif; font-stretch:75%;
+    font-size:14pt; color:#211E1A; text-align:center; }
+  #tt_year { font-family:Consolas,monospace; font-size:10pt; color:#57534E;
+    text-align:center; margin:2px 0 8px; }
+  .tt-row { display:flex; align-items:baseline; font-family:Consolas,monospace;
+    font-size:10pt; line-height:18px; }
+  .tt-row .dots { flex:1; border-bottom:1px dotted #C8C3B4; margin:0 6px 4px; }
+  .tt-foot { font-family:"Segoe UI",sans-serif; font-size:8pt; color:#57534E; margin-top:6px; }
+  .chip-tt { position:static; display:inline-block; margin-top:8px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<p class="caption">D7 · The Seductive Lies: A Trilogy · interactive prototype — legend chips name each effect's Power BI mechanism</p>
+
+<div id="stage">
+
+  <!-- ════════════════ p0 — BOX OFFICE ════════════════ -->
+  <section class="page night active" id="pg0" tabindex="-1" aria-label="Box office — trilogy home">
+    <div class="abs bahn" id="z_marquee">
+      <div class="inner">
+        <h1>THE SEDUCTIVE LIES</h1>
+        <div class="sub">A TRILOGY IN THREE ACTS &nbsp;·&nbsp; A TMDB DATA STORY</div>
+      </div>
+    </div>
+
+    <div class="abs serif" id="hero_takeaway">
+      <p>The data is not wrong — the reading is. 87% of 85,394 listings have no credible financials,
+      the median listing has zero votes, and &ldquo;popularity&rdquo; has no published formula.
+      Every honest number here states what it excludes.</p>
+    </div>
+
+    <button class="ticket" id="tk1" title="Tear the stub — open Act I">
+      <span class="t-main"><span class="rule-m"></span>
+        <span class="t-body bahn">
+          <span class="t-act">ACT I</span>
+          <span class="t-rule" style="display:block"></span>
+          <span class="t-title" style="display:block">THE PROFIT LIE</span>
+          <span class="t-tease" style="display:block">In which $0 is money</span>
+        </span>
+      </span>
+      <span class="t-stub"><span class="rule-s"></span>
+        <span class="t-admit bahn">ADMIT ONE</span>
+        <span class="t-serial">TMDB·2026·07·24</span>
+      </span>
+    </button>
+
+    <button class="ticket" id="tk2" title="Tear the stub — open Act II">
+      <span class="t-main"><span class="rule-m"></span>
+        <span class="t-body bahn">
+          <span class="t-act">ACT II</span>
+          <span class="t-rule" style="display:block"></span>
+          <span class="t-title" style="display:block">THE RATINGS LIE</span>
+          <span class="t-tease" style="display:block">In which 2 votes crown a champion</span>
+        </span>
+      </span>
+      <span class="t-stub"><span class="rule-s"></span>
+        <span class="t-admit bahn">ADMIT ONE</span>
+        <span class="t-serial">TMDB·2026·07·24</span>
+      </span>
+    </button>
+
+    <button class="ticket" id="tk3" title="Tear the stub — open Act III">
+      <span class="t-main"><span class="rule-m"></span>
+        <span class="t-body bahn">
+          <span class="t-act">ACT III</span>
+          <span class="t-rule" style="display:block"></span>
+          <span class="t-title" style="display:block">THE CORRECTED CUT</span>
+          <span class="t-tease" style="display:block">In which the fixes land — and one is refused</span>
+        </span>
+      </span>
+      <span class="t-stub"><span class="rule-s"></span>
+        <span class="t-admit bahn">ADMIT ONE</span>
+        <span class="t-serial">TMDB·2026·07·24</span>
+      </span>
+    </button>
+
+    <span class="chip n" id="chip_tear">PBI: HTML Content tear — VERIFY; fallback pre-torn stub · nav = native button</span>
+
+    <div class="abs bahn" id="z_billing">
+      <div>TMDB SNAPSHOT 2026·07·24 · BASIS 84,036 LISTINGS (ADULT 1,358 EXCLUDED OF 85,394) · FINANCIAL FLOOR $10,000 · m=100 · C=6.96 · LISTINGS≠FILMS: 1,697 DUPLICATE (TITLE,DATE) PAIRS (2.0%)</div>
+      <div>USD AS RECORDED — NOT INFLATION-ADJUSTED · MEDIAN LISTING: 0 VOTES · POPULARITY: FORMULA NOT PUBLISHED</div>
+    </div>
+
+    <div class="abs ui" id="p0_footer">
+      <span class="credit">SOURCE DATA BY TMDB — THIS PRODUCT USES TMDB DATA BUT IS NOT ENDORSED OR CERTIFIED BY TMDB</span>
+      <button class="btn" id="btn_credits">END CREDITS ▸</button>
+    </div>
+  </section>
+
+  <!-- ════════════════ p1 — ACT I (screenplay, paper) ════════════════ -->
+  <section class="page paper act" id="pg1" data-scene="1" tabindex="-1" aria-label="Act I — The Profit Lie">
+    <div class="abs z_scriptheader">
+      <span class="h-title">THE SEDUCTIVE LIES — ACT I: &lsquo;THE PROFIT LIE&rsquo;</span>
+      <span style="display:flex;align-items:center;">
+        <span class="chip p chip-hdr">PBI: static SVG chrome</span>
+        <svg width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+          <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z"
+                fill="#FFFFFF" stroke="#B3402E" stroke-width="1.5"/>
+          <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace"
+                font-size="9.3" letter-spacing="2" fill="#211E1A">ADMIT ONE</text>
+        </svg>
+      </span>
+    </div>
+
+    <div class="abs sl_beat_rail">
+      <button class="beat cur" data-sc="1" aria-pressed="true">SC.1 — THE SEDUCTION</button>
+      <button class="beat" data-sc="2" aria-pressed="false">SC.2 — THE NOTES</button>
+      <button class="beat" data-sc="3" aria-pressed="false">SC.3 — THE CORRECTED CUT</button>
+      <button class="btn next-scene">NEXT SCENE ▸</button>
+    </div>
+    <span class="chip p chip-rail">PBI: bookmarks + native tween</span>
+
+    <div class="abs c_script_body">
+      <div class="slug">INT. THE NAIVE SCREENING ROOM — NIGHT<span class="cut-tag">[naive cut]</span></div>
+      <div class="action">The ANALYST sums profit across all 85,394 listings. No questions asked.</div>
+      <div class="cue">THE NAIVE READ</div>
+      <div class="dlg">The movie business loses money. Look: <span class="ph" title="computed at build — never fabricated">{NAIVE_PROFIT}</span>.</div>
+
+      <div class="r3 trans">SMASH CUT TO:</div>
+      <div class="r3 slug">INT. THE HONEST SCREENING ROOM — DAY</div>
+      <div class="r3 cue">THE RESPONSIBLE READ</div>
+      <div class="r3 dlg">Only 11,203 listings — 13.1% — can support money claims (Budget ≥ $10,000 AND Revenue &gt; 0). Median credible profit: <span class="ph" title="computed at build — never fabricated">{MEDIAN_PROFIT}</span>. The mean, <span class="ph" title="computed at build — never fabricated">{MEAN_PROFIT}</span>, is blockbuster-dragged.</div>
+
+      <div class="note r2" style="top:44px">NOTE: 67,436 revenues (79.0%) are ZERO — unknowns counted as $0.</div>
+      <div class="note r2" style="top:126px">NOTE: Budget is never 0 here. Unknowns arrive as junk: min $1, median $2,800.</div>
+      <div class="note r2" style="top:222px">NOTE: one listing books −$12 revenue.</div>
+    </div>
+
+    <div class="card kpi" id="kpi_profit_naive">
+      <div class="kicker">INSERT — THE NAIVE NUMBER</div>
+      <div class="lbl">Profit, all 85,394 listings (naive)</div>
+      <div class="val"><span class="ph" title="computed at build — never fabricated">{NAIVE_PROFIT}</span>
+        <span class="strike r3"></span></div>
+      <div class="misread r3">MISREAD — see notes</div>
+      <span class="chip p chip-kpi">PBI: bookmark-toggled shape</span>
+    </div>
+
+    <div class="card waffle r3" id="dn_ticket_waffle">
+      <div class="kicker">INSERT — THE TICKET AUDIT</div>
+      <div class="w-title">13.1% hold a valid ticket (floor $10k)</div>
+      <div class="w-cap">red = VALID (13) · outline = no credible financials (87)</div>
+      <svg class="board456" id="waffle_svg" width="424" height="176" viewBox="0 0 424 176" aria-label="Waffle: 13 of 100 tickets valid"></svg>
+      <div class="w-foot">median <span class="ph" title="computed at build — never fabricated">{MEDIAN_PROFIT}</span> · mean <span class="ph" title="computed at build — never fabricated">{MEAN_PROFIT}</span> · USD as recorded, gross gap not P&amp;L</div>
+      <span class="chip p chip-waffle">PBI: Deneb (fallback: stacked bar)</span>
+    </div>
+
+    <div class="abs c_verdict serif">
+      <p>The industry doesn't lose money — the dataset loses data. Claim only the 13.1% we can verify. <span style="font-size:11pt">(USD as recorded; gross gap, not P&amp;L.)</span></p>
+      <button class="btn" id="btn_act1_next">NEXT ACT ▸</button>
+    </div>
+  </section>
+
+  <!-- ════════════════ p2 — ACT II (screenplay, paper) ════════════════ -->
+  <section class="page paper act" id="pg2" data-scene="1" tabindex="-1" aria-label="Act II — The Ratings Lie">
+    <div class="abs z_scriptheader">
+      <span class="h-title">THE SEDUCTIVE LIES — ACT II: &lsquo;THE RATINGS LIE&rsquo;</span>
+      <span style="display:flex;align-items:center;">
+        <span class="chip p chip-hdr">PBI: static SVG chrome</span>
+        <svg width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+          <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z"
+                fill="#FFFFFF" stroke="#B3402E" stroke-width="1.5"/>
+          <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace"
+                font-size="9.3" letter-spacing="2" fill="#211E1A">ADMIT ONE</text>
+        </svg>
+      </span>
+    </div>
+
+    <div class="abs sl_beat_rail">
+      <button class="beat cur" data-sc="1" aria-pressed="true">SC.1 — THE SEDUCTION</button>
+      <button class="beat" data-sc="2" aria-pressed="false">SC.2 — THE NOTES</button>
+      <button class="beat" data-sc="3" aria-pressed="false">SC.3 — THE CORRECTED CUT</button>
+      <button class="btn next-scene">NEXT SCENE ▸</button>
+    </div>
+    <span class="chip p chip-rail">PBI: bookmarks + native tween</span>
+
+    <div class="abs c_script_body">
+      <div class="slug">INT. THE AWARDS NIGHT — NIGHT<span class="cut-tag">[naive cut]</span></div>
+      <div class="action">The envelope opens. The ROOM leans in.</div>
+      <div class="cue">THE NAIVE READ</div>
+      <div class="dlg">The best film ever made? Las mujeres deciden. A perfect 10.0!</div>
+
+      <div class="r3 trans">SMASH CUT TO:</div>
+      <div class="r3 slug">INT. THE RECOUNT — DAY</div>
+      <div class="r3 cue">THE RESPONSIBLE READ</div>
+      <div class="r3 dlg">Weighted by evidence (m=100, C=6.96), a 10.0 on 2 votes reads ~7.02. The Godfather reads <span class="ph" title="computed at build — never fabricated">{GODFATHER_W}</span>. Applause is not evidence.</div>
+
+      <div class="note r2" style="top:44px">NOTE: 2 votes.</div>
+      <div class="note r2" style="top:96px">NOTE: the MEDIAN listing has 0 votes; 75th percentile has 1; 65.5% have none.</div>
+      <div class="note r2" style="top:200px">NOTE: at least 20 films score a perfect 10.0 on 2–3 votes.</div>
+    </div>
+
+    <div class="card lb" id="tbl_perfect_tens">
+      <div class="kicker">INSERT — THE PERFECT TENS</div>
+      <div class="lb-row" tabindex="0" data-tt="0" aria-label="Las mujeres deciden, rated 10.0 on 2 votes — details in tooltip">
+        <span class="poster">poster</span>
+        <span class="lb-name">Las mujeres deciden</span>
+        <span class="lb-score">10.0</span>
+        <span class="lb-votes">2 votes</span>
+      </div>
+      <div class="lb-row" tabindex="0" data-tt="1" aria-label="Logos, rated 10.0 on 3 votes — details in tooltip">
+        <span class="poster">poster</span>
+        <span class="lb-name">Logos</span>
+        <span class="lb-score">10.0</span>
+        <span class="lb-votes">3 votes</span>
+      </div>
+      <div class="lb-row" tabindex="0" data-tt="2" aria-label="Third perfect ten, resolved at build — details in tooltip">
+        <span class="poster">poster</span>
+        <span class="lb-name"><span class="ph" title="computed at build — never fabricated">— at build —</span></span>
+        <span class="lb-score">10.0</span>
+        <span class="lb-votes">2 votes</span>
+      </div>
+      <div class="lb-more">+ at least 18 more perfect 10s</div>
+      <span class="chip p chip-lb">PBI: tooltip page + Image URL (Poster Path)</span>
+    </div>
+
+    <div class="card fall r3" id="dn_rating_fall">
+      <div class="kicker" style="margin-left:4px">INSERT — THE CORRECTION</div>
+      <div class="f-title">Raw applause → evidence-weighted</div>
+      <svg id="fall_svg" width="432" height="172" viewBox="0 0 432 172" aria-label="Dumbbell: perfect 10s fall to about 7 when weighted by evidence"></svg>
+      <span class="chip p chip-fall">PBI: Deneb (fallback: paired bars)</span>
+    </div>
+
+    <div class="abs c_verdict serif">
+      <p>Applause is not evidence: 10.0 on 2 votes reads ~7.02 with m=100, C=6.96.</p>
+      <button class="btn" id="btn_act2_next">THE PREMIERE ▸</button>
+    </div>
+  </section>
+
+  <!-- ════════════════ p3 — THE PREMIERE (night) ════════════════ -->
+  <section class="page night resolved" id="pg3" data-scene="3" tabindex="-1" aria-label="Act III — The Corrected Cut, the premiere">
+    <div class="abs z_scriptheader">
+      <span class="h-title">THE SEDUCTIVE LIES — ACT III: &lsquo;THE CORRECTED CUT&rsquo;</span>
+      <span style="display:flex;align-items:center;">
+        <span class="chip n chip-hdr">PBI: static SVG chrome</span>
+        <svg width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+          <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z"
+                fill="#241F28" stroke="#E8705F" stroke-width="1.5"/>
+          <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace"
+                font-size="9.3" letter-spacing="2" fill="#F2EFE6">ADMIT ONE</text>
+        </svg>
+      </span>
+    </div>
+
+    <div class="abs sl_beat_rail">
+      <button class="beat" data-sc="1" aria-pressed="false">SC.1 — THE ADJUSTMENTS</button>
+      <button class="beat" data-sc="2" aria-pressed="false">SC.2 — THE REFUSAL</button>
+      <button class="beat cur" data-sc="3" aria-pressed="true">SC.3 — THE PREMIERE</button>
+      <button class="btn next-scene" disabled>NEXT SCENE ▸</button>
+    </div>
+    <span class="chip n chip-rail">PBI: bookmarks + native tween</span>
+
+    <div id="hero_sc">
+      <svg id="sc_svg" width="894" height="462" viewBox="0 0 894 462" aria-label="Scatter: revenue versus evidence-weighted rating, populated year by year"></svg>
+      <div id="sc_pop" class="ui">films with credible financials AND ≥ 100 votes · n&nbsp;=&nbsp;<span class="ph" title="computed at build — never fabricated">{SCATTER_N}</span></div>
+      <div id="sc_year" class="bahn">2026</div>
+      <button class="btn" id="btn_play" title="Run the play axis, 1960 to the 2020s">▶ PRESS PLAY</button>
+      <div id="win_label"><span class="ph" title="computed at build — never fabricated">{WINNER}</span> — best-selling AND best-rated on evidence</div>
+      <span class="chip n chip-sc">PBI: NATIVE scatter play axis (core visual)</span>
+    </div>
+
+    <div class="rrail-card" id="c_adjustments">
+      <span class="adj"><b>✓</b> floor $10,000</span>
+      <span class="adj"><b>✓</b> Revenue &gt; 0</span>
+      <span class="adj"><b>✓</b> m = 100</span>
+      <span class="adj"><b>✓</b> C = 6.96</span>
+    </div>
+
+    <div class="rrail-card" id="c_refusal_popularity">
+      <h3>ADJUSTMENT REFUSED — POPULARITY</h3>
+      <div class="why">formula not published. Ranked under protest, never colored, never averaged.</div>
+      <div class="row">POP #1 → quality #— <span class="x">✕</span></div>
+      <div class="row">POP #2 → quality #—</div>
+      <div class="row">POP #3 → quality #— <span class="x">✕</span></div>
+      <div class="at"><span class="ph" title="computed at build — never fabricated">{TOP3_POP_RANKS}</span> @ build</div>
+    </div>
+
+    <div class="rrail-card" id="c_nodate_chip">
+      <span>26,166 listings (30.6%) have no date — they never enter this animation · 320 future-dated flagged · sentinels 1800/2099 excluded from play</span>
+    </div>
+
+    <div class="abs c_verdict serif">
+      <p>THE END — the best movie, read responsibly: <span class="ph" title="computed at build — never fabricated">{WINNER}</span>, best-selling AND best-rated on evidence. Correlation shown; causation refused.</p>
+      <button class="btn" id="btn_roll">ROLL CREDITS ▸</button>
+    </div>
+  </section>
+
+  <!-- ════════════════ p9 — END CREDITS (night, static) ════════════════ -->
+  <section class="page night" id="pg9" tabindex="-1" aria-label="End credits — method and refusals">
+    <div class="abs bahn" id="cr_title">END CREDITS — METHOD &amp; REFUSALS</div>
+
+    <div class="cr-col" id="cr_left">
+      <div class="cr-h">CAST</div>
+      <div class="cr-row"><span>THE ZERO-FILLED FINANCIALS</span><span class="dots"></span><span class="v wrapfull">as 'The Industry Loses Money'</span></div>
+      <div class="cr-row"><span>THE TWO-VOTE PERFECT TEN</span><span class="dots"></span><span class="v wrapfull">as 'Better Than The Godfather'</span></div>
+      <div class="cr-row"><span>THE UNPUBLISHED FORMULA</span><span class="dots"></span><span class="v wrapfull">as 'The People's Favorite'</span></div>
+
+      <div class="cr-h">PRODUCTION COUNTS</div>
+      <div class="cr-row"><span>LISTINGS PER SOURCE</span><span class="dots"></span><span class="v">85,394</span></div>
+      <div class="cr-row"><span>ADULT TITLES EXCLUDED</span><span class="dots"></span><span class="v">1,358</span></div>
+      <div class="cr-row"><span>BASIS</span><span class="dots"></span><span class="v">84,036 <span class="cr-good">✓ kept</span></span></div>
+      <div class="cr-row"><span>DUPLICATE (TITLE, DATE) PAIRS</span><span class="dots"></span><span class="v">1,697 (2.0%)</span></div>
+      <div class="cr-row"><span>DUPLICATE IDS</span><span class="dots"></span><span class="v">101</span></div>
+      <div class="cr-row"><span>NO RELEASE DATE</span><span class="dots"></span><span class="v">26,166 (30.6%)</span></div>
+      <div class="cr-row"><span>FUTURE-DATED</span><span class="dots"></span><span class="v">320</span></div>
+      <div class="cr-row"><span>NEGATIVE REVENUE</span><span class="dots"></span><span class="v">1 (−$12)</span></div>
+    </div>
+
+    <div class="cr-col" id="cr_right">
+      <div class="cr-h">DISCLOSED PARAMETERS</div>
+      <div class="cr-row"><span>FINANCIAL FLOOR</span><span class="dots"></span><span class="v">$10,000 (13.1% vs 11.9% @ $100k)</span></div>
+      <div class="cr-row"><span>m, EVIDENCE REQUIRED</span><span class="dots"></span><span class="v">100 (Vote Count p90=106)</span></div>
+      <div class="cr-row"><span>C, GLOBAL MEAN</span><span class="dots"></span><span class="v">6.96</span></div>
+      <div class="cr-row"><span>SNAPSHOT</span><span class="dots"></span><span class="v">2026·07·24</span></div>
+
+      <div class="cr-h">THE GLOSSARY</div>
+      <div class="cr-gl">M-001 LISTINGS COUNT — rows, not films</div>
+      <div class="cr-gl">M-002 COVERAGE — share of basis with a value</div>
+      <div class="cr-gl">M-003 NAIVE PROFIT <span class="cr-tag-trap">[TRAP]</span> — counts $0 unknowns</div>
+      <div class="cr-gl">M-004 MEDIAN CREDIBLE <span class="cr-good">[HONEST]</span> — floor $10k, Rev&gt;0</div>
+      <div class="cr-gl">M-005 RAW RATING — any votes, even 2</div>
+      <div class="cr-gl">M-006 WEIGHTED RATING <span class="cr-good">[HONEST]</span> — m=100, C=6.96</div>
+      <div class="cr-gl">M-007 POPULARITY <span class="cr-tag-opq">[OPAQUE]</span> — formula not published</div>
+
+      <div class="cr-h">SCENES DELETED — CLAIMS WE REFUSE</div>
+      <div class="cr-gl">inflation-adjusted money · true P&amp;L · distinct-film counts · full-catalogue claims · popularity's meaning</div>
+    </div>
+
+    <div class="abs" id="cr_close">
+      <div class="src">SOURCE DATA BY TMDB — NOT ENDORSED OR CERTIFIED BY TMDB</div>
+      <div class="last serif">No averages of averages were computed in the making of this report.</div>
+    </div>
+
+    <button class="btn" id="btn_home">⌂ BOX OFFICE</button>
+    <span class="chip n chip-cr">PBI: static page — no auto-scroll promised</span>
+  </section>
+
+  <!-- ════════════════ single shared tooltip card ════════════════ -->
+  <div id="tt_poster_card" class="paper" aria-hidden="true">
+    <div id="tt_big_poster">poster — Image URL (Poster Path)</div>
+    <div id="tt_name">Las mujeres deciden</div>
+    <div id="tt_year"><span class="ph" title="computed at build — never fabricated">{YEAR}</span></div>
+    <div class="tt-row"><span>VOTES</span><span class="dots"></span><span id="tt_votes">2</span></div>
+    <div class="tt-row"><span>RATING (RAW)</span><span class="dots"></span><span style="color:#B3402E">10.0</span></div>
+    <div class="tt-row"><span>RATING (WEIGHTED)</span><span class="dots"></span><span id="tt_w" style="color:#2F6B4F">✓ ~7.02</span></div>
+    <div class="tt-row"><span>RANK · POPULARITY †</span><span class="dots"></span><span>— @ build</span></div>
+    <div class="tt-foot">† formula not published — ranked under protest</div>
+    <span class="chip p chip-tt">PBI: tooltip page 320×420</span>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var stage = document.getElementById('stage');
+  var cur = 'pg0';
+
+  function go(id) {
+    if (id === cur) return;
+    hideTip();
+    document.getElementById(cur).classList.remove('active');
+    var next = document.getElementById(id);
+    next.classList.add('active');
+    cur = id;
+    next.focus({ preventScroll: true });
+  }
+
+  /* ---------- scenes (bookmark walk) ---------- */
+  function setScene(pid, n) {
+    var pg = document.getElementById(pid);
+    pg.dataset.scene = String(n);
+    var beats = pg.querySelectorAll('.beat');
+    beats.forEach(function (b, i) {
+      var isCur = (i === n - 1);
+      b.classList.toggle('cur', isCur);
+      b.setAttribute('aria-pressed', isCur ? 'true' : 'false');
+      b.title = 'Scene ' + (i + 1) + ' of 3' + (isCur ? ' — current' : '');
+    });
+    var nx = pg.querySelector('.next-scene');
+    if (nx) {
+      if (n >= 3) { nx.disabled = true;  nx.title = 'Scene 3 of 3 — final scene'; }
+      else        { nx.disabled = false; nx.title = 'Advance to scene ' + (n + 1) + ' of 3'; }
+    }
+    hideTip();
+  }
+
+  ['pg1', 'pg2', 'pg3'].forEach(function (pid) {
+    var pg = document.getElementById(pid);
+    pg.querySelectorAll('.beat').forEach(function (b) {
+      b.addEventListener('click', function () { setScene(pid, +b.dataset.sc); });
+    });
+    var nx = pg.querySelector('.next-scene');
+    if (nx) nx.addEventListener('click', function () {
+      setScene(pid, Math.min(3, (+pg.dataset.scene) + 1));
+    });
+  });
+
+  /* ---------- ticket tear ---------- */
+  function tearAndGo(btn, dest, scene) {
+    if (btn.classList.contains('torn')) return;
+    btn.classList.add('torn');
+    setTimeout(function () {
+      setScene(dest, scene);
+      go(dest);
+      setTimeout(function () { btn.classList.remove('torn'); }, 350);
+    }, 400);
+  }
+  document.getElementById('tk1').addEventListener('click', function () { tearAndGo(this, 'pg1', 1); });
+  document.getElementById('tk2').addEventListener('click', function () { tearAndGo(this, 'pg2', 1); });
+  document.getElementById('tk3').addEventListener('click', function () { tearAndGo(this, 'pg3', 3); });
+
+  document.getElementById('btn_credits').addEventListener('click', function () { go('pg9'); });
+  document.getElementById('btn_act1_next').addEventListener('click', function () { setScene('pg2', 1); go('pg2'); });
+  document.getElementById('btn_act2_next').addEventListener('click', function () { setScene('pg3', 3); go('pg3'); });
+  document.getElementById('btn_roll').addEventListener('click', function () { go('pg9'); });
+  document.getElementById('btn_home').addEventListener('click', function () { go('pg0'); });
+
+  /* ---------- tooltip card ---------- */
+  var tip = document.getElementById('tt_poster_card');
+  var tipData = [
+    { n: 'Las mujeres deciden', ph: false, v: '2', w: '✓ ~7.02' },
+    { n: 'Logos',               ph: false, v: '3', w: '✓ ~7.05' },
+    { n: '— at build —',        ph: true,  v: '2', w: '✓ ~7.02' }
+  ];
+  function showTip(i, rowEl) {
+    var d = tipData[i];
+    var nameEl = document.getElementById('tt_name');
+    if (d.ph) {
+      nameEl.innerHTML = '<span class="ph" title="computed at build — never fabricated">— at build —</span>';
+    } else { nameEl.textContent = d.n; }
+    document.getElementById('tt_votes').textContent = d.v;
+    document.getElementById('tt_w').textContent = d.w;
+    var r = rowEl.getBoundingClientRect(), s = stage.getBoundingClientRect();
+    var top = Math.max(120, Math.min(276, (r.top - s.top) - 40));
+    tip.style.left = '464px';
+    tip.style.top = top + 'px';
+    tip.classList.add('on');
+  }
+  function hideTip() { tip.classList.remove('on'); }
+  document.querySelectorAll('#tbl_perfect_tens .lb-row[data-tt]').forEach(function (row) {
+    var i = +row.dataset.tt;
+    row.addEventListener('mouseenter', function () { showTip(i, row); });
+    row.addEventListener('mouseleave', hideTip);
+    row.addEventListener('focus', function () { showTip(i, row); });
+    row.addEventListener('blur', hideTip);
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hideTip(); });
+
+  /* ---------- Act I waffle (100 tiny tickets) ---------- */
+  (function () {
+    var svg = document.getElementById('waffle_svg');
+    var NS = 'http://www.w3.org/2000/svg';
+    var html = [];
+    for (var i = 0; i < 100; i++) {
+      var col = i % 10, row = Math.floor(i / 10);
+      var x = col * 43, y = row * 18;
+      var valid = i < 13;
+      if (valid) {
+        html.push('<rect x="' + x + '" y="' + y + '" width="36" height="14" rx="2" fill="#B3402E"/>');
+        html.push('<circle cx="' + x + '" cy="' + (y + 7) + '" r="2.2" fill="#FFFFFF"/>');
+        html.push('<circle cx="' + (x + 36) + '" cy="' + (y + 7) + '" r="2.2" fill="#FFFFFF"/>');
+      } else {
+        html.push('<rect x="' + (x + 0.5) + '" y="' + (y + 0.5) + '" width="35" height="13" rx="2" fill="none" stroke="#78716C"/>');
+        html.push('<circle cx="' + x + '" cy="' + (y + 7) + '" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"/>');
+        html.push('<circle cx="' + (x + 36) + '" cy="' + (y + 7) + '" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"/>');
+      }
+    }
+    svg.innerHTML = html.join('');
+  })();
+
+  /* ---------- Act II dumbbell ---------- */
+  (function () {
+    var svg = document.getElementById('fall_svg');
+    function X(v) { return 18 + v / 10 * 396; }
+    var rows = [
+      { n: 'Las mujeres deciden', w: 7.02 },
+      { n: 'Logos',               w: 7.05 },
+      { n: '— at build —',        w: 7.02 },
+      { n: '— at build —',        w: 7.02 }
+    ];
+    var h = [];
+    var cx = X(6.96);
+    h.push('<line x1="' + cx + '" y1="20" x2="' + cx + '" y2="150" stroke="#78716C" stroke-width="1" stroke-dasharray="4 3"/>');
+    h.push('<text x="' + cx + '" y="12" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#57534E">C = 6.96</text>');
+    rows.forEach(function (r, i) {
+      var y = 40 + i * 32;
+      h.push('<text x="18" y="' + (y - 9) + '" font-family="Segoe UI" font-size="11" fill="#57534E">' + r.n + '</text>');
+      h.push('<line x1="' + X(r.w) + '" y1="' + y + '" x2="' + X(10) + '" y2="' + y + '" stroke="#78716C" stroke-width="1.5"/>');
+      h.push('<circle cx="' + X(10) + '" cy="' + y + '" r="5" fill="#B3402E"/>');
+      h.push('<circle cx="' + X(r.w) + '" cy="' + y + '" r="5" fill="#2F6B4F"/>');
+      h.push('<text x="' + (X(r.w) - 9) + '" y="' + (y + 4) + '" text-anchor="end" font-family="Segoe UI" font-size="11" fill="#2F6B4F">✓ ' + r.w.toFixed(2) + ' weighted</text>');
+      h.push('<text x="' + (X(10) - 9) + '" y="' + (y - 8) + '" text-anchor="end" font-family="Segoe UI" font-size="11" fill="#B3402E">10.0 raw</text>');
+    });
+    [0, 2, 4, 6, 8, 10].forEach(function (t) {
+      h.push('<text x="' + X(t) + '" y="168" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#78716C">' + t + '</text>');
+    });
+    svg.innerHTML = h.join('');
+  })();
+
+  /* ---------- Act III scatter + play axis ---------- */
+  var scDots = [];
+  (function () {
+    var svg = document.getElementById('sc_svg');
+    function X(lg) { return 72 + (lg - 4) / 5.6 * 796; }
+    function Y(r)  { return 408 - (r - 5) / 4 * 348; }
+    var data = [
+      [0,4.9,6.4],[0,5.6,7.4],[0,6.3,7.9],[0,5.2,6.1],
+      [1,5.8,6.9],[1,6.7,7.5],[1,6.1,5.9],[1,7.2,7.8,1],
+      [2,6.9,8.1,1],[2,7.5,7.9],[2,6.2,6.5],[2,5.4,5.8],[2,7.8,7.2],
+      [3,7.3,6.8],[3,7.9,7.4,1],[3,6.6,6.2],[3,8.2,7.0],[3,5.9,5.6],
+      [4,8.4,7.7,1],[4,7.7,6.5],[4,8.0,6.9],[4,6.4,6.0],[4,8.7,7.3],[4,7.1,5.9],
+      [5,8.9,7.1,1],[5,8.3,6.4],[5,7.6,6.7],[5,8.6,7.6],[5,6.8,5.7],[5,7.4,6.3],
+      [6,9.2,7.5,1],[6,8.8,6.8],[6,8.1,6.1],[6,8.5,7.2],[6,7.0,6.6],[6,9.0,6.9],[6,6.5,5.8],
+      [7,8.95,7.0],[7,8.35,6.55],[7,7.85,6.15],[7,9.34,8.3,2],[7,7.25,6.75]
+    ];
+    var h = [];
+    // frame + gridlines + axes
+    [5,6,7,8,9].forEach(function (t) {
+      h.push('<line x1="72" y1="' + Y(t) + '" x2="868" y2="' + Y(t) + '" stroke="#241F28" stroke-width="1"/>');
+      h.push('<text x="62" y="' + (Y(t) + 4) + '" text-anchor="end" font-family="Segoe UI" font-size="10" fill="#B5AFA0">' + t.toFixed(1) + '</text>');
+    });
+    var xt = [[4,'$10k'],[5,'$100k'],[6,'$1M'],[7,'$10M'],[8,'$100M'],[9,'$1B']];
+    xt.forEach(function (p) {
+      h.push('<line x1="' + X(p[0]) + '" y1="408" x2="' + X(p[0]) + '" y2="413" stroke="#3A3441" stroke-width="1"/>');
+      h.push('<text x="' + X(p[0]) + '" y="426" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#B5AFA0">' + p[1] + '</text>');
+    });
+    h.push('<line x1="72" y1="408" x2="868" y2="408" stroke="#3A3441" stroke-width="1"/>');
+    h.push('<line x1="72" y1="60" x2="72" y2="408" stroke="#3A3441" stroke-width="1"/>');
+    // C reference
+    var cy = Y(6.96);
+    h.push('<line x1="72" y1="' + cy + '" x2="868" y2="' + cy + '" stroke="#6E6960" stroke-width="1" stroke-dasharray="5 4"/>');
+    h.push('<text x="80" y="' + (cy - 6) + '" font-family="Segoe UI" font-size="10" fill="#B5AFA0">C = 6.96</text>');
+    // axis titles
+    h.push('<text x="470" y="450" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#B5AFA0">Revenue (USD, log) — credible set</text>');
+    h.push('<text x="20" y="234" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#B5AFA0" transform="rotate(-90 20 234)">Rating (evidence-weighted)</text>');
+    // dots
+    var winX = 0, winY = 0;
+    h.push('<g id="sc_dots">');
+    data.forEach(function (d) {
+      var big = d[3] === 1, win = d[3] === 2;
+      var x = X(d[1]).toFixed(1), y = Y(d[2]).toFixed(1);
+      var r = win ? 7 : (big ? 6 : 3.5);
+      var op = (big || win) ? 0.95 : 0.8;
+      if (win) { winX = +x; winY = +y; }
+      h.push('<circle class="d" data-b="' + d[0] + '" data-op="' + op + '" cx="' + x + '" cy="' + y +
+             '" r="' + r + '" fill="#B5AFA0" opacity="' + op + '"/>');
+    });
+    h.push('</g>');
+    h.push('<circle id="win_ring" cx="' + winX + '" cy="' + winY + '" r="13" fill="none" stroke="#E8705F" stroke-width="2"/>');
+    svg.innerHTML = h.join('');
+    scDots = Array.prototype.slice.call(svg.querySelectorAll('circle.d'));
+  })();
+
+  var playing = false;
+  var yrEl = document.getElementById('sc_year');
+  var pg3 = document.getElementById('pg3');
+  var playBtn = document.getElementById('btn_play');
+  playBtn.addEventListener('click', function () {
+    if (playing) return;
+    playing = true;
+    playBtn.disabled = true;
+    pg3.classList.remove('resolved');
+    scDots.forEach(function (d) { d.style.opacity = 0; });
+    yrEl.textContent = '· · ·';
+    var labels = ['1959', '1969', '1979', '1989', '1999', '2009', '2019', '2026'];
+    var i = 0;
+    function step() {
+      scDots.forEach(function (d) {
+        if (+d.dataset.b <= i) d.style.opacity = d.dataset.op;
+      });
+      yrEl.textContent = labels[i];
+      i++;
+      if (i < labels.length) { setTimeout(step, 640); }
+      else {
+        setTimeout(function () {
+          pg3.classList.add('resolved');
+          playing = false;
+          playBtn.disabled = false;
+        }, 420);
+      }
+    }
+    setTimeout(step, 120);
+  });
+})();
+</script>
+</body>
+</html>
