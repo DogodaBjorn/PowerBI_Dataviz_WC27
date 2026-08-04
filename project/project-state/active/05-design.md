@@ -163,11 +163,52 @@ All three verified free of non-reproducible ingredients. Author resolutions:
   documented as de-emphasis with full-contrast counterpart; rank-strip ✓/✕
   kept monochrome per that visual's own "never colored" contract.
 
+## ROUND 3 (2026-08-04) — the entrant authored the concept
+
+D4–D6 rejected ("Still not sold on any"). The entrant supplied the direction
+(verbatim, binding brief — taste key trilogy-concept-entrant):
+
+> "What if we make the concept all around it being a movie on itself. A
+> trilogy even.. The Seductive Lies I II and III. Each telling the story of
+> how Data used irresponsibly leads to a wrong conclusion about the best
+> movie.. rated on profitability in movie I, on viewer ratings on II and
+> then in the end everything is working out well because movie III makes
+> the necessary adjustments and shows the viewer the weighted best selling
+> and rated movie on a good scatter plot animation. [...] something like a
+> movie posters front page or three movie tickets and then clicking on
+> either of three, ripping off the entrance bit and then entering the
+> screenplay page where the plain naive conclusion is shown, the critique
+> is appearing and the new conclusion is drawn."
+
+Plus hard requirements: mockups must be dynamic/realistic (static artboards
+below the bar); Deneb + extended-HTML visuals are a hard wish; movie assets
+(posters) in tooltips; "can't be a flat dashboard... remarkable, usable,
+accessible and most of all fun to engage with"; final chance at the finals.
+
+Feasibility verified this session:
+- Deneb + HTML Content visuals are championship-legitimate (an interactive
+  HTML visual was highlighted at the Champs); rule: ≥1 core PBI visual must
+  remain. Sources in the s5 research trail.
+- Movies[Poster Path] carries real TMDB paths (seen at Q2 profiling) —
+  poster imagery is DATA, not decoration; base-URL mechanics verified at
+  build (research-first).
+- "Scatter plot animation" has a native mechanism: scatter-chart PLAY AXIS
+  over Release Year — real animation, core visual, and the home of the
+  entrant's over-time seed.
+- Story restructure: Acts I (profit lie) + II (ratings lie) + III "The
+  Corrected Cut" (resolution; M-007 popularity folded in as a refusal beat)
+  — metric contracts unchanged, staging only. Key Takeaway stays on cover.
+
+D7 ("The Seductive Lies: A Trilogy") convergence commissioned from
+report-designer: architecture + replacement page contracts + mechanism map
+(every effect names its PBI mechanism: ticket click→page nav, stub tear→CSS
+animation in HTML Content w/ pre-torn fallback, beats→bookmarks, scatter→
+play axis, posters→Image URL) + interactive-prototype build spec + critique.
+
 ## Open questions
 
-- The entrant's direction pick (D4 / D5 / D6) + acks/answers on the round-2
-  decisions delta above. Recorded to `chosen` / `chosen_because` in the
-  creative-direction contract and to taste memory (learnings.py) on decision.
+- Entrant approval of the D7 converged design + its acks (page count, tear
+  fallback, popularity-as-refusal) once the dynamic prototype is presented.
 
 ## After the pick (contracted next steps)
 

@@ -27,7 +27,7 @@ stages:
   s5_design:
     status: in_progress
     evidence: "project-state/active/05-design.md"
-    gate_note: "Round-2 directions D4 One-Sheet / D5 Contact Sheet / D6 Main Titles designed (critique 55/56/52), cinema-as-artifact per taste memory; toggle contracted (native tween, 2 states, responsible default); comps building with both states as stacked artboards. G5 blocked on entrant pick from D4-D6."
+    gate_note: "Rounds 1+2 rejected; ROUND 3: entrant authored the trilogy concept ('The Seductive Lies I II III' — verbatim + hard wishes in 05-design.md; Deneb/HTML-visuals verified contest-legit, play-axis = the honest scatter animation). D7 convergence + dynamic interactive prototype in progress; G5 blocked on entrant approval of D7."
   s6_report_build:
     status: pending
     evidence: ""
