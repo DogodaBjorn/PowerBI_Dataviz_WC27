@@ -14,7 +14,7 @@ definition:
 edge_cases:
   - "Median chosen over mean BECAUSE outliers (mega-blockbusters) drag the mean — the mean-vs-median gap is itself shown as evidence, with top outliers named (R5)."
   - "Selection bias stated on-canvas: films with known financials skew big-studio/US/recent — 'credible' is not 'representative', and the claim scope says so."
-  - "Coverage floor from M-002 verification applies identically."
+  - "Coverage floor from M-002 verification applies identically. VERIFIED (Q2, 2026-08-04): credible set = 11,203 listings (Budget >= $10,000 AND Revenue > 0, floor pending entrant confirmation), 11,110 after the Adult exclusion."
 
 targets: { exists: false, source: "n/a" }
 owner: "entrant (definition steward)"

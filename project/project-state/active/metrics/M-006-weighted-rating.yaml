@@ -12,10 +12,10 @@ definition:
   direction_is_good: "up"
 
 edge_cases:
-  - "m TO VERIFY (Q2): set to the 90th percentile of Vote Count (rounded to a communicable number) — the choice of m is an assumption and is DISCLOSED on-canvas ('we require roughly the evidence of the top decile')."
-  - "C TO VERIFY (Q2): computed once, stated on the definities/method panel."
+  - "m VERIFIED (Q2, 2026-08-04): Vote Count p90 = 106 (p50 = 0, p75 = 1, p99 ≈ 4,889) → m = 100 as the communicable round — an assumption, DISCLOSED on-canvas ('we require roughly the evidence of the top decile'). Pending entrant confirmation at signature."
+  - "C VERIFIED (Q2): vote-count-weighted global mean = 6.96 (6.9594), computed once, stated on the definities/method panel."
   - "Zero votes → shrinks fully to C — display as 'no evidence' rather than C, or it fabricates consensus."
-  - "The raw-vs-weighted rank flip for a named small-sample film is Lie #2's money shot — pick the example from profiling, not memory (do-not-fabricate)."
+  - "The raw-vs-weighted rank flip for a named small-sample film is Lie #2's money shot — pick the example from profiling, not memory (do-not-fabricate). VERIFIED candidates (Q2, 2026-08-04): >=20 non-adult films score a perfect 10.0 on 2-3 votes, e.g. 'Las mujeres deciden' (2017, es, 10.0 @ 2 votes) -> weighted ~7.02; 'Logos' (2025, es, 10.0 @ 3 votes) -> weighted ~7.05."
 
 targets: { exists: false, source: "n/a" }
 owner: "entrant (definition steward)"

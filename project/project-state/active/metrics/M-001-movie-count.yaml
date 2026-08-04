@@ -12,7 +12,7 @@ definition:
   direction_is_good: "context-dependent (it is a denominator, not a goal)"
 
 edge_cases:
-  - "Duplicate titles exist (same film listed twice) — count is of ROWS, stated as 'listings' where precision matters; dedup share TO VERIFY (Q2)."
+  - "Duplicate titles exist (same film listed twice) — count is of ROWS, stated as 'listings' where precision matters. VERIFIED (Q2, 2026-08-04): 83,697 distinct (Title, Release Date) pairs vs 85,394 rows — 1,697 surplus rows, 2.0%."
 
 targets: { exists: false, source: "n/a" }
 owner: "entrant (definition steward)"

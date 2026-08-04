@@ -1,7 +1,7 @@
 # pbi-atelier project state — schema: lifecycle/status.schema.yaml
 project: wc-round-3
 template_version: 0.3.1
-current_stage: 2
+current_stage: 4
 updated: 2026-08-04
 stages:
   s0_intake:
@@ -13,15 +13,15 @@ stages:
     evidence: "project-state/active/01-requirements.md"
     gate_note: "G1 closed 2026-08-04: entrant picked Angle 3 'Three seductive lies' in-session (contract: active/requirements.contract.yaml, commit 5032c37); Q2 profiling assigned to G2."
   s2_metrics:
-    status: in_progress
+    status: passed
     evidence: "project-state/active/02-metrics.md"
-    gate_note: "Contracts M-001..M-007 drafted; G2 blocked on Q2 profiling numbers + entrant glossary signature"
+    gate_note: "G2 closed 2026-08-04: Q2 profiling via Modeling MCP (findings F1-F5); entrant signed the glossary in-session incl. $10k budget floor and m=100/C=6.96. Entrant's 'over time' seed carried to s3 (Date dim) and s5 (design candidate)."
   s3_model_design:
-    status: pending
-    evidence: ""
-    gate_note: ""
+    status: passed
+    evidence: "project-state/active/03-model-blueprint.md"
+    gate_note: "G3 closed 2026-08-04: entrant accepted blueprint in-session incl. not-available list, snapshot anchor 2026-07-24, report-level Adult filter (contract: active/model-blueprint.contract.yaml, user_accepted: true)."
   s4_model_build:
-    status: pending
+    status: in_progress
     evidence: ""
     gate_note: ""
   s5_design:
