@@ -1,0 +1,25 @@
+# Waivers for scripts/pbir_detect.py (the PBIR taste-lint).
+#
+# A waiver is a recorded design decision, not an escape hatch: every entry
+# MUST carry a non-empty reason (ideally naming the design handoff or user
+# decision that sanctioned it) — reasonless waivers are rejected and waive
+# nothing. Unwaived findings fail the G6/G7 gates.
+#
+# Format (miniyaml subset — mappings only, no list-of-mapping syntax):
+#   waivers:
+#     <short-name>:
+#       rule: <rule id from `python scripts/pbir_detect.py --list-rules`>
+#       path: <glob matched against the finding path, e.g. "pages/*" or
+#              "pages/cover/visuals/dn_*/visual.json" or "report">
+#       reason: "why this deviation is a decision, and who approved it"
+#       date: YYYY-MM-DD
+#
+# Example:
+#   waivers:
+#     free-form-cover:
+#       rule: grid-8px
+#       path: "pages/cover"
+#       reason: "Illustrated free-form cover layout per approved design handoff 05"
+#       date: 2026-08-04
+
+waivers:

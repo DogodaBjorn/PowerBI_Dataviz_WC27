@@ -1,0 +1,8 @@
+# Module manifest (miniyaml subset)
+name: imagery-studio
+version: 1
+description: On-brand generative imagery for report chrome - profile-driven Gemini renders anchored on real brand reference images, for cover heroes, section dividers, empty states, and subtle background textures.
+provides: imagery candidates in project/deliverables/imagery/ and PBIR registration instructions
+skills:
+  - im-imagery
+requires: brand kit with imagery-profile.yaml; GEMINI_API_KEY (degrades gracefully without)

@@ -1,0 +1,69 @@
+# Starter kit "Arctic Frost" — no-brand candidate for bk-brand-kit's no-brand path.
+# Adapted from the theme-factory skill, theme "Arctic Frost" (Anthropic skills
+# repo, Apache-2.0); the theme's 4 colors expanded to full role tokens.
+# Fonts: theme's DejaVu Sans mapped to the Segoe UI family.
+# WCAG adjustments: steel blue #4A6FA5 passes (4.5:1) and stays the accent.
+# Theme silver #C0C0C0 is 1.6:1 on the ice canvas — unusable for data,
+# demoted to decoration; gray-blue #6D8296 substitutes in the ramp. Ice blue
+# #D4E4F7 survives as canvas tint and sequential light end. Verified via
+# python scripts/check_contrast.py --kit design/brand-kits/starter-arctic-frost/brand.yaml
+# Best for: healthcare, pharma, clean tech, precision engineering reports.
+
+kit: "starter-arctic-frost"
+version: 1
+date: "2026-08-04"
+
+identity:
+  organization_alias: "starter kit — no client"
+  personality: "crisp, precise, professional"
+
+color:
+  canvas: "#EAF1F9"
+  surface: "#FAFCFE"
+  ink: "#243447"
+  ink_secondary: "#4E617A"
+  hairline: "#CBD9E8"
+
+  accent: "#4A6FA5"
+  good: "#1F7A55"
+  bad: "#B0453A"
+  neutral_data: "#6D8296"
+
+  categorical:
+    - "#4A6FA5"
+    - "#3E8CA0"
+    - "#7C6FA5"
+    - "#2E4E73"
+    - "#6D8296"
+    - "#A5687F"
+
+  sequential: ["#D4E4F7", "#2E4E73"]
+  diverging: ["#B0453A", "#6D8296", "#1F7A55"]
+
+typography:
+  display: "Segoe UI Semibold, Segoe UI"
+  body: "Segoe UI, Arial"
+  numeric: "Segoe UI, Arial"
+  scale_pt: [28, 20, 14, 12, 10]
+
+shape:
+  radius_px: 8
+  shadow: "none"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: ""   # no logo bundled — add the client's when adopting this kit
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "locale-driven; nl-NL default (1.234,56) — confirm per client"
+
+forbidden:
+  - "silver #C0C0C0 never carries data or text"
+  - "no warm hues except the good/bad pair — the kit stays cool"

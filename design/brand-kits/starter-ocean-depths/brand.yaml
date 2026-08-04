@@ -1,0 +1,69 @@
+# Starter kit "Ocean Depths" — no-brand candidate for bk-brand-kit's no-brand path.
+# Adapted from the theme-factory skill, theme "Ocean Depths" (Anthropic skills
+# repo, Apache-2.0); the theme's 4 colors expanded to full role tokens.
+# Dark kit: the theme's deep navy IS the canvas — confirm the client wants a
+# dark report before adopting.
+# Fonts: theme's DejaVu Sans mapped to the Power BI-safe Segoe UI family.
+# WCAG notes: theme teal #2D8B8B kept as accent (3.9:1 on canvas, passes 3:1);
+# good/bad added (the theme defines none). All role pairs verified via
+# python scripts/check_contrast.py --kit design/brand-kits/starter-ocean-depths/brand.yaml
+# Best for: corporate, financial, consulting, trust-building reports.
+
+kit: "starter-ocean-depths"
+version: 1
+date: "2026-08-04"
+
+identity:
+  organization_alias: "starter kit — no client"
+  personality: "calm, trustworthy, deep"
+
+color:
+  canvas: "#1A2332"
+  surface: "#223041"
+  ink: "#F1FAEE"
+  ink_secondary: "#A8DADC"
+  hairline: "#34455C"
+
+  accent: "#2D8B8B"
+  good: "#66C2A3"
+  bad: "#E8907D"
+  neutral_data: "#7B8A9A"
+
+  categorical:
+    - "#2D8B8B"
+    - "#A8DADC"
+    - "#D9B36B"
+    - "#7FA3D1"
+    - "#A98CC9"
+    - "#7B8A9A"
+
+  sequential: ["#A8DADC", "#1F5F5F"]
+  diverging: ["#E8907D", "#7B8A9A", "#66C2A3"]
+
+typography:
+  display: "Segoe UI Semibold, Segoe UI"
+  body: "Segoe UI, Arial"
+  numeric: "Segoe UI, Arial"
+  scale_pt: [28, 20, 14, 12, 10]
+
+shape:
+  radius_px: 8
+  shadow: "none"   # shadows read as smudges on dark canvases
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: ""   # no logo bundled — add the client's when adopting this kit
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "locale-driven; nl-NL default (1.234,56) — confirm per client"
+
+forbidden:
+  - "no pure white fills — use ink #F1FAEE for light elements"
+  - "no saturated red/green semantics; keep the coral/seafoam good-bad pair"
