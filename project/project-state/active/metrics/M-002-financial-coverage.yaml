@@ -1,0 +1,24 @@
+contract: metric
+metric_id: "M-002"
+name: "Financial coverage"
+date: "2026-08-04"
+
+definition:
+  plain_language: "The share of movies for which the dataset actually knows both a budget and a revenue."
+  formula_in_words: "Movies with Budget > 0 AND Revenue > 0, divided by all movies in context."
+  grain: "any"
+  filters: "inherits the report-wide Adult exclusion"
+  unit: "percentage"
+  direction_is_good: "context-dependent — it is the honesty denominator; the report SHOWS it rather than optimizes it"
+
+edge_cases:
+  - "Zero is used by TMDB as 'unknown', not 'free/unreleased' — that conflation IS Lie #1's mechanism; state it on-canvas."
+  - "Non-zero junk (e.g. Budget=1) may exist — threshold TO VERIFY (Q2); if material, coverage uses a minimum-plausible floor, documented."
+  - "Expected order of magnitude: single-digit % of ~1M rows (TO VERIFY — the number is the story's first shock)."
+
+targets: { exists: false, source: "n/a" }
+owner: "entrant (definition steward)"
+synonyms: "credible rows, known-financials share"
+conflicts_checked: true
+
+implementation: { measure_name: "", display_folder: "", format_string: "" }

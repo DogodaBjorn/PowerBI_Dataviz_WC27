@@ -1,0 +1,24 @@
+contract: metric
+metric_id: "M-005"
+name: "Rating (raw)"
+date: "2026-08-04"
+
+definition:
+  plain_language: "TMDB's Vote Average as-is — trustworthy only when enough people voted; Lie #2's raw material."
+  formula_in_words: "Average of Vote Average weighted appropriately for the context (per movie: the value itself; per group: vote-count-weighted mean, never a plain average of averages)."
+  grain: "movie; group-level only vote-count-weighted"
+  filters: "report-wide Adult exclusion"
+  unit: "score (0-10)"
+  direction_is_good: "up (per movie), but ONLY comparable above the reliability threshold (M-006)"
+
+edge_cases:
+  - "Vote Count = 0 → no rating, show blank not 0 (a 0 is a claim)."
+  - "Tiny samples: a 9+ with a handful of votes MUST appear in Lie #2's funnel as 'insufficient evidence', never in any top-N."
+  - "Average-of-averages across groups is forbidden (contract-level rule; pbir_detect cannot catch it — fidelity review must)."
+
+targets: { exists: false, source: "n/a" }
+owner: "entrant (definition steward)"
+synonyms: "vote average, score"
+conflicts_checked: true
+
+implementation: { measure_name: "", display_folder: "", format_string: "" }

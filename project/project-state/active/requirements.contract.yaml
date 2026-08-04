@@ -73,11 +73,11 @@ data_landscape:
 open_questions:
   - id: Q1
     question: "Which story angle carries the entry (three candidates in 01-requirements.md)?"
-    blocking: true
+    blocking: false  # RESOLVED 2026-08-04: entrant picked Angle 3, 'Three seductive lies about the movies'
   - id: Q2
     question: "Profiling numbers for the quality_notes above (needed before s2 contracts lock)."
     blocking: false   # blocks G2, not G1 — s2 writes contracts against verified numbers
 
 gate_g1:
   all_requirements_traced: true
-  no_blocking_questions: false   # Q1 open — closes with the entrant's angle pick
+  no_blocking_questions: true    # Q1 resolved in-session; Q2 assigned to G2

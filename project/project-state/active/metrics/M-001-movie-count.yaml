@@ -1,0 +1,22 @@
+contract: metric
+metric_id: "M-001"
+name: "Movies"
+date: "2026-08-04"
+
+definition:
+  plain_language: "Number of movies in the current filter context."
+  formula_in_words: "Count of rows in Movies."
+  grain: "any (additive count)"
+  filters: "none standing; Adult excluded report-wide (see 02-metrics.md standing filter)"
+  unit: "count"
+  direction_is_good: "context-dependent (it is a denominator, not a goal)"
+
+edge_cases:
+  - "Duplicate titles exist (same film listed twice) — count is of ROWS, stated as 'listings' where precision matters; dedup share TO VERIFY (Q2)."
+
+targets: { exists: false, source: "n/a" }
+owner: "entrant (definition steward)"
+synonyms: "titles, listings, films"
+conflicts_checked: true
+
+implementation: { measure_name: "", display_folder: "", format_string: "" }

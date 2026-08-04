@@ -1,0 +1,24 @@
+contract: metric
+metric_id: "M-004"
+name: "Median profit (credible films)"
+date: "2026-08-04"
+
+definition:
+  plain_language: "The honest counterpart to Lie #1: the median profit among only the movies whose budget and revenue are actually known."
+  formula_in_words: "Median of (Revenue minus Budget) per movie, over rows with Budget > 0 and Revenue > 0."
+  grain: "movie (median is non-additive — recompute per context, never sum)"
+  filters: "credible-financials subset (M-002's numerator); report-wide Adult exclusion"
+  unit: "currency"
+  direction_is_good: "context-dependent"
+
+edge_cases:
+  - "Median chosen over mean BECAUSE outliers (mega-blockbusters) drag the mean — the mean-vs-median gap is itself shown as evidence, with top outliers named (R5)."
+  - "Selection bias stated on-canvas: films with known financials skew big-studio/US/recent — 'credible' is not 'representative', and the claim scope says so."
+  - "Coverage floor from M-002 verification applies identically."
+
+targets: { exists: false, source: "n/a" }
+owner: "entrant (definition steward)"
+synonyms: "honest profit, typical profit"
+conflicts_checked: true
+
+implementation: { measure_name: "", display_folder: "", format_string: "" }
