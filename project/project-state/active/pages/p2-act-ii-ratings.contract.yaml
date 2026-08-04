@@ -1,0 +1,26 @@
+contract: page-purpose
+page_id: "p2-act-ii-ratings"
+page_name: "Act II — The Ratings Lie"
+date: "2026-08-04"
+
+audience: "A1"
+question: "Is a perfect 10.0 the best film ever — or just the least-rated?"
+archetype: "drivers"
+
+three_second_message: "A 10.0 on 2 votes is not a rating: the median listing has zero votes, and weighted by evidence the 'best film ever' reads ~7.02."
+three_minute_path: "SC.1 leaderboard full-dress with real posters (Poster Path) and printed vote counts; SC.2 notes: votes p50=0, p75=1, 65.5% zero-vote; SC.3 the fall — raw 10.0 → weighted ~7.02 (m=100, C=6.96 disclosed on-canvas), Godfather reference PLACEHOLDER-AT-BUILD; per-movie tooltip carries poster + raw/weighted/votes; credits one click away."
+
+hero: "dn_rating_fall — the dumbbell fall from raw to evidence-weighted for the perfect-ten films (SC.3)."
+supporting_visuals:
+  - id: "tbl_perfect_tens"
+    intent: "4 Ranking (trap leaderboard: Las mujeres deciden 10.0 @ 2 votes; Logos 10.0 @ 3; + at least 18 more on 2–3 votes)"
+    metric_ids: ["M-005", "M-001"]
+  - id: "c_script_body"
+    intent: "annotation (S2)"
+    metric_ids: ["M-005", "M-006"]
+  - id: "c_verdict_act2"
+    intent: "editorial framing (S1)"
+    metric_ids: ["M-006"]
+
+interactions: "Beat rail as p1 (bm_p2_b1/b2/b3); tbl_perfect_tens rows → tt-movie-poster tooltip (poster is enhancement, never sole carrier — names and numbers always printed); btn_next_act → p3; btn_credits → p9."
+leaves_out: "The full votes-vs-rating scatter (Act III owns the scatter; Act II stages the fall — acknowledged intent trade); average-of-averages anywhere (M-005 contract rule)."

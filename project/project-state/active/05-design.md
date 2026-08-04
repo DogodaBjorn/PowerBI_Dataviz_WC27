@@ -205,10 +205,49 @@ report-designer: architecture + replacement page contracts + mechanism map
 animation in HTML Content w/ pre-torn fallback, beats→bookmarks, scatter→
 play axis, posters→Image URL) + interactive-prototype build spec + critique.
 
+## D7 converged design (2026-08-04) — summary
+
+Full spec in the designer's round-3 output; contracts live in
+`active/pages/` (5 pages + tt-movie-poster tooltip) and the D7 block in the
+creative-direction contract. Critique: **52/70**, honest lows on state
+coverage (6) and accessibility-of-interactivity (6) — the 50% eligibility
+gate is winnable but must be BUILT. Ranked risks: (1) scope vs deadline —
+ordered cut list contracted (tear→pre-torn; dn_rating_fall→paired bars;
+3 beats→2; tooltip posters→table only; credits joke→free); (2) trap-first
+SC.1 openings — M-003 equivalent marking non-negotiable; (3) a11y of the
+interaction surface — the package is contract, not aspiration.
+
+Architecture: p0 Box Office (night; marquee Key Takeaway; 3 tickets = nav) →
+p1/p2 screenplay acts (paper; 3 bookmark beats: SEDUCTION → NOTES →
+CORRECTED CUT; shared template) → p3 Premiere (night; native play-axis
+scatter over Release Year, credible ∧ votes≥100; refusal beat = M-007;
+no-date chip = the over-time seed's disclosure) → p9 End Credits (method as
+credits roll; static). Mechanism map: every effect names its PBI mechanism
+with fallback (HTML Content tear = VERIFY, pre-torn fallback; 2 Deneb with
+native fallbacks; posters = Image URL from Poster Path; ≥1 core visual rule
+satisfied by the scatter).
+
+## Ack table (entrant, at prototype approval — defaults recommended)
+
+| # | Decision | Default |
+|---|---|---|
+| 1 | 5 pages + tooltip (credits as own page) | yes |
+| 2 | Cover = ticket booth, not poster wall (no AI key art) | yes |
+| 3 | Acts I/II open on SC.1 (naive, marked); Act III opens on SC.3 | yes |
+| 4 | M-007 = Act III refusal beat | yes |
+| 5 | Tear = HTML Content VERIFY; pre-torn fallback accepted | yes |
+| 6 | Scatter population = credible financials ∧ votes ≥ 100; X = Revenue log | yes |
+| 7 | No act tints — single ticket-red accent | yes |
+| 8 | Posters only where they carry data (Act II leaderboard + tooltip) | yes |
+| 9 | Cut-list order pre-approved (see risks) | yes |
+| 10 | Carried: sign-variant headline, placeholder batch, locked Adult filter, coverage basis, credits joke line | — |
+
 ## Open questions
 
-- Entrant approval of the D7 converged design + its acks (page count, tear
-  fallback, popularity-as-refusal) once the dynamic prototype is presented.
+- Entrant approval of the D7 prototype + the ack table above → then G5
+  close-out: px-prototype capture, asset-fidelity inventory, handoff quartet
+  (design-handoff.md, data-model.md, measures.dax, theme.json via
+  theme-from-brand-kit mini-kit from D7 tokens).
 
 ## After the pick (contracted next steps)
 

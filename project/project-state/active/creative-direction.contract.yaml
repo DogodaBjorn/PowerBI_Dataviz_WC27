@@ -4,7 +4,19 @@ project: "wc-round-3"
 date: "2026-08-04"
 
 directions:
-  # ══ ROUND 2 (cinema-as-artifact; commissioned after round-1 rejection) ══
+  # ══ ROUND 3 — CONVERGED (entrant-authored concept; CHOSEN) ══
+  - id: D7
+    name: "The Seductive Lies: A Trilogy"
+    concept: "The entrant's own frame: the report is a film trilogy. Buy a ticket at the box office (cover carries the Key Takeaway on the marquee), read each act as a screenplay page where the naive conclusion is drafted, noted by the script doctor, and corrected (three bookmark beats per act), attend the premiere where the corrected cut plays on a native play-axis scatter (best-selling AND best-rated by release year, with one adjustment refused: popularity), stay for the end credits where the whole method rolls."
+    visual_language: "Theatrical arc: night box office (#171418) → script paper (#F5F2E9) → night premiere and credits; one ticket-red accent (luminance pair #B3402E/#E8705F, doubling as 'lie territory'); Bahnschrift SemiCondensed marquee/tickets + Consolas screenplay + Georgia Italic verdicts; tickets, slugs, dot leaders and perforations carry the cinema in pure form — grayscale-proof. Two Deneb visuals (ticket-waffle, rating-fall dumbbell), one certified HTML Content tear (verify; pre-torn fallback), real TMDB posters via Poster Path where they carry data."
+    signature_moment: "Tearing your ticket, watching each lie get corrected scene by scene, and arriving at a premiere where the honest winners animate in by release year — then the credits roll the method."
+    risk: "Scope vs the deadline (9 bookmarks, 2 Deneb, HTML Content, play axis — ordered cut list contracted); trap-first act openings demand the M-003 equivalent marking on every SC.1; the interactivity surface is exactly where the 50% accessibility eligibility gate is lost if rushed."
+    design_read: "A marquee stating the takeaway over three tickets — you already know the thesis before you choose which lie to watch fall."
+    dials:
+      density: "balanced"
+      variance: "expressive"
+    comp: "project/design-prototypes/d7-trilogy.html"   # dynamic prototype, JS for flow simulation only, mechanism legend on every effect
+  # ══ ROUND 2 (cinema-as-artifact; ALL REJECTED — "Still not sold on any") ══
   - id: D4
     name: "The One-Sheet"
     concept: "A landscape quad poster for a picture called 'Three Seductive Lies'. The lies are critics' pull-quotes with star ratings and naive attributions; the Key Takeaway is the tagline; the method and scope live where posters always put the truth — the billing block. The MPAA-style rating plate is the read-toggle: R (Read Responsibly, default) / N (Naive read)."
@@ -81,14 +93,18 @@ critique:
   method: "each direction argued against design/design-doctrine.md, per audience; seven scored passes in 05-design.md"
   notes: "D1 (52/70): strongest theme-fit and a genuinely felt signature (13 lit seats), disciplined triptych; fails if the two Deneb specs slip (signature demotes to a stacked bar) or if dark-genre familiarity dulls the Creativity read; dark theme demands the strictest small-text discipline of the three. D2 (54/70): the most honest embodiment of 'using data responsibly' — the audit frame makes disclosure the aesthetic; best reading path (row grammar) and best accessibility (all pairs >=4.6:1, all native, zero deadline risk); its failure mode is the Creativity ceiling — the signature is retold as an idea, not an image, and rows can drift toward wall-of-text. D3 (49/70): the most retellable single image (a front page correcting itself) at the lightest build cost, fully native; its failure modes are structural — the lie outweighs the truth typographically, Lie 2 loses the correlation view, and compact blocks put real film titles against the 10pt floor where 25% of the score lives."
 
-chosen: ""                       # ROUND 1 (D1-D3): ALL REJECTED — "don't look and feel movie related". ROUND 2 (D4-D6): ALL REJECTED — "Still not sold on any" (taste key round2-d4-d5-d6). ROUND 3: entrant AUTHORED the concept — "The Seductive Lies I II III" trilogy (taste key trilogy-concept-entrant, verbatim in 05-design.md); D7 convergence in progress. Hard wishes now binding: dynamic realistic mockups, Deneb + extended-HTML visuals, poster assets in tooltips, "remarkable, usable, accessible, fun — not flat, not overcomplicated".
-chosen_because: ""               # to be recorded in the entrant's own words
-user_decided: false
-# DECIDED 2026-08-04 with the rejection: p1 gains the "Read naively / Read responsibly"
-# bookmark toggle (entrant: "I want to add a toggle but with animations!") — native
-# bookmark transition tweening ONLY, two designed states, responsible state is default.
+chosen: "D7"
+chosen_because: "Entrant-authored concept (verbatim in taste memory: trilogy-concept-entrant) — 'make the concept all around it being a movie on itself… remarkable, usable, accessible and most of all fun to engage with'; pending final ack of the 10-row decision table in 05-design.md."
+user_decided: true   # direction authored and chosen by the entrant; ack table outstanding before G5 closes
+# History: ROUND 1 (D1-D3) ALL REJECTED — "don't look and feel movie related".
+# ROUND 2 (D4-D6) ALL REJECTED — "Still not sold on any" (taste key round2-d4-d5-d6).
+# The round-2 toggle decision evolved into D7's three-beat bookmark structure
+# (SC.1 naive / SC.2 notes / SC.3 corrected) — native tween only, M-003 equivalent
+# marking on every naive beat.
 
-fidelity_checklist:              # fill with the winner's list at choice time; candidates below
-  # D1: (1) 10x10 seat grid with exactly 13 gold seats + printed 13.1%; (2) dim-trap/lit-truth card states with strike + TRAP/HONEST tags on every pair; (3) gold as the only accent, used as spotlight rules; (4) gold-ruled Key Takeaway block top-right of p1; (5) dark canvas #0F0F23 identical on all three pages.
-  # D2: (1) claim->trap->honest row grammar on p1, three times, same zone widths; (2) cross-foot reconciliation strip present and correct on every page; (3) tick-mark legend in the masthead and ticks used on every semantic mark; (4) Georgia/Segoe/Consolas system with mono numerals in all tables; (5) red-pencil strike + [UNVERIFIED] tag on every trap figure.
-  # D3: (1) struck 44pt lead headline with 4px rule and yellow-barred correction; (2) CORRECTIONS band carrying the Key Takeaway verbatim; (3) ink-block nameplate identical on all pages; (4) yellow never as text anywhere; (5) every trap block headline paired with its white inset honest card.
+fidelity_checklist:              # D7 — stage 6 is judged against these
+  - "Key Takeaway verbatim on the p0 marquee; three tickets are the only nav and each names its act + teaser stat"
+  - "Every SC.1 naive beat carries the M-003 equivalent marking (slug + 'naive cut' tag + beat rail 1/3); strikes and corrections land at SC.3"
+  - "Act III hero is the NATIVE play-axis scatter (population and parameters printed on-canvas; refusal card for popularity present; no-date chip visible)"
+  - "End-credits method page: cross-foot 85,394 − 1,358 = 84,036, glossary with TRAP/HONEST/OPAQUE tags, SCENES DELETED refusals, TMDB credit"
+  - "One ticket-red accent system, ≤6 hues, 0px surfaces / 8px tickets-chips, and the full a11y package (tab orders, state alt text, focus outlines) as contracted"

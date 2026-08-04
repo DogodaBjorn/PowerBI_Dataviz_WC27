@@ -1,0 +1,26 @@
+contract: page-purpose
+page_id: "p1-act-i-profit"
+page_name: "Act I — The Profit Lie"
+date: "2026-08-04"
+
+audience: "A1"
+question: "Does the movie business really lose money — or does the dataset lose data?"
+archetype: "drivers"
+
+three_second_message: "The 'industry loses money' conclusion is an artifact: 79.0% of revenues are zeros counted as $0 — only 13.1% of listings can support money claims."
+three_minute_path: "Beat rail states the scene (1–3); SC.1 carries the naive-cut marking (M-003 equivalent: slug + naive tag + rail); SC.2 notes cite the mechanism (Budget never 0 — junk: min $1, median $2,800; Revenue 79.0% zeros; one −$12 row); SC.3 shows the ticket-waffle (13 of 100 valid, floor $10k disclosed) and median PLACEHOLDER-AT-BUILD vs mean PLACEHOLDER-AT-BUILD with the USD caveat; verdict links to Act II; credits one click away."
+
+hero: "dn_ticket_waffle — 100 tickets, 13 punched VALID; the felt proportion of credible financials (SC.3)."
+supporting_visuals:
+  - id: "kpi_profit_naive (+ c_strike_act1 at SC.3)"
+    intent: "1 Magnitude (trap exhibit; full-dress only inside marked SC.1)"
+    metric_ids: ["M-003", "M-002"]
+  - id: "c_script_body (slug, action, dialogue, notes)"
+    intent: "annotation (S2) — the screenplay narrative and script-doctor notes"
+    metric_ids: ["M-002", "M-003", "M-004"]
+  - id: "c_verdict_act1"
+    intent: "editorial framing (S1)"
+    metric_ids: ["M-004"]
+
+interactions: "sl_beat_rail: 3 bookmark buttons (bm_p1_b1/b2/b3) + btn_next_scene (beat-variant overlays); native tween only; default = SC.1 (ack); btn_next_act → p2; btn_credits → p9; all controls keyboard-reachable, beat state named in button text ('Scene 2 of 3')."
+leaves_out: "Coverage-by-year panel (over-time now lives in Act III's play axis); genre splits; any unmarked appearance of Profit (naive)."
