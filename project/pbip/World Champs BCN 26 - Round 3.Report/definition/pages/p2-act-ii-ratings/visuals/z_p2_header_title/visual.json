@@ -6,46 +6,96 @@
     "y": 36,
     "z": 10,
     "width": 830,
-    "height": 32,
+    "height": 44,
     "tabOrder": 100
   },
   "visual": {
-    "visualType": "textbox",
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Title · Lie 2"
+                }
+              },
+              "queryRef": "_Measures.Title · Lie 2",
+              "nativeQueryRef": "Title · Lie 2"
+            }
+          ]
+        }
+      }
+    },
     "objects": {
-      "general": [
+      "value": [
         {
           "properties": {
-            "paragraphs": [
-              {
-                "textRuns": [
-                  {
-                    "value": "THE SEDUCTIVE LIES — ",
-                    "textStyle": {
-                      "fontFamily": "Consolas",
-                      "fontSize": "12pt",
-                      "color": "#211E1A"
-                    }
-                  },
-                  {
-                    "value": "ACT II",
-                    "textStyle": {
-                      "fontFamily": "Consolas",
-                      "fontSize": "12pt",
-                      "color": "#8A6516",
-                      "fontWeight": "bold"
-                    }
-                  },
-                  {
-                    "value": ": ‘THE RATINGS LIE’",
-                    "textStyle": {
-                      "fontFamily": "Consolas",
-                      "fontSize": "12pt",
-                      "color": "#211E1A"
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Consolas'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#211E1A'"
                     }
                   }
-                ]
+                }
               }
-            ]
+            },
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "label": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]
@@ -97,6 +147,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Act II title. States the share of listings that clear the disclosed evidence bar of m votes, computed live.'"
                 }
               }
             }

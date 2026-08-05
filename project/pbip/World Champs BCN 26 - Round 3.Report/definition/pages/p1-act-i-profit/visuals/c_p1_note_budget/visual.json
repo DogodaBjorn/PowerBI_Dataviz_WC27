@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "NOTE: Budget is never 0 here. Unknowns arrive as junk: min $1.",
+                    "value": "NOTE: Budget is never 0 here. Unknowns arrive as token amounts, not as blanks.",
                     "textStyle": {
                       "fontFamily": "Consolas",
                       "fontSize": "10pt",

@@ -13,19 +13,44 @@ validation record. This file is the stage's state + open questions.
 | B2a | `p1-act-i-profit` · `p2-act-ii-ratings` | done 2026-08-05 |
 | B2b | Act II ruling · `p3-act-iii-corrected-cut` · `tt-movie-poster` · 9 bookmarks | done 2026-08-05 |
 | **B2c** | **The alt-text layer — 10 measures + alt text on all 210 visuals** | **done 2026-08-05** |
+| **G6-fix** | **QA fix pass: 3 blockers + 12 majors from the 24/40 review** | **done 2026-08-05** |
 | C | Desktop round-trip: refresh, render, work the manual checklist | not started |
 
-**The report is structurally complete.** 210 visuals across six pages
-(p0 42 · p1 44 · p2 38 · p3 37 · p9 35 · tooltip 14) plus nine beat bookmarks.
-Model: **89 measures**, including the ten `06 Display\Alt text` narrations.
+**The report is structurally complete.** 213 visuals across six pages
+(p0 43 · p1 44 · p2 38 · p3 37 · p9 37 · tooltip 14) plus nine beat bookmarks —
+**5 visible pages + 1 tooltip page**, against a contest maximum of 5. The two
+contest-starter pages ("Read Me", "Tabular") were deleted in the fix pass.
+Model: **90 measures**, including the ten `06 Display\Alt text` narrations.
 Alt-text coverage: 76 content · 73 empty-decorative · 61 textboxes reading their own
 copy. **The waiting list is closed.**
 
-`validate_json.py`: 267 files, 0 errors. `validate_tmdl.py --strict`: 1 error, the
-standing `SourceRoot` waiver. All 210 `visual.json`, all six `page.json`,
-`pages.json`, the nine `*.bookmark.json` and `bookmarks.json` validate against their
-published schemas (`visualContainer/2.9.0` with remote sub-schemas resolved,
-`page/2.1.0`, `pagesMetadata/1.1.0`, `bookmark/2.1.0`, `bookmarksMetadata/1.0.0`).
+`validate_json.py`: 251 files, 0 errors. `validate_tmdl.py --strict`: 1 error, the
+standing `SourceRoot` waiver. All 213 `visual.json`, all six `page.json`,
+`pages.json`, `report.json`, the nine `*.bookmark.json` and `bookmarks.json` validate
+against their published schemas (`visualContainer/2.9.0` with remote sub-schemas
+resolved, `page/2.1.0`, `pagesMetadata/1.1.0`, `report/3.3.0`, `bookmark/2.1.0`,
+`bookmarksMetadata/1.0.0`). Binding cross-check: 53 bound properties, all resolve.
+
+## G6 fix pass (2026-08-05) — what changed
+
+Fourteen of the fifteen findings are closed on disk; one (FIX-C) is closed **and**
+proved a schema question the build had left open. Full record in BUILD_LOG →
+*Stage 6 G6 fix pass*.
+
+- **The report-level Adult filter is expressible in PBIR, and is now written.**
+  `report/3.3.0` declares `filterConfig` → `filterConfiguration/1.3.0`; the
+  `Advanced`/`Comparison` shape was taken from a filter this report already carries,
+  and the boolean literal spelling from the schema's own documentation. Validated
+  against the live schema with remote `$ref`s resolved, plus a negative control that
+  proved the validator reaches inside the filter subtree.
+- **The mandated dataset attribution now names TMDB, Kaggle and ODC-By 1.0**, in one
+  identical string on p0 and p9 — written *before* the template pages were deleted,
+  so the credit was never absent from the entry.
+- The three act headers are measure-bound; the Key Takeaway has a kicker; both tables'
+  headers are silenced; the p3 beat rail is on the p1/p2 grid; the ticket perforation
+  is one frame plus one hairline; the p9 negative-revenue row exists and is bound.
+- Two extra defects were found and fixed during the pass: a stale Act II docstring on
+  `Movies (perfect ten)`, and `c_cr_count_dup_val` sitting one row below its label.
 
 ## Decisions recorded this stage
 
@@ -72,11 +97,23 @@ published schemas (`visualContainer/2.9.0` with remote sub-schemas resolved,
    visual's role key and `sourceField` · `VisualTopN` behaviour) join the five from
    phase B1. Each fails visibly and each is a one-line fix; all are on the Desktop
    checklist.
-5. **Native table headers cannot be hidden**, and `tableEx` has no per-column font.
-   `tbl_perfect_tens` and `tbl_refusal_ranks` ship with quiet headers and one font
-   family each; both may need a `columnWidth` tune in Desktop.
+5. ~~**Native table headers cannot be hidden**~~ — **closed in the G6 fix pass.**
+   `tableEx` still has no `columnHeaders.show`, so both tables now set the header
+   `fontColor` equal to the header `backColor` (`#FFFFFF` on p2, `#1D1A20` on p3):
+   the row keeps its semantics for assistive technology and prints nothing. The
+   **no per-column font** limit stands, and both may still need a `columnWidth` tune
+   in Desktop.
 6. **`Two-vote ten (illustration)` and `Godfather rating (reference)` are now unused**
    by any visual after the Act II ruling. Retained, not deleted.
 7. **Nothing built at stage 6 has been rendered.** No measure has been executed and no
    pixel seen; BUILD_LOG's Desktop checklists are the gate for that, and s7 still owns
    the 85,394 / 84,036 / 84,510 snapshot reconciliation.
+8. **The report-level filter has never been seen attached.** It is schema-correct and
+   modelled on a filter this report already carries, but the End Credits cross-foot is
+   the trust anchor of the entry and it now depends on that filter actually binding in
+   Desktop. **First check after refresh:** the Filters pane shows a locked *Adult is
+   False* card, and `[Adult listings excluded]` prints a non-zero number.
+9. **The p3 act header must wrap to render fully.** `[Title · Lie 3]` measures ~963 px
+   against an 830 px box (the band `btn_home` leaves), so the card wraps to two lines
+   in 44 px. If Desktop clips instead of wrapping, raise the box to y 32 / h 48 —
+   never drop the type below the 10 pt floor.

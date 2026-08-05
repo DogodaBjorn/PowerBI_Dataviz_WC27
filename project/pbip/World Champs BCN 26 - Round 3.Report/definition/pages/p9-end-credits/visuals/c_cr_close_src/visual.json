@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "SOURCE DATA BY TMDB — NOT ENDORSED OR CERTIFIED BY TMDB",
+                    "value": "SOURCE DATA BY TMDB, DISTRIBUTED VIA KAGGLE UNDER ODC-BY 1.0 — THIS PRODUCT USES TMDB DATA BUT IS NOT ENDORSED OR CERTIFIED BY TMDB",
                     "textStyle": {
                       "fontFamily": "Bahnschrift SemiCondensed",
                       "fontSize": "10pt",

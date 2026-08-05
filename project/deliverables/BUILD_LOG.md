@@ -4,19 +4,21 @@
 never saw the chat must learn from this file: what exists, what remains
 manual, which numbers rest on assumptions, when it was last validated. -->
 
-Last validated: 2026-08-05 — `validate_tmdl.py --strict`: 15 files, **1 error**
-(the standing `SourceRoot` drive-letter waiver, see 04-model-build.md), 0
-warnings; **267 repo JSON files** well-formed, UTF-8 without BOM, 0 errors;
-`report.json` 0 errors against its declared `report/3.3.0` schema.
-Model: 10 tables, **89 measures**, 8 relationships, 3 shared expressions
+Last validated: 2026-08-05 (G6 fix pass) — `validate_tmdl.py --strict`: 15 files,
+**1 error** (the standing `SourceRoot` drive-letter waiver, see 04-model-build.md),
+0 warnings; **251 repo JSON files** well-formed, UTF-8 without BOM, 0 errors;
+every PBIR file 0 errors against its published schema with remote `$ref`s resolved.
+Model: 10 tables, **90 measures**, 8 relationships, 3 shared expressions
 (SourceRoot parameter, Source, Schema). The `06 Display\Alt text` family is
 **built** — the attribution blocker was cleared on 2026-08-05 (commit `f4b9420`).
-Report: the D7 custom theme is installed and active. **The report is
-structurally complete**: `p0-box-office` (42) · `p1-act-i-profit` (44) ·
-`p2-act-ii-ratings` (38) · `p3-act-iii-corrected-cut` (37) · `p9-end-credits`
-(35) · `tt-movie-poster` tooltip (14) = **210 visuals in six pages**, plus the
-**nine beat bookmarks** (`bm_p1_b1..b3`, `bm_p2_b1..b3`, `bm_p3_b1..b3`). The two
-starter pages are untouched. Nothing has been rendered in Desktop — see
+Report: the D7 custom theme is installed and active, and a **report-level filter**
+(`Movies[Adult] = false`, locked, pane visible) is written into `report.json`.
+**The report is structurally complete**: `p0-box-office` (43) ·
+`p1-act-i-profit` (44) · `p2-act-ii-ratings` (38) · `p3-act-iii-corrected-cut` (37) ·
+`p9-end-credits` (37) · `tt-movie-poster` tooltip (14) = **213 visuals in six pages**
+(5 visible + 1 tooltip — the contest maximum is 5), plus the **nine beat bookmarks**
+(`bm_p1_b1..b3`, `bm_p2_b1..b3`, `bm_p3_b1..b3`). **The two contest-starter pages
+were deleted in the G6 fix pass.** Nothing has been rendered in Desktop — see
 *Manual steps* and *Known limitations*.
 
 ## Built
@@ -49,6 +51,21 @@ starter pages are untouched. Nothing has been rendered in Desktop — see
 | 2026-08-05 (s6 phase B2b) | Report: `pages/tt-movie-poster` | **14 visuals**, 320×420, `type: "Tooltip"`, `visibility: "HiddenInViewMode"`, `pageBinding` type Tooltip. `z_tt_bg` · `img_tt_poster` · `c_tt_name` · `c_tt_year` · 4 label/value rows (the weighted row carries `[Mark · Rating verdict]` beside the number) · `c_tt_foot`. Every field it shows is also printed on canvas elsewhere |
 | 2026-08-05 (s6 phase B2b) | Report: `definition/bookmarks/` | **9 bookmark files + `bookmarks.json`**. Folder layout and both schemas verified (Learn `projects-report`; `bookmark/2.1.0`, `bookmarksMetadata/1.0.0`). Each bookmark captures **every** visual on its page (44 / 38 / 37) with `options.suppressData: true` = Data OFF · Display ON · Current page ON · All visuals |
 | 2026-08-05 (s6 phase B2b) | Report: `pages/pages.json` | `p3-act-iii-corrected-cut` appended after p2; `tt-movie-poster` appended last. Starter ids untouched; `activePageName` / `landingPageName` still `p0-box-office` |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: attribution | `z_footer_credit` (p0) and `c_cr_close_src` (p9) now carry one identical mandated credit string naming **TMDB · Kaggle · ODC-By 1.0** plus the TMDB non-endorsement clause. p0's box widened 900 → 1060 px so the longer string stays on one line (measured 919 px, Segoe UI 10 pt) |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: contest-template pages **deleted** | `a65cf5aab733edd4ebbd` ("Read Me") and `22a73d6058ce40e505e0` ("Tabular") — both 1920×1080, default styling — removed with their 17 visuals and struck from `pageOrder`. Verified beforehand that no bookmark, `navigationSection`, `pageBinding` or tooltip target referenced either id. Entry is now **5 visible pages + 1 tooltip** |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: `definition/report.json` | **report-level filter written** — `filterConfig.filters[0]` `flt_report_adult`: `Movies[Adult] = false`, `type: "Advanced"`, `howCreated: "User"`, `isLockedInViewMode: true`, `isHiddenInViewMode: false` |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: `tbl_perfect_tens` · `tbl_refusal_ranks` | column headers silenced by setting `columnHeaders.fontColor` equal to `columnHeaders.backColor` (`#FFFFFF` on p2, `#1D1A20` on p3). `tableEx` has no `columnHeaders.show` |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: `z_p1_header_title` · `z_p2_header_title` · `z_p3_header_title` | textbox → **measure-bound `cardVisual`** on `[Title · Lie 1/2/3]`. Consolas 12 pt, page ink, left, wrap on; geometry unified to `24, 36, 830, 44` on all three acts. Alt text added (each states the finding, no volatile count) |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: `p0/z_hero_kicker` | NEW textbox — `KEY TAKEAWAY` kicker at `24, 136, 1232, 16`, Bahnschrift SemiCondensed 10 pt `#B5AFA0`, centred over `hero_takeaway`, tabOrder 250 |
+| 2026-08-05 (s6 **G6 fix pass**) | Report + model: stale Act II strings | `z_ticket2_tease` → "In which 1 vote crowns a champion"; `c_cr_cast` → "THE SINGLE-VOTE PERFECT TEN … as 'The Best Film Ever Made'"; `c_cr_glossary` → "M-005 RAW RATING — any votes, even 1"; plus a fourth found in the model: a leftover first docstring line on `Movies (perfect ten)` that still described "a perfect 10.0 on two votes" |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: `c_p1_note_budget` · `c_p1_note_negrev` | the two typed literals removed by re-phrasing (no measure invented): "min $1" → "Unknowns arrive as token amounts, not as blanks."; "one listing books −$12 revenue" → "revenue goes negative in this basis." |
+| 2026-08-05 (s6 **G6 fix pass**) | SemanticModel: `_Measures` — Act III wording | "films" → "listings" in `Label · Population`, `Title · Lie 3`, `Alt · hero_premiere_scatter` (2 places) and `Alt · c_refusal_popularity` (2 places); `Copy · Act III · verdict` "the best movie" → "the best-performing listing" |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: invisible properties | 4 adjustment chips `outline.lineColor` `#3A3441` → `#6E6960` (1.43:1 → 3.16:1 on the card, 3.35:1 on canvas); `z_refusal_card_lit` fill `#282331` → theme `#2E2933` **and** outline weight 2 → 4 px so beat SC.2 has a non-colour carrier; `c_cr_count_dup_lbl` 240 → 264 px (its string measures 261 px at Consolas 12 pt) |
+| 2026-08-05 (s6 **G6 fix pass**) | SemanticModel + Report: p9 NEGATIVE REVENUE row | **1 NEW measure** `Movies (negative revenue)` = `CALCULATE([Movies], Movies[Revenue] < 0)` (folder `05 Data health · Time`, format `#,0`, fresh lineageTag) + `c_cr_count_negrev_lbl` / `c_cr_count_negrev_val` at y 436, tabOrder 550 / 555, z 51 / 52 |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: ticket perforation ×3 | `z_ticketN_rule` widened 286 → 372 px so one act-tint frame spans the whole inner ticket; `z_ticketN_stub_rule` outline switched off. The 1 px `z_ticketN_perf` line is now the only mark at the tear |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: `p3` beat rail | `btn_beat_1..3` and `z_p3_beat1..3_mark` moved onto the p1/p2 x-grid `24/188 · 222/148 · 380/222`. All three p3 labels measured to fit (131 / 106 / 122 px at Bahnschrift SemiCondensed 10 pt) |
+| 2026-08-05 (s6 **G6 fix pass**) | Report: `c_cr_count_dup_val` | y 360 → 341, rejoining its own label — every other p9 count pair already shared a row (found during the width fix, not in the review) |
+| 2026-08-05 (s6 **G6 fix pass**) | Deliverables: `design-handoff.md` | the sentence claiming no `layout.json` / `reference_screenshots/` were produced corrected — both exist (`project/design-prototypes/`, 8 screens and 8 @2x captures) |
 
 ## Deferred — not built, and why
 
@@ -66,13 +83,12 @@ starter pages are untouched. Nothing has been rendered in Desktop — see
 - ~~Alt text on every visual is intentionally UNSET~~ — **resolved, see
   *the alt-text layer* below.** The former waiting list (p0 6 · p1 11 · p2 6 · p3 9 ·
   p9 11 · tooltip 8) is closed; every visual on it now carries alt text.
-- **p9 `NEGATIVE REVENUE` row — not built.** The design's counts table lists a
-  negative-revenue count, but no measure produces it (`measures.dax` has none and
-  `data-model.md`'s field map lists only seven count measures). Typing `1 (−$12)`
-  would be a literal count, which the snapshot-reconciliation rule forbids.
-  **To unblock:** add a `Movies (negative revenue)` measure in folder
-  `05 Data health · Time`, then add the row pair `c_cr_count_negrev_lbl` / `_val`
-  at y 436 with tabOrder 550 / 555.
+- ~~**p9 `NEGATIVE REVENUE` row — not built.**~~ — **RESOLVED and BUILT in the G6
+  fix pass (2026-08-05).** `Movies (negative revenue)` =
+  `CALCULATE([Movies], Movies[Revenue] < 0)` was added in folder
+  `05 Data health · Time` (format `#,0`, fresh lineageTag), and the row pair
+  `c_cr_count_negrev_lbl` / `c_cr_count_negrev_val` sits at y 436 with tabOrder
+  550 / 555 exactly as the recipe specified. The count is **bound, never typed**.
 - **p9 disclosed-parameter notes — numeric parts not built.** The design prints
   `$10,000 (13.1% vs 11.9% @ $100k)` and `100 (Vote Count p90=106)`. Both
   parentheticals are stale under the entrant's newer snapshot (coverage is now
@@ -807,6 +823,58 @@ bookmark, verified by script).
 - *Rail:* `z_p3_beat{1,2,3}_mark` one per beat; `btn_next_scene` at SC.1,
   `btn_next_scene_2` at SC.2, neither at SC.3
 
+### Stage 6 G6 fix pass — decisions (2026-08-05)
+
+- **The report-level Adult filter IS expressible in PBIR — it is now written.**
+  Research trail, not memory: `report.json` declares
+  `report/3.3.0/schema.json`; that schema's own property list contains
+  `filterConfig` → `$ref: ../../filterConfiguration/1.3.0/schema-embedded.json`,
+  whose `FilterContainer` supplies `name` (required), `field`, `type`,
+  `filter` (→ `semanticQuery/1.4.0#/definitions/FilterDefinition`),
+  `howCreated`, `isLockedInViewMode`, `isHiddenInViewMode`. The literal spelling
+  for a boolean is documented in that same file (`Boolean: "true"`), and
+  `QueryComparisonKind` 0 = Equal. The `Advanced` + `Comparison` shape was not
+  invented — it is the shape this report's own `dn_rating_fall` already uses.
+  Verified by validating `report.json` against the live 3.3.0 schema with all
+  remote `$ref`s resolved (0 errors) **and** by a negative control: corrupting
+  `ComparisonKind` to 99 and `type` to `"NotAThing"` produced exactly 2 errors at
+  `/filterConfig/filters/0/...`, proving the validator reaches inside the filter.
+  `[Movies (all listings incl. adult)]` is already
+  `CALCULATE([Movies], REMOVEFILTERS(Movies[Adult]))`, so the End Credits
+  cross-foot now has a non-zero middle line **as designed** — no measure change
+  was needed.
+- **The act headers lost their per-run tint, by necessity.** A `cardVisual` has one
+  `value.fontColor`; it cannot colour "ACT I" differently from the rest of the
+  string. The act tint is **not** lost from the header block: `z_pN_header_rule`
+  directly beneath each title is a full-width 1 px bar already filled with the act
+  tint (`#2E4A7D` / `#8A6516` / `#B79BE8`). The title itself now carries page ink
+  (`#211E1A` on paper 14.83:1, `#F2EFE6` on night 15.89:1). Tint stays chrome-only.
+- **All three act headers were unified to `24, 36, 830, 44`.** `[Title · Lie 3]`
+  measures ~963 px at Consolas 12 pt and cannot fit one line in the 830 px band
+  (`btn_home` starts at x 866), so the header wraps; giving p1 and p2 the same box
+  keeps one geometry per archetype instead of a per-act exception.
+- **FIX-H was resolved by re-phrasing, not by new measures.** Binding "min $1" and
+  "−$12" would need two more measures *and* a split of each 198 px note into a
+  prose box plus a value card — a layout change. Re-phrasing keeps p1 consistent
+  with p9's own refusal to type that figure, and the negative-revenue **count** is
+  now printed live on p9 instead.
+- **`z_ticketN_stub_rule` is now inert on purpose.** Its outline was the second of
+  two facing 2 px edges that made the perforation read as a 5 px bar. PBIR shapes
+  have no per-side outline, so a "3-sided" stub frame is not expressible; the
+  single-frame + perforation-line composition is the honest equivalent. The three
+  visuals are **kept, not deleted**, so their ids stay stable.
+- **`c_cr_count_dup_val` was on the wrong row** (y 360 against its label's y 341,
+  while all six sibling pairs share a y). Corrected to 341. Found while widening the
+  label; not in the review.
+- **A fourth stale Act II string was found in the model.** `Movies (perfect ten)`
+  carried two `///` lines, the first still describing "a perfect 10.0 on two votes"
+  and contradicting the second. The stale line was removed; the measure, its name,
+  `lineageTag`, `formatString` and `displayFolder` are untouched.
+- **Text fitting was measured, not estimated.** Every width decision in this pass
+  (the two credit strings, the act titles, the p9 labels, the p3 beat labels, the two
+  re-phrased notes) was measured with Windows GDI `GetTextExtentPoint32W` at the
+  visual's own family and size, normalised to 96 DPI logical pixels.
+
 ## Manual steps required in Desktop
 
 - [ ] Close Desktop **without saving** and reopen the pbip (Desktop currently
@@ -1040,6 +1108,31 @@ Also at phase B1:
       add the author's name. Do not remove or weaken those entries; do not adopt the
       post's DAX-UDF pattern until the name is recorded.
 
+### New at the G6 fix pass (2026-08-05) — verify these FIRST after refresh
+
+- [ ] **The report-level Adult filter.** Open the Filters pane on any page. Expect one
+      **locked** card reading *Adult is False* (report-level section, pane expanded,
+      not hidden). Then read the End Credits cross-foot: `SOURCE ROWS` −
+      `ADULT LISTINGS EXCLUDED` = `BASIS` must be three different, non-zero numbers.
+      If `ADULT LISTINGS EXCLUDED` prints 0, the filter did not attach — say so, do
+      not paper over it.
+- [ ] **The three act headers.** They are now cards bound to
+      `[Title · Lie 1/2/3]`. Expect a stated finding, not a topic. p3's title wraps to
+      two lines in a 44 px box — confirm nothing is clipped; if it is, raise the box
+      to 48 px (y 32) rather than dropping below 10 pt.
+- [ ] **Both tables' headers.** `tbl_perfect_tens` and `tbl_refusal_ranks` should show
+      no header text at all (ink == fill). If a header still reads, the theme is
+      overriding `columnHeaders.fontColor` — set it again in the Format pane.
+- [ ] **The ticket perforation on p0.** Each ticket must read as **one** framed ticket
+      with a single hairline tear, not two boxes. `z_ticketN_stub_rule` is deliberately
+      inert; do not "fix" it by switching its outline back on.
+- [ ] **Beat SC.2 on p3.** Click SC.2 and confirm the refusal card visibly changes:
+      the outline goes from 2 px to 4 px and the fill lifts one step. If the change is
+      still not obvious on your display, brighten the lit outline rather than the fill.
+- [ ] **`NEGATIVE REVENUE` on p9** prints a live count from
+      `[Movies (negative revenue)]`, and `DUPLICATE (TITLE, DATE) PAIRS` now fits on
+      one line beside its value on the same row.
+
 ## Validation status
 
 ```
@@ -1182,6 +1275,29 @@ volatile-count check      : no static alt string contains a snapshot-dependent
                             and the derived 6.99 appear as literals
 bookmark / link / binding / layout / scope-rule / reserved-red checks : unchanged
                             from phase B2b, all still 0 errors
+
+[2026-08-05 — stage 6 G6 FIX PASS]
+validate_json.py          : 251 file(s) repo-wide, 0 errors, no BOM
+                            (was 267 before the two template pages and their
+                            17 visual.json were deleted; +3 files added since)
+validate_tmdl.py --strict : 15 file(s), 1 error, 0 warnings — the 1 error is the
+                            standing SourceRoot drive-letter waiver
+                            (expressions.tmdl line 34). No new TMDL defect.
+visualContainer/2.9.0     : 213 visual.json, remote $refs resolved, 0 errors
+page/2.1.0                : 6 page.json, 0 errors
+pagesMetadata/1.1.0       : pages.json, 0 errors
+report/3.3.0              : report.json INCLUDING the new filterConfig, 0 errors
+                            (negative control confirmed the filter subtree is
+                            actually traversed — see the fix-pass decisions)
+bookmark/2.1.0            : 9 bookmark files, 0 errors
+bookmarksMetadata/1.0.0   : bookmarks.json, 0 errors
+check_contrast.py         : 6 pair(s), 0 failures
+binding cross-check       : 53 distinct bound properties across 213 visuals,
+                            all resolve to one of 90 measures / 35 columns
+tab-order check           : no duplicate tabOrder on any page
+                            (p0 11 · p1 32 · p2 27 · p3 21 · p9 37 stops)
+page census               : 6 pages — 5 visible at 1280×720 + 1 Tooltip page
+                            (320×420). The contest maximum is 5.
 ```
 
 ## Known limitations
@@ -1226,8 +1342,11 @@ bookmark / link / binding / layout / scope-rule / reserved-red checks : unchange
   The 100-ticket metaphor (the signature moment of Act I) is **not in the shipped
   report**; the proportion is stated numerically by `[Copy · Act I · waffle title]`
   and shown as one split bar.
-- **`tbl_perfect_tens` shows its column headers** and uses one font family for all
-  columns — both are limits of the native table visual, not choices.
+- ~~**`tbl_perfect_tens` shows its column headers**~~ — **resolved in the G6 fix
+  pass.** `tableEx` still has no `columnHeaders.show`, so both tables now set
+  `columnHeaders.fontColor` equal to `columnHeaders.backColor`; the header row still
+  exists for assistive technology but prints nothing. The **one font family per
+  table** limit stands.
 - **Nothing built in phase B2a has been rendered either.** The two pages are
   schema-correct (deeply, against four published schemas) and every binding resolves,
   but no pixel has been seen and no measure has been executed. The phase-B2a Desktop
@@ -1250,8 +1369,18 @@ bookmark / link / binding / layout / scope-rule / reserved-red checks : unchange
 - **`Two-vote ten (illustration)` and `Godfather rating (reference)` are now unused**
   by any visual after the Act II ruling. They are retained, not deleted — nothing
   dangles, but a reader of the model will find two measures no page consumes.
-- **Nothing built at stage 6 has been rendered.** 210 visuals and 9 bookmarks are
+- **Nothing built at stage 6 has been rendered.** 213 visuals and 9 bookmarks are
   schema-correct against eight published schemas and every binding resolves, but no
   pixel has been seen and no measure executed. Eleven tokens across phases B1 and B2b
   are the concrete places where "schema-correct" and "renders as designed" can still
   diverge; each is on the Desktop checklist and each fails visibly.
+- **The G6 fix pass added a twelfth unrendered token: the report-level filter.**
+  `filterConfig` is schema-correct and its shape is copied from a filter this report
+  already carries, but no one has yet seen the filter pane show a locked
+  **Adult is False** card, and `[Adult listings excluded]` has never been evaluated.
+  If the pane comes up empty in Desktop, the whole End Credits cross-foot is wrong —
+  this is the first thing to look at after refresh.
+- **The header wrap on p3 is unrendered.** `[Title · Lie 3]` measures ~963 px against
+  an 830 px box, so it *must* wrap to two lines inside a 44 px card. Cards centre their
+  value vertically; if Power BI clips instead of wrapping, the second line disappears.
+  Check p3's header first among the three.

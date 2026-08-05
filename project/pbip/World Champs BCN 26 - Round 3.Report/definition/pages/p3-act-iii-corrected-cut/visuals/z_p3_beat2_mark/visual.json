@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_p3_beat2_mark",
   "position": {
-    "x": 242,
+    "x": 222,
     "y": 133,
     "z": 19,
-    "width": 177,
+    "width": 148,
     "height": 3,
     "tabOrder": -1
   },

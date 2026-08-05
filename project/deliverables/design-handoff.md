@@ -9,8 +9,10 @@ Canvas: **1280 × 720**, identical on every page · Theme: `theme.json` · Brand
 none (bespoke D7 mini-kit compiled into `theme.json`)
 Measurement source: `project/design-prototypes/d7-trilogy.html` — the approved
 interactive prototype. Its rect ledger and its CSS are the layout truth; every rect
-below is read from it. (No `layout.json` / `reference_screenshots/` were produced this
-round; the prototype's own ledger is the contracted substitute and is authoritative.)
+below is read from it. Both machine-readable companions **were** produced this round and
+ship beside it: `project/design-prototypes/layout.json` (8 screens, measured rects) and
+`project/design-prototypes/reference_screenshots/` (8 @2x captures). Where they and this
+document differ, this document wins — see *Corrections applied to the prototype*.
 
 ## Reading me
 

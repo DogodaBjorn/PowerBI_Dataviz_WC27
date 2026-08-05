@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "NOTE: one listing books −$12 revenue.",
+                    "value": "NOTE: revenue goes negative in this basis.",
                     "textStyle": {
                       "fontFamily": "Consolas",
                       "fontSize": "10pt",

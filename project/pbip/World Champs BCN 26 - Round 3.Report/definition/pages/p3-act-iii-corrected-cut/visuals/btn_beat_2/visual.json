@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "btn_beat_2",
   "position": {
-    "x": 242,
+    "x": 222,
     "y": 100,
     "z": 16,
-    "width": 177,
+    "width": 148,
     "height": 32,
     "tabOrder": 500
   },

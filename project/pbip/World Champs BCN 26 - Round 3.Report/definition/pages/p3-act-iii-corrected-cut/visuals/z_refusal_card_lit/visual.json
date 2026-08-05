@@ -53,7 +53,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#282331'"
+                      "Value": "'#2E2933'"
                     }
                   }
                 }
@@ -86,7 +86,7 @@
             "weight": {
               "expr": {
                 "Literal": {
-                  "Value": "2L"
+                  "Value": "4L"
                 }
               }
             }

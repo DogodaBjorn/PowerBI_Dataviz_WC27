@@ -156,7 +156,6 @@ table _Measures
 		displayFolder: 03 Lie 2 · Ratings
 		lineageTag: 55f90905-50ab-4ca3-a3d5-cf6b33599f43
 
-	/// What a perfect 10.0 on two votes actually reads once evidence is required — the Act II headline, computed from the disclosed m and C, never typed.
 	/// Listings whose raw score is a flat 10.0 on at least one vote — the size of the "best film ever" claim, which turns out to be a crowd.
 	measure 'Movies (perfect ten)' = CALCULATE([Movies], Movies[Vote Average] = 10, Movies[Vote Count] >= 1)
 		formatString: #,0
@@ -316,6 +315,12 @@ table _Measures
 		displayFolder: 05 Data health · Time
 		lineageTag: faecac24-561c-414d-b210-b7b20a925b40
 
+	/// Listings that book revenue below zero — money the source says was un-earned. Counted on the end credits so the figure is never typed.
+	measure 'Movies (negative revenue)' = CALCULATE([Movies], Movies[Revenue] < 0)
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: 6681cde2-03b7-4b3c-ba4d-3247869d10c2
+
 	/// Trap/lie token on the PAPER surface (p1, p2, tooltip) — the colour of a number that must not be believed. Night counterpart: Color · Trap (night).
 	measure 'Color · Trap' = "#B3402E"
 		formatString: @
@@ -415,7 +420,7 @@ table _Measures
 	measure 'Title · Lie 3' =
 			"ACT III — THE CORRECTED CUT: "
 				& FORMAT([Movies (scatter population)], "#,0")
-				& " films earn a place; popularity is refused — formula not published"
+				& " listings earn a place; popularity is refused — formula not published"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 98b7fbce-f4e9-498b-a5e8-ae3d6923d4ab
@@ -604,7 +609,7 @@ table _Measures
 
 	/// p3 scatter population line — who is in this picture and who is not. Bound to c_scatter_population.
 	measure 'Label · Population' =
-			"films with credible financials AND ≥ "
+			"listings with credible financials AND ≥ "
 				& FORMAT([Rating m (disclosed)], "#,0")
 				& " votes · n = "
 				& FORMAT([Movies (scatter population)], "#,0")
@@ -635,7 +640,7 @@ table _Measures
 
 	/// p3 verdict — the corrected cut's closing line, correlation shown and causation refused in the same breath. Bound to c_verdict_act3.
 	measure 'Copy · Act III · verdict' =
-			"THE END — the best movie, read responsibly: "
+			"THE END — the best-performing listing, read responsibly: "
 				& [Winner · title]
 				& ", best-selling AND best-rated on evidence. Correlation shown; causation refused."
 		formatString: @
@@ -768,9 +773,9 @@ table _Measures
 				& FORMAT([Rating C (disclosed)], "0.00")
 				& ". Population: "
 				& FORMAT([Movies (scatter population)], "#,0")
-				& " films with credible financials and at least "
+				& " listings with credible financials and at least "
 				& FORMAT([Rating m (disclosed)], "#,0")
-				& " votes. The highlighted film is "
+				& " votes. The highlighted listing is "
 				& [Winner · title]
 				& ", best-selling and best-rated on evidence."
 		formatString: @
@@ -779,7 +784,7 @@ table _Measures
 
 	/// Screen-reader narration for the popularity refusal card and its rank table — the refusal stated as a refusal.
 	measure 'Alt · c_refusal_popularity' =
-			"Adjustment refused: popularity. TMDB does not publish the formula, so popularity is ranked under protest, never coloured and never averaged. The table lists the three highest-popularity films beside their evidence-weighted rating rank and their revenue rank, and marks with a cross any film whose popularity rank and quality rank disagree by more than 100 places."
+			"Adjustment refused: popularity. TMDB does not publish the formula, so popularity is ranked under protest, never coloured and never averaged. The table lists the three highest-popularity listings beside their evidence-weighted rating rank and their revenue rank, and marks with a cross any listing whose popularity rank and quality rank disagree by more than 100 places."
 		formatString: @
 		displayFolder: 06 Display\Alt text
 		lineageTag: 53c73ef2-ab18-4e37-9f9e-4f6c9aec259c

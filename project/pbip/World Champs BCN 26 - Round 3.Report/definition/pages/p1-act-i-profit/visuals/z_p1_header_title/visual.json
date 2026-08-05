@@ -6,46 +6,96 @@
     "y": 36,
     "z": 10,
     "width": 830,
-    "height": 32,
+    "height": 44,
     "tabOrder": 100
   },
   "visual": {
-    "visualType": "textbox",
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Title · Lie 1"
+                }
+              },
+              "queryRef": "_Measures.Title · Lie 1",
+              "nativeQueryRef": "Title · Lie 1"
+            }
+          ]
+        }
+      }
+    },
     "objects": {
-      "general": [
+      "value": [
         {
           "properties": {
-            "paragraphs": [
-              {
-                "textRuns": [
-                  {
-                    "value": "THE SEDUCTIVE LIES — ",
-                    "textStyle": {
-                      "fontFamily": "Consolas",
-                      "fontSize": "12pt",
-                      "color": "#211E1A"
-                    }
-                  },
-                  {
-                    "value": "ACT I",
-                    "textStyle": {
-                      "fontFamily": "Consolas",
-                      "fontSize": "12pt",
-                      "color": "#2E4A7D",
-                      "fontWeight": "bold"
-                    }
-                  },
-                  {
-                    "value": ": ‘THE PROFIT LIE’",
-                    "textStyle": {
-                      "fontFamily": "Consolas",
-                      "fontSize": "12pt",
-                      "color": "#211E1A"
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Consolas'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#211E1A'"
                     }
                   }
-                ]
+                }
               }
-            ]
+            },
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "label": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]
@@ -97,6 +147,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Act I title. States the share of listings that cannot support a money claim, computed live under the disclosed credibility floor of a $10,000 budget and revenue above zero.'"
                 }
               }
             }
