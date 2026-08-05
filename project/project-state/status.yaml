@@ -31,7 +31,7 @@ stages:
   s6_report_build:
     status: in_progress
     evidence: ""
-    gate_note: "Phase A done: 73 measures in _Measures (8 stubs filled + 40 new), D7 theme registered via verified report/3.3.0 themeCollection, validators clean but for the standing SourceRoot waiver. TMDB base URL VERIFIED from TMDB docs (posters build). REMAINING BLOCKER: alt-text technique author unretrievable behind 403 — 10 Alt- measures deferred until credited in source-register + CREDITS.md, else technique dropped. SNAPSHOT NOTE: entrant's CSV is a newer TMDB snapshot (85,870 in-partition vs 85,394); all signed parameters and conclusions survive — reconciliation table in 02-metrics.md; numbers bind live."
+    gate_note: "BUILT: 6 pages, 210 visuals, 9 bookmarks, 79 measures, D7 theme; all validators clean but the standing SourceRoot waiver; 0 tinted data marks, reserved-red held, no typed counts. Attribution blocker CLEARED (credited by publication, author name an open debt) so the alt-text layer is in build. KNOWN GAP: the scatter Play role could not be verified in any schema/sample/Learn page — built without it and reported; restoring the contracted animation is Desktop step 1. G6 still needs: fidelity review, copy-polish, ax-audit, and the entrant's Desktop steps."
   s7_delivery:
     status: pending
     evidence: ""
