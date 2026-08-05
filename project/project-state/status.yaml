@@ -1,7 +1,7 @@
 # pbi-atelier project state — schema: lifecycle/status.schema.yaml
 project: wc-round-3
 template_version: 0.3.1
-current_stage: 5
+current_stage: 6
 updated: 2026-08-05
 stages:
   s0_intake:
@@ -25,13 +25,13 @@ stages:
     evidence: "project-state/active/04-model-build.md"
     gate_note: "G4 closed 2026-08-04: built per blueprint (33 measures, Release Year dim, SourceRoot, Date 1800-2099 marked, Profit (naive) + rebind); strict 0/0 at close. User set SourceRoot + refreshed same day. ENTRANT WAIVER (standing): committed SourceRoot drive-letter value = the expected 1 strict error at G6/G7 sweeps (see 04-model-build.md close-out). Verify Genres/Production Company loads at s6 entry."
   s5_design:
-    status: in_progress
+    status: passed
     evidence: "project-state/active/05-design.md"
-    gate_note: "D7 'The Seductive Lies: A Trilogy' (entrant-authored) APPROVED 2026-08-05 with one change — per-act film-stock tints, granted as a chrome-only exception to consistency lock 7 (all six variants WCAG-AA verified); tickets cover confirmed, other ack defaults accepted. Rounds 1+2 (D1-D6) rejected, retained as history. G5 closes on tinted prototype + handoff quartet + asset-fidelity inventory (in flight)."
+    gate_note: "G5 closed 2026-08-05: D7 'The Seductive Lies: A Trilogy' (entrant-authored) approved with per-act film-stock tints (chrome-only lock-7 exception, WCAG-verified). Quartet complete in deliverables/ (handoff 149 ids, 56-row asset inventory nothing unmapped, theme validates 0 errors); layout.json 8 screens + @2x references captured. Rendered review added the reserved-red rule. Rounds 1+2 (D1-D6) rejected, retained as history."
   s6_report_build:
-    status: pending
+    status: in_progress
     evidence: ""
-    gate_note: ""
+    gate_note: "BLOCKERS before the relevant work: (1) alt-text technique author unretrievable behind 403 — must be credited in source-register + CREDITS.md before the Alt- family is built, else drop the technique; (2) TMDB image base URL must be verified at build or posters drop."
   s7_delivery:
     status: pending
     evidence: ""

@@ -293,11 +293,54 @@ trap-red + strike + word, honest stays good-green + ✓ + word, identically on
 every page. A tinted data mark is a defect. Hue budget per page stays at 4
 families; p9 credits carry no tint.
 
-## Open questions
+## G5 CLOSE-OUT (2026-08-05)
 
-- None blocking. G5 closes on: tinted prototype + asset-fidelity inventory +
-  handoff quartet (design-handoff.md, data-model.md, measures.dax,
-  theme.json) — all in flight.
+**Quartet complete** in `project/deliverables/`: design-handoff.md (68 KB —
+149 role-prefixed visual ids with rects read from the prototype, per-beat
+bookmark visibility, the M-003 marking as four simultaneous carriers, the
+a11y package with enumerated tab orders, verbatim copy, a 56-row
+asset-fidelity inventory with **nothing unmapped**, and the 5-step cut
+list), data-model.md (blueprint §7 verbatim, byte-identical; 12-row
+placeholder batch naming the resolving measure for each), measures.dax
+(8 stub replacements + 50 new; colour measures paired with glyph/word
+measures), theme.json (validates 0 errors against reportThemeSchema-2.156).
+
+**Measured truth**: `layout.json` (8 screens at exact canvas sizes) +
+`reference_screenshots/` @2x — the stage-6 fidelity targets.
+
+**Rendered review before close** (screenshots read, not assumed) caught the
+reserved-red inversions now contracted; the quartet compiler independently
+found the same three, plus five more fixes (chip overflow, measure
+miscount, paper tokens unreachable from a single-background theme → added
+as documented chrome-only dataColors zones 7–16).
+
+**Documented comp-vs-build drift** (not a defect — resolved deliberately):
+ack #1 defaulted to the filter-true basis, so the build binds 84,036 /
+13.2% live via measures while the prototype PNGs still print 85,394 /
+13.1%. "87%" survives the rounding either way. 85,394 remains only on the
+credits' LISTINGS PER SOURCE row. Fidelity review compares *rects*, not
+these strings.
+
+### Two blockers stage 6 must clear BEFORE the relevant work
+
+1. **Attribution (rule 5 — blocker severity).** The dynamic-alt-text
+   technique comes from the entrant-supplied community post, whose author
+   is unretrievable behind the 403 wall that blocks agents. The author must
+   be identified in a browser and added to `contracts/source-register.yaml`
+   AND `CREDITS.md` **before** the `Alt ·` measure family is implemented.
+   If the name cannot be obtained, the technique is not used.
+2. **TMDB image base URL** for `Image · Poster URL` — retrieve from TMDB's
+   image-configuration docs at build and log it. If unverifiable, posters
+   drop wholesale; the design reads without them.
+
+### Gate G5 checklist
+
+- [x] Every page has a purpose contract with a written 3-second message and 3-minute path (5 contracts + tooltip)
+- [x] Design intelligence queried before directions drafted; cited as used/overruled; judge intel folded in
+- [x] Directions documented with Design Read + dials; three rounds, honest critique; entrant chose D7 (their own concept) — comps existed at every approval point
+- [x] Asset-fidelity inventory complete — 56 rows, nothing unmapped, fallbacks contracted
+- [x] Quartet complete and internally consistent (same tokens in brief/theme/handoff; same ids in handoff/measures)
+- [x] Fidelity checklist written (creative-direction contract; stage 6 judged against it)
 
 ## After the pick (contracted next steps)
 
