@@ -360,6 +360,59 @@
             "bottom": 0
           }
         ]
+      },
+      "ticketPerforation": {
+        "fill": [
+          {
+            "show": true,
+            "fillColor": {
+              "solid": {
+                "color": "#9A9284"
+              }
+            }
+          }
+        ],
+        "outline": [
+          {
+            "show": true,
+            "lineColor": {
+              "solid": {
+                "color": "#9A9284"
+              }
+            },
+            "weight": 1
+          }
+        ]
+      },
+      "parameterChip": {
+        "fill": [
+          {
+            "show": false
+          }
+        ],
+        "outline": [
+          {
+            "show": true,
+            "lineColor": {
+              "solid": {
+                "color": "#6E6960"
+              }
+            },
+            "weight": 1
+          }
+        ]
+      },
+      "spotlightSurface": {
+        "fill": [
+          {
+            "show": true,
+            "fillColor": {
+              "solid": {
+                "color": "#282331"
+              }
+            }
+          }
+        ]
       }
     },
     "textbox": {
@@ -432,6 +485,17 @@
             "top": 0,
             "right": 0,
             "bottom": 0
+          }
+        ]
+      },
+      "posterPlate": {
+        "image": [
+          {
+            "strokeColor": {
+              "solid": {
+                "color": "#C8C3B4"
+              }
+            }
           }
         ]
       }
@@ -520,6 +584,17 @@
             "gridlineThickness": 1
           }
         ]
+      },
+      "evidenceReference": {
+        "y1AxisReferenceLine": [
+          {
+            "lineColor": {
+              "solid": {
+                "color": "#8A8377"
+              }
+            }
+          }
+        ]
       }
     },
     "tableEx": {
@@ -588,6 +663,17 @@
             },
             "outlineWeight": 0,
             "rowPadding": 4
+          }
+        ]
+      },
+      "leaderboardRule": {
+        "grid": [
+          {
+            "gridHorizontalColor": {
+              "solid": {
+                "color": "#EBE7DC"
+              }
+            }
           }
         ]
       }

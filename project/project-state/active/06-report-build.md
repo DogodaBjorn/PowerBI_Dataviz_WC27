@@ -26,12 +26,67 @@ Alt-text coverage: 89 content · 86 empty-decorative · 47 textboxes reading the
 copy. **The waiting list is closed**, and after the a11y pass **no alt string defers
 the reader to something on screen** (was 11).
 
-`validate_json.py`: 260 files, 0 errors. `validate_tmdl.py --strict`: 1 error, the
-standing `SourceRoot` waiver. All 222 `visual.json`, all six `page.json`,
-`pages.json`, `report.json`, the nine `*.bookmark.json` and `bookmarks.json` validate
-against their published schemas (`visualContainer/2.9.0` with remote sub-schemas
-resolved, `page/2.1.0`, `pagesMetadata/1.1.0`, `report/3.3.0`, `bookmark/2.1.0`,
-`bookmarksMetadata/1.0.0`). Binding cross-check: 53 bound properties, all resolve.
+All 222 `visual.json`, all six `page.json`, `pages.json`, `report.json`, the nine
+`*.bookmark.json` and `bookmarks.json` validate against their published schemas
+(`visualContainer/2.9.0` with remote sub-schemas resolved, `page/2.1.0`,
+`pagesMetadata/1.1.0`, `report/3.3.0`, `bookmark/2.1.0`, `bookmarksMetadata/1.0.0`).
+Binding cross-check: 53 bound properties, all resolve.
+
+## Validation record — the full sweep (2026-08-05, after the waiver/handoff pass)
+
+**Correction.** This file previously recorded only `validate_json` and
+`validate_tmdl`, and an earlier note claimed "all validators clean". That was wrong:
+the `validate-project` sweep has eight steps and step 7, `pbir_detect.py`, is
+**gate-blocking at G6/G7** and had never been run. It failed with 63 unwaived
+findings. The complete set, run in the sweep's own order:
+
+| # | Validator | Result | Note |
+|---|---|---|---|
+| 1 | `check_state.py` | **PASS** | `state OK: project 'wc-round-3' at stage 6 (s6_report_build, in_progress), updated 2026-08-05` |
+| 2 | `validate_json.py` | **PASS** | `260 file(s) checked, 0 with errors` |
+| 3 | `check_contrast.py` | **PASS** | `6 pair(s), 0 failure(s)` — accent 3.21:1 canvas/surface, good 9.02:1, bad 6.01:1 |
+| 4 | `validate_tmdl.py --strict` | **1 ERROR (expected)** | `15 file(s), 1 error(s), 0 warning(s) [strict]` — `expressions.tmdl:34`, the committed `SourceRoot` drive-letter value. This is the standing entrant waiver recorded at G4; it is the *only* strict error and no warnings remain |
+| 5 | `tmdl_inventory.py` | **PASS** | 10 tables, **90 measures**, 8 relationships, 1 shared expression — matches the blueprint plus the ten `06 Display\Alt text` narrations added at B2c |
+| 6 | Naming grep | **PASS** | all 222 visual folders carry a `design/naming-conventions.md` role prefix; no Desktop-style 32-hex ids anywhere in the report tree |
+| 7 | `pbir_detect.py` | **PASS *only if the entrant signs*** | `48 finding(s) across 1 report(s) — 0 unwaived, 48 waived -> PASS`. Was 63/63 unwaived → FAIL. See below |
+| 8 | `pbir validate` (CLI) | **not run** | the `pbir` CLI is not installed on this machine (`pbir: command not found`); the documented fallback, direct JSON editing plus schema validation, is what this build used throughout |
+
+### How `pbir_detect` went 63 → 48, and why 48 is not zero
+
+Every one of the 63 findings was inspected individually. **15 were fixed, 48 are
+argued in a DRAFT waiver file.**
+
+- **`ai-dash-emoji` 46 → 42.** The 46 hits were read one by one against their own
+  page's copy register. **Four were genuine AI writing tells** — a spaced em-dash
+  used as a rhetorical pivot between two independent clauses, in lowercase prose,
+  each with a dashless sibling string in the same register on the same page. Those
+  four were **rewritten, not waived**: `z_ticket3_tease`, `c_p2_note_twenty`,
+  `c_lb_more`, `c_tt_foot` (details in BUILD_LOG → *G6 waiver + handoff pass*). The
+  remaining 42 are contracted typography — screenplay slug lines, `SC.n —` beat
+  labels, `INSERT —` shot headings, act/section titles, glossary term–definition
+  rows, TMDB's mandated attribution wording, and the `✓` glyphs that
+  design-hard-rule 3 **requires** as the non-colour carriers. Rewriting those would
+  break the design contract and remove an accessibility carrier.
+- **`theme-color-drift` 11 → 0.** All 11 were **promoted, not waived**. The six
+  distinct chrome hexes are now named style presets in `theme.json`
+  (`ticketPerforation` `#9A9284`, `parameterChip` `#6E6960`, `spotlightSurface`
+  `#282331`, `posterPlate` `#C8C3B4`, `leaderboardRule` `#EBE7DC`,
+  `evidenceReference` `#8A8377`), re-validated at **0 errors** against
+  `reportThemeSchema-2.156.json`. A named preset only applies when a visual selects
+  it, so nothing renders differently — deliberate, this close to delivery.
+- **`grid-8px` 6 → 6, waived per page.** The layout was measured from the approved
+  HTML prototype, whose type sits on a ~19 px line rhythm. Measured over all 222
+  visuals / 888 coordinates: 38 % on the 8 px grid, 55 % on 4 px, 78 % on 2 px; 19 px
+  is the most common rect height after the 32 px button. The handoff *contracts*
+  those off-grid rects, so the build matches its contract — the handoff sentence
+  claiming "8 px grid throughout" was the error and has been corrected. Re-aligning
+  ~200 visuals two days before the deadline is the wrong trade.
+
+**The waiver file is a DRAFT.** `project/project-state/pbir-detect-waivers.yaml`
+carries 19 entries (13 `ai-dash-emoji` covering 42 findings, 6 `grid-8px`, one per
+page). Each glob was checked to match exactly its intended findings and nothing more.
+**A gate may be waived only by the user**: until the entrant signs these entries,
+**G6 stays HELD** even though the detector now prints PASS with the file in place.
 
 ## G6 fix pass (2026-08-05) — what changed
 
@@ -149,3 +204,29 @@ gap. Full record in BUILD_LOG → *Stage 6 G6 a11y pass*.
    against an 830 px box (the band `btn_home` leaves), so the card wraps to two lines
    in 44 px. If Desktop clips instead of wrapping, raise the box to y 32 / h 48 —
    never drop the type below the 10 pt floor.
+10. **The `pbir_detect` waivers are UNSIGNED — this is what holds G6.** 19 DRAFT
+    entries in `project/project-state/pbir-detect-waivers.yaml`. A gate may be waived
+    only by the user. **Entrant action:** read the 13 `ai-dash-emoji` and 6 `grid-8px`
+    entries, approve or strike any of them (striking one brings its findings back),
+    and record the decision in `status.yaml`'s s6 `gate_note`. `status.yaml` was
+    deliberately **not** touched by the build.
+11. **The copy deck and the disk still disagree in seven places the fix passes changed
+    and never wrote back.** Four were amended in this pass because they were the
+    strings being edited; the rest are listed here rather than silently rewritten,
+    because each is a factual claim only the entrant can rule on:
+    `z_ticket2_tease` (deck "In which 2 votes crown a champion" / disk "1 vote") ·
+    `c_p2_note_twovotes` (deck "NOTE: 2 votes." / disk "one vote is enough to score a
+    perfect 10.0.") · glossary `M-005 RAW RATING` (deck "any votes, even 2" / disk
+    "even 1") · `c_p1_note_budget` (deck "min $1, median $2,800" / disk "token
+    amounts, not blanks") · `c_p1_note_negrev` (deck "one listing books −$12 revenue"
+    / disk "revenue goes negative in this basis") · `c_waffle_cap` (deck carries the
+    counts "(13)"/"(87)", disk does not) · both TMDB attribution strings (deck carries
+    the short form, disk the long ODC-BY form written in the G6 fix pass — the disk
+    version is the better one). **Entrant action:** confirm the 1-vs-2-votes fact, then
+    reconcile the deck to disk in one pass.
+12. **`z_refusal_card_lit` and `z_adjustments_card_lit` disagree on disk.** The handoff
+    contracts `#282331` for both spotlight variants; `z_adjustments_card_lit` uses it,
+    `z_refusal_card_lit` uses `#2E2933`. One of the two is wrong and it is a design
+    call, not a build call — left as found, flagged here. `#282331` is now a theme
+    token (`shape.spotlightSurface`), so aligning the refusal card is a one-value edit
+    if the entrant wants the pair consistent.

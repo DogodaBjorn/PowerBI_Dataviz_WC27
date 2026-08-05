@@ -932,6 +932,97 @@ bookmark, verified by script).
   model wins. The 32 stage-4 base measures are absent from that file **by design** —
   it is the stage-5 deliverable — which the banner also records.
 
+### Stage 6 — G6 waiver + handoff pass (2026-08-05)
+
+The pass that ran the sweep step nobody had run. `pbir_detect.py` is gate-blocking at
+G6 and returned 63 unwaived findings. Nothing was waived before every finding had been
+read individually.
+
+- **Four genuine AI writing tells were FIXED, not waived.** The `ai-dash-emoji` rule
+  fired 46 times. The test applied to each: is this dash a *typographic separator the
+  form requires* (slug line, glossary entry, title-and-subtitle) or a *rhetorical pivot
+  between two independent clauses in lowercase prose*? The second is the AI tell. Four
+  hits failed that test, and each had a dashless sibling in the same register on the
+  same page — which is what made them outliers rather than house style:
+
+  | Visual | Was | Is | The sibling that convicted it |
+  |---|---|---|---|
+  | `z_ticket3_tease` | `In which the fixes land — and one is refused` | `In which the fixes land, and one is refused` | `z_ticket1_tease` / `z_ticket2_tease` carry no punctuation at all |
+  | `c_p2_note_twenty` | `…no evidence floor — it never says how many voted.` | `…no evidence floor. It never says how many voted.` | `c_p1_note_budget`, `c_p2_note_twovotes` are plain full-stop sentences |
+  | `c_lb_more` | `…then title — three of the perfect tens counted above` | `…then title; three of the perfect tens counted above` | `c_verdict_act1_note` uses a semicolon for exactly this join |
+  | `c_tt_foot` | `† formula not published — ranked under protest` | `† formula not published. Ranked under protest` | its p3 twin `c_refusal_why` states the same two facts with a full stop |
+
+  Words and meaning are unchanged in all four; only the join changed, and each string
+  is the same length or one character shorter, so no rect can re-wrap. The design
+  handoff's copy deck was amended in the same pass — deviations go back through the
+  contract (invariant 7), not into the report unrecorded.
+
+- **The other 42 dash/emoji hits are contracted typography and are waived.** Screenplay
+  slug lines (`INT. THE HONEST SCREENING ROOM — DAY`), `SC.n —` beat labels, `INSERT —`
+  shot headings, act and section titles, glossary term–definition rows, TMDB's mandated
+  attribution wording, and the `✓` glyphs. The glyphs are not decoration: hard rule 3
+  forbids colour as the only carrier, and the handoff implements that as "honest green
+  always travels with a `✓`". **Rewriting the copy to satisfy a slop detector would
+  damage the entry and break an accessibility hard rule** — the detector is a servant
+  here, not the client.
+
+- **All 11 `theme-color-drift` hits were PROMOTED to theme tokens, not waived.** The six
+  distinct hexes are all chrome; none is a data mark. Route chosen after reading the
+  actual theme schema (`reportThemeSchema-2.156.json`, fetched and inspected this
+  session):
+  - The root object is `"additionalProperties": false`, so **no invented top-level
+    token name is possible**. The free legacy structural slots (`foregroundNeutralLight`,
+    `backgroundDark`, `accent`, the `…Alt` variants) exist, but what each drives at
+    render time is undocumented, and several are aliases of new-name slots this theme
+    already sets — assigning them could shift chrome somewhere unseen. Research-first
+    says take the conservative option when the effect is unverified.
+  - A `visualStyles.<type>.*` default was rejected for the shape colours: 18 shapes
+    carry no explicit `fillColor` and 35 no explicit `lineColor`, so a `*` default
+    would repaint them. That is the sense in which those colours "genuinely cannot be
+    a plain theme default".
+  - Chosen: **named style presets**, `visualStyles.<visualType>.<styleName>`, which the
+    schema explicitly permits (`patternProperties` `^(?!\*$).+$`, same `$ref` as `*`)
+    and which apply **only** when a visual selects one. Registered:
+    `shape.ticketPerforation` `#9A9284` · `shape.parameterChip` `#6E6960` ·
+    `shape.spotlightSurface` `#282331` · `image.posterPlate` `#C8C3B4` ·
+    `tableEx.leaderboardRule` `#EBE7DC` · `scatterChart.evidenceReference` `#8A8377`.
+  - Re-validated at **0 errors**; both theme copies are byte-identical. **Nothing
+    renders differently** — deliberate, two days out. The presets are not wired to the
+    visuals, which go on stating each colour explicitly as `pbir-style.md` requires of
+    every approved visual; the theme is now simply the one place the palette is
+    declared. `theme-color-drift`: 11 → 0.
+
+- **`grid-8px` is waived per page, and the handoff's claim was the thing that was
+  wrong.** The handoff said "8 px grid throughout" while contracting off-grid rects
+  three lines later. Measured truth over 222 visuals / 888 coordinates: 38 % on 8 px,
+  55 % on 4 px, 78 % on 2 px, with 19 px the most common rect height after the 32 px
+  button — the HTML prototype's line rhythm showing through. The page frame *is* on
+  8 px; type-bound rects are not. Re-aligning ~200 visuals two days before the deadline
+  would risk contracted line breaks in a screenplay column to move a lint number, so
+  the deviation is recorded instead and the handoff sentence corrected.
+
+- **The waiver file is a DRAFT and G6 stays HELD.** 19 entries, each glob checked to
+  match exactly its intended findings and nothing more (18 + 7 + 4 + 4 + 1×7 dash
+  entries = 42; 6 grid entries = 6; total 48). A gate may be waived only by the user.
+  `status.yaml` was deliberately not touched.
+
+- **Handoff amendments made in the same session** (invariant 7 — the contract moves
+  first): the p3 scrim `65 % → 80 %` and the constant line `#6E6960 → #8A8377`, both
+  with the recomputed ratios (65 % state failed AA at 4.21:1 for the dimmed axis labels
+  and 2.12:1 for the line; the 80 % state measures 5.75:1 and 3.56:1, and 4.87:1
+  unscrimmed) · the adjustment-chip border `#3A3441 → #6E6960` (1.43:1 → 3.16:1), a
+  third fix-pass change that had never been written back · the beat-rail rects updated
+  to the built `188 / 148 / 222` from `x 24 / 222 / 380` · asset row 35's repeat of the
+  65 % figure · the four amended copy-deck strings · and a theme-notes entry for the
+  six new presets, correcting the claim that "nothing in this report needs an ad-hoc
+  hex".
+
+- **Not fixed, flagged instead:** seven further copy-deck/disk disagreements left by the
+  fix passes (the 1-vs-2-votes fact among them) and the `z_refusal_card_lit` `#2E2933`
+  vs `z_adjustments_card_lit` `#282331` inconsistency. Each is a factual or design call
+  the entrant owns; they are listed in `06-report-build.md` → *Open questions* 11 and
+  12 rather than silently rewritten.
+
 ## Manual steps required in Desktop
 
 - [ ] Close Desktop **without saving** and reopen the pbip (Desktop currently
@@ -1398,6 +1489,56 @@ deferral scan             : 0 alt strings contain a phrase pointing the reader a
 contrast recomputed       : scrimmed axis labels 5.75:1 · scrimmed reference line
                             3.56:1 · p9 dot leaders 8.35:1 · beat-current text
                             7.84 / 4.74 / 7.01:1 · beat-not-current 14.83 / 15.89:1
+
+[2026-08-05 — stage 6 G6 WAIVER + HANDOFF PASS]
+!! CORRECTION TO EVERY BLOCK ABOVE: those blocks recorded validate_json,
+!! validate_tmdl and ad-hoc schema checks, and an earlier note claimed "all
+!! validators clean". That was WRONG. The validate-project sweep has EIGHT
+!! steps and step 7 — pbir_detect.py, which is GATE-BLOCKING at G6/G7 — had
+!! never been run. First run this pass: 63 findings, 63 unwaived -> FAIL.
+!! The full set is now recorded below, honestly, every time.
+
+1 check_state.py          : PASS — state OK: project 'wc-round-3' at stage 6
+                            (s6_report_build, in_progress), updated 2026-08-05
+2 validate_json.py        : PASS — 260 file(s) checked, 0 with errors
+3 check_contrast.py       : PASS — 6 pair(s), 0 failure(s)
+                            accent on canvas 3.21:1 · accent on surface 3.21:1
+                            good 9.02:1 (both) · bad 6.01:1 (both)
+4 validate_tmdl --strict  : 1 ERROR, 0 warnings — 15 file(s). The single error is
+                            expressions.tmdl line 34, the committed SourceRoot
+                            drive-letter value: the standing entrant waiver from
+                            G4. Expected, and the only one.
+5 tmdl_inventory.py       : PASS — 10 tables / 90 measures / 8 relationships /
+                            1 shared expression; matches the blueprint plus the
+                            ten 06 Display\Alt text narrations added at B2c
+6 naming grep             : PASS — all 222 visual folders carry a role prefix
+                            from design/naming-conventions.md; no Desktop-style
+                            32-hex ids anywhere in the report tree
+7 pbir_detect.py          : 48 finding(s) across 1 report(s) —
+                            0 unwaived, 48 waived -> PASS
+                            *** PASS IS CONDITIONAL: the waiver file is a DRAFT
+                            awaiting the entrant's signature. A gate may be
+                            waived only by the user. Until it is signed, treat
+                            step 7 as HELD, not passed. ***
+                            before this pass: 63 findings, 63 unwaived -> FAIL
+                            (46 ai-dash-emoji · 6 grid-8px · 11 theme-color-drift)
+                            after  this pass: 42 ai-dash-emoji (waived, contracted
+                            typography) · 6 grid-8px (waived per page) ·
+                            0 theme-color-drift (PROMOTED to theme tokens)
+8 pbir validate (CLI)     : NOT RUN — the pbir CLI is not installed on this
+                            machine (`pbir: command not found`). The documented
+                            fallback (direct JSON editing + schema validation) is
+                            what this build used throughout. Not a silent skip.
+
+theme re-validation       : theme.json 0 errors vs reportThemeSchema-2.156.json
+                            (Draft-7) after the six new named style presets;
+                            deliverables/theme.json and the installed
+                            StaticResources/RegisteredResources/
+                            D7-Seductive-Lies.json are byte-identical
+grid measurement          : 222 visuals / 888 coordinates — 38% on the 8px grid,
+                            55% on 4px, 78% on 2px; 19px is the most common rect
+                            height after the 32px button (34 rects), which is the
+                            HTML prototype's line rhythm showing through
 ```
 
 ## Known limitations

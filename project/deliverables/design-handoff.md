@@ -140,6 +140,28 @@ the Key Takeaway · **Segoe UI** micro-UI (buttons, chart labels, table values).
   act tints** and **13–16 are the paper-surface structural tokens**
   (`#F5F2E9` canvas, `#211E1A` ink, `#FFFFFF` card, `#D8D4C8` hairline) — both zones
   are **CHROME ONLY**. Binding any of positions 7–16 to a data mark is a G6 defect.
+- **Six structural chrome tokens, added 2026-08-05 as named style presets.** The claim
+  above — "nothing in this report needs an ad-hoc hex" — was not true of the build:
+  `pbir_detect`'s `theme-color-drift` rule found 11 literal hexes the theme did not
+  define. All six distinct values are chrome (no data mark among them) and are now
+  registered in `theme.json` under `visualStyles`, each as a **named style preset**
+  (the schema's `visualStyles.<visualType>.<styleName>` form, `patternProperties`
+  `^(?!\*$).+$`, re-validated at 0 errors):
+
+  | Preset | Hex | What it is |
+  |---|---|---|
+  | `shape.ticketPerforation` | `#9A9284` | the p0 ticket perforation rules (×3) |
+  | `shape.parameterChip` | `#6E6960` | the p3 disclosed-parameter chip borders (×4) |
+  | `shape.spotlightSurface` | `#282331` | the p3 lit adjustments card at SC.1 |
+  | `image.posterPlate` | `#C8C3B4` | the tooltip poster plate stroke |
+  | `tableEx.leaderboardRule` | `#EBE7DC` | the p2 perfect-tens horizontal rule |
+  | `scatterChart.evidenceReference` | `#8A8377` | the p3 `C = 6.96` constant line |
+
+  A named preset applies **only** when a visual selects it, so registering these
+  changed nothing on screen — deliberately, this close to delivery. The visuals go on
+  stating each colour explicitly, which `.claude/rules/pbir-style.md` requires of every
+  approved visual in any case; the theme is now the single place the palette is
+  declared. `theme-color-drift` findings: **11 → 0**.
 - **PBIR property names.** `position.x / y / z / height / width / tabOrder` are
   verified against this report's own `visual.json` files (visualContainer schema
   2.11.0). The **alt-text property path could not be verified** — the visualContainer
@@ -186,12 +208,22 @@ data visual compensates with an **alt-text measure carrying live numbers** (see
 
 Beat-rail geometry, identical on all three act pages:
 
-| Id | Rect | Text (p1/p2) | Text (p3) |
+| Id | Rect (as built) | Text (p1/p2) | Text (p3) |
 |---|---|---|---|
-| `btn_beat_1` | `24, 100, 172, 32` | `SC.1 — THE SEDUCTION` | `SC.1 — THE ADJUSTMENTS` |
-| `btn_beat_2` | `206, 100, 148, 32` | `SC.2 — THE NOTES` | `SC.2 — THE REFUSAL` |
-| `btn_beat_3` | `364, 100, 200, 32` | `SC.3 — THE CORRECTED CUT` | `SC.3 — THE PREMIERE` |
-| `btn_next_scene` | `1106, 100, 150, 32` | `NEXT SCENE ▸` | `NEXT SCENE ▸` (disabled at SC.3) |
+| `btn_beat_1` | `24, 100, 188, 32` | `SC.1 — THE SEDUCTION` | `SC.1 — THE ADJUSTMENTS` |
+| `btn_beat_2` | `222, 100, 148, 32` | `SC.2 — THE NOTES` | `SC.2 — THE REFUSAL` |
+| `btn_beat_3` | `380, 100, 222, 32` | `SC.3 — THE CORRECTED CUT` | `SC.3 — THE PREMIERE` |
+| `btn_next_scene` | `1124, 100, 132, 32` | `NEXT SCENE ▸` | `NEXT SCENE ▸` (disabled at SC.3) |
+
+> **Amended 2026-08-05 — rects updated to the build.** The rail was originally
+> contracted at `172 / 148 / 200` wide from `x = 206 / 364`, with `btn_next_scene` at
+> `1106, 100, 150, 32`. At build the 10 pt Bahnschrift labels at 0.1 em tracking did
+> not fit those widths, so the rail was widened in place: `btn_beat_1` **188** (was
+> 172), `btn_beat_2` starts at **x 222** (was 206), `btn_beat_3` **380, w 222** (was
+> 364, w 200), `btn_next_scene` **1124, w 132** (was 1106, w 150). Row height, `y`,
+> the 24 px left margin and the right edge at 1256 are unchanged, so the rail still
+> reads as one band. The table above is now the built truth; the handoff and the disk
+> agree.
 
 Beat button properties: 10 pt Bahnschrift SemiCondensed, tracking 0.1 em, fill off,
 1 px outline in ink, radius 0. **Current state:** fill = the page's **act tint**, text
@@ -222,8 +254,20 @@ defect in every case.
 **3-second message:** The data is not wrong — the reading is: a trilogy in three acts,
 three tickets, the takeaway on the marquee.
 **Layout:** marquee band 24–136 · takeaway band 152–224 · three 384×312 tickets on a
-424 px pitch at y 248 · billing block 592–648 · footer 664–696. Page margin 24, 8 px
-grid throughout.
+424 px pitch at y 248 · billing block 592–648 · footer 664–696. Page margin 24.
+
+> **Amended 2026-08-05 — the actual pitch, report-wide.** This line previously read
+> "8 px grid throughout", which the handoff's own geometry contradicts (the beat rail
+> is contracted at `y = 100`, the adjustment chips at `952, 167, 132, 22`, the ticket
+> rule at `54, 348, 34, 1`). The true system is: **the page frame is on 8 px** —
+> margins, bands, card rects and the 424 px ticket pitch — while **type-bound rects
+> inherit the prototype's ~19 px line rhythm**, so the effective sub-pitch inside cards
+> and copy columns is 4 px, not 8. Measured over all 222 built visuals (888
+> coordinates) on 2026-08-05: **38 % sit on the 8 px grid, 55 % on 4 px, 78 % on 2 px**,
+> and 19 px is the most common rect height after the 32 px button (34 rects). This is
+> a description of the contracted design, not a build defect; `pbir_detect`'s
+> `grid-8px` rule flags one finding per page and those six are waived per page in
+> `project-state/pbir-detect-waivers.yaml` (DRAFT, pending the entrant's signature).
 
 | Id | Visual | Intent | Data | Polish | Explicit properties |
 |---|---|---|---|---|---|
@@ -356,13 +400,13 @@ best-selling **and** best-rated films emerge — year by year.
 
 | Id | Visual | Intent | Data | Beats | Explicit properties |
 |---|---|---|---|---|---|
-| `hero_premiere_scatter` | **native scatterChart** | **hero — correlation over time; the ≥1 core-visual rule** | X `Movies[Revenue]` **log scale**; Y `[Rating (evidence-weighted)]`; Details `Movies[Title]`; **Play axis** `'Release Year'[Year Label]` (sorted by `Year Sort`); mark colour `[Color · Scatter mark]` | 1·2·3 | `24, 152, 896, 464`; background `#1D1A20`; border 1 px `#2E2933`; legend off; category-axis title `Revenue (USD, log) — credible set`, value-axis title `Rating (evidence-weighted)`, both 10 pt `#B5AFA0`; value-axis gridlines 1 px `#241F28`, category gridlines off; **constant line** at 6.96 (Analytics pane), dashed `#6E6960`, label `C = 6.96` 10 pt `#B5AFA0`; marker size small; population filter and sentinel exclusions per `data-model.md`; play-axis default position = **latest year** (nothing essential is in motion); alt `[Alt · hero_premiere_scatter]` |
+| `hero_premiere_scatter` | **native scatterChart** | **hero — correlation over time; the ≥1 core-visual rule** | X `Movies[Revenue]` **log scale**; Y `[Rating (evidence-weighted)]`; Details `Movies[Title]`; **Play axis** `'Release Year'[Year Label]` (sorted by `Year Sort`); mark colour `[Color · Scatter mark]` | 1·2·3 | `24, 152, 896, 464`; background `#1D1A20`; border 1 px `#2E2933`; legend off; category-axis title `Revenue (USD, log) — credible set`, value-axis title `Rating (evidence-weighted)`, both 10 pt `#B5AFA0`; value-axis gridlines 1 px `#241F28`, category gridlines off; **constant line** at 6.96 (Analytics pane), dashed **`#8A8377`** (amended 2026-08-05, see the note under this table), label `C = 6.96` 10 pt `#B5AFA0`; marker size small; population filter and sentinel exclusions per `data-model.md`; play-axis default position = **latest year** (nothing essential is in motion); alt `[Alt · hero_premiere_scatter]` |
 | `c_scatter_population` | textbox (dynamic) | scope on canvas | `[Label · Population]` | 1·2·3 | `40, 164, 500, 18`; Segoe UI 10 pt `#B5AFA0` |
-| `z_p3_scrim` | basicShape rect | de-emphasis | — | 1·2 | `24, 152, 896, 464`; fill `#171418` at 65 % transparency, no border; the bookmark mechanism for "dim the scatter"; hidden from tab order, decorative |
+| `z_p3_scrim` | basicShape rect | de-emphasis | — | 1·2 | `24, 152, 896, 464`; fill `#171418` at **80 % transparency** (amended 2026-08-05, see the note under this table), no border; the bookmark mechanism for "dim the scatter"; hidden from tab order, decorative |
 | `c_winner_label` | textbox (dynamic) | annotation | `[Copy · Act III · winner label]` | 3 | `498, 248, 336, 50`; Segoe UI 10 pt / 15 px `#F2EFE6`, right-aligned; the leading `✓` is the non-colour carrier |
 | `z_adjustments_card` | basicShape rect | chrome | — | 1·2·3 | `936, 152, 320, 136`; fill `#1D1A20`; border 1 px `#2E2933`; radius 0 |
 | `z_adjustments_card_lit` | basicShape rect | spotlight variant | — | 1 | identical rect; fill `#282331`; border 1 px `#B5AFA0` — shown instead of the plain card at SC.1 (paired-variant pattern) |
-| `z_adj_chip_floor` / `_revenue` / `_m` / `_c` | basicShape rects | chrome | — | 1·2·3 | `952, 167, 132, 22` · `952, 195, 132, 22` · `952, 223, 104, 22` · `952, 251, 104, 22`; fill none; border 1 px `#3A3441`; **radius 8** |
+| `z_adj_chip_floor` / `_revenue` / `_m` / `_c` | basicShape rects | chrome | — | 1·2·3 | `952, 167, 132, 22` · `952, 195, 132, 22` · `952, 223, 104, 22` · `952, 251, 104, 22`; fill none; border 1 px **`#6E6960`** (amended 2026-08-05, see the note under this table); **radius 8** |
 | `c_adj_floor` | textbox (dynamic) | disclosed parameter | `[Label · Chip floor]` | 1·2·3 | `964, 169, 110, 18`; Segoe UI 10 pt `#F2EFE6`, leading `✓` run in `#4ECBA0` |
 | `c_adj_revenue` | textbox | disclosed parameter | — | 1·2·3 | `964, 197, 110, 18`; text `✓ Revenue > 0` |
 | `c_adj_m` | textbox (dynamic) | disclosed parameter | `[Label · Chip m]` | 1·2·3 | `964, 225, 82, 18` |
@@ -376,6 +420,22 @@ best-selling **and** best-rated films emerge — year by year.
 | `c_nodate_chip` | cardVisual | **1 Magnitude — the labelled unknown** | `[Label · No date]` | 1·2·3 | `952, 486, 288, 116`; callout Segoe UI 10.5 pt / 17 px `#B5AFA0`, wrap on, label off, background off, border off; alt `[Alt · c_nodate_chip]` |
 | `c_verdict_act3` | textbox (dynamic) | S1 — "THE END" | `[Copy · Act III · verdict]` | 1·2·3 | `24, 636, 1040, 56`; Georgia Italic 14 pt / 20 px `#F2EFE6` |
 | `btn_roll` | actionButton | navigation | — | 1·2·3 | `1106, 648, 150, 32`; text `ROLL CREDITS ▸`; outline 1 px `#F2EFE6`; → `p9-end-credits` |
+
+> **Amended 2026-08-05 — three p3 values changed for measured contrast; the contract
+> now records what is on disk.** All three came out of fix pass 2 and none was written
+> back into this document at the time. Ratios recomputed with the house WCAG formula
+> (`scripts/check_contrast.py`); the scrim is a shape *over* the plot, so it dims the
+> ink and the field together, and the dimmed pair is measured against the scrim's own
+> `#171418` field.
+>
+> | What | Was | Is | Why |
+> |---|---|---|---|
+> | `z_p3_scrim` transparency | `#171418` @ **65 %** | `#171418` @ **80 %** | at 65 % the dimmed axis labels measured **4.21:1** — below the 4.5:1 AA floor for 10 pt text. At 80 % they measure **5.75:1**. A weaker scrim was the fix; the SC.1/SC.2 de-emphasis still reads. |
+> | `hero_premiere_scatter` constant line | dashed **`#6E6960`** | dashed **`#8A8377`** | under the 65 % scrim `#6E6960` measured **2.12:1**, below the 3:1 non-text floor. `#8A8377` under the 80 % scrim measures **3.56:1**, and **4.87:1** unscrimmed at SC.3 where the line does its actual work. |
+> | `z_adj_chip_*` border | 1 px **`#3A3441`** | 1 px **`#6E6960`** | `#3A3441` on the card fill `#1D1A20` measured **1.43:1** — the chips were effectively invisible, and they are the report's disclosure of every applied parameter. `#6E6960` measures **3.16:1**, clearing the 3:1 non-text floor. |
+>
+> All three hexes are registered theme tokens as of 2026-08-05: `#8A8377` as the
+> `evidenceReference` style and `#6E6960` as the `parameterChip` style in `theme.json`.
 
 **Interactions:** beat rail → `bm_p3_b1/b2/b3`, **default SC.3** (ack table row 3).
 Scatter points open `tt-movie-poster`. The play axis is enhancement, never the only
@@ -593,7 +653,9 @@ live part.
 - `hero_takeaway` **(measure `Title · Landing`)**: `The data is not wrong — the reading is. ‹87%› of ‹84,036› listings have no credible financials, the median listing has zero votes, and “popularity” has no published formula. Every honest number here states what it excludes.`
 - Ticket 1: `ACT I` / `THE PROFIT LIE` / `In which $0 is money`
 - Ticket 2: `ACT II` / `THE RATINGS LIE` / `In which 2 votes crown a champion`
-- Ticket 3: `ACT III` / `THE CORRECTED CUT` / `In which the fixes land — and one is refused`
+- Ticket 3: `ACT III` / `THE CORRECTED CUT` / `In which the fixes land, and one is refused`
+  *(amended 2026-08-05: the em-dash pivot was the one genuine AI writing tell in the
+  three teases — tickets 1 and 2 carry no punctuation at all. Comma, same words.)*
 - Ticket stubs: `ADMIT ONE` and the serial `TMDB·2026·07·24`
 - `z_billing_method` **(measure `Label · Method`)**: `TMDB SNAPSHOT 2026·07·24 · BASIS ‹84,036› LISTINGS (ADULT ‹1,358› EXCLUDED OF ‹85,394›) · FINANCIAL FLOOR $10,000 · m=100 · C=6.96 · LISTINGS≠FILMS: ‹1,697› DUPLICATE (TITLE,DATE) PAIRS (‹2.0%›)`
 - `z_billing_caveats` **(measure `Label · Caveats`)**: `USD AS RECORDED — NOT INFLATION-ADJUSTED · MEDIAN LISTING: 0 VOTES · POPULARITY: FORMULA NOT PUBLISHED`
@@ -631,13 +693,21 @@ live part.
 - `c_p2_dlg_naive`: `The best film ever made? Las mujeres deciden. A perfect 10.0!` *(film name Q2-verified via M-006; re-confirm at build)*
 - `c_p2_note_twovotes`: `NOTE: 2 votes.`
 - `c_p2_note_median` **(measure)**: `NOTE: the MEDIAN listing has ‹0› votes; 75th percentile has ‹1›; ‹65.5%› have none.`
-- `c_p2_note_twenty`: `NOTE: at least 20 films score a perfect 10.0 on 2–3 votes.`
+- `c_p2_note_twenty`: `NOTE: a raw score has no evidence floor. It never says how many voted.`
+  *(the string was rewritten during fix pass 2 for factual accuracy and this deck was
+  not updated; the row now records what ships. Amended again 2026-08-05: the em-dash
+  pivot between the two clauses became a full stop, matching the plain-sentence NOTE
+  register of `c_p1_note_budget` and `c_p2_note_twovotes`.)*
 - `c_p2_trans`: `SMASH CUT TO:`
 - `c_p2_slug_honest`: `INT. THE RECOUNT — DAY`
 - `c_p2_cue_honest`: `THE RESPONSIBLE READ`
 - `c_p2_dlg_honest` **(measure)**: `Weighted by evidence (m=100, C=6.96), a 10.0 on 2 votes reads ‹7.02›. The Godfather reads ‹…›. Applause is not evidence.`
 - `c_lb_kicker`: `INSERT — THE PERFECT TENS`
-- `c_lb_more`: `+ at least 18 more perfect 10s`
+- `c_lb_more`: `sorted by fewest votes, then title; three of the perfect tens counted above`
+  *(rewritten during fix pass 2 — the leaderboard shows the sort and its scope rather
+  than an unverifiable "+18 more" claim — and this deck was not updated; the row now
+  records what ships. Amended again 2026-08-05: em-dash → semicolon, matching the
+  caption register of `c_verdict_act1_note`.)*
 - `c_fall_kicker`: `INSERT — THE CORRECTION`
 - `c_fall_title`: `Raw applause → evidence-weighted`
 - `c_verdict_act2` **(measure)**: `Applause is not evidence: 10.0 on 2 votes reads ‹7.02› with m=100, C=6.96.`
@@ -668,7 +738,9 @@ live part.
 
 ### tt-movie-poster
 - Row labels: `VOTES` · `RATING (RAW)` · `RATING (WEIGHTED)` · `RANK · POPULARITY †`
-- `c_tt_foot`: `† formula not published — ranked under protest`
+- `c_tt_foot`: `† formula not published. Ranked under protest`
+  *(amended 2026-08-05: em-dash → full stop, so the tooltip footnote states the M-007
+  refusal exactly the way its p3 twin `c_refusal_why` already does.)*
 
 ---
 
@@ -715,7 +787,7 @@ and each carries the fallback that was contracted at the same time.
 | 32 | Year-by-year population | p3 | **native scatter play axis** | the entrant's "scatter plot animation", real and native |
 | 33 | 28 pt year readout | p3 | native (play-axis own label) | the custom textbox is an **accepted omission** — the native control renders it |
 | 34 | `▶ PRESS PLAY` button | p3 | native play-axis control | custom button an **accepted omission** |
-| 35 | Scatter dim at SC.1/SC.2 | p3 / `z_p3_scrim` | native basicShape at 65 % transparency + bookmark | PBIR has no visual-opacity property; a scrim is the honest mechanism |
+| 35 | Scatter dim at SC.1/SC.2 | p3 / `z_p3_scrim` | native basicShape at **80 % transparency** + bookmark | PBIR has no visual-opacity property; a scrim is the honest mechanism. Amended 2026-08-05 from 65 % — at 65 % the dimmed axis labels measured 4.21:1, below AA; at 80 % they measure 5.75:1 (see the p3 amendment note) |
 | 36 | Winner ring | p3 | **replaced** — `[Color · Scatter mark]` + `c_winner_label` | a ring cannot be a static shape over a data-driven position |
 | 37 | Four adjustment chips, 8 px radius | p3 | native basicShape ×4 + textbox ×4 | chip height 22 px (prototype's 24 overflowed the card by 9 px) |
 | 38 | Refusal card, 2 px trap border | p3 | native basicShape | |

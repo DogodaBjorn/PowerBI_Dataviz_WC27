@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "NOTE: a raw score has no evidence floor — it never says how many voted.",
+                    "value": "NOTE: a raw score has no evidence floor. It never says how many voted.",
                     "textStyle": {
                       "fontFamily": "Consolas",
                       "fontSize": "10pt",
