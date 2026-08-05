@@ -17,211 +17,35 @@
 # nothing. Unwaived findings fail the G6/G7 gates.
 #
 # Format (miniyaml subset - mappings only, no list-of-mapping syntax):
-#   waivers:
-#     <short-name>:
-#       rule: <rule id from `python scripts/pbir_detect.py --list-rules`>
-#       path: <glob matched against the finding path, e.g. "pages/*" or
-#              "pages/cover/visuals/dn_*/visual.json" or "report">
-#       reason: "why this deviation is a decision, and who approved it"
-#       date: YYYY-MM-DD
-#
+#   
+
 # ---------------------------------------------------------------------------
-# WHAT WAS FIXED RATHER THAN WAIVED (2026-08-05, pbir-operator)
-#
-# All 63 findings were inspected individually before any waiver was drafted.
-#
-# 1. ai-dash-emoji: 46 hits read one by one against their own page's copy
-#    register. FOUR were genuine AI writing tells - a spaced em-dash used as a
-#    rhetorical pivot between two independent clauses, in lowercase prose, with
-#    a dashless sibling string in the same register on the same page. Those
-#    four were REWRITTEN, not waived:
-#      z_ticket3_tease   "the fixes land - and one is refused"
-#                        -> "the fixes land, and one is refused"
-#                        (siblings z_ticket1/2_tease carry no punctuation)
-#      c_p2_note_twenty  "no evidence floor - it never says how many voted."
-#                        -> "no evidence floor. It never says how many voted."
-#                        (sibling notes c_p1_note_budget / c_p2_note_twovotes
-#                        are plain full-stop sentences)
-#      c_lb_more         "then title - three of the perfect tens..."
-#                        -> "then title; three of the perfect tens..."
-#                        (sibling caption c_verdict_act1_note uses a semicolon)
-#      c_tt_foot         "not published - ranked under protest"
-#                        -> "not published. Ranked under protest"
-#                        (its p3 twin c_refusal_why states the same two facts
-#                        with a full stop)
-#    The remaining 42 are the contracted register and are waived below.
-#
-# 2. theme-color-drift: all 11 hits were PROMOTED, not waived. The six chrome
-#    hexes (#9A9284 #6E6960 #282331 #C8C3B4 #EBE7DC #8A8377) are now named
-#    style presets in theme.json - ticketPerforation, parameterChip,
-#    spotlightSurface, posterPlate, leaderboardRule, evidenceReference -
-#    verified against reportThemeSchema-2.156.json (0 errors). A named preset
-#    is inert unless a visual selects it, so nothing renders differently; the
-#    visuals keep stating the colour explicitly, which .claude/rules/
-#    pbir-style.md requires of every approved visual anyway. The theme is now
-#    the single registry for the report's chrome palette. Zero drift findings
-#    remain, so this file waives none.
-#
-# 3. grid-8px: 6 page-level findings, waived below with the honest reason.
+# 2026-08-05 (rebuild ckpt 5): THE OLD BUILD WAS DELETED, AND SO WERE ITS
+# WAIVERS. The 13 entries that covered p0-box-office, p1-act-i-profit,
+# p2-act-ii-ratings, p3-act-iii-corrected-cut, p9-end-credits and
+# tt-movie-poster (12 ai-dash-emoji + 6 grid-8px) matched pages that no longer
+# exist on disk. A waiver for a deleted page is not a decision, it is debris -
+# so they are removed rather than left to rot. What remains is four entries,
+# one per rebuild page, each covering a single 1-2 px separator rule.
 # ---------------------------------------------------------------------------
 
 waivers:
-
-  # === ai-dash-emoji: contracted typography (42 findings) ==================
-
-  beat-rail-scene-labels:
-    rule: ai-dash-emoji
-    path: "pages/p*/visuals/btn_beat_*/visual.json"
-    reason: "DRAFT - contracted, not slop. design-handoff.md lines 191-193 fix the beat-rail label form verbatim (SC.1 - THE SEDUCTION / SC.2 - THE NOTES / SC.3 - THE CORRECTED CUT, and the p3 variants); lines 197-200 additionally require the leading round glyph on the current-state button so the active beat is carried by fill AND by rule AND by glyph. That glyph is the non-colour carrier design-hard-rules.md rule 3 demands. Rewriting these strings to please a slop detector would break the design contract and remove an accessibility carrier. 18 findings."
-    date: 2026-08-05
-
-  screenplay-slug-lines:
-    rule: ai-dash-emoji
-    path: "pages/p*/visuals/c_p*_slug_*/visual.json"
-    reason: "DRAFT - screenplay slug lines. The whole report is built as a three-act screenplay (design-handoff.md asset row 20, copy deck lines 605/613/628/636 which contract INT. THE NAIVE SCREENING ROOM - NIGHT and its three siblings verbatim). A slug line is a fixed typographic form: INT./EXT., location, separator, time of day. The dash is the separator the form requires, not a rhetorical flourish. 4 findings."
-    date: 2026-08-05
-
-  insert-card-kickers:
-    rule: ai-dash-emoji
-    path: "pages/p*/visuals/c_*_kicker/visual.json"
-    reason: "DRAFT - INSERT kickers are screenplay shot-headings, contracted verbatim in design-handoff.md copy deck lines 616, 619, 639, 641 (INSERT - THE NAIVE NUMBER / THE TICKET AUDIT / THE PERFECT TENS / THE CORRECTION). Same label-then-gloss form as a slug line; the dash separates the shot type from its subject. 4 findings."
-    date: 2026-08-05
-
-  misread-stamp:
-    rule: ai-dash-emoji
-    path: "pages/p1-act-i-profit/visuals/c_kpi_profit_misread/visual.json"
-    reason: "DRAFT - MISREAD - see notes is a contracted stamp over the naive KPI (design-handoff.md copy deck line 618, asset row 26). It is a label plus its pointer, the same label-dash-gloss form as the glossary rows, and per handoff line 567-568 the word MISREAD is itself a required non-colour carrier for trap red. 1 finding."
-    date: 2026-08-05
-
-  credits-page-title:
-    rule: ai-dash-emoji
-    path: "pages/p9-end-credits/visuals/z_cr_title/visual.json"
-    reason: "DRAFT - END CREDITS - METHOD & REFUSALS is the contracted page title (design-handoff.md copy deck line 659). Title plus subtitle joined by a dash is the marquee/act-title form used report-wide, not prose. 1 finding."
-    date: 2026-08-05
-
-  deleted-scenes-heading:
-    rule: ai-dash-emoji
-    path: "pages/p9-end-credits/visuals/c_cr_h_refusals/visual.json"
-    reason: "DRAFT - SCENES DELETED - CLAIMS WE REFUSE is the contracted section heading over the not-available list (design-handoff.md copy deck line 664, asset row 46). Heading plus gloss, and the list it heads is the do-not-fabricate register required by invariant 5. 1 finding."
-    date: 2026-08-05
-
-  refusal-card-title:
-    rule: ai-dash-emoji
-    path: "pages/p3-act-iii-corrected-cut/visuals/c_refusal_title/visual.json"
-    reason: "DRAFT - ADJUSTMENT REFUSED - POPULARITY is contracted verbatim (design-handoff.md copy deck line 651, page table line 372). Verdict plus subject; it names the M-007 refusal that the entry is judged on. 1 finding."
-    date: 2026-08-05
-
-  glossary-term-definitions:
-    rule: ai-dash-emoji
-    path: "pages/p9-end-credits/visuals/c_cr_glossary/visual.json"
-    reason: "DRAFT - the glossary rows are term-dash-definition entries, contracted verbatim in design-handoff.md copy deck line 663 (M-001 LISTINGS COUNT - rows, not films, and six siblings). The dash is standard glossary typography; replacing it with a colon or an equals sign would be a change to a signed metric glossary for no reader benefit. 7 findings."
-    date: 2026-08-05
-
-  tmdb-attribution-p0:
-    rule: ai-dash-emoji
-    path: "pages/p0-box-office/visuals/z_footer_credit/visual.json"
-    reason: "DRAFT - mandated attribution. The dash separates two required notices in one footer line: the ODC-BY 1.0 licence statement for the Kaggle distribution, and TMDB's own required disclaimer wording (THIS PRODUCT USES TMDB DATA BUT IS NOT ENDORSED OR CERTIFIED BY TMDB), which is quoted as issued and cannot be reworded. Contracted at design-handoff.md copy deck line 600. 1 finding."
-    date: 2026-08-05
-
-  tmdb-attribution-p9:
-    rule: ai-dash-emoji
-    path: "pages/p9-end-credits/visuals/c_cr_close_src/visual.json"
-    reason: "DRAFT - the same mandated attribution line repeated on the credits page (design-handoff.md copy deck line 665). Same reasoning: the dash joins the licence statement to TMDB's non-negotiable disclaimer wording. 1 finding."
-    date: 2026-08-05
-
-  check-glyph-waffle-caption:
-    rule: ai-dash-emoji
-    path: "pages/p1-act-i-profit/visuals/c_waffle_cap/visual.json"
-    reason: "DRAFT - the check glyph is REQUIRED here, not decoration. design-hard-rules.md rule 3 forbids colour as the only carrier; design-handoff.md line 567-569 implements that as honest green always travels with a check glyph or the word weighted/kept/HONEST, and copy deck line 621 contracts this caption as green check = VALID. Removing the glyph to satisfy an emoji lint would leave colour alone as the carrier and fail an accessibility hard rule. 1 finding."
-    date: 2026-08-05
-
-  check-glyph-adjustment-chip:
-    rule: ai-dash-emoji
-    path: "pages/p3-act-iii-corrected-cut/visuals/c_adj_revenue/visual.json"
-    reason: "DRAFT - same hard-rule-3 carrier. The four disclosed-parameter chips are contracted with leading check glyphs at design-handoff.md copy deck line 650 (check floor $10,000 / check Revenue > 0 / check m = 100 / check C = 6.96); the glyph is what makes an applied adjustment legible without colour. 1 finding."
-    date: 2026-08-05
-
-  check-glyph-credits-basis:
-    rule: ai-dash-emoji
-    path: "pages/p9-end-credits/visuals/c_cr_count_basis_kept/visual.json"
-    reason: "DRAFT - same hard-rule-3 carrier. The BASIS row is contracted to carry a check kept marker (design-handoff.md copy deck line 661) so the kept-versus-excluded distinction in the production counts is not colour-only. 1 finding."
-    date: 2026-08-05
-
-  # === grid-8px: prototype line rhythm, per page (6 findings) ==============
-  #
-  # Shared cause, recorded once and cited by every entry below: the layout was
-  # measured from the approved HTML prototype, whose type is set on a ~19 px
-  # line rhythm (34 rects on disk are exactly 19 px high, the single most
-  # common height after the 32 px button). The 8 px page frame survives in the
-  # bands and margins; every type-bound rect inherits the prototype's rhythm.
-  # Measured 2026-08-05 over all 222 visuals / 888 coordinates: 38% sit on the
-  # 8 px grid, 55% on 4 px, 78% on 2 px. design-handoff.md contracts the
-  # off-grid rects explicitly, so the build matches its contract - the handoff
-  # sentence that claimed "8 px grid throughout" was the error and has been
-  # corrected (see design-handoff.md p0 Layout note).
-
-  grid-p0-box-office:
-    rule: grid-8px
-    path: "pages/p0-box-office"
-    reason: "DRAFT - 34 of 43 visuals off the 8 px grid. Geometry measured from the approved prototype: the ticket internals sit on the prototype's type rhythm (z_ticket1_hr at 54,348,34,1 and the tease block at 54,432,238,44 are contracted at design-handoff.md lines 239-241), and btn_credits is contracted at 1106,664,150,32. Re-cutting the ticket interiors two days before the deadline would risk the page's one hero composition to satisfy a lint metric no judge sees. Recorded as a known deviation instead. Entrant decision."
-    date: 2026-08-05
-
-  grid-p1-act-i-profit:
-    rule: grid-8px
-    path: "pages/p1-act-i-profit"
-    reason: "DRAFT - 44 of 47 visuals off the 8 px grid, the worst page because the screenplay column is pure running type on the prototype's 19 px line rhythm. The beat rail alone is contracted off-grid at y=100 (design-handoff.md line 191-193). Re-flowing a screenplay column onto an 8 px pitch changes line breaks in contracted copy, which is a bigger risk than the finding. Recorded as a known deviation. Entrant decision."
-    date: 2026-08-05
-
-  grid-p2-act-ii-ratings:
-    rule: grid-8px
-    path: "pages/p2-act-ii-ratings"
-    reason: "DRAFT - 39 of 41 visuals off the 8 px grid. Same cause as p1: the two screenplay columns and the margin notes carry the prototype's 19 px line rhythm, and the beat rail is contracted at y=100. The leaderboard card and its caption are pinned to the table's own row height rather than to the 8 px pitch. Recorded as a known deviation. Entrant decision."
-    date: 2026-08-05
-
-  grid-p3-act-iii-corrected-cut:
-    rule: grid-8px
-    path: "pages/p3-act-iii-corrected-cut"
-    reason: "DRAFT - 33 of 40 visuals off the 8 px grid. The four disclosed-parameter chips are contracted at 952,167,132,22 and 28 px apart (design-handoff.md line 365), a 22 px chip height chosen deliberately because the prototype's 24 px overflowed the card by 9 px (asset row 37). Moving them back onto 8 px reopens that overflow. Recorded as a known deviation. Entrant decision."
-    date: 2026-08-05
-
-  grid-p9-end-credits:
-    rule: grid-8px
-    path: "pages/p9-end-credits"
-    reason: "DRAFT - 36 of 37 visuals off the 8 px grid. The credits page is a single scrolling type block: cast rows, counts, disclosed parameters and glossary all sit on the prototype's line rhythm (c_cr_cast at y=129 height=114, the closing lines at y=622 height=26). It is the page where an 8 px re-cut would be most visible and least useful. Recorded as a known deviation. Entrant decision."
-    date: 2026-08-05
-
-  grid-tt-movie-poster:
-    rule: grid-8px
-    path: "pages/tt-movie-poster"
-    reason: "DRAFT - 14 of 14 visuals off the 8 px grid. The tooltip is a 320x420 card (design-handoff.md asset row 49) with a 17 px inner margin and 19 px dot-leader rows; an 8 px pitch does not divide a 320x420 tooltip usefully. This page is never seen at full size. Recorded as a known deviation. Entrant decision."
-    date: 2026-08-05
-
-  # === rebuild pages: one hairline each, everything else snapped ===========
-  #
-  # Unlike the six old pages above, the rebuild pages were SNAPPED rather than
-  # waived: at checkpoint 2 the coordinator ruled the four off-grid rects be
-  # corrected (c_units_legend h 20->24, c_nav_hint y 572->576 h 20->24,
-  # c_units_read y 580->584, btn_method h 28->32). What remains on each rebuild
-  # page is a 1 px separator rule, which cannot sit on an 8 px pitch by nature.
 
   grid-p1-the-answer-hairline:
     rule: grid-8px
     path: "pages/p1-the-answer"
     reason: "DRAFT - one object: z_rule_answer, a 1 px separator, sub-grid by nature. Its x/y/width are all on the 8 px grid (24, 216, 1232); only its 1 px height is not, and an 8 px separator would be a slab, not a rule. Every other rect on the page is on-grid after the checkpoint-2 snap. Entrant sign-off pending."
     date: 2026-08-05
-
   grid-p2-money-hairline:
     rule: grid-8px
     path: "pages/p2-money"
     reason: "DRAFT - two objects, both sub-grid by nature. z_p2_rule is the 2 px indigo answer/evidence separator (x/y/width 24, 120, 1232 all on-grid; only its 2 px height is not). z_p2_strike is the 2 px trap-red strike THROUGH the naive profit number: its y=180 is the vertical middle of the 28 pt numeral it withdraws, not a layout position - moving it to an 8 px pitch would move it off the number and destroy the non-colour carrier that hard rule 3 requires beside the word MISREAD. Every other rect on the page is on-grid. Entrant sign-off pending."
     date: 2026-08-05
-
   grid-p3-evidence-hairline:
     rule: grid-8px
     path: "pages/p3-evidence"
     reason: "DRAFT - one object: z_p3_rule, the 2 px brass answer/evidence separator, sub-grid by nature. Its x/y/width are on the 8 px grid (24, 120, 1232); only its 2 px height is not. Every other rect on the page is on-grid. Entrant sign-off pending."
     date: 2026-08-05
-
   grid-p4-both-hairline:
     rule: grid-8px
     path: "pages/p4-both"

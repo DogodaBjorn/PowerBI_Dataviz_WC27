@@ -91,6 +91,11 @@ were deleted in the G6 fix pass.** Nothing has been rendered in Desktop — see
 | 2026-08-05 (**rebuild ckpt 4**) | Report: `pages/p2-money` | **NEW page, 12 visuals**, 1280×720, **paper** `#F5F2E9`, indigo `#2E4A7D` chrome-only. `nav_pages` · `c_p2_answer` · `z_p2_rule` · `kpi_profit_naive` + `z_p2_strike` · `c_p2_trap_prose` · `c_p2_checked_prose` · `c_budget_return_title` + **`ch_budget_return`** (native `clusteredColumnChart`) · `c_coverage_era_title` + **`ch_coverage_by_era`** (native `lineChart`) · `c_verdict_money`. **8 measure-bound cards**; 16 `visualInteractions` rules, all `NoFilter` |
 | 2026-08-05 (**rebuild ckpt 4**) | Report: `pages/p3-evidence` | **NEW page, 10 visuals**, 1280×720, **paper** `#F5F2E9`, brass `#8A6516` chrome-only. `nav_pages` · `c_p3_answer` · `z_p3_rule` · `c_p3_lb_prose` · **`tbl_perfect_tens`** (native `tableEx`, posters, **headers ON**) · `c_vote_dist_title` + **`ch_vote_distribution`** (native `columnChart`) · `c_p3_fall_prose` · **`dn_rating_fall`** (native `clusteredBarChart`, Deneb fallback, id kept) · `c_verdict_evidence`. **5 measure-bound cards**; 21 `visualInteractions` rules — **exactly one `DataFilter`** |
 | 2026-08-05 (**rebuild ckpt 4**) | Report: `pages/pages.json` | `p2-money` and `p3-evidence` registered in their final positions: `p1-the-answer` · `p2-money` · `p3-evidence` · `p4-both`, then the six old pages. Landing and active still `p1-the-answer` |
+| 2026-08-05 (**ckpt 4 rulings**) | SemanticModel + Report | `Copy · Act II · verdict` rewritten to state the **rule** rather than restate the number (the p3 repetition); **NEW** `p2-money/c_p2_misread` — the `MISREAD` stamp at `24,128,432,16`, Arial Black 10 pt `#B3402E`, tabOrder 250, directly above the struck number |
+| 2026-08-05 (**rebuild ckpt 5**) | Report: `pages/p5-method` | **NEW page, 8 visuals**, 1280×720, night `#171418`, **no act tint**. `nav_pages` · `c_p5_intro` · **`tbl_production_counts`** + **`tbl_disclosed_params`** (both native `tableEx`, **headers ON**) · `c_glossary` (coloured tag runs) · `c_refusals` · `c_credits` · `btn_home` |
+| 2026-08-05 (**rebuild ckpt 5**) | Report: `pages/tt-movie` | **NEW tooltip page, 4 visuals**, 320×420, paper `#FFFFFF`, `type: Tooltip`, `visibility: HiddenInViewMode`, `pageBinding` type Tooltip. `img_poster` (native `image`, **Microsoft's documented data-bound shape**) · `c_tt_head` · `tbl_tt_rows` (native `tableEx`, headers ON) · `c_tt_verdict`. Bound from `tbl_perfect_tens` (p3) and `hero_premiere_scatter` (p4) |
+| 2026-08-05 (**rebuild ckpt 5**) | Report: **the old build deleted** | 6 page folders (`p0-box-office` · `p1-act-i-profit` · `p2-act-ii-ratings` · `p3-act-iii-corrected-cut` · `p9-end-credits` · `tt-movie-poster`) with **222 visuals**, plus **9 bookmarks + `bookmarks.json`** and the `bookmarks/` folder. `pages.json` rewritten to the five new pages + the tooltip. **Zero dangling references** |
+| 2026-08-05 (**rebuild ckpt 5**) | Project state: `pbir-detect-waivers.yaml` | **19 dead entries removed** (12 `ai-dash-emoji` + 6 `grid-8px` + 1 covering deleted visuals) — every one matched a page that no longer exists. Four hairline entries remain, one per rebuild page |
 
 ## Deferred — not built, and why
 
@@ -3047,3 +3052,241 @@ git                       : NOT committed, by instruction. git diff is the undo.
       matches its chart. This is the checkpoint gate.
 - [ ] **Confirm `MISREAD:` appears** at the head of the money trap prose, and that the
       2 px strike lands through the middle of the naive number.
+
+## 2026-08-05 — REBUILD CHECKPOINT 5: the method page, the tooltip, and the deletion
+
+The rebuild is complete. **Five visible pages + one hidden tooltip, 60 visuals, zero
+bookmarks** — against the old build's 222 visuals in six pages with nine bookmarks.
+
+### Checkpoint 4 rulings, closed first
+
+1. **`Copy · Act II · verdict` rewritten.** It now states the rule the EVIDENCE page
+   establishes instead of restating the number the card beside it already prints:
+   *"Acclaim is usable only where the evidence is: only ‹10.1%› of listings clear ‹100›
+   votes, so a rating printed without its vote count is not a finding."* The docstring
+   records why. Name, lineageTag, formatString and displayFolder untouched.
+2. **`c_p2_misread` built** — `MISREAD`, Arial Black 10 pt trap red `#B3402E`, at
+   `24,128,432,16`: the band between the page rule and the naive number, so the word
+   sits **directly above the number it withdraws** and a keyboard user hears it
+   (tabOrder 250) immediately before the number (300). Empty alt, so its own text is
+   read rather than superseded. It is a textbox, not a card: nothing about it is bound.
+
+### Built — `p5-method` (8 visuals, night, no act tint)
+
+| id | type | function | binds | rect | tab |
+|---|---|---|---|---|---|
+| `nav_pages` | pageNavigator | navigation | — | 24,24,720,32 | 100 |
+| `c_p5_intro` | textbox | frames the page | — | 24,72,1232,40 | 200 |
+| `tbl_production_counts` | **tableEx, headers ON** | cross-foots the basis | `Counts[Line]` × `[Value · Count line]` | 24,128,400,280 | 300 |
+| `tbl_disclosed_params` | **tableEx, headers ON** | every parameter, its value, derivation and robustness | `Parameters[Name/Value/Derivation/Robustness]` | 448,128,400,280 | 400 |
+| `c_glossary` | textbox, coloured runs | M-001…M-007 with the tag words | — | 872,128,384,280 | 500 |
+| `c_refusals` | textbox | what this report refuses to claim | — | 24,432,616,176 | 600 |
+| `c_credits` | textbox | attribution and credits | — | 664,432,592,176 | 700 |
+| `btn_home` | actionButton | back to the answer | — | 24,632,200,32 | 800 |
+
+Two rects were snapped to the grid per the standing ruling: the two lower textboxes
+h 180 → **176**, and `btn_home` y 636 → **632**. Bottom edges and the 24 px gutter are
+preserved.
+
+### The glossary reframe — checked row by row against the live measure bodies
+
+The old copy deck was stale; every row was re-read against `_Measures.tmdl` rather than
+copied. Two rows changed, five were confirmed correct, and the acts are gone entirely
+(the page names carry the sequence now — nothing on this page says "Act" or "lie").
+
+| row | old | now | why |
+|---|---|---|---|
+| M-001 LISTINGS COUNT | "rows, not films" | **unchanged** | `[Movies] = COUNTROWS(Movies)` — still exactly right |
+| M-002 | "COVERAGE — share of basis with a value" | **"MONEY BAR: budget at least $10,000 AND revenue above zero"** | the old wording was both stale and imprecise: the measure does not test "has a value", it tests the disclosed floor. Renaming it MONEY BAR ties the glossary to the page named MONEY |
+| M-003 NAIVE PROFIT `[TRAP]` | "counts $0 unknowns" | **"counts unknown revenue as zero dollars"** | same meaning, said in words; still the trap, as ruled |
+| M-004 MEDIAN CREDIBLE `[HONEST]` | "floor $10k, Rev>0" | **"median profit inside the money bar"** | points at M-002 instead of repeating its numbers |
+| M-005 RAW RATING | "any votes, even 1" | **"any votes, even one"** | unchanged in substance |
+| M-006 WEIGHTED RATING `[HONEST]` | "m=100, C=6.96" | **"EVIDENCE BAR, WEIGHTED RATING: m = 100 votes, C = 6.96"** | names the bar the EVIDENCE page is built on |
+| M-007 POPULARITY `[OPAQUE]` | "formula not published" | **"formula not published, ranked under protest"** | matches `[Label · Refusal]` and the p4 refusal card |
+
+The three tag words keep their colours (`[TRAP]` `#E8705F` 6.01:1 · `[HONEST]`
+`#4ECBA0` 9.02:1 · `[OPAQUE]` `#B5AFA0` 8.35:1) **and** their words — colour is never
+the only carrier. Dashes were replaced by colons throughout, so the glossary needs no
+`ai-dash-emoji` waiver at all (the old build carried one for these very rows).
+
+`c_refusals` was extended with the one refusal the new framing adds: **causation** —
+*"The payoff page shows that money and evidence coincide in a few listings. It does not
+say why, and neither do I."* `c_credits` carries the mandated TMDB / Kaggle / ODC-By
+attribution verbatim, plus the two credits this report owes by name: **Meagan
+Longoria** for the accessibility practice, and the Fabric Community Blog post
+*"Accessibility in Action: Building Reusable Alternative Text Logic"* credited by
+publication with its byline recorded on canvas as an **open attribution debt** — the
+same wording CREDITS.md uses.
+
+### Built — `tt-movie` (4 visuals, 320×420, paper, hidden)
+
+`type: "Tooltip"` · `visibility: "HiddenInViewMode"` · `pageBinding` type Tooltip, and
+consumed by **two** visuals: `tbl_perfect_tens` (p3) and `hero_premiere_scatter` (p4),
+both through `visualContainerObjects.visualTooltip` `{show, type: 'Canvas', section:
+'tt-movie'}`. Everything it shows is printed on a page as well — the poster is data
+(it identifies the film) and never the sole identifier, because `c_tt_head` prints the
+title and year beside it.
+
+**`img_poster` closes the longest-standing unverified object in this repo.** The old
+`img_tt_poster` wrote `sourceField` as a **literal string** (`'_Measures.Image · Poster
+URL'`) — the shape this log flagged as "the least verified object in the report".
+Microsoft's own `powerbi-report-authoring` reference (`references/image.md`, "Select
+from data") documents the correct shape, and it is not that: `sourceType` is
+`'imageData'` and **`sourceField` is a Measure expression**:
+
+```json
+"sourceField": { "expr": { "Measure": {
+    "Expression": { "SourceRef": { "Entity": "_Measures" } },
+    "Property": "Image · Poster URL" } } }
+```
+
+The new visual is authored that way, with **no `query.queryState`** — the documented
+template has none, the binding is the `sourceField`. `fit: 'Fit'` and the stroke
+properties were checked against the theme schema's `image` card (`fit` enum is
+`Fit | Stretch | Fill | Normal`; `sourceType` enum is `image | imageUrl | imageData`).
+The measure carries `dataCategory: ImageUrl`, which the same reference requires.
+
+`c_tt_verdict` binds `[Mark · Rating verdict]` and carries the popularity footnote in
+its **`label`** (`show: true` + static `text`), which is how a card can print a second
+string without a second visual. If `label.text` does not bind, the verdict still shows
+and the footnote is on p4 and p5 anyway — it is never the sole carrier. `c_tt_head` was
+given 96 px rather than 72: a 4-line title measures 82 px at Georgia 12 pt in a 152 px
+column, and the winner's title is 3 lines today.
+
+### THE DELETION — audit, method, and result
+
+**Before deleting, every reference into the old build was enumerated.** The only files
+outside the doomed folders that named an old page or bookmark were the nine
+`*.bookmark.json` files (each naming its own page), `bookmarks.json` (naming the nine),
+and `pages.json`. **No new page referenced anything old** — the audit printed `NONE`.
+
+Deleted with plain `rm` / `rmdir`, file by file and folder by folder — never a
+force-recursive delete:
+
+| deleted | count |
+|---|---|
+| `pages/p0-box-office` … `pages/tt-movie-poster` (6 folders) | **222 `visual.json` + 6 `page.json`** |
+| `bookmarks/bm_p1_b1..b3`, `bm_p2_b1..b3`, `bm_p3_b1..b3` | **9 bookmarks** |
+| `bookmarks/bookmarks.json` + the `bookmarks/` folder | 1 registry |
+| `pbir-detect-waivers.yaml` entries covering deleted pages | **19 waivers** |
+
+**Post-deletion audit — zero dangling references, verified mechanically:**
+
+| source | property | target | verdict |
+|---|---|---|---|
+| `btn_go_money` | `visualLink.navigationSection` | `p2-money` | OK |
+| `btn_go_evidence` | `visualLink.navigationSection` | `p3-evidence` | OK |
+| `btn_go_both` | `visualLink.navigationSection` | `p4-both` | OK |
+| `btn_method` | `visualLink.navigationSection` | `p5-method` | OK |
+| `btn_home` | `visualLink.navigationSection` | `p1-the-answer` | OK |
+| `tbl_perfect_tens` | `visualTooltip.section` | `tt-movie` | OK |
+| `hero_premiere_scatter` | `visualTooltip.section` | `tt-movie` | OK |
+
+A string scan of **every** remaining JSON file (including `report.json`) for the six
+dead page ids and the nine bookmark names returns **NONE**. `report.json` never
+referenced a bookmark. The four dangling `visualLink` targets written at checkpoint 2
+are all live now — nothing needed rewiring, which was the point of writing them early.
+
+### The final report
+
+| page | type | size | name | visuals | tab stops |
+|---|---|---|---|---|---|
+| `p1-the-answer` | Page | 1280×720 | THE ANSWER | 14 | 13 |
+| `p2-money` | Page | 1280×720 | 1 · MONEY | 13 | 11 |
+| `p3-evidence` | Page | 1280×720 | 2 · EVIDENCE | 10 | 9 |
+| `p4-both` | Page | 1280×720 | 3 · BOTH | 11 | 10 |
+| `p5-method` | Page | 1280×720 | METHOD | 8 | 8 |
+| `tt-movie` | **Tooltip** | 320×420 | Movie tooltip | 4 | 4 |
+| | | | **total** | **60** | |
+
+**5 visible pages + 1 hidden tooltip — exactly the contest's 5-page maximum.**
+**36 of 60 visuals (60%) carry a data binding**, against 23% in the old build.
+**Zero bookmarks**, so there is no hidden state anywhere in the entry.
+**Twelve alt strings**, one on every chart, table and image, and none anywhere else.
+
+Whole-report audit, run after the deletion: **0 unresolved bindings · 0 forbidden fonts
+(no Segoe UI, Bahnschrift or Consolas anywhere) · 0 colour drift (every hex is declared
+in the theme) · 0 type below 10 pt.**
+
+### Findings for the coordinator — checkpoint 5
+
+1. **`tbl_disclosed_params` will scroll, and that is a geometry problem, not a build
+   defect.** Four columns in 400 px, two of which hold sentences: `Derivation` runs to
+   ~110 characters and `Robustness` to ~55. With `wordWrap` on, each of the four rows
+   is 6–10 lines tall, so the 280 px box shows roughly the first row and a half.
+   **The counts table beside it needs only two columns and has room to spare.** The fix
+   is a swap of geometry, not of content: give the parameters table the 872 px column
+   (or the full 1232 px width beneath the counts) and let the glossary take 400 px.
+   Recorded rather than taken, because the rects are contracted.
+2. **The old `dn_ticket_waffle` measure `Movies (no credible financials)` is now
+   unused.** It was built for the old waffle fallback, which no longer exists. It is
+   harmless (a measure costs nothing at rest) but it no longer has a consumer, which is
+   the same "no nails" test everything else on this rebuild passed. Same for a handful
+   of other old-page-only display measures. **A model tidy pass belongs at s7**, with
+   the consumer audit run against the five new pages; it was not done here because
+   deleting measures mid-checkpoint risks breaking a binding nobody re-checked.
+3. **`c_tt_verdict.label.text` is the one unverified property on the tooltip.** The
+   grammar (selector'd `label` entry) is Desktop-proven; the `text` property inside it
+   is schema-declared but this repo has never seen Desktop write it. Degradation is
+   graceful: the verdict renders, the footnote does not.
+
+### Validation status — 2026-08-05, checkpoint 5 (the rebuild complete)
+
+```
+validate_json.py          : PASS - 87 file(s) repo-wide, 0 errors, no BOM
+                            (was 310 before the deletion; 223 files removed)
+visualContainer/2.9.0     : PASS - all 60 visual.json validated DEEPLY with the
+                            5 remote sub-schemas resolved, 0 real errors:
+                            p1 14 · p2 13 · p3 10 · p4 11 · p5 8 · tt 4
+page/2.1.0                : PASS - all 6 page.json, 0 errors each (including the
+                            tooltip's pageBinding/visibility/type and the two
+                            visualInteractions arrays)
+pagesMetadata/1.1.0       : PASS - pages.json, 0 errors
+pbir_detect.py            : PASS - 60 visuals, 4 findings, 0 UNWAIVED. The four
+                            are one hairline separator per rebuild page. Every
+                            other rule is clean across the whole report:
+                            0 ai-dash-emoji, 0 theme-color-drift, 0 accent-lock,
+                            0 radius-system, 0 text-fill-contrast,
+                            0 section-kicker-repeat.
+validate_tmdl.py --strict : 17 file(s), 1 error - the STANDING SourceRoot waiver
+check_contrast.py         : theme 8 pairs / 0 failures; every page pair measured
+                            individually across the five pages and the tooltip
+check_state.py            : OK (stage 6, in_progress)
+dangling references       : NONE - 7 navigation/tooltip targets all resolve, and
+                            a full string scan for the 6 deleted page ids and 9
+                            bookmark names returns nothing
+git                       : NOT committed, by instruction. git diff is the undo.
+```
+
+**p5 and tooltip pairs, measured:**
+
+| foreground | background | ratio | threshold | verdict |
+|---|---|---|---|---|
+| `#F2EFE6` intro, glossary terms, table values, button text | `#171418` | 15.89:1 | 4.5 | PASS |
+| `#B5AFA0` headings, definitions, table headers, `[OPAQUE]` | `#171418` | 8.35:1 | 4.5 | PASS |
+| `#E8705F` `[TRAP]` tag | `#171418` | 6.01:1 | 4.5 | PASS |
+| `#4ECBA0` `[HONEST]` tag | `#171418` | 9.02:1 | 4.5 | PASS |
+| `#F2EFE6` `btn_home` outline (non-text) | `#171418` | 15.89:1 | 3.0 | PASS |
+| `#6E6960` navigator default outline (non-text) | `#171418` | 3.35:1 | 3.0 | PASS |
+| `#211E1A` tooltip head, table values, verdict | `#FFFFFF` | 16.60:1 | 4.5 | PASS |
+| `#57534E` tooltip table headers + the popularity footnote | `#FFFFFF` | 7.63:1 | 4.5 | PASS |
+| `#57534E` p5 table row gridlines | `#171418` | 2.39:1 | — | decorative separator; row order and real headers carry the structure |
+| `#EBE7DC` tooltip table gridlines | `#FFFFFF` | 1.24:1 | — | decorative |
+| `#C8C3B4` poster stroke | `#FFFFFF` | 1.76:1 | — | decorative edge on an image that is itself the content |
+
+### Manual steps required in Desktop — checkpoint 5
+
+- [ ] **Open the report and confirm five pages plus a hidden tooltip**, in the order
+      THE ANSWER · 1 · MONEY · 2 · EVIDENCE · 3 · BOTH · METHOD.
+- [ ] **Confirm `nav_pages` now lists exactly five entries** on every page (it showed
+      six while the old pages were still registered) and that the tooltip is absent
+      from it.
+- [ ] **Hover a row of `tbl_perfect_tens` and a point of `hero_premiere_scatter`** —
+      the tooltip should appear with a poster. If the poster is blank, the measure-bound
+      image is the suspect; the shape is now Microsoft's documented one, so capture what
+      Desktop writes if it still fails.
+- [ ] **Check `tbl_production_counts` cross-foots**: listings per source minus adult
+      excluded equals the basis.
+- [ ] **Check `tbl_disclosed_params`** and decide the geometry question in finding 1.
+- [ ] **Walk the whole report with the keyboard**: 13 · 11 · 9 · 10 · 8 stops, then
+      Alt+Shift+F11 on each of the 12 charts, tables and images.

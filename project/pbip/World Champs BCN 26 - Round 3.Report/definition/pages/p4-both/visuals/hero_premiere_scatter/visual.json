@@ -542,7 +542,7 @@
             "section": {
               "expr": {
                 "Literal": {
-                  "Value": "'tt-movie-poster'"
+                  "Value": "'tt-movie'"
                 }
               }
             }

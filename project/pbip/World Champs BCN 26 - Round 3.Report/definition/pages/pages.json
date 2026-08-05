@@ -5,12 +5,8 @@
     "p2-money",
     "p3-evidence",
     "p4-both",
-    "p0-box-office",
-    "p1-act-i-profit",
-    "p2-act-ii-ratings",
-    "p3-act-iii-corrected-cut",
-    "p9-end-credits",
-    "tt-movie-poster"
+    "p5-method",
+    "tt-movie"
   ],
   "activePageName": "p1-the-answer",
   "landingPageName": "p1-the-answer"

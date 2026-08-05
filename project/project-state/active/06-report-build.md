@@ -20,7 +20,7 @@ validation record. This file is the stage's state + open questions.
 | **RB-2** | **Rebuild ckpt 2: `p1-the-answer` — the new landing page, 13 visuals** | **done 2026-08-05** |
 | **RB-3** | **Rebuild ckpt 3: `p4-both` — the payoff page, 11 visuals (play axis + navigator)** | **done 2026-08-05** |
 | **RB-4** | **Rebuild ckpt 4: `p2-money` (12) + `p3-evidence` (10) — the two paper pages** | **done 2026-08-05** |
-| RB-5+ | Rebuild ckpt 5+: `p5-method`, the tooltip; then delete the six old pages | not started |
+| **RB-5** | **Rebuild ckpt 5: `p5-method` (8) + `tt-movie` (4); the old build deleted** | **done 2026-08-05** |
 
 **The report is structurally complete.** 222 visuals across six pages
 (p0 43 · p1 47 · p2 41 · p3 40 · p9 37 · tooltip 14) plus nine beat bookmarks —
@@ -569,3 +569,74 @@ included) · `pagesMetadata/1.1.0` 0 · both theme copies 0 · `validate_tmdl.py
 - **Two exclusion filters use a shape this repo has not shipped before** (`Not` +
   `Comparison(0)`), verified against `semanticQuery/1.4.0`. First Desktop render is
   the proof.
+
+## REBUILD CHECKPOINT 5 — method page, tooltip, and the deletion (2026-08-05)
+
+**The rebuild is complete.** Full detail in `project/deliverables/BUILD_LOG.md` under
+*REBUILD CHECKPOINT 5*.
+
+### The report as it now stands
+
+| page | type | name | visuals | tab stops |
+|---|---|---|---|---|
+| `p1-the-answer` | Page | THE ANSWER | 14 | 13 |
+| `p2-money` | Page | 1 · MONEY | 13 | 11 |
+| `p3-evidence` | Page | 2 · EVIDENCE | 10 | 9 |
+| `p4-both` | Page | 3 · BOTH | 11 | 10 |
+| `p5-method` | Page | METHOD | 8 | 8 |
+| `tt-movie` | Tooltip 320×420 | Movie tooltip | 4 | 4 |
+| | | **total** | **60** | |
+
+**5 visible pages + 1 hidden tooltip** — exactly the contest maximum. **222 → 60
+visuals. 9 → 0 bookmarks. 36 of 60 visuals (60%) carry a data binding**, against 23%
+before. Twelve alt strings, one per chart, table and image, none elsewhere. Whole-report
+audit: 0 unresolved bindings · 0 forbidden fonts · 0 colour drift · 0 type below 10 pt.
+
+### Closed this checkpoint
+
+- Both checkpoint-4 rulings: `Copy · Act II · verdict` rewritten to state the rule, and
+  `c_p2_misread` built directly above the struck number (tabOrder 250, empty alt).
+- `p5-method` (8 visuals, night, no act tint) with **two real tables, headers ON**, the
+  reframed glossary, the refusals list (now including **causation**) and the credits
+  block carrying the mandated TMDB/Kaggle/ODC-By attribution plus **Meagan Longoria**
+  and the alt-text blog post credited by publication with its byline named on canvas as
+  an open attribution debt.
+- `tt-movie` (4 visuals) bound from `tbl_perfect_tens` and `hero_premiere_scatter`.
+  `img_poster` uses **Microsoft's documented data-bound image shape** (`sourceType:
+  'imageData'` + `sourceField` as a **Measure expression**), which closes the
+  longest-standing unverified object in this repo — the old build wrote `sourceField`
+  as a literal string, which was wrong.
+- **The old build is gone:** 6 page folders (222 visuals), 9 bookmarks, `bookmarks.json`
+  and the `bookmarks/` folder, deleted file-by-file with `rm`/`rmdir`. **19 dead waiver
+  entries removed** from `pbir-detect-waivers.yaml` — a waiver for a deleted page is
+  debris, not a decision. Four hairline entries remain, one per rebuild page.
+- **Zero dangling references**, verified: 7 navigation/tooltip targets all resolve, and
+  a string scan of every remaining JSON for the 6 dead page ids and 9 bookmark names
+  returns nothing.
+
+### Validation — checkpoint 5
+
+`validate_json.py` 87/0 · deep `visualContainer/2.9.0` **60/60, 0 real errors** ·
+`page/2.1.0` 0 on all six · `pagesMetadata/1.1.0` 0 · **`pbir_detect.py` PASS — 60
+visuals, 4 findings, 0 unwaived** (and now 0 ai-dash-emoji, 0 colour drift, 0
+accent-lock, 0 radius, 0 text-fill-contrast across the whole report) ·
+`validate_tmdl.py --strict` 1 error (standing SourceRoot waiver) · `check_contrast.py`
+theme 8/0 plus every page pair measured · `check_state.py` OK.
+
+### Open questions — checkpoint 5
+
+- **`tbl_disclosed_params` will scroll.** Four columns in 400 px, two of them holding
+  sentences (`Derivation` ~110 characters). The counts table beside it needs only two
+  columns and has room to spare. The fix is a geometry swap, not a content change —
+  recorded rather than taken, because the rects are contracted.
+- **Unused measures survive the rebuild.** `Movies (no credible financials)` and a
+  handful of other display measures existed only for old-page visuals. Harmless at
+  rest, but they now fail the same "no nails" test everything else passed. **A model
+  tidy pass belongs at s7**, run as a consumer audit against the five new pages;
+  deleting measures mid-checkpoint would risk a binding nobody re-checked.
+- **`c_tt_verdict.label.text`** is the one unverified property on the tooltip
+  (schema-declared, never seen written by Desktop). Degrades gracefully: the verdict
+  renders, the footnote does not.
+- **G6 remains HELD** and `status.yaml` is unchanged: the gate is the entrant's, and it
+  now needs a fresh review of a report that shares no page with the one that was
+  reviewed. The four hairline waivers are still **unsigned drafts**.

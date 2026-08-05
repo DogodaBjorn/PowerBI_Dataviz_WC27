@@ -633,15 +633,16 @@ table _Measures
 		displayFolder: 06 Display
 		lineageTag: 7aeb05ca-5bf9-4659-9101-2d94b16d9f99
 
-	/// p2 verdict — Act II's one-line finding, stated as the aggregate rather than about any one film. Bound to c_verdict_act2.
+	/// The one-line verdict of the EVIDENCE page, printed in the verdict band.
+	/// REFRAME 2026-08-05 (rebuild ckpt 5): the old body restated the single-vote arithmetic that
+	/// [Copy · Act II · responsible read] already prints on the same page. It now states the RULE the page
+	/// establishes instead of repeating its number - a close, not an echo.
 	measure 'Copy · Act II · verdict' =
-			"Applause is not evidence: a perfect 10.0 on one vote reads "
-				& FORMAT([Single-vote ten (illustration)], "0.00")
-				& " with m="
+			"Acclaim is usable only where the evidence is: only "
+				& FORMAT([Share · evidence], "0.0%")
+				& " of listings clear "
 				& FORMAT([Rating m (disclosed)], "#,0")
-				& ", C="
-				& FORMAT([Rating C (disclosed)], "0.00")
-				& "."
+				& " votes, so a rating printed without its vote count is not a finding."
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 83cb9688-7a19-4c88-ac04-90ed31148cd0
