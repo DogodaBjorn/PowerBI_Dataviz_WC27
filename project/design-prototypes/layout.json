@@ -617,11 +617,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(232, 112, 95)",
+     "color": "rgb(242, 239, 230)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(232, 112, 95)"
+    "border": "1px solid rgb(242, 239, 230)"
    }
   ]
  },
@@ -801,11 +801,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(179, 64, 46)",
+     "color": "rgb(46, 74, 125)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(33, 30, 26)"
+    "border": "1px solid rgb(46, 74, 125)"
    },
    {
     "tag": "div",
@@ -1059,11 +1059,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(179, 64, 46)",
+     "color": "rgb(46, 74, 125)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(33, 30, 26)"
+    "border": "1px solid rgb(46, 74, 125)"
    }
   ]
  },
@@ -1243,11 +1243,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(179, 64, 46)",
+     "color": "rgb(46, 74, 125)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(33, 30, 26)"
+    "border": "1px solid rgb(46, 74, 125)"
    },
    {
     "tag": "div",
@@ -1683,7 +1683,7 @@
    },
    {
     "tag": "div",
-    "text": "red = VALID (13) · outline = no credible financials (87)",
+    "text": "green = VALID (13) ✓ · outline = no credible financials (87)",
     "rect": {
      "x": 817,
      "y": 368,
@@ -4523,11 +4523,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(179, 64, 46)",
+     "color": "rgb(46, 74, 125)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(33, 30, 26)"
+    "border": "1px solid rgb(46, 74, 125)"
    }
   ]
  },
@@ -4707,11 +4707,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(179, 64, 46)",
+     "color": "rgb(138, 101, 22)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(33, 30, 26)"
+    "border": "1px solid rgb(138, 101, 22)"
    },
    {
     "tag": "div",
@@ -5162,11 +5162,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(179, 64, 46)",
+     "color": "rgb(138, 101, 22)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(33, 30, 26)"
+    "border": "1px solid rgb(138, 101, 22)"
    }
   ]
  },
@@ -5346,11 +5346,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(179, 64, 46)",
+     "color": "rgb(138, 101, 22)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(33, 30, 26)"
+    "border": "1px solid rgb(138, 101, 22)"
    },
    {
     "tag": "div",
@@ -6416,11 +6416,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(179, 64, 46)",
+     "color": "rgb(138, 101, 22)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(33, 30, 26)"
+    "border": "1px solid rgb(138, 101, 22)"
    }
   ]
  },
@@ -6600,11 +6600,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(232, 112, 95)",
+     "color": "rgb(183, 155, 232)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(232, 112, 95)"
+    "border": "1px solid rgb(183, 155, 232)"
    },
    {
     "tag": "div",
@@ -7342,19 +7342,19 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(232, 112, 95)",
+     "color": "rgb(183, 155, 232)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(232, 112, 95)"
+    "border": "1px solid rgb(183, 155, 232)"
    },
    {
     "tag": "div",
     "text": "— best-selling AND best-rated on evidence",
     "rect": {
-     "x": 499,
+     "x": 455,
      "y": 271,
-     "w": 336,
+     "w": 380,
      "h": 15
     },
     "font": {
@@ -7362,6 +7362,24 @@
      "size": "13.3333px",
      "weight": "400",
      "color": "rgb(242, 239, 230)",
+     "letterSpacing": "normal",
+     "transform": "none"
+    }
+   },
+   {
+    "tag": "span",
+    "text": "✓",
+    "rect": {
+     "x": 495,
+     "y": 270,
+     "w": 10,
+     "h": 17
+    },
+    "font": {
+     "family": "\"Segoe UI\", sans-serif",
+     "size": "13.3333px",
+     "weight": "400",
+     "color": "rgb(78, 203, 160)",
      "letterSpacing": "normal",
      "transform": "none"
     }
@@ -7807,11 +7825,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(232, 112, 95)",
+     "color": "rgb(183, 155, 232)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(232, 112, 95)"
+    "border": "1px solid rgb(183, 155, 232)"
    }
   ]
  },
@@ -8914,11 +8932,11 @@
      "family": "\"Segoe UI\", sans-serif",
      "size": "13.3333px",
      "weight": "400",
-     "color": "rgb(232, 112, 95)",
+     "color": "rgb(242, 239, 230)",
      "letterSpacing": "1.06667px",
      "transform": "none"
     },
-    "border": "1px solid rgb(232, 112, 95)"
+    "border": "1px solid rgb(242, 239, 230)"
    }
   ]
  },

@@ -40,6 +40,13 @@
 
   Palette: night #171418 · paper #F5F2E9 · ink/paper #211E1A · sec/paper #57534E
            ink/night #F2EFE6 · sec/night #B5AFA0 · red/paper #B3402E · red/night text #E8705F
+  TRAP-RED IS RESERVED. #B3402E / #E8705F appear ONLY on: trap exhibits and their strikes
+  (naive KPI + its strike, raw 10.0 scores and dots, the leaderboard's perfect tens), the
+  MISREAD and [naive cut] tags, the script-doctor NOTE marks, and the popularity refusal
+  card. Red never carries chrome, navigation, or anything the report holds TRUE — otherwise
+  "red = this is a trap" stops meaning anything. Honest results wear good-green
+  (#2F6B4F paper / #4ECBA0 night) always with a ✓ and a word; chrome wears the act --tint
+  or neutral cream.
            good #2F6B4F (paper) / #4ECBA0 (night) always with ✓ + word
            neutral fill #78716C (paper) / #B5AFA0 (night)
   Placeholders {LIKE_THIS} are dashed-outlined, title="computed at build — never fabricated".
@@ -116,9 +123,14 @@
   .btn { font-family:"Segoe UI",sans-serif; font-size:10pt; letter-spacing:.08em;
          background:transparent; border:1px solid; padding:6px 14px;
          transition:background .15s ease; }
-  .night .btn { color:#E8705F; border-color:#E8705F; }
+  /* TRAP-RED IS RESERVED: #B3402E / #E8705F may appear only on trap exhibits and their
+     strikes, the MISREAD / [naive cut] tags, the NOTE marks, and the popularity refusal
+     card. Navigation and control chrome therefore never wears it — act pages use the
+     act's --tint, p0/p9 (no single act) use neutral cream. */
+  .night .btn { color:#F2EFE6; border-color:#F2EFE6; }   /* p0, p9 */
   .night .btn:hover { background:#241E26; }
-  .paper .btn { color:#B3402E; border-color:#211E1A; }
+  #pg3 .btn { color:var(--tint); border-color:var(--tint); }
+  .paper .btn { color:var(--tint); border-color:var(--tint); }
   .paper .btn:hover { background:#ECE7D8; }
 
   /* ════════ p0 — BOX OFFICE ════════ */
@@ -293,8 +305,10 @@
   #sc_dots circle { transition:opacity .3s ease; }
   #win_ring, #win_label { opacity:0; transition:opacity .35s ease; }
   #pg3.resolved #win_ring, #pg3.resolved #win_label { opacity:1; }
-  #win_label { position:absolute; left:474px; top:118px; width:336px; text-align:right;
+  /* 380px (was 336) so the added ✓ does not wrap the annotation onto a second line */
+  #win_label { position:absolute; left:430px; top:118px; width:380px; text-align:right;
     font-family:"Segoe UI",sans-serif; font-size:10pt; color:#F2EFE6; line-height:15px; }
+  .good-mark { color:#4ECBA0; }
   .chip-sc { right:12px; bottom:10px; }
 
   .rrail-card { position:absolute; left:936px; width:320px;
@@ -506,7 +520,7 @@
     <div class="card waffle r3" id="dn_ticket_waffle">
       <div class="kicker">INSERT — THE TICKET AUDIT</div>
       <div class="w-title">13.1% hold a valid ticket (floor $10k)</div>
-      <div class="w-cap">red = VALID (13) · outline = no credible financials (87)</div>
+      <div class="w-cap">green = VALID (13) ✓ · outline = no credible financials (87)</div>
       <svg class="board456" id="waffle_svg" width="424" height="176" viewBox="0 0 424 176" aria-label="Waffle: 13 of 100 tickets valid"></svg>
       <div class="w-foot">median <span class="ph" title="computed at build — never fabricated">{MEDIAN_PROFIT}</span> · mean <span class="ph" title="computed at build — never fabricated">{MEAN_PROFIT}</span> · USD as recorded, gross gap not P&amp;L</div>
       <span class="chip p chip-waffle">PBI: Deneb (fallback: stacked bar)</span>
@@ -622,7 +636,7 @@
       <div id="sc_pop" class="ui">films with credible financials AND ≥ 100 votes · n&nbsp;=&nbsp;<span class="ph" title="computed at build — never fabricated">{SCATTER_N}</span></div>
       <div id="sc_year" class="bahn">2026</div>
       <button class="btn" id="btn_play" title="Run the play axis, 1960 to the 2020s">▶ PRESS PLAY</button>
-      <div id="win_label"><span class="ph" title="computed at build — never fabricated">{WINNER}</span> — best-selling AND best-rated on evidence</div>
+      <div id="win_label"><span class="good-mark">✓</span> <span class="ph" title="computed at build — never fabricated">{WINNER}</span> — best-selling AND best-rated on evidence</div>
       <span class="chip n chip-sc">PBI: NATIVE scatter play axis (core visual)</span>
     </div>
 
@@ -824,7 +838,8 @@
       var x = col * 43, y = row * 18;
       var valid = i < 13;
       if (valid) {
-        html.push('<rect x="' + x + '" y="' + y + '" width="36" height="14" rx="2" fill="#B3402E"/>');
+        // VALID = the credible subset = the honest answer -> good-green, never trap-red
+        html.push('<rect x="' + x + '" y="' + y + '" width="36" height="14" rx="2" fill="#2F6B4F"/>');
         html.push('<circle cx="' + x + '" cy="' + (y + 7) + '" r="2.2" fill="#FFFFFF"/>');
         html.push('<circle cx="' + (x + 36) + '" cy="' + (y + 7) + '" r="2.2" fill="#FFFFFF"/>');
       } else {
@@ -913,10 +928,12 @@
       var op = (big || win) ? 0.95 : 0.8;
       if (win) { winX = +x; winY = +y; }
       h.push('<circle class="d" data-b="' + d[0] + '" data-op="' + op + '" cx="' + x + '" cy="' + y +
-             '" r="' + r + '" fill="#B5AFA0" opacity="' + op + '"/>');
+             '" r="' + r + '" fill="' + (win ? '#4ECBA0' : '#B5AFA0') + '" opacity="' + op + '"/>');
     });
     h.push('</g>');
-    h.push('<circle id="win_ring" cx="' + winX + '" cy="' + winY + '" r="13" fill="none" stroke="#E8705F" stroke-width="2"/>');
+    // the winner is the trilogy's honest payoff -> good-green ring + green dot, paired
+    // with the ✓ in #win_label so the mark is never colour-only
+    h.push('<circle id="win_ring" cx="' + winX + '" cy="' + winY + '" r="13" fill="none" stroke="#4ECBA0" stroke-width="2"/>');
     svg.innerHTML = h.join('');
     scDots = Array.prototype.slice.call(svg.querySelectorAll('circle.d'));
   })();
