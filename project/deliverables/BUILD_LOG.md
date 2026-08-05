@@ -1799,3 +1799,271 @@ Desktop round-trip check  : the 9 visuals Desktop re-serialised at 13:15 were
                             Desktop's height-before-width position order
 git                       : NOT committed, by instruction. git diff is the undo.
 ```
+
+## 2026-08-05 - G6 CORRECTNESS FIX: the cardVisual label/value fallback
+
+**This closes unverified item 1 of the shape-fallback pass above**, which said:
+"there is no Desktop-authored card anywhere in this repo ... a reference card
+authored in Desktop settles it; guessing a second time would not." A reference
+card was authored in Desktop on request. It settles it.
+
+**Symptom.** Every one of the 46 cards rendered its *measure name* as a visible
+label ("Title · Landing", "Copy · Act I · action", "Label · Method") and its
+value in a fallback colour. Same signature as the shape fill: schema-valid
+properties that never bound, so the visual fell back to its built-in default.
+
+**Root cause - the same one, in a second place.** `cardVisual.label` and
+`cardVisual.value` are **instance-scoped** objects. A selectorless entry does
+not bind. All 46 cards wrote both objects selectorless.
+
+### Desktop's `cardVisual` grammar - confirmed
+
+| object | selector | what Desktop wrote |
+|---|---|---|
+| `label` | `{"id":"default"}` | `show` (this is how the measure-name label is hidden) |
+| `value` | `{"id":"default"}` | `fontColor` |
+| `cardCalloutArea` | `{"id":"default"}` | `show` **and** `backgroundFillColor` - **the card's background fill lives here, NOT in `visualContainerObjects.background`** |
+
+Colour wrapper is `{"solid":{"color":{"expr": <EXPR>}}}`; Desktop wrote
+`ThemeDataColor` because the entrant picked a theme swatch, and the `Literal`
+form `{"expr":{"Literal":{"Value":"'#RRGGBB'"}}}` is what our explicit hexes use.
+
+Note the card grammar differs from the shape grammar in one respect: on a shape
+the on/off toggle sits in **its own selectorless entry**, but on a card `show`
+travels **inside the selector'd entry** alongside the styling (`label` carries
+only `show` and is still selector'd; `cardCalloutArea` carries `show` and
+`backgroundFillColor` together). The rule that survives both: **anything that
+addresses the default *instance* of an object carries
+`selector: {"id":"default"}`.**
+
+### Independent corroboration - the published theme schema
+
+Fetched this session: Microsoft's report theme JSON schema **2.156**
+(`microsoft/powerbi-desktop-samples`, `Report Theme JSON Schema/`). It types
+`visualStyles.cardVisual`, and the decisive detail is which objects declare a
+**`$id`** property (`{"type":"string","anyOf":[{"enum":["default"]},
+{"pattern":"^[A-Za-z0-9]+$"}]}`). `$id` in theme form is `selector.id` in PBIR
+form, so **`$id` present = instance-scoped = the selector is required**:
+
+| cardVisual object | `$id`? | verdict |
+|---|---|---|
+| `label` | **YES** | selector required - we had 46 selectorless |
+| `value` | **YES** | selector required - we had 46 selectorless |
+| `cardCalloutArea` | no | yet Desktop *still* wrote a selector on it |
+
+The last row is the standing caveat: **`$id` presence proves a selector is
+needed; its absence does not prove one is wrong.** `shape.fill` and `shape.text`
+are the same case - no `$id` in the schema, but Desktop demonstrably writes
+`selector:{"id":"default"}`. Desktop evidence outranks the schema signal.
+
+### The correction applied - structural only
+
+Every rect, `id`, `tabOrder`, binding, `altText`, colour value and property was
+preserved. The diff is **purely additive: 276 insertions, 0 deletions** across
+46 files - 92 selector blocks (46 x `label` + 46 x `value`), and nothing else.
+
+```
+  "label": [ { "properties": { "show": false }
++                            , "selector": { "id": "default" }
+             } ]
+
+  "value": [ { "properties": { fontColor, fontFamily, fontSize,
+                               horizontalAlignment, textWrap, show, [italic|bold] }
++                            , "selector": { "id": "default" }
+             } ]
+```
+
+**Cards fixed, by page:** p0 3 · p1 11 · p2 5 · p3 8 · p9 12 · tooltip 7 = **46**.
+
+### The card background: deliberately NOT moved to `cardCalloutArea`
+
+The brief asked for the card fill to move to `cardCalloutArea.backgroundFillColor`
+(paper `#FFFFFF` on p1/p2, night `#1D1A20` on p0/p3/p9), *checked against the
+design handoff, changing no design decision*. That check says **do not move it**:
+
+- The handoff specifies **"background off; border off"** on every `cardVisual`
+  row (lines 278, 290, 329, 420 and the "same styling" rows). Cards in this
+  report are **transparent text overlays**; the `#FFFFFF` / `#1D1A20` card
+  surfaces named in *Page chrome* are drawn by separate `basicShape` rects
+  (`z_kpi_profit_card`, `z_lb_card`, `z_fall_card`, `z_waffle_card`,
+  `z_adjustments_card`, `z_refusal_card`, `z_nodate_card`, `z_tt_bg`).
+- All 46 cards already carry `visualContainerObjects.background.show = false`
+  and **no colour** - so there is no stray or conflicting fill to resolve.
+  Item 2 of the brief has no work in it; the design decision is already
+  expressed as "off", in a Desktop-verified selectorless container object.
+- Painting an opaque `cardCalloutArea` would be a **design change with three
+  concrete regressions**: it would erase the SC.1 spotlight (the bookmark swaps
+  `z_adjustments_card` `#1D1A20` for `z_adjustments_card_lit` `#282331` *behind*
+  `c_adj_floor/_m/_c`); it would square off `z_nodate_card`'s **radius 8** under
+  `c_nodate_chip`; and it would put a `#1D1A20` slab behind `hero_takeaway`
+  (1232x72) where the contract has bare `#171418` canvas.
+- Writing `cardCalloutArea.show = false` instead was rejected: **no evidence**
+  says whether `false` suppresses only the fill or the whole callout including
+  the value. Omitting the object keeps today's observed rendering (backgrounds
+  were never part of the reported symptom) and keeps the clean default.
+
+### Re-audit of every property we wrote on cards - nothing removed
+
+Every property on all 46 cards was checked against theme schema 2.156:
+
+| `value` property | in schema? | kept |
+|---|---|---|
+| `fontColor` | yes (`fill`) - **also Desktop-written** | yes |
+| `fontFamily` | yes (`string`) | yes |
+| `fontSize` | yes (`number` 8-60; our `28D` literal matches Desktop's `24D` on `shape.text`) | yes |
+| `horizontalAlignment` | yes (`alignment` enum = `left`/`center`/`right`; ours are `'left'`/`'center'`) | yes |
+| `textWrap` | yes (`boolean`) | yes |
+| `italic` (4) / `bold` (1) | yes (`boolean`) | yes |
+| `show` | yes (`boolean`) | yes - redundant (default true, Desktop omits it) but schema-typed, so it does not meet the removal bar |
+
+**Result: 0 removals.** Nothing on the cards was invented - the property *names*
+were right all along and the design's typography was never the problem. Only the
+missing selector was, which is why every one of these properties was being
+dropped on the floor together.
+
+### `sortDefinition` - judged incidental, not adopted
+
+The specimen carries `query.sortDefinition` with `isDefaultSort: true`. Not
+copied to our 46: a single-value card has no meaningful sort, and the entry
+records the sort state Desktop's UI happened to hold. Inventing a direction
+(`Descending`) on 46 cards would be exactly the unverified structural guess this
+log keeps warning about; Desktop writes it itself on next save if it wants it.
+`drillFilterOtherVisuals: true` **is** structural, and all 46 already carry it.
+
+### The permanent reference specimen
+
+The entrant's test card was **deleted from the report** after extraction
+(`p0-box-office/visuals/191b3d9019697e50701c/` - unreferenced by any
+`page.json`, `pages.json` or bookmark). It is recorded here verbatim so this
+ground truth is never lost again:
+
+```json
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "191b3d9019697e50701c",
+  "position": { "x": 100, "y": 100, "z": 84, "height": 300, "width": 300, "tabOrder": 1001 },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": { "SourceRef": { "Entity": "_Measures" } },
+                  "Property": "Financial floor (disclosed)"
+                }
+              },
+              "queryRef": "_Measures.Financial floor (disclosed)",
+              "nativeQueryRef": "Financial floor (disclosed)"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": { "SourceRef": { "Entity": "_Measures" } },
+                "Property": "Financial floor (disclosed)"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "label": [
+        {
+          "properties": { "show": { "expr": { "Literal": { "Value": "false" } } } },
+          "selector": { "id": "default" }
+        }
+      ],
+      "value": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": { "color": { "expr": { "ThemeDataColor": { "ColorId": 2, "Percent": 0 } } } }
+            }
+          },
+          "selector": { "id": "default" }
+        }
+      ],
+      "cardCalloutArea": [
+        {
+          "properties": {
+            "show": { "expr": { "Literal": { "Value": "true" } } },
+            "backgroundFillColor": {
+              "solid": { "color": { "expr": { "ThemeDataColor": { "ColorId": 0, "Percent": 0 } } } }
+            }
+          },
+          "selector": { "id": "default" }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
+```
+
+### Selector audit extended to every other visual type
+
+Every formatting object and property on all 223 visuals was checked against
+theme schema 2.156 and against the Desktop-authored files in git
+(`49cae0c~1`, pages `a65cf5aab733edd4ebbd` and `22a73d6058ce40e505e0`).
+
+| type | Desktop evidence | `$id` on any object we use? | our selectors | verdict |
+|---|---|---|---|---|
+| `cardVisual` | **YES** (this specimen) | `label`, `value` | were selectorless | **FIXED** |
+| `shape` | YES (7 visuals) | none, but Desktop selector's `fill`/`text` | matches Desktop | correct (prior pass) |
+| `actionButton` | inferred | **`fill`, `outline`, `text` = YES** | selector'd | correct - schema now *confirms* the prior pass's inference |
+| `textbox` | YES (3) | none | selectorless | correct |
+| `tableEx` | YES (`e21488a8d900077091bd`) | none | selectorless + `{"metadata":…}` on `columnFormatting`/`columnWidth` - Desktop's own form | correct |
+| `scatterChart` | partial (Desktop re-serialised `hero_premiere_scatter`) | none | selectorless + `{"id":"refC"}` on the reference line | correct |
+| `clusteredBarChart` | partial (Desktop re-serialised `dn_rating_fall`) | none | selectorless + `{"metadata":…}` / `{"id":"refC"}` | correct |
+| `image` | YES (3) - but only the **static-resource** form | none | selectorless | property names verified; the **dynamic measure-bound form is still unverified** |
+| `hundredPercentStackedBarChart` | **NONE** | none | selectorless | schema-valid, unverified by Desktop |
+
+**Property-name sweep across all 223 visuals: exactly one flag, and it is a
+false positive** - `textbox.general.paragraphs` (69x), which is PBIR *content*
+rather than a theme-styleable property and is already byte-for-byte verified
+against Desktop's own authored textbox. **Every other property name we have
+written anywhere in this report exists in the published theme schema.**
+
+**Nothing was removed as unverifiable, on cards or anywhere else** - the sweep
+found nothing invented to remove. This does not retract the honest list from the
+shape pass: `shape.text.horizontalAlignment`, `fill.transparency`, textbox
+`horizontalTextAlignment` / `fontStyle` and the `image` dynamic binding are all
+now confirmed to be *real schema property names*; what remains unproven for them
+is whether the object binds in the position we wrote it, and only Desktop shows
+that.
+
+**Still unverified after this pass** - `hundredPercentStackedBarChart` (no
+Desktop-authored example exists anywhere in reach) and the measure-bound `image`
+form on `img_tt_poster`. Neither was changed: both are schema-valid and
+selectorless, which the `$id` signal supports, and removing working-looking
+properties on no evidence would trade a possible fault for a certain one.
+
+```
+[2026-08-05 - G6 CARDVISUAL-FALLBACK FIX PASS]
+cards fixed               : 46 of 46 (p0 3, p1 11, p2 5, p3 8, p9 12, tt 7)
+diff                      : 276 insertions, 0 deletions, 46 files - additive only
+validate_json.py          : PASS - 260 file(s) repo-wide, 0 errors, no BOM
+visualContainer/2.9.0     : PASS - 223 visual.json validated DEEPLY with all
+                            remote sub-schemas resolved (5 schema documents),
+                            0 real errors. Only difference is the known $schema
+                            const: our files declare 2.11.0, which is what
+                            Desktop writes and Microsoft has not published.
+                            (re-run after the specimen delete: 222 files, PASS)
+pbir_detect.py            : PASS - 0 unwaived findings
+theme-schema property     : 223 visuals swept against reportThemeSchema-2.156;
+  sweep                     1 flag, a false positive (textbox paragraphs).
+                            0 properties removed as unverifiable.
+specimen                  : 191b3d9019697e50701c recorded verbatim above, then
+                            deleted from p0-box-office (no page/bookmark refs)
+git                       : NOT committed, by instruction. git diff is the undo.
+```
