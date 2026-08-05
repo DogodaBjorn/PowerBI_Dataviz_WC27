@@ -3,7 +3,7 @@
   "name": "c_p2_slug_honest",
   "position": {
     "x": 34,
-    "y": 333,
+    "y": 371,
     "z": 35,
     "width": 524,
     "height": 27,
@@ -88,5 +88,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "isHidden": true
 }

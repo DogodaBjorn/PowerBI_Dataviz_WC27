@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "NOTE: at least 20 films score a perfect 10.0 on 2–3 votes.",
+                    "value": "NOTE: a raw score has no evidence floor — it never says how many voted.",
                     "textStyle": {
                       "fontFamily": "Consolas",
                       "fontSize": "10pt",
@@ -88,5 +88,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "isHidden": true
 }

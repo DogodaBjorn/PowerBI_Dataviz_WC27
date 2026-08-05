@@ -72,7 +72,7 @@
                 }
               }
             },
-            "lineWeight": {
+            "weight": {
               "expr": {
                 "Literal": {
                   "Value": "1L"

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmarksMetadata/1.0.0/schema.json",
+  "items": [
+    {
+      "name": "bm_p1_b1"
+    },
+    {
+      "name": "bm_p1_b2"
+    },
+    {
+      "name": "bm_p1_b3"
+    },
+    {
+      "name": "bm_p2_b1"
+    },
+    {
+      "name": "bm_p2_b2"
+    },
+    {
+      "name": "bm_p2_b3"
+    },
+    {
+      "name": "bm_p3_b1"
+    },
+    {
+      "name": "bm_p3_b2"
+    },
+    {
+      "name": "bm_p3_b3"
+    }
+  ]
+}

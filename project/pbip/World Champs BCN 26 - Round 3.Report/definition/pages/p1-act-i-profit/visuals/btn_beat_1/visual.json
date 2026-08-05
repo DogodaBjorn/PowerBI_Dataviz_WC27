@@ -44,7 +44,18 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "fillColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2E4A7D'"
+                    }
+                  }
                 }
               }
             }
@@ -99,7 +110,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'SC.1 — THE SEDUCTION'"
+                  "Value": "'● SC.1 — THE SEDUCTION'"
                 }
               }
             },
@@ -122,7 +133,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#211E1A'"
+                      "Value": "'#F5F2E9'"
                     }
                   }
                 }
@@ -182,6 +193,33 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualLink": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Bookmark'"
+                }
+              }
+            },
+            "bookmark": {
+              "expr": {
+                "Literal": {
+                  "Value": "'bm_p1_b1'"
                 }
               }
             }

@@ -1,0 +1,459 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "bm_p1_b1",
+  "displayName": "Act I · SC.1 — THE SEDUCTION",
+  "options": {
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "p1-act-i-profit",
+    "sections": {
+      "p1-act-i-profit": {
+        "visualContainers": {
+          "z_p1_header_title": {
+            "singleVisual": {}
+          },
+          "z_p1_header_rule": {
+            "singleVisual": {}
+          },
+          "btn_home": {
+            "singleVisual": {}
+          },
+          "btn_credits": {
+            "singleVisual": {}
+          },
+          "z_p1_admit": {
+            "singleVisual": {}
+          },
+          "btn_beat_1": {
+            "singleVisual": {
+              "objects": {
+                "merge": {
+                  "fill": [
+                    {
+                      "properties": {
+                        "show": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        },
+                        "fillColor": {
+                          "solid": {
+                            "color": {
+                              "expr": {
+                                "Literal": {
+                                  "Value": "'#2E4A7D'"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "text": [
+                    {
+                      "properties": {
+                        "show": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "text": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'● SC.1 — THE SEDUCTION'"
+                            }
+                          }
+                        },
+                        "fontFamily": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Bahnschrift SemiCondensed'"
+                            }
+                          }
+                        },
+                        "fontSize": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "10D"
+                            }
+                          }
+                        },
+                        "fontColor": {
+                          "solid": {
+                            "color": {
+                              "expr": {
+                                "Literal": {
+                                  "Value": "'#F5F2E9'"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "selector": {
+                        "id": "default"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "btn_beat_2": {
+            "singleVisual": {
+              "objects": {
+                "merge": {
+                  "fill": [
+                    {
+                      "properties": {
+                        "show": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "false"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "text": [
+                    {
+                      "properties": {
+                        "show": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "text": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'SC.2 — THE NOTES'"
+                            }
+                          }
+                        },
+                        "fontFamily": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Bahnschrift SemiCondensed'"
+                            }
+                          }
+                        },
+                        "fontSize": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "10D"
+                            }
+                          }
+                        },
+                        "fontColor": {
+                          "solid": {
+                            "color": {
+                              "expr": {
+                                "Literal": {
+                                  "Value": "'#211E1A'"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "selector": {
+                        "id": "default"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "btn_beat_3": {
+            "singleVisual": {
+              "objects": {
+                "merge": {
+                  "fill": [
+                    {
+                      "properties": {
+                        "show": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "false"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "text": [
+                    {
+                      "properties": {
+                        "show": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "text": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'SC.3 — THE CORRECTED CUT'"
+                            }
+                          }
+                        },
+                        "fontFamily": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Bahnschrift SemiCondensed'"
+                            }
+                          }
+                        },
+                        "fontSize": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "10D"
+                            }
+                          }
+                        },
+                        "fontColor": {
+                          "solid": {
+                            "color": {
+                              "expr": {
+                                "Literal": {
+                                  "Value": "'#211E1A'"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "selector": {
+                        "id": "default"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "z_p1_beat1_mark": {
+            "singleVisual": {}
+          },
+          "z_p1_beat2_mark": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "z_p1_beat3_mark": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_next_scene": {
+            "singleVisual": {}
+          },
+          "btn_next_scene_2": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "z_p1_verdict_rule": {
+            "singleVisual": {}
+          },
+          "c_p1_slug_naive": {
+            "singleVisual": {}
+          },
+          "c_p1_action": {
+            "singleVisual": {}
+          },
+          "c_p1_cue_naive": {
+            "singleVisual": {}
+          },
+          "c_p1_dlg_naive": {
+            "singleVisual": {}
+          },
+          "c_p1_trans": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_p1_slug_honest": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_p1_cue_honest": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_p1_dlg_honest": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "z_kpi_profit_card": {
+            "singleVisual": {}
+          },
+          "c_kpi_profit_kicker": {
+            "singleVisual": {}
+          },
+          "c_kpi_profit_label": {
+            "singleVisual": {}
+          },
+          "kpi_profit_naive": {
+            "singleVisual": {}
+          },
+          "kpi_profit_naive_corrected": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "z_kpi_profit_strike": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_kpi_profit_misread": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "z_p1_note_rule_1": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_p1_note_zeros": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "z_p1_note_rule_2": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_p1_note_budget": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "z_p1_note_rule_3": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_p1_note_negrev": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "z_waffle_card": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_waffle_kicker": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_waffle_title": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_waffle_cap": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "dn_ticket_waffle": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_waffle_foot": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_verdict_act1": {
+            "singleVisual": {}
+          },
+          "c_verdict_act1_note": {
+            "singleVisual": {}
+          },
+          "btn_next_act": {
+            "singleVisual": {}
+          }
+        }
+      }
+    }
+  }
+}

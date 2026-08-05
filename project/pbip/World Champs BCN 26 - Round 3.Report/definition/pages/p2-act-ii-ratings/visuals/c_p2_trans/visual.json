@@ -3,7 +3,7 @@
   "name": "c_p2_trans",
   "position": {
     "x": 34,
-    "y": 300,
+    "y": 338,
     "z": 34,
     "width": 470,
     "height": 27,
@@ -89,5 +89,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "isHidden": true
 }

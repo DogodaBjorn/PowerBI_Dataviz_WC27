@@ -157,6 +157,28 @@ table _Measures
 		lineageTag: 55f90905-50ab-4ca3-a3d5-cf6b33599f43
 
 	/// What a perfect 10.0 on two votes actually reads once evidence is required — the Act II headline, computed from the disclosed m and C, never typed.
+	/// Listings whose raw score is a flat 10.0 on at least one vote — the size of the "best film ever" claim, which turns out to be a crowd.
+	measure 'Movies (perfect ten)' = CALCULATE([Movies], Movies[Vote Average] = 10, Movies[Vote Count] >= 1)
+		formatString: #,0
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: b29fc0e8-9b26-406e-b3fc-aff24cdddff5
+
+	/// The thinnest slice of that crowd: a perfect 10.0 resting on one single vote.
+	measure 'Movies (perfect ten, single vote)' = CALCULATE([Movies], Movies[Vote Average] = 10, Movies[Vote Count] = 1)
+		formatString: #,0
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: b44bb5a5-0c8d-460d-9817-4fb7a8b71147
+
+	/// ILLUSTRATION: what one vote of applause is worth once evidence is required — the shrinkage formula at v = 1, not a film's score.
+	measure 'Single-vote ten (illustration)' =
+			VAR m = [Rating m (disclosed)]
+			VAR v = 1
+			RETURN
+				DIVIDE(v, v + m) * 10 + DIVIDE(m, v + m) * [Rating C (disclosed)]
+		formatString: 0.00
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: f70e71ff-0df1-4f2e-8513-32bca8e0a514
+
 	/// ILLUSTRATION: a worked example of the shrinkage formula, not a film's score.
 	measure 'Two-vote ten (illustration)' =
 			VAR m = [Rating m (disclosed)]
@@ -541,25 +563,36 @@ table _Measures
 		displayFolder: 06 Display
 		lineageTag: de35be9c-3d2c-411f-acde-ec77ec879ffe
 
-	/// p2 SC.3 responsible dialogue — the fall from applause to evidence, with both disclosed parameters and the Godfather reference. Bound to c_p2_dlg_honest.
+	/// p2 SC.1 naive dialogue — the lie stated as a crowd, not a film: thousands of perfect tens, most of them on one vote. Bound to c_p2_dlg_naive.
+	measure 'Copy · Act II · naive read' =
+			"The best film ever made? Take your pick — "
+				& FORMAT([Movies (perfect ten)], "#,0")
+				& " listings score a perfect 10.0. "
+				& FORMAT([Movies (perfect ten, single vote)], "#,0")
+				& " of them on a single vote."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 8108e005-dbff-4aa6-9db0-d682287d0ec3
+
+	/// p2 SC.3 responsible dialogue — the fall from applause to evidence, stated as the aggregate. Names no film: thousands tie, so naming one would be the very claim this act refuses. Bound to c_p2_dlg_honest.
 	measure 'Copy · Act II · responsible read' =
 			"Weighted by evidence (m="
 				& FORMAT([Rating m (disclosed)], "#,0")
 				& ", C="
 				& FORMAT([Rating C (disclosed)], "0.00")
-				& "), a 10.0 on 2 votes reads "
-				& FORMAT([Two-vote ten (illustration)], "0.00")
-				& ". The Godfather reads "
-				& FORMAT([Godfather rating (reference)], "0.00")
+				& "), a perfect 10.0 on a single vote reads "
+				& FORMAT([Single-vote ten (illustration)], "0.00")
+				& " — barely above the global mean of "
+				& FORMAT([Rating C (disclosed)], "0.00")
 				& ". Applause is not evidence."
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 7aeb05ca-5bf9-4659-9101-2d94b16d9f99
 
-	/// p2 verdict — Act II's one-line finding. Bound to c_verdict_act2.
+	/// p2 verdict — Act II's one-line finding, stated as the aggregate rather than about any one film. Bound to c_verdict_act2.
 	measure 'Copy · Act II · verdict' =
-			"Applause is not evidence: 10.0 on 2 votes reads "
-				& FORMAT([Two-vote ten (illustration)], "0.00")
+			"Applause is not evidence: a perfect 10.0 on one vote reads "
+				& FORMAT([Single-vote ten (illustration)], "0.00")
 				& " with m="
 				& FORMAT([Rating m (disclosed)], "#,0")
 				& ", C="
@@ -608,6 +641,17 @@ table _Measures
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: a408d50b-0221-42c8-9b29-8c05b941ab27
+
+	/// The refusal card's divergence flag: marks a listing whose popularity rank and evidence-weighted-rating rank disagree by more than 100 places. A word-and-glyph carrier, never a quality claim about popularity.
+	measure 'Mark · Rank divergence' =
+			IF(
+				ABS([Rank · Popularity] - [Rank · Rating (weighted)]) > 100,
+				"✕",
+				""
+			)
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 6b35e3f2-398c-4b24-935f-4bb4feaebc10
 
 	/// p3 adjustment chip — the disclosed financial floor. Bound to c_adj_floor.
 	measure 'Label · Chip floor' = "✓ floor " & FORMAT([Financial floor (disclosed)], "\$#,0")

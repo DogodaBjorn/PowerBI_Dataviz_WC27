@@ -6,29 +6,96 @@
     "y": 248,
     "z": 33,
     "width": 315,
-    "height": 46,
+    "height": 86,
     "tabOrder": 1100
   },
   "visual": {
-    "visualType": "textbox",
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Copy · Act II · naive read"
+                }
+              },
+              "queryRef": "_Measures.Copy · Act II · naive read",
+              "nativeQueryRef": "Copy · Act II · naive read"
+            }
+          ]
+        }
+      }
+    },
     "objects": {
-      "general": [
+      "value": [
         {
           "properties": {
-            "paragraphs": [
-              {
-                "textRuns": [
-                  {
-                    "value": "The best film ever made? Las mujeres deciden. A perfect 10.0!",
-                    "textStyle": {
-                      "fontFamily": "Consolas",
-                      "fontSize": "12pt",
-                      "color": "#211E1A"
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Consolas'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#211E1A'"
                     }
                   }
-                ]
+                }
               }
-            ]
+            },
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "label": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]

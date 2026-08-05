@@ -10,40 +10,60 @@ validation record. This file is the stage's state + open questions.
 |---|---|---|
 | A | Display measures filled + 40 new measures; D7 theme installed and made active | done 2026-08-05 |
 | B1 | `p0-box-office` (42 visuals) · `p9-end-credits` (35 visuals) · pages registry | done 2026-08-05 |
-| **B2a** | **`p1-act-i-profit` (43 visuals) · `p2-act-ii-ratings` (37 visuals)** | **done 2026-08-05** |
-| B2b | `p3-act-iii-corrected-cut` · `tt-movie-poster` tooltip · the nine beat bookmarks | not started |
+| B2a | `p1-act-i-profit` · `p2-act-ii-ratings` | done 2026-08-05 |
+| **B2b** | **Act II ruling · `p3-act-iii-corrected-cut` · `tt-movie-poster` · 9 bookmarks** | **done 2026-08-05** |
 | C | Desktop round-trip: refresh, render, work the manual checklist | not started |
 
-157 visuals built across four pages. `validate_json.py`: 202 files, 0 errors.
-`validate_tmdl.py --strict`: 1 error, the standing `SourceRoot` waiver.
-All 157 `visual.json` validate against the published `visualContainer/2.9.0`
-schema **with its remote sub-schemas resolved** (visualConfiguration 2.3.0,
-filterConfiguration 1.3.0, semanticQuery 1.4.0, formattingObjectDefinitions 1.5.0).
+**The report is structurally complete.** 210 visuals across six pages
+(p0 42 · p1 44 · p2 38 · p3 37 · p9 35 · tooltip 14) plus nine beat bookmarks.
+Model: 79 measures.
+
+`validate_json.py`: 267 files, 0 errors. `validate_tmdl.py --strict`: 1 error, the
+standing `SourceRoot` waiver. All 210 `visual.json`, all six `page.json`,
+`pages.json`, the nine `*.bookmark.json` and `bookmarks.json` validate against their
+published schemas (`visualContainer/2.9.0` with remote sub-schemas resolved,
+`page/2.1.0`, `pagesMetadata/1.1.0`, `bookmark/2.1.0`, `bookmarksMetadata/1.0.0`).
+
+## Decisions recorded this stage
+
+- **The Act II ruling (2026-08-05, coordinator, design authority).** Act II no longer
+  names a film. The naive read is the aggregate — *n* listings score a perfect 10.0,
+  *n* of them on a single vote — and the corrected read is the aggregate too: a
+  perfect 10.0 on one vote weights to ≈ 6.99, barely above C = 6.96. Five measures
+  added, two rewritten in place, three Act II strings re-worded. Full record and the
+  one deviation (the leaderboard tie-break) in BUILD_LOG → *THE ACT II RULING*.
+- **The play axis is a manual Desktop step, not a silent drop** (see open question 1).
+- **Measure-driven colours are not bound** — the fx-field-value serialisation is
+  unverifiable; the honest carriers are words and glyphs (see open question 2).
+- **Both Deneb visuals ship as their contracted native fallbacks** — Deneb is not
+  registered in this report and an agent cannot register it.
 
 ## Open questions
 
-1. **`c_p2_dlg_naive` names a film the leaderboard will not show.** *Las mujeres
-   deciden* really does hold a perfect 10.0 on 2 votes in the loaded snapshot, but
-   4,304 listings hold a perfect 10.0 on **1** vote, so `tbl_perfect_tens`
-   (contracted: top 3 **ascending** by `[Votes]`) will show three 1-vote titles
-   instead. **Designer decides:** leave it as an illustration · sort the leaderboard
-   descending · or add a `Title · Perfect ten (illustration)` measure and bind the
-   name live. Nothing changed unilaterally. (BUILD_LOG → phase B2a findings, 1.)
-2. **`c_waffle_cap` was re-worded for the fallback medium** — the contracted caption
-   legends waffle cells ("outline = …") that the 100 % stacked bar does not have.
-   Needs designer ack. (BUILD_LOG → phase B2a decisions.)
-3. **Two contracted "at least" strings are large understatements** under the newer
-   snapshot ("+ at least 18 more perfect 10s" vs 4,607; "at least 20 films … on 2–3
-   votes" vs 293). True as written, shipped verbatim, better bound to measures.
-4. **Alt text is still blocked on attribution** (rule `attribution.md`, blocker
-   severity). p1/p2 add 18 visuals to the waiting list. Until it clears, the fourth
-   M-003 carrier is missing and the extra tab stops on p1/p2 are what carry the
-   trap marking to a screen-reader user.
-5. **Deneb is not registered in this report** (`report.json` declares no
-   `publicCustomVisuals`), so both Deneb visuals ship as their contracted native
-   fallbacks. Restoring them is an entrant-side Desktop action, not an agent action.
-6. **`btn_beat_1..3` and `btn_next_scene` have no action yet** — they are bookmark
-   actions and the bookmarks are phase B2b. Verify the `visualLink.type` enum
-   spelling for a bookmark action against `visualConfiguration` before writing it.
-7. **Nothing built at stage 6 has been rendered.** No measure has been executed and
-   no pixel seen; the BUILD_LOG's Desktop checklists are the gate for that.
+1. **The play axis is not on disk — the contracted Act III animation is one Desktop
+   drag away.** No published source (theme schema, visualConfiguration,
+   Microsoft Learn, this repo's own Desktop-authored files, the contest `.pbix`)
+   names the scatter's play-axis role key, so per research-first none was invented.
+   `hero_premiere_scatter` ships complete except the Play well. **Entrant action:**
+   drag `'Release Year'[Year Label]` into Play, leave the head on the latest year,
+   save, and record the role key in BUILD_LOG.
+2. **`[Color · Scatter mark]` and `[Color · Rating verdict]` are unbound.** The winner
+   dot is therefore neutral, not good-green; it is carried by `c_winner_label`'s `✓`
+   and its words. Two `fx → Field value` bindings in Desktop close this.
+3. **Alt text is still blocked on attribution** (rule `attribution.md`, blocker
+   severity). The waiting list now covers p0, p1, p2, p3, p9 and the tooltip page.
+   Until it clears, the fourth M-003 carrier is missing and the extra tab stops on the
+   act pages are what carry the trap marking to a screen-reader user.
+4. **Six new unverified tokens** (scatter role keys · `visualLink.type = 'Bookmark'` ·
+   `explorationState.version` · the bookmark `objects.merge` payload · the `image`
+   visual's role key and `sourceField` · `VisualTopN` behaviour) join the five from
+   phase B1. Each fails visibly and each is a one-line fix; all are on the Desktop
+   checklist.
+5. **Native table headers cannot be hidden**, and `tableEx` has no per-column font.
+   `tbl_perfect_tens` and `tbl_refusal_ranks` ship with quiet headers and one font
+   family each; both may need a `columnWidth` tune in Desktop.
+6. **`Two-vote ten (illustration)` and `Godfather rating (reference)` are now unused**
+   by any visual after the Act II ruling. Retained, not deleted.
+7. **Nothing built at stage 6 has been rendered.** No measure has been executed and no
+   pixel seen; BUILD_LOG's Desktop checklists are the gate for that, and s7 still owns
+   the 85,394 / 84,036 / 84,510 snapshot reconciliation.

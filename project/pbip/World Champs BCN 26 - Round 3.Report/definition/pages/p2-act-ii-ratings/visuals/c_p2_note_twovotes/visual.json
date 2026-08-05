@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "NOTE: 2 votes.",
+                    "value": "NOTE: one vote is enough to score a perfect 10.0.",
                     "textStyle": {
                       "fontFamily": "Consolas",
                       "fontSize": "10pt",
@@ -88,5 +88,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "isHidden": true
 }

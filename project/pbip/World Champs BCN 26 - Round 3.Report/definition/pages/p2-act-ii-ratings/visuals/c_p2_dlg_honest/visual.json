@@ -3,7 +3,7 @@
   "name": "c_p2_dlg_honest",
   "position": {
     "x": 129,
-    "y": 385,
+    "y": 423,
     "z": 37,
     "width": 315,
     "height": 103,
@@ -155,5 +155,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "isHidden": true
 }

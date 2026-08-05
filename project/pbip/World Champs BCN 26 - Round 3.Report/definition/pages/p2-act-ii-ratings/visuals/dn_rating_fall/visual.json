@@ -96,6 +96,19 @@
               }
             },
             "direction": "Ascending"
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Movies"
+                  }
+                },
+                "Property": "Title"
+              }
+            },
+            "direction": "Ascending"
           }
         ]
       }
@@ -505,6 +518,7 @@
     },
     "drillFilterOtherVisuals": true
   },
+  "isHidden": true,
   "filterConfig": {
     "filters": [
       {

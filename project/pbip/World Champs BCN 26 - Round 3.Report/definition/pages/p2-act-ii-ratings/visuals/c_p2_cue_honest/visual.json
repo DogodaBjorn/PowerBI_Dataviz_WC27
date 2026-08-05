@@ -3,7 +3,7 @@
   "name": "c_p2_cue_honest",
   "position": {
     "x": 34,
-    "y": 366,
+    "y": 404,
     "z": 36,
     "width": 470,
     "height": 27,
@@ -89,5 +89,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "isHidden": true
 }
