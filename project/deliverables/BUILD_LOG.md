@@ -6,14 +6,15 @@ manual, which numbers rest on assumptions, when it was last validated. -->
 
 Last validated: 2026-08-05 — `validate_tmdl.py --strict`: 15 files, **1 error**
 (the standing `SourceRoot` drive-letter waiver, see 04-model-build.md), 0
-warnings; 33 pbip JSON files well-formed, UTF-8 without BOM (41 repo-wide, 0
-errors); `report.json` 0 errors against its declared `report/3.3.0` schema.
-Model: 10 tables, **73 measures**, 8 relationships, 3 shared expressions
+warnings; **202 repo JSON files** well-formed, UTF-8 without BOM, 0 errors;
+`report.json` 0 errors against its declared `report/3.3.0` schema.
+Model: 10 tables, **74 measures**, 8 relationships, 3 shared expressions
 (SourceRoot parameter, Source, Schema). Ten further measures (the
 `06 Display\Alt text` family) are **deferred** — see *Deferred*.
-Report: the D7 custom theme is installed and active; **p0-box-office (42 visuals)
-and p9-end-credits (35 visuals)** are built. The two starter pages are untouched.
-p1/p2/p3 and the tooltip page are stage 6 **phase B2**.
+Report: the D7 custom theme is installed and active; **p0-box-office (42),
+p1-act-i-profit (43), p2-act-ii-ratings (37) and p9-end-credits (35 visuals)**
+are built — 157 visuals in four pages. The two starter pages are untouched.
+**p3, the tooltip page and the nine bookmarks are stage 6 phase B2b.**
 
 ## Built
 
@@ -33,6 +34,10 @@ p1/p2/p3 and the tooltip page are stage 6 **phase B2**.
 | 2026-08-05 (s6 phase B1) | Report: `pages/p0-box-office` | **42 visuals**, 1280×720, canvas `#171418`. Marquee (`z_marquee_frame` / `_inner` / `_title` / `_sub`) · `hero_takeaway` (live) · three tickets ×11 objects each (`z_ticketN_body` / `_rule` / `_stub_rule` / `_perf` / `_act` / `_hr` / `_title` / `_tease` / `_admit` / `_serial` + `btn_ticket_actN`) · `z_billing_method` + `z_billing_caveats` (live) · `z_footer_credit` · `btn_credits` |
 | 2026-08-05 (s6 phase B1) | Report: `pages/p9-end-credits` | **35 visuals**, 1280×720, canvas `#171418`. `z_cr_title` · `c_cr_h_cast` + `c_cr_cast` · `c_cr_h_counts` + 7 label/value row pairs + `c_cr_count_basis_kept` · `c_cr_h_params` + 4 label/value row pairs · `c_cr_h_glossary` + `c_cr_glossary` · `c_cr_h_refusals` + `c_cr_refusals` · `c_cr_close_src` · `c_cr_close_last` · `btn_home`. **14 of the 35 are measure-bound cards** — no count is typed anywhere |
 | 2026-08-05 (s6 phase B1) | Report: `pages/pages.json` | `p0-box-office` prepended and made `activePageName` + `landingPageName`; `p9-end-credits` appended. The two starter page ids kept in `pageOrder`, untouched |
+| 2026-08-05 (s6 phase B2a) | SemanticModel: `_Measures` | **1 NEW measure** `Movies (no credible financials)` = `[Movies] - [Movies (credible financials)]` (folder `02 Lie 1 · Financials`, format `#,0`, fresh lineageTag). Build-necessitated: the contracted waffle fallback is a **100 % stacked bar**, which needs the complement segment as a field; `[Movies]` and `[Movies (credible financials)]` overlap and would stack to a lie. No new concept — the design already prints this quantity ("no credible financials (87)") |
+| 2026-08-05 (s6 phase B2a) | Report: `pages/p1-act-i-profit` | **43 visuals**, 1280×720, paper canvas `#F5F2E9`. Chrome ×13 (`z_p1_header_title` / `_rule` · `btn_home` · `btn_credits` · `z_p1_admit` · `btn_beat_1..3` + `z_p1_beat1..3_mark` · `btn_next_scene` · `z_p1_verdict_rule`) · screenplay ×8 · KPI insert ×7 · script-doctor notes ×6 (3 rules + 3 texts) · ticket-audit insert ×6 · verdict ×3. **9 of the 43 are measure-bound cards**; no count is typed anywhere |
+| 2026-08-05 (s6 phase B2a) | Report: `pages/p2-act-ii-ratings` | **37 visuals**, 1280×720, paper canvas `#F5F2E9`. Chrome ×12 + 3 beat marks · screenplay ×8 · notes ×6 · perfect-tens insert ×4 (incl. `tbl_perfect_tens`) · correction insert ×4 (incl. `dn_rating_fall`) · verdict ×2. **3 measure-bound cards** plus two data visuals bound entirely to measures/columns |
+| 2026-08-05 (s6 phase B2a) | Report: `pages/pages.json` | `p1-act-i-profit` and `p2-act-ii-ratings` inserted after `p0-box-office`; starter ids and `p9-end-credits` untouched. Validated against `pagesMetadata/1.1.0` (0 errors) |
 
 ## Deferred — not built, and why
 
@@ -61,8 +66,20 @@ p1/p2/p3 and the tooltip page are stage 6 **phase B2**.
   **Visuals awaiting alt text once unblocked:** p0 — `hero_takeaway`,
   `z_billing_method`, `z_billing_caveats`, `btn_ticket_act1/2/3` (the ticket teaser
   stat lives in the button's alt text per the handoff); p9 — the 11 measure-bound
-  value cards. Decorative chrome (frames, rules, perforations, ticket internals)
+  value cards; **p1 (phase B2a)** — `kpi_profit_naive` (`[Alt · kpi_profit_naive ·
+  SC1]`, must open with the words "Trap exhibit."), `kpi_profit_naive_corrected`
+  (`[Alt · kpi_profit_naive · SC3]`), `dn_ticket_waffle` (`[Alt · dn_ticket_waffle]`),
+  plus `c_p1_action`, `c_p1_dlg_naive`, `c_p1_dlg_honest`, `c_kpi_profit_label`,
+  `c_p1_note_zeros`, `c_waffle_title`, `c_waffle_foot`, `c_verdict_act1`;
+  **p2 (phase B2a)** — `tbl_perfect_tens` (`[Alt · tbl_perfect_tens]`),
+  `dn_rating_fall` (`[Alt · dn_rating_fall]`), plus `c_p2_note_median`,
+  `c_p2_dlg_honest`, `c_verdict_act2`. Decorative chrome (frames, rules,
+  perforations, ticket internals, the `z_pN_admit` glyphs, the three beat marks)
   must receive **empty** alt text at the same time, per the accessibility package.
+  **Alt text is the fourth M-003 carrier** — until it lands, p1/p2 carry three of
+  the four contracted carriers for a screen-reader user (slug tag, beat rail,
+  kicker + label are all on-canvas text and are in the tab order; see the
+  tab-order note below).
   **The property path is now verified** — see the phase-B1 decisions below — so this
   is a pure attribution hold, no longer a research question.
 - **p9 `NEGATIVE REVENUE` row — not built.** The design's counts table lists a
@@ -271,6 +288,248 @@ p1/p2/p3 and the tooltip page are stage 6 **phase B2**.
   no red at all; `btn_credits` and `btn_home` are neutral cream `#F2EFE6` outline
   and text, as required.
 
+### Stage 6 phase B2a — decisions (p1 · p2)
+
+- 2026-08-05 — **DENEB IS NOT AVAILABLE; both contracted fallbacks are taken.**
+  Checked, not assumed: `report/3.3.0/schema.json` defines
+  **`publicCustomVisuals`** ("Names of the custom visuals used in this report from
+  AppSource") and `organizationCustomVisuals`. This report's `report.json` declares
+  **neither**, and no custom-visual payload exists under `StaticResources`. An agent
+  cannot register an AppSource visual (it needs Desktop to download the package, and
+  the identifier + version could not be verified from any published source), so
+  inventing a registration was refused.
+  - `dn_ticket_waffle` → **native `hundredPercentStackedBarChart`** at the same rect,
+    `[Movies (credible financials)]` in good-green `#2F6B4F` against
+    `[Movies (no credible financials)]` in neutral `#78716C`. Ids kept (`dn_` prefix)
+    so the bookmark lists, the handoff and the alt-text register still line up.
+  - `dn_rating_fall` → **native `clusteredBarChart`** (paired bars) at the same rect,
+    `[Rating (raw)]` trap-red vs `[Rating (evidence-weighted)]` good-green, with a
+    dashed **reference line at 6.96** named `C = 6.96` (`referenceLine` card:
+    `show/value/lineColor/style/width/position/displayName/dataLabelShow/
+    dataLabelText/dataLabelColor/dataLabel*Position` — every property and both enums
+    verified in `reportThemeSchema-2.156`).
+  - **To restore Deneb** (optional, entrant-only): install Deneb from AppSource in
+    Desktop, author the two Vega-Lite specs, and the containers can be re-typed;
+    PBIR can carry the container but not the spec.
+- 2026-08-05 — **layout.json is the measured truth; the handoff supplies the
+  decomposition.** Rects were taken from `design-prototypes/layout.json` screens
+  `p1-act-i-sc1/sc3` and `p2-act-ii-sc1/sc3` wherever the prototype has a *block*
+  element for the object. Where layout.json only measures an inline text run
+  (`span`/`p`), the handoff's box wins — a text extent is not a box. Where the
+  handoff decomposes one measured block into two PBIR objects (margin note = 2 px
+  rule + inset text), the handoff's decomposition is built inside the measured
+  block. **Differences resolved in layout.json's favour** (handoff → built):
+  | Object | Handoff | Built (measured) |
+  |---|---|---|
+  | `c_p1_action` | 34,195,470,40 | 34,**196**,470,38 |
+  | `c_p1_cue_naive` | 34,251,… | 34,**248**,… |
+  | `c_p1_dlg_naive` | 129,270,… | 129,**267**,… |
+  | `c_p1_trans` | 34,328,… | 34,**319**,… |
+  | `c_p1_slug_honest` | 34,361,500,… | 34,**352**,**524**,… |
+  | `c_p1_cue_honest` | 34,398,… | 34,**385**,… |
+  | `c_p1_dlg_honest` | 129,417,315,116 | 129,**404**,315,114 |
+  | `c_p1_slug_naive` / `c_p2_slug_naive` | w 500 | w **524** |
+  | `c_kpi_profit_*`, `c_waffle_*`, `c_lb_*`, `c_fall_*` | x 816 / w 424 | x **817** / w **422** (426 on p2's fall card) |
+  | `z_kpi_profit_strike` | 810,236,436,2 | **811,230,308**,2 (matches the measured value width) |
+  | `c_kpi_profit_misread` | 816,264,… | 817,**255**,… |
+  | `z_pN_verdict_rule` | y 624 | y **632** (the measured verdict band's top border) |
+  | `btn_next_scene` | 1106,100,150,32 | **1124,100,132**,32 |
+  | `btn_next_act` (p1) | 1106,648,150,32 | **1142,649,114**,32 |
+  | `btn_next_act` (p2) | 1106,648,150,32 | **1110,649,146**,32 |
+  | `c_p2_action` … `c_p2_dlg_honest` | y 195/232/251/309/342/379/398 | y **196/229/248/300/333/366/385** |
+  | `c_p2_note_*` | y 196/248/352 h 16/44/44 | y 196/248/352 h **22/64/50** |
+  | `dn_rating_fall` | 812,422,432,172 | **813,420**,432,172 |
+  **Beat-rail widths are a genuine conflict and were resolved by max-width.** The
+  prototype's chips auto-size, so the same button measures 187.2 px at SC.1 (with the
+  `●`) and 173.4 px at SC.3; PBIR buttons are fixed. Built at the SC.1 (default-beat)
+  positions with the widest measured text: `btn_beat_1` 24,100,**188**,32 ·
+  `btn_beat_2` **222**,100,148,32 · `btn_beat_3` **380**,100,**222**,32 — 10 px
+  gutters, no state clips its own label.
+- 2026-08-05 — **Text-container heights are the measured height + ~8 px.** A CSS line
+  box is tighter than a PBIR text container, which adds internal padding; at the
+  measured heights, 12 pt Consolas clips. x, y and width are measured exactly. Where
+  two adjacent transparent text containers overlap by a few px as a result, nothing
+  renders differently — both have `background.show = false` and explicit z-order.
+- 2026-08-05 — **Live numbers: the phase-B1 `cardVisual` mechanism, unchanged.**
+  12 measure-bound cards across the two pages (`c_p1_action`, `c_p1_dlg_naive`,
+  `c_p1_dlg_honest`, `c_kpi_profit_label`, `kpi_profit_naive`,
+  `kpi_profit_naive_corrected`, `c_p1_note_zeros`, `c_waffle_title`, `c_waffle_foot`,
+  `c_verdict_act1`, `c_p2_note_median`, `c_p2_dlg_honest`, `c_verdict_act2`). The
+  only literals on either page are contracted non-numeric copy plus the disclosed
+  parameters. **The 11 pt trailing clause of `c_verdict_act1` ships as a second
+  object** (`c_verdict_act1_note`, 24,672,1040,22) because a card cannot mix
+  differently-styled runs — the cost recorded at phase B1, now paid.
+- 2026-08-05 — **`c_p1_note_budget`: the stale median is dropped, not typed.** The
+  contracted string is `…min $1, median $2,800.` A full pass over the loaded CSV
+  (84,510 in-partition non-adult rows) gives **min budget $1** (contract correct,
+  kept) and **median budget $2,961** — the contracted $2,800 is stale under the newer
+  snapshot and no measure produces it. Following the phase-B1 precedent (p9's stale
+  parentheticals), the clause is omitted rather than printed wrong; the note ships as
+  `NOTE: Budget is never 0 here. Unknowns arrive as junk: min $1.`
+  **To restore:** add a `Median budget (all listings)` measure and bind it beside
+  the min.
+- 2026-08-05 — **`c_p1_note_negrev` verified TRUE against the loaded snapshot.**
+  Exactly **one** in-partition non-adult listing books negative revenue: −$12
+  ("Some Bears"). The contracted sentence ships verbatim.
+- 2026-08-05 — **`c_waffle_cap` re-worded for the fallback medium (CONTRACT
+  DEVIATION — needs designer ack).** The contracted caption
+  `green ✓ = VALID (13) · outline = no credible financials (87)` legends a *waffle*:
+  filled vs **outline** cells. The bar fallback has no outline cells, and (13)/(87)
+  are typed counts. Shipped: `green ✓ = VALID · gray = no credible financials`, with
+  the live share printed by `c_waffle_title` (`[Copy · Act I · waffle title]`) and the
+  proportion carried by the bar itself. The `✓` and the words remain the non-colour
+  carriers.
+- 2026-08-05 — **`tbl_perfect_tens` column headers cannot be hidden.** The design
+  says "column headers hidden". The published theme schema's `tableEx` →
+  `columnHeaders` card has **no `show` property** (`alignment, autoSizeColumnWidth,
+  backColor, bold, columnAdjustment, customColumnWidth, defaultColumnWidth, fontColor,
+  fontFamily, fontSize, italic, outline*, underline, wordWrap`) and no `show` exists
+  anywhere else on `tableEx`. Inventing one was refused. Headers ship **styled quiet**
+  (Segoe UI 10 pt `#57534E` on `#FFFFFF`, not bold). This costs a row of vertical
+  space and it *helps* a screen-reader user, who now hears real column names.
+- 2026-08-05 — **`tbl_perfect_tens` per-column fonts are not expressible.** The
+  design wants the score column in Consolas 12 pt bold; `columnFormatting` carries
+  only `alignment, backColor, dataBars, fontColor, labelDisplayUnits, labelPrecision,
+  style*` — no font family/size/weight per column. The table uses one family
+  (Segoe UI 12 pt) and the score column keeps its **trap-red `#B3402E`** plus the
+  `[Mark · Rating verdict]` column, which prints `✕ thin evidence` in words. Colour is
+  still never the only carrier.
+- 2026-08-05 — **`[Color · Rating verdict]` is deliberately NOT bound.** Binding a
+  measure into a column's `fontColor` (fx → field value) has a serialisation shape
+  this session could not verify, and the filter guarantees every visible row is a raw
+  10.0 — the measure would return trap for all of them. The static trap red says the
+  same thing with a verified property. **To restore:** bind it by hand in Desktop and
+  capture the resulting JSON here.
+- 2026-08-05 — **Visual filters were built from typed schema, not memory.**
+  `filterConfiguration/1.3.0` + `semanticQuery/1.4.0` were fetched and read:
+  `tbl_perfect_tens` and `dn_rating_fall` each carry an **Advanced** filter
+  (`Comparison`, `ComparisonKind: 0`, `Literal "10D"`) for `[Rating (raw)] = 10` and a
+  **VisualTopN** filter (`{"VisualTopN": {"ItemCount": 3}}`) over a `sortDefinition`
+  of `[Votes]` **Ascending**. Note: the classic Desktop `TopN` filter expression does
+  **not exist** in `semanticQuery/1.4.0`'s `QueryExpressionContainer` — only
+  `VisualTopN` — so that is what was written. If `VisualTopN` does not take, the
+  failure is visible (more than three rows) and the story still reads.
+- 2026-08-05 — **`actionButton` outline weight: `weight`, not `lineWeight`.** The
+  published theme schema lists `visual-actionButton → outline → [lineColor, show,
+  transparency, weight]`; there is no `lineWeight`. p1/p2 buttons use `weight`.
+  **Pre-existing defect for the next phase to sweep:** exactly two files written at
+  phase B1 use `lineWeight` — `p0-box-office/visuals/btn_credits` and
+  `p9-end-credits/visuals/btn_home`. Both should be changed to `weight` in one
+  single-concern diff. Not fixed here: it is outside this phase's scope and the
+  symptom is a button outline at the theme's default thickness instead of 1 px, not a
+  broken file.
+- 2026-08-05 — **`z_pN_admit` substitutes the contracted `ca-canvas` SVG** with a
+  native `shape` (fill `#FFFFFF`, 2 px act-tint outline, centred `ADMIT ONE` in
+  Consolas 10 pt ink, `horizontalAlignment: center` / `verticalAlignment: middle` —
+  both enums verified). Same substitution the p0 ticket stubs took at phase B1, same
+  reason: real text beats an unverifiable data-URI picture. The contracted 1.5 px
+  stroke becomes 2 px (`weight` is an integer). Id renamed from the handoff's
+  `z_pN_admit_svg` because it is not an SVG.
+- 2026-08-05 — **Beat-rail state is built at SC.3 (the fullest state).**
+  `btn_beat_3` carries the act-tint fill, cream text and the leading `●`;
+  `z_pN_beat3_mark` (the 3 px detached underline, act tint) is visible and
+  `z_pN_beat1_mark` / `z_pN_beat2_mark` are `isHidden`. On p1 `kpi_profit_naive` is
+  `isHidden` and `kpi_profit_naive_corrected` is visible, exactly as the SC.3
+  bookmark specifies. The three marks exist as separate objects so the bookmark phase
+  has a **visibility** mechanism for the current-beat indicator even if formatting
+  capture on the buttons proves unreliable.
+- 2026-08-05 — **`btn_next_scene` and `btn_beat_1..3` carry NO `visualLink`.** They
+  are bookmark actions, and bookmarks do not exist yet. Phase B2b adds
+  `visualLink.type = 'Bookmark'` (verify the enum spelling against
+  `visualConfiguration` before writing it). Everything else on those buttons — shape,
+  fill, outline, text, title/background/border/dropShadow — is explicit.
+- 2026-08-05 — **Paper-surface override applied per visual, as documented.** Every
+  p1/p2 card is `#FFFFFF` with a 1 px `#D8D4C8` hairline and radius 0; text is
+  `#211E1A` / `#57534E`; chart neutral is `#78716C`; page + outspace background is
+  `#F5F2E9`. One rule, one reason (a single theme cannot serve two surfaces).
+- 2026-08-05 — **Scope rule and reserved red checked by script, not by eye.** An
+  automated pass over all four built pages finds: act tints (`#2E4A7D` / `#8A6516` /
+  `#5B3E8E`) on **no data visual**, and trap red only on the reserved set (slug tags,
+  the strike, the MISREAD tag, the three script-doctor rules and their notes, the
+  leaderboard's score + verdict columns, the dumbbell's raw dot) plus p9's `[TRAP]`
+  glossary tag. Navigation (`NEXT SCENE ▸`, `NEXT ACT ▸`, `THE PREMIERE ▸`) is act
+  tint; `btn_home` / `btn_credits` are ink. 0 violations.
+
+### Stage 6 phase B2a — FINDINGS FOR THE DESIGNER / QA (not build defects)
+
+1. **`c_p2_dlg_naive` names a film the leaderboard beside it will not show.** The
+   contracted line is `The best film ever made? Las mujeres deciden. A perfect 10.0!`
+   A full pass over the loaded CSV confirms *Las mujeres deciden* (Movie ID 458672)
+   does hold a **perfect 10.0 on 2 votes** — the sentence is TRUE. But the newer
+   snapshot has **4,610** perfect 10s with at least one vote, of which **4,304 have
+   exactly 1 vote** (260 have 2, 33 have 3). `tbl_perfect_tens` is contracted as
+   *top 3 **ascending** by `[Votes]`*, so it will show three arbitrary **1-vote**
+   titles and never this film. The trap reads *harder* that way — but the dialogue no
+   longer corresponds to the exhibit next to it. **Decision needed (designer):** (a)
+   leave it — the dialogue is an illustration, the table is the population; (b) sort
+   the leaderboard **descending** by votes so the most-voted perfect 10 leads; or
+   (c) add a `Title · Perfect ten (illustration)` measure and bind the film name live.
+   Nothing was changed unilaterally.
+2. **Two contracted "at least" strings are now large understatements** — true, but
+   thin. `c_lb_more`: "+ at least 18 more perfect 10s" (actual: 4,607 more).
+   `c_p2_note_twenty`: "at least 20 films score a perfect 10.0 on 2–3 votes"
+   (actual: 293). Both ship verbatim because they are contracted and remain literally
+   true; both would be stronger bound to a measure.
+3. **Loaded-snapshot counts, for the record** (full CSV pass, 2026-08-05):
+   in-partition non-adult listings **84,510** · credible financials **11,116** ·
+   coverage **13.15 %** · zero-revenue **66,853 (79.1 %)** · negative-revenue rows
+   **1 (−$12)**. Every one of these prints from a measure, so the report stays
+   self-consistent; they are here so s7 can reconcile the narrated 85,394 / 84,036.
+4. **p1 and p2 carry more tab stops than the handoff enumerates** (31 and 26 vs the
+   contracted 23 and 22). The extra stops are the informational card kickers, labels,
+   titles and captions (`c_kpi_profit_kicker`, `c_kpi_profit_label`,
+   `c_kpi_profit_misread`, `c_waffle_kicker/title/cap`, `c_lb_kicker`,
+   `c_fall_kicker/title`) plus `c_verdict_act1_note`. The handoff's enumerated order
+   is preserved **exactly as a subsequence**; each label stop sits immediately before
+   the value it labels (the p9 precedent). This is deliberate: while the alt-text
+   family is blocked, these stops are the only way a screen-reader user hears
+   `INSERT — THE NAIVE NUMBER` and the label ending in `(naive)` — carrier 3 of the
+   M-003 marking. If the alt-text blocker clears, they can be dropped back to `-1`.
+
+### Stage 6 phase B2a — beat state lists for the bookmark phase
+
+Nine bookmarks, capture **Data OFF · Display ON · Current page ON · All visuals**.
+"Chrome" below is visible in all three beats of its page.
+
+**p1-act-i-profit — 43 visuals**
+
+- *Chrome (all beats, 13):* `z_p1_header_title` · `z_p1_header_rule` · `btn_home` ·
+  `btn_credits` · `z_p1_admit` · `btn_beat_1` · `btn_beat_2` · `btn_beat_3` ·
+  `btn_next_scene` · `z_p1_verdict_rule` · `c_verdict_act1` · `c_verdict_act1_note` ·
+  `btn_next_act`
+- *Always-on content (7):* `c_p1_slug_naive` · `c_p1_action` · `c_p1_cue_naive` ·
+  `c_p1_dlg_naive` · `z_kpi_profit_card` · `c_kpi_profit_kicker` ·
+  `c_kpi_profit_label`
+- *Beat marks:* `z_p1_beat1_mark` (b1 only) · `z_p1_beat2_mark` (b2 only) ·
+  `z_p1_beat3_mark` (b3 only)
+- *Notes block (6, b2 + b3):* `z_p1_note_rule_1` · `c_p1_note_zeros` ·
+  `z_p1_note_rule_2` · `c_p1_note_budget` · `z_p1_note_rule_3` · `c_p1_note_negrev`
+- *Correction block (2, b3 only):* `z_kpi_profit_strike` · `c_kpi_profit_misread`
+- *Honest screenplay (4, b3 only):* `c_p1_trans` · `c_p1_slug_honest` ·
+  `c_p1_cue_honest` · `c_p1_dlg_honest`
+- *Waffle block (6, b3 only):* `z_waffle_card` · `c_waffle_kicker` · `c_waffle_title` ·
+  `c_waffle_cap` · `dn_ticket_waffle` · `c_waffle_foot`
+- *KPI variants:* `kpi_profit_naive` visible at **b1 + b2**, hidden at b3 ·
+  `kpi_profit_naive_corrected` hidden at b1 + b2, visible at **b3**
+- *Button state:* the current beat's button takes fill = `#2E4A7D`, text `#F5F2E9`
+  and a leading `● `; the other two take fill off, 1 px `#211E1A` outline, ink text,
+  no glyph. **Built state = SC.3.**
+
+**p2-act-ii-ratings — 37 visuals**
+
+- *Chrome (all beats, 12):* `z_p2_header_title` · `z_p2_header_rule` · `btn_home` ·
+  `btn_credits` · `z_p2_admit` · `btn_beat_1` · `btn_beat_2` · `btn_beat_3` ·
+  `btn_next_scene` · `z_p2_verdict_rule` · `c_verdict_act2` · `btn_next_act`
+- *Always-on content (8):* `c_p2_slug_naive` · `c_p2_action` · `c_p2_cue_naive` ·
+  `c_p2_dlg_naive` · `z_lb_card` · `c_lb_kicker` · `tbl_perfect_tens` · `c_lb_more`
+- *Beat marks:* `z_p2_beat1_mark` (b1) · `z_p2_beat2_mark` (b2) · `z_p2_beat3_mark` (b3)
+- *Notes block (6, b2 + b3):* `z_p2_note_rule_1` · `c_p2_note_twovotes` ·
+  `z_p2_note_rule_2` · `c_p2_note_median` · `z_p2_note_rule_3` · `c_p2_note_twenty`
+- *Honest screenplay + fall block (8, b3 only):* `c_p2_trans` · `c_p2_slug_honest` ·
+  `c_p2_cue_honest` · `c_p2_dlg_honest` · `z_fall_card` · `c_fall_kicker` ·
+  `c_fall_title` · `dn_rating_fall`
+- p2 hides nothing at b3. **Built state = SC.3.**
+
 ## Manual steps required in Desktop
 
 - [ ] Close Desktop **without saving** and reopen the pbip (Desktop currently
@@ -375,6 +634,54 @@ Also at phase B1:
       `#2E4A7D` / `#8A6516` / `#5B3E8E` on `#F5F2E9`. Verify by: the act numeral and
       serial are legible; Act II brass is the worst case at 4.74:1.
 
+### New at stage 6 phase B2a (2026-08-05) — p1 · p2
+
+- [ ] **Confirm both act pages open at 1280×720 on the paper canvas `#F5F2E9`** and
+      that `p0`'s three ticket buttons now navigate (the ticket targets
+      `p1-act-i-profit` and `p2-act-ii-ratings` exist as of this phase;
+      `p3-act-iii-corrected-cut` still does not).
+- [ ] **Check the two fallback charts render.** `dn_ticket_waffle`
+      (`hundredPercentStackedBarChart`, no Category, two Y measures) should draw one
+      full-width bar split green/gray with a bottom legend and a 0–100 % axis.
+      `dn_rating_fall` (`clusteredBarChart`) should draw three film rows × two bars
+      with a dashed `C = 6.96` reference line. **If either is blank**, the likely
+      cause is a role name (`Y` / `Category` / `Tooltips`, taken from this repo's own
+      Desktop-authored combo chart) — read the correct key off a chart dropped by
+      hand and fix both files.
+- [ ] **Check the two visual filters took.** `tbl_perfect_tens` and `dn_rating_fall`
+      should each show **three** rows/categories, all at raw 10.0, fewest votes
+      first. **More than three rows** = the `VisualTopN` filter did not apply
+      (re-apply Top N by hand in the Filters pane and capture the JSON here).
+      **Rows that are not 10.0** = the Advanced measure filter did not apply.
+- [ ] **Check the reference line.** If `C = 6.96` does not appear on
+      `dn_rating_fall`, the `referenceLine` selector id (`refC`) is the suspect —
+      add the line in the Analytics pane and copy the id Desktop writes.
+- [ ] **Check `tbl_perfect_tens` fits its 144 px card.** Native table headers cannot
+      be hidden (see decisions), so the header eats one row. If a scrollbar appears,
+      tune `grid.rowPadding` / `grid.imageHeight` / the five `columnWidth` values —
+      do **not** shrink text below 10 pt.
+- [ ] **Check the poster column.** Until `[Image · Poster URL]` gets the **Image URL**
+      data category (still open from phase A), the first table column renders as URL
+      text and will look wrong.
+- [ ] **Check the beat rail reads at SC.3**: `btn_beat_3` filled Awards-Brass /
+      Ledger-Indigo with cream text and a leading `●`, its 3 px underline
+      (`z_pN_beat3_mark`) visible, the other two outlined in ink. Then confirm a
+      bookmark capture with **Display ON** actually captures the button *fill* — if
+      it does not, drive the current-beat indicator with the three `z_pN_beatN_mark`
+      shapes (already built as separate, individually hideable objects) and swap the
+      button text per beat.
+- [ ] **Check `z_p1_admit` / `z_p2_admit`**: `ADMIT ONE` centred inside a 2 px
+      tinted rectangle. If the text is not centred, `horizontalAlignment` /
+      `verticalAlignment` on a shape's text card is wrong for instances.
+- [ ] **Check the act-II brass on paper**: `#8A6516` on `#F5F2E9` is the worst-case
+      contrast in the report (4.74:1) and carries the header rule, the beat fill,
+      the verdict rule and `THE PREMIERE ▸`.
+- [ ] **Read `[Profit (naive)]`'s sign off `kpi_profit_naive_corrected`** and record
+      it here — it still decides which branch of `[Copy · Act I · naive read]` ships
+      ("loses money" vs "prints money"), and the strike (`z_kpi_profit_strike`,
+      811,230,308,2) is positioned for the measured value width. If the rendered
+      number is wider or narrower, nudge the strike.
+
 ## Validation status
 
 ```
@@ -420,6 +727,42 @@ accessibility check       : p0 tab order == the handoff's 10 enumerated stops in
                             order; p9 reads top-to-bottom with each label stop
                             immediately before its value stop; no altText written
 reserved-red check        : trap red appears only in c_cr_glossary's [TRAP] tag
+
+[2026-08-05 — stage 6 phase B2a]
+validate_json.py          : 202 file(s) repo-wide, 0 errors, no BOM
+validate_tmdl.py --strict : 15 file(s), 1 error (the standing SourceRoot waiver),
+                            0 warnings. TMDL touched this phase: one measure added
+                            (Movies (no credible financials)); nothing else.
+visualContainer structure : all 157 visual.json on the four built pages validated
+                            against the published visualContainer/2.9.0 schema —
+                            and this time DEEPLY: the remote sub-schemas were
+                            resolved and applied too (visualConfiguration/2.3.0,
+                            filterConfiguration/1.3.0, semanticQuery/1.4.0,
+                            formattingObjectDefinitions/1.5.0). 0 errors.
+                            Only relaxation: the $schema const (the files declare
+                            2.11.0, matching every other visual.json Desktop wrote
+                            for this report; 2.11.0 itself is 404).
+page schema               : p1-act-i-profit + p2-act-ii-ratings validated against
+                            page/2.1.0 — 0 errors
+pages registry            : pages.json validated against pagesMetadata/1.1.0 —
+                            0 errors; order p0, p1, p2, <2 starters>, p9
+binding cross-check       : every measure and Table[Column] projection AND every
+                            filter field on all four pages resolves to a real
+                            object in the model — 0 dangling references
+layout cross-check        : every visual inside the 1280x720 canvas; no duplicate
+                            ids; folder name == visual name on all 157
+accessibility check       : p1 and p2 contain the handoff's enumerated tab order
+                            exactly as a subsequence (31 and 26 stops vs 23 and 22
+                            enumerated — see finding 4); no text below 10 pt;
+                            no altText written anywhere
+scope-rule check          : 0 act-tinted data marks across all four pages
+reserved-red check        : trap red confined to the reserved set (slug tags, the
+                            strike, MISREAD, the 3 note rules + notes, the
+                            leaderboard score/verdict columns, the raw-rating bar)
+                            plus p9's [TRAP] glossary tag — 0 violations
+snapshot cross-check      : min budget $1 and the single −$12 revenue row verified
+                            against the loaded CSV; the contracted $2,800 median
+                            was NOT verified (actual $2,961) and was dropped
 ```
 
 ## Known limitations
@@ -456,3 +799,23 @@ reserved-red check        : trap red appears only in c_cr_glossary's [TRAP] tag
   counting stops against the design document will see the difference.
 - The ticket perforation is **solid, not dashed** — a contracted fallback, taken
   because PBIR shapes have no dash property.
+- **Neither Deneb visual is Deneb.** `dn_ticket_waffle` is a 100 % stacked bar and
+  `dn_rating_fall` is a paired bar chart — both are the contracted fallbacks, both
+  keep their ids and rects, and neither is the "felt proportion" the waffle promised.
+  The 100-ticket metaphor (the signature moment of Act I) is **not in the shipped
+  report**; the proportion is stated numerically by `[Copy · Act I · waffle title]`
+  and shown as one split bar.
+- **`tbl_perfect_tens` shows its column headers** and uses one font family for all
+  columns — both are limits of the native table visual, not choices.
+- **Nothing built in phase B2a has been rendered either.** The two pages are
+  schema-correct (deeply, against four published schemas) and every binding resolves,
+  but no pixel has been seen and no measure has been executed. The phase-B2a Desktop
+  checklist above lists every place where "schema-correct" and "renders as designed"
+  could still diverge — the chart role names, the two visual filters, the reference
+  line, the table's fit, and whether a bookmark's Display capture carries a button's
+  fill colour.
+- **p1 and p2 are built in their SC.3 state.** Until the nine bookmarks exist
+  (phase B2b), the beat rail is inert: `btn_beat_1..3` and `btn_next_scene` have no
+  action, and the pages always read as "the corrected cut". The SC.1 trap state —
+  and therefore the M-003 marking's *live* demonstration — only appears once the
+  bookmarks are captured. Every object either state needs is already on the page.

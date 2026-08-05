@@ -37,6 +37,12 @@ table _Measures
 		displayFolder: 01 Core
 		lineageTag: 20c8d02c-1e0d-4583-8433-bdc7b6f4944b
 
+	/// The complement of the credible set: listings the disclosed floor cannot vouch for. Says nothing about those films — only about what the data can support.
+	measure 'Movies (no credible financials)' = [Movies] - [Movies (credible financials)]
+		formatString: #,0
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: 911c4b99-879c-4348-99c5-a3d776ca4d07
+
 	/// Share of listings whose budget and revenue are credibly known — the honesty denominator behind every financial claim.
 	measure 'Financial coverage %' = DIVIDE([Movies (credible financials)], [Movies])
 		formatString: 0.0%
