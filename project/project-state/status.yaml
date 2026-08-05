@@ -31,7 +31,7 @@ stages:
   s6_report_build:
     status: in_progress
     evidence: ""
-    gate_note: "BUILT: 6 pages, 210 visuals, 9 bookmarks, 79 measures, D7 theme; all validators clean but the standing SourceRoot waiver; 0 tinted data marks, reserved-red held, no typed counts. Attribution blocker CLEARED (credited by publication, author name an open debt) so the alt-text layer is in build. KNOWN GAP: the scatter Play role could not be verified in any schema/sample/Learn page — built without it and reported; restoring the contracted animation is Desktop step 1. G6 still needs: fidelity review, copy-polish, ax-audit, and the entrant's Desktop steps."
+    gate_note: "G6 HELD 2026-08-05 (re-score 29/40, was 24/40). BUILT: 5 visible pages + tooltip, 222 visuals, 9 bookmarks, 90 measures. Two audits ran; two fix passes closed 3 fidelity blockers + 12 majors and all 10 a11y findings (template pages deleted — entry was shipping 7 vs a 5-page cap; Adult filter proved writable in PBIR; 29 deferring alt strings rewritten; scrim AA fixed; beat state now announced). CORRECTION TO AN EARLIER NOTE: 'all validators clean' was WRONG — pbir_detect (gate-blocking at G6) had never been run and FAILS with 63 unwaived findings (46 ai-dash-emoji, 6 grid-8px, 11 theme-color-drift). Validator truth: validate_json 260/0, validate_tmdl --strict 1 error (SourceRoot waiver), check_contrast 6/0, check_state OK, pbir_detect FAIL. G6 closes when the entrant signs the pbir_detect waivers (waivers are the user's) and the handoff records the scrim/reference-line amendments."
   s7_delivery:
     status: pending
     evidence: ""
