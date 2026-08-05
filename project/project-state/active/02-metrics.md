@@ -131,6 +131,49 @@ At signature the entrant flagged that the messy dates (F5: 30.6% dateless,
   conceptualizing this into the dashboard happens at stage 5 (creative
   direction), constrained by what the s3 model supports.
 
+## SNAPSHOT RECONCILIATION (2026-08-05) — the data moved under us, the conclusions did not
+
+The Q2 profiling above was run against the model as shipped in the contest
+starter (loaded from the original author's CSV). The entrant later downloaded
+their own copy of the Kaggle TMDB v11 dataset and refreshed, which turns out
+to be a **newer snapshot**: 1,469,389 source rows vs the starter's ~930k.
+Recomputed directly from `project/data/TMDB_movie_dataset_v11.csv` on
+2026-08-05:
+
+| Fact | Q2 (starter snapshot) | Current snapshot | Story impact |
+|---|---|---|---|
+| Listings (budget > 0) | 85,394 | **85,870** | count only |
+| Adult excluded | 1,358 | **1,360** | count only |
+| Basis (non-adult) | 84,036 | **84,510** | count only |
+| Revenue = 0 | 67,436 (79.0%) | **67,836 (79.0%)** | **identical %** |
+| Budget < $10k (junk) | 51,634 (60.5%) | **52,041 (60.6%)** | unchanged |
+| Credible (≥$10k ∧ rev>0) | 11,203 (13.1%) | **11,209 (13.05%)** | unchanged |
+| Credible, non-adult | 11,110 (13.2%) | **11,116 (13.15%)** | unchanged |
+| No release date | 26,166 (30.6%) | **26,429 (30.8%)** | unchanged |
+| Negative revenue | 1 | **1** | identical |
+| Votes p50 / p75 / p90 | 0 / 1 / 106 | **0 / 1 / 104** | unchanged |
+| C (vote-weighted mean) | 6.9594 | **6.9594** | **identical** |
+
+**Every signed parameter survives unchanged** — the $10,000 credibility floor,
+m = 100 (p90 rounds to 100 from either 106 or 104), and C = 6.96. **No
+re-signature is required**: the entrant signed the *parameters and
+definitions*, not the row counts, and each parameter was chosen for
+robustness rather than fitted to a snapshot.
+
+The headline claims are untouched: 79.0% of revenues are unknown-as-zero,
+~87% of listings lack credible financials, the median listing has zero votes,
+and Budget is never 0. That a snapshot change of half a million source rows
+moved no conclusion is itself the round's thesis working — disclosed
+parameters and measure-bound numbers survive their data being replaced.
+
+**Build consequence:** every printed figure in the report binds live to a
+measure (design-handoff.md, "Live-number binding"), so the report is
+self-consistent against whatever is loaded. The counts written in prose
+across the s2–s5 documents are superseded by this table; data-health figures
+quoted from Q2 (duplicate pairs, future-dated) are likewise superseded by
+their live measures at build. s7 business validation checks against the
+LOADED model, not against the Q2 numbers.
+
 ## Gate G2 checklist
 
 - [x] One contract per KPI, edge cases hunted (traps contracted AS traps)

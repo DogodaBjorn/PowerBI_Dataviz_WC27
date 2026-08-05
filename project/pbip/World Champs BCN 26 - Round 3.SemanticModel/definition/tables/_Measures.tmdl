@@ -25,6 +25,18 @@ table _Measures
 		displayFolder: 01 Core
 		lineageTag: 08658434-3805-4f19-8e2c-50db5c1a11a2
 
+	/// Listings in the Act III premiere population: credible financials AND at least m votes — the scatter's on-canvas n.
+	measure 'Movies (scatter population)' =
+			CALCULATE(
+				[Movies],
+				Movies[Budget] >= 10000,
+				Movies[Revenue] > 0,
+				Movies[Vote Count] >= 100
+			)
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: 20c8d02c-1e0d-4583-8433-bdc7b6f4944b
+
 	/// Share of listings whose budget and revenue are credibly known — the honesty denominator behind every financial claim.
 	measure 'Financial coverage %' = DIVIDE([Movies (credible financials)], [Movies])
 		formatString: 0.0%
@@ -42,6 +54,25 @@ table _Measures
 		formatString: \$#,0;(\$#,0)
 		displayFolder: 02 Lie 1 · Financials
 		lineageTag: 3d222496-814f-40f3-8c0b-e65bec089649
+
+	/// The disclosed credibility floor as a first-class, quotable constant — the same $10,000 baked into the credible-set measures at stage 4.
+	/// SCENARIO CHOICE (signed at Q2: 13.1% at $10k vs 11.9% at $100k).
+	measure 'Financial floor (disclosed)' = 10000
+		formatString: \$#,0
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: 6f28f1c2-adbe-47f7-99fd-85e2d8323ce9
+
+	/// Listings booking exactly zero revenue — Lie #1's mechanism: unknowns counted as $0.
+	measure 'Movies (zero revenue)' = CALCULATE([Movies], Movies[Revenue] = 0)
+		formatString: #,0
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: 74363f4e-cbdc-4cdb-9015-b19a5f9deffd
+
+	/// Share of listings whose revenue is zero — the size of the "unknown counted as $0" hole.
+	measure 'Zero-revenue share %' = DIVIDE([Movies (zero revenue)], [Movies])
+		formatString: 0.0%
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: 44d1ceec-fe57-4806-9bd7-a7ed35544f5b
 
 	/// Total votes cast in context — the evidence mass behind any rating claim.
 	measure Votes = SUM(Movies[Vote Count])
@@ -95,6 +126,54 @@ table _Measures
 		displayFolder: 03 Lie 2 · Ratings
 		lineageTag: 7a67ead1-c7c1-4591-912b-e6ff5d903916
 
+	/// Median vote count per listing — the "median listing has zero votes" evidence.
+	measure 'Median votes' = MEDIANX(Movies, Movies[Vote Count])
+		formatString: #,0
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: e8b84a53-10bc-48d0-b220-e6a8be5a5258
+
+	/// 75th-percentile vote count — the second rung of the same evidence ladder.
+	measure 'Votes p75' = PERCENTILEX.INC(Movies, Movies[Vote Count], 0.75)
+		formatString: #,0
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 56351ac0-ead0-418a-95e4-a5678182f1d3
+
+	/// Listings with no votes at all — a rating cannot exist here, so none is shown.
+	measure 'Movies (zero votes)' = CALCULATE([Movies], Movies[Vote Count] = 0)
+		formatString: #,0
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 43beb639-55a9-43b4-bfa0-31732feb2378
+
+	/// Share of listings with no votes at all.
+	measure 'Zero-vote share %' = DIVIDE([Movies (zero votes)], [Movies])
+		formatString: 0.0%
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 55f90905-50ab-4ca3-a3d5-cf6b33599f43
+
+	/// What a perfect 10.0 on two votes actually reads once evidence is required — the Act II headline, computed from the disclosed m and C, never typed.
+	/// ILLUSTRATION: a worked example of the shrinkage formula, not a film's score.
+	measure 'Two-vote ten (illustration)' =
+			VAR m = [Rating m (disclosed)]
+			VAR v = 2
+			RETURN
+				DIVIDE(v, v + m) * 10 + DIVIDE(m, v + m) * [Rating C (disclosed)]
+		formatString: 0.00
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 37cf5826-bf07-4ad0-8226-f7ece6d85f79
+
+	/// The Godfather's evidence-weighted rating — Act II's reference point: what a film with real evidence behind it actually scores.
+	/// Verified at s6 against the source CSV: exactly one listing matches Title = "The Godfather" AND release year 1972 (Movie ID 238).
+	measure 'Godfather rating (reference)' =
+			CALCULATE(
+				[Rating (evidence-weighted)],
+				ALLSELECTED(Movies[Movie ID]),  -- ALLSELECTED: reach past the current visual's movie, stay inside the viewer's selection
+				Movies[Title] = "The Godfather",
+				Movies[Release Year Key] = 1972
+			)
+		formatString: 0.00
+		displayFolder: 03 Lie 2 · Ratings
+		lineageTag: 5ecff1f6-38f6-4f60-a57e-9991d49bb6b6
+
 	/// TMDB's popularity as-is for a single listing — formula unpublished, so it is displayed, never aggregated or graded.
 	measure 'Popularity (as-is)' = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Popularity])) -- HASONEVALUE guard: BLANK at any group grain; MAX tolerates the 101 duplicate-ID rows
 		formatString: 0.0
@@ -122,6 +201,37 @@ table _Measures
 		formatString: 0
 		displayFolder: 04 Lie 3 · Popularity
 		lineageTag: 75e63c56-2295-4107-8286-4f7d2915b232
+
+	/// The corrected cut's winner: within the premiere population, the listing with the best combined standing on revenue and on evidence-weighted rating.
+	/// SCENARIO CHOICE — "best-selling AND best-rated" is a stated composite (sum of the two ranks, lowest wins), disclosed on canvas at p3;
+	/// ties are listed, never broken silently. Not a TMDB or industry definition.
+	measure 'Winner · title' =
+			VAR Population =
+				FILTER(
+					ALLSELECTED(Movies[Movie ID]),  -- ALLSELECTED: the viewer's selection, not the current point
+					CALCULATE(MAX(Movies[Budget])) >= [Financial floor (disclosed)]
+						&& CALCULATE(SUM(Movies[Revenue])) > 0
+						&& CALCULATE(SUM(Movies[Vote Count])) >= [Rating m (disclosed)]
+				)
+			VAR Scored =
+				ADDCOLUMNS(
+					Population,
+					"@Revenue", CALCULATE(SUM(Movies[Revenue])),
+					"@Rating", [Rating (evidence-weighted)]
+				)
+			VAR Ranked =
+				ADDCOLUMNS(
+					Scored,
+					"@Combined",
+						RANKX(Scored, [@Revenue], , DESC, DENSE)
+							+ RANKX(Scored, [@Rating], , DESC, DENSE)
+				)
+			VAR Best = TOPN(1, Ranked, [@Combined], ASC)
+			RETURN
+				CONCATENATEX(Best, CALCULATE(MAX(Movies[Title])), ", ")
+		formatString: @
+		displayFolder: 04 Lie 3 · Popularity
+		lineageTag: da8fe638-3bd3-40aa-af12-e67e2c50dbc3
 
 	/// Listings with no release date on record — a first-class, labeled data-health bucket, never dropped.
 	measure 'Movies (undated)' = CALCULATE([Movies], ISBLANK(Movies[Release Date]))
@@ -159,53 +269,380 @@ table _Measures
 		displayFolder: 05 Data health · Time
 		lineageTag: fa2ed19f-998c-4f38-b50f-b2e288079702
 
-	/// Semantic color for the trap/lie emphasis — STUB: s5 fills value from the design-contract theme.
-	measure 'Color · Trap' = "s5 fills value"
+	/// Adult listings removed by the report-level filter — the cross-foot's middle line.
+	measure 'Adult listings excluded' = [Movies (all listings incl. adult)] - [Movies]
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: 776c3109-1bc1-4910-92cc-a047b3967689
+
+	/// The disclosed snapshot anchor: the dataset's own download date. Deterministic by design — never TODAY() or LocalNow().
+	/// SCENARIO CHOICE (accepted by the entrant at G3).
+	measure 'Snapshot anchor (disclosed)' = DATE(2026, 7, 24)
+		formatString: yyyy-mm-dd
+		displayFolder: 05 Data health · Time
+		lineageTag: c8a7d23c-c6c1-4ac8-b856-35222323f74e
+
+	/// Listings dated on the source's sentinel years (1800 / 2099) — excluded from the Act III play axis and counted where they are excluded.
+	measure 'Movies (sentinel-dated)' = CALCULATE([Movies], Movies[Release Year Key] IN { 1800, 2099 })
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: faecac24-561c-414d-b210-b7b20a925b40
+
+	/// Trap/lie token on the PAPER surface (p1, p2, tooltip) — the colour of a number that must not be believed. Night counterpart: Color · Trap (night).
+	measure 'Color · Trap' = "#B3402E"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 2a2fe019-1816-4fac-9f52-d8643f00c50c
 
-	/// Semantic color for the honest counterpart — STUB: s5 fills value from the design-contract theme.
-	measure 'Color · Honest' = "s5 fills value"
+	/// Honest/corrected token on the PAPER surface — the colour of a number that states what it excludes. Night counterpart: Color · Honest (night).
+	measure 'Color · Honest' = "#2F6B4F"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: c4f24e6b-315e-4ad3-a746-d303eadc07ee
 
-	/// Semantic color for neutral/context series — STUB: s5 fills value from the design-contract theme.
-	measure 'Color · Neutral' = "s5 fills value"
+	/// Context-series token on the PAPER surface — everything that is not the story. Night counterpart: Color · Neutral (night).
+	measure 'Color · Neutral' = "#78716C"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 9faedfbd-7fad-4768-924d-5475a0a8867a
 
-	/// Dynamic insight title for the Lie 1 page — STUB: s5 fills value (copy contracted at design).
-	measure 'Title · Lie 1' = "s5 fills value"
+	/// Trap/lie token on the NIGHT surface (p0, p3, p9).
+	measure 'Color · Trap (night)' = "#E8705F"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 6833e139-f6be-498f-bda0-3ea87181a308
+
+	/// Honest/corrected token on the NIGHT surface (p0, p3, p9).
+	measure 'Color · Honest (night)' = "#4ECBA0"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 74abdd92-6361-496c-81af-548f1e40d829
+
+	/// Context-series token on the NIGHT surface (p0, p3, p9).
+	measure 'Color · Neutral (night)' = "#B5AFA0"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 913d859e-ee04-44c0-ad44-7ad5c834f1bd
+
+	/// Verdict colour for a listing's rating: trap where the evidence is too thin to believe, honest where it clears the disclosed bar,
+	/// neutral where there is no rating at all. Bound to tbl_perfect_tens and tt-movie-poster; always shown beside Mark · Rating verdict, never as colour alone.
+	measure 'Color · Rating verdict' =
+			SWITCH(
+				TRUE(),
+				ISBLANK([Rating (evidence-weighted)]), [Color · Neutral],
+				[Votes] < [Rating m (disclosed)], [Color · Trap],
+				[Color · Honest]
+			)
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: c76014bb-8c18-4e82-968d-25898889d9f9
+
+	/// The word-and-glyph half of the rating verdict — the carrier that survives grayscale, colour-blindness and a printed page.
+	measure 'Mark · Rating verdict' =
+			SWITCH(
+				TRUE(),
+				ISBLANK([Rating (evidence-weighted)]), "— no evidence",
+				[Votes] < [Rating m (disclosed)], "✕ thin evidence",
+				"✓ evidence-backed"
+			)
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 54da26ae-a7db-4200-8334-06d44f378c55
+
+	/// Mark colour for hero_premiere_scatter: the corrected cut's winner reads honest, every other film is context grey.
+	/// Never a tint — data does not wear the act tints.
+	measure 'Color · Scatter mark' =
+			VAR TheWinner = CALCULATE([Winner · title], ALLSELECTED(Movies[Movie ID]))  -- ALLSELECTED: resolve the winner across the selection, not inside one point
+			RETURN
+				IF(
+					HASONEVALUE(Movies[Movie ID]) && CALCULATE(MAX(Movies[Title])) = TheWinner,
+					[Color · Honest (night)],
+					[Color · Neutral (night)]
+				)
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: cadfffed-cedd-4459-9dad-8e01b28c914f
+
+	/// Act I's insight title — the share of listings that cannot carry a money claim. Bound to z_p1_header_title (act-title run).
+	measure 'Title · Lie 1' =
+			"ACT I — THE PROFIT LIE: "
+				& FORMAT(1 - [Financial coverage %], "0.0%")
+				& " of listings cannot support a money claim"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: e562f4ff-d44d-4eb9-9d37-0ebd0afb378b
 
-	/// Dynamic insight title for the Lie 2 page — STUB: s5 fills value (copy contracted at design).
-	measure 'Title · Lie 2' = "s5 fills value"
+	/// Act II's insight title — how few listings clear the disclosed evidence bar. Bound to z_p2_header_title (act-title run).
+	measure 'Title · Lie 2' =
+			"ACT II — THE RATINGS LIE: only "
+				& FORMAT([Evidence share %], "0.0%")
+				& " of listings clear "
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " votes"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 8fc6684a-7f5f-4054-b991-910d1b8b7099
 
-	/// Dynamic insight title for the Lie 3 page — STUB: s5 fills value (copy contracted at design).
-	measure 'Title · Lie 3' = "s5 fills value"
+	/// Act III's insight title — the population that survives every honest adjustment, and the one adjustment refused. Bound to z_p3_header_title.
+	measure 'Title · Lie 3' =
+			"ACT III — THE CORRECTED CUT: "
+				& FORMAT([Movies (scatter population)], "#,0")
+				& " films earn a place; popularity is refused — formula not published"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 98b7fbce-f4e9-498b-a5e8-ae3d6923d4ab
 
-	/// Dynamic insight title for the landing page — STUB: s5 fills value (copy contracted at design).
-	measure 'Title · Landing' = "s5 fills value"
+	/// The p0 marquee takeaway — the mandated Key Takeaway, with its two live counts filled from the model. Bound to hero_takeaway.
+	measure 'Title · Landing' =
+			"The data is not wrong — the reading is. "
+				& FORMAT(1 - [Financial coverage %], "0%")
+				& " of "
+				& FORMAT([Movies], "#,0")
+				& " listings have no credible financials, the median listing has "
+				& IF([Median votes] = 0, "zero", FORMAT([Median votes], "#,0"))
+				& " votes, and “popularity” has no published formula. "
+				& "Every honest number here states what it excludes."
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 80057dd2-e358-46ed-9e73-25952f29963a
 
-	/// Method-panel disclosure line (floor $10k, m=100, C=6.96, anchor 2026-07-24, Adult excluded) — STUB: s5 fills value.
-	measure 'Label · Method' = "s5 fills value"
+	/// The billing-block scope stamp: snapshot, basis and its cross-foot, the financial floor, m, C, and the listings≠films caveat.
+	/// One string, every disclosed parameter, all live. Bound to z_billing_method (p0) and reused as the method line on p9.
+	measure 'Label · Method' =
+			"TMDB SNAPSHOT "
+				& FORMAT([Snapshot anchor (disclosed)], "yyyy·mm·dd")
+				& " · BASIS "
+				& FORMAT([Movies], "#,0")
+				& " LISTINGS (ADULT "
+				& FORMAT([Adult listings excluded], "#,0")
+				& " EXCLUDED OF "
+				& FORMAT([Movies (all listings incl. adult)], "#,0")
+				& ") · FINANCIAL FLOOR "
+				& FORMAT([Financial floor (disclosed)], "\$#,0")
+				& " · m="
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " · C="
+				& FORMAT([Rating C (disclosed)], "0.00")
+				& " · LISTINGS≠FILMS: "
+				& FORMAT([Duplicate listings], "#,0")
+				& " DUPLICATE (TITLE,DATE) PAIRS ("
+				& FORMAT(DIVIDE([Duplicate listings], [Movies]), "0.0%")
+				& ")"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: b424e7e9-8996-4554-b28a-6b289ff3abc5
+
+	/// p1 SC.1 action line — the naive analyst's move, over the true listing basis. Bound to c_p1_action.
+	measure 'Copy · Act I · action' =
+			"The ANALYST sums profit across all "
+				& FORMAT([Movies], "#,0")
+				& " listings. No questions asked."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: fe304c3d-0f55-4999-b442-b9754e32af00
+
+	/// p1 SC.1 naive dialogue — Lie #1 in its own words, with the sign of the naive profit resolved from the model
+	/// (this is the contracted sign-variant headline: the copy flips, the number is never typed). Bound to c_p1_dlg_naive.
+	measure 'Copy · Act I · naive read' =
+			VAR NaiveProfit = [Profit (naive)]
+			VAR Claim =
+				IF(
+					NaiveProfit < 0,
+					"The movie business loses money.",
+					"The movie business prints money."
+				)
+			RETURN
+				Claim & " Look: " & FORMAT(NaiveProfit, "\$#,0;(\$#,0)") & "."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: f9540420-ea19-48ff-9a5e-a05b4a591983
+
+	/// p1 SC.2 margin note — the mechanism behind Lie #1: unknown revenues counted as $0. Bound to c_p1_note_zeros.
+	measure 'Copy · Act I · note zeros' =
+			"NOTE: "
+				& FORMAT([Movies (zero revenue)], "#,0")
+				& " revenues ("
+				& FORMAT([Zero-revenue share %], "0.0%")
+				& ") are ZERO — unknowns counted as $0."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 9b533433-7323-4478-a10c-36940faa00ef
+
+	/// p1 SC.3 responsible dialogue — the honest counterpart with its floor, its median and the mean that proves the outlier drag. Bound to c_p1_dlg_honest.
+	measure 'Copy · Act I · responsible read' =
+			"Only "
+				& FORMAT([Movies (credible financials)], "#,0")
+				& " listings — "
+				& FORMAT([Financial coverage %], "0.0%")
+				& " — can support money claims (Budget ≥ "
+				& FORMAT([Financial floor (disclosed)], "\$#,0")
+				& " AND Revenue > 0). Median credible profit: "
+				& FORMAT([Median profit (credible)], "\$#,0;(\$#,0)")
+				& ". The mean, "
+				& FORMAT([Mean profit (credible)], "\$#,0;(\$#,0)")
+				& ", is blockbuster-dragged."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: f5aeb204-7603-4878-bfc1-9cabd5c0f5c5
+
+	/// p1 SC.3 waffle headline — the felt proportion, stated as a number. Bound to c_waffle_title.
+	measure 'Copy · Act I · waffle title' =
+			FORMAT([Financial coverage %], "0.0%")
+				& " hold a valid ticket (floor "
+				& FORMAT([Financial floor (disclosed)], "\$#,0")
+				& ")"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 95bac130-43a1-48a4-a8e6-9bc850cfac7c
+
+	/// p1 SC.3 waffle footer — median beside mean, with the standing currency caveat. Bound to c_waffle_foot.
+	measure 'Copy · Act I · waffle foot' =
+			"median "
+				& FORMAT([Median profit (credible)], "\$#,0;(\$#,0)")
+				& " · mean "
+				& FORMAT([Mean profit (credible)], "\$#,0;(\$#,0)")
+				& " · USD as recorded, gross gap not P&L"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: d9ea9337-15f6-4d97-8d28-543253cd95b1
+
+	/// p1 verdict — Act I's one-line finding. Bound to c_verdict_act1.
+	measure 'Copy · Act I · verdict' =
+			"The industry doesn't lose money — the dataset loses data. Claim only the "
+				& FORMAT([Financial coverage %], "0.0%")
+				& " we can verify."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: a515bb21-c12d-4994-86d7-41874f8073aa
+
+	/// p1 KPI category label — the trap's scope, stated on the trap itself. Bound to c_kpi_profit_label.
+	measure 'Copy · Act I · kpi label' =
+			"Profit, all " & FORMAT([Movies], "#,0") & " listings (naive)"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 02ba97be-75e9-4f7e-a2bd-33dbfdba2505
+
+	/// p2 SC.2 margin note — the vote-evidence ladder: median, 75th percentile, and the share with nothing at all. Bound to c_p2_note_median.
+	measure 'Copy · Act II · note median' =
+			"NOTE: the MEDIAN listing has "
+				& FORMAT([Median votes], "#,0")
+				& " votes; 75th percentile has "
+				& FORMAT([Votes p75], "#,0")
+				& "; "
+				& FORMAT([Zero-vote share %], "0.0%")
+				& " have none."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: de35be9c-3d2c-411f-acde-ec77ec879ffe
+
+	/// p2 SC.3 responsible dialogue — the fall from applause to evidence, with both disclosed parameters and the Godfather reference. Bound to c_p2_dlg_honest.
+	measure 'Copy · Act II · responsible read' =
+			"Weighted by evidence (m="
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& ", C="
+				& FORMAT([Rating C (disclosed)], "0.00")
+				& "), a 10.0 on 2 votes reads "
+				& FORMAT([Two-vote ten (illustration)], "0.00")
+				& ". The Godfather reads "
+				& FORMAT([Godfather rating (reference)], "0.00")
+				& ". Applause is not evidence."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 7aeb05ca-5bf9-4659-9101-2d94b16d9f99
+
+	/// p2 verdict — Act II's one-line finding. Bound to c_verdict_act2.
+	measure 'Copy · Act II · verdict' =
+			"Applause is not evidence: 10.0 on 2 votes reads "
+				& FORMAT([Two-vote ten (illustration)], "0.00")
+				& " with m="
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& ", C="
+				& FORMAT([Rating C (disclosed)], "0.00")
+				& "."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 83cb9688-7a19-4c88-ac04-90ed31148cd0
+
+	/// p3 scatter population line — who is in this picture and who is not. Bound to c_scatter_population.
+	measure 'Label · Population' =
+			"films with credible financials AND ≥ "
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " votes · n = "
+				& FORMAT([Movies (scatter population)], "#,0")
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 41be565e-cbdb-4c48-a571-c1102c991148
+
+	/// p3 no-date chip — the labelled unknown, counted where it is excluded. Bound to c_nodate_chip.
+	measure 'Label · No date' =
+			FORMAT([Movies (undated)], "#,0")
+				& " listings ("
+				& FORMAT([Undated share %], "0.0%")
+				& ") have no date — they never enter this animation · "
+				& FORMAT([Movies (future-dated)], "#,0")
+				& " future-dated flagged · sentinels 1800/2099 ("
+				& FORMAT([Movies (sentinel-dated)], "#,0")
+				& ") excluded from play"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 30bbca88-0d18-460b-85e5-8ea43ee7fa93
+
+	/// p3 winner annotation beside the premiere scatter. Bound to c_winner_label.
+	measure 'Copy · Act III · winner label' =
+			"✓ " & [Winner · title] & " — best-selling AND best-rated on evidence"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: e6e4c84f-81f7-476b-bbe3-f251ee5873f8
+
+	/// p3 verdict — the corrected cut's closing line, correlation shown and causation refused in the same breath. Bound to c_verdict_act3.
+	measure 'Copy · Act III · verdict' =
+			"THE END — the best movie, read responsibly: "
+				& [Winner · title]
+				& ", best-selling AND best-rated on evidence. Correlation shown; causation refused."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: a408d50b-0221-42c8-9b29-8c05b941ab27
+
+	/// p3 adjustment chip — the disclosed financial floor. Bound to c_adj_floor.
+	measure 'Label · Chip floor' = "✓ floor " & FORMAT([Financial floor (disclosed)], "\$#,0")
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: e43938e1-8c13-42d8-a540-3ee1887b42c5
+
+	/// p3 adjustment chip — the disclosed evidence threshold m. Bound to c_adj_m.
+	measure 'Label · Chip m' = "✓ m = " & FORMAT([Rating m (disclosed)], "#,0")
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 8003b161-9891-4d20-a2a2-53941311cf36
+
+	/// p3 adjustment chip — the disclosed shrinkage target C. Bound to c_adj_c.
+	measure 'Label · Chip C' = "✓ C = " & FORMAT([Rating C (disclosed)], "0.00")
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: ab6151d3-1935-4ebb-b5d9-74b852220103
+
+	/// The billing block's second line: the three standing caveats that qualify every number in the trilogy. Bound to z_billing_caveats (p0).
+	measure 'Label · Caveats' =
+			"USD AS RECORDED — NOT INFLATION-ADJUSTED · MEDIAN LISTING: "
+				& IF([Median votes] = 0, "0", FORMAT([Median votes], "#,0"))
+				& " VOTES · POPULARITY: FORMULA NOT PUBLISHED"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: c0070dfd-92cd-402c-b86d-bb6e57256258
+
+	/// Poster image address for a single listing, built from the TMDB poster path the source already carries.
+	/// Posters are DATA (they identify the film), never decoration — names and numbers are printed beside them in every case.
+	/// PosterBase = secure_base_url + file_size, both retrieved at s6 from TMDB's own image documentation
+	/// (developer.themoviedb.org/docs/image-basics and /reference/configuration-details); w342 is a documented poster size.
+	/// The column bound to this measure must be set to data category "Image URL".
+	measure 'Image · Poster URL' =
+			VAR PosterBase = "https://image.tmdb.org/t/p/w342"
+			VAR PosterPath = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Poster Path]))  -- source poster paths carry their own leading slash (verified in the CSV at s6)
+			RETURN
+				IF(NOT ISBLANK(PosterPath), PosterBase & PosterPath)
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 55662cdd-041c-4b0b-ae07-9f3f3d2fb179
 
 	column Value
 		isHidden

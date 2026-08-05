@@ -11,7 +11,7 @@
       "type": "SharedResources"
     },
     "customTheme": {
-      "name": "Accessible_City_park5942914118805086.json",
+      "name": "D7-Seductive-Lies.json",
       "reportVersionAtImport": {
         "visual": "2.10.0",
         "report": "3.4.0",
@@ -64,6 +64,11 @@
       "name": "RegisteredResources",
       "type": "RegisteredResources",
       "items": [
+        {
+          "name": "D7-Seductive-Lies.json",
+          "path": "D7-Seductive-Lies.json",
+          "type": "CustomTheme"
+        },
         {
           "name": "Accessible_City_park5942914118805086.json",
           "path": "Accessible_City_park5942914118805086.json",
