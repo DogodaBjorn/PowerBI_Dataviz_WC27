@@ -16,6 +16,9 @@ validation record. This file is the stage's state + open questions.
 | **G6-fix** | **QA fix pass: 3 blockers + 12 majors from the 24/40 review** | **done 2026-08-05** |
 | **G6-a11y** | **Accessibility fix pass: the 10 findings of the a11y audit** | **done 2026-08-05** |
 | C | Desktop round-trip: refresh, render, work the manual checklist | not started |
+| **RB-1** | **Rebuild ckpt 1: model deltas (columns, 2 calc tables, 24 measures, 5 rewrites) + theme** | **done 2026-08-05** |
+| **RB-2** | **Rebuild ckpt 2: `p1-the-answer` — the new landing page, 13 visuals** | **done 2026-08-05** |
+| RB-3+ | Rebuild ckpt 3+: `p4-both`, `p2-money`, `p3-evidence`, `p5-method`, tooltip; then delete the six old pages | not started |
 
 **The report is structurally complete.** 222 visuals across six pages
 (p0 43 · p1 47 · p2 41 · p3 40 · p9 37 · tooltip 14) plus nine beat bookmarks —
@@ -372,3 +375,65 @@ per `DEPENDENCIES.md`'s documented fallback.
   bodies now say something different from the act-titled chrome around them.
   Expected mid-rebuild; resolves when the pages are rebuilt. **Not** a defect to
   patch in pages that are about to be deleted.
+
+## REBUILD CHECKPOINT 2 — `p1-the-answer` (2026-08-05, pbir-operator)
+
+The rebuild's landing page: it asks the contest question and answers it. **13
+visuals, exactly the 13 the approved checkpoint lists** — nothing was added, per
+the entrant's binding rule that every element must have a function. Full build
+detail, the grammar, all measured contrast figures, the Deneb swap recipe and the
+Desktop checklist are in `project/deliverables/BUILD_LOG.md` under *REBUILD
+CHECKPOINT 2*.
+
+State, in brief:
+
+- **New:** `definition/pages/p1-the-answer/` — `page.json` (1280×720, night
+  `#171418`, displayName "THE ANSWER") + 13 `visual.json`.
+- **Changed:** `definition/pages/pages.json` only — `p1-the-answer` prepended to
+  `pageOrder` and made both `activePageName` and `landingPageName`. **No other
+  page, visual, bookmark, theme or model file was touched.** The six old pages
+  stay until their replacements exist.
+- **Bindings:** 4 measure-bound cards (`Title · Landing`, `Copy · Answer · units
+  read`, `Label · Method`, `Label · Caveats`) + 1 chart on the three `Share ·`
+  measures. The only literal numbers on canvas are the ordinals 1/2/3 and the
+  disclosed `$10,000` / `m = 100`.
+- **Accessibility:** 12 tab stops in the contracted order, `z_rule_answer` at
+  `tabOrder: -1` with empty alt, one alt string (on the chart only, no volatile
+  count), 10 pt type floor, visible outlines on all four buttons.
+- **Deneb:** still **not registered** in `report.json`, re-checked on disk. The unit
+  chart ships as the native `hundredPercentStackedBarChart` fallback under the same
+  id, rect, z and tab position, so the later swap is a single-file change.
+
+### Validation — checkpoint 2
+
+`validate_json.py` 273/0 · deep `visualContainer/2.9.0` on all 13 new visuals 0 real
+errors (5 sub-schemas resolved) · `page/2.1.0` 0 · `pagesMetadata/1.1.0` 0 ·
+`check_contrast.py` theme 8/0 plus 13 page pairs measured individually (all
+text ≥ 8.35:1, all non-text carriers ≥ 3.27:1) · `validate_tmdl.py --strict` 1 error
+(the standing SourceRoot waiver; no model file touched) · `check_state.py` OK ·
+**`pbir_detect.py` FAIL: 1 unwaived finding.**
+
+### Open questions — checkpoint 2
+
+- **`grid-8px` on `pages/p1-the-answer` is unwaived and stays unwaived.** 5 of 13
+  visuals are off the 8 px grid (`z_rule_answer` h 1 · `c_units_legend` h 20 ·
+  `c_units_read` y 580 · `c_nav_hint` y 572, h 20 · `btn_method` h 28) — **every one
+  of those coordinates is contracted in the approved checkpoint**, so they were not
+  changed unilaterally, and a waiver is the user's to sign, not the operator's.
+  Decide: sign a waiver, or authorise the four-number fix (h 20→24, h 28→24 or 32,
+  y 580→584, y 572→576).
+- **Theme defect, reported not fixed:** `visualStyles.actionButton.*.text[0]` writes
+  `"alignment"`, which `reportThemeSchema-2.156` does not define on that card — the
+  property is `horizontalAlignment`. Inert (that item schema does not set
+  `additionalProperties: false`, so it validates and does nothing). Both theme copies
+  must change together and `project/deliverables/theme.json` is outside this agent's
+  write scope. p1 is unaffected: its buttons write `horizontalAlignment` explicitly.
+- **No "KEY TAKEAWAY" kicker was built** (the old p0 had one). Not in the 13-visual
+  list, so it was not added. One textbox at `24,88,1232,16` if the designer wants a
+  judge to find the mandated element by name; costs one tab stop.
+- **Button text could not bind live.** No verified PBIR serialisation exists for an
+  fx-bound button label, so the three navigation buttons carry static text; the
+  "headline number" requirement is met with disclosed parameters only. To upgrade:
+  bind once in Desktop, capture the JSON, re-author.
+- **Four `visualLink` targets dangle by design** — `p2-money`, `p3-evidence`,
+  `p4-both`, `p5-method` do not exist yet. Written now so nothing needs rewiring.

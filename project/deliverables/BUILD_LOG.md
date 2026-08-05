@@ -77,6 +77,8 @@ were deleted in the G6 fix pass.** Nothing has been rendered in Desktop — see
 | 2026-08-05 (s6 **G6 a11y pass**) | SemanticModel: `Image · Poster URL` | **`dataCategory: ImageUrl`** written on the measure — previously deferred as unverifiable. Now verified from two Microsoft sources (see the decisions below) |
 | 2026-08-05 (s6 **G6 a11y pass**) | Deliverables: `measures.dax` | **12 measure bodies refreshed from the model** (the Act II ruling, films → listings, the two Deneb fallbacks, the play-axis removal, the resolved TMDB poster base) plus 3 resolved `VERIFY-AT-BUILD` docstrings and a new **AUTHORITY** header stating that `_Measures.tmdl` wins |
 | 2026-08-05 (s6 **G6 a11y pass**) | Deliverables: `design-handoff.md` | recorded that **p3 landing on SC.3 is deliberate** (ack #3 in the entrant's decision table), so a future reviewer does not read it as a defect |
+| 2026-08-05 (**rebuild ckpt 2**) | Report: `pages/p1-the-answer` | **NEW page, 13 visuals**, 1280×720, night canvas `#171418`, `displayName` "THE ANSWER". `c_question` · `hero_takeaway` (the mandated Key Takeaway) · `z_rule_answer` · `dn_answer_units` (native `hundredPercentStackedBarChart` fallback) · `c_units_legend` · `c_units_read` · `btn_go_money` / `btn_go_evidence` / `btn_go_both` · `c_nav_hint` · `btn_method` · `z_method_stamp` · `c_caveats`. **4 measure-bound cards + 1 chart bound to 3 measures**; the only literal numbers on canvas are the ordinals 1/2/3 and the disclosed `$10,000` and `m = 100` |
+| 2026-08-05 (**rebuild ckpt 2**) | Report: `pages/pages.json` | `p1-the-answer` prepended to `pageOrder` and made **both** `activePageName` and `landingPageName` (was active `p9-end-credits`, landing `p0-box-office`). The six old pages are untouched and still registered — they are deleted in a later checkpoint, once their replacements exist |
 
 ## Deferred — not built, and why
 
@@ -2297,3 +2299,279 @@ git                       : NOT committed, by instruction. git diff is the undo.
   chrome around them. That is expected mid-rebuild and resolves when the pages
   are rebuilt; it is **not** a defect to fix in the old pages.
 - No page, visual or bookmark was touched in this checkpoint.
+
+## 2026-08-05 — REBUILD CHECKPOINT 2: `p1-the-answer`, the new landing page
+
+The first page of the rebuild. It **asks the contest question and answers it**:
+success is two different things, money and evidence, they almost never coincide,
+and most listings cannot be judged on either. Thirteen visuals, exactly the
+thirteen the approved checkpoint specifies — the entrant's rule ("a builder does
+not put nails where they do not need") was applied as a hard filter: **nothing was
+added that is not in the list**, including the "KEY TAKEAWAY" kicker the old p0
+carried (see *Open questions*).
+
+### Built — the page
+
+| id | type | function | binds | rect | tab |
+|---|---|---|---|---|---|
+| `c_question` | textbox | states the question the report answers | — | 24,40,1232,48 | 100 |
+| `hero_takeaway` | cardVisual | the mandated Key Takeaway (≤50 words) | `[Title · Landing]` | 24,104,1232,96 | 200 |
+| `z_rule_answer` | shape 1 px | separates the claim from its evidence | — | 24,216,1232,1 | **−1** |
+| `dn_answer_units` | `hundredPercentStackedBarChart` | of 100 listings, how many can be judged at all | `[Share · both]` · `[Share · one bar only]` · `[Share · neither]` | 24,240,736,304 | 300 |
+| `c_units_legend` | textbox | names the three states in words | — | 24,552,736,20 | 400 |
+| `c_units_read` | cardVisual | reads the chart in one sentence, live | `[Copy · Answer · units read]` | 24,580,736,48 | 500 |
+| `btn_go_money` | actionButton | → `p2-money` | — | 792,240,464,96 | 600 |
+| `btn_go_evidence` | actionButton | → `p3-evidence` | — | 792,352,464,96 | 700 |
+| `btn_go_both` | actionButton | → `p4-both` | — | 792,464,464,96 | 800 |
+| `c_nav_hint` | textbox | the three tests run in order and are selectable | — | 792,572,464,20 | 900 |
+| `btn_method` | actionButton | → `p5-method` | — | 792,600,464,28 | 1000 |
+| `z_method_stamp` | cardVisual | snapshot · basis · adult exclusion · floor · m · C | `[Label · Method]` | 24,640,1232,24 | 1100 |
+| `c_caveats` | cardVisual | standing caveats + the TMDB/Kaggle/ODC-By credit | `[Label · Caveats]` | 24,664,1232,32 | 1200 |
+
+Tab order is the reading order of the table, buttons after the chart;
+`z_rule_answer` is the page's only `tabOrder: -1`.
+
+### The formatting grammar — applied, not re-derived
+
+Both Desktop specimens recorded in this log on 2026-08-05 were followed exactly:
+
+- **`shape` / `actionButton`** — the on/off toggle sits in its **own selectorless
+  entry**; every property that styles the default part carries
+  `"selector": {"id": "default"}`. So `actionButton.fill` is written as **two**
+  entries (`{show:true}` selectorless **plus** `{fillColor}` selector'd), which is
+  the shape that was missing when every fill fell back to theme red. Same for
+  `outline` (`show` + `lineColor`/`weight`) and `text` (`show` + `text`/font/colour/
+  alignment).
+- **`cardVisual`** — `label` and `value` are instance-scoped, so `show` travels
+  *inside* the selector'd entry alongside the styling. All four cards write
+  `label {show:false}` and `value {show, fontFamily, fontSize, fontColor,
+  horizontalAlignment, textWrap}`, both with `selector: {"id":"default"}`.
+- **`textbox`** — `general.paragraphs[].textRuns[]` with raw `value` +
+  `textStyle{fontFamily,fontSize,color}`, no `expr` wrapper (Desktop's own form).
+- Every visual states `title` / `background` / `border` / `dropShadow` explicitly;
+  `drillFilterOtherVisuals: true` on all 13.
+- `shape` is the visual name (never `basicShape`); the buttons use the verified
+  pair `tileShape: 'rectangleRounded'` + `rectangleRoundedCurve: 8L`.
+
+### Decisions & assumptions — checkpoint 2
+
+- **Button text is STATIC, and that is a verified-shape decision, not a shortcut.**
+  A measure-bound (fx) button label has **no verified serialisation**: all 175
+  existing `altText`/`text` literals in this report are `Literal` strings,
+  `visualConfiguration/2.3.0` delegates `objects` to the untyped
+  `formattingObjectDefinitions/1.5.0` bag, and no Desktop-authored button exists in
+  the repo. Inventing one would be exactly the silent-drop trap this log already
+  paid for twice. **Consequence, honestly stated:** the buttons could not carry a
+  live headline number. They carry the destination, its ordinal and its question,
+  and where a number belongs it is a **disclosed parameter** (the only literals the
+  rebuild allows): `$10,000` on MONEY, `m = 100` on EVIDENCE. BOTH carries no
+  number because none of its numbers is disclosed. **To upgrade:** bind the text in
+  Desktop by hand, capture the JSON here, then re-author.
+- **No volatile count is typed anywhere on the page.** A sweep of every on-canvas
+  literal string returns exactly five numbers: the ordinals `1`, `2`, `3` and the
+  disclosed `$10,000` and `100`. Everything else — the takeaway, the unit-chart
+  read, the method stamp, the caveats — is a measure.
+- **`dn_answer_units` is the native fallback; Deneb is still not registered.**
+  Re-checked on disk this session, not assumed: `report.json` declares neither
+  `publicCustomVisuals` nor `organizationCustomVisuals`, and no custom-visual
+  payload exists under `StaticResources`. An agent cannot register an AppSource
+  visual. The container therefore ships as a native `hundredPercentStackedBarChart`
+  **at the contracted rect, under the contracted id, at the contracted tab
+  position** — see *the Deneb swap* below.
+- **The three unit states are a pure luminance ramp, deliberately colourless.**
+  `Share · both` `#F2EFE6` → `Share · one bar only` `#8A8377` →
+  `Share · neither` `#2E2933`. The honest-green/trap-red pair was **rejected here
+  on purpose**: these three states describe *the record*, not the films
+  (`Movies (neither bar)`'s own docstring says so), and painting them good/bad
+  would import the value judgement the report refuses. A luminance ramp is also
+  the colour-blind-safe choice, and it lets the words in `c_units_legend` do the
+  identifying. Measured, in full:
+
+  | pair | ratio | needs | verdict |
+  |---|---|---|---|
+  | `#F2EFE6` both vs `#8A8377` one (adjacent) | **3.27:1** | 3.0 | PASS |
+  | `#8A8377` one vs `#2E2933` neither (adjacent) | **3.78:1** | 3.0 | PASS |
+  | `#F2EFE6` vs canvas `#171418` | 15.89:1 | 3.0 | PASS |
+  | `#8A8377` vs canvas | 4.87:1 | 3.0 | PASS |
+  | `#2E2933` vs canvas | **1.29:1** | 3.0 | **below** — see the frame below |
+
+  Three fills that are each ≥3:1 against a `#171418` canvas **and** ≥3:1 against
+  each other is arithmetically impossible (the darkest would have to exceed
+  luminance 1.53). The two **boundaries** — which is what carries the quantity —
+  both clear 3:1, and identification is carried three more ways: the printed
+  legend in reading order, the live sentence beneath, and the alt text.
+- **The chart carries a 1 px `#6E6960` container frame, and it is not decoration.**
+  Because the "neither" fill sits at 1.29:1 the bar's right end would otherwise
+  fade into the page, and a 100 % bar whose 100 % mark is invisible cannot be felt
+  as "of every 100". The frame draws that boundary at **3.35:1** and uses the same
+  hairline token as `z_rule_answer`, so the page has one hairline colour.
+- **Axes, legend and data labels are all explicitly OFF on the chart.** The value
+  axis and legend would restate what `c_units_legend` and `c_units_read` already
+  say; in-segment data labels are worse than useless here, because one label colour
+  cannot stay legible across a `#F2EFE6` and a `#2E2933` fill. The chart's job is
+  proportion; the numbers are the card's job.
+- **Radius: a documented 2-step scale.** Controls (the four buttons) are
+  `rectangleRounded` at 8 px; surfaces and the 1 px rule are square. Consistency
+  lock 8 permits a documented 2-step scale, and rounding a 1 px line is meaningless.
+  `pbir_detect`'s `radius-system` rule reads `border.radius` literals only, of which
+  the page writes none, so the lock is measured clean either way.
+- **`z_method_stamp` ships `textWrap: false`, on measurement.** The stamp's live
+  string measures **1228 px** at Arial 10 pt (GDI, 96 DPI) against a 1232 px box —
+  4 px of headroom. If a count gains a digit it wraps, and two 13 px lines cannot
+  fit a 24 px card, so *both* lines would clip. With wrap off it degrades in the
+  right order instead: snapshot, basis, adult exclusion, floor, m and C all render,
+  and only the trailing `LISTINGS≠FILMS` clause truncates. The rect is contracted,
+  so the alternative (a taller box) needs a designer nod — it is on the checklist.
+- **Alt text follows the contracted rule exactly:** the chart gets it, prose cards
+  do not (a card bound to a `Copy ·` measure already reads its own value aloud),
+  `z_rule_answer` gets `''` and no tab stop, and the buttons are named by their own
+  text. One alt string on the page, on `dn_answer_units`, phrased around the
+  disclosed constants so it carries **no volatile count**. The model's
+  `[Alt · dn_answer_units]` is *not* bound: dynamic alt text has no verified PBIR
+  serialisation (the standing finding), so the measure stays ready for a Desktop fx
+  binding while the on-disk literal says the same thing without live numbers.
+- **Every colour on the page is a hex the theme declares** (`#F2EFE6` `#B5AFA0`
+  `#171418` `#1D1A20` `#6E6960` `#8A8377` `#2E2933`). `theme-color-drift`: 0.
+- **Fonts are the Mac-safe set only:** Arial Black 28 pt (the question), Georgia
+  16/12 pt (the takeaway and the chart read), Arial 12/10 pt (buttons and chrome).
+  No Bahnschrift, Consolas or Segoe UI is written anywhere on the page, and both
+  theme copies are clean of all three (re-checked this session). Smallest type on
+  the page is 10 pt — the floor, never crossed.
+
+### The Deneb swap — exactly what changes when Deneb arrives
+
+Nothing outside one file. `dn_answer_units` keeps its **id**, its **rect**
+(24,240,736,304), its **z** (12) and its **tabOrder** (300), so tab order, the page
+inventory and every reference to it survive the swap.
+
+1. 🖥️ Install Deneb from AppSource in Desktop and let Desktop write
+   `publicCustomVisuals` into `report.json` (an agent cannot register it).
+2. In `visuals/dn_answer_units/visual.json` replace `visualType`
+   `hundredPercentStackedBarChart` with Deneb's AppSource visual name **as Desktop
+   writes it** (do not type it from memory — copy it out of the file Desktop saves).
+3. Keep the query as-is: the same three measures in the same order feed the
+   10 × 10 unit chart (`Share · both`, `Share · one bar only`, `Share · neither`).
+4. Delete the four native cards (`categoryAxis`, `valueAxis`, `legend`, `labels`)
+   and the three `dataPoint` metadata-selector fills; the Vega-Lite spec carries
+   colour and geometry instead.
+5. Keep `visualContainerObjects` **exactly as it stands** — the alt text is still
+   required, and the 1 px `#6E6960` frame still bounds the 100 units.
+6. Spec constraints from the plan, unchanged: renderer **SVG** (Canvas discards
+   ARIA), selection **off**, CSS font stacks terminating in `sans-serif`/`serif`,
+   and a `description` encoding on every mark layer so each cell emits an
+   `aria-label`. Reuse the same luminance ramp and the fill-vs-outline carrier.
+7. Re-run: `validate_json.py`, the deep `visualContainer/2.9.0` pass, `pbir_detect`.
+
+### What dangles, and why that is deliberate
+
+All four `visualLink` targets are written to page ids **that do not exist yet** —
+`p2-money`, `p3-evidence`, `p4-both`, `p5-method`. This is the approved sequencing:
+the names are fixed by the plan, so writing them now means no rewiring later. Until
+those pages are built the four buttons are **inert in Desktop** (a navigation action
+pointing at a missing section does nothing). Nothing else on the page depends on
+them, and the old pages are unreachable from the new landing page until the
+replacements land — which is expected mid-rebuild, not a defect.
+
+### Findings for the coordinator — not build defects
+
+1. **`grid-8px` fires on the new page and is left UNWAIVED.** `pbir_detect` reports
+   *5 of 13 visuals off the 8 px grid*: `z_rule_answer` (h 1), `c_units_legend`
+   (h 20), `c_units_read` (y 580), `c_nav_hint` (y 572, h 20), `btn_method` (h 28).
+   **Every one of those coordinates is contracted in the approved checkpoint**, so
+   they were not "corrected" unilaterally. A waiver is the user's to sign, not the
+   operator's — the finding is reported here instead of being buried. Fixing it
+   instead would cost four numbers (h 20→24, h 28→24 or 32, y 580→584, y 572→576)
+   and needs the designer's word.
+2. **A theme defect predating this checkpoint, reported not fixed.**
+   `visualStyles.actionButton.*.text[0]` writes **`"alignment": "center"`**, but
+   `reportThemeSchema-2.156`'s `visual-actionButton → text` card has no `alignment`
+   property — the name is **`horizontalAlignment`** (the theme's own `pageNavigator`
+   block uses the correct one). It validates only because that item schema does not
+   set `additionalProperties: false`, and it is therefore **inert**: theme-level
+   button text alignment never applies. p1 is unaffected because all four buttons
+   write `horizontalAlignment` explicitly. Not fixed here: `project/deliverables/
+   theme.json` is outside this agent's write scope, and the deliverable and the
+   installed `D7-Seductive-Lies.json` must stay content-identical — so both copies
+   have to change in one pass, by whoever owns the theme.
+3. **Checkpoint 1's font cut verified clean.** Neither theme copy contains
+   Bahnschrift, Consolas or Segoe UI. No checkpoint-1 miss to report on fonts.
+
+### Manual steps required in Desktop — checkpoint 2
+
+- [ ] **Open the report and land on `p1-the-answer`.** Confirm it opens as the
+      landing page and that the six old pages are still present behind it.
+- [ ] **Confirm `dn_answer_units` renders three segments.** It is bound with the
+      `Y` role only and **no `Category` field** — a bar chart with values and no
+      axis renders one bar in Desktop, but this repo has never had a Desktop-
+      rendered `hundredPercentStackedBarChart`. *If it renders empty*, the fix is a
+      single-row category field, not a re-design. Check the segment order is
+      both → one → neither, left to right.
+- [ ] **Confirm the four button fills and outlines render** (the regression this
+      grammar exists to prevent). A blank or terracotta button means a selector was
+      dropped somewhere.
+- [ ] **Check `z_method_stamp` on one line.** With `textWrap: false` a too-long
+      string truncates its tail; if the `LISTINGS≠FILMS` clause is cut, ask the
+      designer for 24 → 40 px height rather than dropping to 9 pt (the 10 pt floor
+      is a hard rule).
+- [ ] **Count the Key Takeaway's words on canvas** (the plan's gate for this page).
+      Expected 48 with today's winner; the guard falls back to a 33-word frame.
+- [ ] **Keyboard walk the page:** 12 stops, in the order c_question → hero_takeaway
+      → dn_answer_units → c_units_legend → c_units_read → the three buttons →
+      c_nav_hint → btn_method → z_method_stamp → c_caveats. `z_rule_answer` must
+      **not** take focus. Alt+Shift+F11 on the chart should read the alt string.
+- [ ] **Verify `rectangleRounded` + `rectangleRoundedCurve: 8L` actually rounds the
+      buttons.** If not, they render square, which is a cosmetic degradation only.
+
+### Validation status — 2026-08-05, checkpoint 2
+
+```
+validate_json.py          : PASS - 273 file(s) repo-wide, 0 errors, no BOM
+visualContainer/2.9.0     : PASS - 13 new visual.json validated DEEPLY with all
+                            5 remote sub-schemas resolved, 0 real errors. Only
+                            difference is the known $schema const (our files
+                            declare 2.11.0, which is what Desktop writes).
+page/2.1.0                : PASS - p1-the-answer/page.json, 0 errors
+pagesMetadata/1.1.0       : PASS - pages.json, 0 errors
+pbir_detect.py            : FAIL - 49 findings, 1 unwaived / 48 waived. The one
+                            unwaived finding is grid-8px on pages/p1-the-answer
+                            (contracted rects, see Findings 1). The 48 waived are
+                            the pre-existing old-page set, unchanged by this pass.
+check_contrast.py         : theme pairs 8/0 failures. Page pairs measured
+                            individually (11 pairs, table above and below).
+validate_tmdl.py --strict : 17 file(s), 1 error - the STANDING SourceRoot waiver.
+                            No model file was touched in this checkpoint.
+check_state.py            : OK (stage 6, in_progress)
+measure resolution        : all 4 card/chart bindings resolve to defined measures
+                            in _Measures.tmdl (Title · Landing, Copy · Answer ·
+                            units read, Label · Method, Label · Caveats, plus the
+                            three Share · measures on the chart)
+git                       : NOT committed, by instruction. git diff is the undo.
+```
+
+**Every text/background pair introduced on this page, measured:**
+
+| foreground | background | ratio | threshold | verdict |
+|---|---|---|---|---|
+| `#F2EFE6` question 28 pt | `#171418` canvas | 15.89:1 | 3.0 (large) | PASS |
+| `#F2EFE6` takeaway 16 pt | `#171418` canvas | 15.89:1 | 4.5 | PASS |
+| `#F2EFE6` chart read 12 pt | `#171418` canvas | 15.89:1 | 4.5 | PASS |
+| `#B5AFA0` legend 10 pt | `#171418` canvas | 8.35:1 | 4.5 | PASS |
+| `#B5AFA0` nav hint 10 pt | `#171418` canvas | 8.35:1 | 4.5 | PASS |
+| `#B5AFA0` method stamp 10 pt | `#171418` canvas | 8.35:1 | 4.5 | PASS |
+| `#B5AFA0` caveats 10 pt | `#171418` canvas | 8.35:1 | 4.5 | PASS |
+| `#F2EFE6` button text 12 pt | `#1D1A20` button fill | 14.96:1 | 4.5 | PASS |
+| `#B5AFA0` btn_method text 10 pt | `#171418` canvas | 8.35:1 | 4.5 | PASS |
+| `#F2EFE6` button outline (non-text) | `#171418` canvas | 15.89:1 | 3.0 | PASS |
+| `#B5AFA0` btn_method outline | `#171418` canvas | 8.35:1 | 3.0 | PASS |
+| `#6E6960` rule + chart frame | `#171418` canvas | 3.35:1 | 3.0 | PASS |
+| `#1D1A20` button fill vs canvas | `#171418` canvas | 1.06:1 | — | informational; the outline is the affordance |
+
+### Open questions — checkpoint 2
+
+- **No "KEY TAKEAWAY" kicker was built.** The old p0 carried `z_hero_kicker` so a
+  judge could *find* the mandated element by name; the checkpoint list has 13
+  visuals and no kicker, and "build only what is listed" won. If the coordinator
+  wants the label back it is one textbox at `24,88,1232,16` and it costs one tab
+  stop. **Designer's call, recorded rather than taken.**
+- **The unit chart has no verified render.** See the manual checklist; this is the
+  first `hundredPercentStackedBarChart` in the entry to matter visually.
