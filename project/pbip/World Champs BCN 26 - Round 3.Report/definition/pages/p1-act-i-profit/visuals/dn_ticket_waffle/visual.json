@@ -269,6 +269,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Coverage exhibit. It splits the basis into the listings that hold credible financials under the disclosed floor of $10,000 with revenue above zero — shown in green and marked valid with a tick — and the remainder, which cannot support a money claim. The credible share is stated in the title above.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

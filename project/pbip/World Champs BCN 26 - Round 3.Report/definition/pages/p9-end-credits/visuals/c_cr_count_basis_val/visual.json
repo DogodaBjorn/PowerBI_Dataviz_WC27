@@ -152,6 +152,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Basis: the listing count every number in this report is computed on, after the adult exclusion — listings per source minus adult titles excluded. Marked kept.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

@@ -152,6 +152,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Label for the naive profit number: it sums revenue minus budget across every listing in the basis, including the many whose revenue is simply unknown.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

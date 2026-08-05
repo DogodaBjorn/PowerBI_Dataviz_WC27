@@ -157,6 +157,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ticket to Act Two, The Ratings Lie. Opens the act about applause: a raw rating has no evidence floor, so a perfect 10.0 can rest on a single vote. Weighted with m = 100 and C = 6.96 it reads about 6.99.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

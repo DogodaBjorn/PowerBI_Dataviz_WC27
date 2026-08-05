@@ -159,6 +159,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Act One verdict: the industry does not lose money — the dataset loses data. Claim only the share that clears the disclosed floor of $10,000.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

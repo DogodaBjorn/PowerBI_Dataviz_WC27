@@ -694,6 +694,140 @@ table _Measures
 		displayFolder: 06 Display
 		lineageTag: 55662cdd-041c-4b0b-ae07-9f3f3d2fb179
 
+	/// Screen-reader narration for the naive profit card while it is still standing (SC.1/SC.2): names the number as the trap before it is read as a finding.
+	/// Plain measure feeding Power BI's own dynamic alt text — deliberately NOT a DAX user-defined function (see CREDITS.md, the outstanding byline).
+	measure 'Alt · kpi_profit_naive · SC1' =
+			"Trap exhibit. Naive profit across all "
+				& FORMAT([Movies], "#,0")
+				& " listings reads "
+				& FORMAT([Profit (naive)], "\$#,0;(\$#,0)")
+				& ". This number treats unknown revenues as zero dollars and is shown here only to be corrected in Scene 3."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: c7664e80-c703-42a7-a02d-259ee3125487
+
+	/// Screen-reader narration for the same card once it is struck through and labelled MISREAD (SC.3) — the correction, in words.
+	measure 'Alt · kpi_profit_naive · SC3' =
+			"Trap exhibit, struck through and labelled MISREAD. Naive profit of "
+				& FORMAT([Profit (naive)], "\$#,0;(\$#,0)")
+				& " is withdrawn: only "
+				& FORMAT([Movies (credible financials)], "#,0")
+				& " listings, "
+				& FORMAT([Financial coverage %], "0.0%")
+				& ", can support a money claim."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: 5d932dc3-3753-4418-a441-bf232c5ff7bb
+
+	/// Screen-reader narration for the Act I coverage exhibit — states the proportion and the credible-set medians rather than describing the shape.
+	measure 'Alt · dn_ticket_waffle' =
+			"Coverage exhibit. "
+				& FORMAT([Financial coverage %], "0.0%")
+				& " of listings hold credible financials under the disclosed floor of "
+				& FORMAT([Financial floor (disclosed)], "\$#,0")
+				& " with revenue above zero; the remainder cannot support a money claim. Median credible profit "
+				& FORMAT([Median profit (credible)], "\$#,0;(\$#,0)")
+				& ", mean "
+				& FORMAT([Mean profit (credible)], "\$#,0;(\$#,0)")
+				& "."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: d55091ee-3c35-44dd-ad09-60ffc131502d
+
+	/// Screen-reader narration for the perfect-ten leaderboard — the trap stated as a crowd, with the vote evidence behind it.
+	measure 'Alt · tbl_perfect_tens' =
+			"Trap exhibit. Leaderboard of listings rated a perfect 10.0, sorted by fewest votes first; each row prints the title, the raw rating and its vote count. "
+				& FORMAT([Movies (perfect ten)], "#,0")
+				& " listings score a perfect 10.0 and "
+				& FORMAT([Movies (perfect ten, single vote)], "#,0")
+				& " of those rest on a single vote. "
+				& FORMAT([Zero-vote share %], "0.0%")
+				& " of all listings have no votes at all; the median listing has "
+				& FORMAT([Median votes], "#,0")
+				& ". Every row is marked thin evidence."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: 0c81ca99-25f6-48bc-bad8-c36d9677bd75
+
+	/// Screen-reader narration for the Act II correction exhibit — the fall from applause to evidence, with both disclosed parameters.
+	measure 'Alt · dn_rating_fall' =
+			"Correction exhibit. Each perfect-ten listing falls from a raw 10.0 to roughly "
+				& FORMAT([Single-vote ten (illustration)], "0.00")
+				& " once evidence is required, with m="
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " and C="
+				& FORMAT([Rating C (disclosed)], "0.00")
+				& ". A dashed reference line marks C."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: 6f60e27d-2ca1-4c1f-a593-62f6b1a108df
+
+	/// Screen-reader narration for the premiere scatter — population, axes, the disclosed reference line and the film the corrected cut lands on.
+	measure 'Alt · hero_premiere_scatter' =
+			"Scatter plot animated by release year. Horizontal axis: revenue in US dollars on a logarithmic scale. Vertical axis: evidence-weighted rating, with a dashed reference line at C="
+				& FORMAT([Rating C (disclosed)], "0.00")
+				& ". Population: "
+				& FORMAT([Movies (scatter population)], "#,0")
+				& " films with credible financials and at least "
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " votes. The highlighted film is "
+				& [Winner · title]
+				& ", best-selling and best-rated on evidence."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: 6bdc84d5-d512-45e9-9731-67b00446dd6d
+
+	/// Screen-reader narration for the popularity refusal card and its rank table — the refusal stated as a refusal.
+	measure 'Alt · c_refusal_popularity' =
+			"Adjustment refused: popularity. TMDB does not publish the formula, so popularity is ranked under protest, never coloured and never averaged. The table lists the three highest-popularity films beside their evidence-weighted rating rank and their revenue rank, and marks with a cross any film whose popularity rank and quality rank disagree by more than 100 places."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: 53c73ef2-ab18-4e37-9f9e-4f6c9aec259c
+
+	/// Screen-reader narration for the labelled unknown on the premiere page — the same sentence the chip prints.
+	measure 'Alt · c_nodate_chip' = [Label · No date]
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: aa10443d-c023-4da2-a854-7b764b36a12a
+
+	/// Screen-reader narration for the end-credits reconciliation — the cross-foot read aloud, then the data-health counts.
+	measure 'Alt · tbl_production_counts' =
+			"Production counts, cross-footed: "
+				& FORMAT([Movies (all listings incl. adult)], "#,0")
+				& " listings per source, minus "
+				& FORMAT([Adult listings excluded], "#,0")
+				& " adult titles excluded, equals a basis of "
+				& FORMAT([Movies], "#,0")
+				& ". Data health: "
+				& FORMAT([Duplicate listings], "#,0")
+				& " duplicate title-and-date pairs, "
+				& FORMAT([Duplicate Movie IDs], "#,0")
+				& " duplicate IDs, "
+				& FORMAT([Movies (undated)], "#,0")
+				& " listings with no release date, "
+				& FORMAT([Movies (future-dated)], "#,0")
+				& " future-dated."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: 758a4655-7a6e-4247-95f8-972364c98f2f
+
+	/// Screen-reader narration for the movie tooltip — raw against weighted for the hovered film, with the popularity caveat.
+	measure 'Alt · tt_movie_poster' =
+			"Tooltip for a single film. Raw rating "
+				& FORMAT([Rating (raw)], "0.00")
+				& " on "
+				& FORMAT([Votes], "#,0")
+				& " votes; evidence-weighted rating "
+				& FORMAT([Rating (evidence-weighted)], "0.00")
+				& ", "
+				& [Mark · Rating verdict]
+				& ". Popularity rank "
+				& FORMAT([Rank · Popularity], "0")
+				& ", shown under protest because its formula is not published."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: 790c6dc9-90b2-4758-9aad-6d092ea041b9
+
 	column Value
 		isHidden
 		formatString: 0

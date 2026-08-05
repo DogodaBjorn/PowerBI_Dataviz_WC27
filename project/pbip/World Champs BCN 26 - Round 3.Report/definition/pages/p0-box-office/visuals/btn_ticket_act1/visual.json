@@ -157,6 +157,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ticket to Act One, The Profit Lie. Opens the act about money: only a minority of listings clear the disclosed financial floor of $10,000 with revenue above zero, so an industry-wide profit total is an artefact of missing data.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

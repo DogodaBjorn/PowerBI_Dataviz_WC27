@@ -152,6 +152,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Trap exhibit. This profit total treats unknown revenues as zero dollars, so it is the naive reading, not a finding. It is shown here only to be corrected in Scene 3.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

@@ -534,6 +534,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Trap exhibit. A leaderboard of listings rated a perfect 10.0, sorted by fewest votes first; each row prints the title, the raw rating and its vote count, and every row is marked thin evidence. A raw rating has no evidence floor, so one vote is enough to score a perfect 10.0.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

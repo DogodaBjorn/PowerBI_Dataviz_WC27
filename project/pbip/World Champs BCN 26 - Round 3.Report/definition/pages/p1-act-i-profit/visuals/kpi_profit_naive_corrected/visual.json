@@ -152,6 +152,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Trap exhibit, struck through and labelled MISREAD. The naive profit total is withdrawn: only listings clearing the disclosed floor of $10,000 in budget with revenue above zero can support a money claim, and they are a minority of the basis.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

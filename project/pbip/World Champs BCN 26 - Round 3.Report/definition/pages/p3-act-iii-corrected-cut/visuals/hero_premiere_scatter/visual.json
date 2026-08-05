@@ -528,6 +528,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Premiere scatter. Horizontal axis: revenue in US dollars on a logarithmic scale. Vertical axis: evidence-weighted rating, with a dashed reference line at C = 6.96. Population: films with credible financials under the disclosed floor of $10,000 and at least 100 votes. The film the corrected cut lands on — best-selling and best-rated on evidence — is named in the annotation beside the plot.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

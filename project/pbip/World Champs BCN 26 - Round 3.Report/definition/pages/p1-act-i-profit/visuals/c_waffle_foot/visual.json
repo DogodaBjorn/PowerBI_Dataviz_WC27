@@ -152,6 +152,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Footnote to the coverage exhibit: the median and the mean credible profit, in US dollars as recorded. This is a gross revenue-minus-budget gap, not a profit-and-loss statement.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

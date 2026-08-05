@@ -157,6 +157,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ticket to Act Three, The Corrected Cut. Opens the act where the adjustments land — financial floor $10,000, revenue above zero, m = 100, C = 6.96 — and where one adjustment is refused: popularity, whose formula TMDB does not publish.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

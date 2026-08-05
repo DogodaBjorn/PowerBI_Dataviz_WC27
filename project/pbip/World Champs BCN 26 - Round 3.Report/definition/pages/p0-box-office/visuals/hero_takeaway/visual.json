@@ -159,6 +159,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Key takeaway. The data is not wrong — the reading is. Most listings carry no credible financials, the median listing has no votes at all, and TMDB publishes no formula for popularity. Every number in this report states what it excludes.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

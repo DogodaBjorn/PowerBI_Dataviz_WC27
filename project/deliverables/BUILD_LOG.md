@@ -8,9 +8,9 @@ Last validated: 2026-08-05 — `validate_tmdl.py --strict`: 15 files, **1 error*
 (the standing `SourceRoot` drive-letter waiver, see 04-model-build.md), 0
 warnings; **267 repo JSON files** well-formed, UTF-8 without BOM, 0 errors;
 `report.json` 0 errors against its declared `report/3.3.0` schema.
-Model: 10 tables, **79 measures**, 8 relationships, 3 shared expressions
-(SourceRoot parameter, Source, Schema). Ten further measures (the
-`06 Display\Alt text` family) are **deferred** — see *Deferred*.
+Model: 10 tables, **89 measures**, 8 relationships, 3 shared expressions
+(SourceRoot parameter, Source, Schema). The `06 Display\Alt text` family is
+**built** — the attribution blocker was cleared on 2026-08-05 (commit `f4b9420`).
 Report: the D7 custom theme is installed and active. **The report is
 structurally complete**: `p0-box-office` (42) · `p1-act-i-profit` (44) ·
 `p2-act-ii-ratings` (38) · `p3-act-iii-corrected-cut` (37) · `p9-end-credits`
@@ -52,55 +52,20 @@ starter pages are untouched. Nothing has been rendered in Desktop — see
 
 ## Deferred — not built, and why
 
-- **`06 Display\Alt text` — the 10 `Alt · …` measures (BLOCKER, attribution).**
-  `Alt · kpi_profit_naive · SC1` · `Alt · kpi_profit_naive · SC3` ·
-  `Alt · dn_ticket_waffle` · `Alt · tbl_perfect_tens` · `Alt · dn_rating_fall` ·
-  `Alt · hero_premiere_scatter` · `Alt · c_refusal_popularity` ·
-  `Alt · c_nodate_chip` · `Alt · tbl_production_counts` · `Alt · tt_movie_poster`.
-  The dynamic-alt-text technique comes from the Fabric Community post
-  *"Accessibility in Action: Building Reusable Alternative Text Logic"* supplied by
-  the entrant; the author's name is not retrievable by an agent (the community site
-  answers 403). Attribution rule 5 makes shipping an uncredited adopted technique a
-  **blocker-severity defect**, so the family is not implemented.
-  **To unblock:** open the post in a browser, read the author's name, add them to
-  `contracts/source-register.yaml` **and** `CREDITS.md`, then implement the ten
-  measures (expressions are ready in `measures.dax`) in folder
-  `06 Display\Alt text`, format `@`.
-  **Consequence if it stays blocked:** every data visual loses its live-number alt
-  text, which is the accessibility judge's hand-tested surface (05-design.md,
-  finding 1). No other measure depends on this family, so nothing dangles today.
-- Nothing else from `measures.dax` was deferred. `Image · Poster URL` **was** built
-  — its VERIFY-AT-BUILD base URL was retrieved successfully (see below).
-- **Alt text on every p0/p9 visual is intentionally UNSET** (not empty-string, not
-  a typed sentence) pending the same attribution blocker. Verified by a build check
-  that fails if the token `altText` appears in any generated `visual.json`.
-  **Visuals awaiting alt text once unblocked:** p0 — `hero_takeaway`,
-  `z_billing_method`, `z_billing_caveats`, `btn_ticket_act1/2/3` (the ticket teaser
-  stat lives in the button's alt text per the handoff); p9 — the 11 measure-bound
-  value cards; **p1 (phase B2a)** — `kpi_profit_naive` (`[Alt · kpi_profit_naive ·
-  SC1]`, must open with the words "Trap exhibit."), `kpi_profit_naive_corrected`
-  (`[Alt · kpi_profit_naive · SC3]`), `dn_ticket_waffle` (`[Alt · dn_ticket_waffle]`),
-  plus `c_p1_action`, `c_p1_dlg_naive`, `c_p1_dlg_honest`, `c_kpi_profit_label`,
-  `c_p1_note_zeros`, `c_waffle_title`, `c_waffle_foot`, `c_verdict_act1`;
-  **p2 (phase B2a)** — `tbl_perfect_tens` (`[Alt · tbl_perfect_tens]`),
-  `dn_rating_fall` (`[Alt · dn_rating_fall]`), plus `c_p2_note_median`,
-  `c_p2_dlg_honest`, `c_verdict_act2`. Decorative chrome (frames, rules,
-  perforations, ticket internals, the `z_pN_admit` glyphs, the three beat marks)
-  must receive **empty** alt text at the same time, per the accessibility package.
-  **p3 (phase B2b)** — `hero_premiere_scatter` (`[Alt · hero_premiere_scatter]`),
-  `tbl_refusal_ranks` (`[Alt · c_refusal_popularity]`), `c_nodate_chip`
-  (`[Alt · c_nodate_chip]`), plus `c_scatter_population`, `c_winner_label`,
-  `c_adj_floor`, `c_adj_m`, `c_adj_c`, `c_verdict_act3`;
-  **tt-movie-poster (phase B2b)** — `tbl_tt_rows`'s replacement objects
-  (`c_tt_row_votes_val`, `c_tt_row_raw_val`, `c_tt_row_weighted_mark`,
-  `c_tt_row_weighted_val`, `c_tt_row_rank_val`) carry `[Alt · tt_movie_poster]`
-  between them, plus `c_tt_name`, `c_tt_year` and `img_tt_poster`.
-  **Alt text is the fourth M-003 carrier** — until it lands, p1/p2 carry three of
-  the four contracted carriers for a screen-reader user (slug tag, beat rail,
-  kicker + label are all on-canvas text and are in the tab order; see the
-  tab-order note below).
-  **The property path is now verified** — see the phase-B1 decisions below — so this
-  is a pure attribution hold, no longer a research question.
+- ~~`06 Display\Alt text` — the 10 `Alt · …` measures (BLOCKER, attribution)~~ —
+  **RESOLVED and BUILT 2026-08-05 (phase B2c).** The attribution debt was closed at the
+  main-thread level (commit `f4b9420`): the influencing post is credited *by
+  publication* in `CREDITS.md` and `contracts/source-register.yaml` (tier 4,
+  community), with the unretrievable byline recorded as an **open attribution debt**
+  for a human to close. **Scope of what was adopted:** the post prompted *dynamic*
+  alt text — nothing more. Its own technique wraps the narrative in **DAX
+  user-defined functions**, and that pattern is **NOT** adopted here (adopting it
+  would need the author's name first). The ten measures are ordinary measures driving
+  Power BI's own documented dynamic-alt-text feature, the accessibility practice this
+  repo credits to **Meagan Longoria**. Do not remove or weaken either entry.
+- ~~Alt text on every visual is intentionally UNSET~~ — **resolved, see
+  *the alt-text layer* below.** The former waiting list (p0 6 · p1 11 · p2 6 · p3 9 ·
+  p9 11 · tooltip 8) is closed; every visual on it now carries alt text.
 - **p9 `NEGATIVE REVENUE` row — not built.** The design's counts table lists a
   negative-revenue count, but no measure produces it (`measures.dax` has none and
   `data-model.md`'s field map lists only seven count measures). Typing `1 (−$12)`
@@ -668,6 +633,76 @@ Implemented exactly as ruled:
      `"_Measures.Image · Poster URL"`.
   6. `filterConfig` type `VisualTopN` behaviour (schema-typed, effect unverified).
 
+### Stage 6 phase B2c — the alt-text layer (2026-08-05)
+
+**Attribution first, implementation second.** The blocker was cleared at the
+main-thread level (commit `f4b9420`) by crediting the influencing Fabric Community
+post **by publication** in `CREDITS.md` and `contracts/source-register.yaml`, with
+the byline recorded as an **outstanding attribution debt**. The adopted idea is
+narrow: *make alt text dynamic*. The post's **DAX user-defined function** pattern is
+**not** adopted — implementing it would require the author's name first. What ships
+is ten plain measures on Power BI's own documented dynamic-alt-text feature, the
+accessibility practice this repo already credits to **Meagan Longoria**.
+
+**Ten measures built** in `_Measures`, folder `06 Display\Alt text`, format `@`, each
+with a `///` docstring, each composing live numbers from its bound measures — no count
+is typed inside a measure: `Alt · kpi_profit_naive · SC1` · `· SC3` ·
+`Alt · dn_ticket_waffle` · `Alt · tbl_perfect_tens` · `Alt · dn_rating_fall` ·
+`Alt · hero_premiere_scatter` · `Alt · c_refusal_popularity` · `Alt · c_nodate_chip` ·
+`Alt · tbl_production_counts` · `Alt · tt_movie_poster`. Model: 79 → **89 measures**.
+Two adjustments to the `measures.dax` drafts, both recorded: `Alt · dn_rating_fall`
+now uses **`[Single-vote ten (illustration)]`** (not the two-vote one) so it matches
+the Act II ruling and the chart it narrates; `Alt · tbl_perfect_tens` gained the two
+perfect-ten counts for the same reason.
+
+**On disk the alt text is STATIC, not measure-bound — and that is deliberate.**
+The property *path* is verified (`visual.visualContainerObjects.general[0].properties
+.altText`; `VisualContainerGeneralFormattingObjects` has a **closed** property list
+containing `altText`). The property's **value** is typed `{}` — completely open — so a
+measure expression there is exactly as unverifiable as the colour bindings, and its
+failure mode is **silence**. Silence is the one outcome a screen-reader user must not
+get, so every visual received a literal string in the shape Desktop itself writes.
+Per the coordinator's ruling: **no volatile count is typed anywhere**. The strings
+state the finding using only contracted literals — `$10,000`, `m = 100`, `C = 6.96`,
+snapshot `24 July 2026`, and `6.99`, which is *derived* from m and C
+(1/101 × 10 + 100/101 × 6.96) and is therefore not snapshot-volatile. Volatile
+quantities are phrased around ("a minority of the basis", "most revenues …",
+"the live count is printed on the card"). **Switching to the live measures is one
+Desktop step per visual** (`fx → Field value`) and the measures are already there.
+
+**Coverage — 210 visuals, none left undecided:**
+
+| Treatment | Count | Which |
+|---|---|---|
+| **Content alt** (static finding-stating sentence) | **76** | every `cardVisual`, `tableEx`, chart, scatter · the three ticket buttons · every navigation and beat button |
+| **Empty alt** `""` (skipped by readers) | **73** | all decorative chrome — frames, rules, card backgrounds, perforations, ticket internals, the `z_pN_admit` glyphs, the beat marks, the scrim, the chip outlines, `z_tt_bg`, and `img_tt_poster` |
+| **Left UNSET** (own text is the accessible content) | **61** | textboxes — slugs, cues, transitions, notes, kickers, captions, the glossary, the credits copy, the tooltip's row labels and footnote |
+
+- **Textboxes are deliberately not given alt text.** A textbox's own runs *are* its
+  accessible content; PBIR alt text would replace rather than supplement them, so a
+  duplicate sentence would either double-read or silence the real copy. They were
+  never on the waiting list.
+- **`img_tt_poster` gets empty alt.** The poster is redundant with `c_tt_name`
+  directly beneath it — narrating it twice is noise, not access. This is also the
+  handoff's own position that the poster is enhancement.
+- **State-specific alt on the paired variants (M-003 carrier 4 is now present).**
+  `kpi_profit_naive` opens *"Trap exhibit. This profit total treats unknown revenues
+  as zero dollars, so it is the naive reading, not a finding…"*;
+  `kpi_profit_naive_corrected` opens *"Trap exhibit, struck through and labelled
+  MISREAD. The naive profit total is withdrawn…"*. `tbl_perfect_tens` likewise opens
+  *"Trap exhibit."*. All four M-003 carriers are now live at SC.1 on p1 and p2.
+- **Beat buttons carry the contracted accessible name** — `"Scene N of 3 — <title>"`
+  plus what the beat does — which is M-003 carrier 2 for a screen-reader user. These
+  are page-specific (p3's beats are The Adjustments / The Refusal / The Premiere).
+- **`[Alt · tbl_production_counts]` binds to `c_cr_count_basis_val`** on p9 — the
+  cross-foot's *result* — because the counts "table" is built as label/value pairs.
+  This is the same slot-named-measure pattern the handoff records for
+  `[Alt · c_refusal_popularity]` (→ `tbl_refusal_ranks`) and `[Alt · tt_movie_poster]`
+  (→ the tooltip's five value cards, which carry it between them).
+- **Build order matters:** `alt_text.py` runs *after* any page regeneration, because
+  the page generator writes layout only. A re-run of the generator drops the alt text
+  until the patcher is re-run; the validator catches it (`no altText`).
+
 ### Stage 6 phase B2b — layout.json vs handoff (p3 · tooltip)
 
 Same rule as phase B2a: measured block rects win; the handoff supplies fonts,
@@ -974,6 +1009,37 @@ Also at phase B1:
       rule, the beat fill (with `#211E1A` text on the fill), the verdict rule,
       `NEXT SCENE ▸` and `ROLL CREDITS ▸`.
 
+### New at stage 6 phase B2c (2026-08-05) — the alt-text layer
+
+- [ ] **Optional but recommended: upgrade the 10 data visuals from static to live alt
+      text.** Select the visual → Format → General → Alt text → `fx` → *Field value* →
+      the matching measure in `06 Display\Alt text`. The pairs are:
+      `kpi_profit_naive` → `[Alt · kpi_profit_naive · SC1]` ·
+      `kpi_profit_naive_corrected` → `[Alt · kpi_profit_naive · SC3]` ·
+      `dn_ticket_waffle` → `[Alt · dn_ticket_waffle]` ·
+      `tbl_perfect_tens` → `[Alt · tbl_perfect_tens]` ·
+      `dn_rating_fall` → `[Alt · dn_rating_fall]` ·
+      `hero_premiere_scatter` → `[Alt · hero_premiere_scatter]` ·
+      `tbl_refusal_ranks` → `[Alt · c_refusal_popularity]` ·
+      `c_nodate_chip` → `[Alt · c_nodate_chip]` ·
+      `c_cr_count_basis_val` → `[Alt · tbl_production_counts]` ·
+      the tooltip's value cards → `[Alt · tt_movie_poster]`.
+      **Capture the resulting JSON here** — it closes the last unverified binding
+      shape in this report. Until then the static sentences are accurate and complete;
+      they simply do not carry live figures.
+- [ ] **Re-run `alt_text.py` after any page regeneration.** The page generator writes
+      layout only; alt text is applied by a second pass. The structural validator
+      fails loudly (`no altText`) if the order is missed.
+- [ ] **Hand-test with a screen reader** (the accessibility judge does). Expected:
+      chrome is silent; every card, table and chart states its finding; the beat
+      buttons announce "Scene N of 3"; `kpi_profit_naive` announces "Trap exhibit"
+      **before** the number is read.
+- [ ] **The attribution debt is open, not closed.** `CREDITS.md` and
+      `contracts/source-register.yaml` credit the influencing post *by publication*
+      with its byline marked outstanding. A human must open the post in a browser and
+      add the author's name. Do not remove or weaken those entries; do not adopt the
+      post's DAX-UDF pattern until the name is recorded.
+
 ## Validation status
 
 ```
@@ -1096,6 +1162,26 @@ reserved-red check        : trap red confined to the reserved set — Act I/II s
                             tooltip's raw-rating value, and p9's [TRAP] tag.
                             Navigation (NEXT SCENE / NEXT ACT / THE PREMIERE /
                             ROLL CREDITS) is act tint; btn_home / btn_credits ink
+
+[2026-08-05 — stage 6 phase B2c, the alt-text layer]
+validate_json.py          : 267 file(s) repo-wide, 0 errors, no BOM
+validate_tmdl.py --strict : 15 file(s), 1 error (the standing SourceRoot waiver),
+                            0 warnings. 89 measures, 10 of them in the new
+                            06 Display\\Alt text folder
+visualContainer structure : all 210 visual.json re-validated DEEPLY against
+                            visualContainer/2.9.0 with remote sub-schemas
+                            resolved — 0 errors
+alt-text coverage         : 76 content + 73 empty-decorative + 61 textboxes left
+                            unset = 210. The check now FAILS if a non-textbox
+                            visual has no altText, if decorative chrome carries a
+                            non-empty string, or if a content string is too short
+                            to state a finding. 0 failures
+alt-text waiting list     : CLOSED — every visual on it carries alt text
+volatile-count check      : no static alt string contains a snapshot-dependent
+                            count; only $10,000, m = 100, C = 6.96, 24 July 2026
+                            and the derived 6.99 appear as literals
+bookmark / link / binding / layout / scope-rule / reserved-red checks : unchanged
+                            from phase B2b, all still 0 errors
 ```
 
 ## Known limitations
@@ -1107,10 +1193,12 @@ reserved-red check        : trap red confined to the reserved set — Act I/II s
   enforce the presentation).
 - Financials are nominal, currency-unverified ("USD assumed"); popularity has
   no published definition — see blueprint §7 "metrics NOT available".
-- **Alt text is missing report-wide** until the attribution blocker above is
-  cleared. This is user-visible to exactly the reader the accessibility judge
-  represents: a screen-reader user gets no narration for any data visual. It is a
-  deliberate hold, not an oversight.
+- ~~Alt text is missing report-wide~~ — **resolved 2026-08-05.** Every visual now
+  carries alt text (76 content, 73 empty-decorative, 61 textboxes reading their own
+  copy). **The remaining limitation is that the strings are static**, so they state
+  the finding and the disclosed parameters but do not read live figures; the ten
+  measures that would are authored and one Desktop step away. The **attribution debt
+  is open**: the influencing post is credited by publication, its byline outstanding.
 - No measure has been **executed** in this phase. The measures are authored,
   cross-referenced and lint-clean, but Desktop was closed and the model was not
   refreshed, so no value in the report has yet been read out of the model. Every

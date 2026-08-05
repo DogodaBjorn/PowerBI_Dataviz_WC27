@@ -152,6 +152,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Scope stamp. TMDB snapshot of 24 July 2026. Adult titles are excluded from the basis. Disclosed parameters: financial floor $10,000, m = 100, C = 6.96. Listings are not films — some title-and-date pairs repeat.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

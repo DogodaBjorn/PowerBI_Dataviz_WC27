@@ -490,6 +490,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Adjustment refused: popularity. TMDB does not publish the formula, so popularity is ranked under protest, never coloured and never averaged. The table lists the three highest-popularity films beside their evidence-weighted rating rank and their revenue rank, and marks with a cross any film whose popularity rank and quality rank disagree by more than 100 places.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

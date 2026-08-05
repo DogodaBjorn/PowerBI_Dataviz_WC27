@@ -514,6 +514,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Correction exhibit. Each perfect-ten listing falls from a raw 10.0 to about 6.99 once evidence is required, with m = 100 and C = 6.96. A dashed reference line marks C at 6.96.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

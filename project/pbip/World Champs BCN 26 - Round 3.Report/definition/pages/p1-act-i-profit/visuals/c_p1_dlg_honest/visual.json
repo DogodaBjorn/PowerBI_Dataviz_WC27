@@ -152,6 +152,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'The responsible read: only listings with a budget of at least $10,000 and revenue above zero can support money claims. It gives the median and the mean credible profit; the mean is dragged upward by blockbusters.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

@@ -11,12 +11,15 @@ validation record. This file is the stage's state + open questions.
 | A | Display measures filled + 40 new measures; D7 theme installed and made active | done 2026-08-05 |
 | B1 | `p0-box-office` (42 visuals) · `p9-end-credits` (35 visuals) · pages registry | done 2026-08-05 |
 | B2a | `p1-act-i-profit` · `p2-act-ii-ratings` | done 2026-08-05 |
-| **B2b** | **Act II ruling · `p3-act-iii-corrected-cut` · `tt-movie-poster` · 9 bookmarks** | **done 2026-08-05** |
+| B2b | Act II ruling · `p3-act-iii-corrected-cut` · `tt-movie-poster` · 9 bookmarks | done 2026-08-05 |
+| **B2c** | **The alt-text layer — 10 measures + alt text on all 210 visuals** | **done 2026-08-05** |
 | C | Desktop round-trip: refresh, render, work the manual checklist | not started |
 
 **The report is structurally complete.** 210 visuals across six pages
 (p0 42 · p1 44 · p2 38 · p3 37 · p9 35 · tooltip 14) plus nine beat bookmarks.
-Model: 79 measures.
+Model: **89 measures**, including the ten `06 Display\Alt text` narrations.
+Alt-text coverage: 76 content · 73 empty-decorative · 61 textboxes reading their own
+copy. **The waiting list is closed.**
 
 `validate_json.py`: 267 files, 0 errors. `validate_tmdl.py --strict`: 1 error, the
 standing `SourceRoot` waiver. All 210 `visual.json`, all six `page.json`,
@@ -50,10 +53,20 @@ published schemas (`visualContainer/2.9.0` with remote sub-schemas resolved,
 2. **`[Color · Scatter mark]` and `[Color · Rating verdict]` are unbound.** The winner
    dot is therefore neutral, not good-green; it is carried by `c_winner_label`'s `✓`
    and its words. Two `fx → Field value` bindings in Desktop close this.
-3. **Alt text is still blocked on attribution** (rule `attribution.md`, blocker
-   severity). The waiting list now covers p0, p1, p2, p3, p9 and the tooltip page.
-   Until it clears, the fourth M-003 carrier is missing and the extra tab stops on the
-   act pages are what carry the trap marking to a screen-reader user.
+3. **Alt text is built; the attribution debt is OPEN.** The blocker was cleared at the
+   main-thread level (commit `f4b9420`) by crediting the influencing Fabric Community
+   post *by publication* in `CREDITS.md` and `contracts/source-register.yaml`, with
+   the byline recorded as an outstanding debt. **A human must still retrieve the
+   author's name.** Scope adopted: *dynamic alt text* only — the post's DAX
+   user-defined-function pattern is NOT used, and must not be until the name is
+   recorded. Implementation is plain measures on Power BI's own documented feature
+   (a11y practice credited to Meagan Longoria). All four M-003 carriers are now live
+   at SC.1.
+   **Remaining sub-item:** the alt strings on disk are **static**, because the
+   *value* of `general.altText` is typed as an open object and a measure binding there
+   would fail silently. They state the finding with the disclosed parameters and never
+   type a volatile count. Upgrading the ten data visuals to their `Alt · …` measures
+   via `fx → Field value` is one Desktop step each.
 4. **Six new unverified tokens** (scatter role keys · `visualLink.type = 'Bookmark'` ·
    `explorationState.version` · the bookmark `objects.merge` payload · the `image`
    visual's role key and `sourceField` · `VisualTopN` behaviour) join the five from

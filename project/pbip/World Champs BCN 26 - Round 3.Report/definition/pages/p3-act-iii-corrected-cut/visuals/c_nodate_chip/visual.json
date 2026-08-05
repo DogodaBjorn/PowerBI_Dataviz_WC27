@@ -152,6 +152,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'The labelled unknown: listings with no release date never enter this animation, future-dated listings are flagged, and the sentinel years 1800 and 2099 are excluded from play. The live counts are printed on the chip.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

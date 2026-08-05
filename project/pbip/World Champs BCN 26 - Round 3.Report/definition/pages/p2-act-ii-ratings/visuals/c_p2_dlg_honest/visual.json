@@ -152,6 +152,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'The responsible read: weighted by evidence with m = 100 and C = 6.96, a perfect 10.0 resting on a single vote reads about 6.99 — barely above the global mean of 6.96. Applause is not evidence.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

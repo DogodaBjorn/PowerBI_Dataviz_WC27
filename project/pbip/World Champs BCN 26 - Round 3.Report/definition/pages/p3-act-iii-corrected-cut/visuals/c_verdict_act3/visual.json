@@ -159,6 +159,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Act Three verdict, the end: read responsibly, the best film is the one that is both best-selling and best-rated on evidence. Its name is read from the model. Correlation is shown; causation is refused.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true

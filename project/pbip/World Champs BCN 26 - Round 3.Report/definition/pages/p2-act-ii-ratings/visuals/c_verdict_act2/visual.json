@@ -159,6 +159,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Act Two verdict: applause is not evidence. A perfect 10.0 on one vote reads about 6.99 once m = 100 and C = 6.96 are applied.'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
