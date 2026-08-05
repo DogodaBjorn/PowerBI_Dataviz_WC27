@@ -1,0 +1,228 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "c_cr_glossary",
+  "position": {
+    "x": 680,
+    "y": 284,
+    "z": 45,
+    "width": 360,
+    "height": 170,
+    "tabOrder": 900
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "M-001 LISTINGS COUNT — rows, not films",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "M-002 COVERAGE — share of basis with a value",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "M-003 NAIVE PROFIT ",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  },
+                  {
+                    "value": "[TRAP]",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#E8705F"
+                    }
+                  },
+                  {
+                    "value": " — counts $0 unknowns",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "M-004 MEDIAN CREDIBLE ",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  },
+                  {
+                    "value": "[HONEST]",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#4ECBA0"
+                    }
+                  },
+                  {
+                    "value": " — floor $10k, Rev>0",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "M-005 RAW RATING — any votes, even 2",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "M-006 WEIGHTED RATING ",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  },
+                  {
+                    "value": "[HONEST]",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#4ECBA0"
+                    }
+                  },
+                  {
+                    "value": " — m=100, C=6.96",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "M-007 POPULARITY ",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  },
+                  {
+                    "value": "[OPAQUE]",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#B5AFA0"
+                    }
+                  },
+                  {
+                    "value": " — formula not published",
+                    "textStyle": {
+                      "fontFamily": "Consolas",
+                      "fontSize": "11pt",
+                      "color": "#F2EFE6"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

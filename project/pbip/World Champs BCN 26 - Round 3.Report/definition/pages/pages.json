@@ -1,9 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
   "pageOrder": [
+    "p0-box-office",
     "a65cf5aab733edd4ebbd",
-    "22a73d6058ce40e505e0"
+    "22a73d6058ce40e505e0",
+    "p9-end-credits"
   ],
-  "activePageName": "a65cf5aab733edd4ebbd",
-  "landingPageName": "a65cf5aab733edd4ebbd"
+  "activePageName": "p0-box-office",
+  "landingPageName": "p0-box-office"
 }

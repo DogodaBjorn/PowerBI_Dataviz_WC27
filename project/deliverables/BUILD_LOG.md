@@ -11,8 +11,9 @@ errors); `report.json` 0 errors against its declared `report/3.3.0` schema.
 Model: 10 tables, **73 measures**, 8 relationships, 3 shared expressions
 (SourceRoot parameter, Source, Schema). Ten further measures (the
 `06 Display\Alt text` family) are **deferred** — see *Deferred*.
-Report: starter pages untouched; the D7 custom theme is installed and active.
-Page/visual authoring is stage 6 **phase B**.
+Report: the D7 custom theme is installed and active; **p0-box-office (42 visuals)
+and p9-end-credits (35 visuals)** are built. The two starter pages are untouched.
+p1/p2/p3 and the tooltip page are stage 6 **phase B2**.
 
 ## Built
 
@@ -29,6 +30,9 @@ Page/visual authoring is stage 6 **phase B**.
 | 2026-08-05 (s6 phase A) | SemanticModel: `_Measures` — 06 Display | 26 NEW: 6 colour/mark measures (`Color · Trap/Honest/Neutral (night)`, `Color · Rating verdict`, `Mark · Rating verdict`, `Color · Scatter mark`), 19 copy/label measures (`Copy · Act I ·` ×8, `Copy · Act II ·` ×3, `Copy · Act III ·` ×2, `Label · Population`, `Label · No date`, `Label · Chip floor/m/C`, `Label · Caveats`) and `Image · Poster URL` |
 | 2026-08-05 (s6 phase A) | Report: `StaticResources/RegisteredResources` | `project/deliverables/theme.json` installed byte-identically as `D7-Seductive-Lies.json` (UTF-8, no BOM; sha256 `7fbc8c2ee0a1abaa…`) |
 | 2026-08-05 (s6 phase A) | Report: `definition/report.json` | `themeCollection.customTheme.name` repointed to `D7-Seductive-Lies.json`; a matching `{name, path, type: "CustomTheme"}` item added to the `RegisteredResources` package. `baseTheme` (`Fluent2-CY26SU05`), `objects`, `settings` and every existing identifier untouched |
+| 2026-08-05 (s6 phase B1) | Report: `pages/p0-box-office` | **42 visuals**, 1280×720, canvas `#171418`. Marquee (`z_marquee_frame` / `_inner` / `_title` / `_sub`) · `hero_takeaway` (live) · three tickets ×11 objects each (`z_ticketN_body` / `_rule` / `_stub_rule` / `_perf` / `_act` / `_hr` / `_title` / `_tease` / `_admit` / `_serial` + `btn_ticket_actN`) · `z_billing_method` + `z_billing_caveats` (live) · `z_footer_credit` · `btn_credits` |
+| 2026-08-05 (s6 phase B1) | Report: `pages/p9-end-credits` | **35 visuals**, 1280×720, canvas `#171418`. `z_cr_title` · `c_cr_h_cast` + `c_cr_cast` · `c_cr_h_counts` + 7 label/value row pairs + `c_cr_count_basis_kept` · `c_cr_h_params` + 4 label/value row pairs · `c_cr_h_glossary` + `c_cr_glossary` · `c_cr_h_refusals` + `c_cr_refusals` · `c_cr_close_src` · `c_cr_close_last` · `btn_home`. **14 of the 35 are measure-bound cards** — no count is typed anywhere |
+| 2026-08-05 (s6 phase B1) | Report: `pages/pages.json` | `p0-box-office` prepended and made `activePageName` + `landingPageName`; `p9-end-credits` appended. The two starter page ids kept in `pageOrder`, untouched |
 
 ## Deferred — not built, and why
 
@@ -51,6 +55,30 @@ Page/visual authoring is stage 6 **phase B**.
   finding 1). No other measure depends on this family, so nothing dangles today.
 - Nothing else from `measures.dax` was deferred. `Image · Poster URL` **was** built
   — its VERIFY-AT-BUILD base URL was retrieved successfully (see below).
+- **Alt text on every p0/p9 visual is intentionally UNSET** (not empty-string, not
+  a typed sentence) pending the same attribution blocker. Verified by a build check
+  that fails if the token `altText` appears in any generated `visual.json`.
+  **Visuals awaiting alt text once unblocked:** p0 — `hero_takeaway`,
+  `z_billing_method`, `z_billing_caveats`, `btn_ticket_act1/2/3` (the ticket teaser
+  stat lives in the button's alt text per the handoff); p9 — the 11 measure-bound
+  value cards. Decorative chrome (frames, rules, perforations, ticket internals)
+  must receive **empty** alt text at the same time, per the accessibility package.
+  **The property path is now verified** — see the phase-B1 decisions below — so this
+  is a pure attribution hold, no longer a research question.
+- **p9 `NEGATIVE REVENUE` row — not built.** The design's counts table lists a
+  negative-revenue count, but no measure produces it (`measures.dax` has none and
+  `data-model.md`'s field map lists only seven count measures). Typing `1 (−$12)`
+  would be a literal count, which the snapshot-reconciliation rule forbids.
+  **To unblock:** add a `Movies (negative revenue)` measure in folder
+  `05 Data health · Time`, then add the row pair `c_cr_count_negrev_lbl` / `_val`
+  at y 436 with tabOrder 550 / 555.
+- **p9 disclosed-parameter notes — numeric parts not built.** The design prints
+  `$10,000 (13.1% vs 11.9% @ $100k)` and `100 (Vote Count p90=106)`. Both
+  parentheticals are stale under the entrant's newer snapshot (coverage is now
+  13.05 %, votes p90 is now 104) and neither has a measure behind it. The parameter
+  **values** are live and printed; the numeric notes are omitted rather than typed
+  wrong. **To unblock:** add measures for the robustness pair and for votes p90,
+  then bind them beside the value.
 
 ## Decisions & assumptions
 
@@ -140,6 +168,109 @@ Page/visual authoring is stage 6 **phase B**.
   self-consistent either way; but the 476-row gap should be reconciled at s7 before
   the 85,394 figure is quoted in prose.
 
+### Stage 6 phase B1 — decisions
+
+- 2026-08-05 — **LIVE-NUMBER BINDING MECHANISM SETTLED: fallback A, the
+  `cardVisual` bound through a query projection.** The handoff's preferred
+  textbox *dynamic-value run* is **not used**, because it could not be verified and
+  research-first forbids writing an unverified shape. Evidence gathered:
+  1. `visualContainer/2.11.0` — the version this report's own `visual.json` files
+     declare — returns **HTTP 404**. Probing the series, **2.9.0 is the newest
+     published** version (2.10.0 / 2.11.0 / 2.12.0 / 2.13.0 all 404). This confirms
+     the stage-5 finding.
+  2. `visualContainer/2.9.0` delegates `visual` to
+     `visualConfiguration/2.3.0/schema-embedded.json`, which delegates `objects` to
+     `formattingObjectDefinitions/1.5.0#/definitions/DataViewObjectDefinitions`.
+     That definition is `{"type":"object","additionalProperties":{}}` — **completely
+     untyped**. A string search of the whole file returns **0** occurrences of
+     `textRun`, `paragraph` or `dynamic`. So the schema can neither confirm a
+     dynamic-value run nor reject an invented one — precisely the silent-failure
+     trap the `pbir-authoring` skill warns about.
+  3. Microsoft Learn's PBIR report-definition page documents no textbox dynamic
+     value; `create-reports/desktop-add-text-boxes` returns 404.
+  4. The published theme schema types the theme-level textbox
+     `paragraphs.textRuns` with `value` **required** and **string-only** — no
+     expression variant. (Indicative only: instances use `textStyle` where the theme
+     uses `textRunStyle`, so the shapes already differ.)
+  5. No Microsoft-authored PBIR sample was reachable — `microsoft/powerbi-desktop-samples`
+     ships `.pbix` only, and its `item-schemas` tree covers `definition.pbir` and
+     `localSettings` but no visual schemas.
+  6. Desktop is closed, so it could not be made to serialise one for observation.
+  **What IS verified**, and therefore what is used: a measure binding as a query
+  projection — `query.queryState.<Role>.projections[].field.Measure` — proven both
+  by the typed `Query` / `RoleProjection` definitions and by this report's own
+  Desktop-authored `tableEx` (`e21488a8d900077091bd`) and the two
+  `VerifiedAnswers/*/visualSource.json` files.
+  **This mechanism is now fixed for the whole report.** Every prose-with-a-number in
+  phase B2 uses a `cardVisual`, not a textbox — one mechanism, once, consistently.
+  **Cost, stated plainly:** a card cannot mix styled runs inside one string, so
+  prose that wanted a differently-styled trailing clause (for example the 11 pt
+  `(USD as recorded; gross gap, not P&L.)` on `c_verdict_act1`) must ship as a
+  second adjacent object in phase B2.
+- 2026-08-05 — **ALT-TEXT PROPERTY PATH VERIFIED** (the open item the handoff left
+  for stage 6). It is `visual.visualContainerObjects.general[0].properties.altText`,
+  confirmed in `visualConfiguration/2.3.0/schema-embedded.json` →
+  `VisualContainerGeneralFormattingObjects`, whose properties are exactly
+  `x, y, width, height, altText, allowBinnedLineSample, allowOverlappingPointsSample,
+  keepLayerOrder`. Nothing is written there yet — the attribution hold stands — but
+  the research question is closed.
+- 2026-08-05 — **Property vocabulary was verified before writing, not recalled.**
+  The published `reportThemeSchema-2.156` enumerates the valid visual names and, per
+  visual, the formatting-card names and their properties. Two consequences worth
+  recording: (a) **`basicShape` is not a valid visual name** — the correct name is
+  **`shape`**, which is also what this report's own Desktop-authored files use, so
+  every rectangle in the handoff spec'd as `basicShape` is built as `shape`; the
+  `basicShape` block inside `theme.json` targets nothing and is dead weight (harmless,
+  worth pruning at s7). (b) `cardVisual`'s cards are `value` (font family/size/colour,
+  bold, italic, `horizontalAlignment`, `textWrap`) and `label` (`show`) — which is how
+  the callout is styled as body text with the category label off.
+- 2026-08-05 — **Five tokens could not be verified from any published source.** They
+  are recorded here because each is a *rendering* risk, not a corruption risk: the
+  schemas explicitly leave these open (`queryState` is an open map keyed by role
+  name; enum values are untyped `{}`), so a wrong value fails visibly in Desktop and
+  is a one-line fix. Each is on the manual checklist below.
+  1. `cardVisual` query **role name** — written as `"Data"`.
+  2. `visualLink.type` enum — written as `'PageNavigation'`.
+  3. `textAngle` on a shape — written as `270L` for the vertical ticket-stub text.
+  4. `rectangleRoundedByPixel` + `rectangleRoundedCurve: 8L` for the 8 px ticket
+     radius (chosen over `rectangleRounded` because the tileShape name states the
+     unit; both are in the published enum).
+  5. `horizontalTextAlignment` on a textbox paragraph — the name comes from the
+     theme schema's `paragraphs` definition; instances in this report never set it.
+- 2026-08-05 — **Two contracted media were substituted, with reasons.**
+  1. **Ticket stub art: `ca-canvas` SVG → native `shape` with rotated text.** The
+     handoff contracts an SVG image for the vertical `ADMIT ONE` and the serial.
+     The published theme schema exposes **`textAngle`** on `shape`, so the same
+     content ships as real text (`z_ticketN_admit`, `z_ticketN_serial`) instead of a
+     picture. This is better than the contract, not worse: real text is selectable,
+     scalable and survives a screen reader, whereas the SVG route needed an
+     unverifiable data-URI and was contracted as decorative-with-empty-alt anyway.
+     **Fallback if `textAngle` does not render:** drop to horizontal text at the
+     stub foot, or restore the SVG.
+  2. **p9 `tbl_production_counts` / `tbl_disclosed_params`: `tableEx` → label
+     textbox + measure-bound value card, one pair per row.** A `tableEx` fed eight
+     measures renders eight **columns in one row**, not eight label/value rows; a
+     real row-per-metric table would need a disconnected metric dimension, which the
+     model does not have and which phase A did not build. The alternative — typing
+     the labels and the numbers — is exactly what the snapshot-reconciliation rule
+     forbids. The pair-per-row build keeps **every number measure-bound** and gives a
+     keyboard user a label stop immediately before each value stop.
+- 2026-08-05 — **Perforation dashes not available.** `z_ticketN_perf` is spec'd as a
+  1 px **dashed** line. The published `shape` property list has no dash/line-style
+  property (`linecapType` only), so the contracted fallback is taken: a **solid**
+  1 px `#9A9284` line, with the pre-torn read carried by the separate
+  `z_ticketN_stub_rule` frame either side of it.
+- 2026-08-05 — **Letter-spacing is not expressible in PBIR.** The design specifies
+  tracking on the marquee title (0.14 em), subtitle (0.32 em), section heads and the
+  ticket serial. A textRun's style carries only fontFamily / fontSize / fontWeight /
+  fontStyle / colour / textDecoration. Tracking is therefore **dropped everywhere**;
+  it is a uniform, deliberate fidelity loss, not a per-object slip.
+- 2026-08-05 — **Reserved-red rule held.** An automated check over both pages finds
+  trap red (`#B3402E` / `#E8705F`) in exactly one place: the `[TRAP]` tag run inside
+  `c_cr_glossary`, where it names the trap in words as well as colour. p0 contains
+  no red at all; `btn_credits` and `btn_home` are neutral cream `#F2EFE6` outline
+  and text, as required.
+
 ## Manual steps required in Desktop
 
 - [ ] Close Desktop **without saving** and reopen the pbip (Desktop currently
@@ -203,6 +334,47 @@ Page/visual authoring is stage 6 **phase B**.
       textbox bound to `[Title · Landing]`, saving, and reading the resulting
       `visual.json`. Record the verdict here before phase B binds the rest.
 
+### New at stage 6 phase B1 (2026-08-05) — verify these five tokens FIRST
+
+Open the pbip and check these before phase B2 builds 3 more pages on the same
+patterns. Each is a one-line fix if wrong; each fails visibly, not silently.
+
+- [ ] **`cardVisual` role name.** Where: `hero_takeaway` (p0). Verify by: the card
+      shows the Key Takeaway sentence. **If it is blank**, the role key `"Data"` in
+      `query.queryState` is wrong — read the correct key off a card you drop by hand
+      in Desktop and correct it in all 14 cards (p0 ×3, p9 ×11) before phase B2.
+- [ ] **Button navigation.** Where: `btn_ticket_act1/2/3`, `btn_credits` (p0),
+      `btn_home` (p9). Verify by: Ctrl-click each navigates. **If not**, the
+      `visualLink.type` value `'PageNavigation'` is wrong. Note the ticket buttons
+      target `p1-act-i-profit`, `p2-act-ii-ratings`, `p3-act-iii-corrected-cut`,
+      which **do not exist until phase B2** — until then they are expected to fail.
+- [ ] **Vertical ticket-stub text.** Where: `z_ticket1_admit` / `z_ticket1_serial`.
+      Verify by: `ADMIT ONE` and `TMDB·2026·07·24` read bottom-to-top inside the
+      stub. **If the text renders horizontally**, `textAngle: 270L` is wrong — try
+      `-90`, else take the documented fallback.
+- [ ] **Ticket corner radius.** Where: `z_ticket1_body`. Verify by: 8 px rounded
+      corners, and every other surface square. **If the corners look wrong**, swap
+      `rectangleRoundedByPixel` for `rectangleRounded`.
+- [ ] **Centred text.** Where: `z_marquee_title`, `z_cr_title`, `c_cr_close_src`.
+      Verify by: they are centred, not left-aligned. **If left**, the paragraph key
+      `horizontalTextAlignment` is wrong for instances.
+
+Also at phase B1:
+
+- [ ] **Confirm the two pages open at 1280×720** with the night canvas `#171418`
+      and that `p0-box-office` is the landing page.
+- [ ] **Set the report-level filter `Movies[Adult] = FALSE`, then lock it and keep
+      the filter pane visible.** Not written to disk: filter-lock properties could
+      not be verified. Verify by: the pane shows a locked Adult filter and p9's
+      BASIS row equals LISTINGS PER SOURCE minus ADULT TITLES EXCLUDED.
+- [ ] **Read the p9 cross-foot and record the three numbers here** once the model
+      is refreshed — they are the first live proof that the newer snapshot is
+      flowing (expect roughly 85,870 − 1,360 = 84,510, per the coordinator's
+      reconciliation; whatever the model says is the truth, and nothing is typed).
+- [ ] **Check the tickets' paper tint contrast** on the cream ticket body:
+      `#2E4A7D` / `#8A6516` / `#5B3E8E` on `#F5F2E9`. Verify by: the act numeral and
+      serial are legible; Act II brass is the worst case at 4.74:1.
+
 ## Validation status
 
 ```
@@ -230,6 +402,24 @@ tmdl_inventory            : 10 tables / 73 measures / 8 relationships
                             06 Display\Alt text 0 (10 deferred)
 pbir CLI                  : not installed on this machine — direct JSON editing
                             fallback used (per DEPENDENCIES.md)
+
+[2026-08-05 — stage 6 phase B1]
+validate_json.py          : 120 file(s) repo-wide, 0 errors, no BOM
+validate_tmdl.py --strict : 15 file(s), 1 error (the standing SourceRoot waiver),
+                            0 warnings — TMDL was not touched in this phase
+visualContainer structure : 77 new visual.json validated against the published
+                            visualContainer/2.9.0 schema (name/position/required/
+                            no stray top-level properties) — 0 errors
+page schema               : p0-box-office + p9-end-credits validated against
+                            page/2.1.0 — 0 errors
+binding cross-check       : all 14 measure projections resolve to measures that
+                            exist in _Measures.tmdl
+layout cross-check        : every visual inside the 1280×720 canvas; no duplicate
+                            ids; folder name == visual name on all 77
+accessibility check       : p0 tab order == the handoff's 10 enumerated stops in
+                            order; p9 reads top-to-bottom with each label stop
+                            immediately before its value stop; no altText written
+reserved-red check        : trap red appears only in c_cr_glossary's [TRAP] tag
 ```
 
 ## Known limitations
@@ -254,3 +444,15 @@ pbir CLI                  : not installed on this machine — direct JSON editin
 - The custom theme is registered on disk but has **never been rendered** by
   Desktop in this repo; the theme-notes list in `design-handoff.md` names several
   properties (notably `smallDataLabel`) whose effect is unverified by anyone.
+- **Nothing built in phase B1 has been rendered either.** 77 visuals are
+  schema-correct and internally consistent, but no pixel has been seen. The five
+  unverified tokens above are the concrete places where "schema-correct" and
+  "renders as designed" could still diverge.
+- **Letter-spacing is absent report-wide** (PBIR cannot express it). The marquee
+  and the section heads will read tighter than the prototype.
+- **p9 has 35 tab stops where the design enumerated 14**, because the two credits
+  tables are built as label/value pairs rather than one table visual each. The
+  reading order is correct and every value is preceded by its label, but a judge
+  counting stops against the design document will see the difference.
+- The ticket perforation is **solid, not dashed** — a contracted fallback, taken
+  because PBIR shapes have no dash property.
