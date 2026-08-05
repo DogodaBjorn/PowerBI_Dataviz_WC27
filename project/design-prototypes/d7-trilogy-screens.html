@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>D7 · The Seductive Lies: A Trilogy · measurement variant (8 screens)</title>
+<!--
+  MEASUREMENT VARIANT of d7-trilogy.html — for scripts/prototype/extract_layout.mjs and
+  capture_references.mjs. GENERATED, do not hand-edit: regenerate from d7-trilogy.html.
+
+  Same CSS, tokens, markup and inline SVGs as the interactive prototype. Removed:
+  the flow-simulation JS, the #stage page-swapping wrapper, the legend chips,
+  and the demo caption. Added: the override block appended to the stylesheet, and
+  a data-screen-label on each screen.
+
+  Eight screens, stacked vertically, 24px gap, each sized exactly to its canvas:
+    1 p0-box-office   1280x720
+    2 p1-act-i-sc1    1280x720  Act I  scene 1 (naive full dress)
+    3 p1-act-i-sc3    1280x720  Act I  scene 3 (notes + strike + waffle)
+    4 p2-act-ii-sc1   1280x720  Act II scene 1
+    5 p2-act-ii-sc3   1280x720  Act II scene 3 (notes + dumbbell)
+    6 p3-premiere     1280x720  Act III scene 3, scatter RESOLVED
+    7 p9-end-credits  1280x720
+    8 tt-movie-poster  320x420  tooltip page
+-->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background:#333333; }
+  body {
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:24px 0;
+  }
+  .caption {
+    width:1280px;
+    font-family:"Segoe UI",sans-serif; font-size:11px; color:#A6A6A6;
+    margin:0 0 8px 0;
+  }
+  #stage {
+    position:relative; width:1280px; height:720px;
+    background:#171418; overflow:hidden;
+  }
+  .abs { position:absolute; }
+
+  /* ---------- type roles ---------- */
+  .bahn { font-family:"Bahnschrift SemiCondensed",Bahnschrift,"Arial Narrow","Segoe UI",sans-serif; font-stretch:75%; }
+  .mono { font-family:Consolas,"Courier New",monospace; }
+  .serif{ font-family:Georgia,serif; font-style:italic; }
+  .ui   { font-family:"Segoe UI",sans-serif; }
+
+  /* ---------- pages + bookmark tween ---------- */
+  .page { position:absolute; inset:0; opacity:0; visibility:hidden;
+          transition:opacity .3s ease, visibility 0s linear .3s; }
+  .page.active { opacity:1; visibility:visible; transition:opacity .3s ease; }
+  .page:focus { outline:none; }
+  .night { background:#171418; color:#F2EFE6; }
+  .paper { background:#F5F2E9; color:#211E1A; }
+
+  /* ---------- film-stock tint per act (CHROME ONLY — data never wears it) ----------
+     --tint    the act's stock colour, surface-appropriate variant
+     --tint-on the text colour that sits ON a tint fill (beat-rail current state)
+     Act I  Ledger Indigo  paper #2E4A7D 7.84:1  /  night #7FA8DD 7.43:1
+     Act II Awards Brass   paper #8A6516 4.74:1  /  night #D9A441 8.12:1
+     Act III Velvet Plum   paper #5B3E8E 7.43:1  /  night #B79BE8 7.71:1
+     Tickets on p0 sit on cream bodies -> always the PAPER variant.
+     p9 End Credits carries no tint. */
+  #tk1 { --tint:#2E4A7D; }
+  #tk2 { --tint:#8A6516; }
+  #tk3 { --tint:#5B3E8E; }
+  #pg1 { --tint:#2E4A7D; --tint-on:#F5F2E9; }   /* paper page -> paper variant */
+  #pg2 { --tint:#8A6516; --tint-on:#F5F2E9; }   /* paper page -> paper variant */
+  #pg3 { --tint:#B79BE8; --tint-on:#211E1A; }   /* night page -> night variant */
+
+  /* focus — keyboard support is part of the demo */
+  .night :focus-visible { outline:2px solid #F2EFE6; outline-offset:2px; }
+  .paper :focus-visible { outline:2px solid #211E1A; outline-offset:2px; }
+
+  button { cursor:pointer; }
+  button:disabled { cursor:default; opacity:.45; }
+
+  /* ---------- legend chips ---------- */
+  .chip {
+    position:absolute;
+    font-family:Consolas,monospace; font-size:8.5pt; line-height:1.2;
+    padding:2px 7px; border-radius:8px; border:1px solid;
+    pointer-events:none; white-space:nowrap;
+  }
+  .night .chip, .chip.n { color:#756E63; border-color:#332E36; }
+  .paper .chip, .chip.p { color:#A19B8E; border-color:#DDD8CB; }
+
+  /* ---------- placeholders ---------- */
+  .ph { border:1px dashed currentColor; padding:0 3px; white-space:nowrap; }
+
+  /* ---------- generic buttons ---------- */
+  .btn { font-family:"Segoe UI",sans-serif; font-size:10pt; letter-spacing:.08em;
+         background:transparent; border:1px solid; padding:6px 14px;
+         transition:background .15s ease; }
+  .night .btn { color:#E8705F; border-color:#E8705F; }
+  .night .btn:hover { background:#241E26; }
+  .paper .btn { color:#B3402E; border-color:#211E1A; }
+  .paper .btn:hover { background:#ECE7D8; }
+
+  /* ════════ p0 — BOX OFFICE ════════ */
+  #z_marquee { left:24px; top:24px; width:1232px; height:112px;
+               border:2px solid #F2EFE6; }
+  #z_marquee .inner { position:absolute; inset:4px; border:1px solid #F2EFE6;
+               display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  #z_marquee h1 { font-size:40pt; line-height:1; color:#F2EFE6;
+                  letter-spacing:.14em; font-weight:600; }
+  #z_marquee .sub { font-size:12pt; color:#B5AFA0; letter-spacing:.32em; margin-top:7px; }
+
+  #hero_takeaway { left:24px; top:152px; width:1232px; height:72px;
+    display:flex; align-items:center; justify-content:center; text-align:center; }
+  #hero_takeaway p { font-size:14pt; line-height:22px; color:#F2EFE6; max-width:1180px; }
+
+  .ticket { position:absolute; top:248px; width:384px; height:312px;
+            background:transparent; border:none; padding:0; text-align:left;
+            font-family:inherit; }
+  #tk1 { left:24px; } #tk2 { left:448px; } #tk3 { left:872px; }
+  .t-main { position:absolute; top:0; left:0; bottom:0; right:92px;
+            background:#F5F2E9; border-radius:8px 0 0 8px;
+            transition:background .15s ease; }
+  .t-stub { position:absolute; top:0; right:0; width:92px; height:100%;
+            background:#F5F2E9; border-radius:0 8px 8px 0;
+            border-left:1px dashed #9A9284;
+            display:flex; align-items:center; justify-content:center; gap:8px;
+            transform-origin:left bottom;
+            transition:background .15s ease, transform .38s ease-out, opacity .38s ease-out; }
+  .ticket:hover .t-main, .ticket:hover .t-stub { background:#ECE7D8; }
+  .ticket.torn .t-stub { transform:translateX(74px) rotate(8deg); opacity:0; }
+  .rule-m { position:absolute; top:6px; left:6px; bottom:6px; right:0;
+            border:2px solid var(--tint); border-right:none; pointer-events:none; }
+  .rule-s { position:absolute; top:6px; right:6px; bottom:6px; left:0;
+            border:2px solid var(--tint); border-left:none; pointer-events:none; }
+  .t-body { position:absolute; inset:0; padding:38px 30px; color:#211E1A; }
+  .t-act  { font-size:36pt; line-height:1; font-weight:600; color:var(--tint); }
+  .t-rule { width:34px; height:1px; background:#211E1A; margin:14px 0; }
+  .t-title{ font-size:20pt; line-height:1.1; font-weight:600; letter-spacing:.03em; }
+  .t-tease{ font-family:Georgia,serif; font-style:italic; font-size:12pt;
+            color:#57534E; margin-top:12px; }
+  .t-admit{ writing-mode:vertical-rl; font-size:10pt; letter-spacing:.35em;
+            color:#211E1A; font-weight:600; }
+  .t-serial{ writing-mode:vertical-rl; font-family:Consolas,monospace;
+            font-size:8pt; color:var(--tint); letter-spacing:.12em; }
+
+  #chip_tear { right:24px; top:566px; }
+
+  #z_billing { left:24px; top:592px; width:1232px; height:56px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; }
+  #z_billing div { font-size:10pt; letter-spacing:.03em; color:#B5AFA0; line-height:17px; }
+
+  #p0_footer { left:24px; top:664px; width:1232px; height:32px;
+    display:flex; align-items:center; justify-content:space-between; }
+  #p0_footer .credit { font-size:10pt; color:#B5AFA0; letter-spacing:.04em; }
+
+  /* ════════ acts p1/p2 — shared screenplay template ════════ */
+  .z_scriptheader { left:24px; top:24px; width:1232px; height:56px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:2px solid var(--tint); }
+  .z_scriptheader .h-title { font-family:Consolas,monospace; font-size:12pt; color:#211E1A; }
+  .night .z_scriptheader .h-title { color:#F2EFE6; }
+  .h-act { color:var(--tint); font-weight:700; }
+  /* the torn stub IS the ticket the viewer tore -> scope item (b); keeping it
+     trap-red would spend a semantic colour on pure chrome */
+  .stub-art path { stroke:var(--tint); }
+  .chip-hdr { position:static; margin-right:12px; }
+
+  .sl_beat_rail { left:24px; top:96px; width:1232px; height:40px;
+    display:flex; align-items:center; gap:10px; }
+  .beat { position:relative;
+    font-family:"Bahnschrift SemiCondensed",Bahnschrift,"Arial Narrow",sans-serif;
+    font-stretch:75%; font-size:10pt; letter-spacing:.1em;
+    padding:6px 14px; border:1px solid #211E1A; background:transparent; color:#211E1A;
+    transition:background .2s ease, color .2s ease; }
+  /* current state = tint fill + detached tint underline marker + ● + "Scene N of 3" title;
+     state is never carried by colour alone */
+  .beat.cur { background:var(--tint); color:var(--tint-on); border-color:var(--tint); }
+  .beat.cur::before { content:"● "; }
+  .beat.cur::after { content:""; position:absolute; left:0; right:0; bottom:-5px;
+    height:3px; background:var(--tint); }
+  .night .beat { border-color:#B5AFA0; color:#F2EFE6; }
+  .night .beat.cur { background:var(--tint); color:var(--tint-on); border-color:var(--tint); }
+  .next-scene { margin-left:auto; }
+  /* moved to the right gutter: the current beat's detached underline marker now
+     occupies the 136–140px band on the left of the rail */
+  .chip-rail { top:136px; right:24px; }
+
+  .c_script_body { left:24px; top:152px; width:760px; height:464px;
+    font-family:Consolas,monospace; font-size:12pt; line-height:19px;
+    padding:10px 226px 10px 10px; }
+  .slug { text-transform:uppercase; margin-bottom:14px; }
+  .cut-tag { color:#B3402E; font-size:10pt; margin-left:10px; }
+  .action { max-width:470px; margin-bottom:14px; }
+  .cue { text-align:center; max-width:470px; margin-top:4px; }
+  .dlg { margin:0 60px 14px 95px; max-width:315px; }
+  .trans { text-align:right; max-width:470px; text-transform:uppercase; margin:6px 0 14px; }
+  .note { position:absolute; left:544px; width:206px;
+    font-size:10pt; line-height:14px; color:#B3402E;
+    border-left:2px solid #B3402E; padding-left:8px; }
+
+  /* scene reveals — bookmark show/hide, fixed layout, fade only */
+  .act .r2, .act .r3 { opacity:0; visibility:hidden;
+    transition:opacity .32s ease, visibility 0s linear .32s; }
+  .act[data-scene="2"] .r2,
+  .act[data-scene="3"] .r2,
+  .act[data-scene="3"] .r3 { opacity:1; visibility:visible; transition:opacity .32s ease; }
+
+  /* insert panels */
+  .card { position:absolute; background:#FFFFFF; border:1px solid #D8D4C8; }
+  .kicker { font-family:Consolas,monospace; font-size:9pt; letter-spacing:.14em;
+    color:#57534E; text-transform:uppercase; }
+
+  .kpi { left:800px; top:152px; width:456px; height:144px; padding:14px 16px; }
+  .kpi .lbl { font-family:"Segoe UI",sans-serif; font-size:10pt; color:#57534E; margin-top:8px; }
+  .kpi .val { font-family:Consolas,monospace; font-size:28pt; line-height:1.15;
+    color:#211E1A; position:relative; display:inline-block; margin-top:2px; }
+  .kpi .strike { position:absolute; left:-6px; right:-6px; top:52%; height:2px;
+    background:#B3402E; }
+  .kpi .misread { font-family:"Segoe UI",sans-serif; font-size:9pt; color:#B3402E;
+    letter-spacing:.08em; margin-top:4px; }
+  .chip-kpi { right:10px; bottom:8px; }
+
+  .waffle { left:800px; top:312px; width:456px; height:296px; padding:12px 16px; }
+  .waffle .w-title { font-family:"Segoe UI",sans-serif; font-size:12pt; font-weight:600;
+    color:#211E1A; margin-top:6px; }
+  .waffle .w-cap { font-family:"Segoe UI",sans-serif; font-size:9pt; color:#57534E; margin:2px 0 6px; }
+  .waffle .w-foot { font-family:"Segoe UI",sans-serif; font-size:10pt; color:#57534E; margin-top:6px; }
+  .chip-waffle { right:10px; top:12px; }
+
+  .board456 { display:block; }
+
+  .lb { left:800px; top:152px; width:456px; height:200px; padding:8px 16px 6px; }
+  .lb-row { display:flex; align-items:center; gap:10px; height:48px;
+    border-top:1px solid #EBE7DC; }
+  .lb-row:first-of-type { border-top:none; }
+  .lb-row[tabindex] { cursor:default; }
+  .poster { width:32px; height:44px; background:#E5E1D6; border:1px solid #C8C3B4;
+    display:flex; align-items:center; justify-content:center; flex:none;
+    font-family:"Segoe UI",sans-serif; font-size:7pt; color:#78716C; }
+  .lb-name { font-family:"Segoe UI",sans-serif; font-size:12pt; color:#211E1A; flex:1;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .lb-score { font-family:Consolas,monospace; font-size:12pt; color:#B3402E; font-weight:700; }
+  .lb-votes { font-family:"Segoe UI",sans-serif; font-size:10pt; color:#57534E; width:74px;
+    text-align:right; }
+  .lb-more { font-family:Georgia,serif; font-style:italic; font-size:10pt; color:#57534E;
+    padding-top:5px; }
+  .chip-lb { right:10px; top:10px; }
+
+  .fall { left:800px; top:368px; width:456px; height:248px; padding:10px 12px; }
+  .fall .f-title { font-family:"Segoe UI",sans-serif; font-size:12pt; font-weight:600;
+    color:#211E1A; margin:4px 0 2px 4px; }
+  .chip-fall { right:10px; top:10px; }
+
+  .c_verdict { left:24px; top:632px; width:1232px; height:64px;
+    display:flex; align-items:center; gap:24px;
+    border-top:2px solid var(--tint); }
+  .c_verdict p { font-size:14pt; line-height:20px; flex:1; }
+  .paper .c_verdict p { color:#211E1A; }
+  .night .c_verdict p { color:#F2EFE6; }
+
+  /* ════════ p3 — THE PREMIERE ════════ */
+  #hero_sc { position:absolute; left:24px; top:152px; width:896px; height:464px;
+    background:#1D1A20; border:1px solid #2E2933;
+    transition:opacity .35s ease; }
+  #pg3[data-scene="1"] #hero_sc, #pg3[data-scene="2"] #hero_sc { opacity:.35; }
+  #sc_pop { position:absolute; left:16px; top:12px; font-family:"Segoe UI",sans-serif;
+    font-size:10pt; color:#B5AFA0; }
+  #sc_year { position:absolute; right:16px; top:6px; font-size:28pt; color:#B5AFA0;
+    font-weight:600; letter-spacing:.05em; }
+  #btn_play { position:absolute; left:16px; top:38px; }
+  #sc_dots circle { transition:opacity .3s ease; }
+  #win_ring, #win_label { opacity:0; transition:opacity .35s ease; }
+  #pg3.resolved #win_ring, #pg3.resolved #win_label { opacity:1; }
+  #win_label { position:absolute; left:474px; top:118px; width:336px; text-align:right;
+    font-family:"Segoe UI",sans-serif; font-size:10pt; color:#F2EFE6; line-height:15px; }
+  .chip-sc { right:12px; bottom:10px; }
+
+  .rrail-card { position:absolute; left:936px; width:320px;
+    background:#1D1A20; border:1px solid #2E2933; padding:14px 16px;
+    transition:background .35s ease, border-color .35s ease; }
+  #c_adjustments { top:152px; height:136px; display:flex; flex-direction:column;
+    justify-content:center; gap:7px; }
+  .adj { align-self:flex-start; font-family:"Segoe UI",sans-serif; font-size:10pt;
+    color:#F2EFE6; border:1px solid #3A3441; border-radius:8px; padding:3px 12px; }
+  .adj b { color:#4ECBA0; font-weight:400; }
+  #c_refusal_popularity { top:304px; height:152px; border:2px solid #E8705F;
+    padding:12px 14px; }
+  /* 11pt keeps the heading on ONE line inside 292px of content width; at 12pt it
+     wrapped and pushed the "@ build" line out through the bottom of the card */
+  #c_refusal_popularity h3 { font-family:"Segoe UI",sans-serif; font-size:11pt;
+    color:#E8705F; letter-spacing:.03em; line-height:17px; white-space:nowrap; }
+  #c_refusal_popularity .why { font-family:"Segoe UI",sans-serif; font-size:9.5pt;
+    color:#B5AFA0; line-height:14px; margin:3px 0 6px; }
+  #c_refusal_popularity .row { font-family:Consolas,monospace; font-size:10pt;
+    color:#F2EFE6; line-height:15px; }
+  #c_refusal_popularity .row .x { color:#E8705F; }
+  #c_refusal_popularity .at { font-family:Consolas,monospace; font-size:9pt;
+    color:#B5AFA0; margin-top:3px; }
+  #c_nodate_chip { top:472px; height:144px; border-radius:8px;
+    display:flex; align-items:center;
+    font-family:"Segoe UI",sans-serif; font-size:10.5pt; color:#B5AFA0; line-height:17px; }
+  #pg3[data-scene="1"] #c_adjustments,
+  #pg3[data-scene="2"] #c_refusal_popularity { background:#282331; border-color:#B5AFA0; }
+
+  /* ════════ p9 — END CREDITS ════════ */
+  #cr_title { left:24px; top:24px; width:1232px; height:64px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20pt; letter-spacing:.3em; color:#F2EFE6; }
+  .cr-col { position:absolute; top:104px; width:360px;
+    font-family:Consolas,monospace; font-size:12pt; line-height:19px; color:#F2EFE6; }
+  #cr_left { left:240px; } #cr_right { left:680px; }
+  .cr-h { font-family:"Bahnschrift SemiCondensed",Bahnschrift,"Arial Narrow",sans-serif;
+    font-stretch:75%; font-size:10pt; letter-spacing:.28em; color:#B5AFA0;
+    margin:16px 0 6px; }
+  .cr-h:first-child { margin-top:0; }
+  .cr-row { display:flex; align-items:baseline; flex-wrap:wrap; }
+  .cr-row .dots { flex:1; min-width:24px; border-bottom:1px dotted #57534E;
+    margin:0 6px 4px; }
+  .cr-row .v { text-align:right; margin-left:auto; }
+  .cr-row .v.wrapfull { width:100%; }
+  .cr-good { color:#4ECBA0; }
+  .cr-tag-trap { color:#E8705F; }
+  .cr-tag-opq { color:#B5AFA0; }
+  .cr-gl { font-size:11pt; line-height:17px; }
+  #cr_close { left:24px; top:598px; width:1232px; text-align:center; }
+  #cr_close .src { font-family:"Bahnschrift SemiCondensed",Bahnschrift,sans-serif;
+    font-stretch:75%; font-size:10pt; letter-spacing:.24em; color:#B5AFA0; }
+  #cr_close .last { font-size:14pt; color:#F2EFE6; margin-top:8px; }
+  #btn_home { position:absolute; left:24px; top:664px; }
+  .chip-cr { right:24px; top:672px; }
+
+  /* ════════ tooltip card (single, shared) ════════ */
+  #tt_poster_card { position:absolute; width:320px; height:420px;
+    background:#FFFFFF; border:1px solid #211E1A; padding:14px 16px;
+    opacity:0; visibility:hidden; transition:opacity .18s ease, visibility 0s linear .18s;
+    z-index:40; color:#211E1A; }
+  #tt_poster_card.on { opacity:1; visibility:visible; transition:opacity .18s ease; }
+  #tt_big_poster { width:170px; height:240px; margin:4px auto 10px;
+    background:#E5E1D6; border:1px solid #C8C3B4;
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Segoe UI",sans-serif; font-size:9pt; color:#78716C; }
+  #tt_name { font-family:"Bahnschrift SemiCondensed",Bahnschrift,sans-serif; font-stretch:75%;
+    font-size:14pt; color:#211E1A; text-align:center; }
+  #tt_year { font-family:Consolas,monospace; font-size:10pt; color:#57534E;
+    text-align:center; margin:2px 0 8px; }
+  .tt-row { display:flex; align-items:baseline; font-family:Consolas,monospace;
+    font-size:10pt; line-height:18px; }
+  .tt-row .dots { flex:1; border-bottom:1px dotted #C8C3B4; margin:0 6px 4px; }
+  .tt-foot { font-family:"Segoe UI",sans-serif; font-size:8pt; color:#57534E; margin-top:6px; }
+  .chip-tt { position:static; display:inline-block; margin-top:8px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition:none !important; }
+  }
+
+  /* ══════════ MEASUREMENT-VARIANT OVERRIDES (this file only) ══════════
+     Everything above is byte-identical to d7-trilogy.html. These rules only
+     un-stack the JS-swapped viewport into eight statically rendered screens so
+     extract_layout.mjs / capture_references.mjs can measure them. No token,
+     rect, font or colour is changed. */
+  body { display:block; padding:24px; background:#333333;
+         min-height:0; align-items:initial; justify-content:initial; }
+  .page { position:relative; inset:auto; width:1280px; height:720px;
+          opacity:1; visibility:visible; overflow:hidden;
+          margin:0 0 24px 0; transition:none; }
+  /* id specificity required: #tt_poster_card sets position/opacity/visibility */
+  #tt_poster_card.tt-screen { position:relative; left:auto; top:auto;
+               opacity:1; visibility:visible; margin:0 0 24px 0; transition:none; }
+  /* class equivalents of the #pg1/#pg2/#pg3 tint vars, so a page can appear twice
+     (SC.1 and SC.3) under different ids and still carry its film stock */
+  .tint-act1 { --tint:#2E4A7D; --tint-on:#F5F2E9; }
+  .tint-act2 { --tint:#8A6516; --tint-on:#F5F2E9; }
+  .tint-act3 { --tint:#B79BE8; --tint-on:#211E1A; }
+  /* static comp: nothing may animate while the tools measure */
+  *, *::before, *::after { transition:none !important; animation:none !important; }
+</style>
+</head>
+<body>
+
+<section class="page night" id="pg0" aria-label="Box office — trilogy home" data-screen-label="p0-box-office">
+    <div class="abs bahn" id="z_marquee">
+      <div class="inner">
+        <h1>THE SEDUCTIVE LIES</h1>
+        <div class="sub">A TRILOGY IN THREE ACTS &nbsp;·&nbsp; A TMDB DATA STORY</div>
+      </div>
+    </div>
+
+    <div class="abs serif" id="hero_takeaway">
+      <p>The data is not wrong — the reading is. 87% of 85,394 listings have no credible financials,
+      the median listing has zero votes, and “popularity” has no published formula.
+      Every honest number here states what it excludes.</p>
+    </div>
+
+    <button class="ticket" id="tk1" title="Tear the stub — open Act I">
+      <span class="t-main"><span class="rule-m"></span>
+        <span class="t-body bahn">
+          <span class="t-act">ACT I</span>
+          <span class="t-rule" style="display:block"></span>
+          <span class="t-title" style="display:block">THE PROFIT LIE</span>
+          <span class="t-tease" style="display:block">In which $0 is money</span>
+        </span>
+      </span>
+      <span class="t-stub"><span class="rule-s"></span>
+        <span class="t-admit bahn">ADMIT ONE</span>
+        <span class="t-serial">TMDB·2026·07·24</span>
+      </span>
+    </button>
+
+    <button class="ticket" id="tk2" title="Tear the stub — open Act II">
+      <span class="t-main"><span class="rule-m"></span>
+        <span class="t-body bahn">
+          <span class="t-act">ACT II</span>
+          <span class="t-rule" style="display:block"></span>
+          <span class="t-title" style="display:block">THE RATINGS LIE</span>
+          <span class="t-tease" style="display:block">In which 2 votes crown a champion</span>
+        </span>
+      </span>
+      <span class="t-stub"><span class="rule-s"></span>
+        <span class="t-admit bahn">ADMIT ONE</span>
+        <span class="t-serial">TMDB·2026·07·24</span>
+      </span>
+    </button>
+
+    <button class="ticket" id="tk3" title="Tear the stub — open Act III">
+      <span class="t-main"><span class="rule-m"></span>
+        <span class="t-body bahn">
+          <span class="t-act">ACT III</span>
+          <span class="t-rule" style="display:block"></span>
+          <span class="t-title" style="display:block">THE CORRECTED CUT</span>
+          <span class="t-tease" style="display:block">In which the fixes land — and one is refused</span>
+        </span>
+      </span>
+      <span class="t-stub"><span class="rule-s"></span>
+        <span class="t-admit bahn">ADMIT ONE</span>
+        <span class="t-serial">TMDB·2026·07·24</span>
+      </span>
+    </button>
+
+    
+
+    <div class="abs bahn" id="z_billing">
+      <div>TMDB SNAPSHOT 2026·07·24 · BASIS 84,036 LISTINGS (ADULT 1,358 EXCLUDED OF 85,394) · FINANCIAL FLOOR $10,000 · m=100 · C=6.96 · LISTINGS≠FILMS: 1,697 DUPLICATE (TITLE,DATE) PAIRS (2.0%)</div>
+      <div>USD AS RECORDED — NOT INFLATION-ADJUSTED · MEDIAN LISTING: 0 VOTES · POPULARITY: FORMULA NOT PUBLISHED</div>
+    </div>
+
+    <div class="abs ui" id="p0_footer">
+      <span class="credit">SOURCE DATA BY TMDB — THIS PRODUCT USES TMDB DATA BUT IS NOT ENDORSED OR CERTIFIED BY TMDB</span>
+      <button class="btn" id="btn_credits">END CREDITS ▸</button>
+    </div>
+  </section>
+
+<section class="page paper act tint-act1" id="pg1_sc1" data-scene="1" aria-label="Act I — The Profit Lie" data-screen-label="p1-act-i-sc1">
+    <div class="abs z_scriptheader">
+      <span class="h-title">THE SEDUCTIVE LIES — <span class="h-act">ACT I</span>: ‘THE PROFIT LIE’</span>
+      <span style="display:flex;align-items:center;">
+        
+        <svg class="stub-art" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+          <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z" fill="#FFFFFF" stroke-width="1.5"></path>
+          <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace" font-size="9.3" letter-spacing="2" fill="#211E1A">ADMIT ONE</text>
+        </svg>
+      </span>
+    </div>
+
+    <div class="abs sl_beat_rail">
+      <button class="beat cur" data-sc="1" aria-pressed="true" title="Scene 1 of 3 — current">SC.1 — THE SEDUCTION</button>
+      <button class="beat" data-sc="2" aria-pressed="false" title="Scene 2 of 3">SC.2 — THE NOTES</button>
+      <button class="beat" data-sc="3" aria-pressed="false" title="Scene 3 of 3">SC.3 — THE CORRECTED CUT</button>
+      <button class="btn next-scene" title="Advance to scene 2 of 3">NEXT SCENE ▸</button>
+    </div>
+    
+
+    <div class="abs c_script_body">
+      <div class="slug">INT. THE NAIVE SCREENING ROOM — NIGHT<span class="cut-tag">[naive cut]</span></div>
+      <div class="action">The ANALYST sums profit across all 85,394 listings. No questions asked.</div>
+      <div class="cue">THE NAIVE READ</div>
+      <div class="dlg">The movie business loses money. Look: <span class="ph" title="computed at build — never fabricated">{NAIVE_PROFIT}</span>.</div>
+
+      
+      
+      
+      
+
+      
+      
+      
+    </div>
+
+    <div class="card kpi" id="kpi_profit_naive">
+      <div class="kicker">INSERT — THE NAIVE NUMBER</div>
+      <div class="lbl">Profit, all 85,394 listings (naive)</div>
+      <div class="val"><span class="ph" title="computed at build — never fabricated">{NAIVE_PROFIT}</span>
+        </div>
+      
+      
+    </div>
+
+    
+
+    <div class="abs c_verdict serif">
+      <p>The industry doesn't lose money — the dataset loses data. Claim only the 13.1% we can verify. <span style="font-size:11pt">(USD as recorded; gross gap, not P&amp;L.)</span></p>
+      <button class="btn" id="btn_act1_next">NEXT ACT ▸</button>
+    </div>
+  </section>
+
+<section class="page paper act tint-act1" id="pg1_sc3" data-scene="3" aria-label="Act I — The Profit Lie" data-screen-label="p1-act-i-sc3">
+    <div class="abs z_scriptheader">
+      <span class="h-title">THE SEDUCTIVE LIES — <span class="h-act">ACT I</span>: ‘THE PROFIT LIE’</span>
+      <span style="display:flex;align-items:center;">
+        
+        <svg class="stub-art" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+          <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z" fill="#FFFFFF" stroke-width="1.5"></path>
+          <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace" font-size="9.3" letter-spacing="2" fill="#211E1A">ADMIT ONE</text>
+        </svg>
+      </span>
+    </div>
+
+    <div class="abs sl_beat_rail">
+      <button class="beat" data-sc="1" aria-pressed="false" title="Scene 1 of 3">SC.1 — THE SEDUCTION</button>
+      <button class="beat" data-sc="2" aria-pressed="false" title="Scene 2 of 3">SC.2 — THE NOTES</button>
+      <button class="beat cur" data-sc="3" aria-pressed="true" title="Scene 3 of 3 — current">SC.3 — THE CORRECTED CUT</button>
+      <button class="btn next-scene" disabled="" title="Scene 3 of 3 — final scene">NEXT SCENE ▸</button>
+    </div>
+    
+
+    <div class="abs c_script_body">
+      <div class="slug">INT. THE NAIVE SCREENING ROOM — NIGHT<span class="cut-tag">[naive cut]</span></div>
+      <div class="action">The ANALYST sums profit across all 85,394 listings. No questions asked.</div>
+      <div class="cue">THE NAIVE READ</div>
+      <div class="dlg">The movie business loses money. Look: <span class="ph" title="computed at build — never fabricated">{NAIVE_PROFIT}</span>.</div>
+
+      <div class="r3 trans">SMASH CUT TO:</div>
+      <div class="r3 slug">INT. THE HONEST SCREENING ROOM — DAY</div>
+      <div class="r3 cue">THE RESPONSIBLE READ</div>
+      <div class="r3 dlg">Only 11,203 listings — 13.1% — can support money claims (Budget ≥ $10,000 AND Revenue &gt; 0). Median credible profit: <span class="ph" title="computed at build — never fabricated">{MEDIAN_PROFIT}</span>. The mean, <span class="ph" title="computed at build — never fabricated">{MEAN_PROFIT}</span>, is blockbuster-dragged.</div>
+
+      <div class="note r2" style="top:44px">NOTE: 67,436 revenues (79.0%) are ZERO — unknowns counted as $0.</div>
+      <div class="note r2" style="top:126px">NOTE: Budget is never 0 here. Unknowns arrive as junk: min $1, median $2,800.</div>
+      <div class="note r2" style="top:222px">NOTE: one listing books −$12 revenue.</div>
+    </div>
+
+    <div class="card kpi" id="kpi_profit_naive">
+      <div class="kicker">INSERT — THE NAIVE NUMBER</div>
+      <div class="lbl">Profit, all 85,394 listings (naive)</div>
+      <div class="val"><span class="ph" title="computed at build — never fabricated">{NAIVE_PROFIT}</span>
+        <span class="strike r3"></span></div>
+      <div class="misread r3">MISREAD — see notes</div>
+      
+    </div>
+
+    <div class="card waffle r3" id="dn_ticket_waffle">
+      <div class="kicker">INSERT — THE TICKET AUDIT</div>
+      <div class="w-title">13.1% hold a valid ticket (floor $10k)</div>
+      <div class="w-cap">red = VALID (13) · outline = no credible financials (87)</div>
+      <svg class="board456" id="waffle_svg" width="424" height="176" viewBox="0 0 424 176" aria-label="Waffle: 13 of 100 tickets valid"><rect x="0" y="0" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="0" cy="7" r="2.2" fill="#FFFFFF"></circle><circle cx="36" cy="7" r="2.2" fill="#FFFFFF"></circle><rect x="43" y="0" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="43" cy="7" r="2.2" fill="#FFFFFF"></circle><circle cx="79" cy="7" r="2.2" fill="#FFFFFF"></circle><rect x="86" y="0" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="86" cy="7" r="2.2" fill="#FFFFFF"></circle><circle cx="122" cy="7" r="2.2" fill="#FFFFFF"></circle><rect x="129" y="0" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="129" cy="7" r="2.2" fill="#FFFFFF"></circle><circle cx="165" cy="7" r="2.2" fill="#FFFFFF"></circle><rect x="172" y="0" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="172" cy="7" r="2.2" fill="#FFFFFF"></circle><circle cx="208" cy="7" r="2.2" fill="#FFFFFF"></circle><rect x="215" y="0" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="215" cy="7" r="2.2" fill="#FFFFFF"></circle><circle cx="251" cy="7" r="2.2" fill="#FFFFFF"></circle><rect x="258" y="0" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="258" cy="7" r="2.2" fill="#FFFFFF"></circle><circle cx="294" cy="7" r="2.2" fill="#FFFFFF"></circle><rect x="301" y="0" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="301" cy="7" r="2.2" fill="#FFFFFF"></circle><circle cx="337" cy="7" r="2.2" fill="#FFFFFF"></circle><rect x="344" y="0" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="344" cy="7" r="2.2" fill="#FFFFFF"></circle><circle cx="380" cy="7" r="2.2" fill="#FFFFFF"></circle><rect x="387" y="0" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="387" cy="7" r="2.2" fill="#FFFFFF"></circle><circle cx="423" cy="7" r="2.2" fill="#FFFFFF"></circle><rect x="0" y="18" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="0" cy="25" r="2.2" fill="#FFFFFF"></circle><circle cx="36" cy="25" r="2.2" fill="#FFFFFF"></circle><rect x="43" y="18" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="43" cy="25" r="2.2" fill="#FFFFFF"></circle><circle cx="79" cy="25" r="2.2" fill="#FFFFFF"></circle><rect x="86" y="18" width="36" height="14" rx="2" fill="#B3402E"></rect><circle cx="86" cy="25" r="2.2" fill="#FFFFFF"></circle><circle cx="122" cy="25" r="2.2" fill="#FFFFFF"></circle><rect x="129.5" y="18.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="129" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="165" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="172.5" y="18.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="172" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="208" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="215.5" y="18.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="215" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="251" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="258.5" y="18.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="258" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="294" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="301.5" y="18.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="301" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="337" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="344.5" y="18.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="344" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="380" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="387.5" y="18.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="387" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="423" cy="25" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="0.5" y="36.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="0" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="36" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="43.5" y="36.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="43" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="79" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="86.5" y="36.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="86" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="122" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="129.5" y="36.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="129" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="165" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="172.5" y="36.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="172" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="208" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="215.5" y="36.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="215" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="251" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="258.5" y="36.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="258" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="294" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="301.5" y="36.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="301" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="337" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="344.5" y="36.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="344" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="380" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="387.5" y="36.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="387" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="423" cy="43" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="0.5" y="54.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="0" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="36" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="43.5" y="54.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="43" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="79" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="86.5" y="54.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="86" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="122" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="129.5" y="54.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="129" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="165" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="172.5" y="54.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="172" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="208" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="215.5" y="54.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="215" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="251" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="258.5" y="54.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="258" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="294" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="301.5" y="54.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="301" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="337" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="344.5" y="54.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="344" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="380" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="387.5" y="54.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="387" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="423" cy="61" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="0.5" y="72.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="0" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="36" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="43.5" y="72.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="43" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="79" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="86.5" y="72.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="86" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="122" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="129.5" y="72.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="129" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="165" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="172.5" y="72.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="172" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="208" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="215.5" y="72.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="215" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="251" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="258.5" y="72.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="258" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="294" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="301.5" y="72.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="301" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="337" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="344.5" y="72.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="344" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="380" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="387.5" y="72.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="387" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="423" cy="79" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="0.5" y="90.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="0" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="36" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="43.5" y="90.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="43" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="79" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="86.5" y="90.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="86" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="122" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="129.5" y="90.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="129" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="165" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="172.5" y="90.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="172" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="208" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="215.5" y="90.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="215" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="251" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="258.5" y="90.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="258" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="294" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="301.5" y="90.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="301" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="337" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="344.5" y="90.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="344" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="380" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="387.5" y="90.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="387" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="423" cy="97" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="0.5" y="108.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="0" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="36" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="43.5" y="108.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="43" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="79" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="86.5" y="108.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="86" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="122" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="129.5" y="108.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="129" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="165" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="172.5" y="108.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="172" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="208" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="215.5" y="108.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="215" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="251" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="258.5" y="108.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="258" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="294" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="301.5" y="108.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="301" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="337" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="344.5" y="108.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="344" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="380" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="387.5" y="108.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="387" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="423" cy="115" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="0.5" y="126.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="0" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="36" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="43.5" y="126.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="43" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="79" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="86.5" y="126.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="86" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="122" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="129.5" y="126.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="129" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="165" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="172.5" y="126.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="172" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="208" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="215.5" y="126.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="215" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="251" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="258.5" y="126.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="258" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="294" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="301.5" y="126.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="301" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="337" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="344.5" y="126.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="344" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="380" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="387.5" y="126.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="387" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="423" cy="133" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="0.5" y="144.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="0" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="36" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="43.5" y="144.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="43" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="79" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="86.5" y="144.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="86" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="122" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="129.5" y="144.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="129" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="165" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="172.5" y="144.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="172" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="208" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="215.5" y="144.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="215" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="251" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="258.5" y="144.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="258" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="294" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="301.5" y="144.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="301" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="337" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="344.5" y="144.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="344" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="380" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="387.5" y="144.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="387" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="423" cy="151" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="0.5" y="162.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="0" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="36" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="43.5" y="162.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="43" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="79" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="86.5" y="162.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="86" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="122" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="129.5" y="162.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="129" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="165" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="172.5" y="162.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="172" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="208" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="215.5" y="162.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="215" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="251" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="258.5" y="162.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="258" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="294" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="301.5" y="162.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="301" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="337" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="344.5" y="162.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="344" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="380" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><rect x="387.5" y="162.5" width="35" height="13" rx="2" fill="none" stroke="#78716C"></rect><circle cx="387" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle><circle cx="423" cy="169" r="2.2" fill="#FFFFFF" stroke="#78716C" stroke-width="0.8"></circle></svg>
+      <div class="w-foot">median <span class="ph" title="computed at build — never fabricated">{MEDIAN_PROFIT}</span> · mean <span class="ph" title="computed at build — never fabricated">{MEAN_PROFIT}</span> · USD as recorded, gross gap not P&amp;L</div>
+      
+    </div>
+
+    <div class="abs c_verdict serif">
+      <p>The industry doesn't lose money — the dataset loses data. Claim only the 13.1% we can verify. <span style="font-size:11pt">(USD as recorded; gross gap, not P&amp;L.)</span></p>
+      <button class="btn" id="btn_act1_next">NEXT ACT ▸</button>
+    </div>
+  </section>
+
+<section class="page paper act tint-act2" id="pg2_sc1" data-scene="1" aria-label="Act II — The Ratings Lie" data-screen-label="p2-act-ii-sc1">
+    <div class="abs z_scriptheader">
+      <span class="h-title">THE SEDUCTIVE LIES — <span class="h-act">ACT II</span>: ‘THE RATINGS LIE’</span>
+      <span style="display:flex;align-items:center;">
+        
+        <svg class="stub-art" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+          <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z" fill="#FFFFFF" stroke-width="1.5"></path>
+          <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace" font-size="9.3" letter-spacing="2" fill="#211E1A">ADMIT ONE</text>
+        </svg>
+      </span>
+    </div>
+
+    <div class="abs sl_beat_rail">
+      <button class="beat cur" data-sc="1" aria-pressed="true" title="Scene 1 of 3 — current">SC.1 — THE SEDUCTION</button>
+      <button class="beat" data-sc="2" aria-pressed="false" title="Scene 2 of 3">SC.2 — THE NOTES</button>
+      <button class="beat" data-sc="3" aria-pressed="false" title="Scene 3 of 3">SC.3 — THE CORRECTED CUT</button>
+      <button class="btn next-scene" title="Advance to scene 2 of 3">NEXT SCENE ▸</button>
+    </div>
+    
+
+    <div class="abs c_script_body">
+      <div class="slug">INT. THE AWARDS NIGHT — NIGHT<span class="cut-tag">[naive cut]</span></div>
+      <div class="action">The envelope opens. The ROOM leans in.</div>
+      <div class="cue">THE NAIVE READ</div>
+      <div class="dlg">The best film ever made? Las mujeres deciden. A perfect 10.0!</div>
+
+      
+      
+      
+      
+
+      
+      
+      
+    </div>
+
+    <div class="card lb" id="tbl_perfect_tens">
+      <div class="kicker">INSERT — THE PERFECT TENS</div>
+      <div class="lb-row" tabindex="0" data-tt="0" aria-label="Las mujeres deciden, rated 10.0 on 2 votes — details in tooltip">
+        <span class="poster">poster</span>
+        <span class="lb-name">Las mujeres deciden</span>
+        <span class="lb-score">10.0</span>
+        <span class="lb-votes">2 votes</span>
+      </div>
+      <div class="lb-row" tabindex="0" data-tt="1" aria-label="Logos, rated 10.0 on 3 votes — details in tooltip">
+        <span class="poster">poster</span>
+        <span class="lb-name">Logos</span>
+        <span class="lb-score">10.0</span>
+        <span class="lb-votes">3 votes</span>
+      </div>
+      <div class="lb-row" tabindex="0" data-tt="2" aria-label="Third perfect ten, resolved at build — details in tooltip">
+        <span class="poster">poster</span>
+        <span class="lb-name"><span class="ph" title="computed at build — never fabricated">— at build —</span></span>
+        <span class="lb-score">10.0</span>
+        <span class="lb-votes">2 votes</span>
+      </div>
+      <div class="lb-more">+ at least 18 more perfect 10s</div>
+      
+    </div>
+
+    
+
+    <div class="abs c_verdict serif">
+      <p>Applause is not evidence: 10.0 on 2 votes reads ~7.02 with m=100, C=6.96.</p>
+      <button class="btn" id="btn_act2_next">THE PREMIERE ▸</button>
+    </div>
+  </section>
+
+<section class="page paper act tint-act2" id="pg2_sc3" data-scene="3" aria-label="Act II — The Ratings Lie" data-screen-label="p2-act-ii-sc3">
+    <div class="abs z_scriptheader">
+      <span class="h-title">THE SEDUCTIVE LIES — <span class="h-act">ACT II</span>: ‘THE RATINGS LIE’</span>
+      <span style="display:flex;align-items:center;">
+        
+        <svg class="stub-art" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+          <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z" fill="#FFFFFF" stroke-width="1.5"></path>
+          <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace" font-size="9.3" letter-spacing="2" fill="#211E1A">ADMIT ONE</text>
+        </svg>
+      </span>
+    </div>
+
+    <div class="abs sl_beat_rail">
+      <button class="beat" data-sc="1" aria-pressed="false" title="Scene 1 of 3">SC.1 — THE SEDUCTION</button>
+      <button class="beat" data-sc="2" aria-pressed="false" title="Scene 2 of 3">SC.2 — THE NOTES</button>
+      <button class="beat cur" data-sc="3" aria-pressed="true" title="Scene 3 of 3 — current">SC.3 — THE CORRECTED CUT</button>
+      <button class="btn next-scene" disabled="" title="Scene 3 of 3 — final scene">NEXT SCENE ▸</button>
+    </div>
+    
+
+    <div class="abs c_script_body">
+      <div class="slug">INT. THE AWARDS NIGHT — NIGHT<span class="cut-tag">[naive cut]</span></div>
+      <div class="action">The envelope opens. The ROOM leans in.</div>
+      <div class="cue">THE NAIVE READ</div>
+      <div class="dlg">The best film ever made? Las mujeres deciden. A perfect 10.0!</div>
+
+      <div class="r3 trans">SMASH CUT TO:</div>
+      <div class="r3 slug">INT. THE RECOUNT — DAY</div>
+      <div class="r3 cue">THE RESPONSIBLE READ</div>
+      <div class="r3 dlg">Weighted by evidence (m=100, C=6.96), a 10.0 on 2 votes reads ~7.02. The Godfather reads <span class="ph" title="computed at build — never fabricated">{GODFATHER_W}</span>. Applause is not evidence.</div>
+
+      <div class="note r2" style="top:44px">NOTE: 2 votes.</div>
+      <div class="note r2" style="top:96px">NOTE: the MEDIAN listing has 0 votes; 75th percentile has 1; 65.5% have none.</div>
+      <div class="note r2" style="top:200px">NOTE: at least 20 films score a perfect 10.0 on 2–3 votes.</div>
+    </div>
+
+    <div class="card lb" id="tbl_perfect_tens">
+      <div class="kicker">INSERT — THE PERFECT TENS</div>
+      <div class="lb-row" tabindex="0" data-tt="0" aria-label="Las mujeres deciden, rated 10.0 on 2 votes — details in tooltip">
+        <span class="poster">poster</span>
+        <span class="lb-name">Las mujeres deciden</span>
+        <span class="lb-score">10.0</span>
+        <span class="lb-votes">2 votes</span>
+      </div>
+      <div class="lb-row" tabindex="0" data-tt="1" aria-label="Logos, rated 10.0 on 3 votes — details in tooltip">
+        <span class="poster">poster</span>
+        <span class="lb-name">Logos</span>
+        <span class="lb-score">10.0</span>
+        <span class="lb-votes">3 votes</span>
+      </div>
+      <div class="lb-row" tabindex="0" data-tt="2" aria-label="Third perfect ten, resolved at build — details in tooltip">
+        <span class="poster">poster</span>
+        <span class="lb-name"><span class="ph" title="computed at build — never fabricated">— at build —</span></span>
+        <span class="lb-score">10.0</span>
+        <span class="lb-votes">2 votes</span>
+      </div>
+      <div class="lb-more">+ at least 18 more perfect 10s</div>
+      
+    </div>
+
+    <div class="card fall r3" id="dn_rating_fall">
+      <div class="kicker" style="margin-left:4px">INSERT — THE CORRECTION</div>
+      <div class="f-title">Raw applause → evidence-weighted</div>
+      <svg id="fall_svg" width="432" height="172" viewBox="0 0 432 172" aria-label="Dumbbell: perfect 10s fall to about 7 when weighted by evidence"><line x1="293.616" y1="20" x2="293.616" y2="150" stroke="#78716C" stroke-width="1" stroke-dasharray="4 3"></line><text x="293.616" y="12" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#57534E">C = 6.96</text><text x="18" y="31" font-family="Segoe UI" font-size="11" fill="#57534E">Las mujeres deciden</text><line x1="295.99199999999996" y1="40" x2="414" y2="40" stroke="#78716C" stroke-width="1.5"></line><circle cx="414" cy="40" r="5" fill="#B3402E"></circle><circle cx="295.99199999999996" cy="40" r="5" fill="#2F6B4F"></circle><text x="286.99199999999996" y="44" text-anchor="end" font-family="Segoe UI" font-size="11" fill="#2F6B4F">✓ 7.02 weighted</text><text x="405" y="32" text-anchor="end" font-family="Segoe UI" font-size="11" fill="#B3402E">10.0 raw</text><text x="18" y="63" font-family="Segoe UI" font-size="11" fill="#57534E">Logos</text><line x1="297.18" y1="72" x2="414" y2="72" stroke="#78716C" stroke-width="1.5"></line><circle cx="414" cy="72" r="5" fill="#B3402E"></circle><circle cx="297.18" cy="72" r="5" fill="#2F6B4F"></circle><text x="288.18" y="76" text-anchor="end" font-family="Segoe UI" font-size="11" fill="#2F6B4F">✓ 7.05 weighted</text><text x="405" y="64" text-anchor="end" font-family="Segoe UI" font-size="11" fill="#B3402E">10.0 raw</text><text x="18" y="95" font-family="Segoe UI" font-size="11" fill="#57534E">— at build —</text><line x1="295.99199999999996" y1="104" x2="414" y2="104" stroke="#78716C" stroke-width="1.5"></line><circle cx="414" cy="104" r="5" fill="#B3402E"></circle><circle cx="295.99199999999996" cy="104" r="5" fill="#2F6B4F"></circle><text x="286.99199999999996" y="108" text-anchor="end" font-family="Segoe UI" font-size="11" fill="#2F6B4F">✓ 7.02 weighted</text><text x="405" y="96" text-anchor="end" font-family="Segoe UI" font-size="11" fill="#B3402E">10.0 raw</text><text x="18" y="127" font-family="Segoe UI" font-size="11" fill="#57534E">— at build —</text><line x1="295.99199999999996" y1="136" x2="414" y2="136" stroke="#78716C" stroke-width="1.5"></line><circle cx="414" cy="136" r="5" fill="#B3402E"></circle><circle cx="295.99199999999996" cy="136" r="5" fill="#2F6B4F"></circle><text x="286.99199999999996" y="140" text-anchor="end" font-family="Segoe UI" font-size="11" fill="#2F6B4F">✓ 7.02 weighted</text><text x="405" y="128" text-anchor="end" font-family="Segoe UI" font-size="11" fill="#B3402E">10.0 raw</text><text x="18" y="168" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#78716C">0</text><text x="97.2" y="168" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#78716C">2</text><text x="176.4" y="168" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#78716C">4</text><text x="255.6" y="168" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#78716C">6</text><text x="334.8" y="168" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#78716C">8</text><text x="414" y="168" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#78716C">10</text></svg>
+      
+    </div>
+
+    <div class="abs c_verdict serif">
+      <p>Applause is not evidence: 10.0 on 2 votes reads ~7.02 with m=100, C=6.96.</p>
+      <button class="btn" id="btn_act2_next">THE PREMIERE ▸</button>
+    </div>
+  </section>
+
+<section class="page night resolved tint-act3" id="pg3" data-scene="3" aria-label="Act III — The Corrected Cut, the premiere" data-screen-label="p3-premiere">
+    <div class="abs z_scriptheader">
+      <span class="h-title">THE SEDUCTIVE LIES — <span class="h-act">ACT III</span>: ‘THE CORRECTED CUT’</span>
+      <span style="display:flex;align-items:center;">
+        
+        <svg class="stub-art" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+          <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z" fill="#241F28" stroke-width="1.5"></path>
+          <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace" font-size="9.3" letter-spacing="2" fill="#F2EFE6">ADMIT ONE</text>
+        </svg>
+      </span>
+    </div>
+
+    <div class="abs sl_beat_rail">
+      <button class="beat" data-sc="1" aria-pressed="false" title="Scene 1 of 3">SC.1 — THE ADJUSTMENTS</button>
+      <button class="beat" data-sc="2" aria-pressed="false" title="Scene 2 of 3">SC.2 — THE REFUSAL</button>
+      <button class="beat cur" data-sc="3" aria-pressed="true" title="Scene 3 of 3 — current">SC.3 — THE PREMIERE</button>
+      <button class="btn next-scene" disabled="" title="Scene 3 of 3 — final scene">NEXT SCENE ▸</button>
+    </div>
+    
+
+    <div id="hero_sc">
+      <svg id="sc_svg" width="894" height="462" viewBox="0 0 894 462" aria-label="Scatter: revenue versus evidence-weighted rating, populated year by year"><line x1="72" y1="408" x2="868" y2="408" stroke="#241F28" stroke-width="1"></line><text x="62" y="412" text-anchor="end" font-family="Segoe UI" font-size="10" fill="#B5AFA0">5.0</text><line x1="72" y1="328" x2="868" y2="328" stroke="#241F28" stroke-width="1"></line><text x="62" y="332" text-anchor="end" font-family="Segoe UI" font-size="10" fill="#B5AFA0">6.0</text><line x1="72" y1="248" x2="868" y2="248" stroke="#241F28" stroke-width="1"></line><text x="62" y="252" text-anchor="end" font-family="Segoe UI" font-size="10" fill="#B5AFA0">7.0</text><line x1="72" y1="168" x2="868" y2="168" stroke="#241F28" stroke-width="1"></line><text x="62" y="172" text-anchor="end" font-family="Segoe UI" font-size="10" fill="#B5AFA0">8.0</text><line x1="72" y1="88" x2="868" y2="88" stroke="#241F28" stroke-width="1"></line><text x="62" y="92" text-anchor="end" font-family="Segoe UI" font-size="10" fill="#B5AFA0">9.0</text><line x1="72" y1="408" x2="72" y2="413" stroke="#3A3441" stroke-width="1"></line><text x="72" y="426" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#B5AFA0">$10k</text><line x1="214.14285714285714" y1="408" x2="214.14285714285714" y2="413" stroke="#3A3441" stroke-width="1"></line><text x="214.14285714285714" y="426" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#B5AFA0">$100k</text><line x1="356.2857142857143" y1="408" x2="356.2857142857143" y2="413" stroke="#3A3441" stroke-width="1"></line><text x="356.2857142857143" y="426" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#B5AFA0">$1M</text><line x1="498.4285714285714" y1="408" x2="498.4285714285714" y2="413" stroke="#3A3441" stroke-width="1"></line><text x="498.4285714285714" y="426" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#B5AFA0">$10M</text><line x1="640.5714285714286" y1="408" x2="640.5714285714286" y2="413" stroke="#3A3441" stroke-width="1"></line><text x="640.5714285714286" y="426" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#B5AFA0">$100M</text><line x1="782.7142857142858" y1="408" x2="782.7142857142858" y2="413" stroke="#3A3441" stroke-width="1"></line><text x="782.7142857142858" y="426" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#B5AFA0">$1B</text><line x1="72" y1="408" x2="868" y2="408" stroke="#3A3441" stroke-width="1"></line><line x1="72" y1="88" x2="72" y2="408" stroke="#3A3441" stroke-width="1"></line><line x1="72" y1="251.2" x2="868" y2="251.2" stroke="#6E6960" stroke-width="1" stroke-dasharray="5 4"></line><text x="80" y="245.2" font-family="Segoe UI" font-size="10" fill="#B5AFA0">C = 6.96</text><text x="470" y="450" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#B5AFA0">Revenue (USD, log) — credible set</text><text x="20" y="234" text-anchor="middle" font-family="Segoe UI" font-size="11" fill="#B5AFA0" transform="rotate(-90 20 234)">Rating (evidence-weighted)</text><g id="sc_dots"><circle class="d" data-b="0" data-op="0.8" cx="199.9" cy="296.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="0" data-op="0.8" cx="299.4" cy="216.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="0" data-op="0.8" cx="398.9" cy="176.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="0" data-op="0.8" cx="242.6" cy="320.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="1" data-op="0.8" cx="327.9" cy="256.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="1" data-op="0.8" cx="455.8" cy="208.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="1" data-op="0.8" cx="370.5" cy="336.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="1" data-op="0.95" cx="526.9" cy="184.0" r="6" fill="#B5AFA0" opacity="0.95"></circle><circle class="d" data-b="2" data-op="0.95" cx="484.2" cy="160.0" r="6" fill="#B5AFA0" opacity="0.95"></circle><circle class="d" data-b="2" data-op="0.8" cx="569.5" cy="176.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="2" data-op="0.8" cx="384.7" cy="288.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="2" data-op="0.8" cx="271.0" cy="344.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="2" data-op="0.8" cx="612.1" cy="232.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="3" data-op="0.8" cx="541.1" cy="264.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="3" data-op="0.95" cx="626.4" cy="216.0" r="6" fill="#B5AFA0" opacity="0.95"></circle><circle class="d" data-b="3" data-op="0.8" cx="441.6" cy="312.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="3" data-op="0.8" cx="669.0" cy="248.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="3" data-op="0.8" cx="342.1" cy="360.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="4" data-op="0.95" cx="697.4" cy="192.0" r="6" fill="#B5AFA0" opacity="0.95"></circle><circle class="d" data-b="4" data-op="0.8" cx="597.9" cy="288.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="4" data-op="0.8" cx="640.6" cy="256.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="4" data-op="0.8" cx="413.1" cy="328.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="4" data-op="0.8" cx="740.1" cy="224.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="4" data-op="0.8" cx="512.6" cy="336.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="5" data-op="0.95" cx="768.5" cy="240.0" r="6" fill="#B5AFA0" opacity="0.95"></circle><circle class="d" data-b="5" data-op="0.8" cx="683.2" cy="296.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="5" data-op="0.8" cx="583.7" cy="272.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="5" data-op="0.8" cx="725.9" cy="200.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="5" data-op="0.8" cx="470.0" cy="352.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="5" data-op="0.8" cx="555.3" cy="304.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="6" data-op="0.95" cx="811.1" cy="208.0" r="6" fill="#B5AFA0" opacity="0.95"></circle><circle class="d" data-b="6" data-op="0.8" cx="754.3" cy="264.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="6" data-op="0.8" cx="654.8" cy="320.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="6" data-op="0.8" cx="711.6" cy="232.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="6" data-op="0.8" cx="498.4" cy="280.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="6" data-op="0.8" cx="782.7" cy="256.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="6" data-op="0.8" cx="427.4" cy="344.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="7" data-op="0.8" cx="775.6" cy="248.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="7" data-op="0.8" cx="690.3" cy="284.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="7" data-op="0.8" cx="619.3" cy="316.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle><circle class="d" data-b="7" data-op="0.95" cx="831.0" cy="144.0" r="7" fill="#B5AFA0" opacity="0.95"></circle><circle class="d" data-b="7" data-op="0.8" cx="534.0" cy="268.0" r="3.5" fill="#B5AFA0" opacity="0.8"></circle></g><circle id="win_ring" cx="831" cy="144" r="13" fill="none" stroke="#E8705F" stroke-width="2"></circle></svg>
+      <div id="sc_pop" class="ui">films with credible financials AND ≥ 100 votes · n&nbsp;=&nbsp;<span class="ph" title="computed at build — never fabricated">{SCATTER_N}</span></div>
+      <div id="sc_year" class="bahn">2026</div>
+      <button class="btn" id="btn_play" title="Run the play axis, 1960 to the 2020s">▶ PRESS PLAY</button>
+      <div id="win_label"><span class="ph" title="computed at build — never fabricated">{WINNER}</span> — best-selling AND best-rated on evidence</div>
+      
+    </div>
+
+    <div class="rrail-card" id="c_adjustments">
+      <span class="adj"><b>✓</b> floor $10,000</span>
+      <span class="adj"><b>✓</b> Revenue &gt; 0</span>
+      <span class="adj"><b>✓</b> m = 100</span>
+      <span class="adj"><b>✓</b> C = 6.96</span>
+    </div>
+
+    <div class="rrail-card" id="c_refusal_popularity">
+      <h3>ADJUSTMENT REFUSED — POPULARITY</h3>
+      <div class="why">formula not published. Ranked under protest, never colored, never averaged.</div>
+      <div class="row">POP #1 → quality #— <span class="x">✕</span></div>
+      <div class="row">POP #2 → quality #—</div>
+      <div class="row">POP #3 → quality #— <span class="x">✕</span></div>
+      <div class="at"><span class="ph" title="computed at build — never fabricated">{TOP3_POP_RANKS}</span> @ build</div>
+    </div>
+
+    <div class="rrail-card" id="c_nodate_chip">
+      <span>26,166 listings (30.6%) have no date — they never enter this animation · 320 future-dated flagged · sentinels 1800/2099 excluded from play</span>
+    </div>
+
+    <div class="abs c_verdict serif">
+      <p>THE END — the best movie, read responsibly: <span class="ph" title="computed at build — never fabricated">{WINNER}</span>, best-selling AND best-rated on evidence. Correlation shown; causation refused.</p>
+      <button class="btn" id="btn_roll">ROLL CREDITS ▸</button>
+    </div>
+  </section>
+
+<section class="page night" id="pg9" aria-label="End credits — method and refusals" data-screen-label="p9-end-credits">
+    <div class="abs bahn" id="cr_title">END CREDITS — METHOD &amp; REFUSALS</div>
+
+    <div class="cr-col" id="cr_left">
+      <div class="cr-h">CAST</div>
+      <div class="cr-row"><span>THE ZERO-FILLED FINANCIALS</span><span class="dots"></span><span class="v wrapfull">as 'The Industry Loses Money'</span></div>
+      <div class="cr-row"><span>THE TWO-VOTE PERFECT TEN</span><span class="dots"></span><span class="v wrapfull">as 'Better Than The Godfather'</span></div>
+      <div class="cr-row"><span>THE UNPUBLISHED FORMULA</span><span class="dots"></span><span class="v wrapfull">as 'The People's Favorite'</span></div>
+
+      <div class="cr-h">PRODUCTION COUNTS</div>
+      <div class="cr-row"><span>LISTINGS PER SOURCE</span><span class="dots"></span><span class="v">85,394</span></div>
+      <div class="cr-row"><span>ADULT TITLES EXCLUDED</span><span class="dots"></span><span class="v">1,358</span></div>
+      <div class="cr-row"><span>BASIS</span><span class="dots"></span><span class="v">84,036 <span class="cr-good">✓ kept</span></span></div>
+      <div class="cr-row"><span>DUPLICATE (TITLE, DATE) PAIRS</span><span class="dots"></span><span class="v">1,697 (2.0%)</span></div>
+      <div class="cr-row"><span>DUPLICATE IDS</span><span class="dots"></span><span class="v">101</span></div>
+      <div class="cr-row"><span>NO RELEASE DATE</span><span class="dots"></span><span class="v">26,166 (30.6%)</span></div>
+      <div class="cr-row"><span>FUTURE-DATED</span><span class="dots"></span><span class="v">320</span></div>
+      <div class="cr-row"><span>NEGATIVE REVENUE</span><span class="dots"></span><span class="v">1 (−$12)</span></div>
+    </div>
+
+    <div class="cr-col" id="cr_right">
+      <div class="cr-h">DISCLOSED PARAMETERS</div>
+      <div class="cr-row"><span>FINANCIAL FLOOR</span><span class="dots"></span><span class="v">$10,000 (13.1% vs 11.9% @ $100k)</span></div>
+      <div class="cr-row"><span>m, EVIDENCE REQUIRED</span><span class="dots"></span><span class="v">100 (Vote Count p90=106)</span></div>
+      <div class="cr-row"><span>C, GLOBAL MEAN</span><span class="dots"></span><span class="v">6.96</span></div>
+      <div class="cr-row"><span>SNAPSHOT</span><span class="dots"></span><span class="v">2026·07·24</span></div>
+
+      <div class="cr-h">THE GLOSSARY</div>
+      <div class="cr-gl">M-001 LISTINGS COUNT — rows, not films</div>
+      <div class="cr-gl">M-002 COVERAGE — share of basis with a value</div>
+      <div class="cr-gl">M-003 NAIVE PROFIT <span class="cr-tag-trap">[TRAP]</span> — counts $0 unknowns</div>
+      <div class="cr-gl">M-004 MEDIAN CREDIBLE <span class="cr-good">[HONEST]</span> — floor $10k, Rev&gt;0</div>
+      <div class="cr-gl">M-005 RAW RATING — any votes, even 2</div>
+      <div class="cr-gl">M-006 WEIGHTED RATING <span class="cr-good">[HONEST]</span> — m=100, C=6.96</div>
+      <div class="cr-gl">M-007 POPULARITY <span class="cr-tag-opq">[OPAQUE]</span> — formula not published</div>
+
+      <div class="cr-h">SCENES DELETED — CLAIMS WE REFUSE</div>
+      <div class="cr-gl">inflation-adjusted money · true P&amp;L · distinct-film counts · full-catalogue claims · popularity's meaning</div>
+    </div>
+
+    <div class="abs" id="cr_close">
+      <div class="src">SOURCE DATA BY TMDB — NOT ENDORSED OR CERTIFIED BY TMDB</div>
+      <div class="last serif">No averages of averages were computed in the making of this report.</div>
+    </div>
+
+    <button class="btn" id="btn_home">⌂ BOX OFFICE</button>
+    
+  </section>
+
+<div id="tt_poster_card" class="paper tt-screen" data-screen-label="tt-movie-poster">
+    <div id="tt_big_poster">poster — Image URL (Poster Path)</div>
+    <div id="tt_name">Las mujeres deciden</div>
+    <div id="tt_year"><span class="ph" title="computed at build — never fabricated">{YEAR}</span></div>
+    <div class="tt-row"><span>VOTES</span><span class="dots"></span><span id="tt_votes">2</span></div>
+    <div class="tt-row"><span>RATING (RAW)</span><span class="dots"></span><span style="color:#B3402E">10.0</span></div>
+    <div class="tt-row"><span>RATING (WEIGHTED)</span><span class="dots"></span><span id="tt_w" style="color:#2F6B4F">✓ ~7.02</span></div>
+    <div class="tt-row"><span>RANK · POPULARITY †</span><span class="dots"></span><span>— @ build</span></div>
+    <div class="tt-foot">† formula not published — ranked under protest</div>
+    
+  </div>
+
+</body>
+</html>

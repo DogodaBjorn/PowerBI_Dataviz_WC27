@@ -77,6 +77,21 @@
   .night { background:#171418; color:#F2EFE6; }
   .paper { background:#F5F2E9; color:#211E1A; }
 
+  /* ---------- film-stock tint per act (CHROME ONLY — data never wears it) ----------
+     --tint    the act's stock colour, surface-appropriate variant
+     --tint-on the text colour that sits ON a tint fill (beat-rail current state)
+     Act I  Ledger Indigo  paper #2E4A7D 7.84:1  /  night #7FA8DD 7.43:1
+     Act II Awards Brass   paper #8A6516 4.74:1  /  night #D9A441 8.12:1
+     Act III Velvet Plum   paper #5B3E8E 7.43:1  /  night #B79BE8 7.71:1
+     Tickets on p0 sit on cream bodies -> always the PAPER variant.
+     p9 End Credits carries no tint. */
+  #tk1 { --tint:#2E4A7D; }
+  #tk2 { --tint:#8A6516; }
+  #tk3 { --tint:#5B3E8E; }
+  #pg1 { --tint:#2E4A7D; --tint-on:#F5F2E9; }   /* paper page -> paper variant */
+  #pg2 { --tint:#8A6516; --tint-on:#F5F2E9; }   /* paper page -> paper variant */
+  #pg3 { --tint:#B79BE8; --tint-on:#211E1A; }   /* night page -> night variant */
+
   /* focus — keyboard support is part of the demo */
   .night :focus-visible { outline:2px solid #F2EFE6; outline-offset:2px; }
   .paper :focus-visible { outline:2px solid #211E1A; outline-offset:2px; }
@@ -135,11 +150,11 @@
   .ticket:hover .t-main, .ticket:hover .t-stub { background:#ECE7D8; }
   .ticket.torn .t-stub { transform:translateX(74px) rotate(8deg); opacity:0; }
   .rule-m { position:absolute; top:6px; left:6px; bottom:6px; right:0;
-            border:2px solid #B3402E; border-right:none; pointer-events:none; }
+            border:2px solid var(--tint); border-right:none; pointer-events:none; }
   .rule-s { position:absolute; top:6px; right:6px; bottom:6px; left:0;
-            border:2px solid #B3402E; border-left:none; pointer-events:none; }
+            border:2px solid var(--tint); border-left:none; pointer-events:none; }
   .t-body { position:absolute; inset:0; padding:38px 30px; color:#211E1A; }
-  .t-act  { font-size:36pt; line-height:1; font-weight:600; }
+  .t-act  { font-size:36pt; line-height:1; font-weight:600; color:var(--tint); }
   .t-rule { width:34px; height:1px; background:#211E1A; margin:14px 0; }
   .t-title{ font-size:20pt; line-height:1.1; font-weight:600; letter-spacing:.03em; }
   .t-tease{ font-family:Georgia,serif; font-style:italic; font-size:12pt;
@@ -147,7 +162,7 @@
   .t-admit{ writing-mode:vertical-rl; font-size:10pt; letter-spacing:.35em;
             color:#211E1A; font-weight:600; }
   .t-serial{ writing-mode:vertical-rl; font-family:Consolas,monospace;
-            font-size:8pt; color:#57534E; letter-spacing:.12em; }
+            font-size:8pt; color:var(--tint); letter-spacing:.12em; }
 
   #chip_tear { right:24px; top:566px; }
 
@@ -162,25 +177,35 @@
 
   /* ════════ acts p1/p2 — shared screenplay template ════════ */
   .z_scriptheader { left:24px; top:24px; width:1232px; height:56px;
-    display:flex; align-items:center; justify-content:space-between; }
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:2px solid var(--tint); }
   .z_scriptheader .h-title { font-family:Consolas,monospace; font-size:12pt; color:#211E1A; }
   .night .z_scriptheader .h-title { color:#F2EFE6; }
+  .h-act { color:var(--tint); font-weight:700; }
+  /* the torn stub IS the ticket the viewer tore -> scope item (b); keeping it
+     trap-red would spend a semantic colour on pure chrome */
+  .stub-art path { stroke:var(--tint); }
   .chip-hdr { position:static; margin-right:12px; }
 
   .sl_beat_rail { left:24px; top:96px; width:1232px; height:40px;
     display:flex; align-items:center; gap:10px; }
-  .beat { font-family:"Bahnschrift SemiCondensed",Bahnschrift,"Arial Narrow",sans-serif;
+  .beat { position:relative;
+    font-family:"Bahnschrift SemiCondensed",Bahnschrift,"Arial Narrow",sans-serif;
     font-stretch:75%; font-size:10pt; letter-spacing:.1em;
     padding:6px 14px; border:1px solid #211E1A; background:transparent; color:#211E1A;
-    border-bottom-width:1px; transition:background .2s ease, color .2s ease; }
-  .beat.cur { background:#B3402E; color:#F5F2E9; border-color:#B3402E;
-    border-bottom:3px solid #7E2A1D; padding-bottom:4px; }
+    transition:background .2s ease, color .2s ease; }
+  /* current state = tint fill + detached tint underline marker + ● + "Scene N of 3" title;
+     state is never carried by colour alone */
+  .beat.cur { background:var(--tint); color:var(--tint-on); border-color:var(--tint); }
   .beat.cur::before { content:"● "; }
+  .beat.cur::after { content:""; position:absolute; left:0; right:0; bottom:-5px;
+    height:3px; background:var(--tint); }
   .night .beat { border-color:#B5AFA0; color:#F2EFE6; }
-  .night .beat.cur { background:#B3402E; color:#F5F2E9; border-color:#B3402E;
-    border-bottom-color:#7E2A1D; }
+  .night .beat.cur { background:var(--tint); color:var(--tint-on); border-color:var(--tint); }
   .next-scene { margin-left:auto; }
-  .chip-rail { top:138px; left:24px; }
+  /* moved to the right gutter: the current beat's detached underline marker now
+     occupies the 136–140px band on the left of the rail */
+  .chip-rail { top:136px; right:24px; }
 
   .c_script_body { left:24px; top:152px; width:760px; height:464px;
     font-family:Consolas,monospace; font-size:12pt; line-height:19px;
@@ -249,7 +274,8 @@
   .chip-fall { right:10px; top:10px; }
 
   .c_verdict { left:24px; top:632px; width:1232px; height:64px;
-    display:flex; align-items:center; gap:24px; }
+    display:flex; align-items:center; gap:24px;
+    border-top:2px solid var(--tint); }
   .c_verdict p { font-size:14pt; line-height:20px; flex:1; }
   .paper .c_verdict p { color:#211E1A; }
   .night .c_verdict p { color:#F2EFE6; }
@@ -267,7 +293,7 @@
   #sc_dots circle { transition:opacity .3s ease; }
   #win_ring, #win_label { opacity:0; transition:opacity .35s ease; }
   #pg3.resolved #win_ring, #pg3.resolved #win_label { opacity:1; }
-  #win_label { position:absolute; left:474px; top:96px; width:336px; text-align:right;
+  #win_label { position:absolute; left:474px; top:118px; width:336px; text-align:right;
     font-family:"Segoe UI",sans-serif; font-size:10pt; color:#F2EFE6; line-height:15px; }
   .chip-sc { right:12px; bottom:10px; }
 
@@ -279,16 +305,19 @@
   .adj { align-self:flex-start; font-family:"Segoe UI",sans-serif; font-size:10pt;
     color:#F2EFE6; border:1px solid #3A3441; border-radius:8px; padding:3px 12px; }
   .adj b { color:#4ECBA0; font-weight:400; }
-  #c_refusal_popularity { top:304px; height:152px; border:2px solid #E8705F; }
-  #c_refusal_popularity h3 { font-family:"Segoe UI",sans-serif; font-size:12pt;
-    color:#E8705F; letter-spacing:.04em; }
+  #c_refusal_popularity { top:304px; height:152px; border:2px solid #E8705F;
+    padding:12px 14px; }
+  /* 11pt keeps the heading on ONE line inside 292px of content width; at 12pt it
+     wrapped and pushed the "@ build" line out through the bottom of the card */
+  #c_refusal_popularity h3 { font-family:"Segoe UI",sans-serif; font-size:11pt;
+    color:#E8705F; letter-spacing:.03em; line-height:17px; white-space:nowrap; }
   #c_refusal_popularity .why { font-family:"Segoe UI",sans-serif; font-size:9.5pt;
-    color:#B5AFA0; line-height:14px; margin:4px 0 7px; }
+    color:#B5AFA0; line-height:14px; margin:3px 0 6px; }
   #c_refusal_popularity .row { font-family:Consolas,monospace; font-size:10pt;
-    color:#F2EFE6; line-height:16px; }
+    color:#F2EFE6; line-height:15px; }
   #c_refusal_popularity .row .x { color:#E8705F; }
   #c_refusal_popularity .at { font-family:Consolas,monospace; font-size:9pt;
-    color:#B5AFA0; margin-top:5px; }
+    color:#B5AFA0; margin-top:3px; }
   #c_nodate_chip { top:472px; height:144px; border-radius:8px;
     display:flex; align-items:center;
     font-family:"Segoe UI",sans-serif; font-size:10.5pt; color:#B5AFA0; line-height:17px; }
@@ -429,12 +458,12 @@
   <!-- ════════════════ p1 — ACT I (screenplay, paper) ════════════════ -->
   <section class="page paper act" id="pg1" data-scene="1" tabindex="-1" aria-label="Act I — The Profit Lie">
     <div class="abs z_scriptheader">
-      <span class="h-title">THE SEDUCTIVE LIES — ACT I: &lsquo;THE PROFIT LIE&rsquo;</span>
+      <span class="h-title">THE SEDUCTIVE LIES — <span class="h-act">ACT I</span>: &lsquo;THE PROFIT LIE&rsquo;</span>
       <span style="display:flex;align-items:center;">
         <span class="chip p chip-hdr">PBI: static SVG chrome</span>
-        <svg width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+        <svg class="stub-art" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
           <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z"
-                fill="#FFFFFF" stroke="#B3402E" stroke-width="1.5"/>
+                fill="#FFFFFF" stroke-width="1.5"/>
           <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace"
                 font-size="9.3" letter-spacing="2" fill="#211E1A">ADMIT ONE</text>
         </svg>
@@ -492,12 +521,12 @@
   <!-- ════════════════ p2 — ACT II (screenplay, paper) ════════════════ -->
   <section class="page paper act" id="pg2" data-scene="1" tabindex="-1" aria-label="Act II — The Ratings Lie">
     <div class="abs z_scriptheader">
-      <span class="h-title">THE SEDUCTIVE LIES — ACT II: &lsquo;THE RATINGS LIE&rsquo;</span>
+      <span class="h-title">THE SEDUCTIVE LIES — <span class="h-act">ACT II</span>: &lsquo;THE RATINGS LIE&rsquo;</span>
       <span style="display:flex;align-items:center;">
         <span class="chip p chip-hdr">PBI: static SVG chrome</span>
-        <svg width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+        <svg class="stub-art" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
           <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z"
-                fill="#FFFFFF" stroke="#B3402E" stroke-width="1.5"/>
+                fill="#FFFFFF" stroke-width="1.5"/>
           <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace"
                 font-size="9.3" letter-spacing="2" fill="#211E1A">ADMIT ONE</text>
         </svg>
@@ -568,12 +597,12 @@
   <!-- ════════════════ p3 — THE PREMIERE (night) ════════════════ -->
   <section class="page night resolved" id="pg3" data-scene="3" tabindex="-1" aria-label="Act III — The Corrected Cut, the premiere">
     <div class="abs z_scriptheader">
-      <span class="h-title">THE SEDUCTIVE LIES — ACT III: &lsquo;THE CORRECTED CUT&rsquo;</span>
+      <span class="h-title">THE SEDUCTIVE LIES — <span class="h-act">ACT III</span>: &lsquo;THE CORRECTED CUT&rsquo;</span>
       <span style="display:flex;align-items:center;">
         <span class="chip n chip-hdr">PBI: static SVG chrome</span>
-        <svg width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
+        <svg class="stub-art" width="120" height="40" viewBox="0 0 120 40" aria-hidden="true">
           <path d="M14 4 H110 Q116 4 116 10 V30 Q116 36 110 36 H14 L19 32 12 28 19 24 12 20 19 16 12 12 19 8 Z"
-                fill="#241F28" stroke="#E8705F" stroke-width="1.5"/>
+                fill="#241F28" stroke-width="1.5"/>
           <text x="66" y="24" text-anchor="middle" font-family="Consolas,monospace"
                 font-size="9.3" letter-spacing="2" fill="#F2EFE6">ADMIT ONE</text>
         </svg>
@@ -841,7 +870,9 @@
   (function () {
     var svg = document.getElementById('sc_svg');
     function X(lg) { return 72 + (lg - 4) / 5.6 * 796; }
-    function Y(r)  { return 408 - (r - 5) / 4 * 348; }
+    // 320 (not 348) leaves headroom at the top of the plot so the PRESS PLAY control
+    // does not sit on the 9.0 axis label; max plotted rating is 8.4
+    function Y(r)  { return 408 - (r - 5) / 4 * 320; }
     var data = [
       [0,4.9,6.4],[0,5.6,7.4],[0,6.3,7.9],[0,5.2,6.1],
       [1,5.8,6.9],[1,6.7,7.5],[1,6.1,5.9],[1,7.2,7.8,1],
@@ -864,7 +895,7 @@
       h.push('<text x="' + X(p[0]) + '" y="426" text-anchor="middle" font-family="Segoe UI" font-size="10" fill="#B5AFA0">' + p[1] + '</text>');
     });
     h.push('<line x1="72" y1="408" x2="868" y2="408" stroke="#3A3441" stroke-width="1"/>');
-    h.push('<line x1="72" y1="60" x2="72" y2="408" stroke="#3A3441" stroke-width="1"/>');
+    h.push('<line x1="72" y1="88" x2="72" y2="408" stroke="#3A3441" stroke-width="1"/>');
     // C reference
     var cy = Y(6.96);
     h.push('<line x1="72" y1="' + cy + '" x2="868" y2="' + cy + '" stroke="#6E6960" stroke-width="1" stroke-dasharray="5 4"/>');

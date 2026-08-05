@@ -2,7 +2,7 @@
 project: wc-round-3
 template_version: 0.3.1
 current_stage: 5
-updated: 2026-08-04
+updated: 2026-08-05
 stages:
   s0_intake:
     status: passed
@@ -27,7 +27,7 @@ stages:
   s5_design:
     status: in_progress
     evidence: "project-state/active/05-design.md"
-    gate_note: "Rounds 1+2 rejected; ROUND 3: entrant authored the trilogy concept ('The Seductive Lies I II III' — verbatim + hard wishes in 05-design.md; Deneb/HTML-visuals verified contest-legit, play-axis = the honest scatter animation). D7 convergence + dynamic interactive prototype in progress; G5 blocked on entrant approval of D7."
+    gate_note: "D7 'The Seductive Lies: A Trilogy' (entrant-authored) APPROVED 2026-08-05 with one change — per-act film-stock tints, granted as a chrome-only exception to consistency lock 7 (all six variants WCAG-AA verified); tickets cover confirmed, other ack defaults accepted. Rounds 1+2 (D1-D6) rejected, retained as history. G5 closes on tinted prototype + handoff quartet + asset-fidelity inventory (in flight)."
   s6_report_build:
     status: pending
     evidence: ""

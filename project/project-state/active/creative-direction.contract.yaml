@@ -114,7 +114,18 @@ act_tints:                       # ENTRANT-APPROVED 2026-08-05 ("Give each act i
   unchanged_semantics:
     trap:  { paper: "#B3402E", night: "#E8705F", ratios: "5.08:1 / 6.01:1" }
     good:  { paper: "#2F6B4F", night: "#4ECBA0", ratios: "5.62:1 / 9.02:1" }
+  reserved_red_rule:             # ADDED 2026-08-05 after the rendered review caught three inversions
+    statement: "Trap-red is RESERVED. It may appear ONLY on trap exhibits and their strikes, the MISREAD / [naive cut] tags, the script-doctor NOTE marks, and the popularity refusal card. It must never carry chrome, navigation, or anything the report asserts is TRUE."
+    why: "If red means both 'this is a lie' and 'this is the answer', it encodes nothing — and consistency of direction encoding is precisely what the manual accessibility judge tests (hard rule 3)."
+    corrections_applied: "Rendered review 2026-08-05 caught three inversions in the approved prototype: (1) the Act I waffle's 13 VALID tickets were trap-red though they are the credible/honest subset -> good-green + '✓' in the legend; (2) the Act III winner ring — the trilogy's honest payoff — was coral -> good-green + a ✓ before the annotation; (3) navigation chrome (PRESS PLAY, ROLL CREDITS, END CREDITS, NEXT SCENE/ACT) used red -> act tint on act pages, neutral cream on p0/p9. G6 re-checks this rule."
+    legitimate_red_retained: "The Act II dumbbell's raw-10.0 dot (raw rating IS the trap); the weighted dot stays good-green with its ✓."
   note: "Paper variants are required even for Act III because the p0 tickets have cream (#F5F2E9) bodies on the night cover."
+  build_rulings:                 # settled while applying tints to the prototype 2026-08-05
+    - "Header rule + verdict rule did not previously exist — created as 2px full-width tint rules (chrome ink only, no layout shift)."
+    - "Beat-rail underline detached from the chip (3px ::after, 5px below) so the marker still reads when fill and underline share one token; ● prefix and 'Scene N of 3' text still carry state without color."
+    - "--tint-on (text on a tint fill) is derived, not a token: cream #F5F2E9 on the dark paper variants (7.84:1 indigo, 4.74:1 brass); ink #211E1A on light plum-night (~7.4:1). No new hue."
+    - "Night variants for Acts I/II (#7FA8DD, #D9A441) are UNUSED in this build (both acts live on paper pages and their tickets use paper variants) — retained in the CSS header for any future night-mode act."
+    - "RULING: the torn-stub SVG in act headers takes the act tint, NOT trap-red — it is the torn ticket (scope item b), and leaving semantic red as pure chrome would weaken 'red means trap' everywhere else."
 
 fidelity_checklist:              # D7 — stage 6 is judged against these
   - "Key Takeaway verbatim on the p0 marquee; three tickets are the only nav and each names its act + teaser stat"
@@ -122,3 +133,4 @@ fidelity_checklist:              # D7 — stage 6 is judged against these
   - "Act III hero is the NATIVE play-axis scatter (population and parameters printed on-canvas; refusal card for popularity present; no-date chip visible)"
   - "End-credits method page: cross-foot 85,394 − 1,358 = 84,036, glossary with TRAP/HONEST/OPAQUE tags, SCENES DELETED refusals, TMDB credit"
   - "Per-act film-stock tints applied to CHROME ONLY per act_tints.scope_rule (no tinted data marks); ≤6 hues per page, 0px surfaces / 8px tickets-chips, and the full a11y package (tab orders, state alt text, focus outlines) as contracted"
+  - "Reserved-red rule holds report-wide (act_tints.reserved_red_rule): no red on chrome, navigation, or any mark the report asserts is true — the waffle's VALID tickets and the Act III winner ring read good-green with ✓"
