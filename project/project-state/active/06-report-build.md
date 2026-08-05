@@ -230,3 +230,31 @@ gap. Full record in BUILD_LOG → *Stage 6 G6 a11y pass*.
     call, not a build call — left as found, flagged here. `#282331` is now a theme
     token (`shape.spotlightSurface`), so aligning the refusal card is a one-value edit
     if the entrant wants the pair consistent.
+
+13. **The shape-fill fallback is fixed; the `cardVisual` half of the same bug is
+    NOT.** Root cause and full evidence are in BUILD_LOG under "G6 CORRECTNESS FIX:
+    the shape-fill fallback". In short: a `fill` object written as
+    `[{properties:{show, fillColor}}]` is schema-valid but never binds, so every
+    filled shape fell back to `dataColors[0]` (`#B3402E`). Desktop's authored
+    grammar - recovered from git history and confirmed by Desktop's own save of
+    this project at 13:15 today - puts `selector: {"id":"default"}` on the styling
+    entry and never puts `show` in it. 92 visuals (57 `shape`, 35 `actionButton`)
+    were corrected. **Entrant action:** the 46 `cardVisual` visuals were left
+    untouched on purpose, because no Desktop-authored card exists anywhere in this
+    repo and a second guess would cost another render cycle. Author one card in
+    Desktop - a `cardVisual` with the category label hidden and an explicit value
+    colour - save, and hand back the resulting `visual.json`. That one file settles
+    `label.show`, `value.fontColor` and whether `value` needs a selector, and the
+    correction is then mechanical.
+14. **Six other property shapes are still unverified and may be silently ignored.**
+    Listed in full in the BUILD_LOG block, worst first: the `image` visual
+    `img_tt_poster` (its whole data-bound property set differs from Desktop's only
+    authored image), `shape.text` `horizontalAlignment`/`verticalAlignment`,
+    `fill.transparency`, `actionButton.shape`'s missing `$id`, textbox
+    `horizontalTextAlignment` and textRun `fontStyle`. Each fails visibly rather
+    than corruptly, and each is one line to fix once seen.
+15. **`z_ticket1/2/3_stub_rule` are styled but disabled.** Each carries
+    `outline.show = false` together with a `lineColor` and `weight`, so the ticket
+    perforation draws nothing. The structural correction was applied; the `false`
+    was deliberately preserved because changing it is a design call. **Entrant
+    action:** if the perforation is meant to be visible, flip those three to `true`.

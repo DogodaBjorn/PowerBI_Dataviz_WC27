@@ -5,8 +5,8 @@
     "x": 817,
     "y": 175,
     "z": 42,
-    "width": 422,
     "height": 144,
+    "width": 422,
     "tabOrder": 1200
   },
   "visual": {
@@ -277,7 +277,7 @@
             "autoSizeColumnWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },

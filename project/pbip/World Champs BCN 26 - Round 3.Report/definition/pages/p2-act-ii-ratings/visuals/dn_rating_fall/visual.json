@@ -5,8 +5,8 @@
     "x": 813,
     "y": 420,
     "z": 63,
-    "width": 432,
     "height": 172,
+    "width": 432,
     "tabOrder": 2100
   },
   "visual": {
@@ -27,7 +27,26 @@
                 }
               },
               "queryRef": "Movies.Title",
-              "nativeQueryRef": "Title"
+              "nativeQueryRef": "Title",
+              "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Votes"
+                }
+              },
+              "queryRef": "_Measures.Votes",
+              "nativeQueryRef": "Votes"
             }
           ]
         },
@@ -60,24 +79,6 @@
               },
               "queryRef": "_Measures.Rating (evidence-weighted)",
               "nativeQueryRef": "Rating (evidence-weighted)"
-            }
-          ]
-        },
-        "Tooltips": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Votes"
-                }
-              },
-              "queryRef": "_Measures.Votes",
-              "nativeQueryRef": "Votes"
             }
           ]
         }
@@ -531,7 +532,6 @@
     },
     "drillFilterOtherVisuals": true
   },
-  "isHidden": true,
   "filterConfig": {
     "filters": [
       {
@@ -602,5 +602,6 @@
         "howCreated": "User"
       }
     ]
-  }
+  },
+  "isHidden": true
 }

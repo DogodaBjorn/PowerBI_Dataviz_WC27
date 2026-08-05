@@ -5,6 +5,11 @@
   "displayOption": "FitToPage",
   "height": 420,
   "width": 320,
+  "pageBinding": {
+    "name": "tt-movie-poster-binding",
+    "type": "Tooltip",
+    "parameters": []
+  },
   "objects": {
     "background": [
       {
@@ -68,10 +73,6 @@
       }
     ]
   },
-  "type": "Tooltip",
   "visibility": "HiddenInViewMode",
-  "pageBinding": {
-    "name": "tt-movie-poster-binding",
-    "type": "Tooltip"
-  }
+  "type": "Tooltip"
 }

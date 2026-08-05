@@ -25,24 +25,6 @@ table _Measures
 		displayFolder: 01 Core
 		lineageTag: 08658434-3805-4f19-8e2c-50db5c1a11a2
 
-	/// Listings in the Act III premiere population: credible financials AND at least m votes — the scatter's on-canvas n.
-	measure 'Movies (scatter population)' =
-			CALCULATE(
-				[Movies],
-				Movies[Budget] >= 10000,
-				Movies[Revenue] > 0,
-				Movies[Vote Count] >= 100
-			)
-		formatString: #,0
-		displayFolder: 01 Core
-		lineageTag: 20c8d02c-1e0d-4583-8433-bdc7b6f4944b
-
-	/// The complement of the credible set: listings the disclosed floor cannot vouch for. Says nothing about those films — only about what the data can support.
-	measure 'Movies (no credible financials)' = [Movies] - [Movies (credible financials)]
-		formatString: #,0
-		displayFolder: 02 Lie 1 · Financials
-		lineageTag: 911c4b99-879c-4348-99c5-a3d776ca4d07
-
 	/// Share of listings whose budget and revenue are credibly known — the honesty denominator behind every financial claim.
 	measure 'Financial coverage %' = DIVIDE([Movies (credible financials)], [Movies])
 		formatString: 0.0%
@@ -60,25 +42,6 @@ table _Measures
 		formatString: \$#,0;(\$#,0)
 		displayFolder: 02 Lie 1 · Financials
 		lineageTag: 3d222496-814f-40f3-8c0b-e65bec089649
-
-	/// The disclosed credibility floor as a first-class, quotable constant — the same $10,000 baked into the credible-set measures at stage 4.
-	/// SCENARIO CHOICE (signed at Q2: 13.1% at $10k vs 11.9% at $100k).
-	measure 'Financial floor (disclosed)' = 10000
-		formatString: \$#,0
-		displayFolder: 02 Lie 1 · Financials
-		lineageTag: 6f28f1c2-adbe-47f7-99fd-85e2d8323ce9
-
-	/// Listings booking exactly zero revenue — Lie #1's mechanism: unknowns counted as $0.
-	measure 'Movies (zero revenue)' = CALCULATE([Movies], Movies[Revenue] = 0)
-		formatString: #,0
-		displayFolder: 02 Lie 1 · Financials
-		lineageTag: 74363f4e-cbdc-4cdb-9015-b19a5f9deffd
-
-	/// Share of listings whose revenue is zero — the size of the "unknown counted as $0" hole.
-	measure 'Zero-revenue share %' = DIVIDE([Movies (zero revenue)], [Movies])
-		formatString: 0.0%
-		displayFolder: 02 Lie 1 · Financials
-		lineageTag: 44d1ceec-fe57-4806-9bd7-a7ed35544f5b
 
 	/// Total votes cast in context — the evidence mass behind any rating claim.
 	measure Votes = SUM(Movies[Vote Count])
@@ -131,6 +94,194 @@ table _Measures
 		formatString: 0.0%
 		displayFolder: 03 Lie 2 · Ratings
 		lineageTag: 7a67ead1-c7c1-4591-912b-e6ff5d903916
+
+	/// TMDB's popularity as-is for a single listing — formula unpublished, so it is displayed, never aggregated or graded.
+	measure 'Popularity (as-is)' = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Popularity])) -- HASONEVALUE guard: BLANK at any group grain; MAX tolerates the 101 duplicate-ID rows
+		formatString: 0.0
+		displayFolder: 04 Lie 3 · Popularity
+		lineageTag: adb7ceb7-118c-42e8-af3b-272c338babf7
+
+	/// Rank of the listing by Popularity — the divergence view's undefended ranking, never a quality claim.
+	measure 'Rank · Popularity' = RANKX(ALLSELECTED(Movies[Movie ID]), CALCULATE(MAX(Movies[Popularity]))) -- ALLSELECTED: ranks within the viewer's current slicer/filter selection; MAX per ID tolerates duplicate-ID rows
+		formatString: 0
+		displayFolder: 04 Lie 3 · Popularity
+		lineageTag: f868e8b9-eee8-42ae-a05b-094f82e4e636
+
+	/// Rank of the listing by evidence-weighted rating — the responsible ranking placed beside Popularity's.
+	measure 'Rank · Rating (weighted)' = RANKX(ALLSELECTED(Movies[Movie ID]), [Rating (evidence-weighted)]) -- ALLSELECTED: ranks within the viewer's current slicer/filter selection
+		formatString: 0
+		displayFolder: 04 Lie 3 · Popularity
+		lineageTag: 4da8b67f-4d4e-4700-b3b6-41e5fa513313
+
+	/// Rank of the listing by total revenue, among revenue-known listings only; BLANK when the listing's revenue is unknown.
+	measure 'Rank · Revenue' =
+			VAR CurrentRevenue = CALCULATE(SUM(Movies[Revenue]))
+			VAR RevenueKnown = FILTER(ALLSELECTED(Movies[Movie ID]), CALCULATE(SUM(Movies[Revenue])) > 0) -- ALLSELECTED: rank population is the viewer's current selection, restricted to revenue-known listings
+			RETURN
+			IF(CurrentRevenue > 0, RANKX(RevenueKnown, CALCULATE(SUM(Movies[Revenue]))))
+		formatString: 0
+		displayFolder: 04 Lie 3 · Popularity
+		lineageTag: 75e63c56-2295-4107-8286-4f7d2915b232
+
+	/// Listings with no release date on record — a first-class, labeled data-health bucket, never dropped.
+	measure 'Movies (undated)' = CALCULATE([Movies], ISBLANK(Movies[Release Date]))
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: b9a2daab-2c6d-4442-afa4-ef0025349700
+
+	/// Share of listings with no release date on record.
+	measure 'Undated share %' = DIVIDE([Movies (undated)], [Movies])
+		formatString: 0.0%
+		displayFolder: 05 Data health · Time
+		lineageTag: 3427c975-9823-4b4c-b0b2-7a2054821cfb
+
+	/// Listings dated after the disclosed snapshot anchor 2026-07-24 — announced, not released.
+	measure 'Movies (future-dated)' = CALCULATE([Movies], Movies[Is Future Release] = TRUE)
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: f152f116-2e53-425b-91b2-44df48d4e21b
+
+	/// Distinct (Title, Release Date) pairs — the closest honest stand-in for "distinct films" this source supports.
+	measure 'Movies (distinct title + date)' = COUNTROWS(SUMMARIZE(Movies, Movies[Title], Movies[Release Date]))
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: 07002fd0-5809-43fa-b0f0-70a493e3b334
+
+	/// Listing rows beyond distinct (Title, Release Date) pairs — the duplication the word "listings" accounts for.
+	measure 'Duplicate listings' = [Movies] - [Movies (distinct title + date)]
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: d8097045-50c9-4db5-9f61-bba51cef90eb
+
+	/// Rows sharing a Movie ID with another row (verified 101 at s4) — method-panel data health.
+	measure 'Duplicate Movie IDs' = [Movies] - DISTINCTCOUNT(Movies[Movie ID])
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: fa2ed19f-998c-4f38-b50f-b2e288079702
+
+	/// Trap/lie token on the PAPER surface (p1, p2, tooltip) — the colour of a number that must not be believed. Night counterpart: Color · Trap (night).
+	measure 'Color · Trap' = "#B3402E"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 2a2fe019-1816-4fac-9f52-d8643f00c50c
+
+	/// Honest/corrected token on the PAPER surface — the colour of a number that states what it excludes. Night counterpart: Color · Honest (night).
+	measure 'Color · Honest' = "#2F6B4F"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: c4f24e6b-315e-4ad3-a746-d303eadc07ee
+
+	/// Context-series token on the PAPER surface — everything that is not the story. Night counterpart: Color · Neutral (night).
+	measure 'Color · Neutral' = "#78716C"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 9faedfbd-7fad-4768-924d-5475a0a8867a
+
+	/// Act I's insight title — the share of listings that cannot carry a money claim. Bound to z_p1_header_title (act-title run).
+	measure 'Title · Lie 1' =
+			"ACT I — THE PROFIT LIE: "
+				& FORMAT(1 - [Financial coverage %], "0.0%")
+				& " of listings cannot support a money claim"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: e562f4ff-d44d-4eb9-9d37-0ebd0afb378b
+
+	/// Act II's insight title — how few listings clear the disclosed evidence bar. Bound to z_p2_header_title (act-title run).
+	measure 'Title · Lie 2' =
+			"ACT II — THE RATINGS LIE: only "
+				& FORMAT([Evidence share %], "0.0%")
+				& " of listings clear "
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " votes"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 8fc6684a-7f5f-4054-b991-910d1b8b7099
+
+	/// Act III's insight title — the population that survives every honest adjustment, and the one adjustment refused. Bound to z_p3_header_title.
+	measure 'Title · Lie 3' =
+			"ACT III — THE CORRECTED CUT: "
+				& FORMAT([Movies (scatter population)], "#,0")
+				& " listings earn a place; popularity is refused — formula not published"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 98b7fbce-f4e9-498b-a5e8-ae3d6923d4ab
+
+	/// The p0 marquee takeaway — the mandated Key Takeaway, with its two live counts filled from the model. Bound to hero_takeaway.
+	measure 'Title · Landing' =
+			"The data is not wrong — the reading is. "
+				& FORMAT(1 - [Financial coverage %], "0%")
+				& " of "
+				& FORMAT([Movies], "#,0")
+				& " listings have no credible financials, the median listing has "
+				& IF([Median votes] = 0, "zero", FORMAT([Median votes], "#,0"))
+				& " votes, and “popularity” has no published formula. "
+				& "Every honest number here states what it excludes."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 80057dd2-e358-46ed-9e73-25952f29963a
+
+	/// The billing-block scope stamp: snapshot, basis and its cross-foot, the financial floor, m, C, and the listings≠films caveat.
+	/// One string, every disclosed parameter, all live. Bound to z_billing_method (p0) and reused as the method line on p9.
+	measure 'Label · Method' =
+			"TMDB SNAPSHOT "
+				& FORMAT([Snapshot anchor (disclosed)], "yyyy·mm·dd")
+				& " · BASIS "
+				& FORMAT([Movies], "#,0")
+				& " LISTINGS (ADULT "
+				& FORMAT([Adult listings excluded], "#,0")
+				& " EXCLUDED OF "
+				& FORMAT([Movies (all listings incl. adult)], "#,0")
+				& ") · FINANCIAL FLOOR "
+				& FORMAT([Financial floor (disclosed)], "\$#,0")
+				& " · m="
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " · C="
+				& FORMAT([Rating C (disclosed)], "0.00")
+				& " · LISTINGS≠FILMS: "
+				& FORMAT([Duplicate listings], "#,0")
+				& " DUPLICATE (TITLE,DATE) PAIRS ("
+				& FORMAT(DIVIDE([Duplicate listings], [Movies]), "0.0%")
+				& ")"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: b424e7e9-8996-4554-b28a-6b289ff3abc5
+
+	/// Listings in the Act III premiere population: credible financials AND at least m votes — the scatter's on-canvas n.
+	measure 'Movies (scatter population)' =
+			CALCULATE(
+				[Movies],
+				Movies[Budget] >= 10000,
+				Movies[Revenue] > 0,
+				Movies[Vote Count] >= 100
+			)
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: 20c8d02c-1e0d-4583-8433-bdc7b6f4944b
+
+	/// The complement of the credible set: listings the disclosed floor cannot vouch for. Says nothing about those films — only about what the data can support.
+	measure 'Movies (no credible financials)' = [Movies] - [Movies (credible financials)]
+		formatString: #,0
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: 911c4b99-879c-4348-99c5-a3d776ca4d07
+
+	/// The disclosed credibility floor as a first-class, quotable constant — the same $10,000 baked into the credible-set measures at stage 4.
+	/// SCENARIO CHOICE (signed at Q2: 13.1% at $10k vs 11.9% at $100k).
+	measure 'Financial floor (disclosed)' = 10000
+		formatString: \$#,0
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: 6f28f1c2-adbe-47f7-99fd-85e2d8323ce9
+
+	/// Listings booking exactly zero revenue — Lie #1's mechanism: unknowns counted as $0.
+	measure 'Movies (zero revenue)' = CALCULATE([Movies], Movies[Revenue] = 0)
+		formatString: #,0
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: 74363f4e-cbdc-4cdb-9015-b19a5f9deffd
+
+	/// Share of listings whose revenue is zero — the size of the "unknown counted as $0" hole.
+	measure 'Zero-revenue share %' = DIVIDE([Movies (zero revenue)], [Movies])
+		formatString: 0.0%
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: 44d1ceec-fe57-4806-9bd7-a7ed35544f5b
 
 	/// Median vote count per listing — the "median listing has zero votes" evidence.
 	measure 'Median votes' = MEDIANX(Movies, Movies[Vote Count])
@@ -201,34 +352,6 @@ table _Measures
 		displayFolder: 03 Lie 2 · Ratings
 		lineageTag: 5ecff1f6-38f6-4f60-a57e-9991d49bb6b6
 
-	/// TMDB's popularity as-is for a single listing — formula unpublished, so it is displayed, never aggregated or graded.
-	measure 'Popularity (as-is)' = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Popularity])) -- HASONEVALUE guard: BLANK at any group grain; MAX tolerates the 101 duplicate-ID rows
-		formatString: 0.0
-		displayFolder: 04 Lie 3 · Popularity
-		lineageTag: adb7ceb7-118c-42e8-af3b-272c338babf7
-
-	/// Rank of the listing by Popularity — the divergence view's undefended ranking, never a quality claim.
-	measure 'Rank · Popularity' = RANKX(ALLSELECTED(Movies[Movie ID]), CALCULATE(MAX(Movies[Popularity]))) -- ALLSELECTED: ranks within the viewer's current slicer/filter selection; MAX per ID tolerates duplicate-ID rows
-		formatString: 0
-		displayFolder: 04 Lie 3 · Popularity
-		lineageTag: f868e8b9-eee8-42ae-a05b-094f82e4e636
-
-	/// Rank of the listing by evidence-weighted rating — the responsible ranking placed beside Popularity's.
-	measure 'Rank · Rating (weighted)' = RANKX(ALLSELECTED(Movies[Movie ID]), [Rating (evidence-weighted)]) -- ALLSELECTED: ranks within the viewer's current slicer/filter selection
-		formatString: 0
-		displayFolder: 04 Lie 3 · Popularity
-		lineageTag: 4da8b67f-4d4e-4700-b3b6-41e5fa513313
-
-	/// Rank of the listing by total revenue, among revenue-known listings only; BLANK when the listing's revenue is unknown.
-	measure 'Rank · Revenue' =
-			VAR CurrentRevenue = CALCULATE(SUM(Movies[Revenue]))
-			VAR RevenueKnown = FILTER(ALLSELECTED(Movies[Movie ID]), CALCULATE(SUM(Movies[Revenue])) > 0) -- ALLSELECTED: rank population is the viewer's current selection, restricted to revenue-known listings
-			RETURN
-			IF(CurrentRevenue > 0, RANKX(RevenueKnown, CALCULATE(SUM(Movies[Revenue]))))
-		formatString: 0
-		displayFolder: 04 Lie 3 · Popularity
-		lineageTag: 75e63c56-2295-4107-8286-4f7d2915b232
-
 	/// The corrected cut's winner: within the premiere population, the listing with the best combined standing on revenue and on evidence-weighted rating.
 	/// SCENARIO CHOICE — "best-selling AND best-rated" is a stated composite (sum of the two ranks, lowest wins), disclosed on canvas at p3;
 	/// ties are listed, never broken silently. Not a TMDB or industry definition.
@@ -260,42 +383,6 @@ table _Measures
 		displayFolder: 04 Lie 3 · Popularity
 		lineageTag: da8fe638-3bd3-40aa-af12-e67e2c50dbc3
 
-	/// Listings with no release date on record — a first-class, labeled data-health bucket, never dropped.
-	measure 'Movies (undated)' = CALCULATE([Movies], ISBLANK(Movies[Release Date]))
-		formatString: #,0
-		displayFolder: 05 Data health · Time
-		lineageTag: b9a2daab-2c6d-4442-afa4-ef0025349700
-
-	/// Share of listings with no release date on record.
-	measure 'Undated share %' = DIVIDE([Movies (undated)], [Movies])
-		formatString: 0.0%
-		displayFolder: 05 Data health · Time
-		lineageTag: 3427c975-9823-4b4c-b0b2-7a2054821cfb
-
-	/// Listings dated after the disclosed snapshot anchor 2026-07-24 — announced, not released.
-	measure 'Movies (future-dated)' = CALCULATE([Movies], Movies[Is Future Release] = TRUE)
-		formatString: #,0
-		displayFolder: 05 Data health · Time
-		lineageTag: f152f116-2e53-425b-91b2-44df48d4e21b
-
-	/// Distinct (Title, Release Date) pairs — the closest honest stand-in for "distinct films" this source supports.
-	measure 'Movies (distinct title + date)' = COUNTROWS(SUMMARIZE(Movies, Movies[Title], Movies[Release Date]))
-		formatString: #,0
-		displayFolder: 05 Data health · Time
-		lineageTag: 07002fd0-5809-43fa-b0f0-70a493e3b334
-
-	/// Listing rows beyond distinct (Title, Release Date) pairs — the duplication the word "listings" accounts for.
-	measure 'Duplicate listings' = [Movies] - [Movies (distinct title + date)]
-		formatString: #,0
-		displayFolder: 05 Data health · Time
-		lineageTag: d8097045-50c9-4db5-9f61-bba51cef90eb
-
-	/// Rows sharing a Movie ID with another row (verified 101 at s4) — method-panel data health.
-	measure 'Duplicate Movie IDs' = [Movies] - DISTINCTCOUNT(Movies[Movie ID])
-		formatString: #,0
-		displayFolder: 05 Data health · Time
-		lineageTag: fa2ed19f-998c-4f38-b50f-b2e288079702
-
 	/// Adult listings removed by the report-level filter — the cross-foot's middle line.
 	measure 'Adult listings excluded' = [Movies (all listings incl. adult)] - [Movies]
 		formatString: #,0
@@ -320,24 +407,6 @@ table _Measures
 		formatString: #,0
 		displayFolder: 05 Data health · Time
 		lineageTag: 6681cde2-03b7-4b3c-ba4d-3247869d10c2
-
-	/// Trap/lie token on the PAPER surface (p1, p2, tooltip) — the colour of a number that must not be believed. Night counterpart: Color · Trap (night).
-	measure 'Color · Trap' = "#B3402E"
-		formatString: @
-		displayFolder: 06 Display
-		lineageTag: 2a2fe019-1816-4fac-9f52-d8643f00c50c
-
-	/// Honest/corrected token on the PAPER surface — the colour of a number that states what it excludes. Night counterpart: Color · Honest (night).
-	measure 'Color · Honest' = "#2F6B4F"
-		formatString: @
-		displayFolder: 06 Display
-		lineageTag: c4f24e6b-315e-4ad3-a746-d303eadc07ee
-
-	/// Context-series token on the PAPER surface — everything that is not the story. Night counterpart: Color · Neutral (night).
-	measure 'Color · Neutral' = "#78716C"
-		formatString: @
-		displayFolder: 06 Display
-		lineageTag: 9faedfbd-7fad-4768-924d-5475a0a8867a
 
 	/// Trap/lie token on the NIGHT surface (p0, p3, p9).
 	measure 'Color · Trap (night)' = "#E8705F"
@@ -395,75 +464,6 @@ table _Measures
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: cadfffed-cedd-4459-9dad-8e01b28c914f
-
-	/// Act I's insight title — the share of listings that cannot carry a money claim. Bound to z_p1_header_title (act-title run).
-	measure 'Title · Lie 1' =
-			"ACT I — THE PROFIT LIE: "
-				& FORMAT(1 - [Financial coverage %], "0.0%")
-				& " of listings cannot support a money claim"
-		formatString: @
-		displayFolder: 06 Display
-		lineageTag: e562f4ff-d44d-4eb9-9d37-0ebd0afb378b
-
-	/// Act II's insight title — how few listings clear the disclosed evidence bar. Bound to z_p2_header_title (act-title run).
-	measure 'Title · Lie 2' =
-			"ACT II — THE RATINGS LIE: only "
-				& FORMAT([Evidence share %], "0.0%")
-				& " of listings clear "
-				& FORMAT([Rating m (disclosed)], "#,0")
-				& " votes"
-		formatString: @
-		displayFolder: 06 Display
-		lineageTag: 8fc6684a-7f5f-4054-b991-910d1b8b7099
-
-	/// Act III's insight title — the population that survives every honest adjustment, and the one adjustment refused. Bound to z_p3_header_title.
-	measure 'Title · Lie 3' =
-			"ACT III — THE CORRECTED CUT: "
-				& FORMAT([Movies (scatter population)], "#,0")
-				& " listings earn a place; popularity is refused — formula not published"
-		formatString: @
-		displayFolder: 06 Display
-		lineageTag: 98b7fbce-f4e9-498b-a5e8-ae3d6923d4ab
-
-	/// The p0 marquee takeaway — the mandated Key Takeaway, with its two live counts filled from the model. Bound to hero_takeaway.
-	measure 'Title · Landing' =
-			"The data is not wrong — the reading is. "
-				& FORMAT(1 - [Financial coverage %], "0%")
-				& " of "
-				& FORMAT([Movies], "#,0")
-				& " listings have no credible financials, the median listing has "
-				& IF([Median votes] = 0, "zero", FORMAT([Median votes], "#,0"))
-				& " votes, and “popularity” has no published formula. "
-				& "Every honest number here states what it excludes."
-		formatString: @
-		displayFolder: 06 Display
-		lineageTag: 80057dd2-e358-46ed-9e73-25952f29963a
-
-	/// The billing-block scope stamp: snapshot, basis and its cross-foot, the financial floor, m, C, and the listings≠films caveat.
-	/// One string, every disclosed parameter, all live. Bound to z_billing_method (p0) and reused as the method line on p9.
-	measure 'Label · Method' =
-			"TMDB SNAPSHOT "
-				& FORMAT([Snapshot anchor (disclosed)], "yyyy·mm·dd")
-				& " · BASIS "
-				& FORMAT([Movies], "#,0")
-				& " LISTINGS (ADULT "
-				& FORMAT([Adult listings excluded], "#,0")
-				& " EXCLUDED OF "
-				& FORMAT([Movies (all listings incl. adult)], "#,0")
-				& ") · FINANCIAL FLOOR "
-				& FORMAT([Financial floor (disclosed)], "\$#,0")
-				& " · m="
-				& FORMAT([Rating m (disclosed)], "#,0")
-				& " · C="
-				& FORMAT([Rating C (disclosed)], "0.00")
-				& " · LISTINGS≠FILMS: "
-				& FORMAT([Duplicate listings], "#,0")
-				& " DUPLICATE (TITLE,DATE) PAIRS ("
-				& FORMAT(DIVIDE([Duplicate listings], [Movies]), "0.0%")
-				& ")"
-		formatString: @
-		displayFolder: 06 Display
-		lineageTag: b424e7e9-8996-4554-b28a-6b289ff3abc5
 
 	/// p1 SC.1 action line — the naive analyst's move, over the true listing basis. Bound to c_p1_action.
 	measure 'Copy · Act I · action' =
@@ -549,8 +549,7 @@ table _Measures
 		lineageTag: a515bb21-c12d-4994-86d7-41874f8073aa
 
 	/// p1 KPI category label — the trap's scope, stated on the trap itself. Bound to c_kpi_profit_label.
-	measure 'Copy · Act I · kpi label' =
-			"Profit, all " & FORMAT([Movies], "#,0") & " listings (naive)"
+	measure 'Copy · Act I · kpi label' = "Profit, all " & FORMAT([Movies], "#,0") & " listings (naive)"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 02ba97be-75e9-4f7e-a2bd-33dbfdba2505
@@ -632,8 +631,7 @@ table _Measures
 		lineageTag: 30bbca88-0d18-460b-85e5-8ea43ee7fa93
 
 	/// p3 winner annotation beside the premiere scatter. Bound to c_winner_label.
-	measure 'Copy · Act III · winner label' =
-			"✓ " & [Winner · title] & " — best-selling AND best-rated on evidence"
+	measure 'Copy · Act III · winner label' = "✓ " & [Winner · title] & " — best-selling AND best-rated on evidence"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: e6e4c84f-81f7-476b-bbe3-f251ee5873f8
@@ -696,9 +694,9 @@ table _Measures
 			RETURN
 				IF(NOT ISBLANK(PosterPath), PosterBase & PosterPath)
 		formatString: @
-		dataCategory: ImageUrl
 		displayFolder: 06 Display
 		lineageTag: 55662cdd-041c-4b0b-ae07-9f3f3d2fb179
+		dataCategory: ImageUrl
 
 	/// Screen-reader narration for the naive profit card while it is still standing (SC.1/SC.2): names the number as the trap before it is read as a finding.
 	/// Plain measure feeding Power BI's own dynamic alt text — deliberately NOT a DAX user-defined function (see CREDITS.md, the outstanding byline).
@@ -785,8 +783,7 @@ table _Measures
 		lineageTag: 6bdc84d5-d512-45e9-9731-67b00446dd6d
 
 	/// Screen-reader narration for the popularity refusal card and its rank table — the refusal stated as a refusal.
-	measure 'Alt · c_refusal_popularity' =
-			"Adjustment refused: popularity. TMDB does not publish the formula, so popularity is ranked under protest, never coloured and never averaged. The table lists the three highest-popularity listings beside their evidence-weighted rating rank and their revenue rank, and marks with a cross any listing whose popularity rank and quality rank disagree by more than 100 places."
+	measure 'Alt · c_refusal_popularity' = "Adjustment refused: popularity. TMDB does not publish the formula, so popularity is ranked under protest, never coloured and never averaged. The table lists the three highest-popularity listings beside their evidence-weighted rating rank and their revenue rank, and marks with a cross any listing whose popularity rank and quality rank disagree by more than 100 places."
 		formatString: @
 		displayFolder: 06 Display\Alt text
 		lineageTag: 53c73ef2-ab18-4e37-9f9e-4f6c9aec259c

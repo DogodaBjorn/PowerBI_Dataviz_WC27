@@ -1631,3 +1631,171 @@ grid measurement          : 222 visuals / 888 coordinates — 38% on the 8px gri
   an 830 px box, so it *must* wrap to two lines inside a 44 px card. Cards centre their
   value vertically; if Power BI clips instead of wrapping, the second line disappears.
   Check p3's header first among the three.
+
+## 2026-08-05 - G6 CORRECTNESS FIX: the shape-fill fallback (root cause found)
+
+**Symptom reported from Desktop.** Every shape that should be cream / white /
+dark rendered as solid terracotta `#B3402E`, and the cards showed their measure
+name with the value nearly invisible.
+
+**Root cause - a schema-valid property that Desktop silently ignores.**
+`#B3402E` is `dataColors[0]` of the D7 theme. Our shapes' `fill` objects were
+never bound, so every shape fell back to the shape visual's built-in default,
+which is the theme's first data colour. The `fill` object was written as
+
+```
+"fill": [ { "properties": { "show": true, "fillColor": <colour> } } ]
+```
+
+which passes `visualContainer/2.9.0` deep validation - that schema delegates
+`objects` to `formattingObjectDefinitions/1.5.0#/DataViewObjectDefinitions`,
+which is `{"type":"object","additionalProperties":{}}`, completely untyped.
+Schema-valid, and completely inert. This is the exact trap the `pbir-authoring`
+skill warns about, met for real for the first time in this build.
+
+**The ground truth that settled it.** Seven Desktop-authored `shape` visuals were
+recovered from git history (`49cae0c~1`, pages `a65cf5aab733edd4ebbd` and
+`22a73d6058ce40e505e0`), together with 3 `image`, 2 `slicer`, 3 `textbox` and
+2 `tableEx`. Desktop's grammar for the shape formatting objects is:
+
+| object | selector | properties |
+|---|---|---|
+| `shape` | none | `tileShape` (+ `rectangleRoundedCurve` when rounded) |
+| `rotation` | none | `shapeAngle` |
+| `fill` | `{"id":"default"}` | `fillColor` - **never** `show` |
+| `outline` (off) | none | `show` |
+| `text` | none **and** `{"id":"default"}` | `show` in its own entry; `text`/`fontSize`/`fontColor` in the selector'd entry |
+
+The rule, stated once: **the on/off toggle lives in its own selectorless entry;
+every property that styles the shape's default part carries
+`selector: {"id":"default"}`.** Our own `theme.json` already encodes the same
+grammar for buttons (`actionButton.outline` is
+`[{show:true}, {$id:"default",...}, {$id:"hover",...}]`), which is independent
+corroboration from the published theme schema.
+
+**A second, larger discovery: Desktop round-tripped this project at 13:15 today**
+and its save is the strongest evidence in the repo.
+
+- Desktop's canonical `position` key order is `height` before `width`. All 222
+  visuals were authored `width, height`; after the save exactly **9** carry
+  Desktop's order. Those 9 - and only those 9 - passed through Desktop's
+  formatting model. The other 213 were written back byte-verbatim and are
+  therefore *unexamined*, so their surviving properties prove nothing.
+- On `z_ticket1/2/3_admit` and `z_ticket1/2/3_serial`, **Desktop deleted
+  `textAngle`** - the invented property flagged as unverified token 3 in the
+  phase-B1 decisions. Proof of the drop mechanism, on a shape, in this repo.
+- On `tbl_perfect_tens` Desktop flipped `columnHeaders.autoSizeColumnWidth`
+  from `false` to `true`, and on `dn_rating_fall` it reordered the query roles
+  and added `"active": true`.
+
+**The correction applied** (structure only - every colour, rect, id and tabOrder
+untouched):
+
+```
+- "fill": [ { "properties": { "show": true, "fillColor": C } } ]
++ "fill": [ { "properties": { "fillColor": C }, "selector": { "id": "default" } } ]
+
+- "outline": [ { "properties": { "show": S, "lineColor": L, "weight": W } } ]
++ "outline": [ { "properties": { "show": S } },
++              { "properties": { "lineColor": L, "weight": W },
++                "selector": { "id": "default" } } ]
+
+- "tileShape": "'rectangleRoundedByPixel'"
++ "tileShape": "'rectangleRounded'"        (rectangleRoundedCurve: 8L kept)
+```
+
+`rectangleRoundedByPixel` is in the published theme enum but is **not** what
+Desktop writes; the verified pair is `rectangleRounded` + `rectangleRoundedCurve`
+(Desktop wrote `16L` and `4L` on its own header and panel).
+
+**Counts corrected**
+
+| type | visuals touched | fill | outline | tileShape |
+|---|---|---|---|---|
+| `shape` (63 total) | 57 | 45 | 28 | 8 |
+| `actionButton` (38 total) | 35 | 9 | 35 | 0 |
+| **total** | **92** | **54** | **63** | **8** |
+
+`actionButton` shares the shape object vocabulary exactly (`shape`, `rotation`,
+`fill`, `outline`, `text`) and the theme's own button block uses the same
+selector grammar, so the identical correction was applied. The 18 shape and 29
+button `fill: [{show:false}]` entries were **left selectorless** - that is
+Desktop's own form for a disabled card, and Desktop preserved it verbatim when
+it re-serialised `z_ticket1_admit`.
+
+**What this explains beyond the shapes.** 20 textboxes set dark ink `#211E1A`
+because they sit on cream backing shapes. Their own structure is a byte-for-byte
+match to Desktop's authored textbox (`general[0].properties.paragraphs[].textRuns[]`
+with `value` plus `textStyle{fontFamily,fontSize,color,fontWeight}`, no selector,
+no `expr` wrapper) - **the textboxes were never broken**; they were dark-on-dark
+because their backing shape was rendering as the trap red. Fixing the shapes
+fixes the legibility.
+
+**Verified good, and now on the record** (survived Desktop's own re-serialisation
+of `tbl_perfect_tens` / `hero_premiere_scatter`, so these are proven, not
+inferred): `tableEx` `values`, `grid` (incl. `gridHorizontalColor`,
+`gridHorizontalWeight`, `imageHeight`, `rowPadding`), `columnHeaders`
+(selectorless), `columnFormatting` and `columnWidth` (both `{"metadata": ...}`
+selectors); `scatterChart` `categoryAxis`, `valueAxis`, `dataPoint.defaultColor`
+and `y1AxisReferenceLine` with `{"id":"refC"}`; and the visual-container objects
+`title` / `background` / `border` / `dropShadow` / `general.altText`, all
+selectorless, with `background`/`border` carrying `color`, `transparency`, `width`.
+
+**Still unverified - the honest list.** None of these was changed this pass.
+
+1. **`cardVisual` - deliberately untouched.** There is no Desktop-authored card
+   anywhere in this repo. All 46 write `label: [{show}]` and
+   `value: [{fontColor, fontFamily, fontSize, horizontalAlignment, show,
+   textWrap}]`, both selectorless. The reported symptom - label visible, value
+   nearly invisible - is the same fallback signature, and `value.show` is the
+   same kind of extra `show` that Desktop omits from `fill`. A reference card
+   authored in Desktop settles it; guessing a second time would not.
+2. `shape.text` `horizontalAlignment` / `verticalAlignment` (3 visuals) - absent
+   from every Desktop shape text seen, which only ever carried `text`,
+   `fontSize`, `fontColor`, `fontFamily`.
+3. `fill.transparency` on one shape - Desktop never wrote it.
+4. `actionButton.shape` is selectorless here, but the theme writes
+   `shape: [{$id:"default", roundEdge:0}]`. Left alone rather than invent a
+   selector Desktop has not been seen to use.
+5. `textbox` paragraph `horizontalTextAlignment` (12 paragraphs) and textRun
+   `fontStyle` (6 runs) - Desktop's authored paragraphs carried only `textRuns`
+   and `listType`.
+6. The `image` visual `img_tt_poster` is the **least verified object in the
+   report**: it binds a measure through `query.queryState.Values` and writes
+   `sourceType` / `sourceField` / `fit` / `strokeShow` / `strokeColor` /
+   `strokeWidth`, whereas Desktop's only authored image uses a completely
+   different static-resource shape (`sourceFile.image.{name,url,scaling}`).
+   Assume it falls back until seen.
+7. `z_ticket1/2/3_stub_rule` carry `outline.show = false` **and** a `lineColor`
+   plus `weight` - styled but disabled, so they draw nothing. Structure
+   corrected, value deliberately preserved; if the perforation is meant to be
+   visible this is a content bug, not a structural one.
+
+**The lesson, for this log and the toolkit.** A schema-valid PBIR property can
+be silently ignored, and the failure mode is a theme default that looks like a
+design decision. The published schemas cannot catch it because the formatting
+object bag is untyped. **Desktop-authored reference files are the only proof
+that a formatting object binds** - recover them from git history, or make
+Desktop serialise one, before writing a property shape for the first time.
+
+```
+[2026-08-05 - G6 SHAPE-FALLBACK FIX PASS]
+validate_json.py          : PASS - 259 file(s) repo-wide, 0 errors, no BOM
+visualContainer/2.9.0     : PASS - 222 visual.json validated DEEPLY with all
+                            remote sub-schemas resolved (5 schema documents),
+                            0 errors. The only reported difference is the known
+                            $schema const: our files declare 2.11.0, which is
+                            what Desktop writes and Microsoft has not published.
+pbir_detect.py            : PASS - 222 visuals scanned, 48 finding(s),
+                            0 unwaived, 48 waived (unchanged by this pass;
+                            the waiver file is still a DRAFT awaiting signature)
+grammar re-audit          : shape + actionButton fill/outline/text/shape/rotation
+                            now match the Desktop-authored grammar exactly:
+                            fill    54 x selector{id:default} + fillColor only
+                            outline 63 x selectorless show + 63 styling entries
+                            text    unchanged (already correct)
+Desktop round-trip check  : the 9 visuals Desktop re-serialised at 13:15 were
+                            NOT overwritten by this pass - all 9 still carry
+                            Desktop's height-before-width position order
+git                       : NOT committed, by instruction. git diff is the undo.
+```

@@ -5,8 +5,8 @@
     "x": 338,
     "y": 254,
     "z": 28,
-    "width": 28,
     "height": 300,
+    "width": 28,
     "tabOrder": -1
   },
   "visual": {
@@ -107,13 +107,6 @@
                       "Value": "'#211E1A'"
                     }
                   }
-                }
-              }
-            },
-            "textAngle": {
-              "expr": {
-                "Literal": {
-                  "Value": "270L"
                 }
               }
             }

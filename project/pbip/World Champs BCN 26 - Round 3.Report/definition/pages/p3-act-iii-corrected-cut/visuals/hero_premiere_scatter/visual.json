@@ -5,8 +5,8 @@
     "x": 24,
     "y": 152,
     "z": 30,
-    "width": 896,
     "height": 464,
+    "width": 896,
     "tabOrder": 900
   },
   "visual": {
@@ -27,7 +27,26 @@
                 }
               },
               "queryRef": "Movies.Title",
-              "nativeQueryRef": "Title"
+              "nativeQueryRef": "Title",
+              "active": true
+            }
+          ]
+        },
+        "Play": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Release Year"
+                    }
+                  },
+                  "Property": "Year Label"
+                }
+              },
+              "queryRef": "Release Year.Year Label",
+              "nativeQueryRef": "Year Label"
             }
           ]
         },
@@ -50,7 +69,8 @@
                 }
               },
               "queryRef": "Sum(Movies.Revenue)",
-              "nativeQueryRef": "Sum of Revenue"
+              "nativeQueryRef": "Sum of Revenue",
+              "active": true
             }
           ]
         },
@@ -595,6 +615,67 @@
           ]
         },
         "howCreated": "User"
+      },
+      {
+        "name": "681bf33f100400e93170",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Movies"
+              }
+            },
+            "Property": "Title"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0186771bb5850879b494",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Movies"
+                  }
+                },
+                "Property": "Revenue"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9b484240129299c09754",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Rating (evidence-weighted)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d0f602f7439036330d44",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Release Year"
+              }
+            },
+            "Property": "Year Label"
+          }
+        },
+        "type": "Categorical"
       }
     ]
   }
