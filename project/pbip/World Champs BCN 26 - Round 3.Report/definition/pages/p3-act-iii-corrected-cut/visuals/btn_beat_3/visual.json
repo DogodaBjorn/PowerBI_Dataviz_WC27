@@ -44,18 +44,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fillColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#B79BE8'"
-                    }
-                  }
+                  "Value": "false"
                 }
               }
             }
@@ -110,7 +99,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'● SC.3 — THE PREMIERE'"
+                  "Value": "'SC.3 — THE PREMIERE'"
                 }
               }
             },
@@ -133,7 +122,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#211E1A'"
+                      "Value": "'#F2EFE6'"
                     }
                   }
                 }
@@ -232,7 +221,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Scene 3 of 3 — The Premiere. Reveals the film the corrected cut lands on.'"
+                  "Value": "'Scene 3 of 3 — The Premiere. Reveals the listing the corrected cut lands on.'"
                 }
               }
             }
@@ -241,5 +230,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "isHidden": true
 }

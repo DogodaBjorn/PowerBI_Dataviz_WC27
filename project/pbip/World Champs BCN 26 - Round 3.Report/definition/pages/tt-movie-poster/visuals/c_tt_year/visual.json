@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Release year of the hovered film, or ''no date on record''.'"
+                  "Value": "'Release year of the listing under the pointer, or no date on record when the source carries none.'"
                 }
               }
             }

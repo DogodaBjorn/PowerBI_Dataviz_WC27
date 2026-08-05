@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Listings dated after the snapshot anchor of 24 July 2026, flagged as future-dated.'"
+                  "Value": "'Future-dated listings: dated after the disclosed snapshot anchor of 24 July 2026. Flagged rather than deleted, because the anchor is fixed and is never today.'"
                 }
               }
             }

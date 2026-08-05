@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Evidence-weighted rating for the hovered film, with m = 100 and C = 6.96.'"
+                  "Value": "'Evidence-weighted rating for this listing, computed with m = 100 and C = 6.96. Thin evidence is pulled toward the global mean, so a perfect score resting on very few votes lands near 6.96.'"
                 }
               }
             }

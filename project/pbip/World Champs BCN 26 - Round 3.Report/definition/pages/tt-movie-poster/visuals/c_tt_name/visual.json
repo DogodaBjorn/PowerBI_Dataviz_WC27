@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Title of the hovered film.'"
+                  "Value": "'Title of the listing under the pointer.'"
                 }
               }
             }

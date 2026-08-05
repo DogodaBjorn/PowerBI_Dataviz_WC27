@@ -44,18 +44,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fillColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#2E4A7D'"
-                    }
-                  }
+                  "Value": "false"
                 }
               }
             }
@@ -110,7 +99,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'● SC.1 — THE SEDUCTION'"
+                  "Value": "'SC.1 — THE SEDUCTION'"
                 }
               }
             },
@@ -133,7 +122,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F5F2E9'"
+                      "Value": "'#211E1A'"
                     }
                   }
                 }
@@ -241,5 +230,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "isHidden": true
 }

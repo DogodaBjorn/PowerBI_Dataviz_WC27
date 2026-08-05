@@ -27,234 +27,17 @@
             "singleVisual": {}
           },
           "btn_beat_1": {
-            "singleVisual": {
-              "objects": {
-                "merge": {
-                  "fill": [
-                    {
-                      "properties": {
-                        "show": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "false"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ],
-                  "text": [
-                    {
-                      "properties": {
-                        "show": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "true"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "properties": {
-                        "text": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "'SC.1 — THE SEDUCTION'"
-                            }
-                          }
-                        },
-                        "fontFamily": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "'Bahnschrift SemiCondensed'"
-                            }
-                          }
-                        },
-                        "fontSize": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "10D"
-                            }
-                          }
-                        },
-                        "fontColor": {
-                          "solid": {
-                            "color": {
-                              "expr": {
-                                "Literal": {
-                                  "Value": "'#211E1A'"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "selector": {
-                        "id": "default"
-                      }
-                    }
-                  ]
-                }
-              }
-            }
+            "singleVisual": {}
           },
           "btn_beat_2": {
             "singleVisual": {
-              "objects": {
-                "merge": {
-                  "fill": [
-                    {
-                      "properties": {
-                        "show": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "true"
-                            }
-                          }
-                        },
-                        "fillColor": {
-                          "solid": {
-                            "color": {
-                              "expr": {
-                                "Literal": {
-                                  "Value": "'#8A6516'"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ],
-                  "text": [
-                    {
-                      "properties": {
-                        "show": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "true"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "properties": {
-                        "text": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "'● SC.2 — THE NOTES'"
-                            }
-                          }
-                        },
-                        "fontFamily": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "'Bahnschrift SemiCondensed'"
-                            }
-                          }
-                        },
-                        "fontSize": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "10D"
-                            }
-                          }
-                        },
-                        "fontColor": {
-                          "solid": {
-                            "color": {
-                              "expr": {
-                                "Literal": {
-                                  "Value": "'#F5F2E9'"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "selector": {
-                        "id": "default"
-                      }
-                    }
-                  ]
-                }
+              "display": {
+                "mode": "hidden"
               }
             }
           },
           "btn_beat_3": {
-            "singleVisual": {
-              "objects": {
-                "merge": {
-                  "fill": [
-                    {
-                      "properties": {
-                        "show": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "false"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ],
-                  "text": [
-                    {
-                      "properties": {
-                        "show": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "true"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "properties": {
-                        "text": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "'SC.3 — THE CORRECTED CUT'"
-                            }
-                          }
-                        },
-                        "fontFamily": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "'Bahnschrift SemiCondensed'"
-                            }
-                          }
-                        },
-                        "fontSize": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "10D"
-                            }
-                          }
-                        },
-                        "fontColor": {
-                          "solid": {
-                            "color": {
-                              "expr": {
-                                "Literal": {
-                                  "Value": "'#211E1A'"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "selector": {
-                        "id": "default"
-                      }
-                    }
-                  ]
-                }
-              }
-            }
+            "singleVisual": {}
           },
           "z_p2_beat1_mark": {
             "singleVisual": {
@@ -389,6 +172,23 @@
           },
           "btn_next_act": {
             "singleVisual": {}
+          },
+          "btn_beat_1_current": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_beat_2_current": {
+            "singleVisual": {}
+          },
+          "btn_beat_3_current": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
           }
         }
       }

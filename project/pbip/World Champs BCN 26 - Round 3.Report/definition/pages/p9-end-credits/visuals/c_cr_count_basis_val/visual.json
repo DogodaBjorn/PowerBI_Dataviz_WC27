@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Basis: the listing count every number in this report is computed on, after the adult exclusion — listings per source minus adult titles excluded. Marked kept.'"
+                  "Value": "'Basis: listings per source minus adult listings excluded, and the count every other number in this report is computed on. Marked kept.'"
                 }
               }
             }

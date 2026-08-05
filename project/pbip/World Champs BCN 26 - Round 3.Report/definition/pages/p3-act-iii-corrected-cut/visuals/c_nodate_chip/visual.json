@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'The labelled unknown: listings with no release date never enter this animation, future-dated listings are flagged, and the sentinel years 1800 and 2099 are excluded from play. The live counts are printed on the chip.'"
+                  "Value": "'The labelled unknown. Listings with no release date on record cannot be placed on a release-year timeline, so Act III leaves them out and counts them here rather than dropping them silently. Listings dated after the disclosed snapshot anchor of 24 July 2026 are flagged as future-dated, and the source sentinel years 1800 and 2099 are treated as placeholder dates rather than real releases.'"
                 }
               }
             }

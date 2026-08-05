@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Disclosed parameter: the financial floor, $10,000 in budget with revenue above zero.'"
+                  "Value": "'Disclosed parameter, the financial floor: a budget of at least $10,000 with revenue above zero. Every money claim in this report is restricted to listings that clear it.'"
                 }
               }
             }

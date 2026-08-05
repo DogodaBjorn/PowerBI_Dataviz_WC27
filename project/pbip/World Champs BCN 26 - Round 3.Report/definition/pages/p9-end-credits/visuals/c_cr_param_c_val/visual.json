@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Disclosed parameter: C, the global mean that thin-evidence ratings are pulled toward.'"
+                  "Value": "'Disclosed parameter C: the global mean that thin-evidence ratings are pulled toward, set to 6.96 and applied identically in every rating measure.'"
                 }
               }
             }

@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Listings with no release date — counted here rather than dropped silently.'"
+                  "Value": "'Listings with no release date: counted here rather than dropped silently, and left out of Act III because they cannot be placed on a release-year timeline.'"
                 }
               }
             }

@@ -380,6 +380,15 @@ best-selling **and** best-rated films emerge — year by year.
 **Interactions:** beat rail → `bm_p3_b1/b2/b3`, **default SC.3** (ack table row 3).
 Scatter points open `tt-movie-poster`. The play axis is enhancement, never the only
 path to the finding.
+
+> **p3 landing on SC.3 is deliberate, not a build defect.** p1 and p2 land on SC.1
+> because each act opens on its lie and then corrects it; Act III has no lie left to
+> stage, so it opens on the resting state — the premiere the corrected cut arrives at.
+> This is **ack #3 in the entrant's decision table** and was carried into the build:
+> on disk `btn_beat_3_current` and the SC.3 content are the visible state, and
+> `bm_p3_b1` / `bm_p3_b2` step *backwards* into the adjustments and the refusal.
+> A reviewer comparing the three act pages will see p3 differ from p1/p2 here on
+> purpose. (Recorded at the G6 a11y pass, 2026-08-05.)
 **Leaves out:** any popularity aggregation or good/bad colouring; silently dropped
 dateless rows (they are counted, visibly); causal claims.
 
@@ -398,7 +407,7 @@ centred closing block 598–648 · home button 664–696.
 |---|---|---|---|---|
 | `z_cr_title` | textbox | chrome | — | `24, 24, 1232, 64`; Bahnschrift 20 pt, tracking 0.3 em, `#F2EFE6`, centred |
 | `c_cr_h_cast` | textbox | section head | — | `240, 104, 360, 18`; Bahnschrift 10 pt tracking 0.28 em `#B5AFA0`; `CAST` |
-| `c_cr_cast` | textbox | S1 editorial framing — the three lies named | — | `240, 126, 360, 114`; Consolas 12 pt / 19 px `#F2EFE6`; dot leaders as literal ` . . . . ` runs in `#57534E`; each attribution on its own line |
+| `c_cr_cast` | textbox | S1 editorial framing — the three lies named | — | `240, 126, 360, 114`; Consolas 12 pt / 19 px `#F2EFE6`; dot leaders as literal ` . . . . ` runs in **`#B5AFA0`** (corrected at the G6 a11y pass — the row previously specified `#57534E`, which is the **paper** secondary ink and measures **2.39:1** on this night page; the night secondary ink measures **8.35:1**); each attribution on its own line |
 | `c_cr_h_counts` | textbox | section head | — | `240, 256, 360, 18`; `PRODUCTION COUNTS` |
 | `tbl_production_counts` | tableEx | **hero — the cross-foot** | `[Movies (all listings incl. adult)]`, `[Adult listings excluded]`, `[Movies]`, `[Duplicate listings]`, `[Duplicate Movie IDs]`, `[Movies (undated)]`, `[Movies (future-dated)]`, negative-revenue count | `240, 278, 360, 152`; headers hidden; label column left, value column right; Consolas 12 pt `#F2EFE6`; horizontal gridline 1 px `#57534E` (**dotted VERIFY** — solid is the accepted fallback, it is the dot-leader stand-in); BASIS row carries `✓ kept` in `#4ECBA0`; background off; alt `[Alt · tbl_production_counts]` |
 | `c_cr_h_params` | textbox | section head | — | `680, 104, 360, 18`; `DISCLOSED PARAMETERS` |

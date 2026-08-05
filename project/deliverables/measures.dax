@@ -11,6 +11,19 @@
 // Names here are byte-identical to design-handoff.md and to the TMDL that stage 6
 // writes. Visual ids referenced in comments match design-handoff.md.
 //
+// ---------------------------------------------------------------------------
+// AUTHORITY (added at the G6 a11y pass, 2026-08-05)
+// The built model — `_Measures.tmdl` — is authoritative. This file is the stage-5
+// design deliverable and covers only the 58 display/support measures the design
+// added; the 32 stage-4 base measures live in TMDL alone. Twelve bodies here were
+// refreshed from the model in this pass, because stage 6 changed them after the
+// design was written: the Act II ruling (two-vote -> single-vote), the Act III
+// wording (films -> listings), the two Deneb fallbacks (waffle and dumbbell became
+// a stacked bar and a paired bar chart), the removal of the play-axis claim, and
+// the resolved TMDB poster base. If this file and the model ever disagree again,
+// the model wins — re-run the comparison before pasting anything from here.
+// ---------------------------------------------------------------------------
+//
 // ============================================================================
 // READ THIS FIRST — what REPLACES a stub vs what is NEW
 // ============================================================================
@@ -111,9 +124,10 @@ Movies (zero votes) = CALCULATE([Movies], Movies[Vote Count] = 0)
 /// Folder: 03 Lie 2 · Ratings | Format: 0.0% | NEW
 Zero-vote share % = DIVIDE([Movies (zero votes)], [Movies])
 
-/// What a perfect 10.0 on two votes actually reads once evidence is required —
-/// the Act II headline, computed from the disclosed m and C, never typed.
 /// ILLUSTRATION: a worked example of the shrinkage formula, not a film's score.
+/// SUPERSEDED by `Single-vote ten (illustration)` at the Act II ruling (s6): Act II
+/// now states the single-vote case. This measure is retained in the model but no
+/// visual consumes it.
 /// Folder: 03 Lie 2 · Ratings | Format: 0.00 | NEW
 Two-vote ten (illustration) =
 VAR m = [Rating m (disclosed)]
@@ -123,9 +137,10 @@ RETURN
 
 /// The Godfather's evidence-weighted rating — Act II's reference point: what a film
 /// with real evidence behind it actually scores.
-/// VERIFY-AT-BUILD: confirm exactly ONE listing matches this title+year (duplicate
-/// titles exist in this source); if more than one matches, narrow on Movie ID and
-/// record the id in BUILD_LOG.
+/// RESOLVED at s6 (was VERIFY-AT-BUILD): a full scan of the source CSV finds exactly
+/// two listings titled "The Godfather" — Movie ID 238 (1972) and 1050474 (2023). The
+/// Release Year Key = 1972 predicate selects only 238, so no narrowing on Movie ID was
+/// needed and the measure ships as designed.
 /// Folder: 03 Lie 2 · Ratings | Format: 0.00 | NEW
 Godfather rating (reference) =
 CALCULATE(
@@ -296,7 +311,7 @@ Title · Lie 2 =
 Title · Lie 3 =
 "ACT III — THE CORRECTED CUT: "
     & FORMAT([Movies (scatter population)], "#,0")
-    & " films earn a place; popularity is refused — formula not published"
+    & " listings earn a place; popularity is refused — formula not published"
 
 
 // ══════════════ 06 Display — page copy carrying live numbers ══════════════
@@ -404,17 +419,17 @@ Copy · Act II · responsible read =
     & FORMAT([Rating m (disclosed)], "#,0")
     & ", C="
     & FORMAT([Rating C (disclosed)], "0.00")
-    & "), a 10.0 on 2 votes reads "
-    & FORMAT([Two-vote ten (illustration)], "0.00")
-    & ". The Godfather reads "
-    & FORMAT([Godfather rating (reference)], "0.00")
+    & "), a perfect 10.0 on a single vote reads "
+    & FORMAT([Single-vote ten (illustration)], "0.00")
+    & " — barely above the global mean of "
+    & FORMAT([Rating C (disclosed)], "0.00")
     & ". Applause is not evidence."
 
 /// p2 verdict — Act II's one-line finding. Bound to c_verdict_act2.
 /// Folder: 06 Display | Format: @ | NEW
 Copy · Act II · verdict =
-"Applause is not evidence: 10.0 on 2 votes reads "
-    & FORMAT([Two-vote ten (illustration)], "0.00")
+"Applause is not evidence: a perfect 10.0 on one vote reads "
+    & FORMAT([Single-vote ten (illustration)], "0.00")
     & " with m="
     & FORMAT([Rating m (disclosed)], "#,0")
     & ", C="
@@ -425,7 +440,7 @@ Copy · Act II · verdict =
 /// Bound to c_scatter_population.
 /// Folder: 06 Display | Format: @ | NEW
 Label · Population =
-"films with credible financials AND ≥ "
+"listings with credible financials AND ≥ "
     & FORMAT([Rating m (disclosed)], "#,0")
     & " votes · n = "
     & FORMAT([Movies (scatter population)], "#,0")
@@ -437,11 +452,11 @@ Label · No date =
 FORMAT([Movies (undated)], "#,0")
     & " listings ("
     & FORMAT([Undated share %], "0.0%")
-    & ") have no date — they never enter this animation · "
+    & ") have no date — left out of Act III · "
     & FORMAT([Movies (future-dated)], "#,0")
     & " future-dated flagged · sentinels 1800/2099 ("
     & FORMAT([Movies (sentinel-dated)], "#,0")
-    & ") excluded from play"
+    & ") excluded as placeholders"
 
 /// p3 winner annotation beside the premiere scatter. Bound to c_winner_label.
 /// Folder: 06 Display | Format: @ | NEW
@@ -452,7 +467,7 @@ Copy · Act III · winner label =
 /// refused in the same breath. Bound to c_verdict_act3.
 /// Folder: 06 Display | Format: @ | NEW
 Copy · Act III · verdict =
-"THE END — the best movie, read responsibly: "
+"THE END — the best-performing listing, read responsibly: "
     & [Winner · title]
     & ", best-selling AND best-rated on evidence. Correlation shown; causation refused."
 
@@ -511,16 +526,16 @@ Label · Caveats =
 /// Poster image address for a single listing, built from the TMDB poster path the
 /// source already carries. Posters are DATA (they identify the film), never
 /// decoration — names and numbers are printed beside them in every case.
-/// VERIFY-AT-BUILD: the base URL and size segment are NOT written from memory.
-/// Retrieve them at build from TMDB's own image-configuration documentation and
-/// paste them into PosterBase; record the retrieved value and its source in
-/// BUILD_LOG.md. If the base cannot be verified, ship the FALLBACK: no poster
-/// column, no tooltip image — the design already reads without them.
-/// The column bound to this measure must be set to data category "Image URL".
+/// RESOLVED at s6 (was VERIFY-AT-BUILD): PosterBase was retrieved from TMDB's own
+/// image documentation — developer.themoviedb.org/docs/image-basics and
+/// /reference/configuration-details — giving secure_base_url + the documented size
+/// w342. The FALLBACK (no poster column, no tooltip image) was therefore not taken.
+/// RESOLVED at the G6 a11y pass: the measure carries `dataCategory: ImageUrl` in TMDL,
+/// which is what makes an image visual render it. Without it the visual is blank.
 /// Folder: 06 Display | Format: @ | NEW
 Image · Poster URL =
-VAR PosterBase = "{VERIFY-AT-BUILD — TMDB image base URL + size segment}"
-VAR PosterPath = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Poster Path]))
+VAR PosterBase = "https://image.tmdb.org/t/p/w342"
+VAR PosterPath = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Poster Path]))  -- source poster paths carry their own leading slash (verified in the CSV at s6)
 RETURN
     IF(NOT ISBLANK(PosterPath), PosterBase & PosterPath)
 
@@ -562,11 +577,11 @@ Alt · kpi_profit_naive · SC3 =
 /// Alt text for dn_ticket_waffle (and its stacked-bar fallback).
 /// Folder: 06 Display\Alt text | Format: @ | NEW
 Alt · dn_ticket_waffle =
-"Waffle of 100 ticket shapes. "
-    & FORMAT([Financial coverage %] * 100, "0")
-    & " are filled and marked valid, representing the "
+"Coverage exhibit. "
     & FORMAT([Financial coverage %], "0.0%")
-    & " of listings with credible financials; the rest are empty outlines. Median credible profit "
+    & " of listings hold credible financials under the disclosed floor of "
+    & FORMAT([Financial floor (disclosed)], "\$#,0")
+    & " with revenue above zero; the remainder cannot support a money claim. Median credible profit "
     & FORMAT([Median profit (credible)], "\$#,0;(\$#,0)")
     & ", mean "
     & FORMAT([Mean profit (credible)], "\$#,0;(\$#,0)")
@@ -575,17 +590,21 @@ Alt · dn_ticket_waffle =
 /// Alt text for tbl_perfect_tens.
 /// Folder: 06 Display\Alt text | Format: @ | NEW
 Alt · tbl_perfect_tens =
-"Leaderboard of films rated a perfect ten. Each row prints the film name, the raw rating of 10.0 and its vote count. "
+"Trap exhibit. Leaderboard of listings rated a perfect 10.0, sorted by fewest votes first; each row prints the title, the raw rating and its vote count. "
+    & FORMAT([Movies (perfect ten)], "#,0")
+    & " listings score a perfect 10.0 and "
+    & FORMAT([Movies (perfect ten, single vote)], "#,0")
+    & " of those rest on a single vote. "
     & FORMAT([Zero-vote share %], "0.0%")
-    & " of all listings have no votes at all, and the median listing has "
+    & " of all listings have no votes at all; the median listing has "
     & FORMAT([Median votes], "#,0")
-    & ". These ratings are marked thin evidence."
+    & ". Every row is marked thin evidence."
 
 /// Alt text for dn_rating_fall (and its paired-bars fallback).
 /// Folder: 06 Display\Alt text | Format: @ | NEW
 Alt · dn_rating_fall =
-"Dumbbell chart. Each perfect-ten film falls from a raw 10.0 to roughly "
-    & FORMAT([Two-vote ten (illustration)], "0.00")
+"Correction exhibit. Each perfect-ten listing falls from a raw 10.0 to roughly "
+    & FORMAT([Single-vote ten (illustration)], "0.00")
     & " once evidence is required, with m="
     & FORMAT([Rating m (disclosed)], "#,0")
     & " and C="
@@ -595,20 +614,20 @@ Alt · dn_rating_fall =
 /// Alt text for hero_premiere_scatter.
 /// Folder: 06 Display\Alt text | Format: @ | NEW
 Alt · hero_premiere_scatter =
-"Scatter plot with a play axis over release year. Horizontal axis: revenue in US dollars on a log scale. Vertical axis: evidence-weighted rating, with a dashed reference line at C="
+"Static scatter plot of the corrected cut. Horizontal axis: revenue in US dollars on a logarithmic scale. Vertical axis: evidence-weighted rating, with a dashed reference line at C="
     & FORMAT([Rating C (disclosed)], "0.00")
     & ". Population: "
     & FORMAT([Movies (scatter population)], "#,0")
-    & " films with credible financials and at least "
+    & " listings with credible financials and at least "
     & FORMAT([Rating m (disclosed)], "#,0")
-    & " votes. The highlighted film is "
+    & " votes. Every point is drawn in the same neutral grey — the plot does not colour the winner. The listing that is both best-selling and best-rated on evidence is "
     & [Winner · title]
-    & ", best-selling and best-rated on evidence."
+    & "."
 
 /// Alt text for the refusal card and its rank table.
 /// Folder: 06 Display\Alt text | Format: @ | NEW
 Alt · c_refusal_popularity =
-"Adjustment refused: popularity. TMDB does not publish the formula, so popularity is ranked under protest, never coloured and never averaged. The card lists the three highest-popularity films beside their evidence-weighted rating rank and revenue rank, showing how far the three rankings disagree."
+"Adjustment refused: popularity. TMDB does not publish the formula, so popularity is ranked under protest, never coloured and never averaged. The table lists the three highest-popularity listings beside their evidence-weighted rating rank and their revenue rank, and marks with a cross any listing whose popularity rank and quality rank disagree by more than 100 places."
 
 /// Alt text for c_nodate_chip.
 /// Folder: 06 Display\Alt text | Format: @ | NEW

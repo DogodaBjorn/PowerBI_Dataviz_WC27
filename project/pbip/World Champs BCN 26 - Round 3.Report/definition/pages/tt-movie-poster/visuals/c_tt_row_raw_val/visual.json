@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Raw rating for the hovered film: the plain average, with no evidence floor.'"
+                  "Value": "'Raw rating for this listing: the plain average of its votes with no evidence floor, which is why a single vote can produce a perfect 10.0.'"
                 }
               }
             }

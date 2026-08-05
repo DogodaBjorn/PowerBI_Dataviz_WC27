@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Disclosed parameter: m, the number of votes required before a rating counts as evidence.'"
+                  "Value": "'Disclosed parameter m: the votes required before a rating counts as evidence, set to 100 and applied identically in every rating measure.'"
                 }
               }
             }

@@ -4,9 +4,9 @@
 never saw the chat must learn from this file: what exists, what remains
 manual, which numbers rest on assumptions, when it was last validated. -->
 
-Last validated: 2026-08-05 (G6 fix pass) — `validate_tmdl.py --strict`: 15 files,
+Last validated: 2026-08-05 (G6 a11y pass) — `validate_tmdl.py --strict`: 15 files,
 **1 error** (the standing `SourceRoot` drive-letter waiver, see 04-model-build.md),
-0 warnings; **251 repo JSON files** well-formed, UTF-8 without BOM, 0 errors;
+0 warnings; **260 repo JSON files** well-formed, UTF-8 without BOM, 0 errors;
 every PBIR file 0 errors against its published schema with remote `$ref`s resolved.
 Model: 10 tables, **90 measures**, 8 relationships, 3 shared expressions
 (SourceRoot parameter, Source, Schema). The `06 Display\Alt text` family is
@@ -14,8 +14,8 @@ Model: 10 tables, **90 measures**, 8 relationships, 3 shared expressions
 Report: the D7 custom theme is installed and active, and a **report-level filter**
 (`Movies[Adult] = false`, locked, pane visible) is written into `report.json`.
 **The report is structurally complete**: `p0-box-office` (43) ·
-`p1-act-i-profit` (44) · `p2-act-ii-ratings` (38) · `p3-act-iii-corrected-cut` (37) ·
-`p9-end-credits` (37) · `tt-movie-poster` tooltip (14) = **213 visuals in six pages**
+`p1-act-i-profit` (47) · `p2-act-ii-ratings` (41) · `p3-act-iii-corrected-cut` (40) ·
+`p9-end-credits` (37) · `tt-movie-poster` tooltip (14) = **222 visuals in six pages**
 (5 visible + 1 tooltip — the contest maximum is 5), plus the **nine beat bookmarks**
 (`bm_p1_b1..b3`, `bm_p2_b1..b3`, `bm_p3_b1..b3`). **The two contest-starter pages
 were deleted in the G6 fix pass.** Nothing has been rendered in Desktop — see
@@ -66,6 +66,17 @@ were deleted in the G6 fix pass.** Nothing has been rendered in Desktop — see
 | 2026-08-05 (s6 **G6 fix pass**) | Report: `p3` beat rail | `btn_beat_1..3` and `z_p3_beat1..3_mark` moved onto the p1/p2 x-grid `24/188 · 222/148 · 380/222`. All three p3 labels measured to fit (131 / 106 / 122 px at Bahnschrift SemiCondensed 10 pt) |
 | 2026-08-05 (s6 **G6 fix pass**) | Report: `c_cr_count_dup_val` | y 360 → 341, rejoining its own label — every other p9 count pair already shared a row (found during the width fix, not in the review) |
 | 2026-08-05 (s6 **G6 fix pass**) | Deliverables: `design-handoff.md` | the sentence claiming no `layout.json` / `reference_screenshots/` were produced corrected — both exist (`project/design-prototypes/`, 8 screens and 8 @2x captures) |
+| 2026-08-05 (s6 **G6 a11y pass**) | Report: the alt-text sweep | **29 alt strings rewritten** so each states its finding instead of pointing at the screen. Removed every deferral ("the live count is printed on the card", "its name is read from the model", "stated in the title above", "named in the annotation beside the plot", "the card prints both counts live"). p9's 12 value cards and the tooltip's 7 now fold their label into their own alt, so each stop is self-contained. Volatile figures are phrased around the disclosed constants ($10,000 · m = 100 · C = 6.96 · 24 July 2026); **no volatile count is typed** |
+| 2026-08-05 (s6 **G6 a11y pass**) | Report + model: honesty of the alt layer | Three strings described things the file does not do. `c_nodate_chip` and `Label · No date` (**on canvas**) no longer say "never enter this animation" / "excluded from play"; `Alt · hero_premiere_scatter` and the scatter's on-disk alt now open "Static scatter plot of the corrected cut" and state plainly that the plot does not colour the winner; `dn_ticket_waffle`'s alt no longer credits an in-chart tick that lives in the caption. Docstring on `Movies (sentinel-dated)` re-worded off "play axis" |
+| 2026-08-05 (s6 **G6 a11y pass**) | Report: `z_p3_scrim` + `hero_premiere_scatter` | measured AA failure fixed — scrim `transparency` 65D → **80D** and the C = 6.96 reference line `#6E6960` → **`#8A8377`**. Recomputed under the scrim: axis labels **4.21 → 5.75:1** (needs 4.5), reference line **2.12 → 3.56:1** (needs 3.0). Unscrimmed the line improves too, 3.35 → 4.87:1 |
+| 2026-08-05 (s6 **G6 a11y pass**) | Report: beat state announced (WCAG 4.1.2) | each `btn_beat_N` split into a not-current variant (same id, z and tabOrder) and a new **`btn_beat_N_current`** — **9 new visuals**, tabOrder 405/505/605, alt reading "Scene N of 3, **current scene** — …". Styling that the bookmarks used to merge is now static per variant, and all **9 bookmarks** toggle the pair by `display.mode`. Landing states preserved: p1/p2 on SC.1, p3 on SC.3 |
+| 2026-08-05 (s6 **G6 a11y pass**) | Report: `p9` tab order | 12 `c_cr_*_lbl` + `c_cr_count_basis_kept` set to `tabOrder: -1` with `altText: ''`, their words having been folded into the sibling `_val` alt. p9 drops from **37 → 24** stops and a screen-reader user hears each label-and-number as **one** stop instead of two |
+| 2026-08-05 (s6 **G6 a11y pass**) | Report: `p9/c_cr_cast` dot leaders | the three ` . . . . ` runs moved from `#57534E` (the **paper** secondary ink) to the night token `#B5AFA0` — **2.39 → 8.35:1**. The `design-handoff.md` row that specified `#57534E` here was corrected too; the contract was the source of the defect |
+| 2026-08-05 (s6 **G6 a11y pass**) | Report: `p2/dn_rating_fall` | `valueAxis.end` 10D → **11D**. The raw series sits exactly at 10.0, so at an axis max of 10 the label was forced inside the bar (`#211E1A` on `#B3402E` = 2.92:1); with headroom it places outside on the white card. `end` verified against Microsoft's own cartesian reference |
+| 2026-08-05 (s6 **G6 a11y pass**) | Report: `p1/dn_ticket_waffle` | `legend.show` true → **false**. The native legend printed raw measure names beside the hand-built caption legend that carries the `✓`; `c_waffle_cap` is kept as the single legend |
+| 2026-08-05 (s6 **G6 a11y pass**) | SemanticModel: `Image · Poster URL` | **`dataCategory: ImageUrl`** written on the measure — previously deferred as unverifiable. Now verified from two Microsoft sources (see the decisions below) |
+| 2026-08-05 (s6 **G6 a11y pass**) | Deliverables: `measures.dax` | **12 measure bodies refreshed from the model** (the Act II ruling, films → listings, the two Deneb fallbacks, the play-axis removal, the resolved TMDB poster base) plus 3 resolved `VERIFY-AT-BUILD` docstrings and a new **AUTHORITY** header stating that `_Measures.tmdl` wins |
+| 2026-08-05 (s6 **G6 a11y pass**) | Deliverables: `design-handoff.md` | recorded that **p3 landing on SC.3 is deliberate** (ack #3 in the entrant's decision table), so a future reviewer does not read it as a defect |
 
 ## Deferred — not built, and why
 
@@ -875,6 +886,52 @@ bookmark, verified by script).
   re-phrased notes) was measured with Windows GDI `GetTextExtentPoint32W` at the
   visual's own family and size, normalised to 96 DPI logical pixels.
 
+### Stage 6 G6 a11y pass — decisions (2026-08-05)
+
+- **`dataCategory: ImageUrl` is now VERIFIED, and written.** Two independent
+  Microsoft sources, neither of them memory: (1) Microsoft Learn,
+  `Microsoft.AnalysisServices.Tabular.Measure` — the class exposes a `DataCategory`
+  property, "Specifies the type of data contained in the **measure**", so this is
+  legal on a measure and not only on a column; (2) the Microsoft `powerbi-authoring`
+  plugin's own `references/image.md`, which states that a data-bound image needs the
+  field's Data Category set to "Image URL" and instructs the reader to *"search the
+  TMDL file for `dataCategory: ImageUrl`"* and to *"add `dataCategory: ImageUrl` to a
+  column/measure"* — giving the exact TMDL token. The property name is corroborated
+  locally by this model's own `Date` table (`dataCategory: Time`), which has
+  round-tripped through Desktop. `validate_tmdl.py --strict` stays at the standing
+  waiver only.
+- **The per-point winner colour is NOT writable — it stays a Desktop step, and now
+  with a citation.** Microsoft's `references/color-strategy.md` states that for
+  non-cartesian visuals — naming **scatter** explicitly — `dataPoint.fill` with
+  `metadata` selectors is *silently ignored*, and that colouring individual points
+  needs **`scopeId`** selectors. No published source in reach documents the `scopeId`
+  payload shape, and it would in any case have to encode a specific data-point
+  identity: the winner is produced by `[Winner · title]` and is unknown until the
+  model is refreshed, which has never happened. Field-driven colour is not a way out
+  either — the same reference defines it as an `Aggregation` (Min/Max) over a **column**
+  of hex strings, applying to `backColor`/`fontColor`, and this model has no per-row
+  colour column. The scatter therefore ships single-colour, `dataPoint.defaultColor`
+  `#B5AFA0` (which the same reference confirms is the correct property for a
+  single-series chart), and the alt text now says so out loud.
+  This closes the older open question 2 with evidence rather than "unverifiable".
+- **Beat state had to become two visuals.** Alt text supersedes a button's accessible
+  name, so the `●` marking the current scene never reached a screen reader. A bookmark
+  cannot fix that: `bookmark/2.1.0` → `SingleVisualConfigState` exposes `objects` but
+  **no `visualContainerObjects`**, so `altText` is not mergeable. The current/not-current
+  split (the `kpi_profit_naive` pattern) is the only expressible route. Colours are
+  byte-identical to what the audit measured — current-state text re-checked at
+  7.84:1 (p1), 4.74:1 (p2), 7.01:1 (p3); not-current at 14.83:1 and 15.89:1.
+- **p9 reaches 24 stops, not the contracted 14.** Folding the labels away removes 13
+  stops and makes each label-and-number a single self-contained announcement. The
+  remaining gap is structural: the design counted the two credits blocks as one table
+  visual each, and they are built as label/value pairs. Getting to 14 means rebuilding
+  them as two `tableEx` visuals — a stage-5 change, not a fix-pass change.
+- **`measures.dax` had drifted much further than the two flagged items.** A body-by-body
+  comparison against `_Measures.tmdl` found 12 genuinely stale measures. All 12 were
+  replaced with the model's text; the file now carries an AUTHORITY banner saying the
+  model wins. The 32 stage-4 base measures are absent from that file **by design** —
+  it is the stage-5 deliverable — which the banner also records.
+
 ## Manual steps required in Desktop
 
 - [ ] Close Desktop **without saving** and reopen the pbip (Desktop currently
@@ -1133,6 +1190,24 @@ Also at phase B1:
       `[Movies (negative revenue)]`, and `DUPLICATE (TITLE, DATE) PAIRS` now fits on
       one line beside its value on the same row.
 
+### New at the G6 a11y pass (2026-08-05)
+
+- [ ] **Tab the beat rail on p1, p2 and p3 with a screen reader.** Expected: exactly
+      one beat announces "Scene N of 3, **current scene** — …" and the other two
+      announce without it; clicking a beat swaps which one does. If both variants of a
+      beat are ever audible at once, a bookmark's `display.mode` did not apply.
+- [ ] **Tab p9.** Expected 24 stops, each count and parameter announced as one
+      self-contained sentence ("Duplicate title-and-date pairs: …"), with no bare
+      label stops in between.
+- [ ] **Look at p3 at SC.1 and SC.2 with the scrim down.** The axis labels and the
+      dashed C = 6.96 line must stay legible; they were re-computed to 5.75:1 and
+      3.56:1 but have never been rendered.
+- [ ] **Check `tt-movie-poster` actually shows a poster.** The measure now carries
+      `dataCategory: ImageUrl`; if the tooltip image is still blank after a refresh,
+      the category did not survive the round-trip — record what Desktop wrote.
+- [ ] **`dn_rating_fall` data labels** should now sit outside the bar ends against the
+      white card, not inside the red bar.
+
 ## Validation status
 
 ```
@@ -1298,6 +1373,31 @@ tab-order check           : no duplicate tabOrder on any page
                             (p0 11 · p1 32 · p2 27 · p3 21 · p9 37 stops)
 page census               : 6 pages — 5 visible at 1280×720 + 1 Tooltip page
                             (320×420). The contest maximum is 5.
+
+[2026-08-05 — stage 6 G6 A11Y PASS]
+validate_json.py          : 260 file(s) repo-wide, 0 errors, no BOM
+validate_tmdl.py --strict : 15 file(s), 1 error, 0 warnings — the standing
+                            SourceRoot drive-letter waiver only
+visualContainer/2.9.0     : 222 visual.json, remote $refs resolved, 0 errors
+page/2.1.0                : 6 page.json, 0 errors
+pagesMetadata/1.1.0       : 0 errors      report/3.3.0 : 0 errors
+bookmark/2.1.0            : 9 bookmark files, 0 errors (all rewired this pass)
+bookmarksMetadata/1.0.0   : 0 errors
+check_contrast.py         : 6 pair(s), 0 failures
+binding cross-check       : 53 distinct bound properties across 222 visuals,
+                            all resolve to one of 90 measures / 35 columns
+bookmark coverage         : each of the 9 bookmarks captures every visual on its
+                            page (47 / 47 / 47 · 41 / 41 / 41 · 40 / 40 / 40),
+                            and in every one exactly one beat variant is shown
+                            and its twin hidden
+tab-order check           : no duplicate tabOrder on any page. Effective stops in
+                            the landing state: p0 11 · p1 17 · p2 16 · p3 19 ·
+                            p9 24 · tooltip 0
+deferral scan             : 0 alt strings contain a phrase pointing the reader at
+                            something on screen (was 11)
+contrast recomputed       : scrimmed axis labels 5.75:1 · scrimmed reference line
+                            3.56:1 · p9 dot leaders 8.35:1 · beat-current text
+                            7.84 / 4.74 / 7.01:1 · beat-not-current 14.83 / 15.89:1
 ```
 
 ## Known limitations
@@ -1330,10 +1430,12 @@ page census               : 6 pages — 5 visible at 1280×720 + 1 Tooltip page
   "renders as designed" could still diverge.
 - **Letter-spacing is absent report-wide** (PBIR cannot express it). The marquee
   and the section heads will read tighter than the prototype.
-- **p9 has 35 tab stops where the design enumerated 14**, because the two credits
-  tables are built as label/value pairs rather than one table visual each. The
-  reading order is correct and every value is preceded by its label, but a judge
-  counting stops against the design document will see the difference.
+- **p9 has 24 tab stops where the design enumerated 14** (was 35 before the G6 a11y
+  pass). The 13 bare label stops are gone — each label is folded into its value card's
+  alt text, so a screen-reader user now hears one self-contained sentence per row. The
+  remaining gap is structural: the design counted each credits block as a single table
+  visual, and they are built as label/value pairs. Closing it means rebuilding both
+  blocks as `tableEx` visuals, which is a stage-5 decision rather than a fix.
 - The ticket perforation is **solid, not dashed** — a contracted fallback, taken
   because PBIR shapes have no dash property.
 - **Neither Deneb visual is Deneb.** `dn_ticket_waffle` is a 100 % stacked bar and
@@ -1362,14 +1464,18 @@ page census               : 6 pages — 5 visible at 1280×720 + 1 Tooltip page
   checklist). Until then the scatter is a static premiere and `[Label · No date]`'s
   phrase "they never enter this animation" is describing something the reader cannot
   yet see.
-- **The winner dot is not green.** `[Color · Scatter mark]` and
-  `[Color · Rating verdict]` are unbound because the fx-field-value serialisation could
-  not be verified; the winner is carried by `c_winner_label`'s `✓` and words instead.
-  Two Desktop bindings close this.
+- **The winner dot is not green — and this is now a documented PBIR limit, not a gap
+  in our research.** Microsoft's own colour-strategy reference states that scatter
+  ignores `dataPoint.fill` `metadata` selectors and that individual points need
+  `scopeId` selectors, whose payload no published source in reach documents; a
+  `scopeId` would in any case have to encode a data-point identity that does not exist
+  until the model is refreshed. The winner is carried by `c_winner_label`'s `✓` and its
+  words, and the scatter's alt text now states outright that the plot does not colour
+  the winner. One Desktop fx binding still closes it if the entrant wants the colour.
 - **`Two-vote ten (illustration)` and `Godfather rating (reference)` are now unused**
   by any visual after the Act II ruling. They are retained, not deleted — nothing
   dangles, but a reader of the model will find two measures no page consumes.
-- **Nothing built at stage 6 has been rendered.** 213 visuals and 9 bookmarks are
+- **Nothing built at stage 6 has been rendered.** 222 visuals and 9 bookmarks are
   schema-correct against eight published schemas and every binding resolves, but no
   pixel has been seen and no measure executed. Eleven tokens across phases B1 and B2b
   are the concrete places where "schema-correct" and "renders as designed" can still

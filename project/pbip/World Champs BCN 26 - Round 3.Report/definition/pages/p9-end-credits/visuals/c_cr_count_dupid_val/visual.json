@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Duplicate movie IDs in the source.'"
+                  "Value": "'Duplicate movie IDs: listings repeating an identifier the source treats as unique. Rank and single-value logic guards against them rather than assuming they cannot happen.'"
                 }
               }
             }

@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Rating verdict in words: evidence-backed, thin evidence, or no evidence.'"
+                  "Value": "'Rating verdict in words for this listing — evidence-backed, thin evidence, or no evidence. It is the non-colour carrier beside the weighted number.'"
                 }
               }
             }

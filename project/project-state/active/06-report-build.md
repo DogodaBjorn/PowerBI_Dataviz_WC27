@@ -14,18 +14,20 @@ validation record. This file is the stage's state + open questions.
 | B2b | Act II ruling · `p3-act-iii-corrected-cut` · `tt-movie-poster` · 9 bookmarks | done 2026-08-05 |
 | **B2c** | **The alt-text layer — 10 measures + alt text on all 210 visuals** | **done 2026-08-05** |
 | **G6-fix** | **QA fix pass: 3 blockers + 12 majors from the 24/40 review** | **done 2026-08-05** |
+| **G6-a11y** | **Accessibility fix pass: the 10 findings of the a11y audit** | **done 2026-08-05** |
 | C | Desktop round-trip: refresh, render, work the manual checklist | not started |
 
-**The report is structurally complete.** 213 visuals across six pages
-(p0 43 · p1 44 · p2 38 · p3 37 · p9 37 · tooltip 14) plus nine beat bookmarks —
+**The report is structurally complete.** 222 visuals across six pages
+(p0 43 · p1 47 · p2 41 · p3 40 · p9 37 · tooltip 14) plus nine beat bookmarks —
 **5 visible pages + 1 tooltip page**, against a contest maximum of 5. The two
 contest-starter pages ("Read Me", "Tabular") were deleted in the fix pass.
 Model: **90 measures**, including the ten `06 Display\Alt text` narrations.
-Alt-text coverage: 76 content · 73 empty-decorative · 61 textboxes reading their own
-copy. **The waiting list is closed.**
+Alt-text coverage: 89 content · 86 empty-decorative · 47 textboxes reading their own
+copy. **The waiting list is closed**, and after the a11y pass **no alt string defers
+the reader to something on screen** (was 11).
 
-`validate_json.py`: 251 files, 0 errors. `validate_tmdl.py --strict`: 1 error, the
-standing `SourceRoot` waiver. All 213 `visual.json`, all six `page.json`,
+`validate_json.py`: 260 files, 0 errors. `validate_tmdl.py --strict`: 1 error, the
+standing `SourceRoot` waiver. All 222 `visual.json`, all six `page.json`,
 `pages.json`, `report.json`, the nine `*.bookmark.json` and `bookmarks.json` validate
 against their published schemas (`visualContainer/2.9.0` with remote sub-schemas
 resolved, `page/2.1.0`, `pagesMetadata/1.1.0`, `report/3.3.0`, `bookmark/2.1.0`,
@@ -52,6 +54,30 @@ proved a schema question the build had left open. Full record in BUILD_LOG →
 - Two extra defects were found and fixed during the pass: a stale Act II docstring on
   `Movies (perfect ten)`, and `c_cr_count_dup_val` sitting one row below its label.
 
+## G6 accessibility pass (2026-08-05) — what changed
+
+All ten audit findings are closed on disk except the one that is a documented PBIR
+limit (the scatter winner colour), which is now closed *as an answer* rather than as a
+gap. Full record in BUILD_LOG → *Stage 6 G6 a11y pass*.
+
+- **The alt layer now speaks.** 29 strings rewritten; the deferral scan that found 11
+  offenders returns 0. p9's 12 value cards and the tooltip's 7 fold their label into
+  their own alt, so every stop is a self-contained sentence. Nothing volatile is typed —
+  the disclosed constants carry the meaning.
+- **The alt layer is also honest again.** Three strings described a Play axis and an
+  in-chart tick that do not exist on disk; they now describe what ships, on canvas
+  (`Label · No date`) as well as in the narration.
+- **A measured AA failure is fixed with recomputed numbers**: the p3 scrim at 80D and a
+  lighter reference line take the axis text from 4.21 to **5.75:1** and the C line from
+  2.12 to **3.56:1**.
+- **Beat state is announced** (WCAG 4.1.2) via 9 new current-variant buttons and 9
+  rewired bookmarks — required because `bookmark/2.1.0` cannot merge
+  `visualContainerObjects`, so alt text is not bookmark-switchable.
+- **`dataCategory: ImageUrl` moved from "unverifiable" to written**, on two Microsoft
+  sources.
+- `measures.dax` had drifted in **12** measures, not the 2 reported; all were refreshed
+  from the model and the file now names the model as authoritative.
+
 ## Decisions recorded this stage
 
 - **The Act II ruling (2026-08-05, coordinator, design authority).** Act II no longer
@@ -75,9 +101,15 @@ proved a schema question the build had left open. Full record in BUILD_LOG →
    `hero_premiere_scatter` ships complete except the Play well. **Entrant action:**
    drag `'Release Year'[Year Label]` into Play, leave the head on the latest year,
    save, and record the role key in BUILD_LOG.
-2. **`[Color · Scatter mark]` and `[Color · Rating verdict]` are unbound.** The winner
-   dot is therefore neutral, not good-green; it is carried by `c_winner_label`'s `✓`
-   and its words. Two `fx → Field value` bindings in Desktop close this.
+2. **`[Color · Scatter mark]` and `[Color · Rating verdict]` are unbound — and for the
+   scatter this is now an ANSWERED question, not an open one.** Microsoft's own
+   colour-strategy reference states that scatter silently ignores `dataPoint.fill`
+   `metadata` selectors and that per-point colour needs `scopeId` selectors, whose
+   payload is undocumented and which would have to encode a data-point identity that
+   does not exist until the model is refreshed. The winner is carried by
+   `c_winner_label`'s `✓` and its words, and the scatter's alt text now says plainly
+   that the plot does not colour the winner. Two `fx → Field value` bindings in Desktop
+   still close it if the entrant wants the colour.
 3. **Alt text is built; the attribution debt is OPEN.** The blocker was cleared at the
    main-thread level (commit `f4b9420`) by crediting the influencing Fabric Community
    post *by publication* in `CREDITS.md` and `contracts/source-register.yaml`, with

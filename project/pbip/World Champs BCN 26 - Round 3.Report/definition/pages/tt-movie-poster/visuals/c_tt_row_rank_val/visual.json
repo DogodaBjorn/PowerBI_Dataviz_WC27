@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Popularity rank for the hovered film, shown under protest because TMDB does not publish the popularity formula.'"
+                  "Value": "'Popularity rank for this listing, shown under protest: TMDB does not publish the popularity formula, so this report ranks popularity but never colours it and never averages it.'"
                 }
               }
             }

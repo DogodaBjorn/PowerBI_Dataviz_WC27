@@ -541,7 +541,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trap exhibit. A leaderboard of listings rated a perfect 10.0, sorted by fewest votes first; each row prints the title, the raw rating and its vote count, and every row is marked thin evidence. A raw rating has no evidence floor, so one vote is enough to score a perfect 10.0.'"
+                  "Value": "'Trap exhibit: a leaderboard of listings rated a perfect 10.0, sorted fewest votes first, each row giving the title, the raw rating and the vote count behind it. Every row is marked thin evidence. The finding is that a raw rating has no evidence floor, so a single vote is enough to score a perfect 10.0.'"
                 }
               }
             }

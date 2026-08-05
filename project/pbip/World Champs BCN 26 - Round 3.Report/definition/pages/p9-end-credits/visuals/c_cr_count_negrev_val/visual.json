@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Listings that book revenue below zero in the source — a data-health count, not a claim about any film.'"
+                  "Value": "'Negative-revenue listings: rows booking revenue below zero in the source. A data-health count, not a claim about any film.'"
                 }
               }
             }

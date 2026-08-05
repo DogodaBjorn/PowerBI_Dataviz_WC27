@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Duplicate title-and-date pairs — the reason listings are not films.'"
+                  "Value": "'Duplicate title-and-date pairs: listings repeating an identical title and release date. This is why the report counts listings and refuses to claim a count of films.'"
                 }
               }
             }

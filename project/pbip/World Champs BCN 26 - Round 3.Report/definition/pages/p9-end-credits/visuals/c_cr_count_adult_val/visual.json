@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Adult titles excluded from the basis by the locked report filter.'"
+                  "Value": "'Adult listings excluded: the count removed from the basis by the locked report-level filter on the adult flag. Second line of the cross-foot, subtracted from listings per source.'"
                 }
               }
             }

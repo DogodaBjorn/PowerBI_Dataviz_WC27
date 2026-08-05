@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Vote count for the hovered film — the evidence behind its rating.'"
+                  "Value": "'Vote count for this listing: the evidence behind its rating, and the number that m = 100 is compared against.'"
                 }
               }
             }

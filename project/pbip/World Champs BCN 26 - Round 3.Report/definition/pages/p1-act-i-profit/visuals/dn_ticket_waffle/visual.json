@@ -119,7 +119,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -276,7 +276,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Coverage exhibit. It splits the basis into the listings that hold credible financials under the disclosed floor of $10,000 with revenue above zero — shown in green and marked valid with a tick — and the remainder, which cannot support a money claim. The credible share is stated in the title above.'"
+                  "Value": "'Coverage exhibit: one bar split in two. The finding is that only a small share of the basis holds credible financials — a budget of at least $10,000 with revenue above zero — while the large remainder cannot support a money claim at all. The credible part is drawn in green, the remainder in grey. This is exactly why the naive profit total is a trap: it counts that grey remainder as zero dollars instead of as unknown.'"
                 }
               }
             }

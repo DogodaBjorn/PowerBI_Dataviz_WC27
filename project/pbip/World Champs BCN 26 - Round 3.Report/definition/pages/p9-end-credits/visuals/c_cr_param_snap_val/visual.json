@@ -159,7 +159,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Disclosed parameter: the snapshot anchor, 24 July 2026 — every date test in this report is measured against it, never against today.'"
+                  "Value": "'Disclosed parameter, the snapshot anchor: 24 July 2026, the date the dataset was downloaded. Every date test is measured against it and never against today, so the report reads the same on any day.'"
                 }
               }
             }

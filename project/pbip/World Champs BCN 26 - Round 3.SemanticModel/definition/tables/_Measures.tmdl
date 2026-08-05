@@ -309,7 +309,7 @@ table _Measures
 		displayFolder: 05 Data health · Time
 		lineageTag: c8a7d23c-c6c1-4ac8-b856-35222323f74e
 
-	/// Listings dated on the source's sentinel years (1800 / 2099) — excluded from the Act III play axis and counted where they are excluded.
+	/// Listings dated on the source's sentinel years (1800 / 2099) — excluded from the Act III scatter and counted where they are excluded.
 	measure 'Movies (sentinel-dated)' = CALCULATE([Movies], Movies[Release Year Key] IN { 1800, 2099 })
 		formatString: #,0
 		displayFolder: 05 Data health · Time
@@ -622,11 +622,11 @@ table _Measures
 			FORMAT([Movies (undated)], "#,0")
 				& " listings ("
 				& FORMAT([Undated share %], "0.0%")
-				& ") have no date — they never enter this animation · "
+				& ") have no date — left out of Act III · "
 				& FORMAT([Movies (future-dated)], "#,0")
 				& " future-dated flagged · sentinels 1800/2099 ("
 				& FORMAT([Movies (sentinel-dated)], "#,0")
-				& ") excluded from play"
+				& ") excluded as placeholders"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 30bbca88-0d18-460b-85e5-8ea43ee7fa93
@@ -689,13 +689,14 @@ table _Measures
 	/// Posters are DATA (they identify the film), never decoration — names and numbers are printed beside them in every case.
 	/// PosterBase = secure_base_url + file_size, both retrieved at s6 from TMDB's own image documentation
 	/// (developer.themoviedb.org/docs/image-basics and /reference/configuration-details); w342 is a documented poster size.
-	/// The column bound to this measure must be set to data category "Image URL".
+	/// Carries data category "Image URL" so image visuals will render it — without that category a data-bound image renders blank.
 	measure 'Image · Poster URL' =
 			VAR PosterBase = "https://image.tmdb.org/t/p/w342"
 			VAR PosterPath = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Poster Path]))  -- source poster paths carry their own leading slash (verified in the CSV at s6)
 			RETURN
 				IF(NOT ISBLANK(PosterPath), PosterBase & PosterPath)
 		formatString: @
+		dataCategory: ImageUrl
 		displayFolder: 06 Display
 		lineageTag: 55662cdd-041c-4b0b-ae07-9f3f3d2fb179
 
@@ -767,17 +768,18 @@ table _Measures
 		displayFolder: 06 Display\Alt text
 		lineageTag: 6f60e27d-2ca1-4c1f-a593-62f6b1a108df
 
-	/// Screen-reader narration for the premiere scatter — population, axes, the disclosed reference line and the film the corrected cut lands on.
+	/// Screen-reader narration for the premiere scatter — population, axes, the disclosed reference line and the listing the corrected cut lands on.
+	/// Describes a STATIC plot: no play axis exists on disk. If the entrant wires one in Desktop, add the animation sentence back.
 	measure 'Alt · hero_premiere_scatter' =
-			"Scatter plot animated by release year. Horizontal axis: revenue in US dollars on a logarithmic scale. Vertical axis: evidence-weighted rating, with a dashed reference line at C="
+			"Static scatter plot of the corrected cut. Horizontal axis: revenue in US dollars on a logarithmic scale. Vertical axis: evidence-weighted rating, with a dashed reference line at C="
 				& FORMAT([Rating C (disclosed)], "0.00")
 				& ". Population: "
 				& FORMAT([Movies (scatter population)], "#,0")
 				& " listings with credible financials and at least "
 				& FORMAT([Rating m (disclosed)], "#,0")
-				& " votes. The highlighted listing is "
+				& " votes. Every point is drawn in the same neutral grey — the plot does not colour the winner. The listing that is both best-selling and best-rated on evidence is "
 				& [Winner · title]
-				& ", best-selling and best-rated on evidence."
+				& "."
 		formatString: @
 		displayFolder: 06 Display\Alt text
 		lineageTag: 6bdc84d5-d512-45e9-9731-67b00446dd6d
