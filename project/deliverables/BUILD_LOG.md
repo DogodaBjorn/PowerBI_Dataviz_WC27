@@ -79,6 +79,13 @@ were deleted in the G6 fix pass.** Nothing has been rendered in Desktop — see
 | 2026-08-05 (s6 **G6 a11y pass**) | Deliverables: `design-handoff.md` | recorded that **p3 landing on SC.3 is deliberate** (ack #3 in the entrant's decision table), so a future reviewer does not read it as a defect |
 | 2026-08-05 (**rebuild ckpt 2**) | Report: `pages/p1-the-answer` | **NEW page, 13 visuals**, 1280×720, night canvas `#171418`, `displayName` "THE ANSWER". `c_question` · `hero_takeaway` (the mandated Key Takeaway) · `z_rule_answer` · `dn_answer_units` (native `hundredPercentStackedBarChart` fallback) · `c_units_legend` · `c_units_read` · `btn_go_money` / `btn_go_evidence` / `btn_go_both` · `c_nav_hint` · `btn_method` · `z_method_stamp` · `c_caveats`. **4 measure-bound cards + 1 chart bound to 3 measures**; the only literal numbers on canvas are the ordinals 1/2/3 and the disclosed `$10,000` and `m = 100` |
 | 2026-08-05 (**rebuild ckpt 2**) | Report: `pages/pages.json` | `p1-the-answer` prepended to `pageOrder` and made **both** `activePageName` and `landingPageName` (was active `p9-end-credits`, landing `p0-box-office`). The six old pages are untouched and still registered — they are deleted in a later checkpoint, once their replacements exist |
+| 2026-08-05 (**ckpt 2 rulings**) | Report: `p1-the-answer` — grid snap | 4 rects corrected on the coordinator's ruling: `c_units_legend` h 20→**24** · `c_nav_hint` y 572→**576** h 20→**24** · `c_units_read` y 580→**584** · `btn_method` h 28→**32**. `z_rule_answer` (h 1) stays and is waived as a hairline |
+| 2026-08-05 (**ckpt 2 rulings**) | Report: `p1-the-answer/c_takeaway_kicker` | **NEW textbox** — `KEY TAKEAWAY` at `24,88,1232,16`, Arial 10 pt `#B5AFA0`, `tabOrder` 150 (immediately before `hero_takeaway`), empty alt. Labels the contest's mandated element so a judge finds it in three seconds |
+| 2026-08-05 (**ckpt 2 rulings**) | Deliverables + Report: `theme.json` / `D7-Seductive-Lies.json` | `visualStyles.actionButton.*.text[0]` **`"alignment"` → `"horizontalAlignment"`** in both copies, byte-identical apart from the pre-existing LF/CRLF difference. Re-validated 0 errors against `reportThemeSchema-2.156` |
+| 2026-08-05 (**ckpt 2 rulings**) | Project state: `pbir-detect-waivers.yaml` | two DRAFT hairline entries added (`grid-p1-the-answer-hairline`, `grid-p4-both-hairline`) — one 1 px / 2 px separator each, everything else on-grid. **Unsigned**, like every other entry in that file |
+| 2026-08-05 (**rebuild ckpt 3**) | Report: `pages/p4-both` | **NEW page, 11 visuals**, 1280×720, night `#171418`, plum `#B79BE8` chrome-only, `displayName` "3 · BOTH". `nav_pages` (**native `pageNavigator`**) · `c_p4_answer` · `z_p4_rule` · `c_scatter_population` · `hero_premiere_scatter` (**native `scatterChart` with the Play axis**) · `c_winner_label` · `c_adjustments` · `c_refusal` · `tbl_refusal_ranks` (native `tableEx`, **headers ON**) · `c_nodate` · `c_verdict_both`. **8 measure-bound cards + 2 data visuals**; nothing numeric is typed |
+| 2026-08-05 (**rebuild ckpt 3**) | Report: `p1/dn_answer_units` + `p4/hero_premiere_scatter` | chart-container treatment unified per consistency lock 9: **fill `#1D1A20` + 1 px `#6E6960` hairline** on both night data visuals (p1 gained the fill, p4's border moved off `#2E2933` at 1.29:1) |
+| 2026-08-05 (**rebuild ckpt 3**) | Report: `pages/pages.json` | `p4-both` registered directly after `p1-the-answer`; landing and active still `p1-the-answer`; old pages untouched |
 
 ## Deferred — not built, and why
 
@@ -2575,3 +2582,237 @@ git                       : NOT committed, by instruction. git diff is the undo.
   stop. **Designer's call, recorded rather than taken.**
 - **The unit chart has no verified render.** See the manual checklist; this is the
   first `hundredPercentStackedBarChart` in the entry to matter visually.
+
+## 2026-08-05 — CHECKPOINT 2 RULINGS APPLIED (coordinator)
+
+Three rulings, all closed in one pass. Nothing else on `p1-the-answer` changed.
+
+1. **Grid: snapped, not waived.** `c_units_legend` h 20→24 · `c_nav_hint` y 572→576
+   h 20→24 · `c_units_read` y 580→584 · `btn_method` h 28→32. Every edge relation on
+   the page survives (the legend still sits 8 px above the read card; the nav hint
+   still butts the method button; nothing overlaps), and re-measured text still fits
+   every box on one or two lines as before. `z_rule_answer` (h 1) stays: an 8 px
+   separator is a slab, not a rule. **`pbir_detect` on the page: 1 finding, waived,
+   0 unwaived.**
+2. **`c_takeaway_kicker` built.** `KEY TAKEAWAY` at `24,88,1232,16`, Arial 10 pt
+   `#B5AFA0` (8.35:1 on canvas), `tabOrder: 150` so a screen reader hears the label
+   immediately before the takeaway it labels, `altText: ''` so the alt layer does not
+   supersede and re-read the visible words. Page is now **14 visuals, 13 tab stops**.
+3. **Theme `alignment` → `horizontalAlignment` fixed in both copies.**
+   `visualStyles.actionButton.*.text[0]`. Both files still validate at **0 errors**
+   against `reportThemeSchema-2.156`, and are content-identical (the deliverable is
+   LF, the installed resource CRLF, exactly as before). The property is now the one
+   the schema declares, so a future button that relies on the theme instead of
+   stating its own alignment will actually get it.
+
+## 2026-08-05 — REBUILD CHECKPOINT 3: `p4-both`, the payoff page
+
+Night surface, plum act tint as chrome only, 11 visuals. The page states its answer
+first and then shows the evidence: the animated scatter carries both bars at once,
+and the right-hand column discloses what was adjusted, what was refused, and what was
+left out — the entry's Responsible Data Use evidence, on the page where the payoff is.
+
+### Built — the page
+
+| id | type | function | binds | rect | tab |
+|---|---|---|---|---|---|
+| `nav_pages` | **pageNavigator** | navigation across all pages, current marked | — | 24,24,720,32 | 100 |
+| `c_p4_answer` | cardVisual | the answer, before its evidence | `[Title · Lie 3]` | 24,72,1232,40 | 200 |
+| `z_p4_rule` | shape 2 px plum | answer / evidence separator | — | 24,120,1232,2 | **−1** |
+| `c_scatter_population` | cardVisual | who is in the plot, stated before the plot | `[Label · Population]` | 24,136,896,24 | 300 |
+| `hero_premiere_scatter` | **scatterChart + Play** | both bars at once, animated over release year | X `Sum(Movies[Revenue])` log · Y `[Rating (evidence-weighted)]` · Details `Movies[Title]` · **Play `'Release Year'[Year Label]`** · `y1AxisReferenceLine` 6.96 | 24,160,896,456 | 400 |
+| `c_winner_label` | cardVisual | names the film leading on both | `[Copy · Act III · winner label]` | 944,136,312,80 | 500 |
+| `c_adjustments` | cardVisual | every applied parameter, in one place | `[Label · Adjustments]` | 944,224,312,96 | 600 |
+| `c_refusal` | cardVisual | the refused adjustment and why | `[Label · Refusal]` | 944,336,312,80 | 700 |
+| `tbl_refusal_ranks` | **tableEx** | the evidence for the refusal | `Movies[Title]` · `[Mark · Rank divergence]` · `[Rank · Popularity]` · `[Rank · Rating (weighted)]` · `[Rank · Revenue]` | 944,424,312,104 | 800 |
+| `c_nodate` | cardVisual | the excluded unknown, counted where it is excluded | `[Label · No date]` | 944,536,312,80 | 900 |
+| `c_verdict_both` | cardVisual | the closing finding: correlation shown, causation refused | `[Copy · Act III · verdict]` | 24,632,1232,56 | 1000 |
+
+### THE PLAY AXIS — wired, and here is the evidence
+
+**It did not need to be guessed and it was not left unwired.** The p3 hero already
+carries a `Play` role, and that file is one of the **nine visuals Desktop
+re-serialised** on 2026-08-05 (it is written `height` before `width` — Desktop's
+canonical key order, the same signature that proved which files passed through
+Desktop's formatting model). Desktop kept the role, kept its projection, and
+**generated its own matching field filter** for `Release Year.Year Label` alongside
+the ones for Title, Revenue and the rating measure — which is what Desktop does for a
+populated field well. That is round-trip evidence, not inference:
+
+```
+"Play": { "projections": [ { "field": { "Column": {
+    "Expression": { "SourceRef": { "Entity": "Release Year" } },
+    "Property": "Year Label" } },
+  "queryRef": "Release Year.Year Label", "nativeQueryRef": "Year Label" } ] }
+```
+
+So p4's hero is the p3 file **copied verbatim** with four deliberate changes: the
+rect (24,160,896,456), the fonts (`Segoe UI` → **Arial** ×4 — the Mac-safe rule
+applies to axis labels too, which is where checkpoint 1 had already caught the same
+thing in the theme), the x-axis title (`Revenue (USD, log) — credible set` →
+`Revenue (USD, log scale) · credible set`, dropping an em-dash from on-canvas text),
+and the alt string, which now describes the animation instead of calling the plot
+static. The log axis, the dashed `C = 6.96` reference line with its `{"id":"refC"}`
+selector, `dataPoint.defaultColor` `#B5AFA0`, the canvas tooltip binding to
+`tt-movie-poster` and the population floor filter (renamed `flt_p4_scatter_floor`)
+all come across unchanged — every one of them already survived Desktop.
+
+**The one thing that could NOT be settled from disk: which frame the play axis rests
+on when the page opens.** Power BI starts a play axis at its first frame, which here
+is the earliest release year holding at least one qualifying listing — a nearly empty
+plot, which is exactly the "a judge who does not click sees an empty page" defect the
+rebuild exists to remove. The published theme schema does expose
+`scatterChart.currentFrameIndex.index`, which is almost certainly the lever, but the
+frame count is unknowable before a refresh and no Desktop specimen sets it, so
+**nothing was guessed**. It is the first item on the Desktop checklist, with two
+recorded fixes: set the slider in Desktop, save, and capture whatever
+`currentFrameIndex` Desktop writes; or sort the Play field descending so frame 0 is
+the most recent year.
+
+### `pageNavigator` — verified before writing, cleanly
+
+Every property was checked against `reportThemeSchema-2.156` this session, not
+recalled:
+
+| written | verdict |
+|---|---|
+| `visualType: "pageNavigator"` | valid visual name (`visualStyles.pageNavigator`) |
+| `pages.showHiddenPages` / `showTooltipPages` = false | both declared booleans — the hidden tooltip page can never appear |
+| `layout.orientation = 2L` | the schema titles the enum: **2 = Horizontal**, 1 = Vertical, 0 = Grid. Checkpoint 1's assertion confirmed |
+| `layout.cellPadding = 8L` | declared integer |
+| `shape.tileShape 'rectangleRounded'` + `rectangleRoundedCurve 8L` | `shape` declares **no `$id`** → written selectorless, matching the theme |
+| `fill [{show:false}]` | `fill` declares `$id`, but "off" is Desktop's selectorless form |
+| `outline` = `[{show:true}]` + `$id` default / hover / selected | `$id` declared → selector required |
+| `text` = `[{show:true}]` + `$id` default / hover / selected | `$id` declared; **no `text` property** on the card — page names come from the pages, so nothing to type |
+
+**The current page is marked by outline weight 1 → 2 *and* a bolder, brighter label**
+— never colour alone (hard rule 3). Colours are written explicitly on the visual
+rather than left to the theme, and the default outline is `#6E6960` (3.35:1) rather
+than the theme's `#57534E` (2.39:1), because a control boundary is a non-text carrier
+and 2.39:1 does not clear 3:1. **Recommendation for the theme owner:** move the
+theme's `pageNavigator.outline` default to `#6E6960` so the two agree; not done here,
+because that is a design change beyond the one-key fix that was authorised.
+
+### Decisions & assumptions — checkpoint 3
+
+- **Five rects were snapped to the 8 px grid**, applying the coordinator's own
+  checkpoint-2 ruling to this page's table: `c_scatter_population` h 22→**24** ·
+  `hero_premiere_scatter` y 162→**160** h 454→**456** · `c_winner_label` h 76→**80** ·
+  `c_refusal` h 76→**80** · `tbl_refusal_ranks` y 420→**424** h 100→**104**. **Every
+  alignment in the spec is preserved**: the scatter still ends at y 616 exactly where
+  it did, the right-hand column still ends level with it at 616, every gap in that
+  column is still 8 px, and no rect moved by more than 4 px. Flagged prominently
+  because it is a deviation from a literal rect table — revert in five numbers if the
+  coordinator prefers the original and would rather waive.
+- **`tbl_refusal_ranks` ships with column headers ON.** The p3 original hid them by
+  painting the header text the same colour as its background (`tableEx` has no
+  `columnHeaders.show`); the rebuild plan asks for real headers because they give a
+  screen-reader user genuine column semantics. `wordWrap: true` lets
+  `Rank · Rating (weighted)` wrap inside a 58 px column; measured, the header block
+  and three filtered rows fit the 104 px box. Headers are `#B5AFA0` on `#171418`
+  (8.35:1); values `#F2EFE6` (15.89:1).
+- **The table's font moved Consolas → Arial** (values and headers). Consolas is one of
+  the two faces the rebuild deleted; the p3 original still carries it, and that page
+  is being replaced anyway.
+- **Trap red survives on exactly one column**, `[Mark · Rank divergence]` (`#E8705F`,
+  6.01:1), and the measure prints the divergence **in words** in the same cell, so
+  colour is never the only carrier. The plum act tint appears **only** on
+  `z_p4_rule` — no data mark on this page carries it, which is the standing
+  scope rule.
+- **Chart containers unified (consistency lock 9).** Both night data visuals now use
+  one treatment: fill `#1D1A20`, 1 px `#6E6960` hairline. p1's unit chart gained the
+  fill; p4's scatter border moved off `#2E2933` (1.29:1, effectively invisible). Under
+  the fill the unit ramp measures `#F2EFE6` 14.96:1 · `#8A8377` 4.58:1 · `#2E2933`
+  1.22:1, and the two **adjacent** boundaries that carry the quantity are unchanged at
+  3.27:1 and 3.78:1.
+- **Card type sizes were measured, not guessed** (GDI at 96 DPI, the live strings with
+  today's winner title): `c_p4_answer` Georgia 14 pt = 1021 px in a 1232 px box, one
+  line with ~200 px of headroom for a longer winner (16 pt fits today but leaves only
+  115 px, and a wrap would clip in a 40 px card) · `c_verdict_both` Georgia 14 pt =
+  two lines, 48 px in 56 · `c_winner_label` Georgia 12 pt = three lines, 61 px in 80 ·
+  `c_refusal` Arial 10 pt = three lines, 51 px in 80 (11 pt needs four lines, 75 px in
+  80 — too tight to trust) · `c_nodate` Arial 10 pt = three lines · `c_adjustments`
+  Arial 10 pt = two lines · `c_scatter_population` Arial 10 pt = one line.
+- **Alt text: the scatter and the table only.** Both literal, both phrased around the
+  disclosed constants ($10,000 · 100 votes · C = 6.96) so **no volatile count is
+  typed**; both state the finding rather than describing the screen. Prose cards carry
+  none (they read their own measure aloud), `z_p4_rule` carries `''` and no tab stop,
+  and `nav_pages` is named by its own page buttons.
+- **Nothing numeric is typed on this page at all.** Unlike p1 — which legitimately
+  prints `$10,000` and `m = 100` in button text — every number on p4 arrives through a
+  measure, including the disclosed parameters (`[Label · Adjustments]`).
+
+### Findings for the coordinator — checkpoint 3
+
+1. **`nav_pages` will show six buttons until the old pages are deleted.** It renders
+   one button per visible page: today that is `THE ANSWER`, `3 · BOTH` and the four
+   surviving old pages, in `pageOrder`. At 720 px with 8 px cell padding they will be
+   cramped, and the old names will look wrong beside the new ones. This is expected
+   mid-rebuild and self-corrects at the deletion checkpoint; it is **not** a reason to
+   narrow the navigator now.
+2. **The scatter's opening frame** — see the play-axis note above. This is the one
+   genuine Desktop dependency introduced by this checkpoint.
+3. **`tbl_refusal_ranks` is the tightest object in the entry**: five columns and real
+   headers in 312 px. It was measured to fit, but it is the first thing to check in
+   Desktop after the play axis.
+
+### Validation status — 2026-08-05, checkpoint 3 (and the ckpt-2 rulings)
+
+```
+validate_json.py          : PASS - 286 file(s) repo-wide, 0 errors, no BOM
+visualContainer/2.9.0     : PASS - p1 14/14 and p4 11/11 validated DEEPLY with all
+                            5 remote sub-schemas resolved, 0 real errors (only the
+                            known $schema const difference: our files declare
+                            2.11.0, which is what Desktop writes)
+page/2.1.0                : PASS - p4-both/page.json 0 errors
+pagesMetadata/1.1.0       : PASS - pages.json 0 errors
+pbir_detect.py            : PASS - 247 visuals, 50 findings, 0 UNWAIVED, 50 waived.
+                            The two new pages contribute exactly one finding each
+                            (their 1 px / 2 px separator), both waived as hairlines.
+                            No ai-dash-emoji, no theme-color-drift, no
+                            text-fill-contrast, no accent-lock, no radius finding
+                            from either rebuild page.
+theme vs 2.156            : PASS - both copies 0 errors after the alignment fix
+check_contrast.py         : theme pairs 8/0. p4 pairs measured individually below.
+validate_tmdl.py --strict : 17 file(s), 1 error - the STANDING SourceRoot waiver.
+                            No model file was touched in this checkpoint.
+check_state.py            : OK (stage 6, in_progress)
+binding resolution        : every measure and column bound on p4 resolves against
+                            _Measures.tmdl / Movies / Release Year. 0 unresolved.
+git                       : NOT committed, by instruction. git diff is the undo.
+```
+
+**Every pair introduced on `p4-both`, measured:**
+
+| foreground | background | ratio | threshold | verdict |
+|---|---|---|---|---|
+| `#F2EFE6` answer 14 pt / winner 12 pt / refusal 10 pt / verdict 14 pt | `#171418` | 15.89:1 | 4.5 | PASS |
+| `#B5AFA0` population / adjustments / no-date 10 pt | `#171418` | 8.35:1 | 4.5 | PASS |
+| `#B5AFA0` navigator label (default state) | `#171418` | 8.35:1 | 4.5 | PASS |
+| `#F2EFE6` navigator label (hover / selected, bold) | `#171418` | 15.89:1 | 4.5 | PASS |
+| `#6E6960` navigator outline, default (non-text) | `#171418` | 3.35:1 | 3.0 | PASS |
+| `#F2EFE6` navigator outline, hover / selected 2 px | `#171418` | 15.89:1 | 3.0 | PASS |
+| `#B79BE8` plum separator (non-text chrome) | `#171418` | 7.71:1 | 3.0 | PASS |
+| `#F2EFE6` table values 10 pt | `#171418` | 15.89:1 | 4.5 | PASS |
+| `#B5AFA0` table headers 10 pt | `#171418` | 8.35:1 | 4.5 | PASS |
+| `#E8705F` divergence column 10 pt | `#171418` | 6.01:1 | 4.5 | PASS |
+| `#B5AFA0` scatter axis labels + titles 10 pt | `#1D1A20` card | 7.87:1 | 4.5 | PASS |
+| `#8A8377` scatter `C = 6.96` reference line | `#1D1A20` card | 4.58:1 | 3.0 | PASS |
+| `#B5AFA0` scatter points (non-text) | `#1D1A20` card | 7.87:1 | 3.0 | PASS |
+| `#6E6960` chart hairline | `#171418` | 3.35:1 | 3.0 | PASS |
+| `#57534E` table row gridlines | `#171418` | 2.39:1 | — | **below 3:1, accepted**: a row separator carries no meaning here (row order and real column headers do), and it is the theme's own `tableEx` gridline token |
+| `#1D1A20` card fill | `#171418` | 1.06:1 | — | informational; the hairline is the boundary |
+
+### Manual steps required in Desktop — checkpoint 3
+
+- [ ] **Press play on `hero_premiere_scatter`.** Confirm the play control appears and
+      the frames step through release years. Then decide the resting frame (see the
+      play-axis note) and capture whatever Desktop writes.
+- [ ] **Check `nav_pages` renders** as a horizontal row of page buttons, that the
+      current page is outlined 2 px with a bold label, and that the tooltip page does
+      **not** appear in it.
+- [ ] **Check `tbl_refusal_ranks`** — five columns, real headers, three rows, nothing
+      truncated to uselessness inside 312 px.
+- [ ] **Keyboard walk p4:** 10 stops, nav_pages first, `z_p4_rule` never focused;
+      Alt+Shift+F11 on the scatter and on the table.
+- [ ] **Confirm the plum rule renders** (it is the one act-tint object on the page).

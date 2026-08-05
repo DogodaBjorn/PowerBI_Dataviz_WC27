@@ -195,3 +195,23 @@ waivers:
     path: "pages/tt-movie-poster"
     reason: "DRAFT - 14 of 14 visuals off the 8 px grid. The tooltip is a 320x420 card (design-handoff.md asset row 49) with a 17 px inner margin and 19 px dot-leader rows; an 8 px pitch does not divide a 320x420 tooltip usefully. This page is never seen at full size. Recorded as a known deviation. Entrant decision."
     date: 2026-08-05
+
+  # === rebuild pages: one hairline each, everything else snapped ===========
+  #
+  # Unlike the six old pages above, the rebuild pages were SNAPPED rather than
+  # waived: at checkpoint 2 the coordinator ruled the four off-grid rects be
+  # corrected (c_units_legend h 20->24, c_nav_hint y 572->576 h 20->24,
+  # c_units_read y 580->584, btn_method h 28->32). What remains on each rebuild
+  # page is a 1 px separator rule, which cannot sit on an 8 px pitch by nature.
+
+  grid-p1-the-answer-hairline:
+    rule: grid-8px
+    path: "pages/p1-the-answer"
+    reason: "DRAFT - one object: z_rule_answer, a 1 px separator, sub-grid by nature. Its x/y/width are all on the 8 px grid (24, 216, 1232); only its 1 px height is not, and an 8 px separator would be a slab, not a rule. Every other rect on the page is on-grid after the checkpoint-2 snap. Entrant sign-off pending."
+    date: 2026-08-05
+
+  grid-p4-both-hairline:
+    rule: grid-8px
+    path: "pages/p4-both"
+    reason: "DRAFT - one object: z_p4_rule, a 2 px separator in the plum act tint, sub-grid by nature. Its x/y/width are on the 8 px grid (24, 120, 1232); only its 2 px height is not. The 2 px weight (against p1's 1 px) is the act-tint rule the design uses to mark a payoff page, and an 8 px bar would read as a filled band. Every other rect on the page is on-grid. Entrant sign-off pending."
+    date: 2026-08-05

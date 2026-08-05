@@ -18,7 +18,8 @@ validation record. This file is the stage's state + open questions.
 | C | Desktop round-trip: refresh, render, work the manual checklist | not started |
 | **RB-1** | **Rebuild ckpt 1: model deltas (columns, 2 calc tables, 24 measures, 5 rewrites) + theme** | **done 2026-08-05** |
 | **RB-2** | **Rebuild ckpt 2: `p1-the-answer` — the new landing page, 13 visuals** | **done 2026-08-05** |
-| RB-3+ | Rebuild ckpt 3+: `p4-both`, `p2-money`, `p3-evidence`, `p5-method`, tooltip; then delete the six old pages | not started |
+| **RB-3** | **Rebuild ckpt 3: `p4-both` — the payoff page, 11 visuals (play axis + navigator)** | **done 2026-08-05** |
+| RB-4+ | Rebuild ckpt 4+: `p2-money`, `p3-evidence`, `p5-method`, tooltip; then delete the six old pages | not started |
 
 **The report is structurally complete.** 222 visuals across six pages
 (p0 43 · p1 47 · p2 41 · p3 40 · p9 37 · tooltip 14) plus nine beat bookmarks —
@@ -437,3 +438,75 @@ text ≥ 8.35:1, all non-text carriers ≥ 3.27:1) · `validate_tmdl.py --strict
   bind once in Desktop, capture the JSON, re-author.
 - **Four `visualLink` targets dangle by design** — `p2-money`, `p3-evidence`,
   `p4-both`, `p5-method` do not exist yet. Written now so nothing needs rewiring.
+
+### Checkpoint 2 rulings — CLOSED 2026-08-05 (coordinator)
+
+All three of the open questions above were ruled on and closed in the same session:
+
+1. **Grid: snapped, not waived.** `c_units_legend` h 20→24 · `c_nav_hint` y 572→576
+   h 20→24 · `c_units_read` y 580→584 · `btn_method` h 28→32. Every edge relation and
+   text fit re-checked. `z_rule_answer` (1 px) stays and is waived as a hairline.
+   **`pbir_detect` is back to 0 unwaived.**
+2. **`c_takeaway_kicker` built** — `KEY TAKEAWAY`, `24,88,1232,16`, Arial 10 pt
+   `#B5AFA0`, `tabOrder` 150, empty alt. p1 is now **14 visuals / 13 tab stops**.
+3. **Theme defect fixed in both copies** — `actionButton.*.text[0]`
+   `"alignment"` → `"horizontalAlignment"`; both still 0 errors against
+   `reportThemeSchema-2.156` and content-identical.
+4. Two DRAFT hairline waivers added to `project-state/pbir-detect-waivers.yaml`
+   (`grid-p1-the-answer-hairline`, `grid-p4-both-hairline`). **Unsigned**, like every
+   other entry in that file — the entrant's signature still closes G6.
+
+## REBUILD CHECKPOINT 3 — `p4-both` (2026-08-05, pbir-operator)
+
+The payoff page: night surface, plum act tint as chrome only, 11 visuals. Full detail
+(the play-axis evidence, the `pageNavigator` verification table, every measured
+contrast figure, the Desktop checklist) is in `project/deliverables/BUILD_LOG.md`
+under *REBUILD CHECKPOINT 3*.
+
+State, in brief:
+
+- **New:** `definition/pages/p4-both/` — `page.json` (1280×720, night, displayName
+  "3 · BOTH") + 11 `visual.json`.
+- **Changed:** `pages.json` (p4 registered after p1) and `p1/dn_answer_units` (chart
+  container fill, for lock 9). The six old pages are otherwise untouched.
+- **Two core native visuals added:** the `pageNavigator` (one nav control replacing
+  every per-page button) and the play-axis `scatterChart` — the report's animation.
+  `tbl_refusal_ranks` is the third native data visual on the page.
+- **The Play axis is wired, on evidence:** the p3 hero already carries the `Play`
+  role, and that file is one of the nine Desktop re-serialised (height-before-width),
+  with Desktop having generated its own field filter for `Release Year.Year Label`.
+  Copied verbatim; only the rect, the fonts (Segoe UI → Arial), the x-axis title
+  (em-dash removed) and the alt string changed.
+- **Accessibility:** 10 tab stops in the contracted order, `z_p4_rule` at −1 with
+  empty alt, alt text on the scatter and the table only, 10 pt floor, table headers
+  ON for real column semantics, current-page marked by weight **and** boldness.
+
+### Validation — checkpoint 3
+
+`validate_json.py` 286/0 · deep `visualContainer/2.9.0` p1 14/14 and p4 11/11, 0 real
+errors · `page/2.1.0` 0 · `pagesMetadata/1.1.0` 0 · both theme copies 0 against
+`reportThemeSchema-2.156` · `check_contrast.py` theme 8/0 plus 16 p4 pairs measured
+individually · `validate_tmdl.py --strict` 1 error (standing SourceRoot waiver, no
+model file touched) · `check_state.py` OK · **`pbir_detect.py` PASS — 0 unwaived**
+(50 findings, all waived; the two rebuild pages contribute one hairline each).
+
+### Open questions — checkpoint 3
+
+- **The scatter's opening frame is undecided and cannot be settled from disk.** Power
+  BI starts a play axis at frame 1, here the earliest year with a qualifying listing —
+  a near-empty plot on open, which is the defect the rebuild exists to remove.
+  `scatterChart.currentFrameIndex.index` is in the published theme schema and is
+  almost certainly the lever, but the frame count is unknowable before a refresh and
+  no specimen sets it, so **nothing was guessed**. Desktop step, two recorded routes.
+- **Five p4 rects were snapped to the grid** (`c_scatter_population` h 22→24 ·
+  `hero_premiere_scatter` y 162→160 h 454→456 · `c_winner_label` h 76→80 · `c_refusal`
+  h 76→80 · `tbl_refusal_ranks` y 420→424 h 100→104), applying the checkpoint-2
+  ruling to a rect table that was written before it. Every alignment is preserved and
+  nothing moved more than 4 px. Revert in five numbers if the coordinator prefers the
+  literal table plus a waiver.
+- **`nav_pages` currently renders six buttons** because the four old visible pages are
+  still registered. Self-corrects at the deletion checkpoint.
+- **Theme recommendation, not applied:** `pageNavigator.outline` default is `#57534E`
+  in the theme (2.39:1). The visual writes `#6E6960` (3.35:1) explicitly instead. The
+  theme should follow, but that is a design change beyond the one-key fix authorised
+  this session.

@@ -3,10 +3,10 @@
   "name": "c_nav_hint",
   "position": {
     "x": 792,
-    "y": 572,
+    "y": 576,
     "z": 23,
     "width": 464,
-    "height": 20,
+    "height": 24,
     "tabOrder": 900
   },
   "visual": {
