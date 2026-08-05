@@ -270,12 +270,34 @@ Builder deviations worth carrying to the handoff:
 | 9 | Cut-list order pre-approved (see risks) | yes |
 | 10 | Carried: sign-variant headline, placeholder batch, locked Adult filter, coverage basis, credits joke line | — |
 
+## ENTRANT DECISION 2026-08-05 — D7 approved with one change
+
+- **Approved with changes** → the change is per-act tints (below). All other
+  ack-table defaults accepted as recommended.
+- **Cover = tickets** confirmed (poster wall declined; real TMDB posters stay
+  where they carry data — Act II leaderboard + tooltip).
+- **Act tints granted** — documented exception to consistency lock 7,
+  bounded by a scope rule so hard rule 3 (direction encoding) stays intact:
+
+| Act | Tint | Paper | Night | Ratios | Reading |
+|---|---|---|---|---|---|
+| I | Ledger Indigo | `#2E4A7D` | `#7FA8DD` | 7.84 / 7.43 | the money act, shot cold |
+| II | Awards Brass | `#8A6516` | `#D9A441` | 4.74 / 8.12 | the applause act, shot warm |
+| III | Velvet Plum | `#5B3E8E` | `#B79BE8` | 7.43 / 7.71 | the corrected cut, house curtain |
+
+All six variants computed against the WCAG formula 2026-08-05: every one
+passes AA for text and non-text. **Scope rule (G6-checkable): the tint
+touches chrome only** — act numeral, ticket rule + serial, beat-rail current
+fill, header rule, verdict rule. Data never wears the tint: traps stay
+trap-red + strike + word, honest stays good-green + ✓ + word, identically on
+every page. A tinted data mark is a defect. Hue budget per page stays at 4
+families; p9 credits carry no tint.
+
 ## Open questions
 
-- Entrant approval of the D7 prototype + the ack table above → then G5
-  close-out: px-prototype capture, asset-fidelity inventory, handoff quartet
-  (design-handoff.md, data-model.md, measures.dax, theme.json via
-  theme-from-brand-kit mini-kit from D7 tokens).
+- None blocking. G5 closes on: tinted prototype + asset-fidelity inventory +
+  handoff quartet (design-handoff.md, data-model.md, measures.dax,
+  theme.json) — all in flight.
 
 ## After the pick (contracted next steps)
 
