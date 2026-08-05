@@ -62,6 +62,18 @@ tier_4_community:                # practitioner blogs - inspiring, verify agains
   - name: Kerry Kolosko
     url: https://kerrykolosko.com/
     use_for: "SVG/HTML micro-viz, sparklines, Deneb/SVG templates"
+  - name: "Fabric Community Blog — 'Accessibility in Action: Building Reusable Alternative Text Logic' (author name NOT YET RETRIEVED — see note)"
+    url: http://community.fabric.microsoft.com/t5/Power-BI-Community-Blog/Accessibility-in-Action-Building-Reusable-Alternative-Text-Logic/bc-p/5296822
+    use_for: "the prompt to make alt text DYNAMIC and reusable rather than static strings; its own technique wraps narrative logic in DAX User-Defined Functions"
+    note: >
+      Credited as an influence on wc-round-3 (entrant-supplied). The byline is
+      unretrievable by agents — the community site returns 403 — so the author
+      is named here by publication, not person, and MUST be completed when a
+      human can open the page (attribution rule 5). Scope of the debt: this
+      post prompted dynamic alt text; the implementation used plain measures
+      driving Power BI's own documented dynamic-alt-text feature, NOT the
+      post's UDF pattern. Adopting the UDF pattern itself requires the
+      author's name first.
   - name: Deneb guide & community
     url: https://deneb.guide/
     use_for: "Deneb/Vega-Lite capabilities, showcase, versioning"

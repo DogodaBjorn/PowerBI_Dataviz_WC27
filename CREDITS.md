@@ -32,6 +32,7 @@ adopt a new idea into it, add its source here in the same change
 | **[Reid Havens](https://www.havensconsulting.net/)** (Havens Consulting) | Report-page tooltips as a designed layer, including field-parameter-driven tooltip content. | tooltip-studio |
 | **[Meagan Longoria](https://datasavvy.me/)** | The Power BI accessibility checklist that defined the practice: measured contrast, alt text, tab order, color-never-alone. | a11y-studio |
 | **[Kurt Buhler](https://data-goblins.com/)** (Data Goblins) | Power BI design and agentic-development practice beyond the CLI itself. | source register, scout runs |
+| **["Accessibility in Action: Building Reusable Alternative Text Logic"](http://community.fabric.microsoft.com/t5/Power-BI-Community-Blog/Accessibility-in-Action-Building-Reusable-Alternative-Text-Logic/bc-p/5296822)** (Fabric Community Blog) — ⚠ **author name outstanding** | The prompt to treat alt text as dynamic, reusable narrative rather than static strings. Credited by publication because the community site returns 403 to agents and the byline could not be read; **completing this name is an open attribution debt**, not a closed credit. Scope: the post prompted dynamic alt text; wc-round-3 implements it with plain measures on Power BI's own documented feature, not the post's DAX-UDF pattern (adopting that pattern requires the name first). | wc-round-3 s6 alt-text layer, source register |
 
 ## Method & standards the doctrine stands on
 
