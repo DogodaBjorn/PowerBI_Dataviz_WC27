@@ -176,6 +176,92 @@ table Movies
 
 		annotation SummarizationSetBy = User
 
+	/// Budget bracket, meaningful only above the disclosed $10,000 credibility floor; everything under the floor is labelled "Below floor" rather than binned as if it were known.
+	column 'Budget Band' =
+			SWITCH(
+				TRUE(),
+				Movies[Budget] < 10000, "Below floor",
+				Movies[Budget] < 100000, "$10k–100k",
+				Movies[Budget] < 1000000, "$100k–1M",
+				Movies[Budget] < 10000000, "$1M–10M",
+				Movies[Budget] < 50000000, "$10M–50M",
+				Movies[Budget] < 100000000, "$50M–100M",
+				"$100M+"
+			)
+		dataType: string
+		lineageTag: 0c9d56cd-7fe5-4139-9092-687a8462b157
+		summarizeBy: none
+		isDataTypeInferred
+		sortByColumn: 'Budget Band Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sort order for Budget Band — below-floor first, then ascending brackets. Hidden technical column.
+	column 'Budget Band Sort' =
+			SWITCH(
+				TRUE(),
+				Movies[Budget] < 10000, 1,
+				Movies[Budget] < 100000, 2,
+				Movies[Budget] < 1000000, 3,
+				Movies[Budget] < 10000000, 4,
+				Movies[Budget] < 50000000, 5,
+				Movies[Budget] < 100000000, 6,
+				7
+			)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: babe06d1-b92f-4856-bf6a-f96cf3b3c6f7
+		summarizeBy: none
+		isDataTypeInferred
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	/// Vote-count bracket — the evidence ladder as an axis: none, single digits, tens, hundreds, and the thousand-plus tail.
+	column 'Vote Band' =
+			SWITCH(
+				TRUE(),
+				Movies[Vote Count] = 0, "0",
+				Movies[Vote Count] < 10, "1–9",
+				Movies[Vote Count] < 100, "10–99",
+				Movies[Vote Count] < 1000, "100–999",
+				"1,000+"
+			)
+		dataType: string
+		lineageTag: 9f705101-3539-4e1c-a06b-36e80d996f43
+		summarizeBy: none
+		isDataTypeInferred
+		sortByColumn: 'Vote Band Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sort order for Vote Band — ascending evidence. Hidden technical column.
+	column 'Vote Band Sort' =
+			SWITCH(
+				TRUE(),
+				Movies[Vote Count] = 0, 1,
+				Movies[Vote Count] < 10, 2,
+				Movies[Vote Count] < 100, 3,
+				Movies[Vote Count] < 1000, 4,
+				5
+			)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a31332bb-08d1-49c7-a835-92b494782874
+		summarizeBy: none
+		isDataTypeInferred
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
 	partition Movies = m
 		mode: import
 		queryGroup: Facts

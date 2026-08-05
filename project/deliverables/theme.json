@@ -37,69 +37,74 @@
   "disabledText": "#78716C",
   "hyperlink": "#F2EFE6",
   "visitedHyperlink": "#F2EFE6",
+  "foreground": "#F2EFE6",
+  "foregroundNeutralSecondary": "#B5AFA0",
+  "foregroundNeutralTertiary": "#78716C",
+  "backgroundLight": "#1D1A20",
+  "backgroundNeutral": "#2E2933",
   "textClasses": {
     "callout": {
-      "fontFace": "Consolas",
+      "fontFace": "Courier New",
       "fontSize": 28,
       "color": "#F2EFE6"
     },
     "title": {
-      "fontFace": "Bahnschrift SemiCondensed",
+      "fontFace": "Arial",
       "fontSize": 12,
       "color": "#B5AFA0"
     },
     "largeTitle": {
-      "fontFace": "Bahnschrift SemiCondensed",
+      "fontFace": "Arial Black",
       "fontSize": 20,
       "color": "#F2EFE6"
     },
     "header": {
-      "fontFace": "Bahnschrift SemiCondensed",
+      "fontFace": "Arial Black",
       "fontSize": 14,
       "color": "#F2EFE6"
     },
     "label": {
-      "fontFace": "Segoe UI",
+      "fontFace": "Arial",
       "fontSize": 10,
       "color": "#F2EFE6"
     },
     "semiboldLabel": {
-      "fontFace": "Segoe UI Semibold",
+      "fontFace": "Arial",
       "fontSize": 10,
       "color": "#F2EFE6"
     },
     "boldLabel": {
-      "fontFace": "Segoe UI Bold",
+      "fontFace": "Arial",
       "fontSize": 10,
       "color": "#F2EFE6"
     },
     "largeLabel": {
-      "fontFace": "Segoe UI",
+      "fontFace": "Arial",
       "fontSize": 12,
       "color": "#F2EFE6"
     },
     "smallLabel": {
-      "fontFace": "Segoe UI",
+      "fontFace": "Arial",
       "fontSize": 10,
       "color": "#F2EFE6"
     },
     "lightLabel": {
-      "fontFace": "Segoe UI",
+      "fontFace": "Arial",
       "fontSize": 10,
       "color": "#B5AFA0"
     },
     "largeLightLabel": {
-      "fontFace": "Segoe UI",
+      "fontFace": "Arial",
       "fontSize": 12,
       "color": "#B5AFA0"
     },
     "smallLightLabel": {
-      "fontFace": "Segoe UI",
+      "fontFace": "Arial",
       "fontSize": 10,
       "color": "#B5AFA0"
     },
     "smallDataLabel": {
-      "fontFace": "Segoe UI",
+      "fontFace": "Arial",
       "fontSize": 10,
       "color": "#B5AFA0"
     }
@@ -272,7 +277,7 @@
         "text": [
           {
             "$id": "default",
-            "fontFamily": "Segoe UI",
+            "fontFamily": "Arial",
             "fontSize": 10,
             "fontColor": {
               "solid": {
@@ -288,7 +293,7 @@
         ]
       }
     },
-    "basicShape": {
+    "cardVisual": {
       "*": {
         "background": [
           {
@@ -321,6 +326,150 @@
             "top": 0,
             "right": 0,
             "bottom": 0
+          }
+        ],
+        "label": [
+          {
+            "$id": "default",
+            "show": false
+          }
+        ],
+        "value": [
+          {
+            "$id": "default",
+            "fontColor": {
+              "solid": {
+                "color": "#F2EFE6"
+              }
+            },
+            "textWrap": true
+          }
+        ]
+      }
+    },
+    "pageNavigator": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "show": false
+          }
+        ],
+        "padding": [
+          {
+            "left": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0
+          }
+        ],
+        "pages": [
+          {
+            "showHiddenPages": false,
+            "showTooltipPages": false
+          }
+        ],
+        "layout": [
+          {
+            "orientation": 2,
+            "cellPadding": 8
+          }
+        ],
+        "shape": [
+          {
+            "roundEdge": 0
+          }
+        ],
+        "fill": [
+          {
+            "show": false
+          }
+        ],
+        "outline": [
+          {
+            "show": true
+          },
+          {
+            "$id": "default",
+            "lineColor": {
+              "solid": {
+                "color": "#57534E"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "$id": "hover",
+            "lineColor": {
+              "solid": {
+                "color": "#F2EFE6"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "$id": "selected",
+            "lineColor": {
+              "solid": {
+                "color": "#F2EFE6"
+              }
+            },
+            "weight": 2
+          }
+        ],
+        "text": [
+          {
+            "$id": "default",
+            "fontFamily": "Arial",
+            "fontSize": 10,
+            "fontColor": {
+              "solid": {
+                "color": "#B5AFA0"
+              }
+            },
+            "horizontalAlignment": "center"
+          },
+          {
+            "$id": "hover",
+            "fontFamily": "Arial",
+            "fontSize": 10,
+            "fontColor": {
+              "solid": {
+                "color": "#F2EFE6"
+              }
+            },
+            "horizontalAlignment": "center"
+          },
+          {
+            "$id": "selected",
+            "fontFamily": "Arial",
+            "fontSize": 10,
+            "fontColor": {
+              "solid": {
+                "color": "#F2EFE6"
+              }
+            },
+            "bold": true,
+            "horizontalAlignment": "center"
           }
         ]
       }
@@ -539,9 +688,9 @@
           {
             "show": true,
             "showAxisTitle": true,
-            "fontFamily": "Segoe UI",
+            "fontFamily": "Arial",
             "fontSize": 10,
-            "titleFontFamily": "Segoe UI",
+            "titleFontFamily": "Arial",
             "titleFontSize": 10,
             "labelColor": {
               "solid": {
@@ -560,9 +709,9 @@
           {
             "show": true,
             "showAxisTitle": true,
-            "fontFamily": "Segoe UI",
+            "fontFamily": "Arial",
             "fontSize": 10,
-            "titleFontFamily": "Segoe UI",
+            "titleFontFamily": "Arial",
             "titleFontSize": 10,
             "labelColor": {
               "solid": {
@@ -611,7 +760,7 @@
         ],
         "columnHeaders": [
           {
-            "fontFamily": "Segoe UI",
+            "fontFamily": "Arial",
             "fontSize": 10,
             "fontColor": {
               "solid": {
@@ -627,7 +776,7 @@
         ],
         "values": [
           {
-            "fontFamily": "Segoe UI",
+            "fontFamily": "Arial",
             "fontSize": 10,
             "fontColor": {
               "solid": {
@@ -698,7 +847,7 @@
         "labels": [
           {
             "show": true,
-            "fontFamily": "Segoe UI",
+            "fontFamily": "Arial",
             "fontSize": 10
           }
         ]
@@ -715,7 +864,7 @@
           {
             "show": true,
             "showAxisTitle": false,
-            "fontFamily": "Segoe UI",
+            "fontFamily": "Arial",
             "fontSize": 10
           }
         ],
@@ -723,7 +872,7 @@
           {
             "show": true,
             "showAxisTitle": false,
-            "fontFamily": "Segoe UI",
+            "fontFamily": "Arial",
             "fontSize": 10,
             "start": 0,
             "end": 10
@@ -732,7 +881,7 @@
         "labels": [
           {
             "show": true,
-            "fontFamily": "Segoe UI",
+            "fontFamily": "Arial",
             "fontSize": 10
           }
         ]

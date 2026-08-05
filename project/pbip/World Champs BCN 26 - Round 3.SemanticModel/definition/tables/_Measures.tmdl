@@ -177,45 +177,85 @@ table _Measures
 		displayFolder: 06 Display
 		lineageTag: 9faedfbd-7fad-4768-924d-5475a0a8867a
 
-	/// Act I's insight title — the share of listings that cannot carry a money claim. Bound to z_p1_header_title (act-title run).
+	/// The MONEY page's answer: how few listings can carry a money claim, and what the ones that can actually return.
+	/// REFRAME 2026-08-05: was Act I's title ("THE PROFIT LIE"); the three lies are now the METHOD, so this states the page's finding.
+	/// NAME AND lineageTag DELIBERATELY UNCHANGED — every binding downstream addresses this measure by name.
 	measure 'Title · Lie 1' =
-			"ACT I — THE PROFIT LIE: "
-				& FORMAT(1 - [Financial coverage %], "0.0%")
-				& " of listings cannot support a money claim"
+			"Only "
+				& FORMAT([Share · money], "0.0%")
+				& " of listings can support a money claim — and among those that can, the median return is "
+				& FORMAT([Median revenue multiple (credible)], "0.0")
+				& "× on budget"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: e562f4ff-d44d-4eb9-9d37-0ebd0afb378b
 
-	/// Act II's insight title — how few listings clear the disclosed evidence bar. Bound to z_p2_header_title (act-title run).
+	/// The EVIDENCE page's answer: how few listings clear the disclosed evidence bar, and how crowded the top of the raw scale is.
+	/// REFRAME 2026-08-05: was Act II's title ("THE RATINGS LIE"); the three lies are now the METHOD, so this states the page's finding.
+	/// NAME AND lineageTag DELIBERATELY UNCHANGED — every binding downstream addresses this measure by name.
 	measure 'Title · Lie 2' =
-			"ACT II — THE RATINGS LIE: only "
-				& FORMAT([Evidence share %], "0.0%")
+			"Only "
+				& FORMAT([Share · evidence], "0.0%")
 				& " of listings clear "
 				& FORMAT([Rating m (disclosed)], "#,0")
-				& " votes"
+				& " votes — while "
+				& FORMAT([Movies (perfect ten)], "#,0")
+				& " score a perfect 10.0, "
+				& FORMAT([Movies (perfect ten, single vote)], "#,0")
+				& " of them on a single vote"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 8fc6684a-7f5f-4054-b991-910d1b8b7099
 
-	/// Act III's insight title — the population that survives every honest adjustment, and the one adjustment refused. Bound to z_p3_header_title.
+	/// The BOTH page's answer: the population that clears both bars, and the one listing that leads on each.
+	/// REFRAME 2026-08-05: was Act III's title ("THE CORRECTED CUT"); the three lies are now the METHOD, so this states the page's finding.
+	/// NAME AND lineageTag DELIBERATELY UNCHANGED — every binding downstream addresses this measure by name.
 	measure 'Title · Lie 3' =
-			"ACT III — THE CORRECTED CUT: "
+			"Only "
+				& FORMAT([Share · both], "0.0%")
+				& " of listings clear both bars — "
 				& FORMAT([Movies (scatter population)], "#,0")
-				& " listings earn a place; popularity is refused — formula not published"
+				& " of "
+				& FORMAT([Movies], "#,0")
+				& ". One leads on both: "
+				& [Winner · title]
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 98b7fbce-f4e9-498b-a5e8-ae3d6923d4ab
 
-	/// The p0 marquee takeaway — the mandated Key Takeaway, with its two live counts filled from the model. Bound to hero_takeaway.
+	/// THE KEY TAKEAWAY — the contest's mandated ≤50-word landing statement, bound to hero_takeaway.
+	/// REFRAME 2026-08-05: the verified contest question is "what makes a movie successful?", so this now LEADS WITH THE ANSWER —
+	/// success is two different things, money and evidence, and they almost never coincide. No causal verb appears anywhere.
+	/// WORD GUARD: the sentence is a fixed frame plus the winner's title. The long frame is 38 words; the short frame, which drops
+	/// "— and they rarely coincide", is 33. The winner's word count is measured at run time (spaces + 1) and added to the frame;
+	/// the long frame is used while the total stays inside the 50-word cap (winner ≤ 12 words), otherwise the short frame (≤ 17).
+	/// Assumes hero_takeaway carries no visual-level filter, so [Winner · title] is never blank.
 	measure 'Title · Landing' =
-			"The data is not wrong — the reading is. "
-				& FORMAT(1 - [Financial coverage %], "0%")
-				& " of "
-				& FORMAT([Movies], "#,0")
-				& " listings have no credible financials, the median listing has "
-				& IF([Median votes] = 0, "zero", FORMAT([Median votes], "#,0"))
-				& " votes, and “popularity” has no published formula. "
-				& "Every honest number here states what it excludes."
+			VAR Winner = [Winner · title]
+			VAR WinnerWords = LEN(TRIM(Winner)) - LEN(SUBSTITUTE(TRIM(Winner), " ", "")) + 1
+			VAR LongFrameWords = 38
+			VAR WordCap = 50
+			VAR Opening =
+				IF(
+					LongFrameWords + WinnerWords <= WordCap,
+					"Two things make a movie measurably successful — money and evidence — and they rarely coincide. ",
+					"Two things make a movie measurably successful — money and evidence. "
+				)
+			RETURN
+				Opening
+					& "Of "
+					& FORMAT([Movies], "#,0")
+					& " listings, "
+					& FORMAT([Share · money], "0.0%")
+					& " can support a money claim, "
+					& FORMAT([Share · evidence], "0.0%")
+					& " clear "
+					& FORMAT([Rating m (disclosed)], "#,0")
+					& " votes, only "
+					& FORMAT([Share · both], "0.0%")
+					& " clear both. One film leads on both: "
+					& Winner
+					& "."
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 80057dd2-e358-46ed-9e73-25952f29963a
@@ -674,11 +714,13 @@ table _Measures
 		displayFolder: 06 Display
 		lineageTag: ab6151d3-1935-4ebb-b5d9-74b852220103
 
-	/// The billing block's second line: the three standing caveats that qualify every number in the trilogy. Bound to z_billing_caveats (p0).
+	/// The standing caveats that qualify every number in the report, PLUS the mandated dataset attribution.
+	/// REFRAME 2026-08-05: extended so the required TMDB · Kaggle · ODC-By 1.0 credit and TMDB's own non-endorsement clause
+	/// live inside ONE bound string — the attribution can then never be lost by deleting a text box. Wording quoted as issued.
 	measure 'Label · Caveats' =
 			"USD AS RECORDED — NOT INFLATION-ADJUSTED · MEDIAN LISTING: "
 				& IF([Median votes] = 0, "0", FORMAT([Median votes], "#,0"))
-				& " VOTES · POPULARITY: FORMULA NOT PUBLISHED"
+				& " VOTES · POPULARITY: FORMULA NOT PUBLISHED · SOURCE DATA BY TMDB, DISTRIBUTED VIA KAGGLE UNDER ODC-BY 1.0 — THIS PRODUCT USES TMDB DATA BUT IS NOT ENDORSED OR CERTIFIED BY TMDB"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: c0070dfd-92cd-402c-b86d-bb6e57256258
@@ -831,6 +873,313 @@ table _Measures
 		formatString: @
 		displayFolder: 06 Display\Alt text
 		lineageTag: 790c6dc9-90b2-4758-9aad-6d092ea041b9
+
+	/// Listings that clear the MONEY bar but not the evidence bar — judgeable on money alone.
+	measure 'Movies (money bar only)' = [Movies (credible financials)] - [Movies (scatter population)]
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: d4b12d2a-dd28-4585-ad76-6f63e91c32ce
+
+	/// Listings that clear the EVIDENCE bar but not the money bar — judgeable on evidence alone.
+	measure 'Movies (evidence bar only)' = [Movies with evidence (votes ≥ m)] - [Movies (scatter population)]
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: 32befe3e-2379-4ae0-8dbd-fd64b6da0e63
+
+	/// Listings that clear exactly one of the two bars — the "half a verdict" population.
+	measure 'Movies (one bar only)' = [Movies (money bar only)] + [Movies (evidence bar only)]
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: e74022ba-1718-4c74-897a-ca9cc7374a17
+
+	/// Listings that clear neither bar — the ones this data cannot judge at all. Says nothing about those films, only about the record.
+	measure 'Movies (neither bar)' = [Movies] - [Movies (money bar only)] - [Movies (evidence bar only)] - [Movies (scatter population)]
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: fec9d43e-fcf2-4bb7-a495-9f8ce858325c
+
+	/// Share of listings clearing BOTH bars — the answer page's rarest state.
+	measure 'Share · both' = DIVIDE([Movies (scatter population)], [Movies])
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: 611edc13-991e-4fc9-bc4e-d659ed08938d
+
+	/// Share of listings clearing exactly one bar.
+	measure 'Share · one bar only' = DIVIDE([Movies (one bar only)], [Movies])
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: 74b4a568-ae62-4069-b3a2-ee0da94e6ab5
+
+	/// Share of listings clearing neither bar — the size of the "cannot be judged" population.
+	measure 'Share · neither' = DIVIDE([Movies (neither bar)], [Movies])
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: e5179d81-df72-4cb7-b8fe-ebb1216126b5
+
+	/// Share of listings that can support a money claim — the answer page's name for Financial coverage %.
+	/// Deliberately an alias, not a second DIVIDE: one calculation, one home.
+	measure 'Share · money' = [Financial coverage %]
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: a5a6290e-7c49-4e27-a0d0-5c29013a96c4
+
+	/// Share of listings that clear the evidence bar — the answer page's name for Evidence share %.
+	/// Deliberately an alias, not a second DIVIDE: one calculation, one home.
+	measure 'Share · evidence' = [Evidence share %]
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: e15cd621-331a-4bc6-bad8-06afdad33e2c
+
+	/// Median revenue-to-budget multiple over the credible set only — the money page's actual finding, not a profit total.
+	/// Per-listing ratio then median (never a ratio of sums), so one blockbuster cannot speak for the band.
+	measure 'Median revenue multiple (credible)' =
+			CALCULATE(
+				MEDIANX(Movies, DIVIDE(Movies[Revenue], Movies[Budget])),
+				Movies[Budget] >= 10000,
+				Movies[Revenue] > 0
+			)
+		formatString: 0.0\×
+		displayFolder: 02 Lie 1 · Financials
+		lineageTag: fa9338fb-4fc0-43d3-bea9-e1d176703ab2
+
+	/// The value for one line of the method page's production cross-foot — dispatches to the measure that already owns that count.
+	/// Lets the cross-foot be a real table with real rows instead of eight separately bound cards.
+	measure 'Value · Count line' =
+			SWITCH(
+				SELECTEDVALUE(Counts[Line]),
+				"Listings per source", [Movies (all listings incl. adult)],
+				"Adult excluded", [Adult listings excluded],
+				"Basis", [Movies],
+				"Duplicate (title,date) pairs", [Duplicate listings],
+				"Duplicate IDs", [Duplicate Movie IDs],
+				"No release date", [Movies (undated)],
+				"Future-dated", [Movies (future-dated)],
+				"Negative revenue", [Movies (negative revenue)]
+			)
+		formatString: #,0
+		displayFolder: 05 Data health · Time
+		lineageTag: c9d7120a-040c-40ed-859d-451591aa2e52
+
+	/// ch_budget_return's insight title — names the best- and worst-returning budget bands and their medians, all resolved live.
+	/// States no direction of its own: if the ranking flips with the data, the sentence flips with it.
+	measure 'Title · Budget return' =
+			VAR Bands =
+				FILTER(
+					ADDCOLUMNS(
+						FILTER(
+							ALLSELECTED(Movies[Budget Band]),
+							Movies[Budget Band] <> "Below floor"
+						),
+						"@Multiple", [Median revenue multiple (credible)]
+					),
+					NOT ISBLANK([@Multiple])
+				)
+			VAR Best = TOPN(1, Bands, [@Multiple], DESC)
+			VAR Worst = TOPN(1, Bands, [@Multiple], ASC)
+			RETURN
+				"The "
+					& CONCATENATEX(Best, Movies[Budget Band], ", ")
+					& " band returns a median "
+					& FORMAT(MAXX(Best, [@Multiple]), "0.0")
+					& "× on budget, the "
+					& CONCATENATEX(Worst, Movies[Budget Band], ", ")
+					& " band "
+					& FORMAT(MINX(Worst, [@Multiple]), "0.0")
+					& "× — and only "
+					& FORMAT([Share · money], "0.0%")
+					& " of listings can be judged on money at all"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: bad72b17-656e-4620-9802-8e75906c1897
+
+	/// ch_coverage_by_era's insight title — the best-covered decade against the all-listings rate, with the dateless bucket counted where it is excluded.
+	/// Decades with fewer than 100 listings are held out so a two-film decade cannot win on noise.
+	measure 'Title · Coverage era' =
+			VAR Eras =
+				FILTER(
+					ADDCOLUMNS(
+						FILTER(
+							ALLSELECTED('Release Year'[Decade]),
+							'Release Year'[Decade] <> "No date on record"
+						),
+						"@Coverage", [Share · money],
+						"@Listings", [Movies]
+					),
+					[@Listings] >= 100
+				)
+			VAR Best = TOPN(1, Eras, [@Coverage], DESC)
+			RETURN
+				"The best-covered decade is "
+					& CONCATENATEX(Best, 'Release Year'[Decade], ", ")
+					& " at "
+					& FORMAT(MAXX(Best, [@Coverage]), "0.0%")
+					& "; across all listings only "
+					& FORMAT([Share · money], "0.0%")
+					& " can be judged on money, and "
+					& FORMAT([Movies (undated)], "#,0")
+					& " carry no date at all"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: e5a5e265-7cd6-4766-bcb0-9e9eb50e7b65
+
+	/// ch_vote_distribution's insight title — the evidence desert stated as three live numbers.
+	measure 'Title · Vote distribution' =
+			FORMAT([Zero-vote share %], "0.0%")
+				& " of listings have no votes at all and the median listing has "
+				& FORMAT([Median votes], "#,0")
+				& "; only "
+				& FORMAT([Share · evidence], "0.0%")
+				& " clear "
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " votes"
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: fc4e5d89-a6c6-49b6-80f6-b79ff17e0aa8
+
+	/// Every disclosed adjustment in one bound string — replaces four separate chip objects with one card.
+	measure 'Label · Adjustments' =
+			"✓ floor "
+				& FORMAT([Financial floor (disclosed)], "\$#,0")
+				& " · ✓ revenue > 0 · ✓ m = "
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " · ✓ C = "
+				& FORMAT([Rating C (disclosed)], "0.00")
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 1727ebc0-412d-47c6-a05a-527f66a70264
+
+	/// The one adjustment this report refuses to make, stated as a refusal — the clearest Responsible Data Use evidence in the entry.
+	/// Deliberately carries no number: it is a methodological position, and a count would imply popularity had been scored after all.
+	measure 'Label · Refusal' = "✕ REFUSED — POPULARITY: TMDB does not publish the formula, so popularity is ranked under protest, never coloured, never averaged, and never called quality."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 89845f35-4821-4327-a0b3-cd23ac2665d0
+
+	/// The hover tooltip's heading: one listing's title and release year, with the dateless case named rather than left blank.
+	measure 'Label · Tooltip head' =
+			VAR TitleText = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Title]))  -- HASONEVALUE guard: a tooltip only ever heads one listing
+			VAR YearKey = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Release Year Key]))
+			VAR YearText =
+				SWITCH(
+					TRUE(),
+					ISBLANK(YearKey), "",
+					YearKey = -1, " (no date on record)",
+					" (" & FORMAT(YearKey, "0") & ")"
+				)
+			RETURN
+				IF(NOT ISBLANK(TitleText), TitleText & YearText)
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: e4af66f0-febc-4f84-bda2-59f58b965c7c
+
+	/// Reads the landing page's 100-cell unit chart aloud in one sentence — the same three counts the chart draws, so the picture and the words cannot drift apart.
+	measure 'Copy · Answer · units read' =
+			"Of every 100 listings: "
+				& FORMAT([Share · both] * 100, "0")
+				& " clear both bars, "
+				& FORMAT([Share · one bar only] * 100, "0")
+				& " clear one, and "
+				& FORMAT([Share · neither] * 100, "0")
+				& " clear neither."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 9eea5ea4-6bbb-4e66-aeec-54890b0ab396
+
+	/// The money trap and its mechanism in one paragraph — replaces the old naive-read / margin-note pair.
+	/// The claim flips with the sign of the naive total; the number itself is never typed.
+	measure 'Copy · Money · trap' =
+			VAR NaiveProfit = [Profit (naive)]
+			VAR Claim =
+				IF(
+					NaiveProfit < 0,
+					"The movie business loses money.",
+					"The movie business prints money."
+				)
+			RETURN
+				Claim
+					& " Look: "
+					& FORMAT(NaiveProfit, "\$#,0;(\$#,0)")
+					& ". That reading counts unknowns as real money: "
+					& FORMAT([Movies (zero revenue)], "#,0")
+					& " revenues ("
+					& FORMAT([Zero-revenue share %], "0.0%")
+					& ") are exactly zero, and no budget in this source is zero either — the unknowns arrive as junk small values instead."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: fa9f0550-6cfa-48cf-b224-f720e42068a0
+
+	/// The evidence trap and its mechanism in one paragraph — replaces the old naive-read / margin-note pair.
+	/// Names no film: thousands tie on a perfect 10.0, so naming one would be the very claim this page refuses.
+	measure 'Copy · Evidence · trap' =
+			"The best film ever made? Take your pick — "
+				& FORMAT([Movies (perfect ten)], "#,0")
+				& " listings score a perfect 10.0, "
+				& FORMAT([Movies (perfect ten, single vote)], "#,0")
+				& " of them on a single vote. Weighted by evidence (m="
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& ", C="
+				& FORMAT([Rating C (disclosed)], "0.00")
+				& "), that single vote reads "
+				& FORMAT([Single-vote ten (illustration)], "0.00")
+				& " — barely above the global mean. Applause is not evidence."
+		formatString: @
+		displayFolder: 06 Display
+		lineageTag: 46c411a3-a70b-4007-bc48-c8bfb085761c
+
+	/// Screen-reader narration for the landing unit chart — states the finding and both bar definitions, never the chart type.
+	measure 'Alt · dn_answer_units' =
+			"Of every 100 listings, "
+				& FORMAT([Share · both] * 100, "0")
+				& " can be judged on both money and evidence, "
+				& FORMAT([Share · one bar only] * 100, "0")
+				& " on one of the two, and "
+				& FORMAT([Share · neither] * 100, "0")
+				& " on neither. Money means a budget of at least "
+				& FORMAT([Financial floor (disclosed)], "\$#,0")
+				& " with revenue above zero; evidence means at least "
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " votes."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: ed738019-018c-42ec-9a21-b6784bbf775a
+
+	/// Screen-reader narration for the budget-return chart — states the finding, its population and its exclusions.
+	measure 'Alt · ch_budget_return' =
+			[Title · Budget return]
+				& ". Read over the "
+				& FORMAT([Movies (credible financials)], "#,0")
+				& " listings with credible financials; across that whole set the median is "
+				& FORMAT([Median revenue multiple (credible)], "0.0")
+				& " times budget. Listings below the "
+				& FORMAT([Financial floor (disclosed)], "\$#,0")
+				& " floor are excluded, not binned as though their budgets were known."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: 8c309bfb-78c5-4ebb-b684-eba6262a8830
+
+	/// Screen-reader narration for the coverage-by-era chart — states the finding and where the dateless listings went.
+	measure 'Alt · ch_coverage_by_era' =
+			[Title · Coverage era]
+				& ". "
+				& FORMAT([Movies (undated)], "#,0")
+				& " listings ("
+				& FORMAT([Undated share %], "0.0%")
+				& ") carry no release date and are counted in their own labelled bucket rather than dropped from the axis."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: c00435f3-dd3e-442c-824c-0b04630d298d
+
+	/// Screen-reader narration for the vote-distribution chart — states the finding and the disclosed evidence bar.
+	measure 'Alt · ch_vote_distribution' =
+			[Title · Vote distribution]
+				& ". "
+				& FORMAT([Movies (zero votes)], "#,0")
+				& " listings have no votes at all, and the bar that decides evidence is "
+				& FORMAT([Rating m (disclosed)], "#,0")
+				& " votes."
+		formatString: @
+		displayFolder: 06 Display\Alt text
+		lineageTag: ee6a5e48-c2a2-4946-bd5d-b54aeff32d03
 
 	column Value
 		isHidden

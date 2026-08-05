@@ -34,6 +34,8 @@ ref table Keyword
 ref table 'Keyword Bridge'
 ref table Date
 ref table 'Release Year'
+ref table Counts
+ref table Parameters
 
 ref cultureInfo en-US
 

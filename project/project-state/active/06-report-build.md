@@ -270,3 +270,105 @@ gap. Full record in BUILD_LOG → *Stage 6 G6 a11y pass*.
     perforation draws nothing. The structural correction was applied; the `false`
     was deliberately preserved because changing it is a design call. **Entrant
     action:** if the perforation is meant to be visible, flip those three to `true`.
+
+## REBUILD CHECKPOINT 1 — theme + report.json (2026-08-05, pbir-operator)
+
+Authority: the approved rebuild plan `i-told-you-i-giggly-castle.md`. **No page,
+visual or bookmark was touched.** The report tree is being rebuilt from
+checkpoint 2 onward; this checkpoint fixed only the two report-level artifacts
+that every future page inherits. The model half is logged in `04-model-build.md`.
+
+### `report.json` — the duplicate Adult filter is gone
+
+`filterConfig.filters` carried **two** `Movies[Adult] = FALSE` filters: the
+contracted `flt_report_adult` (named, `Advanced`, `isLockedInViewMode: true`) and
+a second `1dade010cb9e3d8665cb` (`Categorical`, **unlocked**, no display name) —
+a viewer could have switched adult listings back on through it, which would have
+silently invalidated every count in the report. The second is deleted.
+
+The survivor now also carries an **explicit `isHiddenInViewMode: false`**, so
+"visible in the filter pane" is a decision recorded on disk instead of an
+inherited default. Property verified optional-boolean against
+`filterConfiguration/1.3.0`.
+
+### `theme.json` — four additions, one deletion
+
+Both copies changed and kept content-identical: `project/deliverables/theme.json`
+(LF) and `…Report/StaticResources/RegisteredResources/D7-Seductive-Lies.json`
+(CRLF, as Desktop wrote it). Verified equal by parsed comparison, not by eye.
+
+1. **`visualStyles.cardVisual` added — this is the black-slab fix.** The theme's
+   global `"*" / "*"` rule sets `background.show: true` at `#1D1A20` for every
+   visual type, and there was no `cardVisual` block to override it. The new block
+   turns `background`, `border`, `dropShadow`, `visualHeader`, `title` and
+   `padding` off, hides the measure-name `label` (`$id: "default"`,
+   `show: false`) and styles `value` (`$id: "default"`, `fontColor #F2EFE6`,
+   `textWrap`). The grammar is the entrant's own Desktop-authored card specimen,
+   recorded verbatim in `BUILD_LOG.md` on 2026-08-05 — `label` and `value` are
+   instance-scoped and both declare `$id` in the published schema.
+   **`cardCalloutArea` was left out on purpose**: the handoff specifies cards as
+   transparent text overlays ("background off; border off"), and the earlier
+   analysis in this file already rejected painting it.
+   No `fontFamily`/`fontSize` at theme level either — those belong to the
+   `callout` text class and the per-card properties, which already carry the
+   design contract's typography.
+2. **`visualStyles.pageNavigator` added.** One navigator replaces ~16 per-page
+   nav buttons and one tab stop replaces five. `pages.showHiddenPages` and
+   `showTooltipPages` are **false** so the hidden tooltip page can never appear
+   in it; `layout.orientation: 2` (Horizontal); fill off. **The current page is
+   marked by outline weight 1 → 2 plus a brighter, bolded label — never colour
+   alone**, which is the accessibility hard rule, not a preference.
+   `shape` is written selectorless: unlike `actionButton`, `pageNavigator.shape`
+   declares no `$id` in the schema and no Desktop specimen exists, so the
+   conservative form was taken.
+3. **Legacy structural aliases added** — `foreground #F2EFE6`,
+   `foregroundNeutralSecondary #B5AFA0`, `foregroundNeutralTertiary #78716C`,
+   `backgroundLight #1D1A20`, `backgroundNeutral #2E2933`. Without them, any
+   visual default still reading the legacy names falls through to Fluent2's
+   **light** values on a night surface.
+4. **Fonts cut to the Mac-safe set: Georgia / Arial / Arial Black / Courier New.**
+   `Bahnschrift SemiCondensed` and `Consolas` are deleted from the design — both
+   are Windows-only, and the Service does not serve them, so a judge on a Mac
+   would see the whole tone collapse on a "pixel perfect" brief. The mapping
+   preserves the handoff's stated roles (line 102 — Bahnschrift = display and
+   chrome caps · Consolas = screenplay body and numerals · Georgia = verdicts and
+   editorial framing): `callout` → **Courier New**; `largeTitle` and `header` →
+   **Arial Black**; `title` and every label class → **Arial**. The 11 `Segoe UI`
+   families inside `visualStyles` (chart axes, table text, button text) went to
+   **Arial** in the same pass, because the plan's constraint is report-wide and
+   leaving Segoe UI on the axes would have missed the visible half of it.
+   **Georgia takes no textClass slot** — it stays a per-visual face, exactly as
+   the handoff already applies it.
+5. **`basicShape` pruned.** The valid visual name is `shape`; a scan of all 222
+   visuals finds **zero** `basicShape` visuals against 63 `shape`. Dead weight,
+   removed.
+
+### Validation
+
+`validate_json.py` 259 files / 0 errors. Both theme copies validate against
+`reportThemeSchema-2.156` (fetched this session) at **0 errors**, and the
+validator was proved to reach the new blocks by a **negative control**: 7
+deliberate faults injected, 6 caught (`cardVisual.value.fontSize` range,
+`pageNavigator` text/layout/outline enums, `foreground` type, unknown
+`textClasses` member). The one miss is an unknown property *name* inside
+`cardVisual.label`, because that item schema does not set
+`additionalProperties: false` — every property name written was separately
+checked against the schema's own property list. `pbir_detect.py` still PASSes
+(48 findings, 0 unwaived) — it scans the old pages, which are unchanged.
+
+The `pbir` CLI is **not installed** on this machine; direct JSON editing was used
+per `DEPENDENCIES.md`'s documented fallback.
+
+### Open questions
+
+- **Carried forward, unchanged:** G6's pbir_detect waivers still need the
+  entrant's signature, and `status.yaml` still reads `s6: in_progress / G6 HELD`.
+  Nothing in this checkpoint closes that gate — it is preparatory work for the
+  rebuild, not a G6 fix pass. `status.yaml` was deliberately **not** edited.
+- Its G6 note records "90 measures"; the model now has 114. That note is a
+  historical statement about the G6 state, so it was left alone rather than
+  rewritten — flagging it so nobody reads it as current inventory.
+- The old pages still bind `[Title · Lie 1/2/3]` and `[Title · Landing]`, whose
+  bodies now say something different from the act-titled chrome around them.
+  Expected mid-rebuild; resolves when the pages are rebuilt. **Not** a defect to
+  patch in pages that are about to be deleted.

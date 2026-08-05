@@ -1,0 +1,53 @@
+/// Row headers for the METHOD page's production cross-foot — one row per reconciliation line.
+/// Labels only: every VALUE is supplied by [Value · Count line], so no count is ever typed into the model.
+/// Deliberately UNRELATED to Movies — it is a presentation axis, not a dimension; a relationship would filter the fact table meaninglessly.
+table Counts
+	lineageTag: bbb2b0c2-8f7c-4dd0-a57e-500b10b2cf6c
+
+	/// The reconciliation line as printed on the method page — the label column of tbl_production_counts.
+	column Line
+		dataType: string
+		lineageTag: 0b7fcac1-811c-4b19-9c2e-8b2419f1dca7
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Line]
+		sortByColumn: Sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Reading order of the cross-foot: source, exclusion, basis, then the data-health lines. Hidden technical column.
+	column Sort
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d9969918-75f5-4b21-bdcd-0ab8f99e219f
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Sort]
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition Counts = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Line", STRING,
+				    "Sort", INTEGER,
+				    {
+				        { "Listings per source", 1 },
+				        { "Adult excluded", 2 },
+				        { "Basis", 3 },
+				        { "Duplicate (title,date) pairs", 4 },
+				        { "Duplicate IDs", 5 },
+				        { "No release date", 6 },
+				        { "Future-dated", 7 },
+				        { "Negative revenue", 8 }
+				    }
+				)
+

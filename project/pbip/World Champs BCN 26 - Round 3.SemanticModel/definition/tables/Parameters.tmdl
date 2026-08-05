@@ -1,0 +1,85 @@
+/// The four disclosed parameters, one row each, with how each was derived and how sensitive the answer is to it.
+/// Every value here is a SIGNED SCENARIO CHOICE (entrant, G2/G3), not a measurement — which is why it is printed rather than computed.
+/// Deliberately UNRELATED to Movies — it is a disclosure table, not a dimension.
+table Parameters
+	lineageTag: 4a9ad3cb-c827-4a7e-932b-d49b45610c85
+
+	/// The parameter's name as printed on the method page.
+	column Name
+		dataType: string
+		lineageTag: 0e424ba7-f807-4af0-991b-879701b8586d
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Name]
+		sortByColumn: Sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	/// The disclosed value, as text — the four parameters have four different units, so they are printed, never aggregated.
+	column Value
+		dataType: string
+		lineageTag: e7266301-aacf-4313-82b1-cd028060671d
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Where the value came from — the honest answer to "why this number and not another".
+	column Derivation
+		dataType: string
+		lineageTag: 5c696fe8-dc48-435d-9d67-f70cc3c9eed9
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Derivation]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// How much the answer moves if the value moves — the sensitivity check that makes the choice defensible.
+	column Robustness
+		dataType: string
+		lineageTag: 99bb9c7e-5158-476f-8c62-25597a6bcb6d
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Robustness]
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Reading order of the disclosure table. Hidden technical column.
+	column Sort
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 78aa8c0f-0fce-4eaa-8e14-3c08f75ca2e0
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Sort]
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition Parameters = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Name", STRING,
+				    "Value", STRING,
+				    "Derivation", STRING,
+				    "Robustness", STRING,
+				    "Sort", INTEGER,
+				    {
+				        { "Financial floor", "$10,000", "Junk-budget floor — Budget is never 0 in this source; unknowns arrive as junk small values, 60.6% of them below $10k", "Coverage 13.2% at $10k vs 11.9% at $100k (Q2 profiling)", 1 },
+				        { "m — evidence threshold", "100", "Vote Count p90 ≈ 104, rounded to a communicable 100", "p90 rounds to 100 from either snapshot (106 and 104)", 2 },
+				        { "C — shrinkage target", "6.96", "Vote-weighted global mean rating", "6.9594 in both snapshots — identical", 3 },
+				        { "Snapshot anchor", "2026-07-24", "The dataset's own download date", "Fixed by design — never TODAY() or LocalNow(), so nothing drifts between refreshes", 4 }
+				    }
+				)
+

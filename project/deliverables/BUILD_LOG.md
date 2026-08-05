@@ -2067,3 +2067,233 @@ specimen                  : 191b3d9019697e50701c recorded verbatim above, then
                             deleted from p0-box-office (no page/bookmark refs)
 git                       : NOT committed, by instruction. git diff is the undo.
 ```
+
+## 2026-08-05 — REBUILD CHECKPOINT 1: model deltas + theme (no report pages)
+
+The report is being rebuilt to the approved plan
+(`i-told-you-i-giggly-castle.md`). Checkpoint 1 is **disk-only model and theme
+work** — no page was touched. The verified contest question is *"What makes a
+movie successful?"*, and the story now **leads with the answer**: success is two
+different things, money and evidence, and they almost never coincide.
+
+Governing constraint applied throughout, from the entrant: **every element must
+have a function — "a builder doesn't put nails where they don't need."** Applied
+to measures too: nothing below was added without a named consumer in the plan.
+
+### Built — Task A: three calculated columns (+ three sort companions)
+
+| Column | Table | Shape |
+|---|---|---|
+| `Budget Band` | Movies | `Below floor` (under the disclosed $10,000 floor) · `$10k–100k` · `$100k–1M` · `$1M–10M` · `$10M–50M` · `$50M–100M` · `$100M+` |
+| `Budget Band Sort` | Movies | 1–7, hidden, `sortByColumn` target |
+| `Vote Band` | Movies | `0` · `1–9` · `10–99` · `100–999` · `1,000+` |
+| `Vote Band Sort` | Movies | 1–5, hidden, `sortByColumn` target |
+| `Decade` | Release Year | `1800s`…`2090s`, with the −1 unknown member mapped to **"No date on record"** so a dateless listing is never silently dropped from an era axis |
+| `Decade Sort` | Release Year | decade's first year; unknown member last at 2100, matching `Year Sort`'s existing convention |
+
+### Built — Task B: two calculated tables
+
+- **`Counts`** — 8 rows (`Line`, `Sort`): Listings per source · Adult excluded ·
+  Basis · Duplicate (title,date) pairs · Duplicate IDs · No release date ·
+  Future-dated · Negative revenue. **Labels only — every value comes from
+  `[Value · Count line]`**, so no count is ever typed into the model.
+- **`Parameters`** — 4 rows (`Name`, `Value`, `Derivation`, `Robustness`,
+  `Sort`): the financial floor, m, C and the snapshot anchor, each with how it
+  was derived and how sensitive the answer is to it.
+- Both are **deliberately unrelated to `Movies`**: they are presentation /
+  disclosure axes, not dimensions. A relationship would filter the fact table
+  meaninglessly. Recorded here because the star-schema rule requires the
+  justification in writing.
+- Registered in `model.tmdl` as `ref table Counts` / `ref table Parameters`.
+
+### Built — Task C: 24 new measures (90 → 114)
+
+- `01 Core` — `Movies (money bar only)` · `Movies (evidence bar only)` ·
+  `Movies (one bar only)` · `Movies (neither bar)` · `Share · both` ·
+  `Share · one bar only` · `Share · neither` · `Share · money` · `Share · evidence`
+- `02 Lie 1 · Financials` — `Median revenue multiple (credible)`
+- `05 Data health · Time` — `Value · Count line`
+- `06 Display` — `Title · Budget return` · `Title · Coverage era` ·
+  `Title · Vote distribution` · `Label · Adjustments` · `Label · Refusal` ·
+  `Label · Tooltip head` · `Copy · Answer · units read` · `Copy · Money · trap` ·
+  `Copy · Evidence · trap`
+- `06 Display\Alt text` — `Alt · dn_answer_units` · `Alt · ch_budget_return` ·
+  `Alt · ch_coverage_by_era` · `Alt · ch_vote_distribution`
+
+### Rewritten — Task D: five bodies, **names and lineageTags untouched**
+
+`Title · Landing` (the Key Takeaway) · `Title · Lie 1` → the MONEY page's answer ·
+`Title · Lie 2` → EVIDENCE · `Title · Lie 3` → BOTH · `Label · Caveats` (extended
+with the mandated attribution). Each carries a `///` line stating the reframe and,
+on the three act titles, an explicit note that the name is kept **because every
+binding downstream addresses the measure by name**.
+
+Verified mechanically after the pass: **90 pre-existing measures still present,
+0 lineageTags changed, 0 measures lost.**
+
+### Decisions & assumptions
+
+- **`Share · money` and `Share · evidence` are aliases**, not second `DIVIDE`s
+  (`= [Financial coverage %]` / `= [Evidence share %]`). The brief said
+  "each `DIVIDE(…, [Movies])`"; the aliases compute exactly that while keeping
+  *one calculation, one home*. Precedent in-model: `Alt · c_nodate_chip`.
+- **`Title · Landing`'s word guard is arithmetic, not a guess.** The long frame
+  is 38 words, the short frame (which drops "— and they rarely coincide") is 33.
+  The winner's own word count is measured at run time as *spaces + 1* and added;
+  the long frame is used while `38 + winnerWords <= 50`. Simulated across winner
+  titles of 1–17 words: never exceeds 50. With today's winner (*The Lord of the
+  Rings: The Return of the King*, 10 words) it renders at **48 words**, or 46 if
+  standalone em-dashes are not counted.
+  **Residual, stated honestly:** `[Winner · title]` returns a comma-joined list
+  on ties. A tie long enough to blow 50 words would need a copy change, not a
+  third branch — recorded rather than silently handled. The measure also assumes
+  `hero_takeaway` carries no visual-level filter, so the winner is never blank.
+- **Insight titles state findings computed live, never asserted directions.**
+  `Title · Budget return` ranks the budget bands at run time and names the best
+  and worst; if the ranking flips with the data, the sentence flips with it.
+  `Title · Coverage era` holds out decades with fewer than 100 listings so a
+  two-film decade cannot win on noise.
+- **`Label · Refusal` deliberately carries no number.** It is a methodological
+  position; a count would imply popularity had been scored after all. Precedent:
+  `Alt · c_refusal_popularity`.
+- **`Median revenue multiple (credible)` is a median of per-listing ratios**, not
+  a ratio of sums — one blockbuster cannot speak for its band. Its `formatString`
+  is written `0.0\×` (backslash-escaped literal, the same escape form as the
+  model's existing `\$#,0`) rather than the quote-wrapped `"0.0""×"""` form.
+  Identical rendering, no TMDL quote-escaping to get wrong.
+- **`Label · Caveats` now carries the mandated attribution inside the measure**:
+  `SOURCE DATA BY TMDB, DISTRIBUTED VIA KAGGLE UNDER ODC-BY 1.0 — THIS PRODUCT
+  USES TMDB DATA BUT IS NOT ENDORSED OR CERTIFIED BY TMDB` — byte-identical to
+  the string already on `z_footer_credit`. The credit now lives in a **bound
+  string**, so it cannot be lost by deleting a text box during the rebuild.
+- **The four new `Alt ·` measures stay inside the credited scope.** CREDITS.md
+  and `contracts/source-register.yaml` credit the dynamic-alt-text prompt *by
+  publication* (author byline still outstanding behind the community 403) and
+  scope our use to **plain measures on Power BI's own documented feature, not the
+  post's DAX-UDF pattern**. No UDF was written; the attribution debt was not
+  deepened.
+
+### Research-first — what was verified, and against what
+
+TMDL calculated columns and `DATATABLE` calculated tables do **not** exist
+anywhere in this model, so the existing tables could not settle the syntax.
+Verified instead against **Microsoft-authored TMDL** in
+`microsoft/Analysis-Services` (`pbidevmode/fabricps-pbip/SamplePBIP/`):
+
+| Question | Specimen | Answer adopted |
+|---|---|---|
+| Calculated column form | `Calendar.tmdl` → `column 'Date (Year-Month)' = DATE([Year], [Month (#)],1)` | inline `= <DAX>`, `dataType` present, **no** `sourceColumn`, `isDataTypeInferred` present |
+| Calculated table + DATATABLE | `Dynamic Measure.tmdl` | `partition <T> = calculated`, columns carry `dataType`, `isNameInferred`, `isDataTypeInferred`, `sourceColumn: [Name]` (bracketed) |
+| Multi-line calculated source | `Parameter - Dimension.tmdl` | the indentation form (`source =` then a 4-tab body) is valid on a `calculated` partition — matches this repo's M-partition style |
+| `sortByColumn` + `changedProperty` | this model's `Date.tmdl` / `Release Year.tmdl`, and `Calendar.tmdl` | unchanged repo form kept |
+
+**Not verified, conservative choice made:** `PBI_Id` (Desktop's own
+calculated-table annotation) was **omitted** from `Counts` and `Parameters`
+rather than invented — Desktop generates it on save. `PBI_ResultType = Table`
+was written and then removed: it is a Power Query navigation annotation and does
+not belong on a calculated table.
+
+### Built — Task E: report.json + theme
+
+- **`report.json`:** the duplicate **unlocked** `Movies[Adult] = FALSE` filter
+  (`1dade010cb9e3d8665cb`, `Categorical`, no lock) is deleted. Exactly one
+  remains — `flt_report_adult`, named "Adult listings", `Advanced`,
+  `isLockedInViewMode: true`, and now an **explicit** `isHiddenInViewMode: false`
+  so "visible in the pane" is a decision on disk rather than an inherited default.
+  `isHiddenInViewMode` verified optional-boolean in `filterConfiguration/1.3.0`.
+- **`theme.json`** (and the installed `D7-Seductive-Lies.json`, content-identical;
+  the deliverables copy is LF, the installed copy CRLF as Desktop wrote it):
+  - **`visualStyles.cardVisual` added.** `label` `$id: "default"` `show: false`
+    (this is how Desktop hides the measure-name label), `value` `$id: "default"`
+    with `fontColor #F2EFE6` + `textWrap`, and `background`/`border`/`dropShadow`/
+    `visualHeader`/`title`/`padding` off. The grammar is the entrant's own Desktop
+    specimen, recorded verbatim in this log on 2026-08-05. **Without this block the
+    global `"*"/"*"` rule painted `#1D1A20` behind all 46 cards — the black slabs.**
+    No `fontFamily`/`fontSize` written at theme level: those belong to the
+    `callout` text class and to the per-card properties, which already carry the
+    design contract's typography.
+  - **`visualStyles.pageNavigator` added** — one navigator replaces ~16 per-page
+    buttons. `pages.showHiddenPages/showTooltipPages: false` (the hidden tooltip
+    must not appear in it), `layout.orientation: 2` (Horizontal), fill off, and the
+    current page marked by **outline weight 1 → 2 plus a brighter, bolded label**
+    — never colour alone. `shape` written selectorless: unlike `actionButton`,
+    `pageNavigator.shape` declares no `$id` in the schema and no Desktop specimen
+    exists, so the conservative form was chosen.
+  - **Legacy structural aliases added** — `foreground #F2EFE6`,
+    `foregroundNeutralSecondary #B5AFA0`, `foregroundNeutralTertiary #78716C`,
+    `backgroundLight #1D1A20`, `backgroundNeutral #2E2933`, mirroring the
+    first/second/fourth-level elements and the night surfaces so nothing inherits
+    Fluent2's LIGHT values on a night page.
+  - **Fonts cut to the Mac-safe set.** `Bahnschrift SemiCondensed` and `Consolas`
+    are **deleted from the design**. The mapping keeps the handoff's stated roles
+    (line 102: Bahnschrift = display and chrome caps · Consolas = screenplay body
+    and numerals · Georgia = verdicts and editorial framing):
+    `callout` → **Courier New** · `largeTitle`, `header` → **Arial Black** ·
+    `title` and all label classes → **Arial**. The 11 `Segoe UI` families inside
+    `visualStyles` (chart axes, table text, button text) went to **Arial** in the
+    same pass — the plan's constraint is report-wide, and leaving Segoe UI on the
+    chart axes would have missed the visible half of it. **Georgia keeps no
+    textClass slot**: it is applied per-visual, exactly as the handoff already does.
+  - **`basicShape` pruned.** Dead: the valid visual name is `shape`, and a scan of
+    all 222 visuals finds **zero** `basicShape` visuals (63 are `shape`).
+
+### Validation status — 2026-08-05, checkpoint 1
+
+```
+validate_tmdl.py --strict : 17 file(s), 1 error, 0 warnings
+                            The 1 error is the STANDING SourceRoot drive-letter
+                            waiver (expressions.tmdl:34). Expected steady state.
+validate_json.py          : 259 file(s), 0 errors, no BOM
+theme vs reportThemeSchema-2.156 (fetched this session, jsonschema Draft7):
+                            deliverables/theme.json           0 errors
+                            RegisteredResources/D7-*.json     0 errors
+theme negative control    : 7 deliberate faults injected; 6 CAUGHT
+                            (cardVisual.value.fontSize range, pageNavigator
+                            text/layout/outline enums, foreground type,
+                            textClasses unknown class). 1 not caught - an unknown
+                            property NAME inside cardVisual.label, because that
+                            item schema does not set additionalProperties:false.
+                            Every property name written was separately checked
+                            against the schema's own property list.
+model reference integrity : every [measure] and Table[Column] reference in
+                            _Measures.tmdl resolves to a defined object (114
+                            measures, 12 tables). 0 unresolved.
+lineageTag preservation   : 90 pre-existing measures, 0 tags changed, 0 lost.
+pbir_detect.py            : PASS - 48 findings, 0 unwaived (old pages, unchanged)
+pbir CLI                  : NOT INSTALLED on this machine - direct JSON editing
+                            used, per DEPENDENCIES.md's documented fallback.
+git                       : NOT committed, by instruction. git diff is the undo.
+```
+
+### Manual steps required in Desktop — checkpoint 1
+
+- [ ] **REFRESH the model.** The three calculated columns and the two calculated
+      tables are **definitions on disk only** until Desktop recalculates. Nothing
+      that binds to `Movies[Budget Band]`, `Movies[Vote Band]`,
+      `'Release Year'[Decade]`, `Counts` or `Parameters` will resolve before then.
+      *Verify:* the columns appear in the Fields list, `Counts` shows 8 rows and
+      `Parameters` 4 rows.
+- [ ] **Reproduce the six snapshot numbers before any report work** (the plan's
+      checkpoint-1 gate): 84,510 listings · 11,116 credible (13.15%) ·
+      66,853 zero-revenue (79.1%) · 4,610 perfect tens with 4,304 on a single
+      vote · C = 6.96 · votes p90 ≈ 104.
+- [ ] **Read `[Title · Landing]` on canvas and count the words.** Expected 48 with
+      today's winner. If the winner ties and the string runs long, the guard falls
+      back to the 33-word frame — check which frame rendered.
+- [ ] **Confirm the theme reloads** and that the 46 existing cards no longer render
+      a black slab or their measure name. (Those cards are due for replacement in
+      later checkpoints; this is the theme-level check, not a page check.)
+- [ ] **Font check after the next publish** — Courier New / Arial / Arial Black /
+      Georgia only. Any Bahnschrift or Consolas still rendering means a per-visual
+      override survived in a page file, not in the theme.
+
+### Known limitations — checkpoint 1
+
+- `project/deliverables/measures.dax` and `data-model.md` still describe the
+  pre-rebuild model (90 measures, no bands, no `Counts`/`Parameters`). They are
+  design-quartet documents outside this checkpoint's scope and are **now stale**.
+- The old report pages still bind `[Title · Lie 1/2/3]` and `[Title · Landing]`
+  into act-titled chrome. The measures now say something different from the
+  chrome around them. That is expected mid-rebuild and resolves when the pages
+  are rebuilt; it is **not** a defect to fix in the old pages.
+- No page, visual or bookmark was touched in this checkpoint.

@@ -148,3 +148,77 @@ have plausible row counts after refresh before building on them.
 
 None new. Routed question 5 (Profit rename vs starter binding) resolved above:
 same-batch binding update, nothing dangles.
+
+## REBUILD CHECKPOINT 1 — model deltas (2026-08-05, pbir-operator)
+
+Authority: the approved rebuild plan `i-told-you-i-giggly-castle.md`. The
+verified contest question is **"What makes a movie successful?"** and the story
+now leads with the answer, so the model gains the objects that answer it. Scope
+here is the **semantic model only**; the theme and `report.json` deltas from the
+same checkpoint are logged in `06-report-build.md`.
+
+### What was added
+
+- **`Movies[Budget Band]` + `[Budget Band Sort]`** — `Below floor` under the
+  disclosed $10,000 floor, then `$10k–100k` / `$100k–1M` / `$1M–10M` /
+  `$10M–50M` / `$50M–100M` / `$100M+`. The band is only meaningful above the
+  floor, so sub-floor rows are **labelled**, never binned as if their budget
+  were known.
+- **`Movies[Vote Band]` + `[Vote Band Sort]`** — `0` / `1–9` / `10–99` /
+  `100–999` / `1,000+`.
+- **`'Release Year'[Decade]` + `[Decade Sort]`** — decade labels, with the −1
+  unknown member carried through as **"No date on record"** and sorted last at
+  2100 (the convention `Year Sort` already uses). The dateless 30.8% stay
+  first-class on an era axis.
+- **`Counts`** (8 rows) and **`Parameters`** (4 rows) — calculated tables, both
+  `ref`'d in `model.tmdl`. `Counts` supplies only the row *labels* of the method
+  page's cross-foot; the values come from `[Value · Count line]`, which
+  dispatches to the measure that already owns each count.
+- **24 measures** (90 → 114) and **5 measure-body rewrites** with names and
+  `lineageTag`s preserved. Full inventory in `BUILD_LOG.md`.
+
+### Decisions taken here
+
+- **`Counts` and `Parameters` are deliberately unrelated to `Movies`.** The
+  star-schema rule wants that in writing: they are presentation/disclosure axes,
+  not dimensions, and a relationship would filter the fact table meaninglessly.
+- **No measure was added without a consumer named in the plan** — the entrant's
+  "a builder doesn't put nails where they don't need", applied to the model.
+- **`Share · money` / `Share · evidence` are aliases** of `Financial coverage %`
+  / `Evidence share %` rather than second `DIVIDE`s, keeping one calculation in
+  one home while giving the answer page its own `Share ·` vocabulary.
+- **No parameter changed.** The floor ($10,000), m (100), C (6.96) and the
+  snapshot anchor (2026-07-24) are exactly as signed at G2/G3; `Parameters` only
+  *prints* them alongside their derivation and robustness.
+
+### Research-first note
+
+Neither a calculated column nor a `DATATABLE` calculated table existed anywhere
+in this model, so the syntax could not be settled against it. It was verified
+against Microsoft-authored TMDL in `microsoft/Analysis-Services`
+(`pbidevmode/fabricps-pbip/SamplePBIP/`): `Calendar.tmdl` for the calculated
+column form, `Dynamic Measure.tmdl` for the `DATATABLE` calculated table,
+`Parameter - Dimension.tmdl` for the multi-line `calculated` partition body.
+`PBI_Id` was omitted rather than invented — Desktop writes it on save.
+
+### Validation at close
+
+`validate_tmdl.py --strict`: 17 files, **1 error, 0 warnings** — the error is the
+standing SourceRoot drive-letter waiver at `expressions.tmdl:34`, i.e. the
+expected steady state. Reference integrity checked mechanically: every
+`[measure]` and `Table[Column]` reference in `_Measures.tmdl` resolves. All 90
+pre-existing measures present, 0 `lineageTag`s changed.
+
+### Open questions
+
+- **Gate not yet met: the six snapshot numbers are unreproduced.** The
+  calculated columns and tables are definitions on disk; they materialise only
+  when the entrant refreshes in Desktop. Until then nothing binding to
+  `Movies[Budget Band]`, `Movies[Vote Band]`, `'Release Year'[Decade]`, `Counts`
+  or `Parameters` can be checked. **This blocks report work per the plan's
+  checkpoint-1 gate.**
+- `[Winner · title]` returns a comma-joined list on ties. `Title · Landing`'s
+  50-word guard has two frames (38-word and 33-word); a tie long enough to blow
+  50 words even on the short frame would need a copy decision, not a third
+  branch. No tie is expected with the current data — recorded so it is not a
+  surprise later.

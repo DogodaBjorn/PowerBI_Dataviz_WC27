@@ -48,6 +48,41 @@ table 'Release Year'
 
 		annotation SummarizationSetBy = User
 
+	/// Decade label for era views (e.g. "1990s"); the -1 unknown member keeps its own first-class label, so dateless listings are never silently dropped from an era axis.
+	column Decade =
+			IF(
+				'Release Year'[Year Key] = -1,
+				"No date on record",
+				FORMAT(INT('Release Year'[Year Key] / 10) * 10, "0") & "s"
+			)
+		dataType: string
+		lineageTag: 86e4b46c-f215-4366-b66f-212d6bf6f4d9
+		summarizeBy: none
+		isDataTypeInferred
+		sortByColumn: 'Decade Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sort order for Decade — the decade's first year, with the unknown member last at 2100 (the same convention Year Sort uses). Hidden technical column.
+	column 'Decade Sort' =
+			IF(
+				'Release Year'[Year Key] = -1,
+				2100,
+				INT('Release Year'[Year Key] / 10) * 10
+			)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c51f6afe-2173-4fc1-90a7-19af2429881c
+		summarizeBy: none
+		isDataTypeInferred
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
 	partition 'Release Year' = m
 		mode: import
 		queryGroup: Dimensions
