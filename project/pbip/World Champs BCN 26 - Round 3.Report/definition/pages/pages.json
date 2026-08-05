@@ -2,6 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
   "pageOrder": [
     "p1-the-answer",
+    "p2-money",
+    "p3-evidence",
     "p4-both",
     "p0-box-office",
     "p1-act-i-profit",

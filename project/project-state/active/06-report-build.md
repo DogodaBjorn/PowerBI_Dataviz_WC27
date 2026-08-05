@@ -19,7 +19,8 @@ validation record. This file is the stage's state + open questions.
 | **RB-1** | **Rebuild ckpt 1: model deltas (columns, 2 calc tables, 24 measures, 5 rewrites) + theme** | **done 2026-08-05** |
 | **RB-2** | **Rebuild ckpt 2: `p1-the-answer` — the new landing page, 13 visuals** | **done 2026-08-05** |
 | **RB-3** | **Rebuild ckpt 3: `p4-both` — the payoff page, 11 visuals (play axis + navigator)** | **done 2026-08-05** |
-| RB-4+ | Rebuild ckpt 4+: `p2-money`, `p3-evidence`, `p5-method`, tooltip; then delete the six old pages | not started |
+| **RB-4** | **Rebuild ckpt 4: `p2-money` (12) + `p3-evidence` (10) — the two paper pages** | **done 2026-08-05** |
+| RB-5+ | Rebuild ckpt 5+: `p5-method`, the tooltip; then delete the six old pages | not started |
 
 **The report is structurally complete.** 222 visuals across six pages
 (p0 43 · p1 47 · p2 41 · p3 40 · p9 37 · tooltip 14) plus nine beat bookmarks —
@@ -506,7 +507,65 @@ model file touched) · `check_state.py` OK · **`pbir_detect.py` PASS — 0 unwa
   literal table plus a waiver.
 - **`nav_pages` currently renders six buttons** because the four old visible pages are
   still registered. Self-corrects at the deletion checkpoint.
-- **Theme recommendation, not applied:** `pageNavigator.outline` default is `#57534E`
-  in the theme (2.39:1). The visual writes `#6E6960` (3.35:1) explicitly instead. The
-  theme should follow, but that is a design change beyond the one-key fix authorised
-  this session.
+- ~~**Theme recommendation, not applied:** `pageNavigator.outline` default is
+  `#57534E`~~ — **RULED AND APPLIED 2026-08-05:** both theme copies now carry
+  `#6E6960` on `pageNavigator.outline` `$id default` (2.39:1 → 3.35:1), so theme and
+  visual agree. `tableAccent` and the `tableEx` gridline keep `#57534E`.
+
+## REBUILD CHECKPOINT 4 — `p2-money` + `p3-evidence` (2026-08-05, pbir-operator)
+
+The two paper pages, charts built first so the insight titles could be checked against
+real structure. Full detail — the paper-surface override, the four insight titles, the
+cross-filter matrix, the five measure edits and every measured contrast pair — is in
+`project/deliverables/BUILD_LOG.md` under *REBUILD CHECKPOINT 4*.
+
+State, in brief:
+
+- **New:** `definition/pages/p2-money/` (page.json + 12 visuals) and
+  `definition/pages/p3-evidence/` (page.json + 10 visuals), both 1280×720 paper
+  `#F5F2E9`, act tints on chrome only.
+- **Changed:** `pages.json` (final order `p1-the-answer` · `p2-money` · `p3-evidence` ·
+  `p4-both`, then the six old pages), the two theme copies (`pageNavigator.outline`),
+  three insight-title font sizes, and **five measure bodies** — names, lineageTags,
+  formatStrings and displayFolders untouched, 112 measures / 116 lineageTags before and
+  after.
+- **Four new native data visuals:** `clusteredColumnChart`, `lineChart`, `columnChart`
+  and the `tableEx` with posters and headers ON — plus `dn_rating_fall`
+  (`clusteredBarChart`) keeping its id for the later Deneb swap. The entry's core
+  native count is now comfortably past the contest's "at least three".
+- **Cross-filter is expressible in PBIR and is written**, no Desktop step:
+  `page.json → visualInteractions` (`{source, target, type}`, verified against
+  `page/2.1.0`). p3 has **exactly one** `DataFilter`
+  (`ch_vote_distribution → tbl_perfect_tens`) and 20 `NoFilter`; p2 has 16 `NoFilter`
+  and no cross-filter at all. The pair is labelled in the prose card above the table,
+  not with a new object.
+- **The black-slab defect is addressed at its cause:** every paper card writes
+  `cardCalloutArea {show, backgroundFillColor: #F5F2E9}` with the `{"id":"default"}`
+  selector, and every chart/table states its own `#FFFFFF` surface and `#D8D4C8` edge,
+  so nothing inherits the night theme's `#1D1A20` / `#171418` / cream tokens.
+
+### Validation — checkpoint 4
+
+`validate_json.py` 310/0 · deep `visualContainer/2.9.0` p1 14/14, p2 12/12, p3 10/10,
+p4 11/11, 0 real errors · `page/2.1.0` 0 (both new pages, `visualInteractions`
+included) · `pagesMetadata/1.1.0` 0 · both theme copies 0 · `validate_tmdl.py --strict`
+1 error (standing SourceRoot waiver) · `check_state.py` OK · **`pbir_detect.py` PASS —
+0 unwaived** (52 findings, all waived; each new page contributes one hairline finding).
+
+### Open questions — checkpoint 4
+
+- **Repetition on p3, flagged not fixed.** `[Copy · Act II · responsible read]`
+  (`c_p3_fall_prose`) and `[Copy · Act II · verdict`] (`c_verdict_evidence`) state the
+  same fact in nearly the same words. I removed the third instance (it was inside
+  `[Copy · Evidence · trap]`, whose function the spec reassigned) but did not rewrite
+  the verdict, because its copy was not in the brief. A one-line replacement is
+  proposed in BUILD_LOG for the coordinator's ruling.
+- **`kpi_profit_naive` has no adjacent MISREAD stamp** — the word now opens the prose
+  card 44 px beneath it. Hard rule 3 is satisfied (colour + strike + word); if the
+  stamp should sit on the number it is one textbox and one tab stop.
+- **Paper card edges are barely visible by contract:** `#FFFFFF` on `#F5F2E9` is
+  1.12:1 and the `#D8D4C8` hairline 1.32:1 — the old build's paper treatment, carried
+  over deliberately, recorded so it is a decision rather than a surprise.
+- **Two exclusion filters use a shape this repo has not shipped before** (`Not` +
+  `Comparison(0)`), verified against `semanticQuery/1.4.0`. First Desktop render is
+  the proof.

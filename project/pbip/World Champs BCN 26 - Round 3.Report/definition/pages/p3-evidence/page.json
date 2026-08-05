@@ -1,0 +1,178 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "p3-evidence",
+  "displayName": "2 · EVIDENCE",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F5F2E9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F5F2E9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "displayArea": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "ch_vote_distribution",
+      "target": "c_p3_answer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_vote_distribution",
+      "target": "c_p3_lb_prose",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_vote_distribution",
+      "target": "tbl_perfect_tens",
+      "type": "DataFilter"
+    },
+    {
+      "source": "ch_vote_distribution",
+      "target": "c_vote_dist_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_vote_distribution",
+      "target": "c_p3_fall_prose",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_vote_distribution",
+      "target": "dn_rating_fall",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_vote_distribution",
+      "target": "c_verdict_evidence",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_perfect_tens",
+      "target": "c_p3_answer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_perfect_tens",
+      "target": "c_p3_lb_prose",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_perfect_tens",
+      "target": "c_vote_dist_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_perfect_tens",
+      "target": "ch_vote_distribution",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_perfect_tens",
+      "target": "c_p3_fall_prose",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_perfect_tens",
+      "target": "dn_rating_fall",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_perfect_tens",
+      "target": "c_verdict_evidence",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_rating_fall",
+      "target": "c_p3_answer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_rating_fall",
+      "target": "c_p3_lb_prose",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_rating_fall",
+      "target": "tbl_perfect_tens",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_rating_fall",
+      "target": "c_vote_dist_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_rating_fall",
+      "target": "ch_vote_distribution",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_rating_fall",
+      "target": "c_p3_fall_prose",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_rating_fall",
+      "target": "c_verdict_evidence",
+      "type": "NoFilter"
+    }
+  ]
+}

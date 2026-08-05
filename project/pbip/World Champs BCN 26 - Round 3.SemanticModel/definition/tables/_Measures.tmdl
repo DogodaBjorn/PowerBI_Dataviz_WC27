@@ -583,7 +583,7 @@ table _Measures
 	measure 'Copy · Act I · verdict' =
 			"The industry doesn't lose money — the dataset loses data. Claim only the "
 				& FORMAT([Financial coverage %], "0.0%")
-				& " we can verify."
+				& " we can verify. (USD as recorded; gross gap, not P&L.)"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: a515bb21-c12d-4994-86d7-41874f8073aa
@@ -985,7 +985,9 @@ table _Measures
 					& CONCATENATEX(Worst, Movies[Budget Band], ", ")
 					& " band "
 					& FORMAT(MINX(Worst, [@Multiple]), "0.0")
-					& "× — and only "
+					& "×. Bands below the "
+					& FORMAT([Financial floor (disclosed)], "\$#,0")
+					& " floor are excluded here; only "
 					& FORMAT([Share · money], "0.0%")
 					& " of listings can be judged on money at all"
 		formatString: @
@@ -1017,7 +1019,7 @@ table _Measures
 					& FORMAT([Share · money], "0.0%")
 					& " can be judged on money, and "
 					& FORMAT([Movies (undated)], "#,0")
-					& " carry no date at all"
+					& " carry no date at all and are absent from this chart"
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: e5a5e265-7cd6-4766-bcb0-9e9eb50e7b65
@@ -1096,7 +1098,8 @@ table _Measures
 					"The movie business prints money."
 				)
 			RETURN
-				Claim
+				"MISREAD: "
+					& Claim
 					& " Look: "
 					& FORMAT(NaiveProfit, "\$#,0;(\$#,0)")
 					& ". That reading counts unknowns as real money: "
@@ -1108,20 +1111,15 @@ table _Measures
 		displayFolder: 06 Display
 		lineageTag: fa9f0550-6cfa-48cf-b224-f720e42068a0
 
-	/// The evidence trap and its mechanism in one paragraph — replaces the old naive-read / margin-note pair.
+	/// The evidence trap, and the exhibit's own disclosure: what the table beneath is filtered to, how it is sorted, and the one cross-filter on the page.
 	/// Names no film: thousands tie on a perfect 10.0, so naming one would be the very claim this page refuses.
+	/// REFRAME 2026-08-05 (rebuild ckpt 4): the m/C weighting clause moved out - it is [Copy · Act II · responsible read]'s job on the same page, and printing it twice was repetition a reader would notice.
 	measure 'Copy · Evidence · trap' =
-			"The best film ever made? Take your pick — "
+			"The best film ever made? Take your pick: "
 				& FORMAT([Movies (perfect ten)], "#,0")
 				& " listings score a perfect 10.0, "
 				& FORMAT([Movies (perfect ten, single vote)], "#,0")
-				& " of them on a single vote. Weighted by evidence (m="
-				& FORMAT([Rating m (disclosed)], "#,0")
-				& ", C="
-				& FORMAT([Rating C (disclosed)], "0.00")
-				& "), that single vote reads "
-				& FORMAT([Single-vote ten (illustration)], "0.00")
-				& " — barely above the global mean. Applause is not evidence."
+				& " of them on a single vote. The table below is every listing rated exactly 10.0, fewest votes first. Select a bar in the vote chart to filter it."
 		formatString: @
 		displayFolder: 06 Display
 		lineageTag: 46c411a3-a70b-4007-bc48-c8bfb085761c

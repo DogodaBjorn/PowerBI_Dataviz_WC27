@@ -210,6 +210,18 @@ waivers:
     reason: "DRAFT - one object: z_rule_answer, a 1 px separator, sub-grid by nature. Its x/y/width are all on the 8 px grid (24, 216, 1232); only its 1 px height is not, and an 8 px separator would be a slab, not a rule. Every other rect on the page is on-grid after the checkpoint-2 snap. Entrant sign-off pending."
     date: 2026-08-05
 
+  grid-p2-money-hairline:
+    rule: grid-8px
+    path: "pages/p2-money"
+    reason: "DRAFT - two objects, both sub-grid by nature. z_p2_rule is the 2 px indigo answer/evidence separator (x/y/width 24, 120, 1232 all on-grid; only its 2 px height is not). z_p2_strike is the 2 px trap-red strike THROUGH the naive profit number: its y=180 is the vertical middle of the 28 pt numeral it withdraws, not a layout position - moving it to an 8 px pitch would move it off the number and destroy the non-colour carrier that hard rule 3 requires beside the word MISREAD. Every other rect on the page is on-grid. Entrant sign-off pending."
+    date: 2026-08-05
+
+  grid-p3-evidence-hairline:
+    rule: grid-8px
+    path: "pages/p3-evidence"
+    reason: "DRAFT - one object: z_p3_rule, the 2 px brass answer/evidence separator, sub-grid by nature. Its x/y/width are on the 8 px grid (24, 120, 1232); only its 2 px height is not. Every other rect on the page is on-grid. Entrant sign-off pending."
+    date: 2026-08-05
+
   grid-p4-both-hairline:
     rule: grid-8px
     path: "pages/p4-both"

@@ -1,0 +1,153 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "p2-money",
+  "displayName": "1 · MONEY",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F5F2E9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F5F2E9'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "displayArea": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "ch_budget_return",
+      "target": "c_p2_answer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_budget_return",
+      "target": "kpi_profit_naive",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_budget_return",
+      "target": "c_p2_trap_prose",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_budget_return",
+      "target": "c_p2_checked_prose",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_budget_return",
+      "target": "c_budget_return_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_budget_return",
+      "target": "c_coverage_era_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_budget_return",
+      "target": "ch_coverage_by_era",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_budget_return",
+      "target": "c_verdict_money",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_coverage_by_era",
+      "target": "c_p2_answer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_coverage_by_era",
+      "target": "kpi_profit_naive",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_coverage_by_era",
+      "target": "c_p2_trap_prose",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_coverage_by_era",
+      "target": "c_p2_checked_prose",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_coverage_by_era",
+      "target": "c_budget_return_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_coverage_by_era",
+      "target": "ch_budget_return",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_coverage_by_era",
+      "target": "c_coverage_era_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_coverage_by_era",
+      "target": "c_verdict_money",
+      "type": "NoFilter"
+    }
+  ]
+}

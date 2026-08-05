@@ -86,6 +86,11 @@ were deleted in the G6 fix pass.** Nothing has been rendered in Desktop — see
 | 2026-08-05 (**rebuild ckpt 3**) | Report: `pages/p4-both` | **NEW page, 11 visuals**, 1280×720, night `#171418`, plum `#B79BE8` chrome-only, `displayName` "3 · BOTH". `nav_pages` (**native `pageNavigator`**) · `c_p4_answer` · `z_p4_rule` · `c_scatter_population` · `hero_premiere_scatter` (**native `scatterChart` with the Play axis**) · `c_winner_label` · `c_adjustments` · `c_refusal` · `tbl_refusal_ranks` (native `tableEx`, **headers ON**) · `c_nodate` · `c_verdict_both`. **8 measure-bound cards + 2 data visuals**; nothing numeric is typed |
 | 2026-08-05 (**rebuild ckpt 3**) | Report: `p1/dn_answer_units` + `p4/hero_premiere_scatter` | chart-container treatment unified per consistency lock 9: **fill `#1D1A20` + 1 px `#6E6960` hairline** on both night data visuals (p1 gained the fill, p4's border moved off `#2E2933` at 1.29:1) |
 | 2026-08-05 (**rebuild ckpt 3**) | Report: `pages/pages.json` | `p4-both` registered directly after `p1-the-answer`; landing and active still `p1-the-answer`; old pages untouched |
+| 2026-08-05 (**ckpt 3 ruling**) | Deliverables + Report: theme ×2 | `visualStyles.pageNavigator.outline` `$id: default` `#57534E` → **`#6E6960`** in both copies, so the theme agrees with the navigator visuals (2.39:1 → 3.35:1). `tableAccent` and the `tableEx` gridline keep `#57534E` |
+| 2026-08-05 (**rebuild ckpt 4**) | SemanticModel: `_Measures` — 5 bodies | `Title · Budget return` (+ the excluded `Below floor` band, disclosed on canvas) · `Title · Coverage era` (+ "and are absent from this chart") · `Copy · Money · trap` (+ the `MISREAD:` mark in words) · `Copy · Act I · verdict` (+ the USD / gross-gap caveat) · `Copy · Evidence · trap` (rewritten: trap + the table's filter and sort + the one cross-filter hint; the duplicated m/C clause removed). **Names, lineageTags, formatStrings and displayFolders untouched** — verified 112 measures and 116 lineageTags before and after |
+| 2026-08-05 (**rebuild ckpt 4**) | Report: `pages/p2-money` | **NEW page, 12 visuals**, 1280×720, **paper** `#F5F2E9`, indigo `#2E4A7D` chrome-only. `nav_pages` · `c_p2_answer` · `z_p2_rule` · `kpi_profit_naive` + `z_p2_strike` · `c_p2_trap_prose` · `c_p2_checked_prose` · `c_budget_return_title` + **`ch_budget_return`** (native `clusteredColumnChart`) · `c_coverage_era_title` + **`ch_coverage_by_era`** (native `lineChart`) · `c_verdict_money`. **8 measure-bound cards**; 16 `visualInteractions` rules, all `NoFilter` |
+| 2026-08-05 (**rebuild ckpt 4**) | Report: `pages/p3-evidence` | **NEW page, 10 visuals**, 1280×720, **paper** `#F5F2E9`, brass `#8A6516` chrome-only. `nav_pages` · `c_p3_answer` · `z_p3_rule` · `c_p3_lb_prose` · **`tbl_perfect_tens`** (native `tableEx`, posters, **headers ON**) · `c_vote_dist_title` + **`ch_vote_distribution`** (native `columnChart`) · `c_p3_fall_prose` · **`dn_rating_fall`** (native `clusteredBarChart`, Deneb fallback, id kept) · `c_verdict_evidence`. **5 measure-bound cards**; 21 `visualInteractions` rules — **exactly one `DataFilter`** |
+| 2026-08-05 (**rebuild ckpt 4**) | Report: `pages/pages.json` | `p2-money` and `p3-evidence` registered in their final positions: `p1-the-answer` · `p2-money` · `p3-evidence` · `p4-both`, then the six old pages. Landing and active still `p1-the-answer` |
 
 ## Deferred — not built, and why
 
@@ -2816,3 +2821,229 @@ git                       : NOT committed, by instruction. git diff is the undo.
 - [ ] **Keyboard walk p4:** 10 stops, nav_pages first, `z_p4_rule` never focused;
       Alt+Shift+F11 on the scatter and on the table.
 - [ ] **Confirm the plum rule renders** (it is the one act-tint object on the page).
+
+## 2026-08-05 — REBUILD CHECKPOINT 4: `p2-money` and `p3-evidence`, the two paper pages
+
+The two model-dependent pages, built charts-first so the insight titles could be read
+against real structure before the copy was accepted. Both are **paper** surfaces on a
+report whose theme is night — which is exactly where the old build painted black slabs.
+
+### The paper-surface override, and the slab defect it prevents
+
+The theme is a **night** theme: `visualStyles.*.*.background` is `#1D1A20`,
+`cardVisual.value` `$id default` is cream `#F2EFE6`, and `tableEx.values.backColor` is
+`#171418`. Every one of those inherits onto a paper page as an unreadable slab or
+invisible text. So every object on these two pages **states its surface explicitly**:
+
+| token | value | where |
+|---|---|---|
+| canvas / outspace | `#F5F2E9` | `page.json` |
+| card + plot surface | `#FFFFFF` | chart/table `background`, `values.backColor`, `columnHeaders.backColor` |
+| card edge | `#D8D4C8` 1 px | chart/table `border` |
+| ink / secondary | `#211E1A` / `#57534E` | every `value.fontColor`, axis label, header |
+| chart neutral | `#78716C` | value-axis labels, the vote-band bars |
+| gridline | `#EBE7DC` | chart value axis + table row rules |
+
+**And every card writes `cardCalloutArea` explicitly** —
+`{show: true, backgroundFillColor: #F5F2E9}` with `selector: {"id":"default"}`, the
+grammar from the entrant's own Desktop specimen. This is the direct answer to the
+coordinator's warning: a card's callout area is where the fill actually lives (the
+specimen proved it), so on a paper page it is painted paper rather than left to
+inherit a night token. On the night pages (p1/p4) the default matches the canvas and
+the object is deliberately not written — recorded so the difference is not read later
+as an inconsistency.
+
+### The four insight titles, as they now read
+
+All four are **computed at run time**, never asserted. Frames, with today's values in
+angle brackets:
+
+1. **`Title · Budget return`** (`c_budget_return_title`) — ranks the budget bands live
+   and names the best and the worst: *"The ‹$10M–50M› band returns a median ‹3.4›× on
+   budget, the ‹$10k–100k› band ‹1.1›×. Bands below the ‹$10,000› floor are excluded
+   here; only ‹13.2%› of listings can be judged on money at all."* If the ranking flips
+   with the data, the sentence flips with it. **The floor-exclusion clause is new this
+   checkpoint** — the measure already excluded `Below floor` from its own ranking but
+   did not say so on canvas, which the coordinator asked for.
+2. **`Title · Coverage era`** (`c_coverage_era_title`) — *"The best-covered decade is
+   ‹2010s› at ‹18.4%›; across all listings only ‹13.2%› can be judged on money, and
+   ‹12,345› carry no date at all and are absent from this chart."* Decades with fewer
+   than 100 listings are held out so a two-film decade cannot win on noise. **The
+   "absent from this chart" clause is new** — dropping an unknown silently is precisely
+   what this report indicts, so the chart's own exclusion is now printed beside it.
+3. **`Title · Vote distribution`** (`c_vote_dist_title`) — *"‹62.5%› of listings have
+   no votes at all and the median listing has ‹0›; only ‹10.1%› clear ‹100› votes."*
+4. **The two page answers**, which are titles in the same family:
+   **`Title · Lie 1`** (`c_p2_answer`) — *"Only ‹13.2%› of listings can support a money
+   claim — and among those that can, the median return is ‹3.1›× on budget"*; and
+   **`Title · Lie 2`** (`c_p3_answer`) — *"Only ‹10.1%› of listings clear ‹100› votes —
+   while ‹4,610› score a perfect 10.0, ‹4,304› of them on a single vote."*
+
+Every one states a **finding**, not a topic, and every number in them is `FORMAT()`ed
+from a measure.
+
+### Cross-filter — expressible in PBIR, and written
+
+**`page.json` → `visualInteractions` is the mechanism**, verified against
+`page/2.1.0` this session: an array of `{source, target, type}` where `type` is
+`Default` | `DataFilter` | `HighlightFilter` | `NoFilter`. No Desktop step is needed.
+
+- **p3-evidence: exactly one pair.** `ch_vote_distribution → tbl_perfect_tens` =
+  **`DataFilter`**. The other **20** source/target pairs among the three data visuals
+  and the five cards are **`NoFilter`** — so selecting a vote band cannot silently
+  re-compute the page's prose.
+- **p2-money: no cross-filter at all.** All **16** pairs from the two charts to the
+  cards and to each other are `NoFilter`.
+- **The pair is labelled in words, not with a new object**, per the instruction:
+  `[Copy · Evidence · trap]` (on `c_p3_lb_prose`, directly above the table) now ends
+  *"The table below is every listing rated exactly 10.0, fewest votes first. Select a
+  bar in the vote chart to filter it."* — filter, sort and interaction all disclosed in
+  the one card that introduces the exhibit.
+
+### The five measure edits, and why each was necessary
+
+Each closes a **function stated in the checkpoint spec** that the existing body did not
+carry. Names, `lineageTag`s, `formatString`s and `displayFolder`s untouched; verified
+mechanically at 112 measures / 116 lineageTags before and after.
+
+| measure | edit | the function it closes |
+|---|---|---|
+| `Title · Budget return` | + "Bands below the ‹$10,000› floor are excluded here" | "say so in the title measure if it isn't already" |
+| `Title · Coverage era` | + "and are absent from this chart" | "note that exclusion on canvas" |
+| `Copy · Money · trap` | prefixed **`MISREAD: `** | `c_p2_trap_prose` "marks it MISREAD" — and hard rule 3: the strike is one carrier, the **word** is the other |
+| `Copy · Act I · verdict` | + "(USD as recorded; gross gap, not P&L.)" | `c_verdict_money` "with the USD/gross-gap caveat"; the old build carried this in a second object that no longer exists |
+| `Copy · Evidence · trap` | rewritten: trap + the table's filter and sort + the cross-filter hint; the m/C weighting clause **removed** | `c_p3_lb_prose` "discloses the table's filter and sort" + the labelled cross-filter. The removed clause is `[Copy · Act II · responsible read]`'s job **on the same page** — printing it twice was repetition a reader would notice |
+
+### Decisions & assumptions — checkpoint 4
+
+- **Insight titles ship at Georgia 10 pt, not 11 pt, and that is a measurement.** At
+  11 pt `Title · Budget return` renders 1230 px against a 616 px box whose 40 px height
+  holds exactly two lines (1232 px of capacity) — 2 px of headroom. A tie in its `TOPN`
+  concatenates two band names and would push it to a third line, clipping a finding.
+  10 pt restores ~20 characters of headroom and gives all three chart-level titles one
+  size. 10 pt is the floor and is not crossed.
+- **Filters were built from typed schema, not memory.** `ch_budget_return` excludes the
+  `Below floor` band and `ch_coverage_by_era` excludes the `No date on record` decade
+  with an **Advanced `Not` + `Comparison(ComparisonKind: 0 = Equal)`** filter — both
+  `QueryNotExpression` and the `QueryComparisonKind` enum (0 Equal · 1 GreaterThan ·
+  2 GreaterThanOrEqual · 3 LessThan · 4 LessThanOrEqual — **there is no "not equal"
+  kind**) read out of `semanticQuery/1.4.0` this session. `tbl_perfect_tens` and
+  `dn_rating_fall` reuse the proven `Rating (raw) = 10` Advanced filter, and
+  `dn_rating_fall` adds `VisualTopN` `ItemCount: 6` over its own `Votes` ascending sort.
+- **`tbl_perfect_tens` carries no Top-N and that is deliberate.** It shows the whole
+  perfect-ten population, ranked fewest votes first with `Title` as a deterministic
+  tie-break, and scrolls. Two reasons: the repetition **is** the finding, and the one
+  cross-filter on the page needs a table whose row set visibly changes when a vote band
+  is selected. Headers are ON (real column semantics for a screen reader); the poster
+  column renders through `[Image · Poster URL]` at `grid.imageHeight` 40.
+- **Single-series charts use `dataPoint.defaultColor`, never `fill`.** Microsoft's own
+  `color-strategy` reference states that `dataPoint.fill` **without** a selector makes
+  bars invisible — data present, nothing drawn. `ch_budget_return`, `ch_coverage_by_era`
+  and `ch_vote_distribution` therefore use `defaultColor`; `dn_rating_fall`, which has
+  two measures in `Y`, uses per-series `fill` with `{"metadata": …}` selectors, the
+  documented cartesian pattern.
+- **Act tints stay off every data mark.** Indigo `#2E4A7D` appears only on `z_p2_rule`,
+  brass `#8A6516` only on `z_p3_rule`. The money charts are drawn in honest green
+  `#2F6B4F` (they read the *checked* population) and the vote-band chart in neutral
+  `#78716C`. Trap red `#B3402E` appears on exactly three things, each with a word
+  beside it: the naive KPI, its 2 px strike, and the perfect-tens table's rating +
+  verdict columns (the verdict column prints its judgement in words).
+- **The navigator is re-inked per surface.** `nav_pages` on paper uses `#57534E`
+  default / `#211E1A` hover and selected, with a `#78716C` default outline; on night it
+  is `#B5AFA0` / `#F2EFE6` with `#6E6960`. Same control, same geometry, same
+  weight-plus-bold current-page carrier — a cream label on paper would be invisible,
+  and one theme cannot serve two surfaces.
+- **Every rect is on the 8 px grid** except three 2 px objects: `z_p2_rule`,
+  `z_p3_rule` and `z_p2_strike`. The strike is additionally off-grid in **y** (180),
+  because it must sit through the middle of the 28 pt numeral it withdraws — moving it
+  to an 8 px pitch would move it off the number and destroy a required non-colour
+  carrier. Both pages carry a DRAFT hairline waiver naming exactly these objects.
+
+### Findings for the coordinator — checkpoint 4
+
+1. **`c_p3_fall_prose` and `c_verdict_evidence` still say nearly the same thing.**
+   `[Copy · Act II · responsible read]` ends *"…reads ‹6.99› — barely above the global
+   mean of ‹6.96›. Applause is not evidence."* and `[Copy · Act II · verdict]` opens
+   *"Applause is not evidence: a perfect 10.0 on one vote reads ‹6.99› with m=‹100›,
+   C=‹6.96›."* Two objects on one page, one sentence. I removed the third instance (it
+   was also inside `[Copy · Evidence · trap]`) because the spec explicitly reassigned
+   that card's function; I did **not** rewrite the verdict, because its copy was not in
+   the brief. **Proposed one-line fix, for your ruling:** make the verdict close the
+   page instead of repeating it — e.g. *"Acclaim is usable only where the evidence is:
+   only ‹10.1%› of listings clear ‹100› votes, so a rating printed without its vote
+   count is not a finding."* Every number in that sentence already exists as a measure.
+2. **`kpi_profit_naive` has no `MISREAD` object of its own** — the word now lives at the
+   head of the prose card beneath it (`[Copy · Money · trap]`). That satisfies hard
+   rule 3 (colour + strike + word), but the word sits 44 px below the number rather
+   than on it. If you want the stamp adjacent, it is one textbox and one tab stop.
+3. **The paper card surfaces are quiet by design and by measurement**: `#FFFFFF` on
+   `#F5F2E9` is 1.12:1 and the `#D8D4C8` hairline is 1.32:1. That is the contracted
+   paper treatment carried over from the old build, not a new choice — but it is worth
+   knowing that on these two pages the card edges are barely visible, and the charts
+   read as ink on paper rather than as panels.
+
+### Validation status — 2026-08-05, checkpoint 4
+
+```
+validate_json.py          : PASS - 310 file(s) repo-wide, 0 errors, no BOM
+visualContainer/2.9.0     : PASS - p1 14/14 · p2 12/12 · p3 10/10 · p4 11/11
+                            validated DEEPLY with all 5 remote sub-schemas
+                            resolved, 0 real errors (only the known $schema
+                            const difference)
+page/2.1.0                : PASS - p2-money and p3-evidence page.json, 0 errors
+                            (both carry visualInteractions, typed and valid)
+pagesMetadata/1.1.0       : PASS - pages.json, 0 errors
+pbir_detect.py            : PASS - 269 visuals, 52 findings, 0 UNWAIVED.
+                            The two new pages contribute one finding each
+                            (their 2 px separators + the strike), both waived.
+                            No ai-dash-emoji, no theme-color-drift, no
+                            text-fill-contrast, no accent-lock, no radius
+                            finding from either paper page.
+validate_tmdl.py --strict : 17 file(s), 1 error - the STANDING SourceRoot
+                            waiver. The 5 measure edits are clean; 112 measures
+                            and 116 lineageTags before and after, 0 renamed.
+theme vs 2.156            : PASS - both copies 0 errors after the pageNavigator
+                            outline change
+check_state.py            : OK (stage 6, in_progress)
+binding resolution        : every measure and column bound on p2/p3 resolves
+                            against _Measures.tmdl / Movies / Release Year
+git                       : NOT committed, by instruction. git diff is the undo.
+```
+
+**Every pair introduced on the two paper pages, measured:**
+
+| foreground | background | ratio | threshold | verdict |
+|---|---|---|---|---|
+| `#211E1A` ink (answers, prose, verdicts, titles) | `#F5F2E9` canvas | 14.83:1 | 4.5 | PASS |
+| `#211E1A` table values 11 pt, data labels | `#FFFFFF` card | 16.60:1 | 4.5 | PASS |
+| `#57534E` navigator default label, category-axis labels | `#F5F2E9` / `#FFFFFF` | 6.82 / 7.63:1 | 4.5 | PASS |
+| `#B3402E` naive KPI 28 pt (large) | `#F5F2E9` | 5.08:1 | 3.0 | PASS |
+| `#B3402E` rating + verdict columns 11 pt | `#FFFFFF` | 5.69:1 | 4.5 | PASS |
+| `#B3402E` 2 px strike (non-text) | `#F5F2E9` | 5.08:1 | 3.0 | PASS |
+| `#2F6B4F` money bars + coverage line (non-text) | `#FFFFFF` | 6.29:1 | 3.0 | PASS |
+| `#78716C` vote-band bars (non-text), value-axis labels | `#FFFFFF` | 4.80:1 | 4.5 / 3.0 | PASS |
+| `#78716C` navigator default outline (non-text) | `#F5F2E9` | 4.29:1 | 3.0 | PASS |
+| `#2E4A7D` indigo separator (non-text chrome) | `#F5F2E9` | 7.84:1 | 3.0 | PASS |
+| `#8A6516` brass separator (non-text chrome) | `#F5F2E9` | 4.74:1 | 3.0 | PASS |
+| `#D8D4C8` card hairline | `#F5F2E9` | 1.32:1 | — | contracted paper treatment; decorative edge, no meaning |
+| `#EBE7DC` chart + table gridlines | `#FFFFFF` | 1.24:1 | — | decorative separators; row order and headers carry the structure |
+| `#FFFFFF` card | `#F5F2E9` canvas | 1.12:1 | — | informational; the hairline is the boundary |
+
+### Manual steps required in Desktop — checkpoint 4
+
+- [ ] **Open p2 and p3 and check no card paints a dark slab.** This is the specific
+      regression these pages are exposed to; `cardCalloutArea` is written paper on all
+      13 cards, and the check is whether it binds.
+- [ ] **Check the three new charts render**: the budget-band columns (no `Below floor`
+      band), the decade line (no "No date on record" point), the vote-band columns.
+      Both exclusion filters use `Not` + `Comparison`, a shape this repo has not used
+      before.
+- [ ] **Test the one cross-filter**: select a bar in `ch_vote_distribution` and confirm
+      `tbl_perfect_tens` filters, **and that nothing else on the page moves** — the 20
+      `NoFilter` rules are the thing being tested.
+- [ ] **Check `tbl_perfect_tens` posters render** (`[Image · Poster URL]` +
+      `dataCategory: ImageUrl`) and that the table scrolls rather than clipping.
+- [ ] **Read the four insight titles on canvas** and confirm each states a finding that
+      matches its chart. This is the checkpoint gate.
+- [ ] **Confirm `MISREAD:` appears** at the head of the money trap prose, and that the
+      2 px strike lands through the middle of the naive number.
