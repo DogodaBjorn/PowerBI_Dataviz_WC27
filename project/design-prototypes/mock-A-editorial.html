@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mock A · Editorial · What makes a movie successful? · 1280×720</title>
+
+<!--
+================================================================================
+MOCK A — "EDITORIAL"                         landing page · 1280×720 · fixed
+================================================================================
+
+DESIGN RATIONALE (3 sentences)
+1. The page is typeset, not laid out: a masthead rule, one large serif question,
+   a single 50-character column of answer, and a field of evidence to its right —
+   separation comes from measure, rhythm and white space, so the only closed
+   shape on the canvas is the data itself.
+2. The cinema is carried structurally rather than decoratively: the unit mark of
+   the chart is a 16:9 screen, so "100 listings" is drawn as 100 little screens
+   and the finding — five of them lit — is felt before it is read, warmed by one
+   very soft projection bloom that can be deleted without the page changing.
+3. One restrained accent (projector amber) appears in exactly four places — the
+   deck rule, the lit frames, the hero number, and the act numerals — so the eye
+   learns in three seconds that amber means "cleared the bar".
+
+--------------------------------------------------------------------------------
+PALETTE — every text pair measured against its own background (WCAG 2.x)
+--------------------------------------------------------------------------------
+  Paper (canvas)      #FBFAF8   —
+  Ink (primary text)  #16181A   17.07:1 on paper   ✓ AAA   title, lede, numbers
+  Ink secondary       #4A5058    7.80:1 on paper   ✓ AAA   chart group labels
+  Ink muted           #5A5F66    6.17:1 on paper   ✓ AAA   kicker, caption, footer
+  Ink quiet           #6B7178    4.73:1 on paper   ✓ AA    nav arrows, METHOD label
+  Accent (amber)      #8C4A0B    6.50:1 on paper   ✓ AAA   accent text + lit frames
+                                 6.31:1 on the warmest point of the glow ✓ AAA
+  Lit frame fill      #8C4A0B   ── vs unlit frame 4.08:1 ✓ (non-text floor 3:1)
+  Unlit frame fill    #CFC8BB   ── the ground; its meaning is also carried in
+                                 words ("82.1% clear neither"), never by fill alone
+  Hairline            #DCD7CE   decorative separators only, carry no meaning
+  Glow centre         #FFF6E4   non-text; all text over it re-checked above
+
+  Smallest text on the page is 10pt (13.3px). Nothing sits below the floor.
+  Colour is never the only carrier: each of the three chart states is also
+  distinguished by FORM (full / half / empty frame) and by a written label.
+
+--------------------------------------------------------------------------------
+TYPE SCALE (points — Georgia · Arial · Courier New only, no web fonts)
+--------------------------------------------------------------------------------
+  44pt Georgia            the question (page title)
+  27pt Georgia            the hero number, 5.4%
+  15pt Georgia            secondary numbers, 12.5% / 82.1%
+  14pt Georgia            the answer (lede), 30px leading, 432px measure
+  12pt Georgia            navigation questions
+  10.5pt Arial            chart group labels
+  10pt Arial / bold       navigation labels + sublines, footer disclosure
+  10pt Courier New        kicker and chart header — the technical register
+
+  8px grid: every container origin (x, y) and every container width/height is a
+  multiple of 8. Internal text leading and the 16:9 mark metrics (32×18, 8px gap)
+  are optically set and deliberately not grid-bound.
+
+--------------------------------------------------------------------------------
+NOTES FOR PBIR REPRODUCTION — what is safe, and the one thing that is not
+--------------------------------------------------------------------------------
+  SAFE. Everything on this canvas is a solid fill, a 1–2px rule, a text run, or a
+  rectangle: the 100 marks are 118 rectangles (82 unlit + 13 unlit + 13 accent
+  halves + 5 accent), which is a shape-built background image or a small Deneb /
+  HTML-content unit chart. No shadow, no radius, no blur, no blend mode, no
+  external asset, no image, no web font, no animation outside the nav states.
+
+  FLAGGED (1). The soft warm "projection" bloom behind the evidence field is the
+  page's only gradient: radial-gradient(ellipse 400px 225px at 880px 350px,
+  #FFF6E4 0%, transparent 72%). Power BI cannot author a radial gradient, so at
+  build it becomes ONE flat PNG in the page background layer (16:9 footprint,
+  centred at 880,350). It is non-load-bearing: delete it and the page still
+  reads — no text depends on it and every ratio above was measured against its
+  warmest point.
+
+  WATCH (2). (a) Letter-spaced small caps are set with letter-spacing here; PBIR
+  text runs support this, but the nav label widths must be re-measured after the
+  first render. (b) Hover/focus states become button visual states in PBIR
+  (default / hover / focus fill + font colour); the 4px arrow nudge is the one
+  thing that may have to drop — the rule and colour change carry the affordance
+  on their own.
+
+  DERIVED FIGURE. 12.5% is arithmetic, not a new measurement:
+  (13.2 − 5.4) + (10.1 − 5.4) = 7.8 + 4.7 = 12.5, and 100 − 12.5 − 5.4 = 82.1.
+  Frame counts round to 5 / 13 / 82 and sum to exactly 100.
+================================================================================
+-->
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; border-radius:0; }
+  html, body { height:100%; }
+  body {
+    background:#303234;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-family:Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---- comp chrome (outside the artboard) ---------------------------------- */
+  .chrome {
+    width:1280px; font-family:"Courier New", monospace; font-size:10pt;
+    color:#8E9095; letter-spacing:0.6px; padding:0 2px 10px;
+  }
+  .chrome-b { padding:12px 2px 0; }
+
+  /* ---- the artboard: exactly 1280 × 720 ------------------------------------ */
+  #canvas {
+    position:relative; width:1280px; height:720px; flex:0 0 auto;
+    background:#FBFAF8; overflow:hidden; color:#16181A;
+  }
+  .abs { position:absolute; }
+
+  /* the one gradient on the page — see FLAGGED note above */
+  #glow {
+    position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse 400px 225px at 880px 350px,
+                               #FFF6E4 0%, rgba(251,250,248,0) 72%);
+  }
+
+  /* ---- masthead ------------------------------------------------------------ */
+  .kicker {
+    left:64px; top:48px;
+    font-family:"Courier New", monospace; font-size:10pt; line-height:14px;
+    letter-spacing:1.4px; color:#5A5F66;
+  }
+  .rule-mast { left:64px; top:80px;  width:1152px; height:1px; background:#DCD7CE; }
+  .rule-foot { left:64px; top:664px; width:1152px; height:1px; background:#DCD7CE; }
+
+  .title {
+    left:64px; top:104px; width:1152px;
+    font-family:Georgia, serif; font-size:44pt; line-height:62px;
+    letter-spacing:-0.6px; color:#16181A;
+  }
+
+  /* ---- the answer ---------------------------------------------------------- */
+  .deckrule { left:64px; top:192px; width:48px; height:2px; background:#8C4A0B; }
+  /* 432px measure is chosen, not inherited: at 14pt Georgia it sets the answer
+     in six even lines (418/420/416/407/381/159) with no widow and 12px of slack
+     against browser kerning. Left column 432 · gutter 80 · evidence field 640. */
+  .lede {
+    left:64px; top:208px; width:432px;
+    font-family:Georgia, serif; font-size:14pt; line-height:30px; color:#16181A;
+  }
+  .lede b { font-weight:bold; }
+  .lede i { font-style:italic; }
+
+  /* ---- the evidence field -------------------------------------------------- */
+  .charthead {
+    left:576px; top:192px;
+    font-family:"Courier New", monospace; font-size:10pt; line-height:14px;
+    letter-spacing:1.0px; color:#5A5F66;
+  }
+  #grid {
+    left:576px; top:224px; width:392px; height:256px;
+    padding-top:2px;
+    display:flex; flex-wrap:wrap; gap:8px;
+    align-content:flex-start;
+  }
+  /* one mark = one listing, drawn at true 16:9 */
+  .u0, .u1, .u2 { width:32px; height:18px; flex:0 0 32px; }
+  .u0 { background:#CFC8BB; }                    /* cleared neither bar        */
+  .u1 { background:#CFC8BB; }                    /* cleared one bar — half lit */
+  .u1::before { content:""; display:block; width:16px; height:18px; background:#8C4A0B; }
+  .u2 { background:#8C4A0B; }                    /* cleared both bars          */
+
+  /* the key column tops out level with the lede across the gutter (y=208) and
+     bottoms out level with the last row of frames (y=480) */
+  .key { left:1000px; top:208px; width:216px; }
+  .sw  { width:32px; height:18px; }
+  .sw.u1::before { width:16px; height:18px; }
+  .kfig-lg {
+    font-family:Georgia, serif; font-size:27pt; line-height:40px;
+    letter-spacing:-0.4px; color:#8C4A0B;
+  }
+  .kfig {
+    font-family:Georgia, serif; font-size:15pt; line-height:24px; color:#16181A;
+  }
+  .klab {
+    font-family:Arial, sans-serif; font-size:10.5pt; line-height:16px; color:#4A5058;
+  }
+  .cap {
+    left:576px; top:496px; width:640px;
+    font-family:Arial, sans-serif; font-size:10pt; line-height:16px; color:#5A5F66;
+  }
+
+  /* ---- navigation ---------------------------------------------------------- */
+  .nav {
+    top:552px; width:264px; height:88px;
+    cursor:pointer; outline:none;
+  }
+  .nav .navrule { position:absolute; left:0; top:0; width:264px; height:2px; }
+  .nav .navrule i {
+    display:block; width:264px; height:1px; background:#DCD7CE;
+    transition:height 120ms linear, background-color 120ms linear;
+  }
+  .nav .lbl {
+    position:absolute; left:0; top:16px;
+    font-family:Arial, sans-serif; font-weight:bold; font-size:10pt; line-height:16px;
+    letter-spacing:2.2px; color:#16181A;
+    transition:color 120ms linear;
+  }
+  .nav .lbl em { font-style:normal; color:#8C4A0B; }
+  .nav .q {
+    position:absolute; left:0; top:40px; width:264px;
+    font-family:Georgia, serif; font-size:12pt; line-height:22px; color:#16181A;
+  }
+  .nav .s {
+    position:absolute; left:0; top:68px; width:264px;
+    font-family:Arial, sans-serif; font-size:10pt; line-height:16px; color:#5A5F66;
+  }
+  .nav .arw {
+    position:absolute; right:0; top:15px;
+    font-family:Arial, sans-serif; font-size:11pt; line-height:18px; color:#6B7178;
+    transition:color 120ms linear, transform 120ms linear;
+  }
+
+  /* the quieter fourth */
+  .nav.quiet .lbl { color:#4A5058; }
+  .nav.quiet .s   { top:40px; }
+
+  /* hover + focus: the rule lights, the label takes the accent, the arrow moves */
+  .nav:hover .navrule i,
+  .nav:focus-visible .navrule i { height:2px; background:#8C4A0B; }
+  .nav:hover .lbl,
+  .nav:focus-visible .lbl { color:#8C4A0B; }
+  .nav:hover .arw,
+  .nav:focus-visible .arw { color:#8C4A0B; transform:translateX(4px); }
+  .nav:focus-visible { outline:2px solid #8C4A0B; outline-offset:8px; }
+
+  /* ---- footer -------------------------------------------------------------- */
+  .foot {
+    left:64px; top:680px; width:1152px;
+    font-family:Arial, sans-serif; font-size:10pt; line-height:16px; color:#5A5F66;
+  }
+</style>
+</head>
+<body>
+
+<div class="chrome">MOCK A · EDITORIAL · 1280 × 720 · TAB OR HOVER THE FOUR NAVIGATION ITEMS TO SEE THEIR STATES</div>
+
+<div id="canvas">
+
+  <div id="glow"></div>
+
+  <!-- masthead -->
+  <div class="abs kicker">TMDB &middot; 84,510 LISTINGS &middot; SNAPSHOT 24 JULY 2026</div>
+  <div class="abs rule-mast"></div>
+
+  <h1 class="abs title">What makes a movie successful?</h1>
+
+  <!-- the answer -->
+  <div class="abs deckrule"></div>
+  <p class="abs lede">Two things make a movie measurably successful — money and
+    evidence — and they rarely coincide. Of 84,510 listings, <b>13.2%</b> can
+    support a money claim, <b>10.1%</b> clear 100 votes, only <b>5.4%</b> clear
+    both. One film leads on both: <i>The Lord of the Rings: The Return of the
+    King</i>.</p>
+
+  <!-- the evidence field -->
+  <div class="abs charthead">OF EVERY 100 LISTINGS &middot; 1 FRAME = 1 LISTING</div>
+
+  <div class="abs" id="grid" role="img"
+       aria-label="Unit chart of 100 frames representing every 100 listings. Five frames are fully lit: 5.4% clear both the money bar and the evidence bar. Thirteen frames are half lit: 12.5% clear one bar only. The remaining eighty-two frames are unlit: 82.1% clear neither.">
+    <!-- row 1 · 5 both, 5 one -->
+    <i class="u2"></i><i class="u2"></i><i class="u2"></i><i class="u2"></i><i class="u2"></i><i class="u1"></i><i class="u1"></i><i class="u1"></i><i class="u1"></i><i class="u1"></i>
+    <!-- row 2 · 8 one (13 total), 2 neither -->
+    <i class="u1"></i><i class="u1"></i><i class="u1"></i><i class="u1"></i><i class="u1"></i><i class="u1"></i><i class="u1"></i><i class="u1"></i><i class="u0"></i><i class="u0"></i>
+    <!-- rows 3–10 · 80 neither (82 total) -->
+    <i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i>
+    <i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i>
+    <i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i>
+    <i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i>
+    <i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i>
+    <i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i>
+    <i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i>
+    <i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i><i class="u0"></i>
+  </div>
+
+  <!-- group labels: the swatch IS the mark, so no legend is needed -->
+  <div class="abs key">
+    <div class="sw u2"></div>
+    <div class="kfig-lg" style="margin-top:6px">5.4%</div>
+    <div class="klab">clear both bars</div>
+
+    <div class="sw u1" style="margin-top:32px"></div>
+    <div class="kfig" style="margin-top:6px">12.5%</div>
+    <div class="klab">clear one bar only</div>
+
+    <div class="sw u0" style="margin-top:32px"></div>
+    <div class="kfig" style="margin-top:6px">82.1%</div>
+    <div class="klab">clear neither</div>
+  </div>
+
+  <div class="abs cap">Full frame = both bars &middot; half-lit = one bar (money or evidence) &middot; empty = neither</div>
+
+  <!-- navigation -->
+  <div class="abs nav" style="left:64px"  tabindex="0" role="link"
+       aria-label="Act one, Money: is money a usable measure? 13.2% can support a money claim.">
+    <div class="navrule"><i></i></div>
+    <div class="lbl"><em>1 &middot;</em> MONEY</div>
+    <div class="arw">&#8594;</div>
+    <div class="q">Is money a usable measure?</div>
+    <div class="s">13.2% can support a money claim</div>
+  </div>
+
+  <div class="abs nav" style="left:360px" tabindex="0" role="link"
+       aria-label="Act two, Evidence: is acclaim usable? Only 10.1% clear 100 votes.">
+    <div class="navrule"><i></i></div>
+    <div class="lbl"><em>2 &middot;</em> EVIDENCE</div>
+    <div class="arw">&#8594;</div>
+    <div class="q">Is acclaim usable?</div>
+    <div class="s">Only 10.1% clear 100 votes</div>
+  </div>
+
+  <div class="abs nav" style="left:656px" tabindex="0" role="link"
+       aria-label="Act three, Both: who clears both bars, and how that changed over time.">
+    <div class="navrule"><i></i></div>
+    <div class="lbl"><em>3 &middot;</em> BOTH</div>
+    <div class="arw">&#8594;</div>
+    <div class="q">Who clears both bars?</div>
+    <div class="s">And how that changed over time</div>
+  </div>
+
+  <div class="abs nav quiet" style="left:952px" tabindex="0" role="link"
+       aria-label="Method: filters, floors and definitions.">
+    <div class="navrule"><i></i></div>
+    <div class="lbl">METHOD</div>
+    <div class="arw">&#8594;</div>
+    <div class="s">Filters, floors, and definitions</div>
+  </div>
+
+  <!-- footer disclosure -->
+  <div class="abs rule-foot"></div>
+  <div class="abs foot">adult titles excluded &middot; financial floor $10,000 &middot; m = 100 votes &middot; C = 6.96 &middot; listings, not films</div>
+
+</div>
+
+<div class="chrome chrome-b">ONE FLAGGED GRADIENT (PROJECTION BLOOM) &middot; EVERYTHING ELSE IS SOLID FILL, 1PX RULE, TEXT OR RECTANGLE</div>
+
+</body>
+</html>

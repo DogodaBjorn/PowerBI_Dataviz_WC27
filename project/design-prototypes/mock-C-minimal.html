@@ -1,0 +1,402 @@
+<!doctype html>
+<!--
+================================================================================
+  mock C - "DATA-FORWARD MINIMAL"        landing page   |   1280 x 720, fixed
+  TMDB - what makes a movie successful
+================================================================================
+
+  RATIONALE (three sentences)
+  1. This page has no panels, cards, boxes or containers of any kind, because a
+     box is a confession that the content cannot hold its own position - here an
+     eight-column grid does that job, and the only lines drawn are two hairlines
+     that bracket the page, four rules that mark the four things you can click,
+     and two measure rules that state the exact extent of a run of data.
+  2. The one hundred marks are the whole argument and therefore the whole design:
+     five amber, thirteen solid, eighty-two hollow, so that "5.4% clear both
+     bars" stops being a statistic and becomes something you can count.
+  3. The movie hint is deliberately almost subliminal - a warm projection amber
+     against neutral ink, a warm-white paper ground rather than screen white, and
+     a film title set in italic because that is what one does with a film title.
+
+  PALETTE - measured with scripts/check_contrast.py, not estimated
+  ------------------------------------------------------------------------------
+  role                 hex        on ground   requirement          result
+  ground (warm white)  #FBFBF9    -           -                    -
+  ink (primary text)   #1A1D21    16.32:1     4.5:1 text           PASS
+  ink secondary        #565D66     6.43:1     4.5:1 text           PASS
+  accent amber         #965A08     5.39:1     4.5:1 text           PASS
+      "                   "       4.96:1 on hover tint #F6F1E7     PASS
+  mark - "clears one"  #6B7178     4.76:1     3.0:1 non-text       PASS
+  mark - hollow stroke #848B93     3.33:1     3.0:1 non-text       PASS
+  The three data classes are a deliberate three-step hierarchy - amber, then mid
+  grey, then hollow - so the accent run leads the eye. An ink-dark middle class
+  measured 9.12:1 and out-weighed the story it was supposed to support.
+  hairline (structural)#D3D0C6     1.26:1     none - separator only, carries no
+                                              meaning and labels nothing
+  Four hue families on the page (warm white, ink, grey, amber); one accent, used
+  in exactly three places: the five "both" marks, the figure 5.4% in the answer,
+  and the interactive state. Colour is never the only carrier - the three data
+  classes differ in FILL (solid / solid / hollow) as well as in hue, and every
+  run is named in words beside it.
+
+  TYPE SCALE - four steps, three voices, floor 10pt
+  ------------------------------------------------------------------------------
+  28pt Georgia          the question (page title)
+  14pt Georgia / 28     the answer (46 words, 5-column measure ~ 74 characters)
+  12pt Arial + Georgia  labels, run labels, navigation
+  10pt Courier New      kicker, unit note, footer disclosure
+  Georgia carries the human voice, Arial carries data and interface, Courier New
+  carries machine metadata. Nothing else. Radius: none - there are no surfaces
+  to round, so the single radius system on this page is zero.
+
+  "OBVIOUSLY CLICKABLE WITHOUT BOXES" - this variant's hardest problem
+  ------------------------------------------------------------------------------
+  Four affordances stack, none of which is a box:
+    1. a 1px rule in full ink above each item - the darkest lines on the page,
+       four of them in a row, which reads as an index rather than as prose;
+    2. an amber numeral (1 . 2 . 3) - a numbered list is understood as navigable
+       and here the sequence is the argument, money then evidence then both;
+    3. a right-aligned arrow at the end of each item's measure;
+    4. tracked uppercase Arial against an otherwise serif page - a different
+       typeface class signals a different class of object.
+  HOVER is the only moment a box exists: a warm tint fills the 256x72 hit area
+  and the label, numeral and arrow turn amber (three simultaneous carriers).
+  FOCUS adds a 2px amber ring at 6px offset on top of the hover treatment, so
+  keyboard and pointer states are distinguishable from each other.
+  Try it: hover the four items, or press Tab.
+
+  THE "CORRECT AMOUNT OF ADDITIONAL INFO" - what is here and what is refused
+  ------------------------------------------------------------------------------
+  PRESENT   caption naming the chart; unit note stating what one mark and one row
+            are worth (this is the axis information a unit chart actually needs);
+            two measure rules drawn to the exact extent of the runs they label;
+            counts in words beside every run; provenance in the kicker; the
+            method disclosure in the footer.
+  REFUSED   a legend (every run is labelled where it lies, so a legend would be a
+            second index of the same facts); gridlines (a unit chart has no
+            continuous scale to grid); an axis (there is no continuous dimension
+            to scale); tooltips (there is nothing behind these marks that is not
+            already printed beside them - a tooltip here would be a nail driven
+            where none is needed); a percentage on every mark.
+
+  WHAT MIGHT NOT SURVIVE PBIR REPRODUCTION - stated, not hidden
+  ------------------------------------------------------------------------------
+  1. NO NATIVE WAFFLE VISUAL. The 100-mark array is the one ingredient with no
+     first-class Power BI equivalent. Ranked reproduction paths:
+       (a) Deneb / Vega-Lite - exact, including the hollow stroke;
+       (b) a 100-row unit helper table driving a matrix or a scatter with square
+           markers and conditional formatting;
+       (c) fallback: a 100% stacked bar over a 100-tick ruler - same message,
+           materially less felt. Do not fall back to (c) without saying so.
+  2. LETTER-SPACING does not exist in Power BI text boxes. Tracking here is held
+     to <= 0.8px (kicker, nav labels) so the loss is close to invisible, but the
+     nav labels will set very slightly tighter than shown.
+  3. HOVER is reproducible: a Power BI button carries per-state fill, text and
+     icon colour, which is exactly what changes here. A SEPARATE shape cannot
+     react to hover, which is why the nav rules are drawn outside the hit area
+     and deliberately never change state.
+  4. FOCUS RING is indicative only - Power BI draws its own focus indicator and
+     it cannot be restyled. The tab order intended here is the DOM order:
+     MONEY, EVIDENCE, BOTH, METHOD.
+  5. TEXT BASELINES need +/-2px tolerance; Power BI text boxes carry internal
+     padding that HTML line boxes do not.
+  6. The 1px hollow strokes must be drawn on whole pixels (they are offset by
+     0.5 here). At any non-integer scale factor they will soften.
+
+  Ingredients used: solid fills, 1px rules, text, one inline SVG. No gradient,
+  no shadow, no blur, no radius, no image, no web font, no external request.
+  Self-contained, UTF-8. Every absolute x/y and every element width divides by 8.
+================================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>What makes a movie successful? &middot; mock C &middot; data-forward minimal</title>
+<style>
+  *   { margin:0; padding:0; box-sizing:border-box; border-radius:0; }
+  html, body { height:100%; }
+  body {
+    background:#E9E9E6;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-family:Arial, sans-serif; color:#1A1D21;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ------------------------------------------------ the artboard: 1280 x 720 */
+  #canvas {
+    position:relative; width:1280px; height:720px; flex:0 0 auto;
+    background:#FBFBF9; overflow:hidden;
+  }
+  /* direct children only - inline <b>/<i>/<span> inside the answer must stay
+     in the text flow, so this must NOT be a blanket descendant selector */
+  #canvas > * { position:absolute; }
+
+  /* ------------------------------------------------------------- type voices */
+  .serif  { font-family:Georgia, serif; }
+  .sans   { font-family:Arial, sans-serif; }
+  .mono   { font-family:"Courier New", monospace; }
+
+  /* ---------------------------------------------------------------- masthead */
+  #z_kicker {
+    left:80px; top:48px; width:1120px; height:16px; line-height:16px;
+    font-size:10pt; color:#565D66; letter-spacing:0.6px;
+  }
+  #z_rule_top    { left:80px; top:80px;  width:1120px; height:1px; background:#D3D0C6; }
+  #z_rule_footer { left:80px; top:656px; width:1120px; height:1px; background:#D3D0C6; }
+
+  /* ------------------------------------------------------- question + answer */
+  #c_question {
+    left:80px; top:104px; width:1120px; height:48px; line-height:48px;
+    font-size:28pt; color:#1A1D21;
+  }
+  /* 5-column measure (~74 characters) - the ideal reading measure for 14pt.
+     Sized for 4 lines; 26px leading means even a 5th line clears the caption. */
+  #c_answer {
+    left:80px; top:168px; width:688px; height:104px;
+    font-size:14pt; line-height:26px; color:#1A1D21;
+  }
+  #c_answer b   { font-weight:bold; }
+  #c_answer .hi { font-weight:bold; color:#965A08; }
+  #c_answer i   { font-style:italic; }
+
+  /* ------------------------------------------------- the chart and its notes */
+  #c_chart_caption {
+    left:80px; top:304px; width:560px; height:16px; line-height:16px;
+    font-size:10pt; color:#565D66; letter-spacing:0.8px;
+  }
+  #c_chart_unitnote {
+    left:640px; top:304px; width:560px; height:16px; line-height:16px;
+    font-size:10pt; color:#565D66; text-align:right;
+  }
+  .runlabel { top:328px; height:16px; line-height:16px; font-size:12pt; color:#1A1D21; }
+  .runlabel b { font-weight:bold; }
+  #c_run_both b { color:#965A08; }
+  #c_run_one  b { color:#6B7178; }
+  .measurerule { top:352px; height:1px; }
+  #hero_unit_array { left:80px; top:360px; width:1120px; height:152px; }
+  #c_run_neither {
+    left:80px; top:520px; width:560px; height:16px; line-height:16px;
+    font-size:12pt; color:#1A1D21;
+  }
+  #c_run_neither b { font-weight:bold; }
+
+  /* -------------------------------------------------------------- navigation */
+  /* the rule sits OUTSIDE the hit area: a separate shape cannot react to hover
+     in Power BI, so it is drawn as page furniture that never changes state, and
+     the 16px it stands clear also lets the focus ring pass without touching it */
+  .navrule { top:552px; width:256px; height:1px; background:#1A1D21; }
+  .nav {
+    top:568px; width:256px; height:72px;
+    text-decoration:none; color:#1A1D21; cursor:pointer; outline:none;
+    background:transparent;
+  }
+  .nav-l1 {
+    position:absolute; left:0; top:0; width:256px; height:16px; line-height:16px;
+    font-size:12pt; font-weight:bold; letter-spacing:0.8px; color:#1A1D21;
+  }
+  .nav .num   { color:#965A08; }
+  .nav .arrow { position:absolute; right:0; top:0; font-weight:normal; color:#565D66; }
+  .nav-l2 {
+    position:absolute; left:0; top:24px; width:256px; height:18px; line-height:18px;
+    font-family:Georgia, serif; font-style:italic; font-size:12pt; color:#565D66;
+  }
+  .nav-l3 {
+    position:absolute; left:0; top:48px; width:256px; height:14px; line-height:14px;
+    font-size:10pt; color:#1A1D21;
+  }
+  .nav.quiet .nav-l1 { color:#565D66; }
+
+  /* the only moment a box exists on this page */
+  .nav:hover               { background:#F6F1E7; }
+  .nav:hover .nav-l1,
+  .nav:hover .arrow,
+  .nav:hover .num          { color:#965A08; }
+  .nav:focus-visible       { background:#F6F1E7; outline:2px solid #965A08; outline-offset:6px; }
+  .nav:focus-visible .nav-l1,
+  .nav:focus-visible .arrow,
+  .nav:focus-visible .num  { color:#965A08; }
+
+  /* ------------------------------------------------------------------ footer */
+  #z_footer {
+    left:80px; top:664px; width:1120px; height:16px; line-height:16px;
+    font-size:10pt; color:#565D66;
+  }
+
+  /* mock chrome - outside the artboard, not part of the design */
+  #shell_caption {
+    margin-top:16px; font-family:"Courier New", monospace;
+    font-size:11px; color:#8A8A85; letter-spacing:0.6px;
+  }
+</style>
+</head>
+<body>
+
+<div id="canvas" data-screen-label="mock-C-landing">
+
+  <!-- masthead ---------------------------------------------------------- -->
+  <div id="z_kicker" class="mono">TMDB &middot; 84,510 listings &middot; snapshot 24 July 2026</div>
+  <div id="z_rule_top"></div>
+
+  <!-- the question, and the answer in 46 words -------------------------- -->
+  <h1 id="c_question" class="serif">What makes a movie successful?</h1>
+  <p id="c_answer" class="serif">Two things make a movie measurably successful &mdash; money and
+     evidence &mdash; and they rarely coincide. Of 84,510 listings, <b>13.2%</b> can support a
+     money claim, <b>10.1%</b> clear 100 votes, only <span class="hi">5.4%</span> clear both.
+     One film leads on both: <i>The Lord of the Rings: The Return of the King</i>.</p>
+
+  <!-- the showpiece ----------------------------------------------------- -->
+  <div id="c_chart_caption" class="sans">OF EVERY 100 LISTINGS</div>
+  <div id="c_chart_unitnote" class="mono">1 mark = 1 listing in 100 &middot; 1 row = 20</div>
+
+  <div id="c_run_both" class="runlabel sans" style="left:80px; width:280px;"><b>5</b> clear both bars</div>
+  <div id="c_run_one"  class="runlabel sans" style="left:365px; width:400px;"><b>13</b> clear one bar, not the other</div>
+  <div id="z_measure_both" class="measurerule" style="left:80px; width:265px; background:#965A08;"></div>
+  <div id="z_measure_one"  class="measurerule" style="left:365px; width:721px; background:#6B7178;"></div>
+
+  <svg id="hero_unit_array" viewBox="0 0 1120 152" width="1120" height="152"
+       shape-rendering="crispEdges" role="img"
+       aria-label="Of every 100 listings, 5 clear both the money bar and the evidence bar, 13 clear one bar but not the other, and 82 clear neither.">
+      <rect x="0" y="0" width="37" height="24" fill="#965A08"/>
+      <rect x="57" y="0" width="37" height="24" fill="#965A08"/>
+      <rect x="114" y="0" width="37" height="24" fill="#965A08"/>
+      <rect x="171" y="0" width="37" height="24" fill="#965A08"/>
+      <rect x="228" y="0" width="37" height="24" fill="#965A08"/>
+      <rect x="285" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="342" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="399" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="456" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="513" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="570" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="627" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="684" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="741" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="798" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="855" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="912" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="969" y="0" width="37" height="24" fill="#6B7178"/>
+      <rect x="1026.5" y="0.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="1083.5" y="0.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="0.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="57.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="114.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="171.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="228.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="285.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="342.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="399.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="456.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="513.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="570.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="627.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="684.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="741.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="798.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="855.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="912.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="969.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="1026.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="1083.5" y="32.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="0.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="57.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="114.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="171.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="228.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="285.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="342.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="399.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="456.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="513.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="570.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="627.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="684.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="741.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="798.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="855.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="912.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="969.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="1026.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="1083.5" y="64.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="0.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="57.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="114.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="171.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="228.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="285.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="342.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="399.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="456.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="513.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="570.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="627.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="684.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="741.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="798.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="855.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="912.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="969.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="1026.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="1083.5" y="96.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="0.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="57.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="114.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="171.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="228.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="285.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="342.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="399.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="456.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="513.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="570.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="627.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="684.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="741.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="798.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="855.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="912.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="969.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="1026.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+      <rect x="1083.5" y="128.5" width="36" height="23" fill="none" stroke="#848B93" stroke-width="1"/>
+  </svg>
+
+  <div id="c_run_neither" class="sans"><b>82</b> clear neither bar</div>
+
+  <!-- navigation -------------------------------------------------------- -->
+  <div class="navrule" style="left:80px"></div>
+  <a class="nav" id="btn_money" href="#" style="left:80px"
+     aria-label="MONEY. Is money a usable measure? 13.2% can support a money claim">
+    <div class="nav-l1"><span class="num">1 &middot; </span>MONEY<span class="arrow">&#8594;</span></div>
+    <div class="nav-l2">Is money a usable measure?</div>
+    <div class="nav-l3">13.2% can support a money claim</div>
+  </a>
+  <div class="navrule" style="left:368px"></div>
+  <a class="nav" id="btn_evidence" href="#" style="left:368px"
+     aria-label="EVIDENCE. Is acclaim usable? Only 10.1% clear 100 votes">
+    <div class="nav-l1"><span class="num">2 &middot; </span>EVIDENCE<span class="arrow">&#8594;</span></div>
+    <div class="nav-l2">Is acclaim usable?</div>
+    <div class="nav-l3">Only 10.1% clear 100 votes</div>
+  </a>
+  <div class="navrule" style="left:656px"></div>
+  <a class="nav" id="btn_both" href="#" style="left:656px"
+     aria-label="BOTH. Who clears both bars? And how that changed over time">
+    <div class="nav-l1"><span class="num">3 &middot; </span>BOTH<span class="arrow">&#8594;</span></div>
+    <div class="nav-l2">Who clears both bars?</div>
+    <div class="nav-l3">And how that changed over time</div>
+  </a>
+  <div class="navrule" style="left:944px"></div>
+  <a class="nav quiet" id="btn_method" href="#" style="left:944px"
+     aria-label="METHOD. How every number is defined">
+    <div class="nav-l1">METHOD<span class="arrow">&#8594;</span></div>
+    <div class="nav-l2">How every number is defined</div>
+  </a>
+
+  <!-- footer disclosure ------------------------------------------------- -->
+  <div id="z_rule_footer"></div>
+  <div id="z_footer" class="mono">adult titles excluded &middot; financial floor $10,000 &middot;
+     m = 100 votes &middot; C = 6.96 &middot; listings, not films</div>
+
+</div>
+
+<div id="shell_caption">mock C &middot; data-forward minimal &middot; 1280 &times; 720 &middot; hover or Tab the four navigation items</div>
+
+</body>
+</html>

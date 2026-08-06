@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mock D &middot; Hybrid &middot; What makes a movie successful? &middot; 1280&times;720</title>
+<!--
+================================================================================
+  MOCK D — "HYBRID"                          landing page · 1280 × 720 · fixed
+  TMDB · what makes a movie successful · convergence of mocks A, B and C
+================================================================================
+
+  RATIONALE (three sentences)
+  1. Mock A's unit mark is kept intact and made the whole argument — one 16:9
+     film frame per listing, fully lit when it clears both bars, half lit when it
+     clears one, an empty outline when it clears neither — because that is the
+     only place on the page where the cinema lives inside the data instead of
+     being applied to it.
+  2. The three runs are clustered and labelled where they lie (mock C's move),
+     each carrying mock B's large figure with a plain-language definition under
+     it, so the proportion is read rather than counted and no legend is needed
+     anywhere on the page.
+  3. The page is built as five horizontal bands rather than two columns, and the
+     one void that remained is filled with the definition all three earlier mocks
+     were missing — what the two bars actually are — so nothing on the canvas is
+     ornament and nothing runs empty.
+
+--------------------------------------------------------------------------------
+  HOW THE EMPTY LEFT COLUMN WAS SOLVED
+--------------------------------------------------------------------------------
+  In A, B and C the page was a tall left text column beside a tall right chart;
+  the answer is only ~50 words, so the left column died at roughly y=390 and the
+  bottom-left third of every mock read as unfinished. Three changes, no filler:
+
+  1. THE COLUMN IS GONE. The page is now bands: masthead · question · answer ·
+     evidence · routes · disclosure. The evidence band spans the full 1152 pt
+     measure at x=64, so below the answer there is no left column that could run
+     empty — the chart claims the whole width.
+  2. THE CHART TURNED SIDEWAYS. The array is 20 wide × 5 deep instead of 10 × 10,
+     which is what let it become a wide band. It also improves the read: one row
+     is 20 listings, the 5 and the 13 are the first 18 marks of row one, and the
+     82 is everything after them.
+  3. THE ONE REMAINING VOID EARNED ITS PLACE. Beside the answer, top right, sits
+     THE TWO BARS — money and evidence, defined. "Bar" carries six visible
+     strings on this canvas and is the term the whole page turns on; A defined
+     only the mark states and C not at all, and B's one-line "a money claim and
+     100+ votes" was the closest any mock came. Here it is promoted to a named
+     block with a floor and a threshold, so a reader meets the definition before
+     the evidence. It is the missing content, not decoration, and it balances the
+     band so the answer no longer floats alone under a full-width headline.
+
+--------------------------------------------------------------------------------
+  PALETTE — every pair measured with scripts/check_contrast.py, not estimated
+--------------------------------------------------------------------------------
+  role                 hex        pair                          ratio    verdict
+  ground (warm paper)  #F2F0EA    —                             —        —
+  panel (the screen)   #FFFFFF    on ground                     1.14:1   lift only
+  ink                  #16181A    on ground                    15.62:1   AAA text
+  ink                  #16181A    on panel                     17.80:1   AAA text
+  ink secondary        #4A5058    on ground                     7.14:1   AAA text
+  ink secondary        #4A5058    on panel                      8.14:1   AAA text
+  ink muted            #5A6068    on ground                     5.57:1   AA  text
+  ink muted            #5A6068    on panel                      6.35:1   AA  text
+  accent (amber)       #8C4A0B    on ground                     5.95:1   AAA text
+  accent (amber)       #8C4A0B    on panel                      6.78:1   AAA text
+  accent as lit frame  #8C4A0B    on panel (non-text, needs 3)  6.78:1   PASS
+  frame stroke         #8E877A    on panel (non-text, needs 3)  3.56:1   PASS
+  frame stroke         #8E877A    on ground (non-text)          3.13:1   PASS
+  hover tint           #F6F1E7    ink on tint                  15.81:1   AAA text
+  hover tint           #F6F1E7    accent on tint                6.02:1   AAA text
+  hover tint           #F6F1E7    ink secondary on tint          7.23:1   AAA text
+  hairline             #DAD5CA    on ground                     1.28:1   see note
+  panel edge           #E3DDD0    on ground                     1.20:1   see note
+
+  NOTE on the two sub-3:1 entries. #DAD5CA and #E3DDD0 are separators only: they
+  divide, they never encode. Nothing on this page is understood from them, so
+  WCAG 1.4.11 does not apply — every element that DOES carry meaning is measured
+  against its own adjacent background above and clears its threshold.
+
+  NOTE on mark adjacency. Lit fill vs empty stroke is 1.90:1 and that is the
+  correct, deliberate reading: the three states are not separated by colour
+  contrast against each other but by FORM against a common white ground —
+  solid / half solid / hollow. Each is independently ≥3:1 on the panel, which
+  is the test that matters. Every run is additionally named in words beside it
+  ("5 clear both bars — fully lit", and so on), so colour is never the only
+  carrier, and greyscale, low vision and every colour-vision type read it.
+
+  Four hue families total: warm paper, ink, warm grey, amber. One accent, used
+  in exactly five places — the deck rule, the lit frames, the figure 5, the run
+  rule under it, and every interactive state.
+
+--------------------------------------------------------------------------------
+  TYPE SCALE — Georgia · Arial · Courier New only. Floor 10pt. Nothing below it.
+--------------------------------------------------------------------------------
+  44pt   Georgia          / 64px   the question (page title)
+  22pt   Georgia          / 28px   the three run figures — 5 · 13 · 82
+  14pt   Georgia          / 26px   the answer
+  12pt   Georgia          / 22px   bar definitions · navigation questions
+  10.5pt Arial bold       / 22px   bar terms — MONEY · EVIDENCE
+  10pt   Arial bold       / 16px   navigation labels · block heads (tracked)
+  10pt   Arial            / 14-16px run definitions · nav sublines · footer
+  10pt   Courier New      / 16px   eyebrow · unit note (the machine register)
+
+  Arial Black is available and deliberately unused — it has no job on a calm
+  page and would break the one-accent, one-weight-jump discipline.
+
+  Georgia carries the human voice, Arial carries data and interface, Courier New
+  carries provenance and parameters. Three voices, no fourth.
+
+--------------------------------------------------------------------------------
+  REGION MAP — exact x / y / w / h on the 1280 × 720 canvas, for PBIR rebuild
+--------------------------------------------------------------------------------
+  Margins: left 64 · right 64 (content measure 1152) · top 40 · bottom 24.
+  Grid: 8px. Every region origin and every region width/height below divides by
+  8, with four optical exceptions marked (*) — they are set by eye and are more
+  right than the grid would be.
+
+  id                     x      y      w      h    note
+  ------------------------------------------------------------------------------
+  canvas                   0      0   1280    720  ground #F2F0EA
+  z_eyebrow               64     40    720     16  Courier 10pt
+  z_rule_top              64     80   1152      1  hairline
+  c_title                 64    100   1152     64  Georgia 44pt/64
+  z_deckrule              64    176     48      2  accent
+  c_answer                64    192    688    130  Georgia 14pt/26, sets 4 lines
+  z_bars_head            784    192    432     16  "THE TWO BARS"
+  z_bars_rule            784    216    432      1  hairline
+  z_bar1_term            784    232     96     22  MONEY
+  c_bar1_def             880    232    336     22
+  z_bar2_term            784    262     96     22  EVIDENCE          (*) 262
+  c_bar2_def             880    262    336     22                    (*) 262
+  z_bars_note            784    296    432     16
+  z_panel                 48    328   1184    216  #FFFFFF, the screen
+  c_lbl1_fig              64    352    192     28  "5"      accent
+  c_lbl1_def              64    380    200     14
+  c_lbl2_fig             264    352    200     28  "13"     ink
+  c_lbl2_def             264    380    280     14
+  z_rule_run1             64    400    192      1  accent — exact extent of run 1
+  z_rule_run2            264    400    512      1  ink    — exact extent of run 2
+  hero_unit_array         64    408    792    114  100 marks, 20 × 5
+  c_unitnote             888    352    328     32  Courier 10pt, two lines
+  c_lbl3_fig             888    432    328     28  "82"     ink secondary
+  c_lbl3_def             888    460    328     14
+  c_lbl3_sub             888    476    328     14
+  z_navrule_1..4      64/360/656/952  552  264   2  solid ink rule, 16px clear
+  btn_money               64    568    264     84  hit area
+  btn_evidence           360    568    264     84
+  btn_both               656    568    264     84
+  btn_method             952    568    264     84
+    inside each nav:  label +0/+8 · question +0/+32 · subline +0/+58
+    nav label            +0    576    264     16
+    nav question         +0    600    264     22
+    nav subline          +0    626    264     16
+  z_rule_foot             64    664   1152      1  hairline
+  z_footer                64    680   1152     16  Arial 10pt
+
+  THE UNIT ARRAY, in grid terms (this is the reproduction contract)
+    origin            x 64, y 408
+    mark              32 × 18  — true 16:9, the film frame
+    pitch             x 40 (gap 8) · y 24 (gap 6)
+    columns           20  (0-19)   row width  19×40 + 32 = 792
+    rows               5  (0-4)    field height 4×24 + 18 = 114
+    mark(c,r)         x = 64 + 40c   y = 408 + 24r
+    row 0  cols 0-4    FULL   (5)   lit both halves    — clears both bars
+    row 0  cols 5-17   HALF  (13)   left half lit      — clears one bar
+    row 0  cols 18-19  EMPTY  (2)   outline only       — clears neither
+    rows 1-4 cols 0-19 EMPTY (80)   outline only
+    totals            5 + 13 + 82 = 100 exactly
+
+  ELEVATION — one token, one surface
+    --shadow: 0 2px 10px rgba(26,24,20,.05), plus a 1px #E3DDD0 edge.
+    It is on the chart panel and nowhere else, so there is nothing to be
+    inconsistent with. PBI mapping: Effects → Shadow · colour #1A1814 ·
+    position Bottom · offset 2 · blur 10 · transparency 95%; Border → #E3DDD0.
+    The page survives the shadow being switched off: the 1px edge and the
+    white-on-warm lift both hold the panel on their own.
+    RADIUS — one system: zero. There are film frames on this page and film
+    frames have corners. Nothing is rounded, anywhere.
+    NO GRADIENT ANYWHERE. Mock A's radial projection bloom is deleted, not
+    replaced: the white panel does the job it was doing, as a flat fill.
+
+--------------------------------------------------------------------------------
+  FLAGGED — the ingredient that will NOT survive the intended scatter path
+--------------------------------------------------------------------------------
+  The grid is designed for scatter and is scatter-perfect: constant mark size,
+  a regular integer lattice, X = column index 0-19, Y = row index 0-4 with the
+  Y axis reversed, both axes and all gridlines off, colour driven by a [state]
+  column on a 100-row helper table. That part is safe.
+
+  The MARK is not. A Power BI scatter marker is a single symmetric glyph with
+  one size value and one fill: it has no aspect control and no partial fill.
+  So two properties of this mark cannot be produced by a scatter:
+     (a) the 16:9 rectangle — a scatter marker is square or round, never 16:9;
+     (b) the half-lit state — a marker cannot be half filled.
+  (Verify both against the Desktop build in use before the s6 gate; marker
+  options have changed across releases and this must not be taken from memory.)
+
+  Ranked honest alternatives, best first — do not fall to a lower rank silently:
+
+  1. STATIC SHAPES — RECOMMENDED. These are published figures on a landing
+     page, not a live aggregate that a user filters. Author the array as PBIR
+     rectangle shapes at the exact coordinates in the contract above: 82 outline
+     + 13 outline + 13 accent half + 5 accent solid = 113 shapes. Pixel identical
+     to this comp, fully native, no custom visual, and the array cannot break.
+     Cost: it does not respond to cross-filtering — which this page does not ask
+     it to do.
+  2. DENEB / VEGA-LITE — exact AND data driven. mark rect, width 32, height 18,
+     x/y computed from the helper table's column and row indices, fill and stroke
+     from [state]; the half state is a second rect layer at width 16. Requires
+     the deneb-studio module and its justification gate.
+  3. NATIVE SCATTER — the brief's path, with the compromise stated out loud.
+     One scatter over the helper table: X = [col], Y = [row] reversed, marker
+     shape Square, Size bound to a [state weight] measure, colour by [state].
+     The three states become: clears both = large accent square · clears one =
+     SMALL accent square · clears neither = large square in the frame grey.
+     The film frame degrades to a waffle and "half lit" becomes "partly lit",
+     but fill state still carries the meaning without relying on colour and the
+     proportion reads identically. This is the nearest honest scatter.
+  4. TWO LAYERED SCATTERS — a full-size ground layer plus an accent layer gives
+     a truer half-lit read, but depends on two visuals holding identical plot
+     area registration. Fragile. Not recommended.
+
+--------------------------------------------------------------------------------
+  ALSO FLAGGED — smaller reproduction deltas, stated not hidden
+--------------------------------------------------------------------------------
+  1. LETTER-SPACING. Power BI text has no tracking control. Tracking here is
+     held to ≤ 2.2px and only on uppercase runs (eyebrow, block heads, nav
+     labels). Fallback: same strings, same sizes, default tracking — every one
+     of those boxes is left-aligned with slack, so no region moves. This is the
+     one property that will visibly differ.
+  2. LINE-HEIGHT. Power BI text boxes have no line-spacing control (~1.2-1.3
+     automatic). The answer is set 14pt/26px (1.39) and will run shorter in
+     Desktop; its box is 130px for a 4-line set with a 5th line of slack, and
+     nothing below it depends on where it ends.
+  3. FOCUS RING. The 2px accent ring at 6px offset is a browser affordance;
+     Power BI draws its own focus indicator and it cannot be restyled. The HOVER
+     state is fully authorable — a button's Hover state carries fill, text and
+     icon colour, which is exactly and only what changes here.
+  4. NAV RULES sit 16px OUTSIDE the hit area on purpose: a separate PBIR shape
+     cannot react to a button's hover, so the rules are page furniture that
+     never changes state, and the gap also lets the focus ring pass clean.
+  5. TEXT BASELINES need ±2px tolerance; PBI text boxes carry internal padding
+     that HTML line boxes do not.
+  6. 1px strokes are drawn on half pixels here so they land on whole device
+     pixels. At any non-integer scale factor they soften.
+
+  Ingredients used, and nothing else: solid fills, 1-2px rules, text, one inline
+  SVG, one shadow token. No gradient, no blur, no radius, no blend mode, no
+  image, no web font, no external request. Self-contained, UTF-8.
+
+--------------------------------------------------------------------------------
+  FIGURES — what is measured and what is arithmetic
+--------------------------------------------------------------------------------
+  Measured and quoted verbatim: 84,510 listings · 13.2% money · 10.1% evidence ·
+  5.4% both · 5 / 13 / 82 of every 100 · the leader, The Lord of the Rings: The
+  Return of the King · the disclosure line. Nothing else is asserted. The array
+  labels use COUNTS OUT OF 100, which is the chart's own unit and is stated in
+  the unit note; no derived percentage appears anywhere on this page.
+
+  ACCESSIBILITY. DOM and tab order is MONEY → EVIDENCE → BOTH → METHOD, the
+  narrative sequence. The array carries role="img" and an aria-label stating all
+  three runs in words.
+
+  TO SEE THE STATES WITHOUT A POINTER: add class "is-hover" or "is-focus" to any
+  .nav element. Otherwise hover them, or press Tab.
+
+  CREDITS. Convergence of three in-project mocks: the 16:9 frame unit mark and
+  the warm editorial ground from mock A; the large-figure-with-definition key
+  from mock B, together with its white panel and single shadow token; the
+  clustered, directly-labelled runs and the exact-extent measure rules from
+  mock C. The consistency locks (one accent, one radius system, one background
+  treatment per archetype) are adapted from the Consistency Locks in Leonxlnx's
+  taste-skill (MIT) — see CREDITS.md.
+================================================================================
+-->
+<style>
+  *   { margin:0; padding:0; box-sizing:border-box; border-radius:0; }
+  html, body { height:100%; }
+  body {
+    background:#26282A;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-family:Arial, sans-serif; color:#16181A;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ------------------------------------------------ the artboard: 1280 x 720 */
+  #canvas {
+    position:relative; width:1280px; height:720px; flex:0 0 auto;
+    background:#F2F0EA; overflow:hidden;
+  }
+  /* direct children only — inline <b>/<i>/<span> inside the answer must stay in
+     the text flow, so this must NOT be a blanket descendant selector */
+  #canvas > * { position:absolute; }
+
+  /* ------------------------------------------------------------- type voices */
+  .serif { font-family:Georgia, serif; }
+  .sans  { font-family:Arial, sans-serif; }
+  .mono  { font-family:"Courier New", monospace; }
+
+  /* ---------------------------------------------------------------- masthead */
+  #z_eyebrow {
+    left:64px; top:40px; width:720px; height:16px; line-height:16px;
+    font-size:10pt; letter-spacing:1.2px; color:#5A6068;
+  }
+  #z_rule_top  { left:64px; top:80px;  width:1152px; height:1px; background:#DAD5CA; }
+  #z_rule_foot { left:64px; top:664px; width:1152px; height:1px; background:#DAD5CA; }
+
+  /* -------------------------------------------------------------- the question */
+  #c_title {
+    left:64px; top:100px; width:1152px; height:64px; line-height:64px;
+    font-size:44pt; letter-spacing:-0.6px; font-weight:normal; color:#16181A;
+  }
+
+  /* ---------------------------------------------------------------- the answer */
+  #z_deckrule { left:64px; top:176px; width:48px; height:2px; background:#8C4A0B; }
+  /* 688px measure = ~74 characters at 14pt Georgia: the answer sets in four
+     even lines with a fifth line of slack before the panel edge at y=328 */
+  #c_answer {
+    left:64px; top:192px; width:688px; height:130px;
+    font-size:14pt; line-height:26px; color:#16181A;
+  }
+  #c_answer b  { font-weight:bold; }
+  #c_answer i  { font-style:italic; }
+  #c_answer .hi { font-weight:bold; color:#8C4A0B; }
+
+  /* ------------------------------------------- the two bars, defined (top right) */
+  #z_bars_head {
+    left:784px; top:192px; width:432px; height:16px; line-height:16px;
+    font-size:10pt; font-weight:bold; letter-spacing:2.2px; color:#5A6068;
+  }
+  #z_bars_rule { left:784px; top:216px; width:432px; height:1px; background:#DAD5CA; }
+  .barterm {
+    left:784px; width:96px; height:22px; line-height:22px;
+    font-size:10.5pt; font-weight:bold; letter-spacing:0.8px; color:#16181A;
+  }
+  .bardef {
+    left:880px; width:336px; height:22px; line-height:22px;
+    font-family:Georgia, serif; font-size:12pt; color:#16181A;
+  }
+  #z_bars_note {
+    left:784px; top:296px; width:432px; height:16px; line-height:16px;
+    font-size:10pt; color:#5A6068;
+  }
+
+  /* --------------------------------------------------- the screen: one surface */
+  #z_panel {
+    left:48px; top:328px; width:1184px; height:216px;
+    background:#FFFFFF; border:1px solid #E3DDD0;
+    box-shadow:0 2px 10px rgba(26,24,20,.05);
+  }
+
+  /* run labels — mock B's figure-with-definition, placed where the run lies */
+  .runfig { height:28px; line-height:28px; font-family:Georgia, serif; font-size:22pt; }
+  .rundef { height:14px; line-height:14px; font-size:10pt; color:#4A5058; }
+  #c_lbl1_fig { left:64px;  top:352px; width:192px; color:#8C4A0B; }
+  #c_lbl1_def { left:64px;  top:380px; width:200px; }
+  #c_lbl2_fig { left:264px; top:352px; width:200px; color:#16181A; }
+  #c_lbl2_def { left:264px; top:380px; width:280px; }
+  #c_lbl3_fig { left:888px; top:432px; width:328px; color:#4A5058; }
+  #c_lbl3_def { left:888px; top:460px; width:328px; }
+  #c_lbl3_sub { left:888px; top:476px; width:328px; height:14px; line-height:14px;
+                font-size:10pt; color:#5A6068; }
+
+  /* measure rules drawn to the EXACT extent of the run they label */
+  #z_rule_run1 { left:64px;  top:400px; width:192px; height:1px; background:#8C4A0B; }
+  #z_rule_run2 { left:264px; top:400px; width:512px; height:1px; background:#16181A; }
+
+  #hero_unit_array { left:64px; top:408px; width:792px; height:114px; }
+
+  #c_unitnote {
+    left:888px; top:352px; width:328px; height:32px; line-height:16px;
+    font-size:10pt; color:#5A6068;
+  }
+
+  /* -------------------------------------------------------------- navigation */
+  /* the rule is page furniture 16px clear of the hit area: a separate shape
+     cannot react to a button's hover in Power BI, so it never changes state */
+  .navrule { top:552px; width:264px; height:2px; background:#16181A; }
+  .nav {
+    top:568px; width:264px; height:84px;
+    text-decoration:none; color:#16181A; cursor:pointer; outline:none;
+    background:transparent;
+    transition:background-color 110ms linear;
+  }
+  .nav-l1 {
+    position:absolute; left:0; top:8px; width:264px; height:16px; line-height:16px;
+    font-size:10pt; font-weight:bold; letter-spacing:2.2px; color:#16181A;
+    transition:color 110ms linear;
+  }
+  .nav-l1 .num { color:#8C4A0B; }
+  .nav-l1 .arrow {
+    position:absolute; right:0; top:0; font-weight:normal; letter-spacing:0;
+    color:#5A6068; transition:color 110ms linear, transform 110ms linear;
+  }
+  .nav-l2 {
+    position:absolute; left:0; top:32px; width:264px; height:22px; line-height:22px;
+    font-family:Georgia, serif; font-size:12pt; color:#16181A;
+  }
+  .nav-l3 {
+    position:absolute; left:0; top:58px; width:264px; height:16px; line-height:16px;
+    font-size:10pt; color:#5A6068;
+  }
+  .nav.quiet .nav-l1 { color:#4A5058; }
+
+  /* HOVER — three carriers at once: a warm tint fills the hit area, the label
+     and numeral take the accent, the arrow takes the accent and steps 4px */
+  .nav:hover, .nav.is-hover   { background:#F6F1E7; }
+  .nav:hover .nav-l1, .nav.is-hover .nav-l1,
+  .nav:hover .num,   .nav.is-hover .num    { color:#8C4A0B; }
+  .nav:hover .arrow, .nav.is-hover .arrow  { color:#8C4A0B; transform:translateX(4px); }
+
+  /* FOCUS — the hover treatment plus a 2px ring at 6px offset, so keyboard and
+     pointer states are never mistaken for one another */
+  .nav:focus-visible, .nav.is-focus {
+    background:#F6F1E7; outline:2px solid #8C4A0B; outline-offset:6px;
+  }
+  .nav:focus-visible .nav-l1, .nav.is-focus .nav-l1,
+  .nav:focus-visible .num,    .nav.is-focus .num    { color:#8C4A0B; }
+  .nav:focus-visible .arrow,  .nav.is-focus .arrow  { color:#8C4A0B; transform:translateX(4px); }
+
+  /* ------------------------------------------------------------------ footer */
+  #z_footer {
+    left:64px; top:680px; width:1152px; height:16px; line-height:16px;
+    font-size:10pt; color:#5A6068;
+  }
+
+  /* comp chrome — outside the artboard, not part of the design */
+  #shell_caption {
+    margin-top:16px; font-family:"Courier New", monospace;
+    font-size:11px; color:#7E8085; letter-spacing:0.6px;
+  }
+</style>
+</head>
+<body>
+
+<div id="canvas" data-screen-label="mock-D-landing">
+
+  <!-- masthead ------------------------------------------------------------ -->
+  <div id="z_eyebrow" class="mono">TMDB &middot; 84,510 listings &middot; snapshot 24 July 2026</div>
+  <div id="z_rule_top"></div>
+
+  <!-- the question -------------------------------------------------------- -->
+  <h1 id="c_title" class="serif">What makes a movie successful?</h1>
+
+  <!-- the answer, 50 words ------------------------------------------------ -->
+  <div id="z_deckrule"></div>
+  <p id="c_answer" class="serif">Two things make a movie measurably successful
+     &mdash; money and evidence &mdash; and they rarely coincide. Of 84,510
+     listings, <b>13.2%</b> can support a money claim, <b>10.1%</b> clear 100
+     votes, only <span class="hi">5.4%</span> clear both. One film leads on both:
+     <i>The Lord of the Rings: The Return of the King</i>.</p>
+
+  <!-- what the two bars are — the definition A, B and C all left out ------- -->
+  <div id="z_bars_head" class="sans">THE TWO BARS</div>
+  <div id="z_bars_rule"></div>
+  <div class="barterm sans" style="top:232px">MONEY</div>
+  <div class="bardef"       style="top:232px">a financial figure at or above $10,000</div>
+  <div class="barterm sans" style="top:262px">EVIDENCE</div>
+  <div class="bardef"       style="top:262px">at least 100 votes on record</div>
+  <div id="z_bars_note" class="sans">A listing clears both bars, one of them, or neither.</div>
+
+  <!-- the evidence: one screen, one hundred frames ------------------------- -->
+  <div id="z_panel"></div>
+
+  <div id="c_lbl1_fig" class="runfig serif">5</div>
+  <div id="c_lbl1_def" class="rundef sans">clear both bars &mdash; fully lit</div>
+  <div id="c_lbl2_fig" class="runfig serif">13</div>
+  <div id="c_lbl2_def" class="rundef sans">clear one bar only &mdash; half lit</div>
+  <div id="z_rule_run1"></div>
+  <div id="z_rule_run2"></div>
+
+  <svg id="hero_unit_array" viewBox="0 0 792 114" width="792" height="114"
+       shape-rendering="crispEdges" role="img"
+       aria-label="One hundred film frames, one for every hundred listings, twenty to a row. Five frames are fully lit: they clear both the money bar and the evidence bar. Thirteen frames are half lit: they clear one bar only. The remaining eighty-two are empty outlines: they clear neither bar.">
+    <!-- row 0 : cols 0-4 clear both (fully lit) | cols 5-17 clear one bar (half lit) | cols 18-19 clear neither -->
+    <rect x="0" y="0" width="32" height="18" fill="#8C4A0B"/><rect x="40" y="0" width="32" height="18" fill="#8C4A0B"/><rect x="80" y="0" width="32" height="18" fill="#8C4A0B"/><rect x="120" y="0" width="32" height="18" fill="#8C4A0B"/><rect x="160" y="0" width="32" height="18" fill="#8C4A0B"/><rect x="200.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="200" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="240.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="240" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="280.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="280" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="320.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="320" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="360.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="360" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="400.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="400" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="440.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="440" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="480.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="480" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="520.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="520" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="560.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="560" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="600.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="600" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="640.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="640" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="680.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="680" y="0" width="16" height="18" fill="#8C4A0B"/><rect x="720.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="760.5" y="0.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/>
+    <!-- rows 1-4 : 80 more listings that clear neither bar -->
+    <rect x="0.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="40.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="80.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="120.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="160.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="200.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="240.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="280.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="320.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="360.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="400.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="440.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="480.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="520.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="560.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="600.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="640.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="680.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="720.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="760.5" y="24.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/>
+    <rect x="0.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="40.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="80.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="120.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="160.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="200.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="240.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="280.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="320.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="360.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="400.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="440.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="480.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="520.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="560.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="600.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="640.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="680.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="720.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="760.5" y="48.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/>
+    <rect x="0.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="40.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="80.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="120.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="160.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="200.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="240.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="280.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="320.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="360.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="400.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="440.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="480.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="520.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="560.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="600.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="640.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="680.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="720.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="760.5" y="72.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/>
+    <rect x="0.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="40.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="80.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="120.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="160.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="200.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="240.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="280.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="320.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="360.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="400.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="440.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="480.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="520.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="560.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="600.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="640.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="680.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="720.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/><rect x="760.5" y="96.5" width="31" height="17" fill="none" stroke="#8E877A" stroke-width="1"/>
+  </svg>
+
+  <div id="c_unitnote" class="mono">1 frame = 1 listing in 100<br>1 row = 20 listings</div>
+  <div id="c_lbl3_fig" class="runfig serif">82</div>
+  <div id="c_lbl3_def" class="rundef sans">clear neither bar &mdash; empty frame</div>
+  <div id="c_lbl3_sub" class="sans">no usable money figures, too few votes</div>
+
+  <!-- the routes ---------------------------------------------------------- -->
+  <div class="navrule" style="left:64px"></div>
+  <a class="nav" id="btn_money" href="#money" style="left:64px"
+     aria-label="One, MONEY. Is money a usable measure? 13.2% can support a money claim.">
+    <div class="nav-l1 sans"><span class="num">1 &middot; </span>MONEY<span class="arrow">&#8594;</span></div>
+    <div class="nav-l2 serif">Is money a usable measure?</div>
+    <div class="nav-l3 sans">13.2% can support a money claim</div>
+  </a>
+
+  <div class="navrule" style="left:360px"></div>
+  <a class="nav" id="btn_evidence" href="#evidence" style="left:360px"
+     aria-label="Two, EVIDENCE. Is acclaim usable? Only 10.1% clear 100 votes.">
+    <div class="nav-l1 sans"><span class="num">2 &middot; </span>EVIDENCE<span class="arrow">&#8594;</span></div>
+    <div class="nav-l2 serif">Is acclaim usable?</div>
+    <div class="nav-l3 sans">Only 10.1% clear 100 votes</div>
+  </a>
+
+  <div class="navrule" style="left:656px"></div>
+  <a class="nav" id="btn_both" href="#both" style="left:656px"
+     aria-label="Three, BOTH. Who clears both bars? And how that changed over time.">
+    <div class="nav-l1 sans"><span class="num">3 &middot; </span>BOTH<span class="arrow">&#8594;</span></div>
+    <div class="nav-l2 serif">Who clears both bars?</div>
+    <div class="nav-l3 sans">And how that changed over time</div>
+  </a>
+
+  <div class="navrule" style="left:952px"></div>
+  <a class="nav quiet" id="btn_method" href="#method" style="left:952px"
+     aria-label="METHOD. How every number is defined.">
+    <div class="nav-l1 sans">METHOD<span class="arrow">&#8594;</span></div>
+    <div class="nav-l2 serif">How every number is defined</div>
+  </a>
+
+  <!-- disclosure ---------------------------------------------------------- -->
+  <div id="z_rule_foot"></div>
+  <div id="z_footer" class="sans">adult titles excluded &middot; financial floor $10,000
+     &middot; m = 100 votes &middot; C = 6.96 &middot; listings, not films</div>
+
+</div>
+
+<div id="shell_caption">MOCK D &middot; HYBRID &middot; 1280 &times; 720 &middot; HOVER OR TAB THE FOUR ROUTES TO SEE THEIR STATES</div>
+
+</body>
+</html>

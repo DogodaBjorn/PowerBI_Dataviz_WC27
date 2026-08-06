@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mock B — The Screen · landing page · 1280×720</title>
+<!--
+==============================================================================
+ MOCK B — "THE SCREEN"   ·   landing page   ·   1280 × 720 fixed
+==============================================================================
+
+ RATIONALE (3 sentences)
+ 1. The data sits on a screen: the page ground is a warm off-white auditorium
+    and the one chart lives on a pure-white panel in true 16:9 (640×360), so
+    the "movie" reading comes from proportion and a brightness lift — the panel
+    is literally lit relative to its surroundings — never from darkness or
+    ornament.
+ 2. The page is built as one asymmetric spread — question and answer set in
+    Georgia down the left, the projection panel on the right, their top edges
+    optically aligned to the pixel — so a judge reads the message in three
+    seconds and can still audit every number in three minutes.
+ 3. Nothing is on this page that does not do work: two hairlines (they separate
+    chrome from content), one accent used exactly three times (the five lit
+    squares, the 5.4% key figure, and every interactive state), and one shadow
+    token shared by all four panels — the rest is white space, which the brief
+    asked for and which is the most expensive material here.
+
+ PALETTE  (WCAG contrast, computed — not estimated)
+   --ground   #F1EFEA  warm off-white page (the auditorium)      L* 94.5
+   --surface  #FFFFFF  panel / projection surface                L* 100
+   --ink      #17181A  primary text     15.46:1 on ground · 17.77:1 on surface
+   --ink-2    #5B5F66  secondary text    5.58:1 on ground ·  6.42:1 on surface
+   --accent   #8A5A0F  bronze; text+mark 5.15:1 on ground ·  5.92:1 on surface
+   --line     #D9D5CB  1px rules (non-text)
+   --mark-mid #9C978B  "clears one bar" squares (non-text)       L* 62.6
+   --mark-lo  #E4E1D8  "clears neither" squares (non-text)       L* 89.5
+   Every text/background pair on the page is ≥ 4.5:1. The three mark fills are
+   never used for text; they are separated by lightness (L* 42 / 63 / 90 —
+   steps of 21 and 27, legible in greyscale and to every colour-vision type),
+   and colour is never the only carrier: the three groups are contiguous in
+   reading order and each is directly labelled with its own figure and
+   definition in the key. Adjacent-mark ratios: accent↔mid 2.03:1,
+   mid↔light 2.20:1, light↔surface 1.31:1.
+
+ TYPE SCALE  (pt, so it maps 1:1 onto Power BI font sizes; floor is 10pt)
+   32pt / 44px  Georgia            page question (hero)
+   18pt / 32px  Arial Bold         key figures in the chart
+   13pt / 28px  Georgia            hero statement · nav questions (24px there)
+   12pt / 24px  Arial Bold         chart title
+   11pt / 16px  Arial Bold / Arial nav labels · key labels
+   10pt / 16px  Arial              eyebrow, sub-labels, captions, nav stats
+   10pt / 16px  Courier New        footer disclosure only — the "machine"
+                                   register: parameters and exclusions
+   Arial Black is deliberately unused: too heavy for a calm page.
+
+ GEOMETRY — every box on the 8px grid (x / y / w / h, ready for PBIR)
+   page margins        48 left · 48 right · 40 top · 40 bottom
+   eyebrow             48,40   640×16      METHOD link  1032,40   200×16
+   hairlines           48,64 and 48,656    1184×1
+   question (hero)     48,88   480×88      cap-height optically meets the
+                                           panel's top edge at y=96
+   statement           48,216  432×168
+   SCREEN panel        592,96  640×360     ← true 16:9
+     chart title         616,120 592×24
+     unit caption        616,144 592×16
+     100-square field    616,176 232×232   16px squares, 24px pitch
+     key rows            896,176 · 896,264 · 896,352   312×64 each
+     rounding note       616,416 592×16
+   nav panels          48,504 · 448,504 · 848,504      384×120, 16px gutters
+     inside each: 24 pad · label 16 · 8 · question 24 · 8 · stat 16 · 24 pad
+   footer              48,664 1184×16
+
+ ELEVATION — ONE token, used identically on all four panels
+   --shadow: 0 4px 16px rgba(23,24,26,0.07)
+   Power BI mapping: Effects → Shadow · colour #17181A · position Bottom ·
+   offset 4 · blur 16 · transparency 93%.
+   Radius: a documented 2-step scale — surfaces 8px, data marks 2px.
+   No gradient anywhere. The optional "whisper-soft panel tint" was declined:
+   the #F1EFEA → #FFFFFF step already does the work and a solid fill is
+   reproducible in PBIR without qualification.
+
+ WHAT MIGHT NOT SURVIVE PBIR REPRODUCTION  (honest list)
+   1. LETTER-SPACING. Power BI text has no tracking control. The eyebrow,
+      METHOD link and nav labels use 0.08–0.12em here. Fallback: same strings
+      at the same sizes with default tracking — boxes are left-aligned with
+      slack, so the layout does not move. This is the one property that will
+      visibly differ.
+   2. LINE-HEIGHT. PBI text boxes have no line-spacing control (~1.2–1.3
+      automatic). The hero statement is set at 13pt/28px (1.62). Its box is
+      sized 168px for 5 lines and will simply run shorter in PBI; nothing
+      below it moves. Largest expected visual delta on the page.
+   3. THE 100-SQUARE FIELD. Reproduce as a scatter chart — X = column 1–10,
+      Y = row 1–10 (axis reversed), marker shape Square, size locked, axes and
+      gridlines off, colour by a category column — or as a 10×10 matrix with
+      conditional background colours and blank text. Both are native; expect
+      ±1–2px on mark size versus the 16px/24px pitch drawn here.
+   4. FOCUS RING. The 2px accent outline is a browser affordance; Power BI
+      draws its own focus indicator and it cannot be restyled. The HOVER state
+      IS fully authorable: it is a 1px accent border drawn inside the panel
+      edge plus accent text — exactly what a PBI button's Hover state does
+      (Border → colour, Text → colour). The nav panels become transparent
+      buttons layered over their text; elevation never changes on hover, so
+      nothing here depends on a state-dependent shadow (PBI has none).
+   5. SHADOW GRANULARITY. PBI's shadow control is coarser than CSS; the token
+      above is the closest authorable equivalent, not a guarantee.
+   Everything else is solid fills, 1px rules, text and one inline SVG.
+
+ ACCESSIBILITY NOTES
+   DOM/tab order is 1 MONEY → 2 EVIDENCE → 3 BOTH → METHOD, which follows the
+   report's narrative sequence rather than the visual top-right position of the
+   METHOD link — a deliberate, recorded choice. The unit chart carries
+   role="img" and a full aria-label stating all three shares.
+
+ TO INSPECT THE STATES STATICALLY (without a pointer): add class "is-hover" or
+ "is-focus" to any .nav element, or "is-hover" to the METHOD link.
+==============================================================================
+-->
+<style>
+  /* ---------- tokens ---------- */
+  :root{
+    --ground:#F1EFEA;
+    --surface:#FFFFFF;
+    --ink:#17181A;
+    --ink-2:#5B5F66;
+    --accent:#8A5A0F;
+    --line:#D9D5CB;
+    --mark-mid:#9C978B;
+    --mark-lo:#E4E1D8;
+    --shadow:0 4px 16px rgba(23,24,26,.07);
+    --radius:8px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--ground);}
+  body{display:flex;justify-content:center;align-items:flex-start;}
+
+  .page{
+    position:relative;width:1280px;height:720px;overflow:hidden;
+    background:var(--ground);color:var(--ink);
+  }
+  .abs{position:absolute;}
+
+  /* ---------- type registers ---------- */
+  .g{font-family:Georgia,serif;}
+  .a{font-family:Arial,Helvetica,sans-serif;}
+  .m{font-family:"Courier New",monospace;}
+
+  /* ---------- surfaces: one treatment, one radius, one shadow ---------- */
+  .panel{
+    background:var(--surface);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+  }
+
+  /* ---------- masthead ---------- */
+  .eyebrow{left:48px;top:40px;width:640px;height:16px;
+    font-size:10pt;line-height:16px;color:var(--ink-2);letter-spacing:.08em;}
+  .eyebrow b{color:var(--ink);font-weight:bold;letter-spacing:.12em;}
+  .rule{height:1px;background:var(--line);left:48px;width:1184px;}
+
+  /* ---------- hero ---------- */
+  .question{left:48px;top:88px;width:480px;height:88px;font-weight:normal;
+    font-size:32pt;line-height:44px;letter-spacing:-.005em;color:var(--ink);}
+  .statement{left:48px;top:216px;width:432px;height:168px;
+    font-size:13pt;line-height:28px;color:var(--ink);}
+  .statement i{font-style:italic;}
+
+  /* ---------- chart panel ---------- */
+  .screen{left:592px;top:96px;width:640px;height:360px;}
+  .ct{left:616px;top:120px;width:592px;height:24px;
+    font-size:12pt;line-height:24px;font-weight:bold;color:var(--ink);}
+  .cs{left:616px;top:144px;width:592px;height:16px;
+    font-size:10pt;line-height:16px;color:var(--ink-2);}
+  .field{left:616px;top:176px;width:232px;height:232px;}
+  .cn{left:616px;top:416px;width:592px;height:16px;
+    font-size:10pt;line-height:16px;color:var(--ink-2);}
+
+  .u0{fill:var(--accent);}
+  .u1{fill:var(--mark-mid);}
+  .u2{fill:var(--mark-lo);}
+
+  /* ---------- chart key (direct labels, not a legend) ---------- */
+  .krow{left:896px;width:312px;height:64px;}
+  .ksw{left:0;top:8px;width:12px;height:12px;border-radius:2px;}
+  .sw0{background:var(--accent);}
+  .sw1{background:var(--mark-mid);}
+  .sw2{background:var(--mark-lo);}
+  .knum{left:24px;top:0;width:288px;height:32px;
+    font-size:18pt;line-height:32px;font-weight:bold;color:var(--ink);}
+  .knum.hi{color:var(--accent);}
+  .klab{left:24px;top:32px;width:288px;height:16px;
+    font-size:11pt;line-height:16px;color:var(--ink);}
+  .ksub{left:24px;top:48px;width:288px;height:16px;
+    font-size:10pt;line-height:16px;color:var(--ink-2);}
+
+  /* ---------- navigation ---------- */
+  .nav{
+    top:504px;width:384px;height:120px;display:block;text-decoration:none;
+    color:inherit;
+  }
+  .navlab{left:24px;top:24px;width:280px;height:16px;
+    font-size:11pt;line-height:16px;font-weight:bold;letter-spacing:.1em;
+    color:var(--ink);}
+  .navlab span{color:var(--ink-2);font-weight:normal;letter-spacing:.06em;}
+  .navarrow{left:304px;top:24px;width:56px;height:16px;text-align:right;
+    font-size:11pt;line-height:16px;color:var(--ink-2);}
+  /* inside the panel: 24 top pad · 16 · 8 · 24 · 8 · 16 · 24 bottom pad = 120 */
+  .navq{left:24px;top:48px;width:336px;height:24px;
+    font-size:13pt;line-height:24px;color:var(--ink);}
+  .navs{left:24px;top:80px;width:336px;height:16px;
+    font-size:10pt;line-height:16px;color:var(--ink-2);}
+
+  /* HOVER — 1px accent ring drawn inside the panel edge (a PBI button border),
+     the label and the arrow take the accent. Elevation never changes.        */
+  .nav:hover,.nav.is-hover,.nav:focus,.nav.is-focus{
+    box-shadow:var(--shadow),inset 0 0 0 1px var(--accent);}
+  .nav:hover .navlab,.nav.is-hover .navlab,
+  .nav:focus .navlab,.nav.is-focus .navlab,
+  .nav:hover .navarrow,.nav.is-hover .navarrow,
+  .nav:focus .navarrow,.nav.is-focus .navarrow{color:var(--accent);}
+  /* FOCUS — the ring above plus a 2px outline, so keyboard is never ambiguous */
+  .nav:focus,.nav.is-focus{outline:2px solid var(--accent);outline-offset:2px;}
+
+  .mlink{
+    left:1032px;top:40px;width:200px;height:16px;text-align:right;
+    font-size:10pt;line-height:16px;font-weight:bold;letter-spacing:.12em;
+    color:var(--ink-2);text-decoration:none;
+  }
+  .mlink:hover,.mlink.is-hover{
+    color:var(--accent);text-decoration:underline;text-underline-offset:4px;}
+  .mlink:focus-visible,.mlink:focus{
+    outline:2px solid var(--accent);outline-offset:3px;color:var(--accent);}
+
+  /* ---------- footer ---------- */
+  .foot{left:48px;top:664px;width:1184px;height:16px;
+    font-size:10pt;line-height:16px;color:var(--ink-2);}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ============ masthead: provenance left, quiet fourth route right ====== -->
+  <div class="abs a eyebrow"><b>TMDB</b> · 84,510 listings · snapshot 24 July 2026</div>
+  <div class="abs rule" style="top:64px;"></div>
+
+  <!-- ============ hero: the question, then the answer ===================== -->
+  <h1 class="abs g question">What makes a movie<br>successful?</h1>
+
+  <p class="abs g statement">
+    Two things make a movie measurably successful — money and evidence — and
+    they rarely coincide. Of 84,510 listings, 13.2% can support a money claim,
+    10.1% clear 100 votes, only 5.4% clear both. One film leads on both:
+    <i>The Lord of the Rings: The Return of the King</i>.
+  </p>
+
+  <!-- ============ the screen: one chart, true 16:9 ======================== -->
+  <div class="abs panel screen"></div>
+
+  <div class="abs a ct">Five in every hundred clear both bars — 82 clear neither</div>
+  <div class="abs a cs">1 square = 1% of 84,510 listings · read left to right, top to bottom</div>
+
+  <svg class="abs field" width="232" height="232" viewBox="0 0 232 232"
+       role="img"
+       aria-label="Unit chart of 100 squares, one square for each percent of 84,510 listings. Five squares in bronze: listings that clear both bars, 5.4 percent. Thirteen squares in mid grey: clear one bar only, 12.5 percent. Eighty-two squares in light grey: clear neither bar, 82.1 percent.">
+    <!-- row 1 — 5 clear both, then the first 5 that clear one bar only -->
+    <rect class="u0" x="0" y="0" width="16" height="16" rx="2"/><rect class="u0" x="24" y="0" width="16" height="16" rx="2"/><rect class="u0" x="48" y="0" width="16" height="16" rx="2"/><rect class="u0" x="72" y="0" width="16" height="16" rx="2"/><rect class="u0" x="96" y="0" width="16" height="16" rx="2"/><rect class="u1" x="120" y="0" width="16" height="16" rx="2"/><rect class="u1" x="144" y="0" width="16" height="16" rx="2"/><rect class="u1" x="168" y="0" width="16" height="16" rx="2"/><rect class="u1" x="192" y="0" width="16" height="16" rx="2"/><rect class="u1" x="216" y="0" width="16" height="16" rx="2"/>
+    <!-- row 2 — the remaining 8 that clear one bar, then the field begins -->
+    <rect class="u1" x="0" y="24" width="16" height="16" rx="2"/><rect class="u1" x="24" y="24" width="16" height="16" rx="2"/><rect class="u1" x="48" y="24" width="16" height="16" rx="2"/><rect class="u1" x="72" y="24" width="16" height="16" rx="2"/><rect class="u1" x="96" y="24" width="16" height="16" rx="2"/><rect class="u1" x="120" y="24" width="16" height="16" rx="2"/><rect class="u1" x="144" y="24" width="16" height="16" rx="2"/><rect class="u1" x="168" y="24" width="16" height="16" rx="2"/><rect class="u2" x="192" y="24" width="16" height="16" rx="2"/><rect class="u2" x="216" y="24" width="16" height="16" rx="2"/>
+    <!-- rows 3–10 — 80 more listings that clear neither bar -->
+    <rect class="u2" x="0" y="48" width="16" height="16" rx="2"/><rect class="u2" x="24" y="48" width="16" height="16" rx="2"/><rect class="u2" x="48" y="48" width="16" height="16" rx="2"/><rect class="u2" x="72" y="48" width="16" height="16" rx="2"/><rect class="u2" x="96" y="48" width="16" height="16" rx="2"/><rect class="u2" x="120" y="48" width="16" height="16" rx="2"/><rect class="u2" x="144" y="48" width="16" height="16" rx="2"/><rect class="u2" x="168" y="48" width="16" height="16" rx="2"/><rect class="u2" x="192" y="48" width="16" height="16" rx="2"/><rect class="u2" x="216" y="48" width="16" height="16" rx="2"/>
+    <rect class="u2" x="0" y="72" width="16" height="16" rx="2"/><rect class="u2" x="24" y="72" width="16" height="16" rx="2"/><rect class="u2" x="48" y="72" width="16" height="16" rx="2"/><rect class="u2" x="72" y="72" width="16" height="16" rx="2"/><rect class="u2" x="96" y="72" width="16" height="16" rx="2"/><rect class="u2" x="120" y="72" width="16" height="16" rx="2"/><rect class="u2" x="144" y="72" width="16" height="16" rx="2"/><rect class="u2" x="168" y="72" width="16" height="16" rx="2"/><rect class="u2" x="192" y="72" width="16" height="16" rx="2"/><rect class="u2" x="216" y="72" width="16" height="16" rx="2"/>
+    <rect class="u2" x="0" y="96" width="16" height="16" rx="2"/><rect class="u2" x="24" y="96" width="16" height="16" rx="2"/><rect class="u2" x="48" y="96" width="16" height="16" rx="2"/><rect class="u2" x="72" y="96" width="16" height="16" rx="2"/><rect class="u2" x="96" y="96" width="16" height="16" rx="2"/><rect class="u2" x="120" y="96" width="16" height="16" rx="2"/><rect class="u2" x="144" y="96" width="16" height="16" rx="2"/><rect class="u2" x="168" y="96" width="16" height="16" rx="2"/><rect class="u2" x="192" y="96" width="16" height="16" rx="2"/><rect class="u2" x="216" y="96" width="16" height="16" rx="2"/>
+    <rect class="u2" x="0" y="120" width="16" height="16" rx="2"/><rect class="u2" x="24" y="120" width="16" height="16" rx="2"/><rect class="u2" x="48" y="120" width="16" height="16" rx="2"/><rect class="u2" x="72" y="120" width="16" height="16" rx="2"/><rect class="u2" x="96" y="120" width="16" height="16" rx="2"/><rect class="u2" x="120" y="120" width="16" height="16" rx="2"/><rect class="u2" x="144" y="120" width="16" height="16" rx="2"/><rect class="u2" x="168" y="120" width="16" height="16" rx="2"/><rect class="u2" x="192" y="120" width="16" height="16" rx="2"/><rect class="u2" x="216" y="120" width="16" height="16" rx="2"/>
+    <rect class="u2" x="0" y="144" width="16" height="16" rx="2"/><rect class="u2" x="24" y="144" width="16" height="16" rx="2"/><rect class="u2" x="48" y="144" width="16" height="16" rx="2"/><rect class="u2" x="72" y="144" width="16" height="16" rx="2"/><rect class="u2" x="96" y="144" width="16" height="16" rx="2"/><rect class="u2" x="120" y="144" width="16" height="16" rx="2"/><rect class="u2" x="144" y="144" width="16" height="16" rx="2"/><rect class="u2" x="168" y="144" width="16" height="16" rx="2"/><rect class="u2" x="192" y="144" width="16" height="16" rx="2"/><rect class="u2" x="216" y="144" width="16" height="16" rx="2"/>
+    <rect class="u2" x="0" y="168" width="16" height="16" rx="2"/><rect class="u2" x="24" y="168" width="16" height="16" rx="2"/><rect class="u2" x="48" y="168" width="16" height="16" rx="2"/><rect class="u2" x="72" y="168" width="16" height="16" rx="2"/><rect class="u2" x="96" y="168" width="16" height="16" rx="2"/><rect class="u2" x="120" y="168" width="16" height="16" rx="2"/><rect class="u2" x="144" y="168" width="16" height="16" rx="2"/><rect class="u2" x="168" y="168" width="16" height="16" rx="2"/><rect class="u2" x="192" y="168" width="16" height="16" rx="2"/><rect class="u2" x="216" y="168" width="16" height="16" rx="2"/>
+    <rect class="u2" x="0" y="192" width="16" height="16" rx="2"/><rect class="u2" x="24" y="192" width="16" height="16" rx="2"/><rect class="u2" x="48" y="192" width="16" height="16" rx="2"/><rect class="u2" x="72" y="192" width="16" height="16" rx="2"/><rect class="u2" x="96" y="192" width="16" height="16" rx="2"/><rect class="u2" x="120" y="192" width="16" height="16" rx="2"/><rect class="u2" x="144" y="192" width="16" height="16" rx="2"/><rect class="u2" x="168" y="192" width="16" height="16" rx="2"/><rect class="u2" x="192" y="192" width="16" height="16" rx="2"/><rect class="u2" x="216" y="192" width="16" height="16" rx="2"/>
+    <rect class="u2" x="0" y="216" width="16" height="16" rx="2"/><rect class="u2" x="24" y="216" width="16" height="16" rx="2"/><rect class="u2" x="48" y="216" width="16" height="16" rx="2"/><rect class="u2" x="72" y="216" width="16" height="16" rx="2"/><rect class="u2" x="96" y="216" width="16" height="16" rx="2"/><rect class="u2" x="120" y="216" width="16" height="16" rx="2"/><rect class="u2" x="144" y="216" width="16" height="16" rx="2"/><rect class="u2" x="168" y="216" width="16" height="16" rx="2"/><rect class="u2" x="192" y="216" width="16" height="16" rx="2"/><rect class="u2" x="216" y="216" width="16" height="16" rx="2"/>
+  </svg>
+
+  <!-- key: figure, name, definition — read top-down in the field's own order -->
+  <div class="abs krow" style="top:176px;">
+    <div class="abs ksw sw0"></div>
+    <div class="abs a knum hi">5.4%</div>
+    <div class="abs a klab">clear both bars</div>
+    <div class="abs a ksub">a money claim and 100+ votes</div>
+  </div>
+  <div class="abs krow" style="top:264px;">
+    <div class="abs ksw sw1"></div>
+    <div class="abs a knum">12.5%</div>
+    <div class="abs a klab">clear one bar only</div>
+    <div class="abs a ksub">7.8% money · 4.7% votes</div>
+  </div>
+  <div class="abs krow" style="top:352px;">
+    <div class="abs ksw sw2"></div>
+    <div class="abs a knum">82.1%</div>
+    <div class="abs a klab">clear neither bar</div>
+    <div class="abs a ksub">no usable money, too few votes</div>
+  </div>
+
+  <div class="abs a cn">Squares rounded to whole points — exact shares at right</div>
+
+  <!-- ============ navigation: the report in three moves ==================== -->
+  <a class="abs panel nav" href="#money" style="left:48px;">
+    <span class="abs a navlab"><span>1 ·</span> MONEY</span>
+    <span class="abs a navarrow">→</span>
+    <span class="abs g navq">Is money a usable measure?</span>
+    <span class="abs a navs">13.2% can support a money claim</span>
+  </a>
+
+  <a class="abs panel nav" href="#evidence" style="left:448px;">
+    <span class="abs a navlab"><span>2 ·</span> EVIDENCE</span>
+    <span class="abs a navarrow">→</span>
+    <span class="abs g navq">Is acclaim usable?</span>
+    <span class="abs a navs">10.1% clear 100 votes</span>
+  </a>
+
+  <a class="abs panel nav" href="#both" style="left:848px;">
+    <span class="abs a navlab"><span>3 ·</span> BOTH</span>
+    <span class="abs a navarrow">→</span>
+    <span class="abs g navq">Who clears both bars?</span>
+    <span class="abs a navs">5.4% clear both — and how that changed</span>
+  </a>
+
+  <!-- quieter fourth route; last in tab order, first in the masthead -->
+  <a class="abs a mlink" href="#method">METHOD →</a>
+
+  <!-- ============ disclosure ============================================== -->
+  <div class="abs rule" style="top:656px;"></div>
+  <div class="abs m foot">adult titles excluded · financial floor $10,000 · m = 100 votes · C = 6.96 · listings, not films</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,572 @@
+<meta charset="utf-8">
+<title>What makes a movie successful? — five pages</title>
+<!--
+================================================================================
+FINAL SYSTEM — five pages, 1280x720 each. Power BI reproduction specification.
+================================================================================
+
+RATIONALE (3 sentences)
+1. The report is built as a printed essay rather than a dashboard: one statement,
+   one drawn visual and a handful of precise labels per page, with 35-45% of every
+   canvas deliberately left empty so the eye has somewhere to rest and the single
+   finding has nowhere to hide.
+2. All hierarchy is carried by size, tracking and position — a 40-52px regular-weight
+   statement against 10px letterspaced caps — so nothing needs a card, a box, a border
+   or a shadow to be separated from anything else; alignment to a 8px grid does that work.
+3. The only warmth in the system is one deep cinema red used two or three times a page
+   (the qualifying set, the m = 100 threshold, the best-placed film) and six real posters
+   on page 4 — the movie subject is present but never costumed.
+
+PALETTE + CONTRAST (measured, sRGB)
+  #FCFCFD  page ground (cool near-white; NOT beige)
+  #111316  ink            on ground  18.15:1  AAA  (statements, numbers, key labels)
+  #4A5057  ink secondary  on ground   7.95:1  AAA  (lede, body, meaningful rules)
+  #5C636B  ink tertiary   on ground   5.93:1  AAA  (10px caps labels, footer, axes)
+  #8B9199  data grey      on ground   3.10:1  pass non-text >=3:1 (context bars/dots)
+  #A8321C  accent red     on ground   6.53:1  AAA  (text and marks both legal)
+  #FFFFFF  on #A8321C                 6.69:1  AAA  (not used, reserved)
+  #E4E6E9  hairline       on ground   1.22:1  DECORATIVE ONLY — carries no meaning
+                                              (footer rule; grouping rule p5)
+  #FCFCFD  page on #8E9399 backdrop    3.02:1 pass (page edge definition)
+  Smallest type anywhere: 10px. Nothing below it.
+  COLOUR IS NEVER THE ONLY CARRIER: p1 the qualifying row is also the shortest bar and
+  is labelled "the only set that can answer the question"; p2 the two accent bands are
+  also captioned HIGHEST RETURN and the grey one LOWEST RETURN; p3 the accent bars are
+  also the four bars above a labelled threshold rule; p4 the accent point carries a leader
+  line, a name and both of its ranks, and every poster repeats its ranks in words;
+  p5 the refusals are also prefixed with an em dash.
+
+TYPE SCALE  — "Helvetica Neue", Helvetica, Arial, sans-serif throughout. No web fonts.
+  Statement   52px p1 / 40px p2-p5, weight 400, tracking -0.022em, leading 1.14
+  Number      26px (p1 counts, p5 parameters) / 20px (p2 column values), tracking -0.02em
+  Lede        17px p1 / 15px p2-p5, weight 400, leading 1.6, colour #4A5057
+  Body/data   12px (chart values, poster figures) / 13px (p5 refusals) / 14px (p5 bars)
+  Caps label  10px, uppercase, tracking +0.08em (chrome +0.10em)
+  All figures use font-variant-numeric: tabular-nums.
+
+SHARED CHROME (identical x/y on all five pages)
+  page index      x 64   y 40   w 60   h 12   10px caps, ink
+  report title    x 132  y 40   w 480  h 12   10px caps, #5C636B
+  nav (4 labels)  right-aligned, ends x 1216, y 40, h 12, 28px gaps
+                  current page: ink + 1px #A8321C underline at y 58, w = label width
+  footer rule     x 64   y 672  w 1152 h 1    #E4E6E9
+  footer text     x 64   y 682  w 1152 h 12   10px caps #5C636B
+  Power BI: chrome = 3 text boxes + 1 shape (rule) + 4 text boxes with page-navigation
+  actions, replicated on every page at these exact rects.
+
+INTERACTION — three states, no decoration
+  rest    nav label #5C636B, no underline
+  hover   nav label -> #111316, 1px #8B9199 underline appears at y 58 (150ms)
+  focus   1px #A8321C outline, 4px offset, label -> #111316 (keyboard only, :focus-visible)
+  current nav label #111316 with a permanent 1px #A8321C underline
+  Power BI: buttons with Default / Hover / Press / Selected states; the underline is the
+  button's bottom border. Page transitions are Power BI's own page navigation — no custom
+  motion. Nothing else on any page moves, because nothing else would gain from moving.
+
+--- PAGE 1 — THE QUESTION ---------------------------------- (aligned funnel table)
+  statement       x 64   y 128  w 1000 h 58   52px  "What makes a movie successful?"
+  lede            x 64   y 220  w 640  h 55   17px  two lines
+  section label   x 64   y 312  w 520  h 12   10px caps
+  column heads    right-aligned x 1010 "LISTINGS" / x 1152 "SHARE", baseline y 322
+  grouping rule   x 64   y 344  w 1088 h 1    #E4E6E9  (the one hairline on this page)
+  FOUR ROWS on one four-column grid, pitch 76. Labels left at x 64; bars x 400 (max
+  w 480 = 84,510); counts right-aligned at x 1010; shares right-aligned at x 1152.
+  Bar h 10. Nothing is ragged — every column has a single vertical edge.
+    r1 bar y 376 w 480 | 84,510 | 100%  | ALL LISTINGS IN THE SNAPSHOT
+    r2 bar y 452 w  63 | 11,116 | 13.2% | BUDGET AND REVENUE AT OR ABOVE $10,000
+    r3 bar y 528 w  49 |  8,685 | 10.3% | AT LEAST 100 VOTES
+    r4 bar y 604 w  40 |  7,052 |  8.3% | BOTH BARS CLEARED      (accent bar + count)
+    r4 sub-label baseline y 629 at x 64: THE ONLY SET THAT CAN ANSWER THE QUESTION
+  Baselines: labels + shares y 385/461/537/613 ; counts y 390/466/542/618 (26px type
+  optically centred on its bar, which sits 4px lower than the mathematical centre).
+  Power BI: clustered bar chart at x 400 y 360 w 480 h 264 — category = qualification
+  step, value = listings, sort by value descending, axes/gridlines/data labels all OFF.
+  The label, count and share columns are three text-box columns (or one borderless
+  table with three columns) locked to the same four row baselines.
+
+--- PAGE 2 — MONEY ---------------------------------------------------- (column)
+  statement       x 64   y 120  w 700  h 46   40px  "Return is a barbell."
+  lede            x 64   y 186  w 620  h 72   15px  three lines
+  chart label     x 64   y 296  w 700  h 12   10px caps
+  plot baseline   y 596. Scale 0 -> 3.0x over 280px (93.33px per 1.0x)
+  columns w 96, pitch 156:  x 64 / 220 / 376 / 532 / 688 / 844
+    values 1.82 2.27 1.64 1.49 1.97 2.55 -> h 170 212 153 139 184 238
+    tops        y 426 384 443 457 412 358
+    accent columns: #1 ($10-100k) and #6 ($100M+); rest #8B9199
+  value labels    20px ink, centred, baseline 22px above each column top
+  band name       10px caps, centred, y 608 ; band count 10px, centred, y 624
+  break-even rule x 64 y 503 w 936 h 1, #4A5057 dashed 4/3, label x 1008 y 497
+  Power BI: clustered column chart, category = Budget Band, value = Median Revenue /
+  Budget. Data colours set per category. Constant line at 1.0 with label. Y axis hidden.
+
+--- PAGE 3 — EVIDENCE ------------------------------------------------- (bar)
+  statement       x 64   y 120  w 700  h 92   40px  two lines
+  lede            x 64   y 232  w 620  h 48   15px  two lines
+  chart label     x 64   y 300  w 700  h 12   10px caps
+  bin label col   right-aligned at x 150, 10px caps
+  bars start x 166, h 10, max w 700 (55,233). Values 12px at barEnd+14.
+    y 330 356 382 408 434 460 486  then threshold, then  528 554 580 606
+    w  700 113  47  27  31  22  21          47  19  34  11
+    accent: the four bars above the threshold (100-499, 500-999, 1k-4,999, 5,000+)
+  threshold rule  x 64 y 504 w 836 h 1, #A8321C, label x 908 y 498 / y 512
+  Power BI: clustered bar chart, category = Vote Bucket (sorted), value = Listings.
+  Constant line not available on a categorical axis — draw the m=100 rule as a 1px
+  rectangle shape positioned at the gap, with two text boxes.
+
+--- PAGE 4 — BOTH ----------------------------------------------- (scatter + images)
+  statement       x 64   y 112  w 460  h 91   40px  "No film is in the top ten on both."
+  lede            x 64   y 228  w 400  h 72   15px  three lines
+  chart label     x 600  y  96  w 560  h 12   10px caps
+  SCATTER plot rect: x 600 y 128 w 520 h 240.  X = weighted rating 5.0-9.0
+    (px = 600 + 130*(r-5)); Y = log10 revenue 4.0-9.5 (py = 368 - 43.636*(l-4))
+    dots r 1.8 #8B9199 at 55% ; 236 drawn (sample geometry, see LIMITS). The dot field
+    is cleared inside x 556-886 / y 118-194 so the annotation sits on clean ground.
+    NO FITTED LINE — deliberate. With rating on X and log revenue on Y, a least-squares
+    line drawn either way is visually misleading at this aspect ratio: rating-on-revenue
+    reads near-vertical (looks like a strong effect) and revenue-on-rating reads near-flat
+    but describes the reverse regression. The diffuse cloud states "money barely predicts
+    rating" without asserting a slope the sentence beside it does not claim.
+    hero point  cx 1051.1 cy 147.7 r 4.5 #A8321C
+    leader      x1 886 y1 150 -> x2 1044 y2 148, 1px #8B9199 (grey; accent stays at 3/page)
+    hero label  right-aligned at x 868, baselines y 134 / 148 / 169 / 185
+    floor rule  x 600 y 368 w 520 h 1, #8B9199 ; label x 1128 baseline y 372
+    y ticks     right-aligned x 592, baselines y 372 ($10K) / 285 ($1M) / 197 ($100M)
+    x ticks     baseline y 386 at x 600 730 860 990 1120 (5.0 to 9.0)
+    axis title  centred x 860, baseline y 404
+  POSTER ROW  label x 64 y 414 w 520 ; coverage note right-aligned, box x 616 y 414 w 504
+    6 slots w 92 h 138, pitch 148: x 64 / 212 / 360 / 508 / 656 / 804 ; images y 440-578
+    accent marker above slot 1: x 64 y 430 w 92 h 2  (marks the annotated film)
+    caption column w 140 under each slot:
+      title       10px caps  y 586, line-height 12, max 2 lines
+      figures     12px       y 614, line-height 14   "$1.119bn · 8.47"
+      ranks       10px caps  y 632, line-height 12   "REV 33 · RATING 13"
+    All six posters are real. There is no placeholder state on this page: the six leading
+    films all have posters, and the honest coverage finding is stated in the note instead.
+  Power BI: scatter chart (X = Weighted Rating, Y = Revenue on a logarithmic axis, details
+  = Title) at x 600 y 128 w 520 h 276. Hero annotation = 1 text box + 1 line shape + a
+  1-point scatter overlay, or the scatter's own data label on a filtered point. Poster row
+  = six image visuals bound to the poster URL column (base https://image.tmdb.org/t/p/w185)
+  with three text/card rows beneath, all locked to the caption baselines above.
+
+--- PAGE 5 — METHOD ----------------------------------------------- (typographic)
+  statement       x 64   y 104  w 560  h 92   40px  two lines
+  lede            x 64   y 212  w 470  h 48   15px  two lines
+  LEFT  col x 64 w 470:  label y 312 ; bar1 title y 340 body y 360 (w 440)
+                                       bar2 title y 456 body y 476 (w 440)
+  RIGHT col x 632 w 584: label y 312
+    parameter grid 2x2, col x 632 / 928, value 26px y 340 / y 412, label 10px y 372 / 444
+    grouping rule x 632 y 480 w 584 h 1 #E4E6E9   (the one permitted hairline)
+    refusals label y 508 ; three items y 532 / 566 / 600, 13px, em-dash prefixed
+  Power BI: all text boxes. The 2x2 parameter grid can be four card visuals bound to the
+  disclosed parameter measures so the page cannot drift from the model.
+
+WHAT WILL NOT SURVIVE REPRODUCTION (be honest about these)
+  - Letter-spacing: Power BI text boxes have no tracking control. The 10px caps labels
+    will read tighter than here. Compensate by adding hair spaces or accept the shift;
+    do NOT substitute a bolder weight.
+  - Tabular figures: Power BI uses the font default. Segoe UI and Arial are already
+    tabular for digits, so column alignment holds; Helvetica Neue on macOS is not.
+  - The scatter point cloud here is representative sample geometry (236 dots drawn from
+    the disclosed distribution), not the 7,052 real rows — it is the ONLY unbound thing
+    in this file. The real chart will be denser; the hero point must be re-measured after
+    binding, and the annotation's clear zone re-checked against the real density.
+  - Every printed figure IS bound: the six poster captions (titles, revenue, weighted
+    rating, both ranks) and the coverage note come from the verified extract computed
+    over project/data/TMDB_movie_dataset_v11.csv under the model's own rules
+    (budget >= $10,000, revenue > 0, votes >= 100). Nothing on any page is invented.
+  - The five non-hero leading films are NOT plotted as individual points here: at this
+    scale they land within 6px of the hero and of each other and would muddy the
+    annotation. In Power BI they will be real points; expect the top-right corner to
+    read as a small cluster rather than a single mark, and re-place the callout.
+  - Dashed constant lines: Power BI dash patterns differ slightly from SVG.
+  - The 1px rules render at device pixel ratio in Power BI and may thicken on export.
+================================================================================
+-->
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#8E9399;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+       -webkit-font-smoothing:antialiased;padding:48px 0;
+       display:flex;flex-direction:column;align-items:center;gap:48px}
+  .page{position:relative;flex:0 0 auto;width:1280px;height:720px;background:#FCFCFD;
+        overflow:hidden;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+  .ov{position:absolute;left:0;top:0;pointer-events:none}
+  .ov text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+           font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+  .a{position:absolute}
+  .cap{font-size:10px;line-height:12px;letter-spacing:.08em;text-transform:uppercase;color:#5C636B}
+  .cap-i{color:#111316}
+  .cap-a{color:#A8321C}
+  .stmt{font-size:40px;line-height:1.14;letter-spacing:-.022em;color:#111316;font-weight:400}
+  .stmt-xl{font-size:52px;line-height:1.1;letter-spacing:-.024em;color:#111316;font-weight:400}
+  .lede{font-size:15px;line-height:1.6;letter-spacing:-.002em;color:#4A5057}
+  .lede-lg{font-size:17px;line-height:1.6;letter-spacing:-.004em;color:#4A5057}
+  .n{font-size:26px;line-height:26px;letter-spacing:-.02em;color:#111316}
+  .n-a{color:#A8321C}
+  /* chrome */
+  .idx{left:64px;top:40px}
+  .ttl{left:132px;top:40px;letter-spacing:.10em}
+  .nav{position:absolute;right:64px;top:40px;display:flex;gap:28px}
+  .nav a{font-size:10px;line-height:12px;letter-spacing:.10em;text-transform:uppercase;
+         color:#5C636B;text-decoration:none;padding-bottom:6px;
+         border-bottom:1px solid transparent;transition:color .15s,border-color .15s}
+  .nav a:hover{color:#111316;border-bottom-color:#8B9199}
+  .nav a:focus-visible{outline:1px solid #A8321C;outline-offset:4px;color:#111316}
+  .nav a[aria-current="page"]{color:#111316;border-bottom-color:#A8321C}
+  .rule{left:64px;top:672px;width:1152px;height:1px;background:#E4E6E9}
+  .foot{left:64px;top:682px;width:1152px;letter-spacing:.06em}
+</style>
+
+<!-- ============================ PAGE 1 — THE QUESTION ==================== -->
+<section class="page" aria-label="Page 1 of 5 — The question">
+  <div class="a cap cap-i idx">01 / 05</div>
+  <div class="a cap ttl">Movie success — revenue and evidence, 2026 snapshot</div>
+  <nav class="nav" aria-label="Report pages">
+    <a href="#p2">Money</a><a href="#p3">Evidence</a><a href="#p4">Both</a><a href="#p5">Method</a>
+  </nav>
+
+  <h1 class="a stmt-xl" style="left:64px;top:128px;width:1000px">What makes a movie successful?</h1>
+  <p class="a lede-lg" style="left:64px;top:220px;width:640px">Money and audience evidence are
+     nearly independent. The films that earn the most are rarely the films rated best.</p>
+
+  <div class="a cap" style="left:64px;top:312px;width:520px">Of 84,510 listings, how many can be judged at all</div>
+
+  <svg class="ov" width="1280" height="720" viewBox="0 0 1280 720" role="img"
+       aria-label="Four rows: 84,510 listings in the snapshot; 11,116 with budget and revenue at or above ten thousand dollars; 8,685 with at least 100 votes; 7,052 clearing both bars — 8.3 per cent, the only set that can answer the question.">
+    <g font-size="10" letter-spacing="0.8" text-anchor="end" fill="#5C636B">
+      <text x="1010" y="322">LISTINGS</text>
+      <text x="1152" y="322">SHARE</text>
+    </g>
+    <line x1="64" y1="344" x2="1152" y2="344" stroke="#E4E6E9" stroke-width="1"/>
+
+    <g fill="#8B9199">
+      <rect x="400" y="376" width="480" height="10"/>
+      <rect x="400" y="452" width="63"  height="10"/>
+      <rect x="400" y="528" width="49"  height="10"/>
+    </g>
+    <rect x="400" y="604" width="40" height="10" fill="#A8321C"/>
+
+    <g font-size="10" letter-spacing="0.8" fill="#5C636B">
+      <text x="64" y="385">ALL LISTINGS IN THE SNAPSHOT</text>
+      <text x="64" y="461">BUDGET AND REVENUE AT OR ABOVE $10,000</text>
+      <text x="64" y="537">AT LEAST 100 VOTES</text>
+      <text x="64" y="613" fill="#111316">BOTH BARS CLEARED</text>
+      <text x="64" y="629">THE ONLY SET THAT CAN ANSWER THE QUESTION</text>
+    </g>
+    <g font-size="26" letter-spacing="-0.5" text-anchor="end" fill="#111316">
+      <text x="1010" y="390">84,510</text>
+      <text x="1010" y="466">11,116</text>
+      <text x="1010" y="542">8,685</text>
+      <text x="1010" y="618" fill="#A8321C">7,052</text>
+    </g>
+    <g font-size="10" letter-spacing="0.8" text-anchor="end" fill="#5C636B">
+      <text x="1152" y="385">100%</text>
+      <text x="1152" y="461">13.2%</text>
+      <text x="1152" y="537">10.3%</text>
+      <text x="1152" y="613" fill="#111316">8.3%</text>
+    </g>
+  </svg>
+
+  <div class="a rule"></div>
+  <div class="a cap foot">TMDB snapshot 24 July 2026 · 84,510 listings · financial floor $10,000 · m = 100 votes · C = 6.96 · This product uses the TMDB API but is not endorsed or certified by TMDB.</div>
+</section>
+
+<!-- ============================ PAGE 2 — MONEY =========================== -->
+<section class="page" id="p2" aria-label="Page 2 of 5 — Money">
+  <div class="a cap cap-i idx">02 / 05</div>
+  <div class="a cap ttl">Movie success — revenue and evidence, 2026 snapshot</div>
+  <nav class="nav" aria-label="Report pages">
+    <a href="#p2" aria-current="page">Money</a><a href="#p3">Evidence</a><a href="#p4">Both</a><a href="#p5">Method</a>
+  </nav>
+
+  <h2 class="a stmt" style="left:64px;top:120px;width:700px">Return is a barbell.</h2>
+  <p class="a lede" style="left:64px;top:186px;width:620px">The smallest budgets and the largest
+     budgets return the most. The $10–50M middle — where 3,751 films sit, more than any other
+     band — returns the least. Every band still clears break-even at the median.</p>
+
+  <div class="a cap" style="left:64px;top:296px;width:700px">Median revenue ÷ budget by budget band · 11,116 listings that clear the money bar</div>
+
+  <svg class="ov" width="1280" height="720" viewBox="0 0 1280 720" role="img"
+       aria-label="Column chart of median revenue divided by budget across six budget bands: 1.82, 2.27, 1.64, 1.49, 1.97 and 2.55 times. Break-even is 1.0 times.">
+    <rect x="64"  y="426" width="96" height="170" fill="#A8321C"/>
+    <rect x="220" y="384" width="96" height="212" fill="#8B9199"/>
+    <rect x="376" y="443" width="96" height="153" fill="#8B9199"/>
+    <rect x="532" y="457" width="96" height="139" fill="#8B9199"/>
+    <rect x="688" y="412" width="96" height="184" fill="#8B9199"/>
+    <rect x="844" y="358" width="96" height="238" fill="#A8321C"/>
+
+    <line x1="64" y1="503" x2="1000" y2="503" stroke="#4A5057" stroke-width="1" stroke-dasharray="4 3"/>
+    <text x="1008" y="500" font-size="10" letter-spacing="0.8" fill="#4A5057">BREAK-EVEN 1.0×</text>
+
+    <g font-size="20" letter-spacing="-0.4" text-anchor="middle" fill="#111316">
+      <text x="112" y="404">1.82×</text><text x="268" y="362">2.27×</text>
+      <text x="424" y="421">1.64×</text><text x="580" y="435">1.49×</text>
+      <text x="736" y="390">1.97×</text><text x="892" y="336">2.55×</text>
+    </g>
+    <g font-size="10" letter-spacing="0.8" text-anchor="middle" fill="#111316">
+      <text x="112" y="616">$10–100K</text><text x="268" y="616" fill="#5C636B">$100K–1M</text>
+      <text x="424" y="616" fill="#5C636B">$1–10M</text><text x="580" y="616" fill="#5C636B">$10–50M</text>
+      <text x="736" y="616" fill="#5C636B">$50–100M</text><text x="892" y="616">$100M+</text>
+    </g>
+    <g font-size="10" letter-spacing="0.8" text-anchor="middle" fill="#5C636B">
+      <text x="112" y="632" fill="#111316">969 · HIGHEST RETURN</text>
+      <text x="268" y="632">1,306</text>
+      <text x="424" y="632">3,507</text>
+      <text x="580" y="632" fill="#111316">3,751 · LOWEST RETURN</text>
+      <text x="736" y="632">955</text>
+      <text x="892" y="632" fill="#111316">628 · HIGHEST RETURN</text>
+    </g>
+  </svg>
+
+  <div class="a rule"></div>
+  <div class="a cap foot">TMDB snapshot 24 July 2026 · 84,510 listings · financial floor $10,000 · m = 100 votes · C = 6.96 · This product uses the TMDB API but is not endorsed or certified by TMDB.</div>
+</section>
+
+<!-- ============================ PAGE 3 — EVIDENCE ======================== -->
+<section class="page" id="p3" aria-label="Page 3 of 5 — Evidence">
+  <div class="a cap cap-i idx">03 / 05</div>
+  <div class="a cap ttl">Movie success — revenue and evidence, 2026 snapshot</div>
+  <nav class="nav" aria-label="Report pages">
+    <a href="#p2">Money</a><a href="#p3" aria-current="page">Evidence</a><a href="#p4">Both</a><a href="#p5">Method</a>
+  </nav>
+
+  <h2 class="a stmt" style="left:64px;top:120px;width:700px">Two in three listings have never been voted on.</h2>
+  <p class="a lede" style="left:64px;top:232px;width:620px">Only 8,685 clear the 100-vote bar, where
+     an average rating begins to carry weight. Below it, a 10.0 from three people is not evidence.</p>
+
+  <div class="a cap" style="left:64px;top:300px;width:700px">Listings by vote count · all 84,510</div>
+
+  <svg class="ov" width="1280" height="720" viewBox="0 0 1280 720" role="img"
+       aria-label="Bar chart of listings by vote count. 55,233 have no votes at all. Only the four buckets above the m equals 100 threshold — 3,707 plus 1,489 plus 2,658 plus 831, or 8,685 listings — carry enough evidence to rate.">
+    <g fill="#8B9199">
+      <rect x="166" y="330" width="700" height="10"/>
+      <rect x="166" y="356" width="113" height="10"/>
+      <rect x="166" y="382" width="47"  height="10"/>
+      <rect x="166" y="408" width="27"  height="10"/>
+      <rect x="166" y="434" width="31"  height="10"/>
+      <rect x="166" y="460" width="22"  height="10"/>
+      <rect x="166" y="486" width="21"  height="10"/>
+    </g>
+    <g fill="#A8321C">
+      <rect x="166" y="528" width="47" height="10"/>
+      <rect x="166" y="554" width="19" height="10"/>
+      <rect x="166" y="580" width="34" height="10"/>
+      <rect x="166" y="606" width="11" height="10"/>
+    </g>
+
+    <g font-size="10" letter-spacing="0.8" text-anchor="end" fill="#5C636B">
+      <text x="150" y="339">0 VOTES</text>
+      <text x="150" y="365">1</text>
+      <text x="150" y="391">2–4</text>
+      <text x="150" y="417">5–9</text>
+      <text x="150" y="443">10–24</text>
+      <text x="150" y="469">25–49</text>
+      <text x="150" y="495">50–99</text>
+    </g>
+    <g font-size="10" letter-spacing="0.8" text-anchor="end" fill="#111316">
+      <text x="150" y="537">100–499</text>
+      <text x="150" y="563">500–999</text>
+      <text x="150" y="589">1,000–4,999</text>
+      <text x="150" y="615">5,000+</text>
+    </g>
+
+    <g font-size="12" fill="#111316">
+      <text x="880" y="339">55,233</text>
+      <text x="293" y="365">8,930</text>
+      <text x="227" y="391">3,737</text>
+      <text x="207" y="417">2,105</text>
+      <text x="211" y="443">2,455</text>
+      <text x="202" y="469">1,722</text>
+      <text x="201" y="495">1,643</text>
+      <text x="227" y="537">3,707</text>
+      <text x="199" y="563">1,489</text>
+      <text x="214" y="589">2,658</text>
+      <text x="191" y="615">831</text>
+    </g>
+    <text x="932" y="339" font-size="10" letter-spacing="0.8" fill="#5C636B">65.4% OF EVERYTHING IN THE SNAPSHOT</text>
+
+    <line x1="64" y1="504" x2="900" y2="504" stroke="#A8321C" stroke-width="1"/>
+    <text x="908" y="500" font-size="10" letter-spacing="0.8" fill="#A8321C">m = 100 VOTES</text>
+    <text x="908" y="514" font-size="10" letter-spacing="0.8" fill="#111316">8,685 LISTINGS ABOVE THE BAR — 10.3%</text>
+  </svg>
+
+  <div class="a rule"></div>
+  <div class="a cap foot">TMDB snapshot 24 July 2026 · 84,510 listings · financial floor $10,000 · m = 100 votes · C = 6.96 · This product uses the TMDB API but is not endorsed or certified by TMDB.</div>
+</section>
+
+<!-- ============================ PAGE 4 — BOTH ============================ -->
+<section class="page" id="p4" aria-label="Page 4 of 5 — Both">
+  <div class="a cap cap-i idx">04 / 05</div>
+  <div class="a cap ttl">Movie success — revenue and evidence, 2026 snapshot</div>
+  <nav class="nav" aria-label="Report pages">
+    <a href="#p2">Money</a><a href="#p3">Evidence</a><a href="#p4" aria-current="page">Both</a><a href="#p5">Method</a>
+  </nav>
+
+  <h2 class="a stmt" style="left:64px;top:112px;width:460px">No film is in the top ten on both.</h2>
+  <p class="a lede" style="left:64px;top:228px;width:400px">Ten times the revenue buys 0.09 of a
+     rating point: r = 0.12, explaining 1.5% of the variation. Only 11 of the 100 biggest earners
+     are also top-100 rated.</p>
+
+  <div class="a cap" style="left:600px;top:96px;width:560px">7,052 listings clearing both bars · revenue (log) by evidence-weighted rating</div>
+  <div class="a cap" style="left:64px;top:414px;width:520px">Leading listings — rank on revenue · rank on rating</div>
+  <div class="a cap" style="left:616px;top:414px;width:504px;text-align:right">27% of all listings have no poster · only 1 of the 8,685 well-evidenced ones</div>
+
+  <svg class="ov" width="1280" height="720" viewBox="0 0 1280 720" role="img"
+       aria-label="Scatter plot of 7,052 listings, revenue on a logarithmic vertical axis against evidence-weighted rating. The cloud is diffuse and almost uncorrelated: revenue barely predicts rating. The Lord of the Rings: The Return of the King is marked at 1.119 billion dollars and 8.47, ranked 33rd on revenue and 13th on rating.">
+    <g fill="#8B9199" fill-opacity="0.55">
+      <circle cx="723.9" cy="252.9" r="1.8"/><circle cx="714.2" cy="244.5" r="1.8"/><circle cx="880.9" cy="197.4" r="1.8"/><circle cx="734.7" cy="197.1" r="1.8"/><circle cx="735.6" cy="278.4" r="1.8"/><circle cx="916.8" cy="279.7" r="1.8"/><circle cx="839.0" cy="248.5" r="1.8"/>
+      <circle cx="834.9" cy="200.5" r="1.8"/><circle cx="869.1" cy="237.9" r="1.8"/><circle cx="842.0" cy="233.1" r="1.8"/><circle cx="895.8" cy="179.0" r="1.8"/><circle cx="850.0" cy="225.0" r="1.8"/><circle cx="702.2" cy="240.2" r="1.8"/><circle cx="877.1" cy="225.9" r="1.8"/>
+      <circle cx="897.3" cy="240.7" r="1.8"/><circle cx="751.7" cy="204.1" r="1.8"/><circle cx="946.3" cy="198.2" r="1.8"/><circle cx="933.9" cy="193.1" r="1.8"/><circle cx="778.2" cy="222.3" r="1.8"/><circle cx="823.6" cy="207.4" r="1.8"/><circle cx="969.3" cy="230.4" r="1.8"/>
+      <circle cx="882.7" cy="218.2" r="1.8"/><circle cx="900.7" cy="238.1" r="1.8"/><circle cx="967.6" cy="217.4" r="1.8"/><circle cx="941.9" cy="173.9" r="1.8"/><circle cx="887.9" cy="210.8" r="1.8"/><circle cx="835.0" cy="283.4" r="1.8"/><circle cx="843.3" cy="220.8" r="1.8"/>
+      <circle cx="1014.4" cy="233.2" r="1.8"/><circle cx="808.4" cy="267.6" r="1.8"/><circle cx="877.6" cy="277.3" r="1.8"/><circle cx="982.1" cy="214.9" r="1.8"/><circle cx="742.7" cy="276.9" r="1.8"/><circle cx="861.3" cy="233.1" r="1.8"/><circle cx="976.5" cy="196.5" r="1.8"/>
+      <circle cx="946.4" cy="353.3" r="1.8"/><circle cx="787.4" cy="289.8" r="1.8"/><circle cx="732.7" cy="269.6" r="1.8"/><circle cx="928.0" cy="215.0" r="1.8"/><circle cx="803.5" cy="276.6" r="1.8"/><circle cx="935.2" cy="186.6" r="1.8"/><circle cx="1050.4" cy="217.9" r="1.8"/>
+      <circle cx="949.5" cy="278.3" r="1.8"/><circle cx="981.8" cy="234.5" r="1.8"/><circle cx="931.9" cy="256.8" r="1.8"/><circle cx="943.1" cy="216.8" r="1.8"/><circle cx="829.4" cy="237.5" r="1.8"/><circle cx="746.7" cy="226.0" r="1.8"/><circle cx="795.6" cy="196.1" r="1.8"/>
+      <circle cx="766.1" cy="273.4" r="1.8"/><circle cx="814.1" cy="283.2" r="1.8"/><circle cx="656.5" cy="266.5" r="1.8"/><circle cx="843.0" cy="269.3" r="1.8"/><circle cx="979.6" cy="248.2" r="1.8"/><circle cx="789.0" cy="226.3" r="1.8"/><circle cx="807.3" cy="204.7" r="1.8"/>
+      <circle cx="824.1" cy="271.2" r="1.8"/><circle cx="934.4" cy="228.3" r="1.8"/><circle cx="765.9" cy="210.2" r="1.8"/><circle cx="919.7" cy="251.5" r="1.8"/><circle cx="915.1" cy="221.7" r="1.8"/><circle cx="873.9" cy="223.1" r="1.8"/><circle cx="785.2" cy="213.3" r="1.8"/>
+      <circle cx="977.0" cy="193.0" r="1.8"/><circle cx="829.5" cy="261.0" r="1.8"/><circle cx="817.1" cy="258.6" r="1.8"/><circle cx="891.7" cy="215.4" r="1.8"/><circle cx="873.8" cy="208.5" r="1.8"/><circle cx="955.4" cy="215.1" r="1.8"/><circle cx="679.3" cy="227.2" r="1.8"/>
+      <circle cx="732.4" cy="304.0" r="1.8"/><circle cx="699.1" cy="275.4" r="1.8"/><circle cx="883.8" cy="251.5" r="1.8"/><circle cx="873.9" cy="315.7" r="1.8"/><circle cx="983.2" cy="267.8" r="1.8"/><circle cx="968.1" cy="179.0" r="1.8"/><circle cx="771.3" cy="269.3" r="1.8"/>
+      <circle cx="679.4" cy="273.7" r="1.8"/><circle cx="1063.7" cy="190.3" r="1.8"/><circle cx="906.2" cy="224.7" r="1.8"/><circle cx="1039.8" cy="180.1" r="1.8"/><circle cx="987.9" cy="248.2" r="1.8"/><circle cx="828.5" cy="204.7" r="1.8"/><circle cx="986.6" cy="162.6" r="1.8"/>
+      <circle cx="702.9" cy="211.3" r="1.8"/><circle cx="964.2" cy="196.6" r="1.8"/><circle cx="995.5" cy="217.4" r="1.8"/><circle cx="865.2" cy="299.2" r="1.8"/><circle cx="764.1" cy="221.5" r="1.8"/><circle cx="819.0" cy="253.7" r="1.8"/><circle cx="889.9" cy="230.6" r="1.8"/>
+      <circle cx="911.5" cy="278.9" r="1.8"/><circle cx="954.2" cy="179.7" r="1.8"/><circle cx="754.8" cy="212.5" r="1.8"/><circle cx="695.7" cy="205.3" r="1.8"/><circle cx="854.3" cy="248.6" r="1.8"/><circle cx="1005.6" cy="203.9" r="1.8"/><circle cx="889.0" cy="166.4" r="1.8"/>
+      <circle cx="851.8" cy="233.5" r="1.8"/><circle cx="713.6" cy="272.5" r="1.8"/><circle cx="1045.3" cy="198.7" r="1.8"/><circle cx="956.1" cy="302.9" r="1.8"/><circle cx="975.4" cy="205.9" r="1.8"/><circle cx="828.5" cy="244.3" r="1.8"/><circle cx="758.4" cy="248.3" r="1.8"/>
+      <circle cx="881.5" cy="238.5" r="1.8"/><circle cx="772.2" cy="195.3" r="1.8"/><circle cx="882.4" cy="225.8" r="1.8"/><circle cx="951.3" cy="230.2" r="1.8"/><circle cx="842.2" cy="252.0" r="1.8"/><circle cx="849.6" cy="210.4" r="1.8"/><circle cx="919.2" cy="209.4" r="1.8"/>
+      <circle cx="782.6" cy="280.0" r="1.8"/><circle cx="947.6" cy="223.8" r="1.8"/><circle cx="894.5" cy="243.6" r="1.8"/><circle cx="634.9" cy="271.8" r="1.8"/><circle cx="998.1" cy="258.7" r="1.8"/><circle cx="721.6" cy="240.1" r="1.8"/><circle cx="904.8" cy="273.6" r="1.8"/>
+      <circle cx="946.0" cy="239.2" r="1.8"/><circle cx="829.1" cy="310.6" r="1.8"/><circle cx="693.0" cy="215.8" r="1.8"/><circle cx="810.6" cy="225.0" r="1.8"/><circle cx="942.6" cy="242.6" r="1.8"/><circle cx="842.2" cy="241.8" r="1.8"/><circle cx="770.2" cy="236.0" r="1.8"/>
+      <circle cx="859.3" cy="208.4" r="1.8"/><circle cx="930.0" cy="209.5" r="1.8"/><circle cx="932.6" cy="287.9" r="1.8"/><circle cx="847.0" cy="196.2" r="1.8"/><circle cx="808.0" cy="245.2" r="1.8"/><circle cx="887.6" cy="220.6" r="1.8"/><circle cx="854.4" cy="255.8" r="1.8"/>
+      <circle cx="816.9" cy="287.6" r="1.8"/><circle cx="910.5" cy="269.2" r="1.8"/><circle cx="759.7" cy="279.7" r="1.8"/><circle cx="832.8" cy="248.5" r="1.8"/><circle cx="785.4" cy="197.8" r="1.8"/><circle cx="993.9" cy="172.8" r="1.8"/><circle cx="941.7" cy="289.4" r="1.8"/>
+      <circle cx="871.7" cy="287.2" r="1.8"/><circle cx="988.5" cy="269.1" r="1.8"/><circle cx="669.4" cy="296.7" r="1.8"/><circle cx="1085.3" cy="150.9" r="1.8"/><circle cx="829.4" cy="230.4" r="1.8"/><circle cx="817.6" cy="265.0" r="1.8"/><circle cx="914.1" cy="243.2" r="1.8"/>
+      <circle cx="857.7" cy="307.4" r="1.8"/><circle cx="899.1" cy="210.3" r="1.8"/><circle cx="803.1" cy="231.5" r="1.8"/><circle cx="933.9" cy="175.7" r="1.8"/><circle cx="864.7" cy="243.7" r="1.8"/><circle cx="877.4" cy="233.8" r="1.8"/><circle cx="839.4" cy="278.3" r="1.8"/>
+      <circle cx="988.7" cy="204.4" r="1.8"/><circle cx="849.3" cy="248.2" r="1.8"/><circle cx="968.0" cy="172.8" r="1.8"/><circle cx="734.1" cy="240.5" r="1.8"/><circle cx="799.7" cy="210.6" r="1.8"/><circle cx="691.0" cy="202.5" r="1.8"/><circle cx="792.6" cy="228.0" r="1.8"/>
+      <circle cx="948.7" cy="194.6" r="1.8"/><circle cx="768.3" cy="227.0" r="1.8"/><circle cx="820.7" cy="248.7" r="1.8"/><circle cx="739.1" cy="202.6" r="1.8"/><circle cx="876.7" cy="299.4" r="1.8"/><circle cx="852.5" cy="214.7" r="1.8"/><circle cx="885.6" cy="273.4" r="1.8"/>
+      <circle cx="779.8" cy="241.6" r="1.8"/><circle cx="952.7" cy="219.1" r="1.8"/><circle cx="769.6" cy="210.2" r="1.8"/><circle cx="772.6" cy="249.5" r="1.8"/><circle cx="928.0" cy="299.0" r="1.8"/><circle cx="758.8" cy="212.6" r="1.8"/><circle cx="918.0" cy="294.4" r="1.8"/>
+      <circle cx="962.2" cy="215.1" r="1.8"/><circle cx="746.3" cy="242.9" r="1.8"/><circle cx="791.0" cy="208.1" r="1.8"/><circle cx="841.7" cy="299.6" r="1.8"/><circle cx="917.4" cy="257.7" r="1.8"/><circle cx="1045.9" cy="204.8" r="1.8"/><circle cx="862.5" cy="204.5" r="1.8"/>
+      <circle cx="745.9" cy="198.8" r="1.8"/><circle cx="987.6" cy="185.0" r="1.8"/><circle cx="874.5" cy="241.9" r="1.8"/><circle cx="693.8" cy="253.7" r="1.8"/><circle cx="864.8" cy="227.4" r="1.8"/><circle cx="866.7" cy="206.7" r="1.8"/><circle cx="717.7" cy="259.4" r="1.8"/>
+      <circle cx="822.3" cy="254.9" r="1.8"/><circle cx="853.7" cy="269.2" r="1.8"/><circle cx="904.5" cy="244.8" r="1.8"/><circle cx="979.7" cy="239.1" r="1.8"/><circle cx="953.8" cy="197.7" r="1.8"/><circle cx="952.8" cy="235.7" r="1.8"/><circle cx="796.9" cy="259.3" r="1.8"/>
+      <circle cx="941.7" cy="278.8" r="1.8"/><circle cx="771.0" cy="243.4" r="1.8"/><circle cx="910.3" cy="303.9" r="1.8"/><circle cx="752.2" cy="234.3" r="1.8"/><circle cx="1017.3" cy="168.1" r="1.8"/><circle cx="839.5" cy="197.4" r="1.8"/><circle cx="665.5" cy="285.4" r="1.8"/>
+      <circle cx="878.3" cy="222.9" r="1.8"/><circle cx="956.4" cy="168.2" r="1.8"/><circle cx="1001.8" cy="225.4" r="1.8"/><circle cx="686.0" cy="226.2" r="1.8"/><circle cx="946.6" cy="276.0" r="1.8"/><circle cx="698.9" cy="200.4" r="1.8"/><circle cx="962.9" cy="169.2" r="1.8"/>
+      <circle cx="933.0" cy="316.2" r="1.8"/><circle cx="927.6" cy="165.8" r="1.8"/><circle cx="821.9" cy="224.4" r="1.8"/><circle cx="877.7" cy="212.1" r="1.8"/><circle cx="1097.7" cy="260.7" r="1.8"/><circle cx="727.9" cy="227.8" r="1.8"/><circle cx="731.9" cy="212.6" r="1.8"/>
+      <circle cx="899.1" cy="196.5" r="1.8"/><circle cx="974.6" cy="239.5" r="1.8"/><circle cx="810.1" cy="219.4" r="1.8"/><circle cx="839.6" cy="203.1" r="1.8"/><circle cx="832.7" cy="233.5" r="1.8"/><circle cx="931.2" cy="221.4" r="1.8"/><circle cx="958.3" cy="190.8" r="1.8"/>
+      <circle cx="912.6" cy="256.2" r="1.8"/><circle cx="776.7" cy="250.8" r="1.8"/><circle cx="752.0" cy="225.1" r="1.8"/><circle cx="818.2" cy="213.5" r="1.8"/><circle cx="707.0" cy="227.2" r="1.8"/><circle cx="899.2" cy="184.6" r="1.8"/><circle cx="934.7" cy="335.4" r="1.8"/>
+      <circle cx="816.7" cy="243.8" r="1.8"/><circle cx="893.1" cy="227.8" r="1.8"/><circle cx="896.1" cy="231.2" r="1.8"/><circle cx="825.1" cy="197.9" r="1.8"/><circle cx="904.5" cy="165.1" r="1.8"/>
+    </g>
+
+    <line x1="600" y1="368" x2="1120" y2="368" stroke="#8B9199" stroke-width="1"/>
+    <text x="1128" y="372" font-size="10" letter-spacing="0.8" fill="#5C636B">$10,000 FLOOR</text>
+
+    <g font-size="10" letter-spacing="0.8" text-anchor="end" fill="#5C636B">
+      <text x="592" y="372">$10K</text>
+      <text x="592" y="285">$1M</text>
+      <text x="592" y="197">$100M</text>
+    </g>
+    <g font-size="10" letter-spacing="0.8" text-anchor="middle" fill="#5C636B">
+      <text x="600" y="386">5.0</text><text x="730" y="386">6.0</text><text x="860" y="386">7.0</text>
+      <text x="990" y="386">8.0</text><text x="1120" y="386">9.0</text>
+      <text x="860" y="404">EVIDENCE-WEIGHTED RATING</text>
+    </g>
+
+    <line x1="886" y1="150" x2="1044" y2="148" stroke="#8B9199" stroke-width="1"/>
+    <circle cx="1051.1" cy="147.7" r="4.5" fill="#A8321C"/>
+    <g text-anchor="end">
+      <text x="868" y="134" font-size="10" letter-spacing="0.8" fill="#111316">THE LORD OF THE RINGS:</text>
+      <text x="868" y="148" font-size="10" letter-spacing="0.8" fill="#111316">THE RETURN OF THE KING</text>
+      <text x="868" y="169" font-size="13" fill="#111316">$1.119bn · 8.47 · 22,334 votes</text>
+      <text x="868" y="185" font-size="10" letter-spacing="0.8" fill="#A8321C">BEST PLACED ON BOTH — 33RD AND 13TH</text>
+    </g>
+  </svg>
+
+  <div class="a" style="left:64px;top:430px;width:92px;height:2px;background:#A8321C"></div>
+
+  <img class="a" style="left:64px;top:440px" width="92" height="138"
+       src="https://image.tmdb.org/t/p/w185/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg"
+       alt="Poster: The Lord of the Rings: The Return of the King, 2003">
+  <img class="a" style="left:212px;top:440px" width="92" height="138"
+       src="https://image.tmdb.org/t/p/w185/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
+       alt="Poster: The Dark Knight, 2008">
+  <img class="a" style="left:360px;top:440px" width="92" height="138"
+       src="https://image.tmdb.org/t/p/w185/or06FN3Dka5tukK1e9sl16pB3iy.jpg"
+       alt="Poster: Avengers: Endgame, 2019">
+  <img class="a" style="left:508px;top:440px" width="92" height="138"
+       src="https://image.tmdb.org/t/p/w185/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg"
+       alt="Poster: Avengers: Infinity War, 2018">
+  <img class="a" style="left:656px;top:440px" width="92" height="138"
+       src="https://image.tmdb.org/t/p/w185/62HCnUTziyWcpDaBO2i1DX17ljH.jpg"
+       alt="Poster: Top Gun: Maverick, 2022">
+  <img class="a" style="left:804px;top:440px" width="92" height="138"
+       src="https://image.tmdb.org/t/p/w185/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg"
+       alt="Poster: Oppenheimer, 2023">
+
+  <div class="a cap cap-i" style="left:64px;top:586px;width:140px">The Return of the King</div>
+  <div class="a cap cap-i" style="left:212px;top:586px;width:140px">The Dark Knight</div>
+  <div class="a cap cap-i" style="left:360px;top:586px;width:140px">Avengers: Endgame</div>
+  <div class="a cap cap-i" style="left:508px;top:586px;width:140px">Avengers: Infinity War</div>
+  <div class="a cap cap-i" style="left:656px;top:586px;width:140px">Top Gun: Maverick</div>
+  <div class="a cap cap-i" style="left:804px;top:586px;width:140px">Oppenheimer</div>
+
+  <div class="a" style="left:64px;top:614px;width:140px;font-size:12px;line-height:14px;color:#111316">$1.119bn · 8.47</div>
+  <div class="a" style="left:212px;top:614px;width:140px;font-size:12px;line-height:14px;color:#111316">$1.005bn · 8.51</div>
+  <div class="a" style="left:360px;top:614px;width:140px;font-size:12px;line-height:14px;color:#111316">$2.800bn · 8.26</div>
+  <div class="a" style="left:508px;top:614px;width:140px;font-size:12px;line-height:14px;color:#111316">$2.052bn · 8.25</div>
+  <div class="a" style="left:656px;top:614px;width:140px;font-size:12px;line-height:14px;color:#111316">$1.489bn · 8.24</div>
+  <div class="a" style="left:804px;top:614px;width:140px;font-size:12px;line-height:14px;color:#111316">$0.934bn · 8.22</div>
+
+  <div class="a cap" style="left:64px;top:632px;width:140px">Rev 33 · Rating 13</div>
+  <div class="a cap" style="left:212px;top:632px;width:140px">Rev 49 · Rating 8</div>
+  <div class="a cap" style="left:360px;top:632px;width:140px">Rev 2 · Rating 49</div>
+  <div class="a cap" style="left:508px;top:632px;width:140px">Rev 6 · Rating 52</div>
+  <div class="a cap" style="left:656px;top:632px;width:140px">Rev 12 · Rating 55</div>
+  <div class="a cap" style="left:804px;top:632px;width:140px">Rev 64 · Rating 60</div>
+
+  <div class="a rule"></div>
+  <div class="a cap foot">TMDB snapshot 24 July 2026 · 84,510 listings · financial floor $10,000 · m = 100 votes · C = 6.96 · This product uses the TMDB API but is not endorsed or certified by TMDB.</div>
+</section>
+
+<!-- ============================ PAGE 5 — METHOD ========================== -->
+<section class="page" id="p5" aria-label="Page 5 of 5 — Method">
+  <div class="a cap cap-i idx">05 / 05</div>
+  <div class="a cap ttl">Movie success — revenue and evidence, 2026 snapshot</div>
+  <nav class="nav" aria-label="Report pages">
+    <a href="#p2">Money</a><a href="#p3">Evidence</a><a href="#p4">Both</a><a href="#p5" aria-current="page">Method</a>
+  </nav>
+
+  <h2 class="a stmt" style="left:64px;top:104px;width:560px">Two bars, four parameters, three refusals.</h2>
+  <p class="a lede" style="left:64px;top:212px;width:470px">Everything on the previous four pages
+     rests on four disclosed choices. Where the data cannot support a claim, this report declines to make one.</p>
+
+  <!-- LEFT COLUMN — the two bars -->
+  <div class="a cap" style="left:64px;top:312px;width:440px">The two bars</div>
+
+  <div class="a cap cap-i" style="left:64px;top:340px;width:440px">The money bar</div>
+  <p class="a" style="left:64px;top:360px;width:440px;font-size:14px;line-height:1.57;color:#4A5057">
+     Budget and revenue both at or above $10,000. Below that floor a ratio is arithmetic noise:
+     an $800 budget returning $8,000 is not a 10× success, it is a rounding error with ambition.</p>
+
+  <div class="a cap cap-i" style="left:64px;top:456px;width:440px">The evidence bar</div>
+  <p class="a" style="left:64px;top:476px;width:440px;font-size:14px;line-height:1.57;color:#4A5057">
+     At least 100 votes. Below m = 100 an average rating is a rumour; at or above it the weighted
+     rating pulls toward the prior C = 6.96 in proportion to the evidence a title has gathered.</p>
+
+  <!-- RIGHT COLUMN — parameters, then refusals -->
+  <div class="a cap" style="left:632px;top:312px;width:584px">Disclosed parameters</div>
+
+  <div class="a n" style="left:632px;top:340px;width:280px">$10,000</div>
+  <div class="a cap" style="left:632px;top:372px;width:280px">Financial floor — budget and revenue</div>
+  <div class="a n" style="left:928px;top:340px;width:288px">100 votes</div>
+  <div class="a cap" style="left:928px;top:372px;width:288px">m — minimum votes to be rated</div>
+
+  <div class="a n" style="left:632px;top:412px;width:280px">6.96</div>
+  <div class="a cap" style="left:632px;top:444px;width:280px">C — prior mean rating</div>
+  <div class="a n" style="left:928px;top:412px;width:288px">24 Jul 2026</div>
+  <div class="a cap" style="left:928px;top:444px;width:288px">Snapshot date</div>
+
+  <div class="a" style="left:632px;top:480px;width:584px;height:1px;background:#E4E6E9"></div>
+
+  <div class="a cap" style="left:632px;top:508px;width:584px">This report does not claim</div>
+  <p class="a" style="left:632px;top:532px;width:584px;font-size:13px;line-height:1.54;color:#4A5057">
+     <span style="color:#A8321C">—</span>&nbsp; No causation. The association between money and rating is measured, not explained.</p>
+  <p class="a" style="left:632px;top:566px;width:584px;font-size:13px;line-height:1.54;color:#4A5057">
+     <span style="color:#A8321C">—</span>&nbsp; No inflation adjustment. Revenue and budget are nominal, exactly as recorded.</p>
+  <p class="a" style="left:632px;top:600px;width:584px;font-size:13px;line-height:1.54;color:#4A5057">
+     <span style="color:#A8321C">—</span>&nbsp; Nothing about the 71,761 listings that clear neither bar. They are counted, never characterised.</p>
+
+  <div class="a rule"></div>
+  <div class="a cap foot">TMDB snapshot 24 July 2026 · 84,510 listings · financial floor $10,000 · m = 100 votes · C = 6.96 · This product uses the TMDB API but is not endorsed or certified by TMDB.</div>
+</section>
