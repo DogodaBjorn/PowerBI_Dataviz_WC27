@@ -11,7 +11,8 @@ Kennisbank, skills en rekenhulpen voor AI-marketing, performance marketing en an
 ## Inhoud
 | Map | Wat |
 |---|---|
-| `.claude/skills/` | 13 skills, van brief lezen tot AI-fouten-log |
+| `.claude/skills/` | 20 skills, van brief lezen tot AI-fouten-log, plus `panel-review` (expertpanel) |
+| `knowledge/panel/` | Profielen van 8 experts voor het reviewpanel, met bronnen |
 | `knowledge/platforms/` | Meta, Google, TikTok, LinkedIn, Pinterest, Snapchat, X/Reddit, retail media, programmatic/CTV, creators, plus vergelijking |
 | `knowledge/kpis/` | KPI-woordenlijst, KPI-bomen, optimalisatie per KPI, scale/stop-regels |
 | `knowledge/measurement/` | Attributie, incrementaliteit/MMM, tracking/privacy, testopzet, analyserecepten |
@@ -20,6 +21,6 @@ Kennisbank, skills en rekenhulpen voor AI-marketing, performance marketing en an
 | `knowledge/ai-marketing/` | AI-toepassingen per funnelfase, AI-labels, risico's |
 | `lessons/` | Lessen per ronde |
 | `rondes/` | Werkmappen per ronde |
-| `scripts/` | `kpi_calc.py`, `woordcheck.py` (alleen standaardbibliotheek) |
+| `scripts/` | `kpi_calc.py`, `woordcheck.py`, `prognose.py` (alleen standaardbibliotheek) |
 
 Items gemarkeerd met [CHECK] in de kennisbank zijn niet geverifieerd of kunnen verouderd zijn.
