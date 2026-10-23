@@ -48,3 +48,6 @@ Uitkomst: 7 vragen, samengevoegd, elk met "why".
 
 ### Herziene set (voorstel, 7 vragen)
 Zie `vragen.md`, sectie "Final set".
+
+## Review 2 (23-10): volledige brief, alle 8 leden incl. reserves
+Pitches per lid, discussie en induik-lijst in `panel-pitches.md`. Kern: de eerste 500 als meetinstrument voor de $50k; D7 = "opened" is kwetsbaar door de eigen notificaties; er is een economisch anker nodig (£100 per jaar naar break-even kost per onboarding); het plafond moet in publieksgetallen; echte vrouwen als hoofdlijn met één persona-test; paid kalibratieproef in de $5k = Bjorn beslist.

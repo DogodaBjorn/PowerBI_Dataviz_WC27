@@ -87,5 +87,14 @@ def plan_b(conv):
         print(f"  betalers bij {p:.0%} van onboarded: {tot_users*p:,.0f}  (omzet jaar 1 ~GBP {tot_users*p*100:,.0f})")
 
 
+def break_even():
+    # GBP 100/jaar (brief). Apple Small Business Program: 15% commissie (developer.apple.com/app-store/small-business-program/)
+    netto = 100 * 0.85
+    print("\nBREAK-EVEN (jaar-1 netto omzet per betaler GBP %.0f, payback 12 maanden)" % netto)
+    for p in (0.10, 0.20, 0.30):
+        print(f"  free->paid {p:.0%} van onboarded: max kost per onboarding GBP {netto*p:.2f}")
+
+
 if __name__ == "__main__":
     plan_b(plan_a())
+    break_even()

@@ -75,3 +75,57 @@ Vraag per lid: wat is hier gaande, wat moet er gebeuren, waar duiken we eerst in
 2. Wat test je eerst: aanbod (Founding 500, artsrapport), invalshoek (controle, gehoord worden, "women who think") of publiek? Mijn volgorde: aanbod, dan invalshoek, dan publiek.
 3. Wie betaalt de kas tussen de $50k-test en de eerste abonnementsinkomsten, en wanneer is de prijs bekend? De brief zegt dat de inhoud van het betaalde abonnement nog niet vastligt. Dat is een open risico voor elke prognose.
 **Juryvraag:** "Bij welke kost per voltooide onboarding stop je met opschalen, en waar komt dat getal vandaan?"
+
+---
+
+## Discussie: de drie grootste meningsverschillen
+
+**A. Moet er al betaalde media in de eerste 500 (een kleine kalibratieproef uit de $5k)?**
+- Seufert: ja. Anders heeft plan B nul gemeten kosten en is elk getal een aanname, precies wat de investeerder zwak noemt.
+- Holiday: eens. Een paar honderd dollar op één kanaal geeft een eerste kost per voltooide onboarding en een eerste kostencurve.
+- Ritson: de brief zegt dat de founder dat niet wil. Los eerst de taak op zoals hij gesteld is; als je het oneens bent, is daar de ene slide voor.
+- Kaushik: allebei goed te verdedigen. Paid is niet verboden ("whoever proposes it justifies why and how much"). Stel het voor als meetinvestering, niet als acquisitiekanaal, en laat de founder kiezen.
+Uitkomst: in het $5k-plan een optionele kalibratiepost die de founder kan schrappen, plus het argument op de ene oneens-slide. Bjorn beslist.
+
+**B. Verzonnen persona's of echte vrouwen?**
+- Sanchez: echte vrouwen. AI-avatars voor 40+ in gezondheid lezen als een dropshipper-advertentie.
+- Sharp: een vaste, terugkerende figuur kan juist een onderscheidend merkelement zijn. Weggooien is niet nodig, zolang het niet doet alsof ze echt is.
+- Sutherland: draai het om. Het product is "jouw systeem"; het sterkste bewijs is het echte systeem van een echte vrouw. Een persona kan hooguit de verteller zijn.
+- Seufert: niet wegredeneren, testen. Zelfde script, AI-versie tegen echte vrouw, en vergelijk de kost per voltooide onboarding.
+Uitkomst: echte vrouwen als hoofdlijn, één persona-variant als test tegen de hypothese van de founder. Dat respecteert haar hypothese en levert bewijs.
+
+**C. Selectie op fit tegenover representativiteit (bekend uit review 1, nu scherper)**
+- Sharp: de 60% D7 van een gefilterde groep wordt bij brede paid lager. Als de investeerder daarmee rekent, is het plan kapot.
+- Kaushik: daarom per aanmelding een fit-score vastleggen en een klein willekeurig deel van de lagere scores toelaten. Dan ontstaat de curve D7 per fit-score.
+- Binet: die curve is het plafond. Hoe breder je gaat, hoe lager D7 ligt; bij welk punt valt de economie om?
+- Holiday: en die curve, gekoppeld aan de break-even uit £100 per jaar, is de slide voor de investeerder.
+Uitkomst: unaniem. De fit-curve wordt de brug tussen de $5k en de $50k.
+
+---
+
+## Moderator-synthese: waar Bjorn eerst in duikt (vóór het plan)
+
+Gesorteerd op impact ÷ moeite. De brief gaat voor op het panel.
+
+| # | Induiken in | Waarom (wie) | Bron/tool | Moeite | Besluit |
+|---|---|---|---|---|---|
+| 1 | **De KPI-definitie D7 = "opened"**: risico dat een notificatie meetelt als gebruik. Tweede KPI erbij (log, rebuild of rapport) | Kaushik, Seufert. Raakt de kern van het doel | Brief zelf (reminders en agendameldingen zijn een feature) | laag | doen, als "what the brief is not telling" |
+| 2 | **Economisch anker**: £100 per jaar, conversie van gratis naar betaald, break-even kost per onboarding | Holiday, Seufert. Zonder anker geen drempel per trede | WebSearch: subscription-benchmarks health en fitness (RevenueCat/Adapty-rapport, link) | middel | doen |
+| 3 | **Plafond in getallen**: publieksgrootte vrouwen 40-55 UK/US/Noord-Europa, iOS-aandeel, CPM health UK/US | Sharp, Binet. Investeerder wil het plafond | WebSearch (ONS, US Census, StatCounter), Meta-benchmark | middel | doen |
+| 4 | **Health-adbeleid Meta/Google** voor menopauze: targeting en optimalisatie-events | Seufert. Kan een kanaal in plan B blokkeren | Meta-helpartikel via `claude_ai_Meta_Ad` get_help_article, WebSearch | laag | doen |
+| 5 | **Meetkoppeling web naar app**: user-ID van quiz tot D7, TestFlight-limieten | Seufert, Kaushik. Zonder koppeling geen D7 per bron | Apple-documentatie TestFlight (link), web2wave-doc | laag | doen |
+| 6 | **Concurrent-creatives**: welke menopauze-apps adverteren, welke formats lopen lang | Sanchez, Ritson | Meta Ad Library (al deels in `ad-library-bevindingen.md`), Loudbox | laag | aanvullen |
+| 7 | **De 60 interviews en de situaties waarin ze aan de categorie denkt** | Ritson, Sharp, Sutherland | Alleen brief beschikbaar. Aanvullen met Reddit/Mumsnet via WebSearch | middel | kort, alleen de woorden van de doelgroep |
+| 8 | **Kalibratieproef paid in de $5k** | Seufert, Holiday tegen Ritson | Eigen besluit | laag | Bjorn beslist |
+| 9 | Investeerder: wat telt als schaalbewijs (curve over tredes of absolute CAC) | Binet | Niet te verifiëren; als aanname benoemen | laag | als aanname in deck |
+
+**Wat de brief niet vraagt (kandidaten voor de slide "how we read the brief"):**
+- Geen betaalconversie, geen omzetplan: gratis users, geen paywall nu.
+- Geen medische claims of advies; de app vervangt geen arts.
+- Geen publieke launch, geen merkcampagne, geen community bouwen (gepland, niet ons werk).
+- Geen partners, geen vrouwen in ontkenning.
+- Geen lineaire extrapolatie en geen kanalen die op de tijd van de founder draaien in plan B.
+
+**Wat de brief níet vertelt en wij aannemen (benoemen op slide 1):** baseline D7 van testers, betaalconversie, CPI, wat in het betaalde abonnement zit, wat de investeerder als bewijs accepteert, of D7-open via een notificatie meetelt.
+
+**Belangrijkste herkadering (moderator):** de eerste 500 zijn geen doel op zich, maar het meetinstrument voor de $50k. Elk onderdeel van het $5k-plan moet een getal opleveren dat plan B nodig heeft: kost per stap per bron, D7 per fit-score, invites per user. Zo verbinden de twee plannen zich met getallen, wat de brief letterlijk vraagt.

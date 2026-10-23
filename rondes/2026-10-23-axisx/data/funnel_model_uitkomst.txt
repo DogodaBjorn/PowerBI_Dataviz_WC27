@@ -34,3 +34,8 @@ PLAN B
   betalers bij 5% van onboarded: 83  (omzet jaar 1 ~GBP 8,326)
   betalers bij 10% van onboarded: 167  (omzet jaar 1 ~GBP 16,652)
   betalers bij 20% van onboarded: 333  (omzet jaar 1 ~GBP 33,303)
+
+BREAK-EVEN (jaar-1 netto omzet per betaler GBP 85, payback 12 maanden)
+  free->paid 10% van onboarded: max kost per onboarding GBP 8.50
+  free->paid 20% van onboarded: max kost per onboarding GBP 17.00
+  free->paid 30% van onboarded: max kost per onboarding GBP 25.50
