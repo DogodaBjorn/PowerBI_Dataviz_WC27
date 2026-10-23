@@ -1,4 +1,29 @@
-# Questions to AxisX (draft, ranked by how much the answer changes the plan)
+# Questions to AxisX
+
+## Final set (after panel review, 7 questions, ready to send)
+
+1. **Success and baseline.** Is the target 500 users who signed up and completed onboarding, of whom 60% are active on day 7, or 500 retained users? What counts as "active" on day 7: an app open or a core action? And what are onboarding completion and day-7 retention among your closed testers today?
+   *Why: it sets the size of the funnel, and without a baseline we cannot tell whether 60% is a stretch or a given.*
+
+2. **Who she is and what AxisX stands for.** Which country and language do we launch in, which woman is the first target (age, stage, already diagnosed or still searching), and is AxisX a perimenopause brand or a hormonal-health brand that starts with perimenopause?
+   *Why: market sets the rules and the costs, the target and the position set every message and channel.*
+
+3. **Invites and selection.** How many invites can we issue per week, on which platforms, and may we select applicants on fit? If so, may we also admit a random share of lower-fit applicants as a comparison group?
+   *Why: selection helps us hit 60%, but the investor plan needs to know whether retention comes from the segment or from our filter.*
+
+4. **Measurement.** Can we link a person's landing-page source and quiz answers to their in-app activity (onboarding, day 7) at user level?
+   *Why: the $50,000 plan rests on retention per channel and per segment measured on the first 500.*
+
+5. **Real people and rewards.** Which real people can appear on camera and invite others: testers, clinicians, founders, advisers? And may we reward referrals, for example with free premium months, outside the $5,000?
+   *Why: a real voice earns trust in women's health faster than a synthetic one, and the referral design depends on what we can give.*
+
+6. **Your two hypotheses.** Have you already tested AI influencers or the synthetic-persona series, and what did you see?
+   *Why: we want to beat them on evidence, not opinion.*
+
+7. **Investor goal.** For the $50,000 test, is the target free users, paid conversions or cost per retained user? What will the paid tier cost, and is there a target CAC or payback period?
+   *Why: "does it scale" needs a number that defines "scales".*
+
+## Original draft (11 questions, ranked by how much the answer changes the plan)
 
 1. **Success definition.** Is the target 500 users who signed up and completed onboarding, of whom 60% are active on day 7 (so about 300 retained), or 500 retained users? And what counts as "retained" on day 7: an app open, or a core action such as logging symptoms?
    *Why: it sets the size of the top of the funnel by a factor of almost two, and an app open is easy to inflate with push notifications.*
