@@ -86,3 +86,6 @@ Input: `campagne-input.md`, weekschema uit chat 15:54, voorstel Bjorn: founder b
 | 5 | Founder-uren per onboarding meten; capaciteit ~40 uur plannen | Holiday | middel | laag | doen |
 | 6 | Vast merkbeeld: "systeem-kaartje" van een echte vrouw | Sharp | middel | laag | doen |
 | 7 | Betaalde tegenhanger per community-bron voor plan B | Seufert | hoog | middel | doen (in plan B) |
+
+## Review 4 (16:10): hookselectie, alleen Sanchez
+Input: `hooks.md`. Selectie in sectie 6 daar. Kern: 4 ledenhooks over 4 value drivers (outcome, pain, identiteit, planner), P3 ingekort tot "Your doctor has ten minutes."; 8 openingen (4 hooks x 2 eerste beelden), body gelijk; echte vrouwen, founder voorop, 60-90 s met ondertitels. Leiders: 4 houden, Peanut eruit, plekken per community van 50 naar 10 (sluit aan op review 3). Open: het eigen verhaal van de founder, niet door AI te schrijven.

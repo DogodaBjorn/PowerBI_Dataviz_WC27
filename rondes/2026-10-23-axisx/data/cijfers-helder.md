@@ -26,3 +26,9 @@ Meta op $20: verlies bij 1 op 10, quitte bij 2 op 10, winst bij 3 op 10.
 | 1 op ? | bezoekers per onboarded vrouw, per bron | welke bron opschalen |
 | D7 per bron | % dat dag 7 terugkomt, per bron en per type vrouw | welke vrouw we zoeken |
 | Ja op founding price | % dat een plek reserveert tegen de lanceringsprijs (geen betaling) | maximale advertentiekost per vrouw |
+
+## CORRECTIE 16:10 (induik 2)
+De scenario's 10/20/30% betalers hierboven hadden geen bron en zijn te optimistisch. Publiek anker (RevenueCat State of Subscription Apps 2026, https://www.revenuecat.com/state-of-subscription-apps): Health & Fitness download-to-paid D35 mediaan 2,9%, top-kwartiel >6,2%; freemium 2,1%; hard paywall 10,7%.
+Waarde per onboarded vrouw jaar 1 (£85 x c x 1,32): $2,36 (2,1%) · $3,25 (2,9%) · $6,96 (6,2%) · $12,01 (10,7%).
+Meta-onboarding van $8-20 verdient zich met één verlenging (44,1%) pas terug bij 4,8-12,8% betaalconversie onder onboarded vrouwen.
+Benchmarks zijn per download; onboarded vrouwen zijn gefilterd en zouden hoger moeten converteren. Dat verschil meten de eerste 500.

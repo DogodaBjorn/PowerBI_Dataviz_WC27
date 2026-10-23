@@ -97,3 +97,38 @@ The friend must not be labelled. The inviter invites to a group, not to a diagno
 - "Is this perimenopause?" (suggested in our own audience research note): targets women who don't recognise it yet, which the brief puts out of scope for the first 500.
 - Clickbait rules from `hook-generator` (curiosity gap, "you won't believe"): kept the format, dropped the tactic. Trust is the scarce resource with moderators.
 - Any line with "fix", "heal", "balance your hormones": outcome claims the product cannot back.
+
+---
+
+## 6. Selection (panel lens: Savannah Sanchez, simulated on public work)
+
+Her test per hook: does it land in 3 seconds, does it work muted, does a real person say it, does the first frame differ from the other variants. Her lens is weak on 1-to-1 outreach, so for the leader set the rules from panel review 3 apply (Sutherland: ask for help, scarcity per community; Ritson: founder story first).
+
+### Members: ship these 4 (four different value drivers)
+| # | Hook (verbal, max ~2 s) | On-screen text | First frame | Driver | Why it stays |
+|---|---|---|---|---|---|
+| 1 | "Your doctor has ten minutes." | *2 weeks. 1 page. For your GP.* | Hand slides one printed page across a desk | Outcome | Concrete object, payoff visible, points at the first value moment (report). Merged from P3 Experimenter + Contrarian; the long version was too slow for 3 s |
+| 2 | "Sleep, mood, memory, cycle. All different in the same month." | *4 changes. 0 connections.* | Fast swipe through notes app, calendar, screenshots, sleep app | Pain | Hottest subsegment; works fully muted |
+| 3 | "You've said 'I'm fine' for months." | *Write down what isn't.* | Real woman, talking to camera, kitchen or car | Identity / permission | Only works said by a real person; that is the point |
+| 4 | "You track your runs, your sleep and your money." | *Tracked everything. Except this.* | Three app screens, then an empty one | Identity (planner) | Gives the gradual-onset group a door; weakest visual, keep as the 4th arm |
+
+### Members: cut or move
+- P1 Teacher ("You don't need another article tonight"): no specific noun. Cut.
+- P2 Fortuneteller ("This could last years"): fear, slow payoff. Cut.
+- P4 Reframe ("someone you love"): needs a beat to decode. Cut.
+- P5 sceptic lines: strong as text, no visual. Move "Most menopause apps give you content. This one gives you a record." to the landing-page headline test.
+- Founding 500 umbrella: brand-first as an opener. Move to the closing line / CTA of every video.
+
+### Members: production rules
+- Format: talking-to-camera by real women (founder first), captions on, 60 to 90 s for a 40+ audience. No AI avatar or AI voice.
+- The founder's own first sentence is about her, not the app. **Needs her real story; do not write it for her.**
+- 4 hooks x 2 opening visuals = 8 openings, body held constant. A variant counts only if the first frame changes, not just the text.
+- Hook log per community: which opening went where, and what it did on quiz, onboarding, D7.
+
+### Leaders: keep 4
+1. Reddit modmail: **Founder Q&A request: you set the rules**
+2. Group / community founder: **[10] Founding places, held for your members** (panel review 3: scarcity per community; 50 was too many to feel held)
+3. Coach / practitioner: **A two-week summary your clients can take to their GP**
+4. Newsletter / podcast: **What 60 women told me before I wrote any code**
+
+Cut: the Peanut line (vague, in-app messaging rules unverified). LinkedIn: keep "I won't post in your group uninvited" and "I'm looking for 500 women, not users"; cut "They asked for order, not more advice" (reads as a quote we cannot source).
