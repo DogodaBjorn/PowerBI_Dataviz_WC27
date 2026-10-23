@@ -6,6 +6,7 @@ Start 15:07 · Eind 17:07 · 75% = 16:37 (daarna alleen afmaken) · 10 min voor 
 - [ ] Vragen aan de organisatie (vroeg insturen)
 - [ ] Pitch card (Bjorn schrijft zelf)
 - [ ] Deck 5-8 slides met bronlinks (publiek te openen)
+  - Laatste slide vastgelegd (besluit Bjorn): "The one line we can't write for you", founder-activatie, zie `slide-laatste-founder.md`. Telt mee in de 5-8.
 - [ ] Werklog .md
 
 ## Toolcheck 15:08
