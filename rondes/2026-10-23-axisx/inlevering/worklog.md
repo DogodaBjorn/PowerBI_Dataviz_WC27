@@ -215,3 +215,6 @@ Total 1,919 onboarded, blended $23.45; reserve $5,000
   price £70, paid 10.7%: 205 payers, value per onboarding $8.40
 Break-even conversion at blended cost: 20.9% (list) / 29.9% (founding)
 ```
+
+## 9. Final iteration (16:43-16:55)
+Bjorn rejected the first deck ("this isn't it") and set the structure himself: open the pitch on "What they'll see. What they don't see." (the woman's visible and invisible life; the campaign's visible front and invisible engine), split plan A, plan B and the success metrics into What they'll see / What they don't see / What you'll see per phase (pre-activation, landing, open questions, Founders Circle, other channels), and move all technical detail to an appendix written in plain language. A Claude Design brand pass was considered and dropped for time; the deck was restyled by hand toward a warmer, more trustworthy look (warm paper, plum and terracotta, serif headlines, the member "system card" as the recurring asset). The founder's blank line stayed as the last slide. The first deck version remains in git history.
