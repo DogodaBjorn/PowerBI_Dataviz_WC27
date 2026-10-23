@@ -1,0 +1,36 @@
+PLAN A
+  landing -> quiz start                         50%  (Adapty web-to-app: 40-60%)
+  quiz start -> quiz complete                   60%  (Adapty web-to-app: 50-70%)
+  quiz complete -> application                  70%  (ASSUMPTION (Adapty quiz->paywall 70-85% als proxy))
+  application -> approved (fit + quota)         70%  (ASSUMPTION, onze selectiekeuze)
+  approved -> onboarding complete (TestFlight)  70%  (ASSUMPTION, te meten)
+  landing -> onboarding complete: 10.3%
+  onboarded via referral (K=0.20): 100; via funnel: 400
+  landing-bezoekers nodig: 3,887
+  dag-7 actief bij 60%: 300
+  budget totaal: $5,000
+    Web funnel + quiz builder + analytics: $1,200
+    LLM tokens (AI quiz preview, rebuild of system preview): $600
+    Content generation from real systems (visuals, short video): $1,500
+    Answer pages (search + AI answer engines), generation + hosting: $400
+    Founding Circle community space (beta): $600
+    Reserve (tests, extra tokens): $700
+  kosten per onboarded user (cash): $10.00
+
+PLAN B
+  Meta CPM $20.7 CTR 1.0%: CPC $2.07, kost per onboarding $20.12
+  Meta CPM $20.7 CTR 2.7%: CPC $0.77, kost per onboarding $7.45
+  Google CPC $5.26, conv 10.3%: kost per onboarding $51.12
+  Google CPC $5.26, conv 15.4%: kost per onboarding $34.08
+  Creator Reel $1,500 / 20-60 onboardings: $25-$75
+  Trappen (kost per onboarding stijgt ~30% per stap, ASSUMPTION):
+    Stage 1: find the price, 4 channels: $10,000 / $20 = 500 onboarded
+    Stage 2: 3x spend on best 2: $15,000 / $26 = 577 onboarded
+    Stage 3: 3x again on best 1, find the break: $20,000 / $34 = 588 onboarded
+    Reserve measurement + creative: $5,000
+  totaal onboarded: 1,665; blended $27.02 per onboarding
+  dag-7 actief bij 40%: 666
+  dag-7 actief bij 60%: 999
+  betalers bij 5% van onboarded: 83  (omzet jaar 1 ~GBP 8,326)
+  betalers bij 10% van onboarded: 167  (omzet jaar 1 ~GBP 16,652)
+  betalers bij 20% van onboarded: 333  (omzet jaar 1 ~GBP 33,303)
