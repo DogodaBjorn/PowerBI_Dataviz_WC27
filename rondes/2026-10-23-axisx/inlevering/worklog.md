@@ -7,6 +7,10 @@ This log is assembled from the raw session exports and our own notes. The raw ma
 - `worklog-parallel-cf7388bd.md`: parallel session, five research agents (deep dives 2 to 6), 15:50 to 15:57.
 - `worklog-parallel-caf54828.md`: parallel session, hooks, hook selection by the simulated panel, last slide for the founder, 15:58 to 16:27.
 - `worklog-parallel-39621d59.md`: parallel session, campaign name question to the panel, 16:29 (short, not used in the deck).
+- `AxisX_volledige_chat_2026-10-23 (1).md`: ChatGPT session A, 15:14 to 16:44, strategy: competitors, why AxisX exists, community-led acquisition, Founding 500, extract for Claude Code.
+- `AxisX_volledige_chat_en_onderzoek_2026-10-23.md`: ChatGPT session B, about 16:00 to 16:40, the five research questions, the selection quiz and landing page questions, with both research notes in full as appendices.
+- `AxisX_volledige_chat_2026-10-23.md`: ChatGPT session C, 16:27 to 16:44, perimenopause symptoms for the pitch, origin of "What they'll see. What they don't see.", second handoff file.
+- The three ChatGPT files are readable Markdown conversions made by ChatGPT itself (their own header says they are not byte-exact exports). They hold every visible prompt and answer, not hidden reasoning.
 - Deck iterations 16:30 to 17:02 are reconstructed from the git history (16 commits in this round) and the notes in section 8.
 
 ## 1. How we worked, in six lines
@@ -46,6 +50,19 @@ This log is assembled from the raw session exports and our own notes. The raw ma
 | 16:55 | new session | "Upgrade this 30 sec pitch, add facts and style so I can redo it in my own words" | Fact sheet with corrections (700 to 500, "Exis" to AxisX, AI disclosure) and style rules; example version marked not for use | `pitch-card-feiten-en-stijl.md` |
 | 17:05 | new session | "Stel de worklog samen uit de volledige chats en onze eigen worklog" | This file | `worklog.md` |
 
+## 2b. ChatGPT sessions (local time, from the three exports)
+| Time | Session | Bjorn's prompt (shortened) | What ChatGPT did | Where it went in Claude |
+|---|---|---|---|---|
+| 15:14 | A | Brief part 1 attached: "ik wil dat je aan het einde een extract van onze gesprekken deelt"; short question on thePause, Play Health, Waves Women, Balance | Competitor overview with what makes each different | `data/onderzoek-concurrentie-ai.md` cross-check |
+| 15:24 | A | Brief part 2 pasted: "meer over het probleem zelf en de bestaande community ... wat geeft AxisX bestaansrecht volgens jou?" | Problem, existing communities, where AxisX can exist (personal system, not more tracking or information), what is not convincing yet | `strategie.md` |
+| 15:34 | A | "Binnen die communities met behulp van AI de juiste mensen opsporen en activeren ... Account Based Marketing maar hyper-personalized ... Founders Circle ... altijd gratis ... vriendinnen ook gratis" | Founders Circle concept, referral design, a stated precondition on privacy and cost | Core of plan A. "Free forever for all" kept only as a risk scenario |
+| 15:45 | A | "Extract in md formaat voor Claude Code, waar ik de numbers game doe en een panel heb opgezet" | Strategic context file (Founding 500, community-led acquisition, decisions) | `AxisX_Founding_500_strategisch_context_extract.md`, read into Claude 15:53 |
+| about 16:00 | B | The five research questions (economic anchor, ceiling, ad policy, quiz to day 7, Ad Library) | Research note with sources and an explicit split between verified benchmarks and assumptions | `AxisX_marktonderzoek_businesscase_2026-10-23.md`, read into Claude with deep dives 2 to 6 at 16:07 |
+| about 16:15 | B | "Niet het vinden van mensen die helpen activeren, maar de mensen die vanuit de activatie komen kijken ... zeker 500 aanmeldingen en minstens 300 plakkers" | Selection model, landing page copy that selects, pre-screen questions, nine quiz questions, D7 definition | Selection note pasted into Claude 16:17; became the open-question funnel at 16:22 |
+| 16:27 | C | "Wat zijn de meest voorkomende premenopauze symptomen? Ik moet de aandoening beter begrijpen, als man" | Symptom overview and the insight that recognition differs from reality | Symptom context line in the deck, with NHS and Flo/Mayo sources |
+| 16:32 | C | "What they'll see and what they don't see is iets waar ik mee ga spelen" (front: campaign language, design, funnel; back: systematics, applied AI, success metrics; a page "what you'll see"; the known last slide) | Second handoff file with the analysis and a decision register | `AxisX_campaign_pitch_continuation_2026-10-23.md`. This became the deck structure (v2, 16:49) |
+| 16:44 | A, B, C | "Kan jij deze hele chat als md aanleveren?" | The three exports in this folder | Attached to this log |
+
 ## 3. Human decisions that shaped the solution
 - The strategic core is Bjorn's: AI-powered community-led acquisition (account-based marketing on communities, not on individuals) and private founder invites to community leads with her own story. The model's first concept (quiz, content from real systems, answer pages) became the funnel underneath it.
 - Stop the deck, explain the numbers first (15:40). The deck was built only after plan A, the funnel and plan B were on paper.
@@ -53,7 +70,7 @@ This log is assembled from the raw session exports and our own notes. The raw ma
 - GDPR line: AI analyses public conversations at theme level, raw text deleted afterwards, leads chosen on public role, no health profiling, founder sends every message herself, no automated DMs.
 - Open questions instead of a tick-box quiz; AI classifies her own words; a random contrast group without the signals so plan B learns whether retention comes from the selection or the market.
 - Founding price for every applicant (£70 instead of £100) as an extra reason to apply and as the paid signal for plan B.
-- Deck structure and storyline (twice): "What they'll see. What they don't see." and one idea per slide.
+- Deck frame: "What they'll see. What they don't see." is Bjorn's own idea (ChatGPT session C, 16:32), with the double meaning of the woman's visible and invisible day and the campaign's visible front and invisible engine. He then reset the storyline twice (16:43, 16:51): one idea per slide.
 - Last slide left blank for the founder's own sentence; pitch card written by Bjorn himself.
 
 ## 4. What the model proposed that we rejected or changed, and why
@@ -94,12 +111,12 @@ This log is assembled from the raw session exports and our own notes. The raw ma
 - Web2Wave MCP: creative trends (run lengths 200-435 days for Flo and BioID), documentation check of the 48-hour identify window.
 - WebSearch and WebFetch via agents: RevenueCat, Adapty, StatCounter, ONS, US Census, Eurostat, superads, influee/Triple Whale, Meta and Google policy pages, Apple TestFlight documentation, NICE NG23, NHS.
 - Python (standard library only): `funnel_model.py`, `plan_b_model.py`; `scripts/sessie_naar_md.py` to export the sessions to this log.
-- ChatGPT: strategic context extract (community-led acquisition, Founding 500) and a market research file; both read into Claude and checked against the brief.
+- ChatGPT (three sessions, section 2b): competitor overview, brand reason to exist, the community-led acquisition idea shaped with Bjorn, a market research note on the same five questions the Claude agents ran, selection quiz research, symptom background for a male presenter, and two handoff files. Its research note and the Claude deep dives were read side by side before plan A; where they differed the linked public source decided.
 - Loudbox demo: checked at 15:08, not used (workspace held other data).
 - Git: 16 commits between 15:08 and 17:01, so every version of the plan and the deck is recoverable.
 
 ## 7. Files behind the deck
-`regels.md` · `vragen.md` · `strategie.md` · `campagne-input.md` · `meetplan.md` · `plan-A.md` · `plan-B.md` · `funnel-inhoud.md` · `hooks.md` · `slide-laatste-founder.md` · `pitch-card-feiten-en-stijl.md` · `panel-log.md` · `panel-pitches.md` · `ai-fouten.md` · `afwijzingen.md` · `data/` (research tables, deep dives 2 to 6, models and outputs)
+`regels.md` · `vragen.md` · `strategie.md` · `campagne-input.md` · `meetplan.md` · `plan-A.md` · `plan-B.md` · `funnel-inhoud.md` · `hooks.md` · `slide-laatste-founder.md` · `pitch-card-feiten-en-stijl.md` · `panel-log.md` · `panel-pitches.md` · `ai-fouten.md` · `afwijzingen.md` · `data/` (research tables, deep dives 2 to 6, models and outputs) · ChatGPT handoff files in the project root: `AxisX_Founding_500_strategisch_context_extract.md`, `AxisX_marktonderzoek_businesscase_2026-10-23.md`, `AxisX_campaign_pitch_continuation_2026-10-23.md` · the three ChatGPT chat exports in this folder
 
 ## 8. Deck iterations (16:30 to 17:02)
 - **v1 (16:30).** Eight slides straight from plan A and plan B. Bjorn: "this isn't it". Too technical, the woman was missing.
@@ -244,12 +261,12 @@ S3 10x plan-A run-rate, best 1: $18,000 / $30 = 600 onboarded
 Total 1,919 onboarded, blended $23.45; reserve $5,000
   D7 45%: 863 active, $52 per D7-active
   D7 60%: 1,151 active, $39 per D7-active
-  price �100, paid 2.9%: 56 payers, value per onboarding $3.25
-  price �100, paid 6.2%: 119 payers, value per onboarding $6.96
-  price �100, paid 10.7%: 205 payers, value per onboarding $12.01
-  price �70, paid 2.9%: 56 payers, value per onboarding $2.28
-  price �70, paid 6.2%: 119 payers, value per onboarding $4.87
-  price �70, paid 10.7%: 205 payers, value per onboarding $8.40
+  price £100, paid 2.9%: 56 payers, value per onboarding $3.25
+  price £100, paid 6.2%: 119 payers, value per onboarding $6.96
+  price £100, paid 10.7%: 205 payers, value per onboarding $12.01
+  price £70, paid 2.9%: 56 payers, value per onboarding $2.28
+  price £70, paid 6.2%: 119 payers, value per onboarding $4.87
+  price £70, paid 10.7%: 205 payers, value per onboarding $8.40
 Break-even conversion at blended cost: 20.9% (list) / 29.9% (founding)
 ```
 
