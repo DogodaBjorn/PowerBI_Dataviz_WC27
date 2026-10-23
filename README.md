@@ -6,7 +6,8 @@ Kennisbank, skills en rekenhulpen voor AI-marketing, performance marketing en an
 1. Open een Claude Code-sessie in `E:\PerformanceOps`.
 2. Zeg "ronde start" en deel de brief. De skill `ronde-start` maakt de werkmap en het tijdschema; `brief-lezer` geeft de werkkaart.
 3. Data: `python -I scripts/kpi_calc.py rondes/<ronde>/data/<bestand>.csv --target-cpa <doel> --by Channel,Format`
-4. Voor insturen: `python -I scripts/woordcheck.py rondes/<ronde>/inlevering.md --regels rondes/<ronde>/regels.md` en de skill `inlever-check`.
+4. "How we worked" (hoe we AI gebruikten): begin bij [HOW-WE-WORKED.md](HOW-WE-WORKED.md).
+5. Voor insturen: `python -I scripts/woordcheck.py rondes/<ronde>/inlevering.md --regels rondes/<ronde>/regels.md` en de skill `inlever-check`.
 
 ## Inhoud
 | Map | Wat |
