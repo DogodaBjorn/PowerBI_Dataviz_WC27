@@ -76,3 +76,61 @@ Every visit carries: community, invite code, hook #, first-frame A/B, landing he
 - step rates landing -> quiz -> application -> onboarding = funnel benchmark;
 - cohort 1 vs cohort 2 D7 = how much retention falls when selection loosens (what paid will look like);
 - founding-price yes % = max affordable cost per onboarding.
+
+---
+## 9. DECISION 16:22 (Bjorn): open questions + AI classification (replaces the closed quiz in section 3; section 5 rules become the classifier output)
+Principle: she tells her own story, the same way the app works. AI reads it, labels it, and the selection runs on signals in her own words, not on tick boxes.
+
+### 9.1 What she sees (4 open questions + 5 hard facts)
+Open (free text, voice input allowed):
+1. "Tell it like you'd tell a friend: what's changed lately?"
+2. "What have you already tried to make sense of it?"
+3. "What would make the next two weeks worth it for you?"
+4. "What's going on in your life right now that any plan has to fit around?"
+Hard facts (closed, needed for eligibility): age band · iPhone yes/no · "2 minutes a day for 14 days?" · email · consent (health data, separate box) · founding price yes/no.
+
+### 9.2 What the AI labels (one JSON per applicant, rubric fixed in advance)
+| Signal | Values | Example words/phrases it listens for |
+|---|---|---|
+| recognition | explicit / suspected / none / not-me | "perimenopause", "peri", "my hormones", "my GP said it's...", cycle changes named as such |
+| active_search (0-3) | count of actions | "saw my GP", "I track in my notes", "joined a group", "read everything", "tried supplements" |
+| method_fit | high / medium / low | wants to see patterns, own record, prepare for doctor (high) vs wants a quick fix, a diagnosis or a prescription (low) |
+| intent_commitment | strong / some / none | "I'm ready to", "I want to finally", "I need a plan", concrete goal for two weeks |
+| urgency | sudden / gradual | "within a month", "out of nowhere", "suddenly" vs "slowly", "over the past year" |
+| life_context tags | multi | work, children, parents, shifts, travel, health conditions mentioned (quota only) |
+| safety_flag | yes / no | crisis language: no selection decision, she gets a signposting message to professional help |
+| rationale | 1 sentence | why these labels (audit trail) |
+Instruction to the model: judge content, not writing style or length; no diagnosis; output only the schema.
+
+### 9.3 Three groups (all inside the brief's segment: 39+, recognises or suspects perimenopause)
+| Group | Who | Share of invites |
+|---|---|---|
+| Signal group (cohort 1) | recognition explicit/suspected + active_search >= 1 + method_fit high/medium + commitment strong/some | ~85% |
+| Contrast group (cohort 2) | eligible, in segment, but WITHOUT the signals (low search, low commitment), randomly sampled | ~15% |
+| Later | under 39, "not-me" (not recognising perimenopause: out of scope per brief), no iPhone, no time now | 0% now, kept on a list with consent |
+The contrast group is the test: if they retain as well as the signal group, our signals don't matter and paid can buy broadly; if they retain much worse, the signals are the filter plan B must find in paid traffic.
+
+### 9.4 Calibration
+- Before go-live: the founder and one team member label the same 50 answers by hand; AI vs human agreement must reach 80% per signal (our rule) or the rubric is rewritten.
+- After 100 onboarded: per signal, compare D7 open and Active founder D7 (with vs without signal). Keep signals with clear lift, drop the rest, re-weight. Repeat at 300.
+- Output: a validated "intent profile" (which words and actions predict day 7 in this audience).
+
+### 9.5 Technical set-up
+1. Quiz in web2wave with open text fields; on submit a webhook sends answers + user_id to the AxisX backend.
+2. Backend calls an LLM with structured output (fixed JSON schema), temperature 0, prompt and model version stored with every result.
+3. Labels + score go to the application table (sheet/CRM) next to email, invite code and hook tags. Raw text stays in the health-data store, not in marketing tools.
+4. Rules engine: signal group -> auto-approve within quota; contrast group -> random draw; "later" and borderline cases -> human review queue (founder/team), never an automatic rejection.
+5. Approved -> TestFlight email invite -> in-app login with the same email -> events (onboarding_complete, app_open, feedback_given, report_pdf_created) keyed on user_id.
+6. Weekly join: labels x events = lift table per signal, per community, per hook.
+Cost: covered by the $400 AI-quiz token line in plan A (about 4,000 applicants, short texts); check against current model pricing before launch.
+
+### 9.6 GDPR / trust
+- Free text about symptoms is health data (GDPR art. 9): explicit consent naming both purposes (building her preview, selecting founding members).
+- No solely automated rejection (art. 22): every "later" and borderline decision is checked by a person; she can ask for review.
+- LLM provider under a data processing agreement, no training on her data; EU/UK processing where available.
+- Retention: applicants not admitted -> raw text deleted after 30 days, only aggregated labels kept. Admitted -> text becomes part of her own app system, under the app's privacy terms.
+- Never to ad platforms: no raw text, no labels, no quiz events with health meaning.
+- Bias check weekly: approval rate per life_context tag and per answer length; if short or non-native writers are approved less, fix the rubric.
+
+### 9.7 Why this matters for plan B
+The intent profile is a day-0 quality signal per channel. In the $50k test we see within days, not weeks, whether a paid channel sends signal-group women or contrast-group women, before any D7 data exists. That makes saturation visible early: when a channel's share of signal-group applicants drops, the channel is running out of the right women.
