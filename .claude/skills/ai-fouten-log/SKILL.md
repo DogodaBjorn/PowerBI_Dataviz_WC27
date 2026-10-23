@@ -18,6 +18,8 @@ Soorten fouten die terugkomen:
 - Verzonnen bronnen of cijfers.
 
 ## Aan het eind: How we worked (Engels, max 5 regels)
+Begin bij `rondes/_sjabloon/how-we-worked.md`: daar staan de vaste regels over de voorbereiding (toolkit, panel, compliance-check) en een voorbeeld van 5 regels. Vul aan met wat er in deze ronde echt gebeurde; schrap wat we niet gebruikten.
+
 1. Welke tools wat deden (Claude Code + welke MCP, ChatGPT, Claude Design), met wat het opleverde dat anders niet kon.
 2. Hoe we samenvoegden (twee AI's, wie won op welk punt).
 3-5. Gevangen fouten: "Caught and fixed: [AI] [fout]; [wat het bewijs liet zien]; [wat we deden]."
