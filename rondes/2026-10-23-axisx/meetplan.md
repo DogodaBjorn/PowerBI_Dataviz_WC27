@@ -29,3 +29,23 @@ Benchmarks stap 1-2: Adapty (40-60%, 50-70%). Stap 3-5: aannames, gemeten in wee
 | D7-open, Active founder D7 en D14-rapport per bron | stopregel: een kanaal dat goedkoop is maar lage D7-feedback of weinig D14-rapporten geeft, schaalt niet |
 | Founding price reserved | maximale kost per onboarding (break-even: $11 / $22 / $34 bij 1, 2 of 3 op 10 betalers; £85 netto x 1,32) |
 | D14-rapport per bron | vroege voorspeller van betalen; optimalisatie-event in plan B als het platform health-events beperkt |
+
+## Succesmetrics campagne (na panel-review 3, 16:01)
+**Score (brief):** 500 completed onboarding · 60% app geopend op dag 7.
+**Stuurmetric (wekelijks):** Active founders D7 = onboarded + feedback gegeven in week 1.
+
+| Fase | Metric | Per | Stopregel / bijsturen (onze beslisregel, geen benchmark) |
+|---|---|---|---|
+| Bereik | Kartrekkers benaderd -> antwoord % | kartrekker, community | <20% antwoord na 30 berichten: bericht herschrijven |
+| Bereik | Kartrekkers geactiveerd (delen link / hosten Q&A) | kartrekker | |
+| Bereik | Partners ja / benaderd | partner | |
+| Funnel | Bezoekers per onboarded vrouw (verwacht ~10) | bron, invite-code | >20 na 200 bezoekers: landingsvariant per community wisselen |
+| Activatie | Completed onboarding | bron, type vrouw | partner <10 onboardings na 2 weken: stoppen |
+| Waarde | D7 open · Active founder D7 · D14-rapport | bron, type vrouw | bron met D7-open <45% na 50 onboardings: stoppen, ook als hij goedkoop is |
+| Variatie | Dekking quota levenssituaties | type vrouw | quotum vol: die bron pauzeren voor dat type |
+| Referral | Gekwalificeerde referrals per active founder (onboarded + feedback week 1) | verwijzer | |
+| Betaalsignaal | Founding price gereserveerd % | bron | |
+| Kosten | Cash per onboarded · founder-uren per onboarded | bron | |
+| Vertrouwen | Verwijderde posts, klachten, negatieve vermeldingen | community | 1 klacht van een beheerder: stoppen in die community |
+
+Invite-code per kartrekker en per partner is voorwaarde voor deze tabel.
