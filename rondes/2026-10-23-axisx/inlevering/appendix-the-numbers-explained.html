@@ -5,9 +5,52 @@ h1,h2,h3,h4{font-family:"Playfair Display",Georgia,serif;color:#7a3e6d;font-weig
 section{page-break-after:always} section:last-child{page-break-after:auto} table{border-collapse:collapse;width:100%;margin:6px 0;font-size:11px} td{border-bottom:1px solid #e3d5dc;padding:3px 6px;vertical-align:top} tr:first-child td{background:#f3e9ee;color:#7a3e6d;font-weight:600}
 pre{font-size:9.5px;white-space:pre-wrap;background:#faf6f1;padding:8px;border-radius:6px} li{margin:0 0 2px 16px} .intro{background:#faf6f1;border-left:4px solid #c8705a;padding:10px 14px;margin-bottom:14px}</style></head><body>
 <section><h1>AxisX, The Founding 500: appendix. The numbers, explained.</h1>
-<div class="intro"><p>Written in plain language, the way an analytics coach would walk a founder through it: first the answer, then the sum, then the decision it changes on Monday. Every number comes from the brief, a public source (URL next to it) or is labelled as an assumption to be measured on the first 500. Sections 1 to 2 are a Dutch working note with the English numbers; sections 3 to 7 are the working files behind slides 3 to 7; section 8 holds the code so every figure can be recomputed.</p>
-<p>Companion to the 8-slide deck. Deck slide references: slide 6 (money) uses sections 1 to 3; slide 7 (success per phase) uses section 4; slides 3 and 4 use sections 5 to 7.</p></div>
+<div class="intro">
+<p><b>How to read this appendix.</b> Written the way an analytics coach would walk a founder through it: first the answer, then the sum, then the decision it changes on Monday. Every number comes from the brief, from a public source with the URL next to it, or is labelled as an assumption to be measured on the first 500. The deck keeps one idea per slide; everything behind each slide is here.</p>
+<p><b>Panel validation.</b> Four review rounds by a simulated panel of leading practitioners (AI role-play on their public work; names are in the work log, not here) checked these details: the questions to the client (round 1), the full brief and the economic anchor (round 2), the campaign, the private founder invites and the success metrics with stop rules (round 3), and plan A as a whole (round 4). Changes the panel forced: a contrast group next to the selected group, a sourced free-to-paid anchor (2.1 to 6.2 percent instead of an unsourced 10 to 30 percent), community leads chosen on public role rather than on health posts, one ID from quiz to day 7, and the founder's hours counted as a cost. Where a number is still an assumption, it says so.</p>
+<p><b>Section guide.</b> §0 how we read the brief (deck slide 1) · §1-2 the story of 100 visitors and what a woman is worth (slides 4, 6, 7) · §3 plan B stages and the ceiling (slides 5, 6) · §4 the measurement plan with definitions and stop rules (slide 4) · §5 funnel content, open questions, AI classification, GDPR and trust, hooks and the visual system (slides 2, 3) · §8 the models, so every figure can be recomputed. Sections 1 and 2 are the original plain-language working note in Dutch with the English numbers; a full English rewrite did not fit in the two hours and is the first thing to do after the hand-in.</p></div>
 <h2>Contents</h2><ol><li>The story of 100 visitors (funnel)</li><li>What a woman is worth, and the break-even</li><li>Plan B: stages and the ceiling</li><li>The measurement plan</li><li>Funnel content, open questions and AI classification</li><li>GDPR and trust (inside section 5)</li><li>Hooks and visual system (inside section 5)</li><li>Models (code)</li></ol></section>
+<section><h1>0. How we read the brief (working notes, Dutch, with the rules we checked every deliverable against)</h1><h2>Regels van deze ronde (brief deel 1 = PDF, deel 2 = volledige brief, geplakt in chat 15:2x)</h2>
+<h3>Doel en definities (deel 2)</h3>
+<li>500 users op de gratis app, 60% actief op dag 7. Dus 500 met volledige onboarding, ~300 die op dag 7 de app openen.</li>
+<li>&quot;Completed onboarding&quot; = onboarding volledig afgerond. &quot;Retained day 7&quot; = app geopend op dag 7.</li>
+<li>60% komt uit het financiële model van de founder. Betalende users niet nodig nu.</li>
+<li>De 500 = prototype van toekomstige betalers. Founder wil VARIATIE in levensomstandigheden en loyale feedbackgevers; geen negatieve feedback van willekeurige mensen.</li>
+<li>Twee klanten: founder (product, eerste 500, actief gebruik) en investeerder (schaalbewijs, CAC + prognose betalers).</li>
+<h3>Product (deel 2)</h3>
+<li>Eén prompt over haar situatie, app bouwt een systeem: tracken, gewoontes, reminders, herbouwen op nieuwe input.</li>
+<li>Kernwaarde eerste 2 weken (founder): PDF-rapport voor haar arts.</li>
+<li>Community: gepland, niet gebouwd, door focusgroepen gevraagd (normaliserend effect). Arts in app: gepland.</li>
+<li>iOS only, closed testing. Wel: invite links, sharing. Niet: rewards, loyalty, webquiz naar App Store (= deel van de case).</li>
+<li>Publieke release ~4-6 weken vanaf half oktober 2026. Funnel moet de overgang overleven zonder herbouw.</li>
+<h3>Doelgroep</h3>
+<li>Vrouwen 39+ die erkennen dat perimenopauze begint en steun willen. Twee types: rustig/geleidelijk; duidelijke symptomen, 7-10 jaar vooruit.</li>
+<li>Heetste subsegment: &quot;familiar world falls apart within a month&quot;, meest bereid te betalen.</li>
+<li>NIET: vrouwen in ontkenning. Later: partners. Markten: UK, US, Noord-Europa.</li>
+<li>60 interviews (35-60): controleverlies, gefragmenteerde info, niet toegeven hoe diep symptomen gaan. Meesten ok met AI, 15-20% sceptisch. ~15% artsen menopauzecursus (founder).</li>
+<li>Positionering: &quot;an app for women who think&quot;. Verschil met Flo (3 sec/maand, &lt;1% MAU perimenopauzemodule, founder via Sensor Tower), ChatGPT, BetterMe, Peppy.</li>
+<h3>Geld</h3>
+<li>Plan A $5.000: tooling, tokens, contentgeneratie. Founder: geen paid media. Plus: beta-toegang, haar volledige tijd, eigen kanalen.</li>
+<li>Plan B $50.000: plan, niet uitgekeerd; start pas als de eerste 500 cijfers hebben. Paid moet erin. Inhoud verplicht:</li>
+<p>  1. welke kanalen houden stand op schaal, welke alleen voor de eerste honderden, waarom</p>
+<p>  2. hoeveel users $50k koopt en kosten per voltooide onboarding per stap</p>
+<p>  3. plafond: bij welk volume stijgt de kost, wat verzadigt (publiek, creative, frequentie, kanaal)</p>
+<p>  4. welke metrics op de eerste 500 vastleggen</p>
+<p>  5. wat in de investor deck gaat als schaalbewijs</p>
+<li>Zwak volgens investeerder: lineaire extrapolatie, geen plafond/breekpunt, kanalen die afhangen van de persoonlijke tijd van de founder.</li>
+<li>Prijs abonnement £100/jaar. Geen CPI-cijfers. Geen social accounts, geen content, nooit marketing gedaan.</li>
+<li>Hypotheses founder: AI-influencers (mag weg), vijf synthetische persona&#x27;s Instagram-serie.</li>
+<h3>Rode lijnen</h3>
+<li>App vervangt geen arts, diagnosticeert niet, schrijft niet voor.</li>
+<li>Geen publieke lancering vóór het product af is; elke mechaniek rekent met beta.</li>
+<li>Geen woorden als diagnose, cure, treat, prescribe als belofte.</li>
+<h3>Inleverstukken (harde checks)</h3>
+<li>Pitch card: 30 sec, DOOR BJORN GESCHREVEN. Modelversie is herkenbaar en wordt afgestraft.</li>
+<li>Deck 5-8 slides (link of PDF). Verplichte blokken: hoe we de brief lazen incl. wat hij NIET vraagt; strategie eerste 500; geld $5k en $50k met de getallen die ze verbinden; links naar bronnen bij elke externe claim.</li>
+<li>Optioneel 1 slide oneens met founder, alleen nadat de taak zoals gesteld is opgelost.</li>
+<li>Elk getal dat niet uit de brief komt: bron ernaast. Elke link opent voor buitenstaander.</li>
+<li>Werklog .md: prompts, tools/skills, wat het model voorstelde dat we AFWEZEN en waarom. Helft van de beoordeling = hoe we werkten.</li>
+<li>Eén inzending, geen herkansing. Engels, geen em-dashes.</li></section>
 <section><h1>1-2. The story of 100 visitors, and what a woman is worth</h1><h2>De cijfers in gewone taal (Kaushik-lens, simulatie; 15:30)</h2>
 
 <p>Wisselkoers: 1 GBP = 1,32 USD (currency-converter.org.uk, 4 okt 2026: https://www.currency-converter.org.uk/converter/GBP/USD/1)</p>
