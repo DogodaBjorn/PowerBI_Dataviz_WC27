@@ -1,6 +1,18 @@
 # Questions to AxisX
 
-## Final set (after panel review, 7 questions, ready to send)
+## Send this (short, practical)
+
+1. Is the goal 500 onboarded users with 60% active on day 7, or 500 users still active on day 7? What counts as "active"?
+2. What are onboarding completion and day-7 retention among your current testers?
+3. Which country and language do we launch in, and which woman do we target first?
+4. How many app invites can we send per week, on iOS, Android or both?
+5. May we choose who gets invited, and also let in a random group as a comparison?
+6. Can we see per user where she came from, her quiz answers, and what she did in the app?
+7. Which real people (testers, doctors, founders) can we use in content, and can we reward referrals with free premium time?
+8. Have you already tested the AI influencers or the persona series? What happened?
+9. For the $50,000 test: what does the paid version cost, and what cost per user does the investor accept?
+
+## Final set (after panel review, 7 questions, with reasons)
 
 1. **Success and baseline.** Is the target 500 users who signed up and completed onboarding, of whom 60% are active on day 7, or 500 retained users? What counts as "active" on day 7: an app open or a core action? And what are onboarding completion and day-7 retention among your closed testers today?
    *Why: it sets the size of the funnel, and without a baseline we cannot tell whether 60% is a stretch or a given.*
