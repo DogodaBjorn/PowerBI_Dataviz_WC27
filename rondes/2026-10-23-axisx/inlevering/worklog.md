@@ -1,6 +1,6 @@
 # Work log: AxisX, AI Marketing Kombat Stage 2
 
-Team: Bjorn (human lead, all decisions). Models: Claude (Claude Code: one main session and three parallel sessions) and ChatGPT (one strategy session, its extract was fed into Claude). Time: 15:07 to 17:07 CEST, 23 October 2026.
+Team: Bjorn (human lead, all decisions). Models: Claude (Claude Code: one main session and three parallel sessions) and ChatGPT (three sessions, its extracts and research notes were fed into Claude). Time: 15:07 to 17:07 CEST, 23 October 2026.
 
 This log is assembled from the raw session exports and our own notes. The raw material is attached unedited:
 - `worklog-sessie-export.md`: main Claude session, 15:07 to 16:25, every prompt, model answer and tool call (times in UTC, add two hours).
