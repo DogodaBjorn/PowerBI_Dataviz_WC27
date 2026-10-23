@@ -1,75 +1,112 @@
 # Work log: AxisX, AI Marketing Kombat Stage 2
 
-Team: Bjorn (human lead). Models: Claude (Claude Code, main session plus parallel sessions) and ChatGPT (strategy context). Time: 15:07 to 17:07, 23 Oct 2026.
-Full session exports are attached: `worklog-sessie-export.md` (main Claude session, prompts, model answers, every tool call) and `worklog-parallel-*.md` (three parallel Claude sessions run by Bjorn: research deep dives, hooks, campaign name).
+Team: Bjorn (human lead, all decisions). Models: Claude (Claude Code: one main session and three parallel sessions) and ChatGPT (one strategy session, its extract was fed into Claude). Time: 15:07 to 17:07 CEST, 23 October 2026.
 
-## 1. How we worked (short)
-1. Started from a fixed round routine: work folder, rules file from the brief, AI-errors file, tool check (Meta Ad Library, WebSearch, Loudbox).
-2. Sent questions to the organisation first; a simulated expert panel cut 11 draft questions to 9 short, practical ones.
-3. Research in parallel: three Claude research agents (audience, paid economics, competitors and AI risk), five deep dives in a parallel session (economic anchor, ceiling, ad policy, quiz-to-day-7 measurement, Ad Library run lengths), and a ChatGPT session for the strategic core.
-4. Every number traced to a source or labelled as an assumption; small Python models (`funnel_model.py`, `plan_b_model.py`) so each figure can be recomputed.
-5. A simulated panel of marketing experts (AI role-play based on public work of leading practitioners) reviewed the questions, the campaign, plan A and the hooks; it changed the plan five times (see section 4).
-6. The human made the strategic calls (section 3); the model proposed, calculated and wrote.
+This log is assembled from the raw session exports and our own notes. The raw material is attached unedited:
+- `worklog-sessie-export.md`: main Claude session, 15:07 to 16:25, every prompt, model answer and tool call (times in UTC, add two hours).
+- `worklog-parallel-cf7388bd.md`: parallel session, five research agents (deep dives 2 to 6), 15:50 to 15:57.
+- `worklog-parallel-caf54828.md`: parallel session, hooks, hook selection by the simulated panel, last slide for the founder, 15:58 to 16:27.
+- `worklog-parallel-39621d59.md`: parallel session, campaign name question to the panel, 16:29 (short, not used in the deck).
+- Deck iterations 16:30 to 17:02 are reconstructed from the git history (16 commits in this round) and the notes in section 8.
 
-## 2. Prompts (Bjorn's, in order, main session)
-- Brief PDF shared; "start the round".
-- "Kun je de vijf vragen even langs ons panel laten gaan?" (panel on the questions)
-- "En nu samenkomen tot praktische vragen aub?"
-- Full brief part 2 pasted.
-- "Dit is een heel goede vervolgstap!" (research go)
-- "Nee we zijn hier nog lang niet aan toe ... laat Avinash Kaushik mij even helpen dit verder te verduidelijken" (rejected building the deck, asked for plain-language numbers)
-- "Active founder D7 = feedback given in the first 7 days; D14 report as second metric. Leg dit vast."
-- ChatGPT context extract added: "AI-powered community-led acquisition", Founding 500.
-- "Panel review this plan, which metrics define success? Plus: targeted private invites from the founder, advised by AI, to community leads with her own story."
-- "Take GDPR fully on board: AI may analyse and advise, then delete data; public role, not profiling."
-- Deep dives 2-6 + market research file: "check with the panel whether we have a solid base, present part 1: what do we do with A?"
-- Selection note + hook-builder/taste results pasted: "what do we use in text and visuals?"
-- "Keep the questions as open as possible; classify with AI; build a test group of people without those signals."
-- "Everyone who applies to the Founding Circle gets a lower price at launch."
+## 1. How we worked, in six lines
+1. Fixed round routine first (skill `ronde-start`): work folder, rules file distilled from the brief, AI-errors file, rejections file, tool check (Meta Ad Library, WebSearch, Loudbox).
+2. Questions to the organisation went out early. A simulated panel of marketing experts (AI role-play on the public work of leading practitioners) cut 11 draft questions to 9 short practical ones.
+3. Research ran in parallel: three Claude research agents (audience, paid economics, competitors and AI risk), then five deep-dive agents in a second session (economic anchor, ceiling, ad policy, quiz-to-day-7 measurement, Ad Library run lengths), and a ChatGPT session for the strategic core.
+4. Every number traced to a linked source or labelled ASSUMPTION; two small Python models (`funnel_model.py`, `plan_b_model.py`) so each figure can be recomputed. When the model's numbers became unclear ("abracadabra"), Bjorn stopped the deck and asked for a plain-language explanation first.
+5. The panel reviewed four times (questions, full brief, campaign plan, hooks) and changed the plan each time (section 4).
+6. The human made the strategic calls (section 3); the model proposed, researched, calculated and wrote. Two things were deliberately kept away from the model: the founder's own first sentence and the 30-second pitch card.
+
+## 2. Timeline: prompts, tools, outputs (local time)
+| Time | Session | Bjorn's prompt (shortened, original wording in the exports) | What the model did | Output / commit |
+|---|---|---|---|---|
+| 15:07 | main | Brief PDF attached; start the round | Skill `ronde-start`; read lessons from round 1; work folder, `regels.md`, 11 draft questions | commit 15:08 |
+| 15:12 | main | "Kun je de vijf vragen even langs ons panel laten gaan?" | Skill `panel-review`, review 1 on the top-5 questions | `panel-log.md` |
+| 15:15 | main | "En nu samenkomen tot praktische vragen aub?" | 7-question set, then a 9-question short set | `vragen.md`, commit 15:13 |
+| 15:16 | main | Full brief part 2 pasted | Rules extended (definitions, red lines, deliverables); Ad Library search "perimenopause" UK/US; first strategy concept "No two systems alike" | `regels.md`, `strategie.md`, commit 15:24 |
+| 15:22 | main | "Dit is een heel goede vervolgstap!" | Three research agents started (audience and communities; paid economics; competitors and AI risk); funnel model written | `data/onderzoek-*.md`, `funnel_model.py`, commit 15:27 |
+| 15:28 | main | (model proposed to build the deck now) | Rejected by Bjorn, see 15:40 | |
+| 15:40 | main | "Nee we zijn hier nog lang niet aan toe ... te veel abracadabra ... laat Avinash Kaushik mij even helpen dit te verduidelijken" | Plain-language numbers (100 visitors, plan A, plan B, break-even); FX error caught; rejections file started | `data/cijfers-helder.md`, `afwijzingen.md` |
+| 15:49 | main | "Active founder D7 = feedback in the first 7 days; day-14 report as second metric. Leg dit vast." | Measurement plan with the brief's KPIs as score and two steering metrics | `meetplan.md`, commit 15:50 |
+| 15:50 | parallel 1 | "Kun jij wat research agents aan het werk zetten" (five deep-dive questions from the panel synthesis) | Five agents in parallel, each to its own file; model re-checked the Web2Wave 48-hour claim itself | `data/induik-2..6.md` |
+| 15:53 | main | ChatGPT extract added: "lees dit uit en haal inspiratie voor verdere campagnevoering" | Campaign input: community-led acquisition, Founding 500, partner offer, weekly plan | `campagne-input.md`, commit 15:54 |
+| 15:58 | parallel 2 | "Hook bouwer en taste skill ... betere hooks dan From feeling lost in your own body ... ABM op communities en community leaders" | Skills `hook-generator` and `viral-hooks`; hooks for leaders and five personas; AI error caught ("Is this perimenopause?") | `hooks.md` |
+| 16:00 | main | "Panel review dit plan ... welke meetwaardes ... plus private invites vanuit de founder, geadviseerd door AI, aan kartrekkers met haar eigen verhaal" | Panel review 3 (7 members): invite codes, one steering metric, public role not health posts, founder hours | `panel-log.md`, commit 16:01 |
+| 16:02 | parallel 2 | "Er is een panellid die de selectie kan maken" | Creative panel member (simulated) selects 4 member hooks, 8 openings, cuts vague hooks | `hooks.md` section 6 |
+| 16:07 | main | "AVG 100% meenemen: AI analyseert en adviseert, dan data verwijderen; publieke rol, geen profilering. Neem induik 2-6 en het marktonderzoek mee, panel: solide basis? Presenteer deel 1: wat doen we met A?" | Plan A written; economic anchor corrected (RevenueCat 2.9/6.2%); panel review 4 | `plan-A.md`, commit 16:10 |
+| 16:17 | main | "Ja, funnel, quiz en hooks gebruiken" + selection note pasted (select on recognition, search, fit with the method, ability to test now) | Funnel content: text and image per step | `funnel-inhoud.md`, commit 16:18 |
+| 16:20 | parallel 2 | "Laatste slide aan de founder: geef jouw sterkste zin" | Model declined to write her line; slide asks her for it with three questions | `slide-laatste-founder.md` |
+| 16:22 | main | "Vragen zo open mogelijk ... met AI classificeren ... testgroep met mensen bij wie we die signalen niet horen" | Four open questions, AI classification (structured output, prompt and model version logged), signal group and contrast group | `funnel-inhoud.md`, commit 16:23 |
+| 16:25 | main | "Iedereen die zich aanmeldt voor de Founding Circle krijgt goedkoper toegang" | Founding price £70 instead of £100 for every applicant | commit 16:25 |
+| 16:26 | main | | Plan B: three stages, honest break-even line | `plan-B.md`, commit 16:26 |
+| 16:29 | parallel 3 | "Panel members: what do we call the campaign?" | Started reading the plan; not used, "The Founding 500" kept | |
+| 16:30 | main | Build the deck | Deck v1 (8 slides, PDF) and first work log | commit 16:30 |
+| 16:43 | main | "This isn't it" and new structure set by Bjorn | Deck v2 rebuilt around "What they'll see. What they don't see."; appendix in plain language | commit 16:49 |
+| 16:51 | main | "Too dense" and storyline set by Bjorn | Deck v3: one idea per slide, closing line "We only need your story to start the story", appendix with panel validation | commits 17:00, 17:01 |
+| 16:55 | new session | "Upgrade this 30 sec pitch, add facts and style so I can redo it in my own words" | Fact sheet with corrections (700 to 500, "Exis" to AxisX, AI disclosure) and style rules; example version marked not for use | `pitch-card-feiten-en-stijl.md` |
+| 17:05 | new session | "Stel de worklog samen uit de volledige chats en onze eigen worklog" | This file | `worklog.md` |
 
 ## 3. Human decisions that shaped the solution
-- Strategy core is Bjorn's: AI-powered community-led acquisition (ABM on communities, not on individuals) and private founder invites to community leads.
-- GDPR line: AI analyses public conversations at theme level, raw data deleted afterwards, leads chosen on public role, no profiling, founder sends every message herself.
-- Steering metrics: Active founder D7 (feedback in week 1) and day-14 doctor report, on top of the brief's KPIs.
-- Open questions instead of a tick-box quiz, AI classification of her own words, and a contrast group without the signals.
-- Founding price for every applicant as an extra reason to apply.
-- Last slide left blank for the founder's own sentence; pitch card written by Bjorn.
+- The strategic core is Bjorn's: AI-powered community-led acquisition (account-based marketing on communities, not on individuals) and private founder invites to community leads with her own story. The model's first concept (quiz, content from real systems, answer pages) became the funnel underneath it.
+- Stop the deck, explain the numbers first (15:40). The deck was built only after plan A, the funnel and plan B were on paper.
+- Steering metrics: Active founder D7 (feedback given in week 1) and the day-14 doctor report, on top of the brief's score (500 onboarded, 60% open on day 7).
+- GDPR line: AI analyses public conversations at theme level, raw text deleted afterwards, leads chosen on public role, no health profiling, founder sends every message herself, no automated DMs.
+- Open questions instead of a tick-box quiz; AI classifies her own words; a random contrast group without the signals so plan B learns whether retention comes from the selection or the market.
+- Founding price for every applicant (£70 instead of £100) as an extra reason to apply and as the paid signal for plan B.
+- Deck structure and storyline (twice): "What they'll see. What they don't see." and one idea per slide.
+- Last slide left blank for the founder's own sentence; pitch card written by Bjorn himself.
 
 ## 4. What the model proposed that we rejected or changed, and why
-| Model proposed | What we did | Why |
-|---|---|---|
-| 11 questions to the organisation | 9 short practical questions | Must be answerable directly |
-| Build the deck right after the first funnel model | Rejected; first analysis and a real campaign | Numbers were not clear enough yet ("abracadabra") |
-| "Selection on fit is how we hit 60% day 7", no caveat | Added a random contrast group | Selection inflates retention; the investor plan would inherit a number that doesn't scale (panel) |
-| Recruit women who don't yet recognise perimenopause (ChatGPT) | Removed | The brief rules them out for the first 500 |
-| "Is this perimenopause?" as quiz hook (research agent) | Removed | Same reason |
-| Lifetime free for all founders and friends (idea in the ChatGPT session) | Kept only as a risk scenario | Price model and cost per user unknown |
-| Closed 8-question quiz | Replaced by 4 open questions + AI classification | Matches how the app works; signals in her own words |
-| Many hooks (13+) | 4 kept; vague, fear-based and brand-first openers cut | Must land in 3 seconds, work muted, be sayable by a real person |
-| Model writing the founder's first line | Left blank on purpose | It must be hers |
+| Time | Model proposed | What we did | Why |
+|---|---|---|---|
+| 15:10 | 11 questions to the organisation, with explanations | 9 short practical questions | Must be answerable directly |
+| 15:13 | "Selection on fit is how we hit 60% day 7", no caveat | Random contrast group of lower-fit applicants | Selection inflates retention; the investor plan would inherit a number that does not scale (panel) |
+| 15:28 | Build the deck (7 slides, PDF) right after the first funnel model | Rejected; analysis and a real campaign first | Numbers were "abracadabra"; the campaign did not exist yet |
+| ChatGPT | Recruit women who do not yet recognise perimenopause | Removed | The full brief rules them out for the first 500 |
+| ChatGPT | Lifetime free for all founders and friends (Bjorn's own idea in that session) | Kept only as a risk scenario | Price model and cost per user unknown |
+| 15:5x | Research agent: "Is this perimenopause?" as quiz hook | Removed | Same reason: the brief wants women who already recognise it |
+| 15:5x | Research agent wanted a Web2Wave 422 tool error logged as an AI error | Not logged | Tool configuration issue, not a model error |
+| 16:00 | Select community leads on what they post about their symptoms | Select on public role only (moderator, admin, newsletter, coach) | Health profiling of individuals (GDPR art. 9) and platform rules |
+| 16:00 | Many loose metrics | Brief KPIs as score, one steering metric, stop rule per source | One decision per metric |
+| 16:02 | 13+ hooks, 50 reserved places per community | 4 hooks kept, 8 openings; 10 places per community | Must land in 3 seconds, work muted, be sayable by a real woman; scarcity per community |
+| 16:10 | Closed 8-question quiz | 4 open questions plus AI classification | Matches how the app works; the signals are in her own words |
+| 16:20 | Model writing the founder's first line | Left blank on purpose | A model writes something smooth; the women in these communities would hear it is not hers |
+| 16:29 | New campaign name from the panel | Kept "The Founding 500" | No time, and the name already carried the deck |
+| 16:30 | Deck v1 | Rebuilt twice to Bjorn's structure | First too technical, then too dense |
+| 16:45 | Claude Design brand pass for the deck | Dropped, restyled by hand | Time |
+| 16:55 | Example pitch text in the fact sheet | Not used as written | Brief: the pitch card must be Bjorn's own words; a model version is penalised |
 
 ## 5. AI errors we caught
-| AI said | Should have been | Caught by |
-|---|---|---|
-| Compared cost per onboarding in dollars with a break-even in pounds | Convert with a sourced FX rate first (1.32) | Plain-language review |
-| "1, 2 or 3 in 10 onboarded women will pay" (no source) | Public anchor 2.1-6.2% download-to-paid (RevenueCat 2026); a woman is worth $2-7 in year 1, not $11-34. This turned plan B into an honest test | Deep dive 2 |
-| "Selection on fit" as the retention lever without caveat | Contrast group | Simulated panel |
-| "Is this perimenopause?" hook | Out of scope per brief | Hook check |
-| A shell command hung on an empty `cat` and created a stray empty file | Stopped, file removed | Claude itself |
+| Time | AI said or did | Should have been | Caught by |
+|---|---|---|---|
+| 15:13 | "Selection on fit is how we hit 60% day-7 retention" as a lever without caveat | Selection hits 60% but makes the 500 unrepresentative; contrast group needed | Simulated panel |
+| 15:28 | Compared cost per onboarding in dollars ($7-20) with a break-even in pounds (£8.50-25.50) | Convert first with a sourced FX rate (1.32, currency-converter.org.uk) | Plain-language review |
+| 15:28 | Proposed building the deck before the campaign existed | Analysis and campaign first | Bjorn |
+| 16:00 | Research agent advised "Is this perimenopause?" as hook | Out of scope: the brief excludes women who do not recognise it yet | Claude, hooks check |
+| 16:10 | "1, 2 or 3 in 10 onboarded women will pay" without source | Public anchor 2.1-6.2% download-to-paid (RevenueCat 2026); a woman is worth $2-7 in year 1, not $11-34. This turned plan B into an honest test instead of a growth plan | Deep dive 2 |
+| 16:3x | A shell command hung on an empty `cat` and created a stray empty file | Stopped, file removed | Claude itself |
+| 16:55 | Bjorn's pitch draft said "700 women" and "Exis"; the fact sheet flagged both | 500 onboarded, 300 on day 7; AxisX | Fact check against the brief |
 
-## 6. Tools and skills used
-- Claude Code skills: ronde-start, panel-review (4 rounds), meetplan logic, hooks (viral-hooks, hook-generator in a parallel session), artifact-free PDF build.
-- Meta Ad Library (MCP `ads_library_search`): 5,247 active UK ads on "perimenopause", named-woman advertorial pages, anna app as the only direct app advertiser, run-length lower bounds.
-- Web2Wave creative trends (MCP): run lengths of Flo and BioID creatives (200-435 days).
-- WebSearch / WebFetch via research agents: KFF, Gallup, Clutch, RevenueCat, Adapty, StatCounter, ONS, US Census, Eurostat, Meta and Google policy pages, Apple TestFlight docs.
-- Python (standard library): funnel and plan B models.
-- ChatGPT: strategic context extract (community-led acquisition, Founding 500).
-- Loudbox demo: checked, not used (workspace held other data).
+## 6. Tools, skills and agents
+- Claude Code skills: `ronde-start`, `panel-review` (4 reviews), `hook-generator` and `viral-hooks` (parallel session), measurement-plan logic from `meetplan`. The `taste-skill` was found and not used (it covers landing-page design).
+- Research agents: 3 in the main session (15:22) and 5 in parallel session 1 (15:50), each writing to its own file, each under the rule "a number counts only if you checked it on a public page, with the link".
+- Meta Ad Library (MCP `ads_library_search`, 3 searches plus the deep-dive agent): about 28k US ads on "perimenopause app", 5,247 active UK ads on "perimenopause"; named-woman and named-doctor advertorial pages; anna app as the only direct app advertiser; Flo and BioID run lengths.
+- Web2Wave MCP: creative trends (run lengths 200-435 days for Flo and BioID), documentation check of the 48-hour identify window.
+- WebSearch and WebFetch via agents: RevenueCat, Adapty, StatCounter, ONS, US Census, Eurostat, superads, influee/Triple Whale, Meta and Google policy pages, Apple TestFlight documentation, NICE NG23, NHS.
+- Python (standard library only): `funnel_model.py`, `plan_b_model.py`; `scripts/sessie_naar_md.py` to export the sessions to this log.
+- ChatGPT: strategic context extract (community-led acquisition, Founding 500) and a market research file; both read into Claude and checked against the brief.
+- Loudbox demo: checked at 15:08, not used (workspace held other data).
+- Git: 16 commits between 15:08 and 17:01, so every version of the plan and the deck is recoverable.
 
 ## 7. Files behind the deck
-plan-A.md · plan-B.md · funnel-inhoud.md · meetplan.md · hooks.md · data/ (research tables, models, deep dives) · panel-log.md · ai-fouten.md · afwijzingen.md
+`regels.md` · `vragen.md` · `strategie.md` · `campagne-input.md` · `meetplan.md` · `plan-A.md` · `plan-B.md` · `funnel-inhoud.md` · `hooks.md` · `slide-laatste-founder.md` · `pitch-card-feiten-en-stijl.md` · `panel-log.md` · `panel-pitches.md` · `ai-fouten.md` · `afwijzingen.md` · `data/` (research tables, deep dives 2 to 6, models and outputs)
 
-## 8. Appendix: models (recompute every number)
+## 8. Deck iterations (16:30 to 17:02)
+- **v1 (16:30).** Eight slides straight from plan A and plan B. Bjorn: "this isn't it". Too technical, the woman was missing.
+- **v2 (16:49).** Bjorn set the structure: open on "What they'll see. What they don't see." (the woman's visible day and the effort behind it; the campaign's front and the engine underneath). Plan A, plan B and success metrics split into what they see, what they don't see, what you will see per phase. All technical detail moved to a plain-language appendix. A Claude Design brand pass was considered and dropped for time; restyled by hand (warm paper, plum and terracotta, serif headlines, the member "system card" as the recurring asset).
+- **v3, final (17:00).** Bjorn: too dense. Storyline reset to one idea per slide: how we reach the Founding 500, what they experience as a funnel (front and engine), what the funnel teaches for plan B, how A builds B, the money, and the closing line "We only need your story to start the story." Eight slides within the brief's limit. Appendix keeps every detail for the founder, opening with how the panel validated them. The founder's blank line stayed as the last slide. Earlier versions remain in git history.
+
+## 9. Appendix: models (recompute every number)
 
 ### funnel_model.py
 ```python
@@ -216,8 +253,3 @@ Total 1,919 onboarded, blended $23.45; reserve $5,000
 Break-even conversion at blended cost: 20.9% (list) / 29.9% (founding)
 ```
 
-## 9. Final iteration (16:43-16:55)
-Bjorn rejected the first deck ("this isn't it") and set the structure himself: open the pitch on "What they'll see. What they don't see." (the woman's visible and invisible life; the campaign's visible front and invisible engine), split plan A, plan B and the success metrics into What they'll see / What they don't see / What you'll see per phase (pre-activation, landing, open questions, Founders Circle, other channels), and move all technical detail to an appendix written in plain language. A Claude Design brand pass was considered and dropped for time; the deck was restyled by hand toward a warmer, more trustworthy look (warm paper, plum and terracotta, serif headlines, the member "system card" as the recurring asset). The founder's blank line stayed as the last slide. The first deck version remains in git history.
-
-## 10. Final deck (16:51-17:02)
-Bjorn rejected the second deck as too dense and set the storyline: how we achieve the Founding 500, what they experience as a funnel (front and engine), what the funnel teaches us for plan B, how plan A learnings build plan B, the money, and the closing line "We only need your story to start the story." One idea per slide, details moved to the appendix, 8 slides within the brief's limit. The appendix keeps every detail for the founder, with an opening note on how the panel validated them. Deck restyled by hand (warm paper, plum and terracotta, serif headlines, member system card); a Claude Design pass was dropped for time.

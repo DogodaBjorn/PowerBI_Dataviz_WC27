@@ -1,0 +1,479 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>AxisX appendix: the numbers, explained</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<style>@page{size:A4;margin:18mm 16mm} body{font-family:"Segoe UI",Arial,sans-serif;color:#2b1d2e;background:#fff;font-size:12px;line-height:1.45}
+h1,h2,h3,h4{font-family:"Playfair Display",Georgia,serif;color:#7a3e6d;font-weight:600} h1{font-size:22px;border-bottom:2px solid #c8705a;padding-bottom:4px;margin-top:0} h2{font-size:16px} h3{font-size:14px} h4{font-size:12.5px}
+section{page-break-after:always} section:last-child{page-break-after:auto} table{border-collapse:collapse;width:100%;margin:6px 0;font-size:11px} td{border-bottom:1px solid #e3d5dc;padding:3px 6px;vertical-align:top} tr:first-child td{background:#f3e9ee;color:#7a3e6d;font-weight:600}
+pre{font-size:9.5px;white-space:pre-wrap;background:#faf6f1;padding:8px;border-radius:6px} li{margin:0 0 2px 16px} .intro{background:#faf6f1;border-left:4px solid #c8705a;padding:10px 14px;margin-bottom:14px}</style></head><body>
+<section><h1>AxisX, The Founding 500: appendix. The numbers, explained.</h1>
+<div class="intro">
+<p><b>How to read this appendix.</b> Written the way an analytics coach would walk a founder through it: first the answer, then the sum, then the decision it changes on Monday. Every number comes from the brief, from a public source with the URL next to it, or is labelled as an assumption to be measured on the first 500. The deck keeps one idea per slide; everything behind each slide is here.</p>
+<p><b>Panel validation.</b> Four review rounds by a simulated panel of leading practitioners (AI role-play on their public work; names are in the work log, not here) checked these details: the questions to the client (round 1), the full brief and the economic anchor (round 2), the campaign, the private founder invites and the success metrics with stop rules (round 3), and plan A as a whole (round 4). Changes the panel forced: a contrast group next to the selected group, a sourced free-to-paid anchor (2.1 to 6.2 percent instead of an unsourced 10 to 30 percent), community leads chosen on public role rather than on health posts, one ID from quiz to day 7, and the founder's hours counted as a cost. Where a number is still an assumption, it says so.</p>
+<p><b>Section guide.</b> §0 how we read the brief (deck slide 1) · §1-2 the story of 100 visitors and what a woman is worth (slides 4, 6, 7) · §3 plan B stages and the ceiling (slides 5, 6) · §4 the measurement plan with definitions and stop rules (slide 4) · §5 funnel content, open questions, AI classification, GDPR and trust, hooks and the visual system (slides 2, 3) · §8 the models, so every figure can be recomputed. Sections 1 and 2 are the original plain-language working note in Dutch with the English numbers; a full English rewrite did not fit in the two hours and is the first thing to do after the hand-in.</p></div>
+<h2>Contents</h2><ol><li>The story of 100 visitors (funnel)</li><li>What a woman is worth, and the break-even</li><li>Plan B: stages and the ceiling</li><li>The measurement plan</li><li>Funnel content, open questions and AI classification</li><li>GDPR and trust (inside section 5)</li><li>Hooks and visual system (inside section 5)</li><li>Models (code)</li></ol></section>
+<section><h1>0. How we read the brief (working notes, Dutch, with the rules we checked every deliverable against)</h1><h2>Regels van deze ronde (brief deel 1 = PDF, deel 2 = volledige brief, geplakt in chat 15:2x)</h2>
+<h3>Doel en definities (deel 2)</h3>
+<li>500 users op de gratis app, 60% actief op dag 7. Dus 500 met volledige onboarding, ~300 die op dag 7 de app openen.</li>
+<li>&quot;Completed onboarding&quot; = onboarding volledig afgerond. &quot;Retained day 7&quot; = app geopend op dag 7.</li>
+<li>60% komt uit het financiële model van de founder. Betalende users niet nodig nu.</li>
+<li>De 500 = prototype van toekomstige betalers. Founder wil VARIATIE in levensomstandigheden en loyale feedbackgevers; geen negatieve feedback van willekeurige mensen.</li>
+<li>Twee klanten: founder (product, eerste 500, actief gebruik) en investeerder (schaalbewijs, CAC + prognose betalers).</li>
+<h3>Product (deel 2)</h3>
+<li>Eén prompt over haar situatie, app bouwt een systeem: tracken, gewoontes, reminders, herbouwen op nieuwe input.</li>
+<li>Kernwaarde eerste 2 weken (founder): PDF-rapport voor haar arts.</li>
+<li>Community: gepland, niet gebouwd, door focusgroepen gevraagd (normaliserend effect). Arts in app: gepland.</li>
+<li>iOS only, closed testing. Wel: invite links, sharing. Niet: rewards, loyalty, webquiz naar App Store (= deel van de case).</li>
+<li>Publieke release ~4-6 weken vanaf half oktober 2026. Funnel moet de overgang overleven zonder herbouw.</li>
+<h3>Doelgroep</h3>
+<li>Vrouwen 39+ die erkennen dat perimenopauze begint en steun willen. Twee types: rustig/geleidelijk; duidelijke symptomen, 7-10 jaar vooruit.</li>
+<li>Heetste subsegment: &quot;familiar world falls apart within a month&quot;, meest bereid te betalen.</li>
+<li>NIET: vrouwen in ontkenning. Later: partners. Markten: UK, US, Noord-Europa.</li>
+<li>60 interviews (35-60): controleverlies, gefragmenteerde info, niet toegeven hoe diep symptomen gaan. Meesten ok met AI, 15-20% sceptisch. ~15% artsen menopauzecursus (founder).</li>
+<li>Positionering: &quot;an app for women who think&quot;. Verschil met Flo (3 sec/maand, &lt;1% MAU perimenopauzemodule, founder via Sensor Tower), ChatGPT, BetterMe, Peppy.</li>
+<h3>Geld</h3>
+<li>Plan A $5.000: tooling, tokens, contentgeneratie. Founder: geen paid media. Plus: beta-toegang, haar volledige tijd, eigen kanalen.</li>
+<li>Plan B $50.000: plan, niet uitgekeerd; start pas als de eerste 500 cijfers hebben. Paid moet erin. Inhoud verplicht:</li>
+<p>  1. welke kanalen houden stand op schaal, welke alleen voor de eerste honderden, waarom</p>
+<p>  2. hoeveel users $50k koopt en kosten per voltooide onboarding per stap</p>
+<p>  3. plafond: bij welk volume stijgt de kost, wat verzadigt (publiek, creative, frequentie, kanaal)</p>
+<p>  4. welke metrics op de eerste 500 vastleggen</p>
+<p>  5. wat in de investor deck gaat als schaalbewijs</p>
+<li>Zwak volgens investeerder: lineaire extrapolatie, geen plafond/breekpunt, kanalen die afhangen van de persoonlijke tijd van de founder.</li>
+<li>Prijs abonnement £100/jaar. Geen CPI-cijfers. Geen social accounts, geen content, nooit marketing gedaan.</li>
+<li>Hypotheses founder: AI-influencers (mag weg), vijf synthetische persona&#x27;s Instagram-serie.</li>
+<h3>Rode lijnen</h3>
+<li>App vervangt geen arts, diagnosticeert niet, schrijft niet voor.</li>
+<li>Geen publieke lancering vóór het product af is; elke mechaniek rekent met beta.</li>
+<li>Geen woorden als diagnose, cure, treat, prescribe als belofte.</li>
+<h3>Inleverstukken (harde checks)</h3>
+<li>Pitch card: 30 sec, DOOR BJORN GESCHREVEN. Modelversie is herkenbaar en wordt afgestraft.</li>
+<li>Deck 5-8 slides (link of PDF). Verplichte blokken: hoe we de brief lazen incl. wat hij NIET vraagt; strategie eerste 500; geld $5k en $50k met de getallen die ze verbinden; links naar bronnen bij elke externe claim.</li>
+<li>Optioneel 1 slide oneens met founder, alleen nadat de taak zoals gesteld is opgelost.</li>
+<li>Elk getal dat niet uit de brief komt: bron ernaast. Elke link opent voor buitenstaander.</li>
+<li>Werklog .md: prompts, tools/skills, wat het model voorstelde dat we AFWEZEN en waarom. Helft van de beoordeling = hoe we werkten.</li>
+<li>Eén inzending, geen herkansing. Engels, geen em-dashes.</li></section>
+<section><h1>1-2. The story of 100 visitors, and what a woman is worth</h1><h2>De cijfers in gewone taal (Kaushik-lens, simulatie; 15:30)</h2>
+
+<p>Wisselkoers: 1 GBP = 1,32 USD (currency-converter.org.uk, 4 okt 2026: https://www.currency-converter.org.uk/converter/GBP/USD/1)</p>
+
+<h3>1. Het verhaal van 100 bezoekers</h3>
+<p>100 op de landingspagina -&gt; 50 starten de quiz -&gt; 30 maken hem af -&gt; 21 vragen een plek aan -&gt; 15 worden toegelaten -&gt; 10 ronden de onboarding af.</p>
+<p>= 1 op de 10. Stap 1-2 benchmark (Adapty), stap 3-5 onze gok, meten in week 1.</p>
+
+<h3>2. Plan A</h3>
+<p>500 vrouwen nodig. 100 via uitnodigingen van andere vrouwen, 400 via de funnel = ~4.000 bezoekers. 300 openen de app op dag 7.</p>
+<p>$5.000 / 500 = $10 per vrouw, zonder de tijd van de founder (gratis, maar schaalt niet).</p>
+
+<h3>3. Plan B: wat kost een vrouw via advertenties</h3>
+<p>Prijs per klik / 10% = prijs per vrouw.</p>
+<p>Meta: klik $0,77-2,07 -&gt; $7,70-20,70 per vrouw.</p>
+
+<h3>4. Is dat goed? Wat is een vrouw waard</h3>
+<p>Betaler = £100/jaar - 15% Apple = £85 = $112.</p>
+<p>1 op 10 betaalt -&gt; gemiddeld $11,20 per onboarded vrouw.</p>
+<p>2 op 10 -&gt; $22,40. 3 op 10 -&gt; $33,70.</p>
+<p>Meta op $20: verlies bij 1 op 10, quitte bij 2 op 10, winst bij 3 op 10.</p>
+
+<h3>5. De drie getallen die we op de eerste 500 meten</h3>
+<table>
+<tr><td>Getal</td><td>Wat het is</td><td>Besluit op maandag</td></tr>
+<tr><td>1 op ?</td><td>bezoekers per onboarded vrouw, per bron</td><td>welke bron opschalen</td></tr>
+<tr><td>D7 per bron</td><td>% dat dag 7 terugkomt, per bron en per type vrouw</td><td>welke vrouw we zoeken</td></tr>
+<tr><td>Ja op founding price</td><td>% dat een plek reserveert tegen de lanceringsprijs (geen betaling)</td><td>maximale advertentiekost per vrouw</td></tr>
+</table>
+
+<h3>CORRECTIE 16:10 (induik 2)</h3>
+<p>De scenario&#x27;s 10/20/30% betalers hierboven hadden geen bron en zijn te optimistisch. Publiek anker (RevenueCat State of Subscription Apps 2026, https://www.revenuecat.com/state-of-subscription-apps): Health &amp; Fitness download-to-paid D35 mediaan 2,9%, top-kwartiel &gt;6,2%; freemium 2,1%; hard paywall 10,7%.</p>
+<p>Waarde per onboarded vrouw jaar 1 (£85 x c x 1,32): $2,36 (2,1%) · $3,25 (2,9%) · $6,96 (6,2%) · $12,01 (10,7%).</p>
+<p>Meta-onboarding van $8-20 verdient zich met één verlenging (44,1%) pas terug bij 4,8-12,8% betaalconversie onder onboarded vrouwen.</p>
+<p>Benchmarks zijn per download; onboarded vrouwen zijn gefilterd en zouden hoger moeten converteren. Dat verschil meten de eerste 500.</p></section><section><h1>3. Plan B: stages and the ceiling</h1><h2>Plan B: the $50,000 scale test (16:27)</h2>
+<p>Model: data/plan_b_model.py (output in plan_b_uitkomst.txt). Sources: onderzoek-paid.md, induik 2-6.</p>
+
+<h3>The honest answer first</h3>
+<p>On public benchmarks paid acquisition does not pay back in year 1. Blended cost ~$23 per completed onboarding needs ~21% of onboarded women to pay at £100 (30% at the £70 founding price). Health &amp; Fitness benchmark: 2.9% median, 6.2% top quartile download-to-paid (RevenueCat 2026). So the $50k does not buy growth; it buys the answer to two questions:</p>
+<p>1. Do our onboarded, intent-selected women convert far above download benchmarks? (lever 1: conversion)</p>
+<p>2. How far can cost per onboarding fall, and where does it rise? (lever 2: the cost curve and the ceiling)</p>
+<p>Not a bigger plan A: no founder Q&amp;As, no personal invites (they don&#x27;t scale and don&#x27;t count).</p>
+
+<h3>Starts only when</h3>
+<li>Plan A delivered: step rates per source, D7 cohort 1 vs cohort 2, intent profile, founding-price yes %.</li>
+<li>App live in the App Store (Google App campaigns and Apple Search Ads need a store app; TestFlight has no SKAN attribution).</li>
+<li>Meta data-source category checked in Events Manager (health &amp; wellness restrictions).</li>
+
+<h3>Channels and why</h3>
+<table>
+<tr><td>Channel</td><td>Role at scale</td><td>Why it holds or not</td></tr>
+<tr><td>Meta (FB/IG), UK + US, women 39-55 broad, creative self-selects</td><td>Scale channel</td><td>Largest reach; US pool not exhausted within $50k. Health interests not targetable, health events may be blocked: optimise on highest allowed event, measure onboarding ourselves</td></tr>
+<tr><td>Newsletter sponsorships + paid creators (same partners as plan A)</td><td>Paid twin of the community route</td><td>Trust transfers; limited inventory, saturates first</td></tr>
+<tr><td>Google Search (contextual, no remarketing)</td><td>Intent capture</td><td>Health = sensitive category: no remarketing/Customer Match; App campaigns only after store launch</td></tr>
+<tr><td>Apple Search Ads (after launch)</td><td>Store intent</td><td>Taps/installs only, no in-app optimisation</td></tr>
+<tr><td>Nordics (NL, DK, SE, NO, FI)</td><td>Capped test, $5-10k max</td><td>iOS pool saturates inside $50k at frequency 3 (induik 3)</td></tr>
+</table>
+
+<h3>Stages (cost per onboarding = assumption, replaced by plan A numbers)</h3>
+<table>
+<tr><td>Stage</td><td>Budget</td><td>Cost per onboarding</td><td>Onboarded</td></tr>
+<tr><td>S1 calibrate, 4 channels, 4 weeks</td><td>$12,000</td><td>$18</td><td>667</td></tr>
+<tr><td>S2 3x daily spend on best 2</td><td>$15,000</td><td>$23</td><td>652</td></tr>
+<tr><td>S3 best channel at 10x plan-A run-rate</td><td>$18,000</td><td>$30</td><td>600</td></tr>
+<tr><td>Reserve: holdout/geo test + creative refresh (real women, new openings)</td><td>$5,000</td><td></td><td></td></tr>
+<tr><td>Total</td><td>$50,000</td><td>blended $23</td><td>~1,900</td></tr>
+</table>
+<p>D7-active: ~860 (45%, paid assumed colder) to ~1,150 (60%): $39-52 per D7-active.</p>
+<p>Start cost from Meta Health &amp; Wellness CPM $20.70 (influee/Triple Whale 2025), CTR 1-2.7%, 1 in 10 landing-to-onboarding (plan A measures the real number).</p>
+
+<h3>The ceiling: what saturates first</h3>
+<p>1. Right women, not all women: the in-market slice (recognises perimenopause, wants help) is unknown; illustratively 10% of the iOS pool saturates the UK at ~$19k and the Nordics at ~$11k (induik 3, assumption).</p>
+<p>2. Early warning: the share of signal-group applicants per channel (intent profile from plan A). When it drops, the channel is running out of the right women, days before D7 shows it.</p>
+<p>3. Creative fatigue: frequency above ~3 per week (practitioner rule, unverified); 8 openings refreshed every stage.</p>
+<p>4. Q4 CPMs (Superads: monthly CPM swings), launch lands in Nov-Dec.</p>
+
+<h3>Stop and scale rules</h3>
+<li>Scale a channel to the next stage only if cost per D7-active and signal-group share hold within 25% of the previous stage (our rule).</li>
+<li>Stop a channel when cost per D7-active rises more than 50% stage on stage, or signal-group share falls below cohort-2 levels.</li>
+
+<h3>What goes in the investor deck as proof</h3>
+<li>Cost curve per channel: cost per onboarding and per D7-active against daily spend, three stages.</li>
+<li>Signal-group share per channel (quality at day 0).</li>
+<li>D7 cohort 1 vs cohort 2 from plan A (how retention falls when selection loosens).</li>
+<li>Founding-price yes % and, after launch, real paid conversion of onboarded women.</li>
+<li>The break-even line: required conversion at each cost level. Scalable = the cost curve stays under that line for at least one channel.</li></section><section><h1>4. The measurement plan: KPIs, stop rules, A into B</h1><h2>Meetplan (vastgelegd 15:33, besluit Bjorn)</h2>
+
+<p>Principe: de eerste campagne (plan A, eerste 500) is het meetinstrument. Haar cijfers worden de benchmark voor plan B ($50k). Elke metric heeft een besluit.</p>
+
+<h3>KPI&#x27;s</h3>
+<table>
+<tr><td>Niveau</td><td>KPI</td><td>Definitie</td><td>Doel</td><td>Waarom</td></tr>
+<tr><td>Brief (officieel)</td><td>Completed onboarding</td><td>Onboarding volledig afgerond</td><td>500</td><td>Brief</td></tr>
+<tr><td>Brief (officieel)</td><td>Retained day 7</td><td>App geopend op dag 7</td><td>60% van 500 = 300</td><td>Brief, founder&#x27;s model</td></tr>
+<tr><td>Onze aanvulling 1</td><td>**Active founder D7**</td><td>Heeft binnen de eerste 7 dagen feedback gegeven in de app</td><td>te meten, doel volgt uit baseline week 1</td><td>Bewijst dat de app werkt voor haar, en dat ze de actieve, loyale feedbackgever is die de founder zoekt. Een app-open kan een tik op een reminder zijn, feedback niet</td></tr>
+<tr><td>Onze aanvulling 2</td><td>**D14 report reached**</td><td>Heeft het 14-dagenrapport voor haar arts gegenereerd</td><td>te meten</td><td>Kernwaarde van de eerste twee weken volgens de founder; sterkste signaal van echte intentie en voorbode van betalen</td></tr>
+<tr><td>Betaalsignaal</td><td>Founding price reserved</td><td>Reserveert een plek tegen de lanceringsprijs, zonder betaling</td><td>te meten</td><td>Bepaalt hoeveel een advertentie per vrouw mag kosten in plan B</td></tr>
+</table>
+
+<p>De officiële brief-KPI&#x27;s blijven leidend in de inlevering. Aanvulling 1 en 2 zijn kwaliteitslagen erbovenop, geen vervanging.</p>
+
+<h3>Funnelstappen (per user gelogd, met bron en quizprofiel)</h3>
+<p>landing -&gt; quiz start -&gt; quiz complete -&gt; application -&gt; approved -&gt; onboarding complete -&gt; D7 open -&gt; feedback D7 -&gt; D14 rapport -&gt; founding price</p>
+<p>Benchmarks stap 1-2: Adapty (40-60%, 50-70%). Stap 3-5: aannames, gemeten in week 1.</p>
+
+<h3>Uitsplitsing</h3>
+<li>Per bron (founder-kanalen apart gelabeld, Reddit, community, zoekpagina&#x27;s, referral).</li>
+<li>Per type vrouw uit de quiz (rustig/geleidelijk, duidelijke symptomen, &quot;wereld valt in een maand uiteen&quot;).</li>
+<li>Voorwaarde: de webfunnel-ID loopt door tot in de app (invite-code per user of hetzelfde e-mailadres).</li>
+
+<h3>Doorvertaling naar plan B</h3>
+<table>
+<tr><td>Uit plan A</td><td>Gebruik in plan B</td></tr>
+<tr><td>Bezoekers per onboarded vrouw, per bron</td><td>kost per onboarding = kost per klik x bezoekers per vrouw</td></tr>
+<tr><td>D7-open, Active founder D7 en D14-rapport per bron</td><td>stopregel: een kanaal dat goedkoop is maar lage D7-feedback of weinig D14-rapporten geeft, schaalt niet</td></tr>
+<tr><td>Founding price reserved</td><td>maximale kost per onboarding (break-even: $11 / $22 / $34 bij 1, 2 of 3 op 10 betalers; £85 netto x 1,32)</td></tr>
+<tr><td>D14-rapport per bron</td><td>vroege voorspeller van betalen; optimalisatie-event in plan B als het platform health-events beperkt</td></tr>
+</table>
+
+<h3>Succesmetrics campagne (na panel-review 3, 16:01)</h3>
+<p>**Score (brief):** 500 completed onboarding · 60% app geopend op dag 7.</p>
+<p>**Stuurmetric (wekelijks):** Active founders D7 = onboarded + feedback gegeven in week 1.</p>
+
+<table>
+<tr><td>Fase</td><td>Metric</td><td>Per</td><td>Stopregel / bijsturen (onze beslisregel, geen benchmark)</td></tr>
+<tr><td>Bereik</td><td>Kartrekkers benaderd -&gt; antwoord %</td><td>kartrekker, community</td><td>&lt;20% antwoord na 30 berichten: bericht herschrijven</td></tr>
+<tr><td>Bereik</td><td>Kartrekkers geactiveerd (delen link / hosten Q&amp;A)</td><td>kartrekker</td><td></td></tr>
+<tr><td>Bereik</td><td>Partners ja / benaderd</td><td>partner</td><td></td></tr>
+<tr><td>Funnel</td><td>Bezoekers per onboarded vrouw (verwacht ~10)</td><td>bron, invite-code</td><td>&gt;20 na 200 bezoekers: landingsvariant per community wisselen</td></tr>
+<tr><td>Activatie</td><td>Completed onboarding</td><td>bron, type vrouw</td><td>partner &lt;10 onboardings na 2 weken: stoppen</td></tr>
+<tr><td>Waarde</td><td>D7 open · Active founder D7 · D14-rapport</td><td>bron, type vrouw</td><td>bron met D7-open &lt;45% na 50 onboardings: stoppen, ook als hij goedkoop is</td></tr>
+<tr><td>Variatie</td><td>Dekking quota levenssituaties</td><td>type vrouw</td><td>quotum vol: die bron pauzeren voor dat type</td></tr>
+<tr><td>Referral</td><td>Gekwalificeerde referrals per active founder (onboarded + feedback week 1)</td><td>verwijzer</td><td></td></tr>
+<tr><td>Betaalsignaal</td><td>Founding price gereserveerd %</td><td>bron</td><td></td></tr>
+<tr><td>Kosten</td><td>Cash per onboarded · founder-uren per onboarded</td><td>bron</td><td></td></tr>
+<tr><td>Vertrouwen</td><td>Verwijderde posts, klachten, negatieve vermeldingen</td><td>community</td><td>1 klacht van een beheerder: stoppen in die community</td></tr>
+</table>
+
+<p>Invite-code per kartrekker en per partner is voorwaarde voor deze tabel.</p></section><section><h1>5-7. Funnel content, open questions and AI classification, GDPR, hooks and visual system</h1><h2>Funnel content: text and visuals (16:16)</h2>
+<p>Inputs: plan-A.md, hooks.md section 6 (selection, simulated Sanchez lens), Bjorn&#x27;s selection note (select on recognition + active search + fit + availability, not on symptom severity), induik 4 (ad policy), induik 5 (one ID), induik 6 (Ad Library formats).</p>
+<p>Rules: English, no em-dashes, no diagnose/cure/treat/prescribe, no outcome promise, beta stated honestly, no AI-generated people.</p>
+
+<h3>1. Entry: 4 member hooks (video, 60-90 s, real women, founder first, captions on)</h3>
+<table>
+<tr><td>#</td><td>Spoken (first ~2 s)</td><td>On-screen text</td><td>First frame A</td><td>First frame B</td><td>Driver</td></tr>
+<tr><td>1</td><td>&quot;Your doctor has ten minutes.&quot;</td><td>2 weeks. 1 page. For your GP.</td><td>Hand slides one printed page across a desk</td><td>Woman in a waiting room, page in hand</td><td>Outcome</td></tr>
+<tr><td>2</td><td>&quot;Sleep, mood, memory, cycle. All different in the same month.&quot;</td><td>4 changes. 0 connections.</td><td>Fast swipe: notes app, calendar, screenshots, sleep app</td><td>Four sticky notes on a fridge</td><td>Pain</td></tr>
+<tr><td>3</td><td>&quot;You&#x27;ve said &#x27;I&#x27;m fine&#x27; for months.&quot;</td><td>Write down what isn&#x27;t.</td><td>Woman to camera, kitchen</td><td>Woman to camera, parked car</td><td>Permission</td></tr>
+<tr><td>4</td><td>&quot;You track your runs, your sleep and your money.&quot;</td><td>Tracked everything. Except this.</td><td>Three app screens, then an empty one</td><td>Running watch, banking app, then blank notes</td><td>Identity (planner)</td></tr>
+</table>
+<p>Body (same for all 8 openings): what she did (one sentence in, a system out), what it looks like (system card), day 14 page, honest beta line.</p>
+<p>Close: &quot;We&#x27;re looking for 500 women to build the app they wish existed. [10] places are held for [community].&quot;</p>
+<p>Founder video line 1: OPEN, her own story, not written by AI.</p>
+<p>Paid note (plan B): hook 3 names a personal state; check against Meta personal-attributes rule before paid use. Hooks 1, 2, 4 are safe as written.</p>
+
+<h3>2. Landing page (one per community, own invite code)</h3>
+<li>Headline test A: &quot;A personal system built around your life. And one page your doctor can read.&quot;</li>
+<li>Headline test B (for sceptics): &quot;Most menopause apps give you content. This one gives you a record.&quot;</li>
+<li>Sub: &quot;Tell AxisX what&#x27;s changed, in your own words. It builds what to track, when to be reminded, and after two weeks a one-page summary for your appointment.&quot;</li>
+<li>Founder video (the hook video for this community).</li>
+<li>Three lines: Your data in one place · Your own dashboards and reminders · A two-week summary for your doctor.</li>
+<li>Honest box: &quot;AxisX is in closed beta on iPhone. It doesn&#x27;t diagnose or replace your doctor. We use AI to build your system; you decide what goes in.&quot;</li>
+<li>Offer: &quot;Founding 500: [10] places held for [community]. Free during beta, [incentive at launch]. In return: tell us what we haven&#x27;t accounted for.&quot;</li>
+<li>CTA: &quot;See what your system would look like&quot; (starts quiz).</li>
+
+<h3>3. Quiz = qualification (8 screens, about 2 minutes)</h3>
+<p>Selection principle: recognition + already searching + sees value in the method + can try it now. NOT symptom severity. No diagnosis required (perimenopause is recognised clinically from symptoms; NICE NG23).</p>
+<table>
+<tr><td>#</td><td>Question</td><td>Answers</td><td>Use</td></tr>
+<tr><td>0</td><td>&quot;Tell it like you&#x27;d tell a friend: what&#x27;s changed lately?&quot;</td><td>free text</td><td>Product-native start; feeds the system preview. Stored as health data, never sent to ad pixels</td></tr>
+<tr><td>1</td><td>Age</td><td>under 39 / 39-44 / 45-49 / 50-55 / 56+</td><td>Under 39: later list</td></tr>
+<tr><td>2</td><td>&quot;Which fits you best?&quot;</td><td>&quot;I&#x27;m fairly sure perimenopause has started&quot; / &quot;I suspect it has&quot; / &quot;I&#x27;m not sure it&#x27;s that&quot;</td><td>Third answer: later list (brief: not in scope now)</td></tr>
+<tr><td>3</td><td>&quot;In the last 3 months, have you...?&quot; (multi)</td><td>talked to a GP or nurse · tracked it somewhere · joined a group or forum · read up on it · nothing yet</td><td>Behaviour, not intention: strongest fit signal</td></tr>
+<tr><td>4</td><td>&quot;What would help most right now?&quot;</td><td>see patterns · prepare for my doctor · build habits that stick · feel less alone in it</td><td>Shapes preview; persona tag</td></tr>
+<tr><td>5</td><td>&quot;What does your life look like?&quot; (multi)</td><td>work full time · care for children · care for parents · shift work · lots of travel · other</td><td>Quota for variety</td></tr>
+<tr><td>6</td><td>&quot;Could you spend 2 minutes a day for the next 14 days?&quot;</td><td>yes / most days / not right now</td><td>&quot;Not right now&quot;: later list</td></tr>
+<tr><td>7</td><td>&quot;Do you use an iPhone?&quot;</td><td>yes / no</td><td>No: Android waitlist</td></tr>
+</table>
+<p>Result screen: preview of HER system (3 things to track, 2 habits, 1 reminder time, &quot;your doctor page on day 14&quot;), generated by AI from answers 0 and 4. Disclaimer under it. No score (Flo owns &quot;Perimenopause Score&quot;).</p>
+
+<h3>4. Application (after the preview)</h3>
+<li>Email (the key for TestFlight invite and in-app login).</li>
+<li>Separate consent box for health data (GDPR art. 9), separate box for emails.</li>
+<li>&quot;Will you tell us what we haven&#x27;t accounted for, on day 3, 7 and 14?&quot; yes / maybe.</li>
+<li>Pay signal: &quot;At launch the full app is planned at £100 a year. Shall we hold a founding price for you? No payment now.&quot; yes / no.</li>
+
+<h3>5. Selection model: three outcomes</h3>
+<table>
+<tr><td>Outcome</td><td>Rule (start weights, recalibrated)</td></tr>
+<tr><td>Invite now (cohort 1)</td><td>39+, recognises or suspects, at least 1 behaviour in Q3, yes to 2 min/day, iPhone, quota not full</td></tr>
+<tr><td>Cohort 2 test</td><td>Lower fit (e.g. no Q3 behaviour, &quot;maybe&quot; on feedback) plus a random 10-15% sample of all eligible applicants: comparison group for plan B</td></tr>
+<tr><td>Later</td><td>Under 39, &quot;not sure it&#x27;s that&quot;, no time now, no iPhone (Android waitlist)</td></tr>
+</table>
+<p>Recalibration after the first 50-100 onboarded: compare quiz answers with Active founder D7 and D7 open; drop questions that don&#x27;t predict, raise weight of those that do.</p>
+<p>Volume: 500 approved is not 500 onboarded. Invite to onboarding complete is an assumption of ~70% (to measure) so about 715 invites for 500 onboarded, then 60% D7 = 300.</p>
+
+<h3>6. After approval: emails and in-app moments</h3>
+<table>
+<tr><td>Day</td><td>Message</td><td>Goal</td></tr>
+<tr><td>Approval</td><td>&quot;Your place is held. Here&#x27;s your invite.&quot; (TestFlight email invite + login steps)</td><td>install + onboarding</td></tr>
+<tr><td>0</td><td>Welcome from the founder (text, her voice)</td><td>onboarding complete</td></tr>
+<tr><td>3</td><td>&quot;What haven&#x27;t we accounted for?&quot; (in-app, 1 question)</td><td>Active founder D7</td></tr>
+<tr><td>7</td><td>&quot;One week in. What would you change?&quot;</td><td>D7 open + feedback</td></tr>
+<tr><td>13</td><td>&quot;Your doctor page is ready tomorrow.&quot;</td><td>D14 report</td></tr>
+<tr><td>14</td><td>Report + &quot;You have 3 founding invites. Who should have one?&quot;</td><td>report + referral</td></tr>
+</table>
+
+<h3>7. Visual system (one recognisable asset)</h3>
+<li>**System card** (distinctive asset, in every piece): one card per real member (consented, anonymised), showing her system: e.g. &quot;07:00 tablet, 1 h before food · 12:00 protein · 17:00 how do I feel?&quot; Same layout, colours and type every time. AI renders the card from consented data; no faces generated.</li>
+<li>**Doctor page** mock: generic, no real data, &quot;2 weeks. 1 page.&quot; as visual promise.</li>
+<li>**Video**: phone-shot talking head, captions, full sentence on the first frame (format of the long runners in the category: Flo 202-215 days, BioID 214-435 days, induik 6).</li>
+<li>**Series &quot;No two systems alike&quot;**: carousel of system cards from members, the opposite of the founder&#x27;s synthetic-persona idea.</li>
+<li>AI&#x27;s role in visuals: card rendering, captions, cutting 8 openings, resizing. Never people, never voices.</li>
+
+<h3>8. What A gives B (tags on everything)</h3>
+<p>Every visit carries: community, invite code, hook #, first-frame A/B, landing headline A/B, persona (Q4), cohort (1/2). Output for plan B:</p>
+<li>winning hook + frame per D7 (not per click) = first paid creatives;</li>
+<li>step rates landing -&gt; quiz -&gt; application -&gt; onboarding = funnel benchmark;</li>
+<li>cohort 1 vs cohort 2 D7 = how much retention falls when selection loosens (what paid will look like);</li>
+<li>founding-price yes % = max affordable cost per onboarding.</li>
+
+<p>---</p>
+<h3>9. DECISION 16:22 (Bjorn): open questions + AI classification (replaces the closed quiz in section 3; section 5 rules become the classifier output)</h3>
+<p>Principle: she tells her own story, the same way the app works. AI reads it, labels it, and the selection runs on signals in her own words, not on tick boxes.</p>
+
+<h4>9.1 What she sees (4 open questions + 5 hard facts)</h4>
+<p>Open (free text, voice input allowed):</p>
+<p>1. &quot;Tell it like you&#x27;d tell a friend: what&#x27;s changed lately?&quot;</p>
+<p>2. &quot;What have you already tried to make sense of it?&quot;</p>
+<p>3. &quot;What would make the next two weeks worth it for you?&quot;</p>
+<p>4. &quot;What&#x27;s going on in your life right now that any plan has to fit around?&quot;</p>
+<p>Hard facts (closed, needed for eligibility): age band · iPhone yes/no · &quot;2 minutes a day for 14 days?&quot; · email · consent (health data, separate box) · founding price yes/no.</p>
+
+<h4>9.2 What the AI labels (one JSON per applicant, rubric fixed in advance)</h4>
+<table>
+<tr><td>Signal</td><td>Values</td><td>Example words/phrases it listens for</td></tr>
+<tr><td>recognition</td><td>explicit / suspected / none / not-me</td><td>&quot;perimenopause&quot;, &quot;peri&quot;, &quot;my hormones&quot;, &quot;my GP said it&#x27;s...&quot;, cycle changes named as such</td></tr>
+<tr><td>active_search (0-3)</td><td>count of actions</td><td>&quot;saw my GP&quot;, &quot;I track in my notes&quot;, &quot;joined a group&quot;, &quot;read everything&quot;, &quot;tried supplements&quot;</td></tr>
+<tr><td>method_fit</td><td>high / medium / low</td><td>wants to see patterns, own record, prepare for doctor (high) vs wants a quick fix, a diagnosis or a prescription (low)</td></tr>
+<tr><td>intent_commitment</td><td>strong / some / none</td><td>&quot;I&#x27;m ready to&quot;, &quot;I want to finally&quot;, &quot;I need a plan&quot;, concrete goal for two weeks</td></tr>
+<tr><td>urgency</td><td>sudden / gradual</td><td>&quot;within a month&quot;, &quot;out of nowhere&quot;, &quot;suddenly&quot; vs &quot;slowly&quot;, &quot;over the past year&quot;</td></tr>
+<tr><td>life_context tags</td><td>multi</td><td>work, children, parents, shifts, travel, health conditions mentioned (quota only)</td></tr>
+<tr><td>safety_flag</td><td>yes / no</td><td>crisis language: no selection decision, she gets a signposting message to professional help</td></tr>
+<tr><td>rationale</td><td>1 sentence</td><td>why these labels (audit trail)</td></tr>
+</table>
+<p>Instruction to the model: judge content, not writing style or length; no diagnosis; output only the schema.</p>
+
+<h4>9.3 Three groups (all inside the brief&#x27;s segment: 39+, recognises or suspects perimenopause)</h4>
+<table>
+<tr><td>Group</td><td>Who</td><td>Share of invites</td></tr>
+<tr><td>Signal group (cohort 1)</td><td>recognition explicit/suspected + active_search &gt;= 1 + method_fit high/medium + commitment strong/some</td><td>~85%</td></tr>
+<tr><td>Contrast group (cohort 2)</td><td>eligible, in segment, but WITHOUT the signals (low search, low commitment), randomly sampled</td><td>~15%</td></tr>
+<tr><td>Later</td><td>under 39, &quot;not-me&quot; (not recognising perimenopause: out of scope per brief), no iPhone, no time now</td><td>0% now, kept on a list with consent</td></tr>
+</table>
+<p>The contrast group is the test: if they retain as well as the signal group, our signals don&#x27;t matter and paid can buy broadly; if they retain much worse, the signals are the filter plan B must find in paid traffic.</p>
+
+<h4>9.4 Calibration</h4>
+<li>Before go-live: the founder and one team member label the same 50 answers by hand; AI vs human agreement must reach 80% per signal (our rule) or the rubric is rewritten.</li>
+<li>After 100 onboarded: per signal, compare D7 open and Active founder D7 (with vs without signal). Keep signals with clear lift, drop the rest, re-weight. Repeat at 300.</li>
+<li>Output: a validated &quot;intent profile&quot; (which words and actions predict day 7 in this audience).</li>
+
+<h4>9.5 Technical set-up</h4>
+<p>1. Quiz in web2wave with open text fields; on submit a webhook sends answers + user_id to the AxisX backend.</p>
+<p>2. Backend calls an LLM with structured output (fixed JSON schema), temperature 0, prompt and model version stored with every result.</p>
+<p>3. Labels + score go to the application table (sheet/CRM) next to email, invite code and hook tags. Raw text stays in the health-data store, not in marketing tools.</p>
+<p>4. Rules engine: signal group -&gt; auto-approve within quota; contrast group -&gt; random draw; &quot;later&quot; and borderline cases -&gt; human review queue (founder/team), never an automatic rejection.</p>
+<p>5. Approved -&gt; TestFlight email invite -&gt; in-app login with the same email -&gt; events (onboarding_complete, app_open, feedback_given, report_pdf_created) keyed on user_id.</p>
+<p>6. Weekly join: labels x events = lift table per signal, per community, per hook.</p>
+<p>Cost: covered by the $400 AI-quiz token line in plan A (about 4,000 applicants, short texts); check against current model pricing before launch.</p>
+
+<h4>9.6 GDPR / trust</h4>
+<li>Free text about symptoms is health data (GDPR art. 9): explicit consent naming both purposes (building her preview, selecting founding members).</li>
+<li>No solely automated rejection (art. 22): every &quot;later&quot; and borderline decision is checked by a person; she can ask for review.</li>
+<li>LLM provider under a data processing agreement, no training on her data; EU/UK processing where available.</li>
+<li>Retention: applicants not admitted -&gt; raw text deleted after 30 days, only aggregated labels kept. Admitted -&gt; text becomes part of her own app system, under the app&#x27;s privacy terms.</li>
+<li>Never to ad platforms: no raw text, no labels, no quiz events with health meaning.</li>
+<li>Bias check weekly: approval rate per life_context tag and per answer length; if short or non-native writers are approved less, fix the rubric.</li>
+
+<h4>9.7 Why this matters for plan B</h4>
+<p>The intent profile is a day-0 quality signal per channel. In the $50k test we see within days, not weeks, whether a paid channel sends signal-group women or contrast-group women, before any D7 data exists. That makes saturation visible early: when a channel&#x27;s share of signal-group applicants drops, the channel is running out of the right women.</p>
+
+<h3>10. DECISION 16:25 (Bjorn): founding price for EVERY applicant</h3>
+<p>Everyone who applies to the Founders Circle (admitted now, cohort 2, or &quot;later&quot;) gets a founding price on the full app at launch: [£X a year instead of £100, proposal £70 = 30% off, to be set by the founder].</p>
+<li>Trigger to apply: value even if she is not admitted now, so no applicant leaves empty-handed (also protects against the negativity the founder fears).</li>
+<li>Copy (landing + application): &quot;Apply and your founding price is locked in, whether you join now or at launch.&quot;</li>
+<li>Turns the application list into a launch list with a price reason to come back on release day.</li>
+<li>Pay signal stays: &quot;Lock in my founding price&quot; (yes/no, no payment) is the measure of willingness to pay, per group and per channel.</li>
+<li>Economics: at £70 the net per payer is £70 x 0.85 = £59.50 (vs £85), so break-even per onboarding is 30% lower. Plan B models both prices; the founding price applies only to founding applicants, not to paid-acquired users later.</li></section><section><h1>8. Models (recompute every number)</h1><pre>&quot;&quot;&quot;Funnelmodel AxisX: plan A ($5k, geen paid) en plan B ($50k, paid).
+Elke aanname heeft een bron of het label ASSUMPTION (te meten op de eerste 500).
+&quot;&quot;&quot;
+
+DOEL_ONBOARDED = 500          # brief
+D7 = 0.60                     # brief (founder&#x27;s model)
+
+# Stapconversies webfunnel
+STAPPEN = [
+    (&quot;landing -&gt; quiz start&quot;, 0.50, &quot;Adapty web-to-app: 40-60%&quot;),
+    (&quot;quiz start -&gt; quiz complete&quot;, 0.60, &quot;Adapty web-to-app: 50-70%&quot;),
+    (&quot;quiz complete -&gt; application&quot;, 0.70, &quot;ASSUMPTION (Adapty quiz-&gt;paywall 70-85% als proxy)&quot;),
+    (&quot;application -&gt; approved (fit + quota)&quot;, 0.70, &quot;ASSUMPTION, onze selectiekeuze&quot;),
+    (&quot;approved -&gt; onboarding complete (TestFlight)&quot;, 0.70, &quot;ASSUMPTION, te meten&quot;),
+]
+
+
+def funnel():
+    tot = 1.0
+    for naam, r, bron in STAPPEN:
+        tot *= r
+    return tot
+
+
+def plan_a():
+    conv = funnel()
+    k = 0.20                    # K-factor-benchmark &gt;0,20 &#x27;zeer goed&#x27; (blogbronnen, onderzoek-concurrentie-ai.md)
+    via_referral = DOEL_ONBOARDED * k
+    top = DOEL_ONBOARDED - via_referral
+    bezoekers = top / conv
+    print(&quot;PLAN A&quot;)
+    for naam, r, bron in STAPPEN:
+        print(f&quot;  {naam:45s} {r:.0%}  ({bron})&quot;)
+    print(f&quot;  landing -&gt; onboarding complete: {conv:.1%}&quot;)
+    print(f&quot;  onboarded via referral (K=0.20): {via_referral:.0f}; via funnel: {top:.0f}&quot;)
+    print(f&quot;  landing-bezoekers nodig: {bezoekers:,.0f}&quot;)
+    print(f&quot;  dag-7 actief bij 60%: {DOEL_ONBOARDED*D7:.0f}&quot;)
+    budget = {
+        &quot;Web funnel + quiz builder + analytics&quot;: 1200,
+        &quot;LLM tokens (AI quiz preview, rebuild of system preview)&quot;: 600,
+        &quot;Content generation from real systems (visuals, short video)&quot;: 1500,
+        &quot;Answer pages (search + AI answer engines), generation + hosting&quot;: 400,
+        &quot;Founding Circle community space (beta)&quot;: 600,
+        &quot;Reserve (tests, extra tokens)&quot;: 700,
+    }
+    print(f&quot;  budget totaal: ${sum(budget.values()):,}&quot;)
+    for k_, v in budget.items():
+        print(f&quot;    {k_}: ${v:,}&quot;)
+    print(f&quot;  kosten per onboarded user (cash): ${sum(budget.values())/DOEL_ONBOARDED:.2f}&quot;)
+    return conv
+
+
+def kosten_per_onboarding(cpm, ctr, conv):
+    cpc = cpm / (1000 * ctr)
+    return cpc, cpc / conv
+
+
+def plan_b(conv):
+    print(&quot;\nPLAN B&quot;)
+    cpm = 20.70   # Meta Health &amp; Wellness 2025, influee.co (Triple Whale data)
+    for ctr in (0.010, 0.0270):  # 2,70% = benchmark influee; 1,0% = conservatief (ASSUMPTION)
+        cpc, cpo = kosten_per_onboarding(cpm, ctr, conv)
+        print(f&quot;  Meta CPM ${cpm} CTR {ctr:.1%}: CPC ${cpc:.2f}, kost per onboarding ${cpo:.2f}&quot;)
+    # Google Search: CPC $5,26 gemiddeld alle branches (secundair), zoekintentie -&gt; ASSUMPTION hogere conversie
+    for conv_s in (conv, conv * 1.5):
+        print(f&quot;  Google CPC $5.26, conv {conv_s:.1%}: kost per onboarding ${5.26/conv_s:.2f}&quot;)
+    # Creators: micro Reel $800-2.500 (Later 2026). ASSUMPTION: 20-60 onboardings per Reel
+    print(f&quot;  Creator Reel $1,500 / 20-60 onboardings: ${1500/60:.0f}-${1500/20:.0f}&quot;)
+
+    # Getrapt plan met stijgende kosten (verzadiging). Startkost en stijging = ASSUMPTION, te meten.
+    trappen = [(&quot;Stage 1: find the price, 4 channels&quot;, 10000, 20.0),
+               (&quot;Stage 2: 3x spend on best 2&quot;, 15000, 26.0),
+               (&quot;Stage 3: 3x again on best 1, find the break&quot;, 20000, 34.0)]
+    reserve = 5000
+    tot_users = 0
+    print(&quot;  Trappen (kost per onboarding stijgt ~30% per stap, ASSUMPTION):&quot;)
+    for naam, geld, cpo in trappen:
+        n = geld / cpo
+        tot_users += n
+        print(f&quot;    {naam}: ${geld:,} / ${cpo:.0f} = {n:,.0f} onboarded&quot;)
+    print(f&quot;    Reserve measurement + creative: ${reserve:,}&quot;)
+    print(f&quot;  totaal onboarded: {tot_users:,.0f}; blended ${45000/tot_users:.2f} per onboarding&quot;)
+    for d7 in (0.40, 0.60):
+        print(f&quot;  dag-7 actief bij {d7:.0%}: {tot_users*d7:,.0f}&quot;)
+    # Betalers: prijs GBP 100/jaar (brief). Free-&gt;paid onbekend: scenario 5/10/20% (ASSUMPTION)
+    for p in (0.05, 0.10, 0.20):
+        print(f&quot;  betalers bij {p:.0%} van onboarded: {tot_users*p:,.0f}  (omzet jaar 1 ~GBP {tot_users*p*100:,.0f})&quot;)
+
+
+def break_even():
+    # GBP 100/jaar (brief). Apple Small Business Program: 15% commissie (developer.apple.com/app-store/small-business-program/)
+    netto = 100 * 0.85
+    print(&quot;\nBREAK-EVEN (jaar-1 netto omzet per betaler GBP %.0f, payback 12 maanden)&quot; % netto)
+    for p in (0.10, 0.20, 0.30):
+        print(f&quot;  free-&gt;paid {p:.0%} van onboarded: max kost per onboarding GBP {netto*p:.2f}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    plan_b(plan_a())
+    break_even()
+
+
+&quot;&quot;&quot;Plan B ($50k): getrapte test. Aannames gelabeld; benchmarks met bron in onderzoek-paid.md, induik-2/3.&quot;&quot;&quot;
+FX = 1.32  # currency-converter.org.uk, 4 okt 2026
+STAGES = [  # naam, budget, kost per onboarding (ASSUMPTION: start uit Meta CPM $20.70 / CTR 1-2.7% / 1 op 10, +~30% per stap)
+    (&quot;S1 calibrate, 4 channels&quot;, 12000, 18.0),
+    (&quot;S2 3x daily spend, best 2&quot;, 15000, 23.0),
+    (&quot;S3 10x plan-A run-rate, best 1&quot;, 18000, 30.0),
+]
+RESERVE = 5000  # holdout/geo test + creative refresh
+tot = 0
+for n, b, c in STAGES:
+    u = b / c; tot += u
+    print(f&quot;{n}: ${b:,} / ${c:.0f} = {u:,.0f} onboarded&quot;)
+print(f&quot;Total {tot:,.0f} onboarded, blended ${45000/tot:.2f}; reserve ${RESERVE:,}&quot;)
+for d7 in (0.45, 0.60):  # 45% = ASSUMPTION paid colder than plan A; replaced by cohort-2 D7 from plan A
+    print(f&quot;  D7 {d7:.0%}: {tot*d7:,.0f} active, ${45000/(tot*d7):.0f} per D7-active&quot;)
+for price in (100, 70):  # list price (brief) vs founding price (Bjorn 16:25)
+    net = price * 0.85 * FX
+    for c in (0.029, 0.062, 0.107):  # RevenueCat 2026: H&amp;F median, H&amp;F top quartile, hard paywall
+        print(f&quot;  price £{price}, paid {c:.1%}: {tot*c:,.0f} payers, value per onboarding ${net*c:.2f}&quot;)
+print(&quot;Break-even conversion at blended cost:&quot;, f&quot;{(45000/tot)/(100*0.85*FX):.1%} (list) / {(45000/tot)/(70*0.85*FX):.1%} (founding)&quot;)
+
+
+# output
+S1 calibrate, 4 channels: $12,000 / $18 = 667 onboarded
+S2 3x daily spend, best 2: $15,000 / $23 = 652 onboarded
+S3 10x plan-A run-rate, best 1: $18,000 / $30 = 600 onboarded
+Total 1,919 onboarded, blended $23.45; reserve $5,000
+  D7 45%: 863 active, $52 per D7-active
+  D7 60%: 1,151 active, $39 per D7-active
+  price £100, paid 2.9%: 56 payers, value per onboarding $3.25
+  price £100, paid 6.2%: 119 payers, value per onboarding $6.96
+  price £100, paid 10.7%: 205 payers, value per onboarding $12.01
+  price £70, paid 2.9%: 56 payers, value per onboarding $2.28
+  price £70, paid 6.2%: 119 payers, value per onboarding $4.87
+  price £70, paid 10.7%: 205 payers, value per onboarding $8.40
+Break-even conversion at blended cost: 20.9% (list) / 29.9% (founding)
+</pre></section></body></html>
