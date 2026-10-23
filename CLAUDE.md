@@ -21,7 +21,7 @@ Werkplaats en kennisbank van Bjorn voor performance marketing, analytics en AI i
 
 ## Skills (in `.claude/skills/`)
 Volgorde in een ronde: `ronde-start` → `brief-lezer` → (`panel-review`) → `data-doorrekenen` → (`panel-review`) → `kpi-optimalisatie` / `kanaalkeuze-budget` / `budget-prognose` → `hypotheses-en-tests` → `creative-brief-ai` → `panel-review` → `case-update` (telkens als er een update komt) → `inlever-check` → `ai-fouten-log`.
-Overig: `concurrentie-onderzoek` (Loudbox, Meta Ad Library), `persona-bouwer`, `advertentieteksten`, `landingspagina-audit`, `meetplan`, `jury-pitch`, `ai-oplossing-pitch` (AI-voorstel voor een merk, bv. Fabergé), `luxe-merkpoort` (toets bij luxe merken).
+Overig: `concurrentie-onderzoek` (Loudbox, Meta Ad Library), `persona-bouwer`, `advertentieteksten`, `landingspagina-audit`, `meetplan`, `jury-pitch`, `ai-oplossing-pitch` (AI-voorstel voor een merk, bv. Fabergé), `luxe-merkpoort` (toets bij luxe merken), `web2wave-hackathon` (volledige Web2Wave-hackathonflow: doelgroepen, creative-onderzoek, generatie, quizfunnel met paywall; Engelstalig, van github.com/web2wave/skills; vereist de Web2Wave-MCP).
 Panel: `knowledge/panel/panel.md` (standaard Seufert, Kaushik, Ritson, Sharp, Sanchez; reserves Binet, Sutherland, Holiday). Simulatie op publiek werk: geen verzonnen citaten, geen namen in de inlevering.
 
 ## Harde werkregels
