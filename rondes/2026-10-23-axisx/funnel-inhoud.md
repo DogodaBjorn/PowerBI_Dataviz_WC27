@@ -134,3 +134,11 @@ Cost: covered by the $400 AI-quiz token line in plan A (about 4,000 applicants, 
 
 ### 9.7 Why this matters for plan B
 The intent profile is a day-0 quality signal per channel. In the $50k test we see within days, not weeks, whether a paid channel sends signal-group women or contrast-group women, before any D7 data exists. That makes saturation visible early: when a channel's share of signal-group applicants drops, the channel is running out of the right women.
+
+## 10. DECISION 16:25 (Bjorn): founding price for EVERY applicant
+Everyone who applies to the Founders Circle (admitted now, cohort 2, or "later") gets a founding price on the full app at launch: [£X a year instead of £100, proposal £70 = 30% off, to be set by the founder].
+- Trigger to apply: value even if she is not admitted now, so no applicant leaves empty-handed (also protects against the negativity the founder fears).
+- Copy (landing + application): "Apply and your founding price is locked in, whether you join now or at launch."
+- Turns the application list into a launch list with a price reason to come back on release day.
+- Pay signal stays: "Lock in my founding price" (yes/no, no payment) is the measure of willingness to pay, per group and per channel.
+- Economics: at £70 the net per payer is £70 x 0.85 = £59.50 (vs £85), so break-even per onboarding is 30% lower. Plan B models both prices; the founding price applies only to founding applicants, not to paid-acquired users later.

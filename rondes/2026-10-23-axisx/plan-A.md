@@ -33,7 +33,7 @@ Totaal 500. Bij 1 op 10 (koud) tot 1 op 5 (warm) ongeveer 3.000-4.000 bezoekers.
 Gereserveerde plekken voor haar leden · geanonimiseerd inzichtrapport terug · live Q&A met de founder · geen verplichting claims te onderschrijven.
 
 ## Loyalty en referral (voorstel, kosten nul cash nu)
-Founding member: 12 maanden gratis bij lancering · Founding advisor (top 50 meest actieve feedbackgevers): kernpakket blijvend gratis · vriendin: 3 maanden gratis na toelating · verwijzer: extra maanden na 2 gekwalificeerde referrals. Feedback die het product verandert wordt teruggemeld ("you shaped this").
+Founding price voor ELKE aanmelder (ook niet toegelaten), voorstel £70 i.p.v. £100 (besluit Bjorn 16:25) · Founding member: 12 maanden gratis bij lancering · Founding advisor (top 50 meest actieve feedbackgevers): kernpakket blijvend gratis · vriendin: 3 maanden gratis na toelating · verwijzer: extra maanden na 2 gekwalificeerde referrals. Feedback die het product verandert wordt teruggemeld ("you shaped this").
 
 ## AVG en AI-werkwijze (besluit Bjorn 16:07)
 - AI analyseert alleen openbare gesprekken op themaniveau (vragen, taal, behoeften, moderatieregels). Geen gezondheidsprofielen van personen.
