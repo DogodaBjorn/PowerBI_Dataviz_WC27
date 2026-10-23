@@ -1,0 +1,13 @@
+S1 calibrate, 4 channels: $12,000 / $18 = 667 onboarded
+S2 3x daily spend, best 2: $15,000 / $23 = 652 onboarded
+S3 10x plan-A run-rate, best 1: $18,000 / $30 = 600 onboarded
+Total 1,919 onboarded, blended $23.45; reserve $5,000
+  D7 45%: 863 active, $52 per D7-active
+  D7 60%: 1,151 active, $39 per D7-active
+  price £100, paid 2.9%: 56 payers, value per onboarding $3.25
+  price £100, paid 6.2%: 119 payers, value per onboarding $6.96
+  price £100, paid 10.7%: 205 payers, value per onboarding $12.01
+  price £70, paid 2.9%: 56 payers, value per onboarding $2.28
+  price £70, paid 6.2%: 119 payers, value per onboarding $4.87
+  price £70, paid 10.7%: 205 payers, value per onboarding $8.40
+Break-even conversion at blended cost: 20.9% (list) / 29.9% (founding)
