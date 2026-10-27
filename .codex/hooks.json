@@ -1,0 +1,41 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash 'e:\\PowerBI Set-up\\wc-round-3\\.codex\\hooks\\block-destructive.sh'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash 'e:\\PowerBI Set-up\\wc-round-3\\.codex\\hooks\\validate-pbip-json.sh'"
+          },
+          {
+            "type": "command",
+            "command": "bash 'e:\\PowerBI Set-up\\wc-round-3\\.codex\\hooks\\validate-tmdl.sh'"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash 'e:\\PowerBI Set-up\\wc-round-3\\.codex\\hooks\\check-project-state.sh'"
+          }
+        ]
+      }
+    ]
+  }
+}
