@@ -89,3 +89,13 @@ Input: `campagne-input.md`, weekschema uit chat 15:54, voorstel Bjorn: founder b
 
 ## Review 4 (16:10): hookselectie, alleen Sanchez
 Input: `hooks.md`. Selectie in sectie 6 daar. Kern: 4 ledenhooks over 4 value drivers (outcome, pain, identiteit, planner), P3 ingekort tot "Your doctor has ten minutes."; 8 openingen (4 hooks x 2 eerste beelden), body gelijk; echte vrouwen, founder voorop, 60-90 s met ondertitels. Leiders: 4 houden, Peanut eruit, plekken per community van 50 naar 10 (sluit aan op review 3). Open: het eigen verhaal van de founder, niet door AI te schrijven.
+
+## Review 5 (17:15): deck-artifact, alleen begrijpelijkheid
+Input: `inlevering/deck-artifact.html` (live artifact, 8 slides). Vraag: snapt een jurylid wat er staat, volgt hij de cijfers en de kleine bijschriften? Geen inhoudelijke review.
+- Kaushik: de vijf tegels op slide 4 noemen een cijfer zonder te zeggen wat je ermee beslist ("expected about 10 to 1", "judged on day 7, not clicks"). Fix: per tegel twee zinnen, wat het is en wat het beslist.
+- Seufert: slide 3 en 5 zijn stenotaal ("One ID, four events", "signal share hold within 25%; stop at +50%", "ten times plan A's run-rate"). Fix: regels uitschrijven, holdout in zes woorden uitleggen.
+- Ritson: "What it is not asking: volume, women in denial, paid conversion now, or plan A times ten" en "Not the census" zijn notities voor onszelf. Fix: gewone zinnen.
+- Sharp: het voorbeeldkaartje (07:00 tablet, 1 h before food) is als merkasset goed, maar de slide zegt niet wat het is of waar het terugkomt. Fix: kop boven het kaartje.
+- Sanchez: "hook" en "winning hook" betekenen voor een jury niets. Fix: "opening video", hook tussen haakjes.
+- Bjorn (moderator neemt over): "what a woman is worth" (slide 5 label, slide 6 kop, "a payer is worth £85", appendix §1-2 koppen) reduceert een vrouw tot omzet. Overal vervangen door "what a subscription earns back". Rekensom ongewijzigd (£100 - 15% Apple = £85).
+Geen meningsverschil. Alles doorgevoerd in deck-artifact.html (artifact v2 en v3), deck.html, beide appendix-bestanden; PDF's opnieuw gemaakt en per slide op overloop gecheckt (slide 5 ingekort).
