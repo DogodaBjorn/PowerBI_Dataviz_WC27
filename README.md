@@ -25,3 +25,6 @@ Kennisbank, skills en rekenhulpen voor AI-marketing, performance marketing en an
 | `scripts/` | `kpi_calc.py`, `woordcheck.py`, `prognose.py` (alleen standaardbibliotheek) |
 
 Items gemarkeerd met [CHECK] in de kennisbank zijn niet geverifieerd of kunnen verouderd zijn.
+
+---
+Part of the workspace of Björn Kats (DoGoDa). Map, status of all repos and agent briefings: [DogodaBjorn/workspace](https://github.com/DogodaBjorn/workspace) (private) · public overview: [github.com/DogodaBjorn](https://github.com/DogodaBjorn).
