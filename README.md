@@ -1,3 +1,9 @@
+# wc-round-3: World Champs round 3 build
+
+Entry of Björn Kats (DoGoDa) for the Power BI Dataviz World Champs BCN 26, round 3, built on the pbi-atelier lifecycle. Status: `project/project-state/status.yaml` (stage 6 held on 2026-08-05, pending validator waivers). Mission brief: `MISSION-wc-round-3.md`. Contest data stays local. Below is the pbi-atelier template README that this project was started from.
+
+---
+
 # pbi-atelier
 
 **An agent-driven studio for building premium Power BI reports, start to finish.**
@@ -79,3 +85,6 @@ The content of this repository is MIT-licensed — see [LICENSE](LICENSE).
 External tools it drives (notably the `pbir` CLI) have their **own licenses,
 including non-commercial terms**; read [DEPENDENCIES.md](DEPENDENCIES.md) before
 using them in paid work.
+
+---
+Part of the workspace of Björn Kats (DoGoDa). Map, status of all repos and agent briefings: [DogodaBjorn/workspace](https://github.com/DogodaBjorn/workspace) (private) · public overview: [github.com/DogodaBjorn](https://github.com/DogodaBjorn).
