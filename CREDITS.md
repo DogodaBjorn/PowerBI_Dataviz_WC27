@@ -48,6 +48,42 @@ adopt a new idea into it, add its source here in the same change
 | **Nielsen Norman Group** | Evidence-based dashboard usability. | source register |
 | **W3C** ([WCAG 2.2](https://www.w3.org/TR/WCAG22/)) | The accessibility criteria our contrast script and audit implement. | a11y-studio, check_contrast.py |
 
+## The dashboard canon (dataviz-canon skill)
+
+Re-derived from a merged research synthesis (2026-11-05; see
+`research/log/2026-11-05-dataviz-best-in-class-canon.md`). Nothing copied;
+each principle in `references/canon.md` carries a `DC-nnn` id and names its
+source. Credits below are additional to the method and standards table above
+(Tufte, Knaflic, FT/Alan Smith, IBCS, Nielsen Norman and W3C already stand
+there and are reused by the canon).
+
+| Who | What we owe them | Where it lands |
+|---|---|---|
+| **Stephen Few** (*Information Dashboard Design*, *Show Me the Numbers*, Perceptual Edge) | The dashboard definition (monitoring, one screen, at a glance), the bullet graph as the gauge's replacement, the critique of memorability research, the accessibility position we answer. | dataviz-canon DC-001, 017, 033, 042 |
+| **Alberto Cairo** (*The Functional Art*, *How Charts Lie*) | Truthful, functional, beautiful, insightful, enlightening as five qualities; how readers get misled. | dataviz-canon DC-001 |
+| **Jonathan Schwabish, Claus Wilke, Andy Kirk** | Chart catalogue, principled form choice, the design process context → data → editorial → design. | dataviz-canon DC-033, 038 |
+| **Nick Desbarats** (Practical Reporting) | Display taxonomy (name which kind of display you build); why Good/Satisfactory/Poor bands and percent-deviation flags mislead. | dataviz-canon DC-017, 039 |
+| **Steve Wexler, Jeffrey Shaffer, Andy Cotgreave, Amanda Makulec** (*The Big Book of Dashboards*, *Dashboards That Deliver*) | The broader dashboard definition and scenario-based critique. | dataviz-canon DC-017 |
+| **Dona Wong** (*WSJ Guide to Information Graphics*) | Number formatting, scale and labeling rules for business charts. | dataviz-canon DC-036, 038 |
+| **Lisa Charlotte Muth** ([Datawrapper](https://www.datawrapper.de/blog/)) | Grey as the most important color; emphasize with color; light-grey diverging midpoints. | dataviz-canon DC-037 |
+| **William Cleveland & Robert McGill; Jeffrey Heer & Michael Bostock; Jock Mackinlay; Jacques Bertin; Colin Ware; Tamara Munzner & Matthew Brehmer; Ben Shneiderman** | The perceptual ranking of encodings and its replication; visual variables and pre-attentive attributes; the task typology; overview first, zoom and filter, details on demand. | dataviz-canon DC-010, 011, 015, 016 |
+| **John Sweller** (Cognitive Load Theory) | Intrinsic, extraneous and germane load; the split-attention effect behind direct labeling. | dataviz-canon DC-012 |
+| **Alper Sarikaya, Michael Correll, Lyn Bartram, Melanie Tory, Danyel Fisher; Benjamin Bach et al.** | The dashboard design space and genres (TVCG 2019); dashboard design patterns (TVCG 2023). | dataviz-canon DC-019 |
+| **Scott Bateman et al.; Michelle Borkin et al.** | The memorability evidence that frames the chartjunk debate. | dataviz-canon DC-014 |
+| **Jessica Hullman, Matthew Kay, Lace Padilla** | Uncertainty visualization: hypothetical outcome plots, the deterministic construal error, labeled bands. | dataviz-canon DC-020, audit B7 |
+| **Robert Kaplan & David Norton** (Balanced Scorecard) | Outcomes balanced with drivers; leading and lagging indicators. | dataviz-canon DC-022 |
+| **Richard Wang & Diane Strong** | Data quality as the consumer experiences it (intrinsic, contextual, representational, accessibility). | dataviz-canon DC-023, audit C3 |
+| **IBCS Association** (Jürgen Faisst, Diego Berea et al.) and **ISO** | ISO 24896:2026 Notation for Business Reporting, which lifts the IBCS notation to an international standard. | dataviz-canon DC-037, §6 |
+| **Kurt Buhler** ([SQLBI](https://www.sqlbi.com/) and [Data Goblins](https://data-goblins.com/)) *(canon adoption)* | The 3-30-300 rule; "useful before beautiful"; the Excel lift-and-shift failure mode; report-specific objects; the Copilot critique. | dataviz-canon DC-004, 016, 030, 054, 071 |
+| **Marco Russo & Alberto Ferrari** ([SQLBI](https://www.sqlbi.com/)) *(canon adoption)* | Calculation-group precedence, dynamic format strings, the "shades of grey" stance on pie charts. | dataviz-canon DC-035, 056 |
+| **Ruben Van de Voorde** ([Tabular Editor blog](https://tabulareditor.com/blog/)) | What "good" means in a Power BI report: time-to-insight, hidden states, self-filtering KPIs, the maintenance cost of elaborate cards. | dataviz-canon DC-031, 040, 051 |
+| **Chris Webb** ([Crossjoin](https://blog.crossjoin.co.uk/)) | The 32,766-character text-value fact and the chunked-image workaround; Copilot AI-instruction practice. | dataviz-canon DC-053 |
+| **Miguel Myers and the Power BI Core Visuals team** *(canon adoption)* | The core-visuals vision (new card, reference labels, button slicer) as the native path for KPI cards. | dataviz-canon DC-051 |
+| **Benn Stancil; Simon Späti** | The "BI is dead" debate and its rebuttal: semantics and governance matter more under AI. | dataviz-canon DC-071 |
+| **Gartner** | The analytics capability ladder (descriptive to prescriptive) used to classify page purpose. | dataviz-canon DC-018 |
+| **Microsoft Learn authors** | Copilot limits and Prep-data-for-AI; implementation-planning test categories; RLS/OLS behavior with workspace roles. | dataviz-canon DC-060, 061, 070 |
+
+
 ## Skill repositories whose ideas were adopted
 
 Same rule as everywhere else: nothing copied — each idea is re-expressed in

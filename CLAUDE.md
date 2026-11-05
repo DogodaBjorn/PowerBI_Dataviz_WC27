@@ -91,6 +91,7 @@ The daily driver is `/next` — it reads the state, reports gate status, and rou
 |---|---|
 | TMDL / DAX / PBIR conventions | skills `tmdl-patterns`, `dax-patterns`, `pbir-authoring` |
 | Visual choice, page layout, polish | `design/` docs + skills `design-critique`, `dataviz-polish`, `chart-grounding` (canon judgment layer for chart choice, scales and chart words) |
+| Is this report best in class? (audit, contest prep, KPI anatomy, what the canon says) | skill `dataviz-canon` (dashboard-level canon with DC-ids + the 20-dimension audit) |
 | Brand kit → theme | skill `theme-from-brand-kit` (kits in `design/brand-kits/`) |
 | Driving the `pbir` CLI / MS plugin | adapter skills `pbir-cli`, `ms-authoring` |
 | Full validation sweep | skill `validate-project` |

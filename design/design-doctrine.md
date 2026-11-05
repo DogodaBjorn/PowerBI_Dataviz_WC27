@@ -48,3 +48,7 @@ Every page must pass both, and they pull in opposite directions — that tension
 - Token values: brand kit (`brand-kits/`) compiled by `theme-from-brand-kit`
 - Finishing pass: the `dataviz-polish` skill
 - Divergence → convergence process: the `design-critique` skill at stage 5
+- Dashboard-level canon and the distance-from-best-in-class audit: the
+  `dataviz-canon` skill (its `references/canon.md` is where the doctrine's
+  claims are sourced to Few, Tufte, Cleveland & McGill, Sweller, IBCS and
+  the dashboard research)

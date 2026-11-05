@@ -33,7 +33,23 @@ tier_2_method:                   # binding for method unless Tier 1 contradicts
     url: https://docs.tabulareditor.com/
     use_for: "model hygiene checks and conventions"
 
+  - name: Perception and dashboard research (Cleveland & McGill 1984; Heer & Bostock 2010; Mackinlay 1986; Sweller CLT; Sarikaya et al. TVCG 2019; Bach et al. TVCG 2023; Hullman/Kay/Padilla on uncertainty)
+    url: https://alper.datav.is/publications/dashboards/
+    use_for: "the evidence behind encoding choice, cognitive-load budgets, dashboard genres and uncertainty display (dataviz-canon DC-010 to DC-020)"
+  - name: ISO 24896:2026 — Notation for Business Reporting (IBCS-led)
+    url: https://www.ibcs.com/iso-24896/
+    use_for: "formal notation for charts, tables and text in business reports; binding where a client adopts it"
+
 tier_3_craft:                    # informing, not binding — design judgment
+  - name: Stephen Few — Perceptual Edge archive and books
+    url: https://www.perceptualedge.com/
+    use_for: "dashboard definition, bullet graphs, table design, critiques of gauges/pies/3-D (dataviz-canon)"
+  - name: Nick Desbarats — Practical Reporting
+    url: https://www.practicalreporting.com/
+    use_for: "display taxonomy, flagging thresholds, Practical Charts / Practical Dashboards (dataviz-canon)"
+  - name: Datawrapper blog — Lisa Charlotte Muth
+    url: https://www.datawrapper.de/blog/category/color-in-data-vis
+    use_for: "color discipline: grey as default, emphasis with color, diverging midpoints (dataviz-canon DC-037)"
   - name: Financial Times — Visual Vocabulary
     url: https://github.com/Financial-Times/chart-doctor/tree/main/visual-vocabulary
     use_for: "chart-type selection by analytical intent"
@@ -76,7 +92,16 @@ tier_4_community:                # practitioner blogs - inspiring, verify agains
     use_for: "Power BI accessibility practice"
   - name: Data Goblins (Kurt Buhler)
     url: https://data-goblins.com/
-    use_for: "Power BI design & agentic development practice"
+    use_for: "Power BI design & agentic development practice; report requirements and reporting-layer articles (dataviz-canon)"
+  - name: Tabular Editor blog (Ruben Van de Voorde)
+    url: https://tabulareditor.com/blog/data-visualization-best-practices-for-power-bi-reports
+    use_for: "what 'good' means in a Power BI report: hidden states, self-filtering KPIs, container styling (dataviz-canon)"
+  - name: Chris Webb — Crossjoin
+    url: https://blog.crossjoin.co.uk/
+    use_for: "Power BI internals: text-value limits for SVG/images, Copilot AI instructions (dataviz-canon)"
+  - name: SQLBI articles — 3-30-300 rule and dashboard design
+    url: https://www.sqlbi.com/articles/introducing-the-3-30-300-rule-for-better-reports/
+    use_for: "report hierarchy rule and 'useful before beautiful' (dataviz-canon DC-004, DC-016); SQLBI method entries stay in tier 2"
   - name: Siqi Chen — humanizer skill
     url: https://github.com/DogodaBjorn/humanizer
     use_for: "AI-writing-tell detection for user-visible copy (copy-polish)"

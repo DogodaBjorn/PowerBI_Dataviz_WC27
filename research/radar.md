@@ -5,12 +5,13 @@ Rings: **adopted** (in the repo) · **trial** (in, unproven on a real
 project) · **assess** (promising, not built) · **hold** (deliberately not,
 with reason). Maintained by `/scout` runs and stage-7 retrospectives.
 
-Last updated: 2026-08-04 (toolkit-integration sweep: Claude Repositories + TrainerBjornOps + Microsoft agentic stack absorbed).
+Last updated: 2026-11-05 (dashboard canon adopted from the three-run best-in-class research; see log).
 
 ## Adopted
 
 | Item | Owner in repo | Since |
 |---|---|---|
+| Best-in-class dashboard canon (three tiers, DC-ids, expert disagreements) + 20-dimension distance-from-best audit | dataviz-canon (core) | v0.4.0 |
 | Button-slicer UI patterns (segmented/tabs/toggle/KPI cards/image items) | nav-studio | v0.2.0 |
 | Functional SVG icons + state variants | icon-studio | v0.2.0 |
 | SVG-in-DAX dynamic marks | icon-studio guide; reused by table-studio | v0.2.0 |
@@ -42,6 +43,10 @@ Last updated: 2026-08-04 (toolkit-integration sweep: Claude Repositories + Train
 | Item | Why interesting | Note |
 |---|---|---|
 | New card visual reference labels & collage layouts | native modern KPI cards (GA Nov 2025), still evolving fast | fold into dataviz-polish/table-studio when the surface stabilizes |
+| KPI anatomy as required slots in the metric contract (definition, formula, grain, period, owner, source, target, direction, interpretation rule) | audit A2 of dataviz-canon needs them; most are implicit in s2 today | extension of `contracts/metric.contract.yaml` + s2-metrics, not a module |
+| Dynamic format strings via calculation groups as the default consistency device | SQLBI; agent-built reports switch measures via field parameters and break formats | extension of dax-patterns / tmdl-patterns |
+| SVG-in-DAX performance budget (points per sparkline, DirectQuery caution) | audit C2; vendor heuristic needs a fixture benchmark | extension of icon-studio / table-studio guides |
+| AI-readiness of the model (Prep data for AI, descriptions, verified answers) | audit C7; Copilot cannot style, so the model is where AI quality lives | extension of tmdl-patterns docstring guidance |
 | Light/dark report variants | reader-environment fit | extension of theme-from-brand-kit, not a module |
 | Mobile canvas layouts | underserved delivery surface | needs a real project demand first |
 | backend-stories (PBIP DAX/M → backend user stories) | reverse-engineering add-on | carried from v0.1.0 future-ideas |

@@ -1,13 +1,13 @@
 # pbi-atelier project state — schema: lifecycle/status.schema.yaml
 project: PowerBI_Dataviz_WC27
-template_version: 0.3.1
+template_version: 0.4.0
 current_stage: 0
 updated: 2026-11-05
 stages:
   s0_intake:
     status: in_progress
     evidence: ""
-    gate_note: ""
+    gate_note: "canon audit of the pitched entry filed: project-state/active/00-best-in-class-audit.md (17/40, caps A2+B8); direction not yet recorded"
   s1_requirements:
     status: pending
     evidence: ""
