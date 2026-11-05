@@ -24,6 +24,7 @@ pbixray, numpy). Run scripts with `python -I` and pass paths as arguments.
 | `21_baseline_projection.py <data>` | parquet | do-nothing 2026–2032 from FinanceAssumptions, capacity wall |
 | `22_column_codex.py <data>` | parquet | every column of every table with ranges and distinct values (`output/codex.txt`) |
 | `30_pitch_data.py <data> <json>` + `31_baseline_bridge.py <data> <json>` | parquet | the JSON behind `deliverables/pitch/goodnight-inn-three-ways.html` |
+| `17_crosscheck_dutch_review.py <data>` | parquet | verification of the Dutch data review of 4 Nov 2026: margins after distribution, per-hotel trends, comfort vs renovation age, complaint momentum, renovation spend per brand, sister event study, NPV conventions (`output/crosscheck.txt`) |
 | `tools/extract_mht.py` | the saved blog page | the contest brief as text and its links (`project/contest/`) |
 
 Modelling choices baked into the quick economics (to be decided properly in the

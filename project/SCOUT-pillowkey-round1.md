@@ -264,9 +264,13 @@ Lisbon trap) and the biggest numbers, at the cost of probably being the most-cho
   tooltip pages count (starter says allowed).
 - Does the source workbook contain sheets the starter does not load? (Rule says don't pull them;
   we only need to know we are not missing a loaded one.)
-- Metric contracts: does OP impact net running cost; disruption = room revenue only or total
+- Metric contracts: OP impact nets running cost (reconciled); disruption = room revenue only or total
   revenue, with or without variable-cost relief; do added rooms carry F&B/other mix; how the
   Low/High scenarios combine across a portfolio (sum per scenario, not mix).
+- Distribution cost sits **outside** MonthlyPerformance opex (the workbook's Contents sheet says
+  costs exclude distribution costs, per the Dutch review of 4 Nov; confirm the wording). Margin
+  after commissions: Goodnight 33.7 %, P&K 34.7 %, Maison d'Or 32.9 %, Pebble & Pine 28.2 %.
+  See `project/research/2026-11-05-crosscheck-dutch-review.md`.
 - Start-month policy: earliest start maximises in-horizon impact; the report may expose
   start year as a what-if parameter (allowed: "scenario parameters").
 - Baseline: whether to project the no-investment 2026–2032 baseline with FinanceAssumptions

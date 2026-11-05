@@ -50,10 +50,12 @@ python scripts/init_project.py --name <repo-name> --client-alias fabric-contest 
 
 Sources: blog post "Power BI Dataviz World Champs 2027 | Round 1"
 (community.fabric.microsoft.com, article 5390883) and the starter file's hidden
-*Read Me* and *Judging Criteria* pages. Deadline: **November 18, 2026** (time of
-day and time zone: read the Official Rules PDF linked from the post — not
-reachable from the sandbox that prepared this brief; last year's rounds closed
-11:59 pm Pacific). Today is November 4.
+*Read Me* and *Judging Criteria* pages. Deadline: **November 18, 2026, 23:59
+Pacific = November 19, 08:59 CET** per the independent Dutch review's reading of
+the Official Rules PDF (the PDF was not reachable from the sandbox that prepared
+this brief — confirm once, then treat as fixed). Brief prepared November 4;
+cross-checked against the Dutch review on November 5 (see
+`research/2026-11-05-crosscheck-dutch-review.md`).
 
 1. **One brand only: Goodnight Inn.** Name it visibly on both pages and in the
    gallery description.
@@ -101,16 +103,19 @@ reachable from the sandbox that prepared this brief; last year's rounds closed
 
 ## 2 · The story (stage 0/1 seed)
 
-**Concept: "Wake-up call."** Goodnight Inn is the group's most profitable brand
-per dollar of revenue, and it has quietly stopped growing: occupancy is pinned
+**Concept: "Wake-up call."** Goodnight Inn looks like the group's most profitable
+brand per dollar of revenue — 44.4 % before commissions, 33.7 % after, where P&K
+Select actually leads — and it has quietly stopped growing: occupancy is pinned
 at 79 %, revenue rose 0.8 % last year while cost per occupied room rose 3.5 %,
 and operating profit fell for the first time. Two things explain it. Half of
 every room dollar now arrives through online travel agencies at an 18 %
 commission (a third did in 2021), so the brand pays $22.7 M a year to be
 booked — $4.8 M more than at its 2021 channel mix. And the welcome is fading:
-NPS has slid from +8.5 to +3.3, and the ten hotels that have gone longest
-without a refresh are the ones guests no longer recommend. Meanwhile the
-airport hotels are full. The plan buys the guest back (app, revenue management,
+NPS has slid from +8.5 to +3.3, room comfort tracks years since a refresh almost
+perfectly (r = −0.92), and the ten hotels that have gone longest without one are
+the ones guests no longer recommend. The cause sits in the Board's own books:
+$0.98 M of renovation per hotel since 2018 against $6–8 M at the sister brands,
+and nothing started since 2020. Meanwhile the airport hotels are full. The plan buys the guest back (app, revenue management,
 kiosks), fixes the welcome (refresh the ten oldest), and builds where the brand
 is full (Gatwick, Toronto) — $51.3 M of the $60 M, +$7.6 M a year of operating
 profit by 2032 — and says no, with numbers, to a new hotel in Boston, an
@@ -130,21 +135,25 @@ discipline → Accessibility.
 | # | Claim (hypothesis) | Value found in prior analysis | Grain / method |
 |---|---|---|---|
 | E1 | Portfolio | 50 hotels, 6,485 rooms (avg 130): 17 airport, 22 highway, 11 city; 25 North America, 20 Europe, 5 Asia-Pacific | Hotels |
-| E2 | 2025 P&L | Revenue $212.8 M (room revenue 94 %), GOP $94.4 M, **GOP margin 44.4 %** (best of the four brands; 46.1 % in 2023, 45.8 % in 2024) | MonthlyPerformance, brand sums |
+| E2 | 2025 P&L | Revenue $212.8 M (room revenue 94 %), GOP $94.4 M, **GOP margin 44.4 % before commissions** (46.1 % in 2023, 45.8 % in 2024) and **33.7 % after distribution cost** ($71.8 M; 36.5 % in 2023). After commissions P&K Select leads (34.7 %; Maison d'Or 32.9, Pebble & Pine 28.2): "best margin in the group" is partly where the commission is booked | MonthlyPerformance, brand sums; opex excludes distribution cost per the workbook's Contents sheet (confirm wording) |
 | E3 | The plateau | Occupancy 78.3 / 79.3 / 79.4 % (2023–25); revenue +0.8 % in 2025; **GOP −$2.2 M (−2.3 %)**, the first decline in the window | brand sums by year |
 | E4 | The scissors | Revenue per occupied room +0.9 % in 2025, cost per occupied room (CPOR) +3.5 % ($60.9 → $63.0); staff cost 26.9 % → 28.3 % of revenue since 2023 | TotalRevenue / TotalOpex ÷ RoomsSold |
 | E5 | The middleman | OTA share of room revenue **33.0 % (2021) → 50.0 % (2025)**, identical across hotels (49–51 %); direct web/app 31.4 % → 23.0 %, and direct web room nights fell 14 % from their 2022 peak while OTA nights rose 89 % since 2021 | BookingChannels, brand sums |
 | E6 | What it costs | Distribution cost $12.6 M → **$22.65 M (11.3 % of room revenue**; other brands 7.5–8.0 %); OTA commission is 80 % of it ($18.1 M). Channel costs: OTA 18 %, TA/TO 10 %, corporate 5 %, direct web 4 %, phone 1.5 % | DistributionCost ÷ RoomRevenue |
 | E7 | Counterfactual | At the 2021 channel mix, 2025 distribution cost would be $17.8 M: the mix shift costs **$4.8 M/yr**; each 1 pt of room revenue moved OTA → direct web saves $0.28 M/yr | 2021 shares × 2025 channel cost rates × 2025 room revenue |
 | E8 | No OTA premium | ADR by channel 2025: OTA $109.3, direct web $111.6, phone $109.4 — OTA guests pay the same, net $89.6 vs $107.1 per night after commission | RoomRevenue ÷ RoomNights by channel |
-| E9 | The fading welcome | NPS **+8.5 → +3.3** (response-weighted); room comfort 7.43 → 7.17 (largest score drop); complaints per 1k room nights 9.4 → 9.9: room condition 1.54 → 1.80 (+17 %), **check-in & waiting 0.88 → 1.10 (+25 %, fastest-rising)** | GuestExperience weighted by SurveyResponses; GuestComplaints ÷ RoomsSold |
-| E10 | Age explains it | NPS 2025 by years since last renovation: ≤5 y +6.8 (14 hotels), 6–9 y +4.0 (20), 10–15 y **−4.6** (10); r = −0.78. Occupancy (79–80 %) and GOP margin (44 %) are identical across buckets: age hurts loyalty, not (yet) money | Hotels.LastRenovationDate; 6 hotels never renovated — use OpeningDate as product age |
+| E9 | The fading welcome | NPS **+8.5 → +3.3** (response-weighted); room comfort 7.43 → 7.17 (largest score drop); complaints per 1k room nights 9.4 → 9.9: **room condition 1.54 → 1.80 (+17 %, and the only category still accelerating: +9 % in 2025)**, check-in & waiting 0.88 → 1.10 (+25 % over the window, flat in 2025); NPS fell at 45 of the 48 hotels with 2021 data, margin fell at all 50 in 2025 | GuestExperience weighted by SurveyResponses; GuestComplaints ÷ RoomsSold |
+| E10 | Age explains it | NPS 2025 by years since last renovation: ≤5 y +6.8 (14 hotels), 6–9 y +4.0 (20), 10–15 y **−4.6** (10); r = −0.78 with NPS and **r = −0.92 with room comfort** (44 dated hotels; −0.92 over all 50 with the opening-date fallback). Occupancy (79–80 %) and GOP margin (44 %) are identical across buckets, and per-hotel NPS change vs occupancy change correlates at −0.04: age hurts loyalty, not (yet) money | Hotels.LastRenovationDate; 6 hotels never renovated — use OpeningDate as product age |
 | E11 | 2021 cohort | Seven hotels fully renovated in 2021 ($2.1–3.5 M each) held NPS at +6 to +9 through 2025 while the other 43 slid from +8.9 to +2.7; their RevPAR grew +39 % vs peers +36 % 2021→25 (no large revenue premium) | Renovations ⋈ MonthlyPerformance ⋈ GuestExperience |
 | E12 | The ten oldest | GI-07's ten hotels (Dallas DFW, Lyon, Schiphol, Chicago Midway, Richmond, Sydney, Madrid Barajas, Bologna, Kingston, Ottawa; 1,180 rooms, 11–14 y since works) include **8 of the 12 hotels with negative NPS**; $29.5 M = $2.95 M/hotel, in line with the 2021 cohort's cost | InvestmentProjectProperties ⋈ Hotels |
 | E13 | Where we're full | Airport hotels: 82 % occupancy, ADR $116, RevPAR $95 (highway 77.5 % / $82, city 79 % / $76). **Gatwick 90.4 %** (≥90 % in 14 of the last 24 months, RevPAR $145, highest in brand), **Toronto 91.9 %** (17 of 24 months ≥90 %), Montréal 90 %. **Kingston 61 %**, never above 74 % | MonthlyPerformance by hotel/month |
 | E14 | Seasonality | Mild: brand 68.5 % (Jan) → 89.8 % (Jul); airport hotels flat 78–91 %; highway dips to 68–71 % in H2 | 2025 by location type × month |
 | E15 | Mix | Business travel 20 % → 24 % of room nights (growing), leisure 40 % → 38 %, family 24 % → 23 %; leisure pays the highest ADR ($113.6) | GuestSegments |
-| E16 | Benchmarks | GI distribution cost 11.3 % vs Maison d'Or 8.0 %, P&K 7.5 %, Pebble & Pine 10.2 %; GI GOP margin 44.4 % vs 38.0 / 40.0 / 35.1 % | brand sums (sister-brand comparison is provided data, allowed) |
+| E16 | Benchmarks | GI distribution cost 11.3 % vs Maison d'Or 8.0 %, P&K 7.5 %, Pebble & Pine 10.2 %; GI GOP margin 44.4 % vs 38.0 / 40.0 / 35.1 % before commissions, 33.7 % vs 32.9 / 34.7 / 28.2 % after | brand sums (sister-brand comparison is provided data, allowed) |
+| E17 | The group starved the brand | Renovation spend started 2018–2025: Goodnight **$48.8 M over 18 jobs = $0.98 M per hotel** vs Maison d'Or $211 M ($7.0 M/hotel), P&K $317 M ($7.9 M), Pebble & Pine $266 M ($5.9 M). Goodnight started 4 / 7 / 7 renovations in 2018–20 and **none since December 2020**; the sisters started four more in 2022–23 | Renovations ⋈ Hotels, by StartDate |
+| E18 | Sister renovations prove the mechanism | Four renovations completed inside the window (Paris 2022, London 2023, Chicago Loop 2023, Myrtle Beach 2023), measured 6 months before start vs 6 months after end: **room comfort +0.98**, NPS +21, room-condition complaints −38 % (−26 … −55 %). The organisers' GI-07 satisfaction effect (+0.6) is conservative | GuestExperience + GuestComplaints around Renovations.StartDate/EndDate; the 2021 completions have no pre-period in the data |
+| E19 | The promise | Value for money 7.66, **lowest of the four brands** (P&K 7.72, Pebble & Pine 7.94, Maison d'Or 8.04) at the brand whose positioning is "affordable"; ADR +14.6 % since 2021 (Pebble & Pine +13.3, Maison d'Or +20.2, P&K +23.7) on a falling score | GuestExperience weighted; ADR = RoomRevenue ÷ RoomsSold |
+| E20 | The $60.0 M foil | App + kiosks + energy + Gatwick + Boston + breakfast + RMS costs **exactly $60.0 M**: the dataset carries a route that spends the budget to the dollar without touching a room. Show it, name it, reject it | InvestmentProjects capex sums |
 
 Anything not derivable from the tables (market share, competitor rates, app
 adoption, marketing spend, financing, tax, depreciation, terminal value beyond
@@ -176,7 +185,7 @@ the metric contract.
 | Move | Projects | Capex | Answers Page 1 finding |
 |---|---|---|---|
 | **Buy the guest back** | GI-01 app, GI-10 RMS, GI-02 kiosks | $9.4 M | E5–E8 (middleman), E9 (check-in complaints) |
-| **Fix the welcome** | GI-07 refresh of the ten oldest | $29.5 M | E9–E12 (fading welcome, age) |
+| **Fix the welcome** | GI-07 refresh of the ten oldest | $29.5 M | E9–E12 (fading welcome, age), E17–E19 (under-investment, proven mechanism, the promise) |
 | **Build where we're full** | GI-05 Gatwick, GI-04 Toronto | $12.4 M | E13 (airport hotels at 90 %+) |
 | Total | 6 projects, 4 growth initiatives | **$51.3 M of $60 M** (86 %) | $8.7 M held as contingency on the refresh (≈ 30 % of its capex), or GI-09 breakfast ($4.25 M) if the Board prefers to deploy it |
 
@@ -245,7 +254,9 @@ benchmark measures lift the filter with `ALL(Brands)`.
   inside a measure.
 
 Metric contracts to write at stage 2 (one YAML each; names final at G2):
-`Occupancy`, `ADR`, `RevPAR`, `Total Revenue`, `GOP`, `GOP Margin %`, `CPOR`,
+`Occupancy`, `ADR`, `RevPAR`, `Total Revenue`, `GOP`, `GOP Margin %`, `GOP after
+Distribution`, `GOP Margin after Distribution %`, `Room Comfort (weighted)`,
+`Renovation Spend per Hotel`, `CPOR`,
 `Revenue per Occupied Room`, `Distribution Cost`, `Distribution Cost % of Room
 Revenue`, `OTA Share %`, `Direct Share %`, `Distribution Cost at 2021 Mix`
 (counterfactual, labeled), `NPS (weighted)`, `Overall Score (weighted)`,
@@ -256,9 +267,10 @@ projects, ≥1 growth, ≤ budget, dependencies met), `Annual Impact (ramped)`,
 Year`, `Rooms Added`, `Rooms Refreshed`, `Disruption Months`. Edge cases to
 write down: 2021 is a depressed base year (trend claims use 2023→2025 or
 2022→2025, never 2021); late openers (Valencia 2023, Porto 2022) excluded from
-like-for-like growth; six never-renovated hotels; whether `DistributionCost`
-is already inside `OtherOperatingCost` (cannot be proven from the data — state
-the assumption, never double-count); Low/High portfolio = sum of each
+like-for-like growth; six never-renovated hotels; `DistributionCost` sits
+**outside** MonthlyPerformance opex (the workbook's Contents sheet states that
+costs exclude distribution costs, per the Dutch review — confirm the wording
+once, then show both margins and never double-count); Low/High portfolio = sum of each
 project's Low/High (no mixing); disruption applies to total revenue with no
 cost relief (conservative) unless the contract argues otherwise.
 
@@ -286,15 +298,17 @@ Page map (exactly 2 visible pages + hidden tooltip pages):
 **P1 · Brand Review — "Wake-up call."**
 3-second message: *full, flat, and paying the middleman — the group's best
 margin is slipping.* Grid: KPI band (occupancy 79 %, RevPAR $85, GOP margin
-44.4 % with the two-year slide, NPS +3.3 with the four-year slide; each with
-sister-brand benchmark in the tooltip). Three story blocks, left to right:
+44.4 % before and 33.7 % after commissions with the two-year slide, NPS +3.3
+with the four-year slide; each with sister-brand benchmark in the tooltip —
+after commissions P&K Select leads). Three story blocks, left to right:
 **The plateau** (revenue-per-occupied-room vs cost-per-occupied-room index
 2023–2025, GOP bridge 2024 → 2025); **The middleman** (channel share of room
 revenue 2021–2025 as stacked area or bump, distribution-cost line in $, the
 "$4.8 M at the 2021 mix" callout, and the *folio* visual: what a $109 room
-night nets us by channel); **The fading welcome** (NPS by renovation-age
-bucket as a dot strip of 50 hotels, complaint categories trend with check-in
-and room condition highlighted). Bottom strip: **Where we're full** — airport
+night nets us by channel); **The fading welcome** (room comfort vs years
+since refresh as a dot strip of 50 hotels, r = −0.92; the renovation-spend bar,
+$1.0 M vs $6–8 M per hotel since 2018, as the why; complaint categories trend
+with room condition highlighted as the one still rising). Bottom strip: **Where we're full** — airport
 / highway / city occupancy and the Gatwick/Toronto/Kingston monthly occupancy
 sparklines. Title names the brand; subtitle names the Board.
 
@@ -312,12 +326,14 @@ refreshed / direct-share target as operational impact. Right, the
 **departures board**: initiatives × (gate = hotels, departs = start, arrives
 = completion, disruption months, status Funded / Not funded / Needs GI-01)
 styled per the chosen direction, native matrix first (§6). Bottom: **Not
-funded, and why** (Boston, Kingston, Energy with one number each) and the
+funded, and why** (Boston, Kingston, Energy with one number each, and the
+$60.0 M route that funds everything except the refresh, named and rejected) and the
 **Risks & trade-offs** panel (rooms vs kilowatts; refresh disruption 15 % of
 1,180 rooms for 14 months; app adoption is the Low/High swing; horizon
 honesty). A bookmark overlay "How we calculated this" carries the
-FinanceParameters rules and the counterfactual method (keeps the page count at
-two).
+FinanceParameters rules, the counterfactual method, both valuation conventions
+(constant 2025 dollars per the dataset, nominal with FinanceAssumptions — same
+ranking) and the disruption convention (keeps the page count at two).
 
 Every page: page-purpose contract with its 3-second message and 3-minute trust
 path, alt text for every visual, explicit tab order, brand name visible,
