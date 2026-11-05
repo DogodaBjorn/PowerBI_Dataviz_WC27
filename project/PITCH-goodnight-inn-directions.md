@@ -508,7 +508,9 @@ erosion into the baseline. The only table that lets you project a no-investment 
 4. Late openers (GI Valencia 2023, Porto 2022; PS Melbourne, Warsaw) distort growth
    rates; use like-for-like sets.
 5. Six GI hotels have no renovation date; product age = years since opening.
-6. DistributionCost's relation to OtherOperatingCost is unstated; pick one assumption.
+6. DistributionCost sits outside MonthlyPerformance opex per the workbook's Contents sheet
+   ("excludes distribution costs", as read by the Dutch review of 4 Nov; confirm): show the
+   margin before and after commissions (44.4 % / 33.7 %); after commissions P&K Select leads.
 7. Impacts are in 2025 dollars; the baseline in FinanceAssumptions is nominal. Never mix
    on one axis without saying so.
 8. Portfolio Low/High = sum of each project's Low/High; never mix scenarios across

@@ -1,0 +1,75 @@
+== margin before/after distribution (assumes opex excludes distribution cost, per Contents sheet)
+               GOP%  Dist%ofRev  GOP% after dist  GOP after dist M
+Brand                                                             
+Goodnight Inn 0.444       0.106            0.337            71.766
+Maison d'Or   0.380       0.050            0.329           439.176
+P&K Select    0.400       0.053            0.347           415.089
+Pebble & Pine 0.351       0.069            0.282           306.716
+      GOP%  Dist%ofRev  GOP% after dist  GOP after dist M
+Year                                                     
+2021 0.409       0.084            0.325            48.739
+2022 0.451       0.091            0.360            66.518
+2023 0.461       0.097            0.365            74.327
+2024 0.458       0.102            0.355            75.023
+2025 0.444       0.106            0.337            71.766
+
+== hotels with NPS 2025 < 2021: 45 of 48 | NPS 2025 < 2024: 38 of 50
+margin 2025 < 2023: 48 of 50 | margin 2025 < 2024: 50 of 50
+corr(dNPS 2021-25, dOcc 2021-25) = -0.039 | corr(dNPS 23-25, dOcc 23-25)= 0.033
+
+== r(years since reno, RoomComfort 2025) over 44 hotels with a date: -0.923 | r with NPS: -0.781 | all 50 with opening fallback: comfort -0.919
+
+== complaints per 1k: change 2024->2025 and 2021->2025
+                          2025  yoy 24-25  2021-25
+Category                                          
+Room condition           1.796      0.090    0.168
+Wi-Fi & technology       0.780      0.009    0.018
+Facilities & activities  0.722      0.006   -0.037
+Billing & pricing        1.209      0.006    0.074
+Staff & service          1.273      0.005    0.003
+Noise                    0.923     -0.003   -0.001
+Cleanliness              1.223     -0.008   -0.019
+Check-in & waiting times 1.098     -0.016    0.248
+Food & beverage          0.887     -0.043   -0.023
+
+== renovation spend 2018+ (by start year) per brand, $M, per hotel
+                n  spend_M  per_hotel_M
+Brand                                  
+Goodnight Inn  18   48.840        0.977
+Maison d'Or     8  211.060        7.035
+P&K Select     12  316.970        7.924
+Pebble & Pine  14  265.880        5.908
+StartDate      2018  2019  2020  2022  2023
+Brand                                      
+Goodnight Inn     4     7     7     0     0
+Maison d'Or       3     2     1     1     1
+P&K Select        1     4     6     1     0
+Pebble & Pine     5     5     3     1     0
+GI last renovation start: 2020-12-01 | GI 2021+ starts: 0
+
+== event study, 4 renovations completed 2021-2023 with >=3 months each side
+                     hotel         brand        end  comfort_before  comfort_after  d_comfort  nps_before  nps_after  roomcond_per1k_before  roomcond_per1k_after  d_roomcond_pct
+         Maison d'Or Paris   Maison d'Or 2022-09-01           7.743          8.806      1.063      19.514     42.625                  1.219                 0.546          -0.553
+        Maison d'Or London   Maison d'Or 2023-08-01           7.795          8.860      1.065      23.238     46.037                  0.836                 0.618          -0.261
+Pebble & Pine Myrtle Beach Pebble & Pine 2023-05-01           7.430          8.283      0.853      14.419     34.921                  1.607                 1.032          -0.358
+   P&K Select Chicago Loop    P&K Select 2023-06-01           7.306          8.233      0.926       9.031     26.648                  1.294                 0.843          -0.348
+mean d_comfort 0.98 | mean d_nps 21.0 | mean room-condition complaints change -38% (range -55..-26)
+
+== value for money 2025 by brand
+Year           2021  2025
+Brand                    
+Goodnight Inn 7.848 7.659
+Maison d'Or   8.294 8.040
+P&K Select    7.860 7.724
+Pebble & Pine 8.126 7.940
+ADR growth 2021->2025
+Brand
+Goodnight Inn   0.146
+Maison d'Or     0.202
+P&K Select      0.237
+Pebble & Pine   0.133
+
+== alt B sum 60.0
+== NPV Expected with disruption at 45% margin vs 100%:
+{'GI-01': (3.3, 3.3), 'GI-02': (-0.4, -0.4), 'GI-03': (-10.0, -11.6), 'GI-04': (-3.4, -3.5), 'GI-05': (-3.2, -3.3), 'GI-06': (-3.7, -3.7), 'GI-07': (-22.7, -26.0), 'GI-08': (-17.5, -17.5), 'GI-09': (-1.0, -1.0), 'GI-10': (0.5, 0.5)}
+feasible combos (>=3, >=1 growth, budget, dependency): 456
