@@ -1,0 +1,97 @@
+adapter: chart-grounding
+target_repo: pbi-atelier (agent-driven Power BI report studio, PBIP/PBIR, 8-stage gated lifecycle)
+producer: BookCompiler (E:\bookcompiler)
+bundle: bundle_v2_data-visualization
+contract: E:\bookcompiler\docs\INTEGRATION_CONTRACT.md (v1.0.0)
+generated_at: "2026-10-10"
+principle_refs:
+  - { canonical_id: CP-051, role: core }
+  - { canonical_id: CP-052, role: core }
+  - { canonical_id: CP-053, role: core }
+  - { canonical_id: CP-065, role: core }
+  - { canonical_id: CP-066, role: core }
+  - { canonical_id: CP-067, role: core }
+  - { canonical_id: CP-068, role: core }
+  - { canonical_id: CP-069, role: core }
+  - { canonical_id: CP-054, role: core }
+  - { canonical_id: CP-055, role: core }
+  - { canonical_id: CP-056, role: core }
+  - { canonical_id: CP-057, role: core }
+  - { canonical_id: CP-058, role: core }
+  - { canonical_id: CP-059, role: core }
+  - { canonical_id: CP-061, role: core }
+  - { canonical_id: CP-062, role: core }
+  - { canonical_id: CP-063, role: core }
+  - { canonical_id: CP-064, role: core }
+  - { canonical_id: CP-060, role: supporting }
+  - { canonical_id: CP-070, role: supporting }
+  - { canonical_id: CP-071, role: supporting }
+  - { canonical_id: CP-072, role: supporting }
+  - { canonical_id: CP-038, role: supporting }
+  - { canonical_id: CP-040, role: supporting }
+  - { canonical_id: CP-042, role: supporting }
+  - { canonical_id: CP-026, role: supporting }
+  - { canonical_id: CP-034, role: supporting }
+  - { canonical_id: CP-019, role: guardrail }
+  - { canonical_id: CP-043, role: guardrail }
+  - { canonical_id: CP-001, role: guardrail }
+adapted_rules:
+  - adapted_id: PBA-C-001
+    inherits: [CP-051, CP-052]
+    behaviour: >-
+      Every visual in a page-purpose contract declares its reader question, its intent
+      from design/visual-selection.md (mapped to one canonical family), the form chosen,
+      one alternative considered and what the form sacrifices.
+  - adapted_id: PBA-C-002
+    inherits: [CP-065, CP-060]
+    behaviour: >-
+      At stage 2 every measure that will be charted states its denominator or reference;
+      rates for groups of unequal size, medians for skewed values, catch-all categories
+      opened before they are summarised.
+  - adapted_id: PBA-C-003
+    inherits: [CP-066, CP-053]
+    behaviour: >-
+      Bar and column value axes start at zero; line and dot visuals of rates may zoom
+      with the benchmark drawn as a constant line; small multiples share one axis.
+  - adapted_id: PBA-C-004
+    inherits: [CP-067, CP-068, CP-026]
+    behaviour: >-
+      Visual titles state the finding, the visual subtitle carries measure, unit,
+      universe and period, legends are replaced by direct or series labels where the
+      visual supports them.
+  - adapted_id: PBA-C-005
+    inherits: [CP-062, CP-065]
+    behaviour: >-
+      Map visuals only when place is the page's point; filled maps show rates or ranks,
+      counts go to bubble/proportional-symbol maps, and every map is paired with a
+      totals visual.
+  - adapted_id: PBA-C-006
+    inherits: [CP-071, CP-072, CP-001]
+    behaviour: >-
+      Display mode decides richness: operational and KPI pages use familiar forms and
+      the declutter doctrine; explanatory and showpiece pages may layer one secondary
+      relationship at a time (tooltips, companion visuals) with a reading key.
+overrides:
+  - context: interactive BI reports
+    note: >-
+      The canon's chart source is static editorial graphics and is thin on
+      interactivity. Tooltips, drill-through and bookmarks are where pbi-atelier carries
+      CP-072's secondary layers and CP-051's companion views; slicers never replace a
+      chart that answers the page question.
+  - context: intent table
+    note: >-
+      design/visual-selection.md (10 intents) stays the operational table. Its intents
+      map onto the canon's nine families as listed in SKILL.md; "Detail lookup" is
+      CP-052 (tables), "Comparison across categories" is CP-054 (magnitude). The canon
+      has a separate spatial family the table lacks - flagged in SKILL.md, not edited.
+  - context: design doctrine "ink serves data"
+    note: >-
+      design-doctrine.md principle 2 (Tufte lineage) aligns with CP-001; CP-072
+      (enrich rather than dumb down) is a recorded canonical tension with CP-001
+      (CP-072 conflicts_with CP-001), resolved here by display mode (PBA-C-006).
+  - context: local skills and docs
+    note: >-
+      design/visual-selection.md, design/chart-selection.csv, design-doctrine.md,
+      .claude/rules/design-hard-rules.md, the brand kits and the dataviz-polish and
+      design-critique skills remain the operational authority; this canon is their
+      judgment layer.

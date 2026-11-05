@@ -1,0 +1,407 @@
+== TABLES
+<StringArray>
+[            'BookingChannels',                      'Brands',                        'Date',          'FinanceAssumptions',           'FinanceParameters',             'GuestComplaints',             'GuestExperience',               'GuestSegments',
+                      'Hotels', 'InvestmentProjectProperties',          'InvestmentProjects',         'InvestmentScenarios',          'MonthlyPerformance',                      'Region',                 'Renovations',                    'Scenario']
+Length: 16, dtype: str
+== SIZE
+9190321
+== STATS
+                       TableName                      ColumnName  Cardinality  Dictionary  HashIndex  DataSize        ModifiedTime StructureModifiedTime
+0                BookingChannels                         HotelID          165        3423          0     49200 2026-11-03 20:43:07   2026-11-03 20:43:07
+1                BookingChannels                           Month           60         520          0      4120 2026-11-03 20:43:07   2026-11-03 20:43:07
+2                BookingChannels                         Channel            5         399          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+3                BookingChannels                        Bookings         1855        7460          0     78632 2026-11-03 20:43:07   2026-11-03 20:43:07
+4                BookingChannels                      RoomNights         3669           0      65645     98248 2026-11-03 20:43:07   2026-11-03 20:43:07
+5                BookingChannels                     RoomRevenue        46119           0    1052245    196352 2026-11-03 20:43:07   2026-11-03 20:43:07
+6                BookingChannels                DistributionCost        26350           0     526661    130952 2026-11-03 20:43:07   2026-11-03 20:43:07
+7                         Brands                           Brand            4         257          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+8                         Brands                         Segment            4         357          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+9                         Brands                      Properties            4           0       1133       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+10                        Brands                     Positioning            4         797          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+11                        Brands             InvestmentBudgetUSD            4           0       1133       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+12                          Date                            Date         4383       35104          0      8912 2026-11-03 20:43:07   2026-11-03 20:43:07
+13                          Date                            Year           12          88          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+14                          Date                         Quarter            4         179          0       536 2026-11-03 20:43:07   2026-11-03 20:43:07
+15                          Date                     MonthNumber           12          88          0      2336 2026-11-03 20:43:07   2026-11-03 20:43:07
+16                          Date                           Month           12         315          0      2336 2026-11-03 20:43:07   2026-11-03 20:43:07
+17                          Date                       YearMonth          144        3579          0      4528 2026-11-03 20:43:07   2026-11-03 20:43:07
+18                          Date                          Period            3         235          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+19            FinanceAssumptions                            Year            7           0       1133       160 2026-11-03 20:43:07   2026-11-03 20:43:07
+20            FinanceAssumptions                          Region            3         215          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+21            FinanceAssumptions           MarketDemandGrowthPct           18           0       1133       168 2026-11-03 20:43:07   2026-11-03 20:43:07
+22            FinanceAssumptions                 ADRInflationPct           17           0       1133       168 2026-11-03 20:43:07   2026-11-03 20:43:07
+23            FinanceAssumptions                CostInflationPct           15           0       1133       168 2026-11-03 20:43:07   2026-11-03 20:43:07
+24             FinanceParameters                       Parameter           10         637          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+25             FinanceParameters                           Value            7           0       1133       176 2026-11-03 20:43:07   2026-11-03 20:43:07
+26             FinanceParameters                            Unit            5         229          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+27             FinanceParameters                           Notes           10        1385          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+28               GuestComplaints                         HotelID          165        3423          0     88440 2026-11-03 20:43:07   2026-11-03 20:43:07
+29               GuestComplaints                           Month           60         520          0     70784 2026-11-03 20:43:07   2026-11-03 20:43:07
+30               GuestComplaints                        Category            9         497          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+31               GuestComplaints                      Complaints           34         176          0      1832 2026-11-03 20:43:07   2026-11-03 20:43:07
+32               GuestExperience                         HotelID          165        3423          0      9960 2026-11-03 20:43:07   2026-11-03 20:43:07
+33               GuestExperience                           Month           60         520          0       840 2026-11-03 20:43:07   2026-11-03 20:43:07
+34               GuestExperience                 SurveyResponses          368        1512          0     11360 2026-11-03 20:43:07   2026-11-03 20:43:07
+35               GuestExperience                    OverallScore          275        2240          0     11360 2026-11-03 20:43:07   2026-11-03 20:43:07
+36               GuestExperience                CleanlinessScore          282        2296          0     11360 2026-11-03 20:43:07   2026-11-03 20:43:07
+37               GuestExperience                    ServiceScore          282        2296          0     11360 2026-11-03 20:43:07   2026-11-03 20:43:07
+38               GuestExperience                RoomComfortScore          316        2568          0     11360 2026-11-03 20:43:07   2026-11-03 20:43:07
+39               GuestExperience                  AmenitiesScore          299        2432          0     11360 2026-11-03 20:43:07   2026-11-03 20:43:07
+40               GuestExperience              ValueForMoneyScore          238        1944          0      9576 2026-11-03 20:43:07   2026-11-03 20:43:07
+41               GuestExperience                NetPromoterScore          742           0      16493     13232 2026-11-03 20:43:07   2026-11-03 20:43:07
+42                 GuestSegments                         HotelID          165        3423          0     49200 2026-11-03 20:43:07   2026-11-03 20:43:07
+43                 GuestSegments                           Month           60         520          0      9920 2026-11-03 20:43:07   2026-11-03 20:43:07
+44                 GuestSegments                         Segment            5         277          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+45                 GuestSegments                        Bookings         2068        8312          0     64624 2026-11-03 20:43:07   2026-11-03 20:43:07
+46                 GuestSegments                      RoomNights         4304           0      65733     98248 2026-11-03 20:43:07   2026-11-03 20:43:07
+47                 GuestSegments                     RoomRevenue        45171           0    1051349    196352 2026-11-03 20:43:07   2026-11-03 20:43:07
+48                        Hotels                         HotelID          165        3423          0       312 2026-11-03 20:43:07   2026-11-03 20:43:07
+49                        Hotels                       HotelName          165        9377          0       312 2026-11-03 20:43:07   2026-11-03 20:43:07
+50                        Hotels                           Brand            4         257          0       192 2026-11-03 20:43:07   2026-11-03 20:43:07
+51                        Hotels                            City          131        3545          0       312 2026-11-03 20:43:07   2026-11-03 20:43:07
+52                        Hotels                         Country           28         845          0       256 2026-11-03 20:43:07   2026-11-03 20:43:07
+53                        Hotels                          Region            3         215          0       192 2026-11-03 20:43:07   2026-11-03 20:43:07
+54                        Hotels                        Latitude          156           0       4213       480 2026-11-03 20:43:07   2026-11-03 20:43:07
+55                        Hotels                       Longitude          159           0       4237       480 2026-11-03 20:43:07   2026-11-03 20:43:07
+56                        Hotels                    LocationType            9         463          0       232 2026-11-03 20:43:07   2026-11-03 20:43:07
+57                        Hotels                           Rooms           64           0       1133       336 2026-11-03 20:43:07   2026-11-03 20:43:07
+58                        Hotels                     OpeningDate          132           0       2165       480 2026-11-03 20:43:07   2026-11-03 20:43:07
+59                        Hotels              LastRenovationDate           71           0       1149       480 2026-11-03 20:43:07   2026-11-03 20:43:07
+60   InvestmentProjectProperties                       ProjectID           36         843          0       520 2026-11-03 20:43:07   2026-11-03 20:43:07
+61   InvestmentProjectProperties                         HotelID          165        3423          0       616 2026-11-03 20:43:07   2026-11-03 20:43:07
+62            InvestmentProjects                       ProjectID           40         923          0       184 2026-11-03 20:43:07   2026-11-03 20:43:07
+63            InvestmentProjects                           Brand            4         257          0       160 2026-11-03 20:43:07   2026-11-03 20:43:07
+64            InvestmentProjects                     ProjectName           39        3579          0       184 2026-11-03 20:43:07   2026-11-03 20:43:07
+65            InvestmentProjects                        Category            7         333          0       160 2026-11-03 20:43:07   2026-11-03 20:43:07
+66            InvestmentProjects                           Scope            4         275          0       160 2026-11-03 20:43:07   2026-11-03 20:43:07
+67            InvestmentProjects                GrowthInitiative            2         153          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+68            InvestmentProjects                        CapexUSD           37           0       1133       232 2026-11-03 20:43:07   2026-11-03 20:43:07
+69            InvestmentProjects                   EarliestStart            2           0       1133       192 2026-11-03 20:43:07   2026-11-03 20:43:07
+70            InvestmentProjects                  DurationMonths           15           0       1133       176 2026-11-03 20:43:07   2026-11-03 20:43:07
+71            InvestmentProjects            RoomsOutOfServicePct            9           0       1133       176 2026-11-03 20:43:07   2026-11-03 20:43:07
+72            InvestmentProjects                      AddedRooms            9           0       1133       176 2026-11-03 20:43:07   2026-11-03 20:43:07
+73            InvestmentProjects            AnnualRunningCostUSD            6           0       1133       192 2026-11-03 20:43:07   2026-11-03 20:43:07
+74            InvestmentProjects                       DependsOn            2         163          0       160 2026-11-03 20:43:07   2026-11-03 20:43:07
+75            InvestmentProjects                   ExclusiveWith            6         243          0       160 2026-11-03 20:43:07   2026-11-03 20:43:07
+76            InvestmentProjects                     Description           38        4599          0       184 2026-11-03 20:43:07   2026-11-03 20:43:07
+77           InvestmentScenarios                       ProjectID           40         923          0       248 2026-11-03 20:43:07   2026-11-03 20:43:07
+78           InvestmentScenarios                        Scenario            3         183          0       176 2026-11-03 20:43:07   2026-11-03 20:43:07
+79           InvestmentScenarios              OccupancyChangePts           15           0       1133       272 2026-11-03 20:43:07   2026-11-03 20:43:07
+80           InvestmentScenarios                    ADRChangePct           20           0       1133       272 2026-11-03 20:43:07   2026-11-03 20:43:07
+81           InvestmentScenarios             AddedRoomsOccupancy           18           0       1133       256 2026-11-03 20:43:07   2026-11-03 20:43:07
+82           InvestmentScenarios    FoodBeverageRevenueChangePct           16           0       1133       192 2026-11-03 20:43:07   2026-11-03 20:43:07
+83           InvestmentScenarios           OtherRevenueChangePct           16           0       1133       248 2026-11-03 20:43:07   2026-11-03 20:43:07
+84           InvestmentScenarios       OperatingExpenseChangePct            9           0       1133       232 2026-11-03 20:43:07   2026-11-03 20:43:07
+85           InvestmentScenarios       DistributionCostChangePts            8           0       1133       232 2026-11-03 20:43:07   2026-11-03 20:43:07
+86           InvestmentScenarios           SatisfactionChangePts           15           0       1133       256 2026-11-03 20:43:07   2026-11-03 20:43:07
+87           InvestmentScenarios            NewPropertyOccupancy           11           0       1133       160 2026-11-03 20:43:07   2026-11-03 20:43:07
+88           InvestmentScenarios                  NewPropertyADR           13           0       1133       176 2026-11-03 20:43:07   2026-11-03 20:43:07
+89           InvestmentScenarios          AnnualRevenueImpactUSD          104           0       2197       392 2026-11-03 20:43:07   2026-11-03 20:43:07
+90           InvestmentScenarios  AnnualOperatingProfitImpactUSD          120           0       2197       392 2026-11-03 20:43:07   2026-11-03 20:43:07
+91            MonthlyPerformance                         HotelID          165        3423          0      9960 2026-11-03 20:43:07   2026-11-03 20:43:07
+92            MonthlyPerformance                           Month           60         520          0      7376 2026-11-03 20:43:07   2026-11-03 20:43:07
+93            MonthlyPerformance                  RoomsAvailable          309        1276          0      4416 2026-11-03 20:43:07   2026-11-03 20:43:07
+94            MonthlyPerformance                       RoomsSold         5151           0     132045     19768 2026-11-03 20:43:07   2026-11-03 20:43:07
+95            MonthlyPerformance                     RoomRevenue         9777           0     262749     39392 2026-11-03 20:43:07   2026-11-03 20:43:07
+96            MonthlyPerformance             FoodBeverageRevenue         9476           0     262893     39392 2026-11-03 20:43:07   2026-11-03 20:43:07
+97            MonthlyPerformance                    OtherRevenue         9201           0     137405     26312 2026-11-03 20:43:07   2026-11-03 20:43:07
+98            MonthlyPerformance                    TotalRevenue         9788           0     262701     39392 2026-11-03 20:43:07   2026-11-03 20:43:07
+99            MonthlyPerformance                       StaffCost         9585           0     263013     39392 2026-11-03 20:43:07   2026-11-03 20:43:07
+100           MonthlyPerformance                      EnergyCost         9276           0     262773     26312 2026-11-03 20:43:07   2026-11-03 20:43:07
+101           MonthlyPerformance                 MaintenanceCost         9307           0     262781     26312 2026-11-03 20:43:07   2026-11-03 20:43:07
+102           MonthlyPerformance                FoodBeverageCost         8953           0     136653     26312 2026-11-03 20:43:07   2026-11-03 20:43:07
+103           MonthlyPerformance              OtherOperatingCost         9675           0     262613     26312 2026-11-03 20:43:07   2026-11-03 20:43:07
+104           MonthlyPerformance          TotalOperatingExpenses         9775           0     262741     39392 2026-11-03 20:43:07   2026-11-03 20:43:07
+105                       Region                          Region            3         215          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+106                  Renovations                    RenovationID          201        4143          0       352 2026-11-03 20:43:07   2026-11-03 20:43:07
+107                  Renovations                         HotelID          155        3223          0       352 2026-11-03 20:43:07   2026-11-03 20:43:07
+108                  Renovations                       StartDate          103           0       2157       552 2026-11-03 20:43:07   2026-11-03 20:43:07
+109                  Renovations                         EndDate          103           0       2165       552 2026-11-03 20:43:07   2026-11-03 20:43:07
+110                  Renovations                  RenovationType            2         199          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+111                  Renovations            RoomsOutOfServicePct           16           0       1133       248 2026-11-03 20:43:07   2026-11-03 20:43:07
+112                  Renovations                         CostUSD          195           0       4237       472 2026-11-03 20:43:07   2026-11-03 20:43:07
+113                     Scenario                        Scenario            3         183          0       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+114                     Scenario                   ScenarioOrder            3           0       1133       152 2026-11-03 20:43:07   2026-11-03 20:43:07
+== SCHEMA
+                       TableName                      ColumnName  PandasDataType
+0                BookingChannels                         HotelID          string
+1                BookingChannels                           Month  datetime64[ns]
+2                BookingChannels                         Channel          string
+3                BookingChannels                        Bookings           Int64
+4                BookingChannels                      RoomNights           Int64
+5                BookingChannels                     RoomRevenue           Int64
+6                BookingChannels                DistributionCost           Int64
+7                         Brands                           Brand          string
+8                         Brands                         Segment          string
+9                         Brands                      Properties           Int64
+10                        Brands                     Positioning          string
+11                        Brands             InvestmentBudgetUSD           Int64
+12                          Date                            Date  datetime64[ns]
+13                          Date                            Year           Int64
+14                          Date                         Quarter          string
+15                          Date                     MonthNumber           Int64
+16                          Date                           Month          string
+17                          Date                       YearMonth          string
+18                          Date                          Period          string
+19            FinanceAssumptions                            Year           Int64
+20            FinanceAssumptions                          Region          string
+21            FinanceAssumptions           MarketDemandGrowthPct         Float64
+22            FinanceAssumptions                 ADRInflationPct         Float64
+23            FinanceAssumptions                CostInflationPct         Float64
+24             FinanceParameters                       Parameter          string
+25             FinanceParameters                           Value         Float64
+26             FinanceParameters                            Unit          string
+27             FinanceParameters                           Notes          string
+28               GuestComplaints                         HotelID          string
+29               GuestComplaints                           Month  datetime64[ns]
+30               GuestComplaints                        Category          string
+31               GuestComplaints                      Complaints           Int64
+32               GuestExperience                         HotelID          string
+33               GuestExperience                           Month  datetime64[ns]
+34               GuestExperience                 SurveyResponses           Int64
+35               GuestExperience                    OverallScore         Float64
+36               GuestExperience                CleanlinessScore         Float64
+37               GuestExperience                    ServiceScore         Float64
+38               GuestExperience                RoomComfortScore         Float64
+39               GuestExperience                  AmenitiesScore         Float64
+40               GuestExperience              ValueForMoneyScore         Float64
+41               GuestExperience                NetPromoterScore         Float64
+42                 GuestSegments                         HotelID          string
+43                 GuestSegments                           Month  datetime64[ns]
+44                 GuestSegments                         Segment          string
+45                 GuestSegments                        Bookings           Int64
+46                 GuestSegments                      RoomNights           Int64
+47                 GuestSegments                     RoomRevenue           Int64
+48                        Hotels                         HotelID          string
+49                        Hotels                       HotelName          string
+50                        Hotels                           Brand          string
+51                        Hotels                            City          string
+52                        Hotels                         Country          string
+53                        Hotels                          Region          string
+54                        Hotels                        Latitude         Float64
+55                        Hotels                       Longitude         Float64
+56                        Hotels                    LocationType          string
+57                        Hotels                           Rooms           Int64
+58                        Hotels                     OpeningDate  datetime64[ns]
+59                        Hotels              LastRenovationDate  datetime64[ns]
+60   InvestmentProjectProperties                       ProjectID          string
+61   InvestmentProjectProperties                         HotelID          string
+62            InvestmentProjects                       ProjectID          string
+63            InvestmentProjects                           Brand          string
+64            InvestmentProjects                     ProjectName          string
+65            InvestmentProjects                        Category          string
+66            InvestmentProjects                           Scope          string
+67            InvestmentProjects                GrowthInitiative          string
+68            InvestmentProjects                        CapexUSD           Int64
+69            InvestmentProjects                   EarliestStart  datetime64[ns]
+70            InvestmentProjects                  DurationMonths           Int64
+71            InvestmentProjects            RoomsOutOfServicePct         Float64
+72            InvestmentProjects                      AddedRooms           Int64
+73            InvestmentProjects            AnnualRunningCostUSD           Int64
+74            InvestmentProjects                       DependsOn          string
+75            InvestmentProjects                   ExclusiveWith          string
+76            InvestmentProjects                     Description          string
+77           InvestmentScenarios                       ProjectID          string
+78           InvestmentScenarios                        Scenario          string
+79           InvestmentScenarios              OccupancyChangePts         Float64
+80           InvestmentScenarios                    ADRChangePct         Float64
+81           InvestmentScenarios             AddedRoomsOccupancy         Float64
+82           InvestmentScenarios    FoodBeverageRevenueChangePct         Float64
+83           InvestmentScenarios           OtherRevenueChangePct         Float64
+84           InvestmentScenarios       OperatingExpenseChangePct         Float64
+85           InvestmentScenarios       DistributionCostChangePts         Float64
+86           InvestmentScenarios           SatisfactionChangePts         Float64
+87           InvestmentScenarios            NewPropertyOccupancy         Float64
+88           InvestmentScenarios                  NewPropertyADR         Float64
+89           InvestmentScenarios          AnnualRevenueImpactUSD           Int64
+90           InvestmentScenarios  AnnualOperatingProfitImpactUSD           Int64
+91            MonthlyPerformance                         HotelID          string
+92            MonthlyPerformance                           Month  datetime64[ns]
+93            MonthlyPerformance                  RoomsAvailable           Int64
+94            MonthlyPerformance                       RoomsSold           Int64
+95            MonthlyPerformance                     RoomRevenue           Int64
+96            MonthlyPerformance             FoodBeverageRevenue           Int64
+97            MonthlyPerformance                    OtherRevenue           Int64
+98            MonthlyPerformance                    TotalRevenue           Int64
+99            MonthlyPerformance                       StaffCost           Int64
+100           MonthlyPerformance                      EnergyCost           Int64
+101           MonthlyPerformance                 MaintenanceCost           Int64
+102           MonthlyPerformance                FoodBeverageCost           Int64
+103           MonthlyPerformance              OtherOperatingCost           Int64
+104           MonthlyPerformance          TotalOperatingExpenses           Int64
+105                       Region                          Region          string
+106                  Renovations                    RenovationID          string
+107                  Renovations                         HotelID          string
+108                  Renovations                       StartDate  datetime64[ns]
+109                  Renovations                         EndDate  datetime64[ns]
+110                  Renovations                  RenovationType          string
+111                  Renovations            RoomsOutOfServicePct         Float64
+112                  Renovations                         CostUSD           Int64
+113                     Scenario                        Scenario          string
+114                     Scenario                   ScenarioOrder           Int64
+== RELATIONSHIPS
+                  FromTableName FromColumnName         ToTableName ToColumnName  IsActive Cardinality CrossFilteringBehavior  FromKeyCount ToKeyCount  RelyOnReferentialIntegrity
+0                        Hotels          Brand              Brands        Brand         1         M:1                 Single             7       None                           0
+1                        Hotels         Region              Region       Region         1         M:1                 Single             6       None                           0
+2            FinanceAssumptions         Region              Region       Region         1         M:1                 Single             6       None                           0
+3            InvestmentProjects          Brand              Brands        Brand         1         M:1                 Single             7       None                           0
+4           InvestmentScenarios      ProjectID  InvestmentProjects    ProjectID         1         M:1                 Single            43       None                           0
+5   InvestmentProjectProperties      ProjectID  InvestmentProjects    ProjectID         1         M:1                 Single            39       None                           0
+6                   Renovations        HotelID              Hotels      HotelID         1         M:1                 Single           158       None                           0
+7            MonthlyPerformance        HotelID              Hotels      HotelID         1         M:1                 Single           168       None                           0
+8            MonthlyPerformance          Month                Date         Date         1         M:1                 Single            63       None                           0
+9                 GuestSegments        HotelID              Hotels      HotelID         1         M:1                 Single           168       None                           0
+10                GuestSegments          Month                Date         Date         1         M:1                 Single            63       None                           0
+11              BookingChannels        HotelID              Hotels      HotelID         1         M:1                 Single           168       None                           0
+12              BookingChannels          Month                Date         Date         1         M:1                 Single            63       None                           0
+13              GuestExperience        HotelID              Hotels      HotelID         1         M:1                 Single           168       None                           0
+14              GuestExperience          Month                Date         Date         1         M:1                 Single            63       None                           0
+15              GuestComplaints        HotelID              Hotels      HotelID         1         M:1                 Single           168       None                           0
+16              GuestComplaints          Month                Date         Date         1         M:1                 Single            63       None                           0
+== DAX MEASURES
+Empty DataFrame
+Columns: []
+Index: []
+== DAX COLUMNS
+Empty DataFrame
+Columns: []
+Index: []
+== DAX TABLES
+Empty DataFrame
+Columns: []
+Index: []
+== POWER QUERY
+-- Date
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="Date",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"Year", Int64.Type}, {"Quarter", type text}, {"MonthNumber", Int64.Type}, {"Month", type text}, {"YearMonth", type text}, {"Period", type text}})
+in
+    Typed
+-- Region
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="Region",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"Region", type text}})
+in
+    Typed
+-- Scenario
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="Scenario",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"Scenario", type text}, {"ScenarioOrder", Int64.Type}})
+in
+    Typed
+-- Brands
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="Brands",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"Brand", type text}, {"Segment", type text}, {"Properties", Int64.Type}, {"Positioning", type text}, {"InvestmentBudgetUSD", Int64.Type}})
+in
+    Typed
+-- Hotels
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="Hotels",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"HotelName", type text}, {"Brand", type text}, {"City", type text}, {"Country", type text}, {"Region", type text}, {"Latitude", type number}, {"Longitude", type number}, {"LocationType", type text}, {"Rooms", Int64.Type}, {"OpeningDate", type date}, {"LastRenovationDate", type date}})
+in
+    Typed
+-- Renovations
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="Renovations",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"RenovationID", type text}, {"HotelID", type text}, {"StartDate", type date}, {"EndDate", type date}, {"RenovationType", type text}, {"RoomsOutOfServicePct", type number}, {"CostUSD", Int64.Type}})
+in
+    Typed
+-- MonthlyPerformance
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="MonthlyPerformance",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"RoomsAvailable", Int64.Type}, {"RoomsSold", Int64.Type}, {"RoomRevenue", Int64.Type}, {"FoodBeverageRevenue", Int64.Type}, {"OtherRevenue", Int64.Type}, {"TotalRevenue", Int64.Type}, {"StaffCost", Int64.Type}, {"EnergyCost", Int64.Type}, {"MaintenanceCost", Int64.Type}, {"FoodBeverageCost", Int64.Type}, {"OtherOperatingCost", Int64.Type}, {"TotalOperatingExpenses", Int64.Type}})
+in
+    Typed
+-- GuestSegments
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="GuestSegments",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"Segment", type text}, {"Bookings", Int64.Type}, {"RoomNights", Int64.Type}, {"RoomRevenue", Int64.Type}})
+in
+    Typed
+-- BookingChannels
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="BookingChannels",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"Channel", type text}, {"Bookings", Int64.Type}, {"RoomNights", Int64.Type}, {"RoomRevenue", Int64.Type}, {"DistributionCost", Int64.Type}})
+in
+    Typed
+-- GuestExperience
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="GuestExperience",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"SurveyResponses", Int64.Type}, {"OverallScore", type number}, {"CleanlinessScore", type number}, {"ServiceScore", type number}, {"RoomComfortScore", type number}, {"AmenitiesScore", type number}, {"ValueForMoneyScore", type number}, {"NetPromoterScore", type number}})
+in
+    Typed
+-- GuestComplaints
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="GuestComplaints",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"Category", type text}, {"Complaints", Int64.Type}})
+in
+    Typed
+-- InvestmentProjects
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="InvestmentProjects",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"ProjectID", type text}, {"Brand", type text}, {"ProjectName", type text}, {"Category", type text}, {"Scope", type text}, {"GrowthInitiative", type text}, {"CapexUSD", Int64.Type}, {"EarliestStart", type date}, {"DurationMonths", Int64.Type}, {"RoomsOutOfServicePct", type number}, {"AddedRooms", Int64.Type}, {"AnnualRunningCostUSD", Int64.Type}, {"DependsOn", type text}, {"ExclusiveWith", type text}, {"Description", type text}})
+in
+    Typed
+-- InvestmentProjectProperties
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="InvestmentProjectProperties",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"ProjectID", type text}, {"HotelID", type text}})
+in
+    Typed
+-- InvestmentScenarios
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="InvestmentScenarios",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"ProjectID", type text}, {"Scenario", type text}, {"OccupancyChangePts", type number}, {"ADRChangePct", type number}, {"AddedRoomsOccupancy", type number}, {"FoodBeverageRevenueChangePct", type number}, {"OtherRevenueChangePct", type number}, {"OperatingExpenseChangePct", type number}, {"DistributionCostChangePts", type number}, {"SatisfactionChangePts", type number}, {"NewPropertyOccupancy", type number}, {"NewPropertyADR", type number}, {"AnnualRevenueImpactUSD", Int64.Type}, {"AnnualOperatingProfitImpactUSD", Int64.Type}})
+in
+    Typed
+-- FinanceAssumptions
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="FinanceAssumptions",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"Year", Int64.Type}, {"Region", type text}, {"MarketDemandGrowthPct", type number}, {"ADRInflationPct", type number}, {"CostInflationPct", type number}})
+in
+    Typed
+-- FinanceParameters
+let
+    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+    Sheet = Source{[Item="FinanceParameters",Kind="Sheet"]}[Data],
+    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+    Typed = Table.TransformColumnTypes(Promoted, {{"Parameter", type text}, {"Value", type number}, {"Unit", type text}, {"Notes", type text}})
+in
+    Typed
+== M PARAMS
+  ParameterName                                                                                                              Description  \
+0      DataFile  URL of PillowKey_Dataset.xlsx in Azure Blob Storage (public, anonymous). Change it in Transform data > Edit paramete...   
+
+                                                                                                                Expression        ModifiedTime  
+0  "https://datavizcontests.blob.core.windows.net/worldchamps-atl27/PillowKey_Dataset.xlsx" meta [IsParameterQuery=true... 2026-11-03 20:43:07  

@@ -1,0 +1,70 @@
+# Imagery profile — blank scaffold (imagery-studio module).
+# Sits beside brand.yaml in a kit folder; copy with the kit and fill in.
+# Governs how generative chrome imagery is produced so it stays on-brand:
+# the style_anchors (real reference images) carry the look, this file pins
+# the words around them. The im-imagery skill reads this profile, resolves
+# palette roles against brand.yaml, and composes render specs for
+# scripts/imagery/render_image.mjs.
+
+kit: "<kit-name>"          # must match brand.yaml → kit
+version: 1
+date: "<YYYY-MM-DD>"
+
+method: generative          # this module only does generative; deterministic
+                            # backgrounds are canvas-studio territory
+
+# One paragraph that a stranger could paint from: medium, linework, mood,
+# recurring motifs. Say what it IS, not what it isn't (negatives go below).
+style_spec: >-
+  <e.g. Warm watercolor hand-sketch, loose linework, light paper background;
+  recurring motifs: <objects the brand owns>; gentle and approachable, never
+  corporate>
+
+palette:
+  # ROLE REFERENCES into this kit's brand.yaml → color.* — never duplicate
+  # hex values here. The skill substitutes the actual hexes at render time,
+  # so a rebrand re-renders correctly from one source of truth.
+  dominant: color.canvas          # carries most of the image area
+  ink: color.ink                  # linework / darkest value
+  accent: color.accent            # THE accent — consistency lock 7 applies
+                                  # to imagery exactly as to visuals
+  support:                        # optional, sparing; e.g. color.neutral_data
+    - "<color.<role> | delete if unused>"
+
+# Brand-specific negatives, comma-separated phrases. The renderer ALWAYS
+# appends the hard no-text set (no text/words/letters/numbers/logos/
+# watermark), so never repeat those here.
+negative: >-
+  <e.g. no stock photo, no 3D render, no photorealism, no flat corporate
+  clipart, no busy background, no gradients>
+
+style_anchors:
+  # 2-5 REAL images that define the style (sketches, past approved renders),
+  # paths relative to the repo root. These do more than any prompt text —
+  # a profile without anchors drifts off-brand.
+  - "design/brand-kits/<kit-name>/assets/anchors/<anchor-1>.webp"
+  - "design/brand-kits/<kit-name>/assets/anchors/<anchor-2>.webp"
+
+sizes:
+  # Default render targets for report use, at 2x the canvas slot so imagery
+  # stays sharp (canvas default 1280x720 — adjust if the design contract
+  # changes canvas size). aspect_ratio must be one the model supports;
+  # off-ratio slots (divider bands) are cropped at placement, noted in the
+  # design handoff.
+  cover_hero:
+    width: 2560
+    height: 1440
+    aspect_ratio: "16:9"
+  section_divider:
+    width: 2560
+    height: 1080          # rendered 21:9, cropped to the divider band
+    aspect_ratio: "21:9"
+  background_texture:
+    width: 2560
+    height: 1440
+    aspect_ratio: "16:9"
+    note: "faint wash only — must stay far below data-ink contrast"
+  empty_state:
+    width: 1024
+    height: 1024
+    aspect_ratio: "1:1"

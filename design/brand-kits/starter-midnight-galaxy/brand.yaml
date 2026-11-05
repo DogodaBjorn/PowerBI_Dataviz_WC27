@@ -1,0 +1,70 @@
+# Starter kit "Midnight Galaxy" — no-brand candidate for bk-brand-kit's no-brand path.
+# Adapted from the theme-factory skill, theme "Midnight Galaxy" (Anthropic
+# skills repo, Apache-2.0); the theme's 4 colors expanded to full role tokens.
+# Dark kit: confirm the client wants a dark report before adopting.
+# Fonts: theme's FreeSans mapped to the Segoe UI family.
+# WCAG adjustments: theme cosmic blue #4A4E8F is 2.05:1 on the deep purple
+# canvas — brightened to #6E7FD1 (4.1:1) in the ramp. Lavender accent
+# #A490C2 passes (5.4:1); silver #E6E6FA kept as ink. good/bad added (the
+# theme defines none). Verified via
+# python scripts/check_contrast.py --kit design/brand-kits/starter-midnight-galaxy/brand.yaml
+# Best for: entertainment, gaming, nightlife, premium creative reporting.
+
+kit: "starter-midnight-galaxy"
+version: 1
+date: "2026-08-04"
+
+identity:
+  organization_alias: "starter kit — no client"
+  personality: "dramatic, cosmic, premium"
+
+color:
+  canvas: "#2B1E3E"
+  surface: "#362A4C"
+  ink: "#E9E6F5"
+  ink_secondary: "#B3A6CE"
+  hairline: "#4A3D66"
+
+  accent: "#A490C2"
+  good: "#63C79B"
+  bad: "#E88098"
+  neutral_data: "#8A82A0"
+
+  categorical:
+    - "#A490C2"
+    - "#6E7FD1"
+    - "#5FB3C7"
+    - "#D9B36B"
+    - "#D183B8"
+    - "#8A82A0"
+
+  sequential: ["#D9D2F0", "#4A4E8F"]
+  diverging: ["#E88098", "#8A82A0", "#63C79B"]
+
+typography:
+  display: "Segoe UI Semibold, Segoe UI"
+  body: "Segoe UI, Arial"
+  numeric: "Segoe UI, Arial"
+  scale_pt: [28, 20, 14, 12, 10]
+
+shape:
+  radius_px: 8
+  shadow: "none"   # shadows read as smudges on dark canvases
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: ""   # no logo bundled — add the client's when adopting this kit
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "locale-driven; nl-NL default (1.234,56) — confirm per client"
+
+forbidden:
+  - "no pure black or pure white anywhere — the kit lives in deep purple"
+  - "raw cosmic blue #4A4E8F never carries data on canvas — use #6E7FD1"

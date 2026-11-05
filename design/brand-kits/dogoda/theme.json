@@ -1,0 +1,41 @@
+{
+  "name": "DoGoDa",
+  "dataColors": [
+    "#046566",
+    "#F06460",
+    "#8A8682",
+    "#BBB7B2"
+  ],
+  "background": "#F1F0ED",
+  "foreground": "#2A1F1B",
+  "tableAccent": "#557A7A",
+  "good": "#4A8265",
+  "neutral": "#CECAC3",
+  "bad": "#C25335",
+  "maximum": "#4A8265",
+  "center": "#CECAC3",
+  "minimum": "#C25335",
+  "null": "#BBB7B2",
+  "textClasses": {
+    "callout": {
+      "fontFace": "'Source Code Pro', Consolas, monospace",
+      "fontSize": 28,
+      "color": "#2A1F1B"
+    },
+    "title": {
+      "fontFace": "Nunito, 'Segoe UI Semibold', sans-serif",
+      "fontSize": 14,
+      "color": "#2A1F1B"
+    },
+    "header": {
+      "fontFace": "'Public Sans', 'Segoe UI', sans-serif",
+      "fontSize": 12,
+      "color": "#2A1F1B"
+    },
+    "label": {
+      "fontFace": "'Public Sans', 'Segoe UI', sans-serif",
+      "fontSize": 10,
+      "color": "#4A3D37"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+# pbi-atelier project configuration (see GETTING-STARTED.md)
+name: PowerBI_Dataviz_WC27
+client_alias: fabric-contest
+language: en
+template_version: 0.3.1
+created: 2026-11-05
+brand_kit: none
+modules:
+  - brand-kit-studio
+  - nav-studio
+  - tooltip-studio
+  - a11y-studio
+  - table-studio
+  - icon-studio
+  - canvas-studio
+  - px-prototype
+  - deneb-studio
+  - custom-visual-studio

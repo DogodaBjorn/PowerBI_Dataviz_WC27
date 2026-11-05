@@ -1,0 +1,115 @@
+Power BI Dataviz World Champs 2027 | Round 1 | Microsoft Fabric Community
+Data Days: AI @Work
+Learn it. Build it. Make it real. Nov 2 ��� Dec 15.
+Explore Data Days
+Open Side Menu
+Skip to content
+Forums
+Inspiration
+Ideas
+Communities
+Blogs
+Learning
+Support
+RegisterSign In
+Microsoft Fabric Community
+Fabric community blogs
+Power BI Community Blog
+Report
+Data Days is back! Practical AI, live sessions, certifications and more! Register now
+On this pageRound 1 ��� The Investment Challenge!Meet Pillow & Key Group
+���� Your Challenge
+���� The Timeline
+������� Get Started
+���� Submit Your Entry
+���� A Very Special Thank You!
+Ready to Compete?
+Blog Post
+Power BI Community Blog 
+3 MIN READ
+Power BI Dataviz World Champs 2027 | Round 1
+slindsayCommunity Admin
+193193 views
+5 hours ago
+ Round 1 ��� The Investment Challenge!
+The Power BI Dataviz World Championships are BACK! ���� We're kicking things off with a challenge that puts your analytical skills, creativity, and storytelling to the test. This time, you're not just building a report - you're making the decisions!
+Meet Pillow & Key Group
+Pillow & Key Group is a fictional hospitality company with 165 hotels across North America, Europe, and Asia-Pacific. The company operates four brands, each with its own customers, challenges, and opportunities.
+BrandFocusHotels
+Maison d���OrLuxury hotels & resorts30
+Pebble & PineFamily vacation resorts45
+P&K SelectBusiness & conference hotels40
+Goodnight InnBudget & economy hotels50
+The Board of Directors is preparing its next five-year investment strategy. But there's a catch: there isn't enough money to fund everything. That's where you come in!
+���� Your Challenge
+Choose one brand and build a Power BI report that helps the Board make smart investment decisions. Your report should answer two big questions:
+1. The Brand Review
+Where does your brand stand today?
+Explore the historical data to uncover what matters most. What's working? What's not? Where are the biggest opportunities?
+The Board doesn't need every number. They need the insights that will help them make decisions.
+2. The Investment Strategy
+Where should the money go, and why?
+Turn your findings into a compelling investment proposal.
+Your strategy must:
+Recommend at least three investment initiatives.
+Include at least one initiative focused on future growth.
+Stay within your brand's budget.
+Demonstrate expected financial and operational impact through 2032.
+Explain your choices, risks, and trade-offs.
+Remember, there's no single right answer. We're looking for thoughtful analysis, clear recommendations, and a story that makes the Board pay attention!
+���� The Timeline
+2021���2025: Historical data
+2026: Your planning year
+2027���2031: Investment period
+Through 2032: Measure the impact of your decisions
+������� Get Started
+Everything you need is ready!
+���� Download the Power BI Starter File
+���� Download the Excel Dataset
+���� Official Rules
+A few things to remember:
+Choose one brand.
+Use only the provided data.
+Include at least four built-in Power BI visuals.
+Design for your audience: the Board of Directors.
+Make accessibility part of your design.
+���� Submit Your Entry
+Round 1 closes November 18, 2026!
+Share your entry in the Fabric Community Contests Gallery, including:
+An image of your report.
+A short description identifying your chosen brand.
+Your PBIX file or Publish to Web link.
+The official contest tag.
+������ Submit your entry
+Two participants from this round will advance to the live World Championship finale at FabCon Atlanta in March 2027!
+���� A Very Special Thank You!
+One of my favorite things about this community is how willing people are to jump in, share their talents, and help make something wonderful happen. This year's World Championships are no exception!
+A HUGE thank you to our Contest Advisory Committee:
+Karin Szil��gyi
+Aanor Le Gouic
+Taylor Amy
+Santhana Lakshmi Ponnurasan
+Paulo Grijo
+This is community at its very best, and we're so grateful for you all! ����
+Ready to Compete?
+You've got the data. You've got the challenge. Now show us what you can do!
+Let's find our next Power BI Dataviz World Champion! ����
+Updated 5 hours ago
+Version 2.0
+events
+LikeLike
+4
+CommentComment
+slindsayCommunity Admin
+Joined May 08, 2017
+Send Message
+View Profile
+Power BI Community Blog On this blog you will find articles, guides and information created by our community members and, from time to time, roundups and community news.
+If you are interested in becoming a community blog author, send a private message to Natalie_iTalent. An overview of the community blogs can be found here.
+Sign in to reply
+ �� 2026 Microsoft
+ Manage cookies
+ Privacy & cookies 
+ Terms of use 
+ Trademarks 
+ Your Privacy Choices Consumer Health Privacy 

@@ -1,0 +1,65 @@
+# PowerBI_Dataviz_WC27 — Goodnight Inn · Power BI Dataviz World Champs 2027, Round 1
+
+Björn Kats' entry for Round 1 ("The Investment Challenge") of the Power BI Dataviz
+World Champs 2027: a two-page Power BI report that reviews Pillow & Key Group's budget
+brand, **Goodnight Inn**, and proposes how its $60 M investment budget should be spent
+through 2032. Built on the [pbi-atelier](https://github.com/DogodaBjorn/pbi-atelier)
+lifecycle (template copied 2026-11-05). Client alias: `fabric-contest` · Language: `en`.
+
+**Deadline: November 18, 2026** (submission planned November 17).
+
+## Status
+
+`project/project-state/status.yaml` — stage 0 (intake), nothing gated yet.
+Open the repo in Claude Code and paste the kickoff prompt at the bottom of
+`project/MISSION-goodnight-inn.md`; from then on `/next` routes the lifecycle.
+
+## Where things are
+
+| Path | Contents |
+|---|---|
+| `project/MISSION-goodnight-inn.md` | Stage-0 source of truth: contest constraints, story, evidence pack, project table, recommended plan, model blueprint seed, two-page design contract, showpiece gate, 14-day timeline, kickoff prompt |
+| `project/SCOUT-pillowkey-round1.md` | Rules digest, dataset mechanics (the organisers' impact rules decoded), all four brands compared |
+| `project/PITCH-goodnight-inn-directions.md` | Three creative directions (Wake-up call · Fifty keys · Two futures) scored on the seven G5 passes, plus the dataset codex and 18 idea seeds |
+| `project/creative-direction.draft.yaml` | Pre-filled stage-5 contract; `/s5-design` finishes it (`user_decided: false`) |
+| `project/deliverables/pitch/` | The browsable pitch page (`goodnight-inn-three-ways.html`, also published as a Claude artifact), its template and data |
+| `project/analysis/` | The reproducible evidence pipeline: decode the starter `.pbix`, export tables, every analysis behind the numbers in the mission and pitch, with outputs |
+| `project/contest/` | The Round 1 blog post as text, and its links (starter file, dataset, rules PDF, gallery) |
+| `project/data/` | Local only (gitignored): the starter `.pbix`, the saved blog page. The dataset loads from the organisers' public blob through the model's `DataFile` parameter |
+| `project/pbip/` | The Power BI project (semantic model + report), empty until stage 4 |
+| `.claude/skills/` | The atelier's 38 skills plus 9 vendored third-party skills (`VENDORED.md`) |
+| everything else | The pbi-atelier framework: lifecycle, contracts, design doctrine, modules, validators (read-only reference at project time) |
+
+## Working on this project
+
+1. Open in Claude Code; the session-start hook reports the state. Read `CLAUDE.md`,
+   then the mission.
+2. `/next` routes to the current stage. Gates close only with evidence; never skip one.
+3. Every number in the mission and the pitch is a hypothesis from the offline decode;
+   the model re-derives it before it lands in a visual (invariant 5, do not fabricate).
+4. The contest's "must work online" rule is blocker-severity: built-in fonts only,
+   embedded images only, Publish-to-Web test before submission.
+5. No commits or pushes without Björn's explicit yes. Deploys and publishes are run by
+   a human, never by the agent.
+
+## Reproducing the evidence pack
+
+```bash
+python -m venv .venv && . .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install -r project/analysis/requirements.txt
+python -I project/analysis/01_dump_model.py project/data/PillowKey_Starter.pbix > project/analysis/output/model_dump.txt
+python -I project/analysis/02_export_tables.py project/data/PillowKey_Starter.pbix project/analysis/data
+python -I project/analysis/20_goodnight_inn_deep_dive.py project/analysis/data
+```
+
+See `project/analysis/README.md` for the full script map.
+
+## Dependencies
+
+See `DEPENDENCIES.md`. The custom-visual path (Node ≥ 20 + `pbiviz`) and the HTML-comp
+path (`scripts/prototype`, Playwright) are optional and gated in the mission (§6).
+Note the `pbir` CLI's non-commercial license before using it in paid work.
+
+---
+Part of Björn Kats' (DoGoDa) workspace. Previous rounds: 2026 Round 2 in
+[world-champs-r2](https://github.com/DogodaBjorn/world-champs-r2).

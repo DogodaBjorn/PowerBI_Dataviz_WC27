@@ -1,0 +1,69 @@
+# Starter kit "Forest Canopy" — no-brand candidate for bk-brand-kit's no-brand path.
+# Adapted from the theme-factory skill, theme "Forest Canopy" (Anthropic skills
+# repo, Apache-2.0); the theme's 4 colors expanded to full role tokens.
+# Fonts: theme's FreeSerif headers mapped to Cambria; FreeSans body to Segoe UI.
+# WCAG adjustments: theme sage #7D8471 and olive #A4AC86 fail 3:1 on the ivory
+# canvas as data colors — darkened to #6B7360 / #79855C in the categorical
+# ramp. Forest green kept (lightened one step to #3A6B3E for a livelier
+# accent; original #2D4A2B anchors the sequential dark end). Verified via
+# python scripts/check_contrast.py --kit design/brand-kits/starter-forest-canopy/brand.yaml
+# Best for: sustainability, agriculture, wellness, public-sector green reports.
+
+kit: "starter-forest-canopy"
+version: 1
+date: "2026-08-04"
+
+identity:
+  organization_alias: "starter kit — no client"
+  personality: "natural, grounded, calm"
+
+color:
+  canvas: "#F5F4EE"
+  surface: "#FCFBF7"
+  ink: "#273422"
+  ink_secondary: "#5A6350"
+  hairline: "#DEDDD0"
+
+  accent: "#3A6B3E"
+  good: "#3E7A4E"
+  bad: "#A4462E"   # rust, not red — hue + lightness apart from good
+  neutral_data: "#82887A"
+
+  categorical:
+    - "#3A6B3E"
+    - "#6B7360"
+    - "#79855C"
+    - "#A08050"
+    - "#58788C"
+    - "#8A6E4B"
+
+  sequential: ["#DDE4D2", "#2D4A2B"]
+  diverging: ["#A4462E", "#82887A", "#3E7A4E"]
+
+typography:
+  display: "Cambria, Georgia"
+  body: "Segoe UI, Arial"
+  numeric: "Segoe UI, Arial"
+  scale_pt: [28, 20, 14, 12, 10]
+
+shape:
+  radius_px: 8
+  shadow: "none"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: ""   # no logo bundled — add the client's when adopting this kit
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "locale-driven; nl-NL default (1.234,56) — confirm per client"
+
+forbidden:
+  - "accent and good are both greens — never let good carry categorical duty"
+  - "no saturated primaries; the kit lives on muted earth tones"

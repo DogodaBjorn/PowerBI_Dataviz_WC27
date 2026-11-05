@@ -1,0 +1,221 @@
+
+===== Goodnight Inn
+                                        HotelName         Country LocationType  Rooms  RenoAge  Occ2025  RevPAR2025  RevPAR2022  GOP%2025  GOP%2022  Rev2025M  NPS25  Overall25  Compl/1kRN Projects
+HotelID                                                                                                                                                                                             
+GI027        Goodnight Inn London Gatwick Airport  United Kingdom      Airport    160    8.000    0.904     145.249     134.304     0.441     0.455     8.987  6.793      7.387       9.757    GI-05
+GI007               Goodnight Inn Phoenix Airport   United States      Airport    110    4.000    0.885     100.440      89.942     0.440     0.453     4.276  8.131      7.516       9.818      NaN
+GI033                         Goodnight Inn Lille          France      Highway    145    9.000    0.818     100.130      90.808     0.440     0.446     5.613  0.623      7.224      10.719      NaN
+GI050                Goodnight Inn Sydney Airport       Australia      Airport    140   13.000    0.833      99.018      88.297     0.446     0.454     5.361 -9.206      6.840      11.682      NaN
+GI001      Goodnight Inn Montréal-Trudeau Airport          Canada      Airport    155   10.000    0.902      97.917      87.756     0.439     0.454     5.874 -4.239      7.110       9.969      NaN
+GI048      Goodnight Inn Singapore Changi Airport       Singapore      Airport    150    7.000    0.769      97.477      85.815     0.446     0.450     5.658  2.901      7.281      10.311      NaN
+GI015                   Goodnight Inn Kansas City   United States      Highway    105    8.000    0.874      96.423      87.995     0.440     0.460     3.915  4.385      7.350       8.745      NaN
+GI019                    Goodnight Inn Sacramento   United States      Highway    110    4.000    0.848      96.073      84.166     0.446     0.450     4.089 10.075      7.589       8.957      NaN
+GI029    Goodnight Inn Amsterdam Schiphol Airport     Netherlands      Airport    105   14.000    0.833      95.730      84.355     0.448     0.443     3.888 -4.001      7.028      10.300      NaN
+GI004               Goodnight Inn Atlanta Airport   United States      Airport    165    7.000    0.817      95.547      84.250     0.448     0.454     6.103  6.894      7.432       9.874      NaN
+GI040                      Goodnight Inn Valencia           Spain      Highway    105      NaN    0.816      95.524         NaN     0.442       NaN     3.881  7.631      7.374      10.900      NaN
+GI026             Goodnight Inn Paris CDG Airport          France      Airport    110      NaN    0.816      95.410      84.294     0.445     0.441     4.061  2.427      7.218      10.504      NaN
+GI002       Goodnight Inn Toronto Pearson Airport          Canada      Airport    150    9.000    0.919      94.433      83.386     0.438     0.447     5.476 -0.330      7.163      10.198    GI-04
+GI008               Goodnight Inn Orlando Airport   United States      Airport    110      NaN    0.852      93.375      83.261     0.446     0.456     3.973  7.420      7.413       9.060      NaN
+GI006                Goodnight Inn Denver Airport   United States      Airport    110    7.000    0.750      92.853      82.314     0.445     0.453     3.953  2.390      7.301      10.332      NaN
+GI047                   Goodnight Inn Osaka Namba           Japan         City    170    4.000    0.814      92.342      81.892     0.443     0.447     6.072  6.301      7.431       9.386      NaN
+GI021                      Goodnight Inn Richmond   United States      Highway     90   13.000    0.808      92.121      83.137     0.442     0.458     3.208  2.287      7.301      11.035      NaN
+GI014                    Goodnight Inn Louisville   United States      Highway    155    5.000    0.803      91.810      83.869     0.441     0.460     5.503  6.946      7.387       9.086      NaN
+GI012                     Goodnight Inn Nashville   United States      Highway    155    9.000    0.810      91.122      82.001     0.444     0.458     5.467 -0.072      7.199      11.238      NaN
+GI020                     Goodnight Inn Charlotte   United States      Highway    105    5.000    0.816      90.911      80.766     0.446     0.457     3.694  5.311      7.394      10.931      NaN
+GI025                    Goodnight Inn Pittsburgh   United States         City    165    6.000    0.767      90.615      82.030     0.437     0.452     5.786  5.047      7.425       9.441      NaN
+GI011                  Goodnight Inn Indianapolis   United States      Highway    120    4.000    0.841      89.246      79.397     0.442     0.455     4.143  5.330      7.463       8.882      NaN
+GI024                  Goodnight Inn Philadelphia   United States         City    140    5.000    0.801      89.138      80.807     0.444     0.459     4.830 14.157      7.705       8.578      NaN
+GI010                      Goodnight Inn Columbus   United States      Highway    120    5.000    0.772      88.435      78.480     0.443     0.453     4.107  7.688      7.436       8.966      NaN
+GI039                       Goodnight Inn Bologna           Italy      Highway     95   12.000    0.780      87.995      79.238     0.447     0.450     3.235 -6.565      6.947      11.870      NaN
+GI035                    Goodnight Inn Birmingham  United Kingdom      Highway    110    6.000    0.783      87.189      76.806     0.448     0.444     3.708  8.520      7.486       9.389      NaN
+GI022                   Goodnight Inn Québec City          Canada         City     90    5.000    0.765      85.828      76.068     0.447     0.458     2.991  3.894      7.364       9.835      NaN
+GI046          Goodnight Inn Tokyo Haneda Airport           Japan      Airport    105    7.000    0.752      85.241      77.413     0.438     0.458     3.462  4.326      7.388       9.883      NaN
+GI003        Goodnight Inn Chicago Midway Airport   United States      Airport    150   13.000    0.778      84.526      77.181     0.441     0.461     4.909 -7.328      6.905      11.203      NaN
+GI028             Goodnight Inn Frankfurt Airport         Germany      Airport    115    6.000    0.805      84.279      75.140     0.441     0.440     3.754  5.952      7.384       8.793      NaN
+GI034                      Goodnight Inn Bordeaux          France      Highway    135    7.000    0.789      82.094      71.875     0.445     0.435     4.287 -5.921      6.965      11.547      NaN
+GI031                Goodnight Inn Munich Airport         Germany      Airport    100    9.000    0.753      81.670      73.127     0.448     0.450     3.161  6.534      7.425       9.497      NaN
+GI023                        Goodnight Inn Ottawa          Canada         City    120      NaN    0.712      81.019      70.896     0.449     0.453     3.763  1.422      7.222       9.108      NaN
+GI005            Goodnight Inn Dallas DFW Airport   United States      Airport    145   14.000    0.757      80.109      71.237     0.449     0.459     4.496 -5.254      6.989      10.505      NaN
+GI037                       Goodnight Inn Cologne         Germany      Highway    165    8.000    0.753      78.880      70.110     0.444     0.445     5.030 10.375      7.532       9.178      NaN
+GI030        Goodnight Inn Madrid Barajas Airport           Spain      Airport    130   12.000    0.760      77.715      69.668     0.445     0.448     3.910 -2.129      7.098       9.899      NaN
+GI045                        Goodnight Inn Lisbon        Portugal         City    105      NaN    0.826      76.746      69.939     0.445     0.453     3.117  3.096      7.340       9.317      NaN
+GI013                       Goodnight Inn Memphis   United States      Highway    145    4.000    0.764      75.179      65.511     0.455     0.454     4.218  3.270      7.336      10.137      NaN
+GI032                          Goodnight Inn Lyon          France      Highway     95   14.000    0.825      74.339      67.171     0.446     0.450     2.734 -7.294      6.986      10.317      NaN
+GI036                    Goodnight Inn Manchester  United Kingdom      Highway    155    6.000    0.749      73.095      65.671     0.444     0.445     4.385  5.662      7.418       8.775      NaN
+GI018                Goodnight Inn Salt Lake City   United States      Highway    120    7.000    0.790      72.024      64.147     0.448     0.460     3.341  3.457      7.300       9.686      NaN
+GI038                       Goodnight Inn Hanover         Germany      Highway     90    7.000    0.635      71.694      65.188     0.435     0.444     2.498  6.689      7.479      10.165      NaN
+GI043                         Goodnight Inn Porto        Portugal         City    155      NaN    0.755      69.355      44.836     0.447     0.299     4.159 12.706      7.657       9.624      NaN
+GI041                        Goodnight Inn Prague  Czech Republic         City    150    4.000    0.820      68.859      62.268     0.440     0.443     3.999  4.537      7.384       9.517      NaN
+GI016                 Goodnight Inn Oklahoma City   United States      Highway    165    7.000    0.766      65.231      59.164     0.444     0.463     4.163  3.793      7.336      10.193      NaN
+GI042                      Goodnight Inn Budapest         Hungary         City    165    9.000    0.779      62.293      57.493     0.439     0.451     3.974  0.909      7.268       9.619      NaN
+GI044                        Goodnight Inn Kraków          Poland         City    110    4.000    0.793      58.563      52.560     0.442     0.445     2.493  7.333      7.431       9.208      NaN
+GI017                   Goodnight Inn Albuquerque   United States      Highway    170    5.000    0.638      56.600      49.236     0.446     0.449     3.720  8.880      7.492       9.971      NaN
+GI049                  Goodnight Inn Kuala Lumpur        Malaysia         City    140    5.000    0.865      55.430      49.071     0.445     0.452     3.002  2.587      7.360      10.344      NaN
+GI009                      Goodnight Inn Kingston          Canada      Highway    110   11.000    0.612      55.153      49.100     0.445     0.454     2.349 -1.835      7.162       9.641    GI-06
+corr RenoAge vs Overall25 -0.8 | RenoAge vs Compl 0.55 | RenoAge vs GOP% 0.1
+
+===== Maison d'Or
+                         HotelName         Country       LocationType  Rooms  RenoAge  Occ2025  RevPAR2025  RevPAR2022  GOP%2025  GOP%2022  Rev2025M  NPS25  Overall25  Compl/1kRN     Projects
+HotelID                                                                                                                                                                                        
+MO021             Maison d'Or Maui   United States  Resort - Tropical    260    6.000    0.799     601.752     507.148     0.381     0.370    96.383 47.009      8.914       3.259  MO-04,MO-05
+MO001         Maison d'Or New York   United States        City center    210    8.000    0.862     552.230     488.235     0.382     0.395    64.591 34.313      8.414       3.708        MO-06
+MO022            Maison d'Or Aspen   United States  Resort - Mountain    145    4.000    0.725     522.301     440.453     0.379     0.369    46.633 45.580      8.896       3.858          NaN
+MO009           Maison d'Or London  United Kingdom        City center    190    2.000    0.727     502.371     378.674     0.382     0.276    52.868 45.249      8.814       3.412        MO-03
+MO008            Maison d'Or Paris          France        City center    250    3.000    0.724     487.178     377.572     0.388     0.221    67.919 43.243      8.714       3.646          NaN
+MO015           Maison d'Or Geneva     Switzerland        City center    195    7.000    0.704     440.976     394.474     0.373     0.379    47.677 40.553      8.647       3.470          NaN
+MO016            Maison d'Or Tokyo           Japan        City center    200    6.000    0.777     436.938     374.598     0.380     0.372    48.690 47.814      8.811       3.277          NaN
+MO007           Maison d'Or Boston   United States        City center    135    8.000    0.779     415.525     376.033     0.373     0.394    31.120 39.849      8.635       4.066          NaN
+MO020            Maison d'Or Seoul     South Korea        City center    180    6.000    0.736     409.414     356.123     0.379     0.381    40.920 44.633      8.805       3.476          NaN
+MO004      Maison d'Or Los Angeles   United States        City center    130    8.000    0.760     405.067     358.973     0.374     0.387    29.188 36.004      8.492       4.019          NaN
+MO003    Maison d'Or San Francisco   United States        City center    215   15.000    0.735     400.387     348.576     0.387     0.393    47.572 20.875      7.958       4.262          NaN
+MO027        Maison d'Or Santorini          Greece   Resort - Coastal    170    8.000    0.733     378.733     347.501     0.382     0.395    39.927 28.507      8.240       4.400          NaN
+MO017            Maison d'Or Kyoto           Japan        City center    120    9.000    0.736     376.689     325.132     0.386     0.386    25.068 31.093      8.376       4.311          NaN
+MO028          Maison d'Or Zermatt     Switzerland  Resort - Mountain    155    7.000    0.747     376.567     338.443     0.378     0.384    36.193 35.585      8.501       4.638          NaN
+MO025           Maison d'Or Amalfi           Italy   Resort - Coastal    215    5.000    0.708     374.343     326.437     0.381     0.370    49.624 47.032      8.814       3.620          NaN
+MO011            Maison d'Or Milan           Italy        City center    210   12.000    0.777     371.782     330.561     0.383     0.384    43.374 29.081      8.264       4.216          NaN
+MO018        Maison d'Or Singapore       Singapore        City center    210   14.000    0.707     360.694     327.985     0.364     0.390    41.810 22.246      7.990       4.832          NaN
+MO014        Maison d'Or Amsterdam     Netherlands        City center    225    5.000    0.721     358.506     302.257     0.381     0.355    44.873 47.811      8.890       3.497          NaN
+MO019        Maison d'Or Hong Kong           China        City center    240   15.000    0.717     346.903     306.540     0.378     0.388    46.034 15.911      7.761       5.046        MO-02
+MO024      Maison d'Or Côte d'Azur          France   Resort - Coastal    290   12.000    0.688     343.342     319.917     0.372     0.396    61.401 23.720      8.053       4.639          NaN
+MO002          Maison d'Or Chicago   United States        City center    255   14.000    0.710     341.846     302.396     0.377     0.390    48.525 15.133      7.698       4.614          NaN
+MO013        Maison d'Or Barcelona           Spain        City center    205   12.000    0.653     330.436     291.245     0.384     0.382    37.708 19.098      7.859       4.544          NaN
+MO005         Maison d'Or Montréal          Canada        City center    125    8.000    0.711     328.404     288.175     0.378     0.389    22.782 34.318      8.371       4.532          NaN
+MO010             Maison d'Or Rome           Italy        City center    180   16.000    0.747     318.501     278.882     0.377     0.372    31.823 18.717      7.821       5.158        MO-01
+MO006          Maison d'Or Toronto          Canada        City center    220   12.000    0.748     310.871     270.583     0.384     0.389    38.107 24.809      8.058       4.428          NaN
+MO023         Maison d'Or Whistler          Canada  Resort - Mountain    150   17.000    0.691     310.697     269.275     0.383     0.387    28.826  6.205      7.398       5.760          NaN
+MO030             Maison d'Or Bali       Indonesia  Resort - Tropical    285    9.000    0.768     308.356     266.925     0.382     0.383    54.063 29.609      8.281       4.256          NaN
+MO029           Maison d'Or Phuket        Thailand  Resort - Tropical    205    7.000    0.744     289.019     247.768     0.383     0.378    36.605 44.036      8.799       3.792          NaN
+MO026         Maison d'Or Mallorca           Spain   Resort - Coastal    200   15.000    0.579     284.444     253.714     0.375     0.379    35.066 15.722      7.797       5.226        MO-10
+MO012           Maison d'Or Vienna         Austria        City center    245   13.000    0.670     283.024     254.942     0.376     0.380    38.532 24.637      8.062       4.888          NaN
+corr RenoAge vs Overall25 -0.94 | RenoAge vs Compl 0.86 | RenoAge vs GOP% -0.23
+
+===== P&K Select
+                                      HotelName         Country LocationType  Rooms  RenoAge  Occ2025  RevPAR2025  RevPAR2022  GOP%2025  GOP%2022  Rev2025M  NPS25  Overall25  Compl/1kRN     Projects
+HotelID                                                                                                                                                                                               
+PS001               P&K Select New York Midtown   United States  City center    290    7.000    0.758     252.359     171.419     0.400     0.294    37.380 20.308      7.911       5.496          NaN
+PS002    P&K Select New York Financial District   United States  City center    425   17.000    0.734     212.712     149.900     0.397     0.301    46.205 -1.494      7.138       6.591          NaN
+PS017                    P&K Select London City  United Kingdom  City center    385    4.000    0.703     208.774     135.838     0.403     0.253    41.138 24.450      8.086       5.011          NaN
+PS018                P&K Select London Heathrow  United Kingdom  City center    410    4.000    0.712     206.622     137.510     0.395     0.261    43.218 25.809      8.100       5.071          NaN
+PS031               P&K Select Tokyo Marunouchi           Japan  City center    320    9.000    0.768     199.323     136.725     0.399     0.294    32.518 15.596      7.741       5.642          NaN
+PS033               P&K Select Singapore Marina       Singapore  City center    255    4.000    0.746     196.583     130.974     0.399     0.234    26.400 23.355      8.061       5.185          NaN
+PS012                         P&K Select Denver   United States  City center    470    4.000    0.768     194.293     128.736     0.401     0.276    46.666 21.947      7.943       5.327          NaN
+PS019               P&K Select Paris La Défense          France  City center    365   10.000    0.676     194.168     136.623     0.395     0.284    36.216 13.253      7.683       6.018          NaN
+PS014                  P&K Select San Francisco   United States  City center    275   13.000    0.704     192.451     133.912     0.401     0.303    27.055  8.688      7.516       6.128          NaN
+PS027                         P&K Select Zurich     Switzerland  City center    360    5.000    0.689     189.093     127.764     0.398     0.268    34.686 25.338      8.080       4.914          NaN
+PS037                     P&K Select Sydney CBD       Australia  City center    255    4.000    0.696     188.395     123.309     0.402     0.271    24.670 25.708      8.082       4.755          NaN
+PS023                 P&K Select Amsterdam Zuid     Netherlands  City center    360    8.000    0.721     185.462     127.815     0.402     0.284    34.284 18.076      7.935       5.332          NaN
+PS038                      P&K Select Melbourne       Australia  City center    400      NaN    0.751     182.769         NaN     0.397       NaN    37.386 28.175      8.223       4.836          NaN
+PS034              P&K Select Hong Kong Central           China  City center    260    5.000    0.676     181.057     119.008     0.404     0.277    24.014 18.876      7.930       5.515          NaN
+PS013                        P&K Select Seattle   United States  City center    395    7.000    0.708     177.476     119.943     0.401     0.289    35.853 21.913      7.966       5.189        PS-05
+PS007                 P&K Select Boston Seaport   United States  City center    290   11.000    0.757     174.701     118.101     0.402     0.291    25.862 18.886      7.852       5.254          NaN
+PS026                          P&K Select Milan           Italy  City center    355    6.000    0.735     174.166     121.905     0.392     0.283    31.540 24.345      8.117       5.356          NaN
+PS006          P&K Select Montréal Centre-Ville          Canada  City center    260    5.000    0.707     168.651     112.988     0.399     0.280    22.358 28.094      8.223       5.305          NaN
+PS008                  P&K Select Washington DC   United States  City center    360   16.000    0.675     163.269     112.994     0.398     0.296    30.019 -5.188      6.996       6.709        PS-04
+PS015    P&K Select Las Vegas Convention Center   United States  City center    460    7.000    0.750     163.245     108.938     0.406     0.251    39.487 15.610      7.776       5.660        PS-01
+PS036                  P&K Select Seoul Gangnam     South Korea  City center    475   13.000    0.715     162.580     112.189     0.401     0.296    39.413  5.068      7.369       6.466          NaN
+PS004                 P&K Select Chicago O'Hare   United States  City center    305   13.000    0.748     160.919     110.763     0.397     0.293    25.067  5.964      7.438       6.085          NaN
+PS029                      P&K Select Stockholm          Sweden  City center    260   17.000    0.724     159.179     109.258     0.400     0.283    21.171 -7.518      6.955       6.591          NaN
+PS024                       P&K Select Brussels         Belgium  City center    235   14.000    0.756     156.818     108.956     0.396     0.280    18.881  1.191      7.304       6.108          NaN
+PS009                        P&K Select Atlanta   United States  City center    335   10.000    0.781     156.265     106.883     0.405     0.295    26.799 10.887      7.556       5.413          NaN
+PS005               P&K Select Toronto Downtown          Canada  City center    465   11.000    0.718     155.928     108.254     0.401     0.309    37.185 11.139      7.563       5.827          NaN
+PS028                         P&K Select Dublin         Ireland  City center    435   16.000    0.694     154.684     106.523     0.404     0.292    34.463  4.833      7.351       6.407          NaN
+PS021                         P&K Select Munich         Germany  City center    245   11.000    0.671     153.760     104.217     0.410     0.285    19.291  9.443      7.575       6.130          NaN
+PS003                   P&K Select Chicago Loop   United States  City center    225    2.000    0.710     152.978      91.958     0.413     0.176    17.608 29.287      8.245       4.804          NaN
+PS020                      P&K Select Frankfurt         Germany  City center    460   10.000    0.746     152.109     105.108     0.401     0.291    35.619 16.307      7.745       5.545          NaN
+PS035                       P&K Select Shanghai           China  City center    245    4.000    0.742     150.825     101.931     0.401     0.287    18.896 26.013      8.093       4.644          NaN
+PS032                          P&K Select Osaka           Japan  City center    435    8.000    0.728     148.732     101.779     0.399     0.292    32.980 20.235      7.934       5.691          NaN
+PS010                         P&K Select Dallas   United States  City center    420   14.000    0.686     148.374     102.385     0.398     0.296    31.749  5.377      7.448       5.836          NaN
+PS016                      P&K Select Vancouver          Canada  City center    455   17.000    0.712     147.462     101.952     0.399     0.296    34.216 -2.336      7.159       6.997          NaN
+PS022                         P&K Select Berlin         Germany  City center    320   16.000    0.686     138.869      96.627     0.393     0.278    22.661  5.324      7.381       6.217          NaN
+PS025                         P&K Select Madrid           Spain  City center    370    9.000    0.633     138.014      95.445     0.402     0.292    26.032 17.841      7.851       6.211  PS-08,PS-10
+PS011                        P&K Select Houston   United States  City center    310   10.000    0.636     126.054      87.048     0.401     0.354    19.659 14.469      7.735       5.796        PS-02
+PS030                         P&K Select Warsaw          Poland  City center    420      NaN    0.731     122.414      57.100     0.400     0.048    26.291 27.477      8.174       4.962          NaN
+PS040                        P&K Select Bangkok        Thailand  City center    370    5.000    0.736     103.980      68.332     0.403     0.271    19.732 19.810      7.916       5.552          NaN
+PS039                         P&K Select Mumbai           India  City center    255   17.000    0.684      91.918      62.686     0.405     0.297    11.984 -2.057      7.167       6.992          NaN
+corr RenoAge vs Overall25 -0.95 | RenoAge vs Compl 0.9 | RenoAge vs GOP% -0.21
+
+===== Pebble & Pine
+                                  HotelName         Country                 LocationType  Rooms  RenoAge  Occ2025  RevPAR2025  RevPAR2022  GOP%2025  GOP%2022  Rev2025M  NPS25  Overall25  Compl/1kRN     Projects
+HotelID                                                                                                                                                                                                           
+PP011                   Pebble & Pine Banff          Canada            Resort - Mountain    280    6.000    0.773     185.802     174.802     0.353     0.385    28.212 24.793      8.080       6.292        PP-04
+PP037                  Pebble & Pine Rimini           Italy             Resort - Coastal    340   13.000    0.700     183.906     178.678     0.355     0.387    33.937 15.874      7.804       7.135          NaN
+PP012               Pebble & Pine Park City   United States            Resort - Mountain    385    6.000    0.665     178.741     164.896     0.350     0.376    37.411 31.088      8.309       6.142          NaN
+PP040           Pebble & Pine Costa del Sol           Spain             Resort - Coastal    235    9.000    0.667     178.705     171.590     0.355     0.383    22.650 20.124      8.001       6.637          NaN
+PP009              Pebble & Pine Lake Tahoe   United States            Resort - Mountain    405   10.000    0.699     178.157     172.698     0.345     0.396    38.859 15.264      7.803       6.785          NaN
+PP005         Pebble & Pine Smoky Mountains   United States  Resort - Lake & Countryside    260    5.000    0.652     175.769     164.754     0.352     0.383    24.666 28.586      8.290       6.094          NaN
+PP044                  Pebble & Pine Niseko           Japan            Resort - Mountain    240   14.000    0.661     171.707     157.194     0.368     0.387    22.326 15.317      7.731       7.511          NaN
+PP013                   Pebble & Pine Stowe   United States            Resort - Mountain    180    6.000    0.657     169.477     158.044     0.345     0.377    16.482 29.203      8.239       5.929          NaN
+PP042                    Pebble & Pine Jeju     South Korea             Resort - Coastal    300    7.000    0.609     169.167     162.772     0.340     0.385    27.366 24.194      8.023       6.596          NaN
+PP016               Pebble & Pine San Diego   United States             Resort - Coastal    265      NaN    0.672     168.878     164.796     0.350     0.403    24.159 32.909      8.267       6.305          NaN
+PP015                Pebble & Pine Cape Cod   United States             Resort - Coastal    340    4.000    0.627     168.023     157.363     0.358     0.390    30.984 36.391      8.501       5.823          NaN
+PP024                  Pebble & Pine Annecy          France  Resort - Lake & Countryside    260    9.000    0.616     167.202     162.565     0.357     0.392    23.546 24.861      8.069       6.315          NaN
+PP041                 Pebble & Pine Okinawa           Japan            Resort - Tropical    215    7.000    0.675     166.146     163.468     0.332     0.381    19.278 30.878      8.260       6.024          NaN
+PP028            Pebble & Pine Loire Valley          France  Resort - Lake & Countryside    285   11.000    0.668     165.827     161.509     0.352     0.386    25.608 18.875      7.826       7.625          NaN
+PP004                 Pebble & Pine Poconos   United States  Resort - Lake & Countryside    320   18.000    0.658     165.195     159.163     0.349     0.388    28.552  0.266      7.238       8.536        PP-07
+PP008                 Pebble & Pine Niagara          Canada  Resort - Lake & Countryside    235   12.000    0.647     164.298     159.794     0.345     0.399    20.766 16.201      7.797       7.333          NaN
+PP038                   Pebble & Pine Crete          Greece             Resort - Coastal    310   10.000    0.633     163.043     157.008     0.355     0.389    27.256 13.765      7.737       6.718          NaN
+PP017             Pebble & Pine Outer Banks   United States             Resort - Coastal    235   13.000    0.674     162.433     154.993     0.359     0.399    20.678 15.146      7.721       6.577          NaN
+PP022                 Pebble & Pine Orlando   United States          Resort - Theme park    220   15.000    0.701     161.632     153.950     0.340     0.384    19.108  8.421      7.548       7.196          NaN
+PP025           Pebble & Pine Lake District  United Kingdom  Resort - Lake & Countryside    350    9.000    0.664     161.548     156.734     0.354     0.388    30.634 28.210      8.156       6.613          NaN
+PP033               Pebble & Pine Dolomites           Italy            Resort - Mountain    180    5.000    0.644     161.538     154.787     0.341     0.369    15.659 17.639      7.918       6.920          NaN
+PP006                 Pebble & Pine Branson   United States  Resort - Lake & Countryside    265    5.000    0.607     160.504     154.017     0.351     0.395    22.907 30.488      8.291       6.229          NaN
+PP034                 Pebble & Pine Algarve        Portugal             Resort - Coastal    165    8.000    0.618     160.476     150.782     0.357     0.377    14.384 21.462      8.016       6.364        PP-06
+PP007             Pebble & Pine Lake George   United States  Resort - Lake & Countryside    165    8.000    0.624     159.214     154.937     0.356     0.404    14.151 27.255      8.176       6.464          NaN
+PP032                  Pebble & Pine Tignes          France            Resort - Mountain    290   10.000    0.657     156.474     149.369     0.350     0.378    24.609 11.917      7.686       7.324          NaN
+PP026            Pebble & Pine Black Forest         Germany  Resort - Lake & Countryside    205    7.000    0.605     154.819     147.711     0.356     0.383    17.118 22.512      8.029       6.477        PP-10
+PP001                 Pebble & Pine Muskoka          Canada  Resort - Lake & Countryside    280   11.000    0.584     154.365     151.573     0.352     0.407    23.437 14.280      7.725       7.488        PP-01
+PP029                 Pebble & Pine Bavaria         Germany  Resort - Lake & Countryside    280    9.000    0.645     152.816     148.694     0.353     0.390    23.081 21.897      7.898       7.022          NaN
+PP039                Pebble & Pine Cornwall  United Kingdom             Resort - Coastal    410   16.000    0.645     151.332     144.773     0.353     0.383    33.504  9.178      7.547       7.973          NaN
+PP019              Pebble & Pine Ocean City   United States             Resort - Coastal    290    5.000    0.629     149.704     144.009     0.347     0.390    23.468 24.552      8.088       5.890          NaN
+PP014            Pebble & Pine Myrtle Beach   United States             Resort - Coastal    240    2.000    0.622     149.548     137.729     0.350     0.323    19.312 30.979      8.379       5.668          NaN
+PP036                Pebble & Pine Brittany          France             Resort - Coastal    355    4.000    0.658     148.762     142.229     0.354     0.380    28.548 26.115      8.173       6.614          NaN
+PP002             Pebble & Pine Lake Placid   United States  Resort - Lake & Countryside    280   12.000    0.618     145.925     143.447     0.349     0.401    22.142 18.317      7.832       6.629          NaN
+PP035             Pebble & Pine Costa Brava           Spain             Resort - Coastal    405    6.000    0.654     145.617     139.100     0.349     0.378    31.558 26.740      8.131       5.935          NaN
+PP010          Pebble & Pine Mont-Tremblant          Canada            Resort - Mountain    355   13.000    0.662     145.588     135.576     0.361     0.391    28.002 12.653      7.688       6.951          NaN
+PP018                  Pebble & Pine Destin   United States             Resort - Coastal    205   12.000    0.670     145.422     142.227     0.351     0.403    16.140 16.297      7.794       7.218          NaN
+PP030                Pebble & Pine Chamonix          France            Resort - Mountain    380      NaN    0.643     144.731     139.479     0.349     0.385    29.523 19.373      7.903       6.423          NaN
+PP020    Pebble & Pine Prince Edward Island          Canada             Resort - Coastal    220    5.000    0.622     143.332     132.911     0.357     0.388    16.999 29.160      8.217       6.427          NaN
+PP031               Pebble & Pine Kitzbühel         Austria            Resort - Mountain    370   11.000    0.640     141.388     137.898     0.347     0.384    28.207 20.483      7.890       6.257          NaN
+PP023              Pebble & Pine Lake Garda           Italy  Resort - Lake & Countryside    240   12.000    0.574     140.869     134.643     0.361     0.386    18.340  8.912      7.605       7.412  PP-02,PP-03
+PP003         Pebble & Pine Wisconsin Dells   United States  Resort - Lake & Countryside    410   17.000    0.615     140.654     139.313     0.349     0.404    31.219  2.059      7.302       8.276          NaN
+PP043                  Pebble & Pine Hakone           Japan  Resort - Lake & Countryside    255   17.000    0.593     138.859     135.012     0.348     0.397    19.122  1.553      7.238       8.124          NaN
+PP021                  Pebble & Pine Cancún          Mexico            Resort - Tropical    415    9.000    0.631     132.240     130.076     0.336     0.385    29.791 19.915      7.942       6.925          NaN
+PP045                Pebble & Pine Langkawi        Malaysia            Resort - Tropical    315    4.000    0.636     116.411     109.303     0.336     0.370    19.794 33.670      8.431       5.868          NaN
+PP027            Pebble & Pine Lake Balaton         Hungary  Resort - Lake & Countryside    275    6.000    0.641     106.287     101.253     0.353     0.381    15.744 25.206      8.113       6.455          NaN
+corr RenoAge vs Overall25 -0.93 | RenoAge vs Compl 0.86 | RenoAge vs GOP% 0.14
+
+== renovations table sample
+  RenovationID HotelID  StartDate    EndDate   RenovationType  RoomsOutOfServicePct   CostUSD
+0        R0001   MO001 1991-07-01 1992-03-01  Full renovation                 0.320  18960000
+1        R0002   MO001 2003-09-01 2004-05-01  Full renovation                 0.300  20030000
+2        R0004   MO002 1999-07-01 2000-03-01  Full renovation                 0.260  25280000
+3        R0005   MO002 2010-08-01 2011-04-01  Full renovation                 0.270  27830000
+4        R0007   MO003 2009-11-01 2010-07-01  Full renovation                 0.260  26970000
+5        R0008   MO004 1993-09-01 1994-05-01  Full renovation                 0.230  11680000
+6        R0010   MO004 2016-10-01 2017-06-01  Full renovation                 0.270  17000000
+7        R0011   MO005 2016-08-01 2017-04-01  Full renovation                 0.210  17420000
+8        R0012   MO006 2012-10-01 2013-06-01  Full renovation                 0.320  29340000
+9        R0013   MO007 2016-08-01 2017-04-01  Full renovation                 0.300  16710000
+RenovationType
+Full renovation    125
+Rooms refresh       76
+Name: count, dtype: int64[pyarrow]
+1985-09-01 00:00:00 2023-08-01 00:00:00
+renovations finishing 2022-2024 by brand/type
+RenovationType  Full renovation
+Brand                          
+Maison d'Or                   2
+P&K Select                    1
+Pebble & Pine                 1
+cost by type                    n           cost   oos  months
+RenovationType                                   
+Full renovation  125 16,422,640.000 0.271   7.961
+Rooms refresh     76 18,114,342.105 0.284   7.995
+
+seasonality 2025 min/max/ratio
+                min   max  ratio  months<60%
+Brand                                       
+Goodnight Inn 0.685 0.898  0.763           0
+Maison d'Or   0.632 0.824  0.767           0
+P&K Select    0.587 0.811  0.724           1
+Pebble & Pine 0.434 0.892  0.487           7

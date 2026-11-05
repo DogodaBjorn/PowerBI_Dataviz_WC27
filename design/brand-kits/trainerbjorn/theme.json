@@ -1,0 +1,42 @@
+{
+  "name": "TrainerBjörn",
+  "dataColors": [
+    "#1F857F",
+    "#CC6526",
+    "#7B5CA9",
+    "#A28218",
+    "#8A8682"
+  ],
+  "background": "#FBF8F1",
+  "foreground": "#333333",
+  "tableAccent": "#1F857F",
+  "good": "#3B8D5D",
+  "neutral": "#D3D1CD",
+  "bad": "#C55F1D",
+  "maximum": "#3B8D5D",
+  "center": "#D3D1CD",
+  "minimum": "#C55F1D",
+  "null": "#BBB7B2",
+  "textClasses": {
+    "callout": {
+      "fontFace": "'Source Code Pro', Consolas, monospace",
+      "fontSize": 28,
+      "color": "#333333"
+    },
+    "title": {
+      "fontFace": "Lora, Georgia, serif",
+      "fontSize": 14,
+      "color": "#333333"
+    },
+    "header": {
+      "fontFace": "'Public Sans', 'Segoe UI', sans-serif",
+      "fontSize": 12,
+      "color": "#333333"
+    },
+    "label": {
+      "fontFace": "'Public Sans', 'Segoe UI', sans-serif",
+      "fontSize": 10,
+      "color": "#4A3D37"
+    }
+  }
+}

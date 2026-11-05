@@ -1,0 +1,71 @@
+# Starter kit "Modern Minimalist" — no-brand candidate for bk-brand-kit's no-brand path.
+# Adapted from the theme-factory skill, theme "Modern Minimalist" (Anthropic
+# skills repo, Apache-2.0); the theme's grayscale expanded to full role tokens.
+# Fonts: theme's DejaVu Sans mapped to the Segoe UI family.
+# WCAG adjustments: theme slate gray #708090 is 4.05:1 on white — fails 4.5:1
+# as secondary text, darkened to #5C6870 for ink_secondary (original kept in
+# the ramp, where 3:1 non-text applies). Light gray #D3D3D3 demoted to
+# hairline. good/bad added (a grayscale theme defines none); a restrained
+# steel blue joins the ramp for series distinguishability. Verified via
+# python scripts/check_contrast.py --kit design/brand-kits/starter-modern-minimalist/brand.yaml
+# Best for: tech, architecture, design showcases, data-dense dashboards.
+
+kit: "starter-modern-minimalist"
+version: 1
+date: "2026-08-04"
+
+identity:
+  organization_alias: "starter kit — no client"
+  personality: "clean, precise, contemporary"
+
+color:
+  canvas: "#F4F5F6"
+  surface: "#FFFFFF"
+  ink: "#2C3944"
+  ink_secondary: "#5C6870"
+  hairline: "#D3D3D3"
+
+  accent: "#36454F"
+  good: "#1E7F4F"
+  bad: "#B3402E"
+  neutral_data: "#9AA4AC"
+
+  # Deliberately narrow grayscale ramp — prefer <=4 series on any one chart.
+  categorical:
+    - "#36454F"
+    - "#708090"
+    - "#4E7396"
+    - "#74899A"
+    - "#5C6870"
+    - "#A0855C"
+
+  sequential: ["#E3E7EA", "#2C3944"]
+  diverging: ["#B3402E", "#9AA4AC", "#1E7F4F"]
+
+typography:
+  display: "Segoe UI Semibold, Segoe UI"
+  body: "Segoe UI, Arial"
+  numeric: "Segoe UI, Arial"
+  scale_pt: [28, 20, 14, 12, 10]
+
+shape:
+  radius_px: 4   # sharper corners suit the minimalist temperament
+  shadow: "none"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: ""   # no logo bundled — add the client's when adopting this kit
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "locale-driven; nl-NL default (1.234,56) — confirm per client"
+
+forbidden:
+  - "no decorative color — good/bad are the only meaning-bearing hues"
+  - "no shadows, no gradients, no rounded corners beyond 4px"

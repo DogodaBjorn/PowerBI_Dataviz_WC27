@@ -1,0 +1,180 @@
+
+#### BookingChannels  rows=49050
+  HotelID                          string           distinct=165    nulls=0     e.g. MO001 | MO002 | MO003 | MO004 | MO005
+  Month                            datetime64[ns]   distinct=60     nulls=0     2021-01-01 .. 2025-12-01
+  Channel                          string           distinct=5      nulls=0     values: Direct Website & App | Direct Phone & Walk-in | Online Travel Agencies | Corporate Contracts | Travel Agents & Tour Operators
+  Bookings                         Int64            distinct=1855   nulls=0     min 7  median 288  max 2,843  sum 1.846e+07
+  RoomNights                       Int64            distinct=3669   nulls=0     min 23  median 709  max 5,296  sum 4.555e+07
+  RoomRevenue                      Int64            distinct=46119  nulls=0     min 3,433  median 1.419e+05  max 2.314e+06  sum 1.127e+10
+  DistributionCost                 Int64            distinct=26350  nulls=0     min 144  median 9,186  max 2.286e+05  sum 9.776e+08
+
+#### Brands  rows=4
+  Brand                            string           distinct=4      nulls=0     values: Maison d'Or | Pebble & Pine | P&K Select | Goodnight Inn
+  Segment                          string           distinct=4      nulls=0     values: Luxury hotels & resorts | Family vacation resorts | Business & conference hotels | Budget & economy hotels
+  Properties                       Int64            distinct=4      nulls=0     values: 30 | 45 | 40 | 50
+  Positioning                      string           distinct=4      nulls=0     values: Premium accommodation, fine dining, spa experiences and personalized service | Family-friendly destinations, recreational activities and seasonal vacation experiences | Upscale urban accommodation, corporate travel and conference facilities | Affordable, convenient accommodation with efficient operations and reliable service
+  InvestmentBudgetUSD              Int64            distinct=4      nulls=0     values: 210000000 | 145000000 | 135000000 | 60000000
+
+#### Date  rows=4383
+  Date                             datetime64[ns]   distinct=4383   nulls=0     2021-01-01 .. 2032-12-31
+  Year                             Int64            distinct=12     nulls=0     values: 2028 | 2027 | 2029 | 2030 | 2031 | 2032 | 2025 | 2023 | 2022 | 2021 | 2024 | 2026
+  Quarter                          string           distinct=4      nulls=0     values: Q1 | Q2 | Q3 | Q4
+  MonthNumber                      Int64            distinct=12     nulls=0     values: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  Month                            string           distinct=12     nulls=0     values: Jan | Feb | Mar | Apr | May | Jun | Jul | Aug | Sep | Oct | Nov | Dec
+  YearMonth                        string           distinct=144    nulls=0     e.g. 2028-01 | 2028-02 | 2028-03 | 2028-04 | 2028-05
+  Period                           string           distinct=3      nulls=0     values: Investment horizon | Historical | Planning year
+
+#### FinanceAssumptions  rows=21
+  Year                             Int64            distinct=7      nulls=0     values: 2026 | 2027 | 2028 | 2029 | 2030 | 2031 | 2032
+  Region                           string           distinct=3      nulls=0     values: North America | Europe | Asia-Pacific
+  MarketDemandGrowthPct            Float64          distinct=18     nulls=0     min 0.015  median 0.0185  max 0.032  sum 0.4585
+  ADRInflationPct                  Float64          distinct=17     nulls=0     min 0.02  median 0.0235  max 0.028  sum 0.5005
+  CostInflationPct                 Float64          distinct=15     nulls=0     min 0.027  median 0.0305  max 0.034  sum 0.6405
+
+#### FinanceParameters  rows=10
+  Parameter                        string           distinct=10     nulls=0     values: Discount rate | Base year | Ramp-up - first year after completion | Ramp-up - second year after completion | Ramp-up - third year onwards | Capex phasing | Disruption during works | Earliest investment date | Impact horizon | Currency
+  Value                            Float64          distinct=7      nulls=0     values: 0.08 | 2025.0 | 0.5 | 0.85 | 1.0 | 2027.0 | 2032.0
+  Unit                             string           distinct=5      nulls=0     values: % | Year | % of full impact | Rule | USD
+  Notes                            string           distinct=10     nulls=0     values: Annual rate used to discount future cash flows to 2026. | Investment impacts are expressed versus 2025 actuals, in 2025 dollars. | Share of the annual impact achieved in the first 12 months after completion. | Share of the annual impact achieved in months 13 to 24. | Full impact from month 25. | Capex is spent evenly over the project duration. | Rooms out of service during works generate no revenue; apply RoomsOutOfServicePct to the property's rooms for the project duration. | No project can start before January 2027. | Impact is measured through December 2032. | All monetary values are in US dollars.
+
+#### GuestComplaints  rows=88290
+  HotelID                          string           distinct=165    nulls=0     e.g. MO001 | MO002 | MO003 | MO004 | MO005
+  Month                            datetime64[ns]   distinct=60     nulls=0     2021-01-01 .. 2025-12-01
+  Category                         string           distinct=9      nulls=0     values: Room condition | Cleanliness | Noise | Staff & service | Check-in & waiting times | Wi-Fi & technology | Food & beverage | Facilities & activities | Billing & pricing
+  Complaints                       Int64            distinct=34     nulls=0     min 0  median 3  max 40  sum 2.942e+05
+
+#### GuestExperience  rows=9810
+  HotelID                          string           distinct=165    nulls=0     e.g. MO003 | MO006 | MO012 | MO013 | MO019
+  Month                            datetime64[ns]   distinct=60     nulls=0     2021-01-01 .. 2025-12-01
+  SurveyResponses                  Int64            distinct=368    nulls=0     min 21  median 123  max 452  sum 1.358e+06
+  OverallScore                     Float64          distinct=275    nulls=0     min 6.59  median 7.86  max 9.4  sum 7.729e+04
+  CleanlinessScore                 Float64          distinct=282    nulls=0     min 6.6  median 8  max 9.65  sum 7.876e+04
+  ServiceScore                     Float64          distinct=282    nulls=0     min 6.58  median 7.96  max 9.62  sum 7.829e+04
+  RoomComfortScore                 Float64          distinct=316    nulls=0     min 6.11  median 7.69  max 9.46  sum 7.588e+04
+  AmenitiesScore                   Float64          distinct=299    nulls=0     min 6.16  median 7.67  max 9.43  sum 7.577e+04
+  ValueForMoneyScore               Float64          distinct=238    nulls=0     min 6.52  median 7.92  max 9.24  sum 7.778e+04
+  NetPromoterScore                 Float64          distinct=742    nulls=0     min -20.5  median 18.2  max 64.1  sum 1.867e+05
+
+#### GuestSegments  rows=49050
+  HotelID                          string           distinct=165    nulls=0     e.g. MO001 | MO002 | MO003 | MO004 | MO005
+  Month                            datetime64[ns]   distinct=60     nulls=0     2021-01-01 .. 2025-12-01
+  Segment                          string           distinct=5      nulls=0     values: Leisure | Family | Business Travel | Groups & Events | Long Stay
+  Bookings                         Int64            distinct=2068   nulls=0     min 3  median 243  max 2,865  sum 1.846e+07
+  RoomNights                       Int64            distinct=4304   nulls=0     min 28  median 564  max 9,476  sum 4.555e+07
+  RoomRevenue                      Int64            distinct=45171  nulls=0     min 4,930  median 9.673e+04  max 3.456e+06  sum 1.127e+10
+
+#### Hotels  rows=165
+  HotelID                          string           distinct=165    nulls=0     e.g. MO001 | MO002 | MO003 | MO004 | MO005
+  HotelName                        string           distinct=165    nulls=0     e.g. Maison d'Or New York | Maison d'Or Chicago | Maison d'Or San Francisco | Maison d'Or Los Angeles | Maison d'Or Montréal
+  Brand                            string           distinct=4      nulls=0     values: Maison d'Or | Pebble & Pine | P&K Select | Goodnight Inn
+  City                             string           distinct=131    nulls=0     e.g. New York | Chicago | San Francisco | Los Angeles | Montréal
+  Country                          string           distinct=28     nulls=0     e.g. United States | Canada | France | United Kingdom | Italy
+  Region                           string           distinct=3      nulls=0     values: North America | Europe | Asia-Pacific
+  Latitude                         Float64          distinct=156    nulls=0     min -37.81  median 41.39  max 59.33  sum 6,364
+  Longitude                        Float64          distinct=159    nulls=0     min -156.4  median -2.24  max 151.2  sum -2,883
+  LocationType                     string           distinct=9      nulls=0     values: City center | Resort - Tropical | Resort - Mountain | Resort - Coastal | Resort - Lake & Countryside | Resort - Theme park | Airport | Highway | City
+  Rooms                            Int64            distinct=64     nulls=0     min 90  median 225  max 475  sum 3.94e+04
+  OpeningDate                      datetime64[ns]   distinct=132    nulls=0     1975-02-01 .. 2023-04-01
+  LastRenovationDate               datetime64[ns]   distinct=70     nulls=10    2007-08-01 .. 2023-08-01
+
+#### InvestmentProjectProperties  rows=467
+  ProjectID                        string           distinct=36     nulls=0     e.g. MO-01 | MO-02 | MO-03 | MO-04 | MO-05
+  HotelID                          string           distinct=165    nulls=0     e.g. MO010 | MO019 | MO009 | MO021 | MO001
+
+#### InvestmentProjects  rows=40
+  ProjectID                        string           distinct=40     nulls=0     e.g. MO-01 | MO-02 | MO-03 | MO-04 | MO-05
+  Brand                            string           distinct=4      nulls=0     values: Maison d'Or | Pebble & Pine | P&K Select | Goodnight Inn
+  ProjectName                      string           distinct=39     nulls=0     e.g. Full renovation - Maison d'Or Rome | Full renovation - Maison d'Or Hong Kong | Suites & public areas redesign - Maison d'Or London | Spa & wellness expansion - Maison d'Or Maui | Signature restaurant - Maison d'Or Maui
+  Category                         string           distinct=7      nulls=0     values: Renovation | New services | Expansion | New property | Digital | Efficiency | Commercial
+  Scope                            string           distinct=4      nulls=0     values: Single property | New property | Brand-wide | Multiple properties
+  GrowthInitiative                 string           distinct=2      nulls=0     values: No | Yes
+  CapexUSD                         Int64            distinct=37     nulls=0     min 2e+06  median 1.6e+07  max 1.36e+08  sum 9.243e+08
+  EarliestStart                    datetime64[ns]   distinct=2      nulls=0     2027-01-01 .. 2027-07-01
+  DurationMonths                   Int64            distinct=15     nulls=0     min 6  median 16  max 36  sum 645
+  RoomsOutOfServicePct             Float64          distinct=9      nulls=0     values: 0.3 | 0.2 | 0.03 | 0.02 | 0.05 | 0.0 | 0.1 | 0.01 | 0.15
+  AddedRooms                       Int64            distinct=9      nulls=0     values: 0 | 40 | 160 | 30 | 80 | 60 | 260 | 240 | 150
+  AnnualRunningCostUSD             Int64            distinct=6      nulls=0     values: 0 | 1500000 | 800000 | 2000000 | 600000 | 300000
+  DependsOn                        string           distinct=2      nulls=38    values: PS-03 | GI-01
+  ExclusiveWith                    string           distinct=6      nulls=34    values: MO-05 | MO-04 | PP-03 | PP-02 | PS-10 | PS-08
+  Description                      string           distinct=38     nulls=0     e.g. Complete renovation of rooms, suites, lobby and restaurant. | Complete renovation of rooms, suites and public areas. | Redesign of suites, lobby and bar to reinforce the flagship's luxury positioning. | Doubling of spa capacity with a new wellness pavilion. | Chef-led signature restaurant on the site reserved for the spa pavilion.
+
+#### InvestmentScenarios  rows=120
+  ProjectID                        string           distinct=40     nulls=0     e.g. MO-03 | MO-04 | MO-06 | MO-08 | MO-09
+  Scenario                         string           distinct=3      nulls=0     values: Low | Expected | High
+  OccupancyChangePts               Float64          distinct=15     nulls=0     min 0  median 0  max 0.14  sum 1.582
+  ADRChangePct                     Float64          distinct=20     nulls=0     min -0.01  median 0  max 0.14  sum 1.873
+  AddedRoomsOccupancy              Float64          distinct=17     nulls=96    min 0.05  median 0.71  max 0.9  sum 15.79
+  FoodBeverageRevenueChangePct     Float64          distinct=16     nulls=0     min 0  median 0  max 0.4  sum 2.835
+  OtherRevenueChangePct            Float64          distinct=16     nulls=0     min 0  median 0  max 0.4  sum 4.26
+  OperatingExpenseChangePct        Float64          distinct=9      nulls=0     values: 0.0 | -0.01 | -0.015 | -0.02 | -0.005 | -0.008 | -0.011 | -0.004 | -0.012
+  DistributionCostChangePts        Float64          distinct=8      nulls=0     values: 0.0 | -0.001 | -0.003 | -0.005 | -0.002 | -0.006 | -0.012 | -0.018
+  SatisfactionChangePts            Float64          distinct=15     nulls=0     min 0  median 0  max 1.2  sum 18.45
+  NewPropertyOccupancy             Float64          distinct=10     nulls=108   values: 0.62 | 0.72 | 0.78 | 0.6 | 0.7 | 0.75 | 0.64 | 0.77 | 0.85 | 0.89
+  NewPropertyADR                   Float64          distinct=12     nulls=108   values: 432.42 | 475.66 | 513.49 | 218.42 | 248.2 | 263.09 | 208.47 | 227.42 | 241.63 | 110.6 | 119.45 | 123.87
+  AnnualRevenueImpactUSD           Int64            distinct=104    nulls=0     min 0  median 2.777e+06  max 3.561e+07  sum 5.753e+08
+  AnnualOperatingProfitImpactUSD   Int64            distinct=120    nulls=0     min -9.97e+05  median 1.938e+06  max 1.223e+07  sum 3.184e+08
+
+#### MonthlyPerformance  rows=9810
+  HotelID                          string           distinct=165    nulls=0     e.g. MO016 | MO023 | MO028 | GI001 | GI002
+  Month                            datetime64[ns]   distinct=60     nulls=0     2021-01-01 .. 2025-12-01
+  RoomsAvailable                   Int64            distinct=309    nulls=0     min 2,520  median 6,820  max 1.472e+04  sum 7.076e+07
+  RoomsSold                        Int64            distinct=5151   nulls=0     min 872  median 4,144  max 1.312e+04  sum 4.555e+07
+  RoomRevenue                      Int64            distinct=9777   nulls=0     min 8.47e+04  median 9.555e+05  max 6.02e+06  sum 1.127e+10
+  FoodBeverageRevenue              Int64            distinct=9476   nulls=0     min 3,352  median 2.61e+05  max 2.755e+06  sum 3.266e+09
+  OtherRevenue                     Int64            distinct=9201   nulls=0     min 1,676  median 1.713e+05  max 1.487e+06  sum 1.87e+09
+  TotalRevenue                     Int64            distinct=9788   nulls=0     min 8.973e+04  median 1.406e+06  max 1.013e+07  sum 1.641e+10
+  StaffCost                        Int64            distinct=9585   nulls=0     min 3.602e+04  median 4.892e+05  max 2.385e+06  sum 4.818e+09
+  EnergyCost                       Int64            distinct=9276   nulls=0     min 5,787  median 9.082e+04  max 4.717e+05  sum 9.096e+08
+  MaintenanceCost                  Int64            distinct=9307   nulls=0     min 5,757  median 7.971e+04  max 3.887e+05  sum 7.703e+08
+  FoodBeverageCost                 Int64            distinct=8953   nulls=0     min 1,083  median 8.63e+04  max 9.221e+05  sum 1.079e+09
+  OtherOperatingCost               Int64            distinct=9675   nulls=0     min 2.214e+04  median 3.025e+05  max 1.445e+06  sum 2.953e+09
+  TotalOperatingExpenses           Int64            distinct=9775   nulls=0     min 7.322e+04  median 1.06e+06  max 5.448e+06  sum 1.053e+10
+
+#### Region  rows=3
+  Region                           string           distinct=3      nulls=0     values: North America | Europe | Asia-Pacific
+
+#### Renovations  rows=201
+  RenovationID                     string           distinct=201    nulls=0     e.g. R0001 | R0002 | R0004 | R0005 | R0007
+  HotelID                          string           distinct=155    nulls=0     e.g. MO001 | MO002 | MO003 | MO004 | MO005
+  StartDate                        datetime64[ns]   distinct=103    nulls=0     1985-09-01 .. 2023-01-01
+  EndDate                          datetime64[ns]   distinct=103    nulls=0     1986-05-01 .. 2023-08-01
+  RenovationType                   string           distinct=2      nulls=0     values: Full renovation | Rooms refresh
+  RoomsOutOfServicePct             Float64          distinct=16     nulls=0     min 0.2  median 0.28  max 0.35  sum 55.54
+  CostUSD                          Int64            distinct=195    nulls=0     min 1.47e+06  median 1.742e+07  max 3.894e+07  sum 3.43e+09
+
+#### Scenario  rows=3
+  Scenario                         string           distinct=3      nulls=0     values: Low | Expected | High
+  ScenarioOrder                    Int64            distinct=3      nulls=0     values: 1 | 2 | 3
+
+#### Hotels extras
+countries: 28 ['Australia', 'Austria', 'Belgium', 'Canada', 'China', 'Czech Republic', 'France', 'Germany', 'Greece', 'Hungary', 'India', 'Indonesia', 'Ireland', 'Italy', 'Japan', 'Malaysia', 'Mexico', 'Netherlands', 'Poland', 'Portugal', 'Singapore', 'South Korea', 'Spain', 'Sweden', 'Switzerland', 'Thailand', 'United Kingdom', 'United States']
+opening years: 1975 - 2023
+rooms per hotel min/median/max 90 225.0 475
+renovations per hotel: {'min': 1.0, 'mean': 1.3, 'max': 3.0}
+by decade/type
+RenovationType  Full renovation  Rooms refresh
+EndDate                                       
+1980                          1              0
+1990                          9              1
+2000                         26             18
+2010                         61             46
+2020                         28             11
+hotels with 0 renovations: 10
+
+#### Projects categories x scope
+Scope         Brand-wide  Multiple properties  New property  Single property
+Category                                                                    
+Commercial             1                    0             0                0
+Digital                5                    0             0                0
+Efficiency             2                    2             0                0
+Expansion              0                    0             0               10
+New property           0                    0             4                0
+New services           1                    1             0                8
+Renovation             0                    1             0                5
+GrowthInitiative  No  Yes
+Brand                    
+Goodnight Inn      3    7
+Maison d'Or        4    6
+P&K Select         3    7
+Pebble & Pine      2    8
+EarliestStart values [datetime.date(2027, 1, 1) datetime.date(2027, 7, 1)]

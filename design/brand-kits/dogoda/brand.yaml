@@ -1,0 +1,66 @@
+# Brand kit: DoGoDa (Björn's data-for-good brand). Chart colours approved by Björn 2026-10-10,
+# validated with the dataviz palette validator on Cream (contrast and colour blindness).
+# Source of truth for the brand itself: LinkedInContentOps brands/dogoda/visual-style.md.
+# theme.json beside this file is the compiled reference theme (schema 2.157).
+
+kit: "dogoda"
+version: 1
+date: "2026-10-10"
+
+identity:
+  organization_alias: "DoGoDa"
+  personality: "calm, precise, warm"
+
+color:
+  canvas: "#F1F0ED"          # Cream
+  surface: "#FAF8F4"         # Paper
+  ink: "#2A1F1B"             # Walnut Ink
+  ink_secondary: "#4A3D37"
+  hairline: "#D9D4CC"
+
+  accent: "#FF2731"          # Signal Red: the single highlight, once per visual
+  good: "#4A8265"            # sea green (diverging, above)
+  bad: "#C25335"             # terracotta (diverging, below)
+  neutral_data: "#BBB7B2"    # context fill; context lines Stone #8A8682
+
+  # Two series at most. Deep Teal first: Power BI uses slot 1 for a single series, and Dusty
+  # Teal #557A7A sits too close to Coral for colour-blind readers (CVD 6.0). Slots 3-4 are
+  # greys on purpose: a third series means highlight plus grey, or small multiples.
+  categorical:
+    - "#046566"              # Deep Teal
+    - "#F06460"              # Heritage Coral (2.75:1, always labelled)
+    - "#8A8682"              # Stone (context)
+    - "#BBB7B2"              # context fill
+
+  sequential: ["#83B2B2", "#659393", "#487575", "#2B5859", "#0C3D3E"]
+  diverging: ["#C25335", "#FA8565", "#CECAC3", "#7AB395", "#4A8265"]
+
+typography:
+  display: "Nunito ExtraBold, Segoe UI Semibold"
+  body: "Public Sans, Segoe UI"
+  numeric: "Source Code Pro, Consolas"
+  scale_pt: [28, 20, 14, 11, 9]
+
+shape:
+  radius_px: 4
+  shadow: "none"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: "assets/<add the DoGoDa wordmark here>"
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "English first; thousands with a comma, one decimal discipline per column"
+
+forbidden:
+  - "more than one Signal Red per visual"
+  - "Signal Red as highlight inside a diverging chart (reads as the negative side)"
+  - "a third categorical colour"
+  - "em dashes in titles, subtitles or annotations"

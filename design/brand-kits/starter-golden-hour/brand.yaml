@@ -1,0 +1,69 @@
+# Starter kit "Golden Hour" — no-brand candidate for bk-brand-kit's no-brand path.
+# Adapted from the theme-factory skill, theme "Golden Hour" (Anthropic skills
+# repo, Apache-2.0); the theme's 4 colors expanded to full role tokens.
+# Fonts: theme's FreeSans mapped to the Segoe UI family.
+# WCAG adjustments: theme mustard #F4A900 is 1.7:1 on the beige canvas —
+# deepened to ochre #A87400 (3.4:1) as accent; the raw mustard is banned on
+# data. Terracotta #C1666B passes 3:1 and serves as bad. Warm beige #D4B896
+# survives as the canvas tint. Verified via
+# python scripts/check_contrast.py --kit design/brand-kits/starter-golden-hour/brand.yaml
+# Best for: hospitality, food, artisan brands, autumn campaign reporting.
+
+kit: "starter-golden-hour"
+version: 1
+date: "2026-08-04"
+
+identity:
+  organization_alias: "starter kit — no client"
+  personality: "warm, inviting, artisanal"
+
+color:
+  canvas: "#F5EBD9"
+  surface: "#FCF6EA"
+  ink: "#443B35"
+  ink_secondary: "#6E6155"
+  hairline: "#E2D4BC"
+
+  accent: "#A87400"
+  good: "#4E7A3C"
+  bad: "#C1666B"   # theme terracotta — rose-red, apart from good in hue and warmth
+  neutral_data: "#8A7C68"
+
+  categorical:
+    - "#A87400"
+    - "#C1666B"
+    - "#4E7A3C"
+    - "#8C5A2E"
+    - "#557A8C"
+    - "#8A7C68"
+
+  sequential: ["#F0DDB8", "#6B4A00"]
+  diverging: ["#C1666B", "#8A7C68", "#4E7A3C"]
+
+typography:
+  display: "Segoe UI Semibold, Segoe UI"
+  body: "Segoe UI, Arial"
+  numeric: "Segoe UI, Arial"
+  scale_pt: [28, 20, 14, 12, 10]
+
+shape:
+  radius_px: 8
+  shadow: "subtle: ~10% opacity, small blur"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: ""   # no logo bundled — add the client's when adopting this kit
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "locale-driven; nl-NL default (1.234,56) — confirm per client"
+
+forbidden:
+  - "raw mustard #F4A900 never touches data or text — chrome sparkle only, if at all"
+  - "no cool grays; neutrals stay warm (beige/brown family)"

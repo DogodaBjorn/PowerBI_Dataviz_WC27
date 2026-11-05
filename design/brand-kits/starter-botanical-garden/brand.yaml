@@ -1,0 +1,69 @@
+# Starter kit "Botanical Garden" — no-brand candidate for bk-brand-kit's no-brand path.
+# Adapted from the theme-factory skill, theme "Botanical Garden" (Anthropic
+# skills repo, Apache-2.0); the theme's 4 colors expanded to full role tokens.
+# Fonts: theme's DejaVu Serif headers mapped to Georgia; body to Segoe UI.
+# WCAG adjustments: theme marigold #F9A620 is 1.8:1 on the cream canvas —
+# darkened to #B27908 (3.4:1) in the ramp; raw marigold banned on data.
+# Fern accent #4A7C59 passes (4.4:1). good shifted to teal-green #2E7D6E so
+# the verdict reads apart from the green accent. Verified via
+# python scripts/check_contrast.py --kit design/brand-kits/starter-botanical-garden/brand.yaml
+# Best for: food, farm-to-table, garden retail, natural products reporting.
+
+kit: "starter-botanical-garden"
+version: 1
+date: "2026-08-04"
+
+identity:
+  organization_alias: "starter kit — no client"
+  personality: "fresh, organic, lively"
+
+color:
+  canvas: "#F5F3ED"
+  surface: "#FCFBF7"
+  ink: "#2A3A2E"
+  ink_secondary: "#59685A"
+  hairline: "#E0DCCE"
+
+  accent: "#4A7C59"
+  good: "#2E7D6E"
+  bad: "#B7472A"   # theme terracotta — warm rust against the cool good
+  neutral_data: "#857F70"
+
+  categorical:
+    - "#4A7C59"
+    - "#B7472A"
+    - "#B27908"
+    - "#5A7FA5"
+    - "#8C6E9E"
+    - "#857F70"
+
+  sequential: ["#DCE5D4", "#2C5238"]
+  diverging: ["#B7472A", "#857F70", "#2E7D6E"]
+
+typography:
+  display: "Georgia, Cambria"
+  body: "Segoe UI, Arial"
+  numeric: "Segoe UI, Arial"
+  scale_pt: [28, 20, 14, 12, 10]
+
+shape:
+  radius_px: 8
+  shadow: "subtle: ~10% opacity, small blur"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: ""   # no logo bundled — add the client's when adopting this kit
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "locale-driven; nl-NL default (1.234,56) — confirm per client"
+
+forbidden:
+  - "raw marigold #F9A620 never carries data or text"
+  - "accent green never doubles as good — teal-green #2E7D6E owns the verdict"

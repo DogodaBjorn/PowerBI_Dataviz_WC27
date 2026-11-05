@@ -1,0 +1,69 @@
+# Starter kit "Desert Rose" — no-brand candidate for bk-brand-kit's no-brand path.
+# Adapted from the theme-factory skill, theme "Desert Rose" (Anthropic skills
+# repo, Apache-2.0); the theme's 4 colors expanded to full role tokens.
+# Fonts: theme's FreeSans mapped to the Segoe UI family (Georgia display is a
+# tasteful upgrade if the client wants more boutique — re-run contrast after).
+# WCAG adjustments: theme clay #B87D6D is 2.8:1 on the sand canvas — darkened
+# to #A5654F (3.8:1) as accent. Dusty rose #D4A5A5 is 1.8:1 — deepened to
+# #A9646E in the ramp. Deep burgundy #5D2E46 kept as ink (9:1). Verified via
+# python scripts/check_contrast.py --kit design/brand-kits/starter-desert-rose/brand.yaml
+# Best for: fashion, beauty, interior design, boutique retail reports.
+
+kit: "starter-desert-rose"
+version: 1
+date: "2026-08-04"
+
+identity:
+  organization_alias: "starter kit — no client"
+  personality: "soft, sophisticated, elegant"
+
+color:
+  canvas: "#F3E9DF"
+  surface: "#FBF6F0"
+  ink: "#5D2E46"
+  ink_secondary: "#7A5A66"
+  hairline: "#E3D2C2"
+
+  accent: "#A5654F"
+  good: "#3E6B4E"
+  bad: "#A6453F"   # muted brick — hue + lightness apart from good; not a pure red/green pair
+  neutral_data: "#8A796E"
+
+  categorical:
+    - "#A5654F"
+    - "#5D2E46"
+    - "#A9646E"
+    - "#6B7D5E"
+    - "#557A8C"
+    - "#8A796E"
+
+  sequential: ["#EFD9CE", "#6E3A28"]
+  diverging: ["#A6453F", "#8A796E", "#3E6B4E"]
+
+typography:
+  display: "Segoe UI Semibold, Segoe UI"
+  body: "Segoe UI, Arial"
+  numeric: "Segoe UI, Arial"
+  scale_pt: [28, 20, 14, 12, 10]
+
+shape:
+  radius_px: 8
+  shadow: "subtle: ~10% opacity, small blur"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: ""   # no logo bundled — add the client's when adopting this kit
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "locale-driven; nl-NL default (1.234,56) — confirm per client"
+
+forbidden:
+  - "raw dusty rose #D4A5A5 never carries data — background wash at most"
+  - "no saturated brights; everything stays dusty and muted"

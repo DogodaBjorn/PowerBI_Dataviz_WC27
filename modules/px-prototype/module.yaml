@@ -1,0 +1,8 @@
+# Module manifest (miniyaml subset)
+name: px-prototype
+version: 1
+description: Pixel-perfect pipeline from approved HTML design comps - Playwright rect extraction, @2x reference screenshots, and verbatim-rect PBIR recreation verified within +-2px at stage 6.
+provides: measured layout.json and reference screenshots under project/design-prototypes/, plus the stage-6 measured-rect build discipline
+skills:
+  - px-prototype
+requires: Node.js with Playwright installed once per machine in scripts/prototype/ (npm install; npx playwright install chromium); deneb-studio recommended for pixel-critical charts

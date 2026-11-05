@@ -1,0 +1,69 @@
+# Starter kit "Sunset Boulevard" — no-brand candidate for bk-brand-kit's no-brand path.
+# Adapted from the theme-factory skill, theme "Sunset Boulevard" (Anthropic
+# skills repo, Apache-2.0); the theme's 4 colors expanded to full role tokens.
+# Fonts: theme's DejaVu Serif headers mapped to Georgia; body to Segoe UI.
+# WCAG adjustments: accent — theme burnt orange #E76F51 was 2.8:1 on canvas,
+# darkened to #D4552F (3.6:1). Coral #F4A261 (1.8:1) and sand #E9C46A (1.5:1)
+# fail as data colors: darkened twins #B5673A / #A6791F carry them in the
+# categorical ramp; the sand hue survives as the canvas tint. Verified via
+# python scripts/check_contrast.py --kit design/brand-kits/starter-sunset-boulevard/brand.yaml
+# Best for: creative, marketing, lifestyle, event reporting.
+
+kit: "starter-sunset-boulevard"
+version: 1
+date: "2026-08-04"
+
+identity:
+  organization_alias: "starter kit — no client"
+  personality: "warm, energetic, creative"
+
+color:
+  canvas: "#FAF1E0"
+  surface: "#FFFBF2"
+  ink: "#264653"
+  ink_secondary: "#56707C"
+  hairline: "#E8D9BE"
+
+  accent: "#D4552F"
+  good: "#2E7D5B"
+  bad: "#B3402E"   # deep red-orange; reads apart from accent by darkness + hue shift
+  neutral_data: "#867E6E"
+
+  categorical:
+    - "#D4552F"
+    - "#264653"
+    - "#A6791F"
+    - "#B5673A"
+    - "#4E7D8C"
+    - "#8C5A6E"
+
+  sequential: ["#F2D8B4", "#8C3A1E"]
+  diverging: ["#B3402E", "#867E6E", "#2E7D5B"]
+
+typography:
+  display: "Georgia, Cambria"
+  body: "Segoe UI, Arial"
+  numeric: "Segoe UI, Arial"
+  scale_pt: [28, 20, 14, 12, 10]
+
+shape:
+  radius_px: 8
+  shadow: "subtle: ~10% opacity, small blur"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: ""   # no logo bundled — add the client's when adopting this kit
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "locale-driven; nl-NL default (1.234,56) — confirm per client"
+
+forbidden:
+  - "no raw theme coral/sand on data marks — use the darkened ramp twins"
+  - "accent and bad stay visually distinct: never use accent for negatives"

@@ -1,0 +1,68 @@
+# Creative-direction contract — pre-filled from PITCH-goodnight-inn-directions.md
+# Drop into project/project-state/active/ at stage 5; stage 5 still runs its own
+# design-intelligence queries and comps before this is signed. The user decides.
+
+contract: creative-direction
+project: "Goodnight Inn — Power BI Dataviz World Champs 2027 Round 1"
+date: "2026-11-04"
+
+directions:
+  - id: D1
+    name: "Wake-up call"
+    concept: "A one-page Board briefing (headline, three findings) followed by the decision itself. The report is the argument; nothing on it is furniture."
+    visual_language: "Paper white, navy ink, one amber accent; display serif hero numbers, grotesk labels, mono kickers (Georgia / Segoe UI / Consolas, built-in only); balanced density; three vertical story columns under a one-line headline."
+    signature_moment: "The folio: a hotel bill showing an OTA guest and a direct guest pay the same $109 and leave $90 vs $107 on the desk."
+    risk: "Copy weight: a briefing lives on words; a weak copy-polish turns it into a text document with charts, and the KPI band is one lazy build from a card wall."
+    design_read: "Headline, then the amber OTA wedge growing across the middle column, then the folio: the order is the argument."
+    dials:
+      density: "balanced"
+      variance: "strict"
+    comp: "project/design-prototypes/d1-wake-up-call.html"
+  - id: D2
+    name: "Fifty keys"
+    concept: "The brand as the wall of key hooks behind a night desk: fifty hotels, one decision each. Page 1 is the wall tonight (full / tired / fine / weak); page 2 is the wall re-lit by the plan, year by year to 2032."
+    visual_language: "Night navy surface, amber key-card lights, white grotesk with tabular figures; compact density on the wall, airy margins elsewhere; expressive variance; the wall takes two-thirds of each page."
+    signature_moment: "The wall lighting up as the year slicer moves from 2027 to 2032."
+    risk: "Density and the dark surface: 50 rows at 1080 px, AA contrast for amber on navy, printed values in every chip, matrix render time under Publish-to-Web; the Board may read it as an operations screen."
+    design_read: "The amber band of full hotels at the top of the wall, then the red chips and big age numbers at the bottom, then the capacity wall."
+    dials:
+      density: "compact"
+      variance: "expressive"
+    comp: "project/design-prototypes/d2-fifty-keys.html"
+  - id: D3
+    name: "Two futures"
+    concept: "2032 shown twice: the brand if nothing is funded, projected from the organisers' own FinanceAssumptions (demand fills rooms to 90%, margin thins to 41.7%, eight hotels run out of rooms), and 2032 with the plan as a Low-High band."
+    visual_language: "Cream paper, ink, hairline rules, one accent, mono tabular numerals for every figure; airy density, strict variance; two large charts and a figure column per page, like an annual-report spread."
+    signature_moment: "The fan: one line splitting into a grey do-nothing future and an amber funded band."
+    risk: "Honesty optics: the baseline is scenario logic; any projected mark without its label invites a 'simulated data' objection. Finance-first, so the hotel-level 'why' is thin."
+    design_read: "The split in the fan, then the margin bridge, then the dates on the capacity wall."
+    dials:
+      density: "airy"
+      variance: "strict"
+    comp: "project/design-prototypes/d3-two-futures.html"
+
+design_intelligence:
+  queries: "<to run at stage 5: search.py 'hospitality board report', 'investment dashboard', 'budget economy hotel brand' — domains style, color, typography, product>"
+  cited: "<fill after the queries; record what was used or overruled and why>"
+
+critique:
+  method: "each direction argued against design/design-doctrine.md, per audience (Board of Directors; contest judges on Analytical Quality, Insightfulness, Visual Effectiveness, Creativity & Innovation, Accessibility)"
+  notes: |
+    D1 (50/70): highest floor; reading path 8, accessibility 8; gaps are slop risk on the KPI band (6) and copy weight. Signature quotable but small.
+    D2 (49/70): highest ceiling; signature 9, slop 8, brand 8; gaps are reading path (6: the wall is texture before message), state coverage (6: long names, year slicer cleared), accessibility (6: dark surface), dial fit (6: compact leaking to cramped).
+    D3 (48/70): strongest analytic spine; dial fit 8, signature 8; gaps are slop risk (5: finance-deck look), brand (6), and honesty optics on projected marks.
+    Scores: reading 8/6/7 · states 7/6/7 · slop 6/8/5 · brand 7/8/6 · a11y 8/6/7 · dials 7/6/8 · signature 7/9/8.
+
+chosen: "<D1 | D2 | D3>"
+chosen_because: "<the deciding argument, in the user's words>"
+user_decided: false
+
+fidelity_checklist:
+  - "<if D1> three-column briefing under a one-line headline on P1"
+  - "<if D1> the folio with real channel figures"
+  - "<if D1> plan builder with budget bar and constraint lamps on P2"
+  - "<if D1> S3 type hierarchy identical on both pages"
+  - "<if D1> amber accent on exactly one story series per visual"
+  - "<if D2> the wall as one matrix, sorted so the story rows lead, every chip printing its value"
+  - "<if D2> year slicer re-lights the wall; default state designed"
+  - "<if D3> every projected mark carries its scenario label on the canvas"

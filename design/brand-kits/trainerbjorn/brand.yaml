@@ -1,0 +1,63 @@
+# Brand kit: TrainerBjörn (Björn's training brand). Chart colours approved by Björn 2026-10-10,
+# validated with the dataviz palette validator on Paper (contrast and colour blindness).
+# Brand colours stay unchanged; Teal Deep, Markeer-oranje, Paars and Oker are darker data steps
+# so marks reach 3:1. Source of truth: LinkedInContentOps brands/trainerbjorn/visual-style.md.
+# theme.json beside this file is the compiled reference theme (schema 2.157).
+
+kit: "trainerbjorn"
+version: 1
+date: "2026-10-10"
+
+identity:
+  organization_alias: "TrainerBjörn"
+  personality: "warm, clear, encouraging"
+
+color:
+  canvas: "#FBF8F1"          # Paper
+  surface: "#FFFFFF"
+  ink: "#333333"             # Charcoal
+  ink_secondary: "#4A3D37"
+  hairline: "#E7DDC9"
+
+  accent: "#CC6526"          # Markeer-oranje; the yellow #F5C842 marker band sits behind its label
+  good: "#3B8D5D"            # green (diverging, above)
+  bad: "#C55F1D"             # orange (diverging, below)
+  neutral_data: "#BBB7B2"    # context fill; context lines Mute #8A8682
+
+  categorical:               # max four, in this order
+    - "#1F857F"              # Teal Deep (single series)
+    - "#CC6526"              # Markeer-oranje
+    - "#7B5CA9"              # Paars
+    - "#A28218"              # Oker
+    - "#8A8682"              # Mute (context)
+
+  sequential: ["#4BC0B8", "#1EA099", "#117F79", "#0A5F5A", "#04413E"]
+  diverging: ["#C55F1D", "#FD9156", "#D3D1CD", "#6EBF8C", "#3B8D5D"]
+
+typography:
+  display: "Lora, Georgia"
+  body: "Public Sans, Segoe UI"
+  numeric: "Source Code Pro, Consolas"
+  scale_pt: [28, 20, 14, 11, 9]
+
+shape:
+  radius_px: 8
+  shadow: "none"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: "assets/<add the TrainerBjörn logo here>"
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "Dutch pages: decimal comma, thousands with a dot; English pages the reverse"
+
+forbidden:
+  - "Training Teal #2BA8A0 or brand orange #E87C3E as a data mark (below 3:1 on paper)"
+  - "yellow #F5C842 as a data mark; it is the marker band only"
