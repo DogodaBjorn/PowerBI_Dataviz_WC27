@@ -13,7 +13,7 @@ Source: blog post 5390883 (Round 1) + the starter file's hidden "Read Me" and "J
 
 | Rule | Detail |
 |---|---|
-| Deadline | **November 18, 2026** (time zone in the Official Rules PDF, not fetchable from this sandbox; read it) |
+| Deadline | **November 18, 2026, 11:59 p.m. Pacific** (= November 19, 08:59 CET; Official Rules §3). Round 2: November 25 – December 9, 2026; finale FabCon Atlanta March 8–12, 2027 |
 | Scope | **One brand only.** Report helps the Board decide its five-year investment strategy |
 | Page 1 | *The Brand Review*: where does the brand stand today? Insights, not every number |
 | Page 2 | *The Investment Strategy*: where should the money go, and why? |
@@ -28,7 +28,7 @@ Source: blog post 5390883 (Round 1) + the starter file's hidden "Read Me" and "J
 | Prize | Two Round-1 entrants advance to the live finale at FabCon Atlanta, March 2027 |
 | Starter canvas | 1920 × 1080; Fluent 2 base theme; starter pages are hidden in view mode |
 
-**Judging criteria (five, from the starter file):**
+**Judging criteria (four in the Official Rules §8 — Insightfulness, Visual Effectiveness, Creativity and Innovation, Accessibility; the starter file adds Analytical Quality):**
 1. **Analytical Quality** — accuracy of calculations, appropriate methods, correct interpretation, well-supported conclusions *(new vs. last year; this is the one to win)*
 2. **Insightfulness** — relevance of insights, how well the two questions are answered, usefulness for decisions
 3. **Visual Effectiveness** — layout, navigation, text, colors, choice of visuals
@@ -260,8 +260,10 @@ Lisbon trap) and the biggest numbers, at the cost of probably being the most-cho
 
 ## 6 · Open items to resolve before/at stage 2
 
-- Official Rules PDF: deadline time zone, eligibility, the exact contest tag, whether hidden
-  tooltip pages count (starter says allowed).
+- Official Rules received 5 Nov (`contest/official-rules-ATL-2027.pdf`): deadline confirmed;
+  18+, no government or public-sector employees; one entry per round; original work with a
+  royalty-free reuse licence to Microsoft. The contest tag is not in the rules either (take it
+  from the gallery); page and visual rules come from the starter file only.
 - Does the source workbook contain sheets the starter does not load? (Rule says don't pull them;
   we only need to know we are not missing a loaded one.)
 - Metric contracts: OP impact nets running cost (reconciled); disruption = room revenue only or total

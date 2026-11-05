@@ -10,9 +10,10 @@ Verification script: `project/analysis/17_crosscheck_dutch_review.py`, output in
 ## Verdict
 
 Numerically sound. Every claim the review shares with the mission reproduces within
-rounding; its four genuinely new findings hold and are adopted below. Two statements
-conflict with the contest rules (a five-page structure; four judging criteria) and one
-method choice overstates an effect (the event-study window). Its advice package is
+rounding; its four genuinely new findings hold and are adopted below. One statement
+conflicts with the starter file (a five-page structure), one is incomplete (the Official
+Rules' four judging criteria, without the starter's fifth) and one method choice
+overstates an effect (the event-study window). Its advice package is
 the mission's plan A plus the breakfast upgrade.
 
 ## Claim by claim
@@ -37,7 +38,7 @@ the mission's plan A plus the breakfast upgrade.
 | 16 | NPV through 2032, constant 2025 dollars: refresh −21.9, Boston −16.9, energy −9.7, Gatwick −3.1, Toronto −3.3, Kingston −3.6, app +3.1, breakfast −1.1, RMS +0.5, kiosks −0.4 | With the review's disruption convention (lost revenue × 45 % margin): −22.7, −17.5, −10.0, −3.2, −3.4, −3.7, +3.3, −1.0, +0.5, −0.4. With the mission's (full revenue loss): refresh −26.0, energy −11.6, rest unchanged | ✓ within $0.8 M; ranking identical under both |
 | 17 | 456 of 1,024 combinations are feasible (budget, ≥ 3 projects, ≥ 1 growth, kiosks only with app); best NPV package app + kiosks + RMS, $9.4 M, +3.2 constant / +4.0 nominal | 456 exactly; +3.4 M (Expected) | ✓ |
 | 18 | Advice package GI-07 + 01 + 02 + 10 + 09 + 04 + 05 = $55.6 M, cumulative ≈ −$26 M constant through 2032 | = mission plan A + GI-09; $55.55 M; cumulative −$25.6 M | ✓ identical plan |
-| 19 | Deadline 18 Nov 2026 23:59 PT = 19 Nov 08:59 NL time | Not verifiable from this sandbox (rules PDF unreachable); the review cites the Official Rules | adopt provisionally; confirm in the PDF |
+| 19 | Deadline 18 Nov 2026 23:59 PT = 19 Nov 08:59 NL time | Confirmed from the Official Rules received 5 Nov (§3: Round 1 ends 11:59 p.m. PT on November 18, 2026) | ✓ |
 
 ## What the review adds (adopted into the mission)
 
@@ -74,8 +75,9 @@ the mission's plan A plus the breakfast upgrade.
    (hidden tooltip pages allowed). The review's sequence survives intact: its P1–P3
    (paradox, cause, which hotels) is the Brand Review page; its P4–P5 (the money, the
    plan) is the Investment Strategy page. That is direction D1's layout.
-2. **Four criteria.** There are five, and the fifth, *Analytical Quality*, is the one
-   that rewards the review's own rigour.
+2. **Four criteria.** The review follows the Official Rules (§8), which name four; the
+   starter file's Judging Criteria page adds a fifth, *Analytical Quality*, the one that
+   rewards the review's own rigour. Design for all five.
 3. **"17 tables."** The workbook has a Contents sheet; the starter loads 16 tables.
    Contents is documentation, not data to pull, so reading it is within the rules.
 4. **Event-study window.** "Six months before the *end* date" overlaps the works
@@ -119,7 +121,7 @@ convention.
 | Decision | Default if deferred |
 |---|---|
 | Confirm the Contents-sheet wording ("excludes distribution costs") in the workbook | Both margins shown with the assumption labelled |
-| Confirm the deadline time in the Official Rules PDF | Submit by 17 Nov evening CET regardless |
+| Deadline time — confirmed 5 Nov from the Official Rules (11:59 p.m. PT, 18 Nov) | Submit by 17 Nov evening CET regardless |
 | GI-09 breakfast in the plan ($55.6 M) or $8.7 M held as reserve ($51.3 M) | Reserve; breakfast as the Board's optional add |
 | Disruption convention (full revenue / 45 % margin / revenue less variable relief) | Full revenue (conservative) with the sensitivity stated |
 | Direction (unchanged by this review; its sketch is D1) | Stage 5 re-runs divergence |

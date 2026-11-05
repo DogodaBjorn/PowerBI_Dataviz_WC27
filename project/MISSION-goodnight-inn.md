@@ -50,11 +50,13 @@ python scripts/init_project.py --name <repo-name> --client-alias fabric-contest 
 
 Sources: blog post "Power BI Dataviz World Champs 2027 | Round 1"
 (community.fabric.microsoft.com, article 5390883) and the starter file's hidden
-*Read Me* and *Judging Criteria* pages. Deadline: **November 18, 2026, 23:59
-Pacific = November 19, 08:59 CET** per the independent Dutch review's reading of
-the Official Rules PDF (the PDF was not reachable from the sandbox that prepared
-this brief — confirm once, then treat as fixed). Brief prepared November 4;
-cross-checked against the Dutch review on November 5 (see
+*Read Me* and *Judging Criteria* pages, and the Official Rules (ATL 2027, filed
+as `contest/official-rules-ATL-2027.pdf`, digest in
+`contest/official-rules-digest.md`). Deadline: **November 18, 2026, 11:59 p.m.
+Pacific = November 19, 08:59 CET** (Official Rules §3, confirmed). Round 2 runs
+November 25 – December 9, 2026; the live finale is at FabCon Atlanta, March
+8–12, 2027, open to Round 1–2 winners only (two per round). Brief prepared
+November 4; cross-checked against the Dutch review on November 5 (see
 `research/2026-11-05-crosscheck-dutch-review.md`).
 
 1. **One brand only: Goodnight Inn.** Name it visibly on both pages and in the
@@ -88,18 +90,31 @@ cross-checked against the Dutch review on November 5 (see
    resources (no external URLs), no R/Python visuals, no live connection, and
    a Publish-to-Web rendering test in an incognito browser at 1920×1080 and on
    a 1366-wide laptop before submission (§7).
-9. Judging criteria to optimize, in the organisers' words: **Analytical
-   Quality** (accuracy, appropriate methods, correct interpretation,
-   well-supported conclusions), **Insightfulness**, **Visual Effectiveness**,
-   **Creativity & Innovation**, **Accessibility**. The judges' note: *"thoughtful
-   analysis, not just beautiful dashboards … support their recommendations with
-   evidence."* Analytical Quality is the criterion that is new this year and the
-   one this build is designed to win.
+9. Judging criteria. The Official Rules (§8) name four: **Insightfulness**,
+   **Visual Effectiveness**, **Creativity and Innovation**, **Accessibility**;
+   the starter file's Judging Criteria page adds **Analytical Quality**
+   (accuracy, appropriate methods, correct interpretation, well-supported
+   conclusions) and the judges' note *"thoughtful analysis, not just beautiful
+   dashboards … support their recommendations with evidence."* Design for all
+   five: the rules' four are what a tie-break is scored on, and Analytical
+   Quality is what makes the other four defensible.
 10. Submission: Fabric Community Contests Gallery (aka.ms/contestsgallery) —
     report image, short description naming Goodnight Inn, `.pbix` and/or
-    Publish-to-Web link, the official contest tag (not in the post; take it
-    from the gallery/rules). Two Round-1 entrants advance to the live finale at
-    FabCon Atlanta, March 2027.
+    Publish-to-Web link, the official contest tag (not in the post or the
+    rules; take it from the gallery). **One entry per round**, three across the
+    contest; entries do not carry over between rounds. Two Round-1 winners
+    advance to the live finale (prize: conference admission plus three hotel
+    nights; airfare is the winner's own; virtual presentation permitted).
+11. Rules that shape the build (Official Rules §4, §6, §7): entrant 18+ and
+    **not a government or public-sector employee**; the entry must be
+    **original work** with all licences obtained, and Microsoft receives a
+    royalty-free licence to reuse and publish it — so every font, image and
+    icon must be ours or built-in (already required by item 8); Microsoft
+    trademarks may be used under a limited licence; no content that is
+    offensive, political, or **promotes alcohol or tobacco** (the plan has
+    none; keep bar imagery out of the chrome). "Use of any automated system to
+    participate is prohibited" concerns entry mechanics; the starter file
+    explicitly allows AI-assisted design tools.
 
 ## 2 · The story (stage 0/1 seed)
 
