@@ -77,3 +77,11 @@ relationship c73cc1dd-3f4a-5232-8d88-ca60fe0e158b
 relationship b9f6263e-77c4-5a90-b54a-22c8eb9cd232
 	fromColumn: HotelOutlook.HotelID
 	toColumn: Hotels.HotelID
+
+relationship 92f81aca-2ad5-5c1b-a360-2468742b133d
+	fromColumn: PackageProject.PackageID
+	toColumn: Package.PackageID
+
+relationship 9af2e4a7-01f2-5214-b0eb-0747a49147bf
+	fromColumn: PackageProject.ProjectID
+	toColumn: InvestmentProjects.ProjectID

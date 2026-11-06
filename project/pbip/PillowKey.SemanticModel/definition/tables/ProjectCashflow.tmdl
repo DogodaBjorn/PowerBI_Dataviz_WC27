@@ -63,6 +63,15 @@ table ProjectCashflow
 		isDataTypeInferred
 		sourceColumn: [RevenueBenefit]
 
+	column DiscountFactor
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 58125913-981c-5c1f-afae-7fcaff810e8a
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [DiscountFactor]
+
 	partition ProjectCashflow = calculated
 		mode: import
 		source = ```
@@ -71,6 +80,8 @@ table ProjectCashflow
 				VAR RampY3 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - third year onwards" )
 				VAR FirstYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Earliest investment date" )
 				VAR LastYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" )
+				VAR Rate = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" )
+				VAR Origin = DATE ( FirstYear, 1, 1 )
 				VAR Horizon =
 				    FILTER ( ALLNOBLANKROW ( 'Date'[Date] ), YEAR ( 'Date'[Date] ) >= FirstYear && YEAR ( 'Date'[Date] ) <= LastYear && DAY ( 'Date'[Date] ) = 1 )
 				VAR Hotel25 =
@@ -84,7 +95,7 @@ table ProjectCashflow
 				        GENERATE (
 				            InvestmentScenarios,
 				            VAR vPid = InvestmentScenarios[ProjectID]
-				            VAR vStart = LOOKUPVALUE ( InvestmentProjects[EarliestStart], InvestmentProjects[ProjectID], vPid )
+				            VAR vStart = LOOKUPVALUE ( InvestmentProjects[Planned Start], InvestmentProjects[ProjectID], vPid )
 				            VAR vDur = LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], vPid )
 				            VAR vCapex = LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], vPid )
 				            VAR vOos = LOOKUPVALUE ( InvestmentProjects[RoomsOutOfServicePct], InvestmentProjects[ProjectID], vPid )
@@ -109,7 +120,8 @@ table ProjectCashflow
 				                        RETURN IF ( 'Date'[Date] >= vDone, vOP / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 ),
 				                    "@RevenueBenefit",
 				                        VAR vM = DATEDIFF ( vDone, 'Date'[Date], MONTH )
-				                        RETURN IF ( 'Date'[Date] >= vDone, vRev / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 )
+				                        RETURN IF ( 'Date'[Date] >= vDone, vRev / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 ),
+				                    "@Df", DIVIDE ( 1, POWER ( 1 + Rate, DATEDIFF ( Origin, 'Date'[Date], MONTH ) / 12 ) )
 				                )
 				        ),
 				        "ProjectID", InvestmentScenarios[ProjectID],
@@ -118,7 +130,8 @@ table ProjectCashflow
 				        "Capex", [@Capex],
 				        "Disruption", [@Disruption],
 				        "Benefit", [@Benefit],
-				        "RevenueBenefit", [@RevenueBenefit]
+				        "RevenueBenefit", [@RevenueBenefit],
+				        "DiscountFactor", [@Df]
 				    )
 				```
 

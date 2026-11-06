@@ -183,8 +183,15 @@ EXTRA_COLUMNS = {
         calc_col("InvestmentProjects", "In Recommended Plan",
                  'IF(InvestmentProjects[Move] IN {"Buy the guest back", "Fix the welcome", "Build where we are full"}, "Yes", "No")',
                  "string", doc="Yes for the six projects of the recommended plan."),
-        calc_col("InvestmentProjects", "Completion Date", "EDATE(InvestmentProjects[EarliestStart], InvestmentProjects[DurationMonths])", "dateTime", "Short Date",
-                 doc="Earliest start plus duration: the month the project goes live."),
+        calc_col("InvestmentProjects", "Planned Start",
+                 "VAR dep = InvestmentProjects[DependsOn] VAR own = InvestmentProjects[EarliestStart] RETURN IF ( dep = \"\", own, MAX ( own, EDATE ( LOOKUPVALUE ( InvestmentProjects[EarliestStart], InvestmentProjects[ProjectID], dep ), LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], dep ) ) ) )",
+                 "dateTime", "Short Date",
+                 doc="Earliest start, or the month the prerequisite (DependsOn) goes live if that is later: GI-02 kiosks start when the GI-01 app is live."),
+        calc_col("InvestmentProjects", "Completion Date", "EDATE(InvestmentProjects[Planned Start], InvestmentProjects[DurationMonths])", "dateTime", "Short Date",
+                 doc="Planned start plus duration: the month the project goes live."),
+        calc_col("InvestmentProjects", "Answers Finding",
+                 'SWITCH(InvestmentProjects[ProjectID], "GI-01", "F2", "GI-02", "F3", "GI-03", "F1", "GI-04", "F4", "GI-05", "F4", "GI-06", "F4", "GI-07", "F3", "GI-08", "F4", "GI-09", "F3", "GI-10", "F1")',
+                 "string", doc="The Brand Review finding (F1 to F4 on page 1) the initiative answers; Goodnight Inn projects only (opzet 2026-11-06)."),
     ]),
 }
 
@@ -196,6 +203,8 @@ VAR RampY2 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter
 VAR RampY3 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - third year onwards" )
 VAR FirstYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Earliest investment date" )
 VAR LastYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" )
+VAR Rate = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" )
+VAR Origin = DATE ( FirstYear, 1, 1 )
 VAR Horizon =
     FILTER ( ALLNOBLANKROW ( 'Date'[Date] ), YEAR ( 'Date'[Date] ) >= FirstYear && YEAR ( 'Date'[Date] ) <= LastYear && DAY ( 'Date'[Date] ) = 1 )
 VAR Hotel25 =
@@ -209,7 +218,7 @@ RETURN
         GENERATE (
             InvestmentScenarios,
             VAR vPid = InvestmentScenarios[ProjectID]
-            VAR vStart = LOOKUPVALUE ( InvestmentProjects[EarliestStart], InvestmentProjects[ProjectID], vPid )
+            VAR vStart = LOOKUPVALUE ( InvestmentProjects[Planned Start], InvestmentProjects[ProjectID], vPid )
             VAR vDur = LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], vPid )
             VAR vCapex = LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], vPid )
             VAR vOos = LOOKUPVALUE ( InvestmentProjects[RoomsOutOfServicePct], InvestmentProjects[ProjectID], vPid )
@@ -234,7 +243,8 @@ RETURN
                         RETURN IF ( 'Date'[Date] >= vDone, vOP / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 ),
                     "@RevenueBenefit",
                         VAR vM = DATEDIFF ( vDone, 'Date'[Date], MONTH )
-                        RETURN IF ( 'Date'[Date] >= vDone, vRev / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 )
+                        RETURN IF ( 'Date'[Date] >= vDone, vRev / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 ),
+                    "@Df", DIVIDE ( 1, POWER ( 1 + Rate, DATEDIFF ( Origin, 'Date'[Date], MONTH ) / 12 ) )
                 )
         ),
         "ProjectID", InvestmentScenarios[ProjectID],
@@ -243,7 +253,8 @@ RETURN
         "Capex", [@Capex],
         "Disruption", [@Disruption],
         "Benefit", [@Benefit],
-        "RevenueBenefit", [@RevenueBenefit]
+        "RevenueBenefit", [@RevenueBenefit],
+        "DiscountFactor", [@Df]
     )
 """
 
@@ -433,7 +444,8 @@ m("2032 Run-rate", "VAR s = [Selected Scenario] RETURN CALCULATE ( SUM ( Investm
 for scn in ("Low", "High"):
     m(f"2032 Run-rate ({scn})", f'CALCULATE ( SUM ( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), InvestmentScenarios[Scenario] = "{scn}" )', USDM, C5, f"Run-rate at the {scn} scenario.")
 m("Run-rate % of 2025 GOP", "DIVIDE ( [2032 Run-rate], [GOP 2025] )", PCT, C5, "Run-rate relative to 2025 gross operating profit.")
-m("NPV @ 8%", 'VAR r = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ) RETURN SUMX ( FILTER ( ALL ( \'Date\'[Year] ), \'Date\'[Year] >= 2027 ), CALCULATE ( [Net Impact] ) / ( 1 + r ) ^ ( \'Date\'[Year] - 2026 ) )', USDM, C5, "Net impact discounted to 2026 at the FinanceParameters rate, through 2032, no terminal value.")
+m("NPV @ 8%", "VAR s = [Selected Scenario] RETURN CALCULATE ( SUMX ( FILTER ( ProjectCashflow, ProjectCashflow[Scenario] = s ), ( ProjectCashflow[Benefit] - ProjectCashflow[Capex] - ProjectCashflow[Disruption] ) * ProjectCashflow[DiscountFactor] ), REMOVEFILTERS ( 'Date' ) )", USDM, C5,
+  "Net impact through 2032 discounted monthly at the FinanceParameters rate to January 2027 (the close of the 2026 planning year), no terminal value (convention of 04-p2-build-method.md).")
 m("Payback Year", "VAR t = ADDCOLUMNS ( FILTER ( ALL ( 'Date'[Year] ), 'Date'[Year] >= 2027 ), \"@cum\", VAR y = 'Date'[Year] RETURN CALCULATE ( [Net Impact], REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y ) ) RETURN MINX ( FILTER ( t, [@cum] >= 0 ), 'Date'[Year] )", "0", C5, "First year the cumulative net impact turns positive; blank when after 2032.")
 m("Payback (text)", 'IF ( ISBLANK ( [Payback Year] ), "after 2032", FORMAT ( [Payback Year], "0" ) )', TXT, C5, "Payback year as text, with the horizon trap spelled out.")
 
@@ -518,6 +530,285 @@ m("Wall Light", 'VAR y = SELECTEDVALUE ( PlanYear[Year], 2032 ) VAR n = COUNTROW
 m("Capacity (text)", 'VAR y = [First Capped Year] RETURN IF ( ISBLANK ( [Baseline Rooms Available] ), BLANK (), IF ( ISBLANK ( y ), "room to grow", "full in " & y ) )', TXT, C7, "Capacity wall label per hotel.")
 
 
+# ================================================================ opzet 2026-11-06 (05-doorlichting-nieuwe-opzet.md)
+# P1: the factual four-brand comparison and Goodnight Inn geography. P2: the package matrix
+# with the focus swap (04-p2-build-method.md). Offline reference: project/analysis/40_ and 41_.
+C8 = "08 Brand comparison"
+C9 = "09 Package matrix"
+SUSDM = r"+\$#,0.0,,\M;" + "−" + r"\$#,0.0,,\M;\$0.0\M"
+USDM1 = r"\$#,0.0,,\M"
+MINUS = 'UNICHAR ( 8722 )'
+INK, INK2, GOOD, BAD, ACCENT, PLUM, LILAC, SLATE, TINT, TINT2 = "#24192B", "#5B5163", "#1D5FA8", "#B45309", "#B5175F", "#3E2C55", "#B8B0BE", "#82798A", "#F8D7E3", "#EE9DBA"
+BRANDS = [("GI", "Goodnight Inn"), ("PS", "P&K Select"), ("MO", "Maison d'Or"), ("PP", "Pebble & Pine")]
+
+
+def signed(expr, body):
+    """Text with a true minus or a plus: body is a DAX text expression of ABS(expr)."""
+    return f"IF ( {expr} < 0, {MINUS}, \"+\" ) & {body}"
+
+
+def brand(b):
+    return f"REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = \"{b}\""
+
+
+m("Value for Money (weighted)", "DIVIDE ( SUMX ( GuestExperience, GuestExperience[ValueForMoneyScore] * GuestExperience[SurveyResponses] ), [Survey Responses] )", "0.00", C3, "Value-for-money score weighted by responses.")
+m("Room Condition Complaints per 1k", 'DIVIDE ( CALCULATE ( [Complaints], GuestComplaints[Category] = "Room condition" ), [Rooms Sold] ) * 1000', "0.00", C3, "Room-condition complaints per thousand room nights sold.")
+m("KPI Value",
+  'VAR k = SELECTEDVALUE ( KpiLine[Key] ) RETURN SWITCH ( k, "occ", [Occupancy %], "adr", [ADR], "revpar", [RevPAR], "gop", [GOP Margin %], "gopa", [GOP Margin after Distribution %], '
+  '"ota", [OTA Share %], "direct", [Direct Share %], "dist", [Distribution Cost % of Room Revenue], "nps", [NPS (weighted)], "comfort", [Room Comfort (weighted)], '
+  '"value", [Value for Money (weighted)], "compl", [Complaints per 1k Room Nights], "roomcond", [Room Condition Complaints per 1k] )',
+  "0.0000", C8, "The comparison line in context (KpiLine[Key]) as a number; formatting comes from KpiLine[Format] in the text measures.")
+for y in (2023, 2025):
+    m(f"KPI {y}", f"CALCULATE ( [KPI Value], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = {y} )", "0.0000", C8, f"The comparison line in calendar {y}.")
+for code, b in BRANDS:
+    m(f"KPI {code} 2025", f"CALCULATE ( [KPI 2025], {brand(b)} )", "0.0000", C8, f"{b}, comparison line, 2025.")
+    m(f"KPI Text {code}", f"VAR v = [KPI {code} 2025] RETURN IF ( ISBLANK ( v ), BLANK (), FORMAT ( v, SELECTEDVALUE ( KpiLine[Format] ) ) )", TXT, C8, f"{b}: the 2025 value as formatted text for the comparison table.")
+m("KPI GI 2023", f"CALCULATE ( [KPI 2023], {brand('Goodnight Inn')} )", "0.0000", C8, "Goodnight Inn, comparison line, 2023 (2021 is a depressed base year).")
+m("KPI Rank",
+  "VAR dir = SELECTEDVALUE ( KpiLine[Direction] ) VAR gn = [KPI GI 2025] "
+  "VAR better = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), VAR b = Brands[Brand] RETURN dir * CALCULATE ( [KPI 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b ) > dir * gn ) ) "
+  "RETURN IF ( ISBLANK ( gn ) || dir = 0, BLANK (), better + 1 )",
+  "0", C8, "Goodnight Inn's rank among the four brands in the line's good direction (1 = best); blank for segment measures that are not ranked.")
+m("KPI Rank (text)",
+  "VAR r = [KPI Rank] VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR dir = SELECTEDVALUE ( KpiLine[Direction] ) "
+  'RETURN IF ( ISBLANK ( SELECTEDVALUE ( KpiLine[Key] ) ), BLANK (), IF ( dir = 0, "not ranked", SWITCH ( TRUE (), r = 1, "best of " & n, r = n, "last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) ) )',
+  TXT, C8, "Rank as words; the word carries the verdict, the color repeats it.")
+m("KPI Rank Color", f'VAR r = [KPI Rank] VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) RETURN SWITCH ( TRUE (), ISBLANK ( r ), "{INK2}", r = 1, "{GOOD}", r = n, "{BAD}", "{INK2}" )', TXT, C8, "Harbour blue for best, Ember for last, plum-grey otherwise (field-value font color).")
+m("KPI Change since 2023 (text)",
+  "VAR d = [KPI GI 2025] - [KPI GI 2023] VAR s = SELECTEDVALUE ( KpiLine[DeltaScale] ) VAR u = SELECTEDVALUE ( KpiLine[DeltaUnit] ) "
+  "RETURN IF ( ISBLANK ( d ), BLANK (), " + signed("d", 'IF ( u = "$", "$", "" ) & FORMAT ( ABS ( d ) * s, SELECTEDVALUE ( KpiLine[DeltaFormat] ) ) & IF ( u = "pt", " pt", "" )') + " )",
+  TXT, C8, "Goodnight Inn's change 2023 to 2025 in the line's unit (points for percentages).")
+m("KPI Change Color", f'VAR d = ( [KPI GI 2025] - [KPI GI 2023] ) * SELECTEDVALUE ( KpiLine[Direction] ) RETURN SWITCH ( TRUE (), ISBLANK ( d ) || d = 0, "{INK2}", d > 0, "{GOOD}", "{BAD}" )', TXT, C8, "Direction-aware color of the change: good when it moved the right way.")
+m("Occupancy and Hotels (text)", 'VAR o = [Occupancy % 2025] RETURN IF ( ISBLANK ( o ), BLANK (), FORMAT ( o, "0.0%" ) & " · " & [Hotels in Context] )', TXT, C8, "Geography matrix cell: 2025 occupancy and the number of hotels.")
+m("Occupancy Heat Color", f'VAR o = [Occupancy % 2025] RETURN SWITCH ( TRUE (), ISBLANK ( o ), "#FFFFFF", o >= 0.85, "{TINT2}", o >= 0.80, "{TINT}", "#FFFFFF" )', TXT, C8, "Three-step tint for the geography matrix: 85 percent and over, 80 percent and over, below.")
+m("GN Column Tint", f'"{TINT}"', TXT, C8, "Raspberry tint behind the Goodnight Inn column of the comparison table (field value, so no literal hex in the visual).")
+m("Hotel Bar Color", f'IF ( SELECTEDVALUE ( Hotels[LocationType] ) = "Airport", "{ACCENT}", "{SLATE}" )', TXT, C8, "Raspberry for airport hotels, plum-slate for the rest.")
+for key, base in (("Margin after", "GOP Margin after Distribution %"), ("OTA", "OTA Share %"), ("NPS", "NPS (weighted)")):
+    fmt = next(x[2] for x in MEASURES if x[0] == base)
+    for code, b in BRANDS:
+        m(f"Trend {key} {code}", f"CALCULATE ( [{base}], {brand(b)} )", fmt, C8, f"{b}: {base} on the trend axis.")
+gi = brand("Goodnight Inn")
+m("Subtitle P1 (text)",
+  f"VAR occ = CALCULATE ( [Occupancy % 2025], {gi} ) VAR gm = CALCULATE ( [GOP Margin % 2025], {gi} ) VAR ga = CALCULATE ( [GOP Margin after Distribution % 2025], {gi} ) "
+  f"VAR last = CALCULATE ( MAX ( Renovations[StartDate] ), {gi} ) "
+  'RETURN "Goodnight Inn fills the most rooms (" & FORMAT ( occ, "0.0%" ) & ") and keeps the widest margin before commissions (" & FORMAT ( gm, "0.0%" ) & "); after commissions it is second (" & FORMAT ( ga, "0.0%" ) & "), and on guests, channels and complaints it is last of four. The last renovation started in " & FORMAT ( last, "mmm yyyy" ) & "."',
+  TXT, C8, "Page-1 subtitle; the ranks it names are the KPI Rank values of the comparison table (verify on refresh).")
+m("Geo Title (text)",
+  f'VAR a = CALCULATE ( [Occupancy % 2025], {gi}, Hotels[LocationType] = "Airport" ) VAR h = CALCULATE ( [Occupancy % 2025], {gi}, Hotels[LocationType] = "Highway" ) '
+  'RETURN "F4 · The airports are the fullest: " & FORMAT ( a, "0.0%" ) & " occupancy, against " & FORMAT ( h, "0.0%" ) & " on the highway"',
+  TXT, C8, "Geography card title.")
+m("Trend Title Margin (text)", f'"F1 · After commissions the margin fell from " & FORMAT ( CALCULATE ( [GOP Margin after Distribution %], {gi}, REMOVEFILTERS ( \'Date\' ), \'Date\'[Year] = 2023 ), "0.0%" ) & " (2023) to " & FORMAT ( CALCULATE ( [GOP Margin after Distribution % 2025], {gi} ), "0.0%" )', TXT, C8, "Trend title, margin after commissions.")
+m("Trend Title OTA (text)", f'"F2 · OTAs book " & FORMAT ( CALCULATE ( [OTA Share % 2025], {gi} ), "0.0%" ) & " of room revenue, up from " & FORMAT ( CALCULATE ( [OTA Share %], {gi}, REMOVEFILTERS ( \'Date\' ), \'Date\'[Year] = 2021 ), "0.0%" ) & " in 2021"', TXT, C8, "Trend title, OTA share.")
+m("Trend Title NPS (text)", f'VAR n = CALCULATE ( [NPS (weighted) 2025], {gi} ) RETURN "F3 · NPS fell every year, to " & ' + signed("n", 'FORMAT ( ABS ( n ), "0.0" )') + ' & "; sister brands higher"', TXT, C8, "Trend title, NPS (the yearly fall is checked in 41_opzet_facts.py; re-check on refresh).")
+
+# ---------------------------------------------------------------- P2: package matrix
+def pkgval(col):
+    return f'VAR s = [Selected Scenario] RETURN SWITCH ( s, "Low", SUM ( Package[{col} Low] ), "High", SUM ( Package[{col} High] ), SUM ( Package[{col} Expected] ) )'
+
+
+m("Package Capex", "SUM ( Package[CapexUSD] )", USDM1, C9, "Capex of the package(s) in context.")
+m("Package NPV (sel)", pkgval("NPV"), SUSDM, C9, "Package NPV through 2032 in the selected scenario (scatter Y).")
+m("Package Run-rate (sel)", pkgval("RunRate"), SUSDM, C9, "Package operating-profit run-rate in 2032, selected scenario.")
+TV = "VAR s = [Selected Scenario] VAR t = ADDCOLUMNS ( ALLNOBLANKROW ( Package ), \"@v\", SWITCH ( s, \"Low\", Package[NPV Low], \"High\", Package[NPV High], Package[NPV Expected] ) ) "
+m("Preset A Package", TV + "RETURN MAXX ( TOPN ( 1, t, [@v], DESC ), Package[PackageID] )", TXT, C9, "Shortlist rule A: the valid package with the highest NPV in the selected scenario.")
+m("Preset B Package", TV + "RETURN MAXX ( TOPN ( 1, FILTER ( t, [@v] >= 0 ), Package[HotelsRated], DESC, [@v], DESC ), Package[PackageID] )", TXT, C9, "Shortlist rule B: most hotels with a dataset guest-score effect among packages with NPV at least zero; ties by NPV. Blank when none qualifies (Low).")
+m("Preset C Package", TV + 'RETURN MAXX ( TOPN ( 1, FILTER ( t, Package[ContainsRefresh] = "Yes" ), [@v], DESC ), Package[PackageID] )', TXT, C9, "Shortlist rule C: the highest-NPV package that includes the refresh of the ten oldest hotels.")
+m("Focus Package", 'VAR k = SELECTEDVALUE ( PlanSelector[Key], "A" ) RETURN SWITCH ( k, "A", [Preset A Package], "B", [Preset B Package], "C", [Preset C Package], k )', TXT, C9,
+  "The package in focus: a preset letter resolves through its rule in the selected scenario, a package id stands for itself. Default A, so the panel is never empty.")
+m("Focus Highlight", "IF ( SELECTEDVALUE ( Package[PackageID] ) = [Focus Package], 1, 0 )", "0", C9, "1 for the scatter point in focus.")
+m("Package Point Color", f'SWITCH ( TRUE (), [Focus Highlight] = 1, "{ACCENT}", SELECTEDVALUE ( Package[ContainsRefresh] ) = "Yes", "{LILAC}", "{PLUM}" )', TXT, C9, "Scatter color: raspberry in focus, plum without the refresh, lilac-grey with it (field value).")
+m("Package Point Size", "IF ( [Focus Highlight] = 1, 6, 1 )", "0", C9, "Scatter size: the point in focus drawn larger.")
+
+
+def focus(expr, fmt, name, doc):
+    m(name, f"VAR f = [Focus Package] RETURN CALCULATE ( {expr}, REMOVEFILTERS ( Package ), Package[PackageID] = f )", fmt, C9, doc)
+
+
+focus("SUM ( Package[CapexUSD] )", USDM1, "Focus Capex", "Capex of the package in focus.")
+focus("[Package NPV (sel)]", SUSDM, "Focus NPV (sel)", "NPV through 2032 of the package in focus, selected scenario.")
+focus("SUM ( Package[NPV Low] )", SUSDM, "Focus NPV Low", "NPV of the package in focus, Low scenario.")
+focus("SUM ( Package[NPV High] )", SUSDM, "Focus NPV High", "NPV of the package in focus, High scenario.")
+focus("[Package Run-rate (sel)]", SUSDM, "Focus Run-rate (sel)", "2032 run-rate of the package in focus.")
+focus("SUM ( Package[Projects] )", "0", "Focus Projects", "Initiatives in the package in focus.")
+focus("SUM ( Package[Growth] )", "0", "Focus Growth", "Growth initiatives in the package in focus.")
+focus("SUM ( Package[RoomsAdded] )", "#,0", "Focus Rooms Added", "Rooms added by the package in focus.")
+focus("SUM ( Package[HotelsRated] )", "#,0", "Focus Hotels Rated", "Hotels touched by an initiative with a dataset guest-score effect (Expected), counted once.")
+FIDS = 'VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) '
+m("Focus Project Flag", FIDS + "RETURN IF ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) IN ids, 1, 0 )", "0", C9, "1 for an initiative inside the package in focus (visual filter for the plan table).")
+m("Focus Project NPV (sel)", FIDS + "RETURN SUMX ( FILTER ( VALUES ( InvestmentProjects[ProjectID] ), InvestmentProjects[ProjectID] IN ids ), [NPV @ 8%] )", SUSDM, C9,
+  "NPV contribution per initiative in focus; at the total it sums to the package NPV (waterfall; reconciles with Package by construction).")
+m("Focus Project Capex", FIDS + "RETURN SUMX ( FILTER ( VALUES ( InvestmentProjects[ProjectID] ), InvestmentProjects[ProjectID] IN ids ), CALCULATE ( SUM ( InvestmentProjects[CapexUSD] ) ) )", USDM1, C9, "Capex per initiative in focus.")
+m("Focus Project Run-rate (sel)", FIDS + "RETURN SUMX ( FILTER ( VALUES ( InvestmentProjects[ProjectID] ), InvestmentProjects[ProjectID] IN ids ), [2032 Run-rate] )", SUSDM, C9, "Organisers' annual operating-profit impact per initiative in focus (reached by 2032).")
+m("Focus Project Live (text)", "IF ( [Focus Project Flag] = 1, [Live (text)] )", TXT, C9, "Go-live month per initiative in focus.")
+m("Focus Project Guest Effect (text)",
+  'VAR p = SELECTEDVALUE ( InvestmentProjects[ProjectID] ) VAR s = [Selected Scenario] VAR pts = CALCULATE ( MAX ( InvestmentScenarios[SatisfactionChangePts] ), InvestmentScenarios[Scenario] = s ) '
+  'RETURN IF ( [Focus Project Flag] = 1, IF ( pts > 0, "+" & FORMAT ( pts, "0.00" ) & " on " & [Hotels Touched], "·" ) )',
+  TXT, C9, "Dataset guest-score effect in points on the touched hotels; per initiative, never summed, never shown as NPS.")
+for scn in ("Low", "Expected", "High"):
+    m(f"Focus Cumulative Net ({scn})",
+      FIDS + "VAR y = MAX ( 'Date'[Year] ) RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), "
+      f"REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = \"{scn}\", TREATAS ( ids, ProjectCashflow[ProjectID] ) )",
+      SUSDM, C9, f"Cumulative net impact of the package in focus, undiscounted 2025 dollars, {scn} scenario.")
+m("Focus Payback Year",
+  FIDS + "VAR s = [Selected Scenario] VAR t = ADDCOLUMNS ( GENERATESERIES ( 2027, 2032, 1 ), \"@c\", VAR y = [Value] RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), "
+  "REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = s, TREATAS ( ids, ProjectCashflow[ProjectID] ) ) ) RETURN MINX ( FILTER ( t, [@c] >= 0 ), [Value] )",
+  "0", C9, "First year the cumulative net of the package in focus turns positive; blank when after 2032.")
+m("Focus Rooms Refreshed",
+  FIDS + 'VAR ren = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Category] = "Renovation" && InvestmentProjects[ProjectID] IN ids ), "@r", InvestmentProjects[ProjectID] ) '
+  'VAR hs = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] IN ren ), "@h", InvestmentProjectProperties[HotelID] ) '
+  "RETURN CALCULATE ( SUM ( Hotels[Rooms] ), REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), TREATAS ( hs, Hotels[HotelID] ) ) + 0",
+  "#,0", C9, "Rooms in the hotels a renovation initiative in focus touches.")
+m("Focus Live By (text)", FIDS + 'RETURN FORMAT ( CALCULATE ( MAX ( InvestmentProjects[Completion Date] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] IN ids ), "mmm yyyy" )', TXT, C9, "Month the last initiative in focus goes live.")
+
+
+def preset_set(k):
+    pk = f"[Preset {k} Package]"
+    for nm, col, fmt in (("Capex", "SUM ( Package[CapexUSD] )", USDM1), ("NPV (sel)", "[Package NPV (sel)]", SUSDM), ("Run-rate (sel)", "[Package Run-rate (sel)]", SUSDM)):
+        m(f"Preset {k} {nm}", f"VAR f = {pk} RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( {col}, REMOVEFILTERS ( Package ), Package[PackageID] = f ) )", fmt, C9, f"Preset {k}: {nm.lower()}.")
+    m(f"Preset {k} Range (text)",
+      f"VAR f = {pk} VAR lo = CALCULATE ( SUM ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) / 1000000 VAR hi = CALCULATE ( SUM ( Package[NPV High] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) / 1000000 "
+      "RETURN IF ( ISBLANK ( f ), BLANK (), " + signed("lo", 'FORMAT ( ABS ( lo ), "0.0" )') + ' & " to " & ' + signed("hi", 'FORMAT ( ABS ( hi ), "0.0" )') + " )",
+      TXT, C9, f"Preset {k}: NPV from the Low to the High scenario, $M.")
+    m(f"Preset {k} Mix (text)",
+      f'VAR f = {pk} RETURN IF ( ISBLANK ( f ), "No package qualifies in this case.", f & ": " & CONCATENATEX ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], PackageProject[ProjectID] ), " + ", PackageProject[ProjectID], ASC ) )',
+      TXT, C9, f"Preset {k}: package id and the initiatives in it.")
+
+
+for k in "ABC":
+    preset_set(k)
+m("Subtitle P2 (text)",
+  'VAR f = [Focus Package] VAR s = [Selected Scenario] RETURN IF ( ISBLANK ( f ), "No package qualifies for this rule in the " & s & " case.", '
+  '"In focus, package " & f & ": " & FORMAT ( [Focus Capex], "' + USDM1.replace("\\", "\\") + '" ) & " of the " & FORMAT ( [Budget], "' + USDM1 + '" ) & " budget on " & [Focus Projects] & " initiatives (" & [Focus Growth] & " growth). NPV through 2032 " & FORMAT ( [Focus NPV (sel)], "' + SUSDM + '" ) & " (" & s & "; Low " & FORMAT ( [Focus NPV Low], "' + SUSDM + '" ) & ", High " & FORMAT ( [Focus NPV High], "' + SUSDM + '" ) & "); " & FORMAT ( [Focus Run-rate (sel)], "' + SUSDM + '" ) & " a year of operating profit by 2032." )',
+  TXT, C9, "Page-2 subtitle bound to the package in focus and the scenario.")
+m("Scatter Title (text)",
+  'VAR s = [Selected Scenario] VAR n = COUNTROWS ( ALLNOBLANKROW ( Package ) ) VAR pos = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Package ), SWITCH ( s, "Low", Package[NPV Low], "High", Package[NPV High], Package[NPV Expected] ) >= 0 ) ) + 0 '
+  'RETURN IF ( pos = 0, "None", FORMAT ( pos, "0" ) ) & " of " & n & " valid packages " & IF ( pos = 1, "is worth more than it costs", "are worth more than they cost" ) & " by December 2032 (" & s & " case)"',
+  TXT, C9, "Scatter title: how many packages have NPV at least zero in the selected scenario.")
+m("Shortlist Title (text)", '"Three packages, one per criterion (" & [Selected Scenario] & " case)"', TXT, C9, "Shortlist state title.")
+m("Plan Title (text)", 'VAR f = [Focus Package] RETURN IF ( ISBLANK ( f ), "No package in focus", f & " in focus: " & FORMAT ( [Focus Capex], "' + USDM1 + '" ) & " on " & [Focus Projects] & " initiatives, all live by " & [Focus Live By (text)] )', TXT, C9, "Plan state title.")
+m("Plan Risk (text)",
+  FIDS + 'VAR s = [Selected Scenario] VAR ren = "GI-07" IN ids VAR pb = [Focus Payback Year] '
+  'VAR oos = LOOKUPVALUE ( InvestmentProjects[RoomsOutOfServicePct], InvestmentProjects[ProjectID], "GI-07" ) VAR dur = LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], "GI-07" ) '
+  'RETURN "Risks: " & IF ( ren, FORMAT ( oos, "0%" ) & " of " & FORMAT ( [Focus Rooms Refreshed], "#,0" ) & " rooms out of service for " & dur & " months; ", "" ) & "NPV in the Low case " & FORMAT ( [Focus NPV Low], "' + SUSDM + '" ) & "; the cumulative net turns positive " & IF ( ISBLANK ( pb ), "after 2032", "in " & pb ) & " (" & s & ")." & IF ( "GI-02" IN ids, " Kiosks wait for the app: they start when it goes live.", "" )',
+  TXT, C9, "Plan state: the risks of the package in focus in one sentence.")
+m("Uncertainty (text)",
+  'VAR rc = LOOKUPVALUE ( InvestmentProjects[AnnualRunningCostUSD], InvestmentProjects[ProjectID], "GI-01" ) RETURN "Read with care: no package is worth its cost by 2032 in the Low case, and nothing after 2032 is counted. Profit impacts are taken as net of running costs; read gross, the booking app earns " & FORMAT ( rc, "' + USDM1 + '" ) & " a year less."',
+  TXT, C9, "Standing uncertainty line on the shortlist (the Low-case claim is checked in 40_package_matrix.py; re-check on refresh).")
+
+KPI_ROWS = [  # Sort, Key, FindingLabel, Measure, Direction, Format, DeltaScale, DeltaUnit, DeltaFormat
+    (1, "occ", "F1 · Full, margin slipping", "Occupancy", 1, "0.0%", 100, "pt", "0.0"),
+    (2, "adr", "", "Average daily rate (segment)", 0, "$#,0", 1, "$", "0"),
+    (3, "revpar", "", "RevPAR (segment)", 0, "$#,0", 1, "$", "0"),
+    (4, "gop", "", "GOP margin before commissions", 1, "0.0%", 100, "pt", "0.0"),
+    (5, "gopa", "", "GOP margin after commissions", 1, "0.0%", 100, "pt", "0.0"),
+    (6, "ota", "F2 · Paying the middleman", "OTA share of room revenue", -1, "0.0%", 100, "pt", "0.0"),
+    (7, "direct", "", "Direct share (web, app, phone)", 1, "0.0%", 100, "pt", "0.0"),
+    (8, "dist", "", "Distribution cost, % of room revenue", -1, "0.0%", 100, "pt", "0.0"),
+    (9, "nps", "F3 · The weakest welcome", "Net promoter score", 1, "+0.0;−0.0;0.0", 1, "", "0.0"),
+    (10, "comfort", "", "Room comfort score (0 to 10)", 1, "0.00", 1, "", "0.00"),
+    (11, "value", "", "Value for money score (0 to 10)", 1, "0.00", 1, "", "0.00"),
+    (12, "compl", "", "Complaints per 1,000 room nights", -1, "0.0", 1, "", "0.0"),
+    (13, "roomcond", "", "Room-condition complaints per 1,000", -1, "0.00", 1, "", "0.00"),
+]
+
+PACKAGE = r"""
+VAR LastYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" )
+VAR Budget = LOOKUPVALUE ( Brands[InvestmentBudgetUSD], Brands[Brand], "Goodnight Inn" )
+VAR CF =
+    SELECTCOLUMNS (
+        ProjectCashflow,
+        "@CPid", ProjectCashflow[ProjectID], "@CScn", ProjectCashflow[Scenario], "@CYr", YEAR ( ProjectCashflow[Month] ),
+        "@CNet", ProjectCashflow[Benefit] - ProjectCashflow[Capex] - ProjectCashflow[Disruption],
+        "@CDf", ProjectCashflow[DiscountFactor], "@CBen", ProjectCashflow[Benefit]
+    )
+VAR Proj =
+    ADDCOLUMNS (
+        SELECTCOLUMNS (
+            FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ),
+            "@Pid", InvestmentProjects[ProjectID],
+            "@Capex", InvestmentProjects[CapexUSD],
+            "@Growth", IF ( InvestmentProjects[GrowthInitiative] = "Yes", 1, 0 ),
+            "@Dep", InvestmentProjects[DependsOn],
+            "@Added", InvestmentProjects[AddedRooms],
+            "@Refresh", IF ( InvestmentProjects[Category] = "Renovation", 1, 0 )
+        ),
+        "@Bit", VALUE ( RIGHT ( [@Pid], 2 ) ) - 1,
+        "@Rated", VAR p = [@Pid] RETURN IF ( LOOKUPVALUE ( InvestmentScenarios[SatisfactionChangePts], InvestmentScenarios[ProjectID], p, InvestmentScenarios[Scenario], "Expected" ) > 0, 1, 0 ),
+        "@NpvL", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "Low" ), [@CNet] * [@CDf] ),
+        "@NpvE", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "Expected" ), [@CNet] * [@CDf] ),
+        "@NpvH", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "High" ), [@CNet] * [@CDf] ),
+        "@RrL", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "Low" && [@CYr] = LastYear ), [@CBen] ),
+        "@RrE", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "Expected" && [@CYr] = LastYear ), [@CBen] ),
+        "@RrH", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "High" && [@CYr] = LastYear ), [@CBen] )
+    )
+VAR Masks = SELECTCOLUMNS ( GENERATESERIES ( 0, POWER ( 2, COUNTROWS ( Proj ) ) - 1, 1 ), "@Mask", [Value] )
+VAR Rows =
+    ADDCOLUMNS (
+        Masks,
+        "@Ids", VAR m = [@Mask] RETURN CONCATENATEX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), RIGHT ( [@Pid], 2 ), "+", [@Bit], ASC ),
+        "@N", VAR m = [@Mask] RETURN COUNTROWS ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ) ) + 0,
+        "@G", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@Growth] ) + 0,
+        "@Capex", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@Capex] ) + 0,
+        "@Broken", VAR m = [@Mask] VAR inP = FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ) VAR have = SELECTCOLUMNS ( inP, "@Have", [@Pid] )
+            RETURN COUNTROWS ( FILTER ( inP, [@Dep] <> "" && NOT ( [@Dep] IN have ) ) ) + 0,
+        "@Added", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@Added] ) + 0,
+        "@Refresh", VAR m = [@Mask] RETURN MAXX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@Refresh] ) + 0,
+        "@Rated", VAR m = [@Mask] VAR rp = SELECTCOLUMNS ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 && [@Rated] = 1 ), "@Rp", [@Pid] )
+            RETURN COUNTROWS ( DISTINCT ( SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] IN rp ), "@H", InvestmentProjectProperties[HotelID] ) ) ) + 0,
+        "@NpvL", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@NpvL] ),
+        "@NpvE", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@NpvE] ),
+        "@NpvH", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@NpvH] ),
+        "@RrL", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@RrL] ),
+        "@RrE", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@RrE] ),
+        "@RrH", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@RrH] )
+    )
+VAR Valid = FILTER ( Rows, [@N] >= 3 && [@G] >= 1 && [@Capex] <= Budget && [@Broken] = 0 )
+RETURN
+    SELECTCOLUMNS (
+        Valid,
+        "PackageID", [@Ids], "Mask", [@Mask], "Projects", [@N], "Growth", [@G], "CapexUSD", [@Capex],
+        "ContainsRefresh", IF ( [@Refresh] = 1, "Yes", "No" ), "RoomsAdded", [@Added], "HotelsRated", [@Rated],
+        "NPV Low", [@NpvL], "NPV Expected", [@NpvE], "NPV High", [@NpvH],
+        "RunRate Low", [@RrL], "RunRate Expected", [@RrE], "RunRate High", [@RrH]
+    )
+"""
+
+PACKAGE_PROJECT = r"""
+SELECTCOLUMNS (
+    GENERATE (
+        SELECTCOLUMNS ( ALLNOBLANKROW ( Package ), "@Pkg", Package[PackageID], "@Mask", Package[Mask] ),
+        VAR m = [@Mask]
+        RETURN
+            FILTER (
+                SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ), "@Pid", InvestmentProjects[ProjectID] ),
+                MOD ( INT ( m / POWER ( 2, VALUE ( RIGHT ( [@Pid], 2 ) ) - 1 ) ), 2 ) = 1
+            )
+    ),
+    "PackageID", [@Pkg],
+    "ProjectID", [@Pid]
+)
+"""
+
+PLAN_SELECTOR = r"""
+UNION (
+    DATATABLE (
+        "Key", STRING, "Label", STRING, "Sort", INTEGER,
+        {
+            { "A", "A · Highest NPV through 2032", 1 },
+            { "B", "B · Most hotels with a guest-score effect, NPV at least zero", 2 },
+            { "C", "C · Highest NPV with the refresh of the ten oldest hotels", 3 }
+        }
+    ),
+    SELECTCOLUMNS (
+        ALLNOBLANKROW ( Package ),
+        "Key", Package[PackageID],
+        "Label", "Package " & Package[PackageID] & "  ($" & FORMAT ( Package[CapexUSD] / 1000000, "0.0" ) & "M)",
+        "Sort", 100 + RANKX ( ALLNOBLANKROW ( Package ), Package[NPV Expected], , DESC )
+    )
+)
+"""
+
+
 def measures_table():
     out = ["/// Measure home for the three sketches. Base measures read columns; everything else reads measures.", "table _Measures", f"\tlineageTag: {tag('table._Measures')}", ""]
     for name, dax, fmt, folder, doc in MEASURES:
@@ -557,6 +848,10 @@ def helper_table(name, doc, rows, cols):
 
 
 def main():
+    global MODEL
+    import sys
+    if len(sys.argv) > 2 and sys.argv[1] == "--out":  # dry run into another folder (validation outside project/pbip)
+        MODEL = Path(sys.argv[2]) / "PillowKey.SemanticModel"
     if MODEL.exists():
         import shutil
         shutil.rmtree(MODEL / "definition", ignore_errors=True)
@@ -571,7 +866,7 @@ def main():
       f"\tlineageTag: {tag('expr.DataFile')}\n\n"
       "\tannotation PBI_ResultType = Text\n\n"
       "\tannotation PBI_NavigationStepName = Navigation\n")
-    tables = list(SHIPPED) + ["_Measures", "ProjectCashflow", "HotelOutlook", "Timeline", "PlanYear", "BridgeStep", "FolioLine"]
+    tables = list(SHIPPED) + ["_Measures", "ProjectCashflow", "HotelOutlook", "Timeline", "PlanYear", "BridgeStep", "FolioLine", "KpiLine", "Package", "PackageProject", "PlanSelector"]
     model = ["model Model", "\tculture: en-US", "\tdefaultPowerBIDataSourceVersion: powerBI_V3", "\tsourceQueryCulture: en-US", "\tdataAccessOptions", "\t\tlegacyRedirects", "\t\treturnErrorValuesAsNull", "",
              "queryGroup Facts", "", "\tannotation PBI_QueryGroupOrder = 0", "", "queryGroup Dimensions", "", "\tannotation PBI_QueryGroupOrder = 1", "",
              "annotation __PBI_TimeIntelligenceEnabled = 0", "",
@@ -589,8 +884,28 @@ def main():
     w(d / "tables" / "ProjectCashflow.tmdl", calc_table(
         "ProjectCashflow",
         "Grain: one row per project, scenario and month, January 2027 to December 2032. Capex phased evenly, disruption from rooms out of service against the mapped hotels' 2025 revenue, benefit ramped 50 / 85 / 100 percent after go-live. Rules read from FinanceParameters.",
-        [("ProjectID", "string", None), ("Scenario", "string", None), ("Month", "dateTime", "Short Date"), ("Capex", "double", USD), ("Disruption", "double", USD), ("Benefit", "double", USD), ("RevenueBenefit", "double", USD)],
+        [("ProjectID", "string", None), ("Scenario", "string", None), ("Month", "dateTime", "Short Date"), ("Capex", "double", USD), ("Disruption", "double", USD), ("Benefit", "double", USD), ("RevenueBenefit", "double", USD), ("DiscountFactor", "double", "0.0000")],
         PROJECT_CASHFLOW))
+    w(d / "tables" / "KpiLine.tmdl", helper_table(
+        "KpiLine", "Lines of the page-1 four-brand comparison: finding group, label, good direction (1 higher, -1 lower, 0 not ranked) and number formats. The values come from KPI Value.",
+        KPI_ROWS,
+        [("Sort", "INTEGER", "int64"), ("Key", "STRING", "string"), ("Finding", "STRING", "string"), ("Measure", "STRING", "string"), ("Direction", "INTEGER", "int64"),
+         ("Format", "STRING", "string"), ("DeltaScale", "INTEGER", "int64"), ("DeltaUnit", "STRING", "string"), ("DeltaFormat", "STRING", "string")]).replace(
+        "\tcolumn Measure\n\t\tdataType: string\n", "\tcolumn Measure\n\t\tdataType: string\n\t\tsortByColumn: Sort\n"))
+    w(d / "tables" / "Package.tmdl", calc_table(
+        "Package",
+        "Grain: one row per valid Goodnight Inn package (456 of the 1,024 subsets of the ten initiatives): capex within the brand budget, three or more initiatives, at least one growth initiative, every DependsOn met. Values are sums of the initiatives' ProjectCashflow (monthly discounting at the FinanceParameters rate to January 2027; 2032 run-rate). Offline reference: project/analysis/40_package_matrix.py.",
+        [("PackageID", "string", None), ("Mask", "int64", "0"), ("Projects", "int64", "0"), ("Growth", "int64", "0"), ("CapexUSD", "double", USD), ("ContainsRefresh", "string", None),
+         ("RoomsAdded", "int64", "#,0"), ("HotelsRated", "int64", "#,0"), ("NPV Low", "double", USD), ("NPV Expected", "double", USD), ("NPV High", "double", USD),
+         ("RunRate Low", "double", USD), ("RunRate Expected", "double", USD), ("RunRate High", "double", USD)],
+        PACKAGE))
+    w(d / "tables" / "PackageProject.tmdl", calc_table(
+        "PackageProject", "Bridge: one row per package and initiative it contains (Package 1-* PackageProject *-1 InvestmentProjects).",
+        [("PackageID", "string", None), ("ProjectID", "string", None)], PACKAGE_PROJECT))
+    w(d / "tables" / "PlanSelector.tmdl", calc_table(
+        "PlanSelector", "Disconnected package selector (no relationships, by design): the three shortlist rules A / B / C, then every valid package. The slicer on Label is single-select; DAX reads Key.",
+        [("Key", "string", None), ("Label", "string", None), ("Sort", "int64", "0")], PLAN_SELECTOR).replace(
+        "\tcolumn Label\n\t\tdataType: string\n", "\tcolumn Label\n\t\tdataType: string\n\t\tsortByColumn: Sort\n"))
     w(d / "tables" / "HotelOutlook.tmdl", calc_table(
         "HotelOutlook",
         "Scenario logic, labeled as such on every visual: the do-nothing projection per hotel and year 2025-2032. 2025 unit economics grown by the organisers' regional demand, ADR and cost assumptions; demand capped at 97 percent occupancy.",
@@ -624,6 +939,7 @@ def main():
         ("GuestComplaints", "HotelID", "Hotels", "HotelID"), ("GuestComplaints", "Month", "Date", "Date"),
         ("ProjectCashflow", "ProjectID", "InvestmentProjects", "ProjectID"), ("ProjectCashflow", "Month", "Date", "Date"),
         ("HotelOutlook", "HotelID", "Hotels", "HotelID"),
+        ("PackageProject", "PackageID", "Package", "PackageID"), ("PackageProject", "ProjectID", "InvestmentProjects", "ProjectID"),
     ]
     out = []
     for ft, fc, tt, tc in rels:

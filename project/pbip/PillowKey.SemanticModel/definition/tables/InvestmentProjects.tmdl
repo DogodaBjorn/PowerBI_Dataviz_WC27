@@ -123,11 +123,24 @@ table InvestmentProjects
 		lineageTag: baf902d2-c45a-5828-88cc-45267257da2c
 		summarizeBy: none
 		isDataTypeInferred
-	/// Earliest start plus duration: the month the project goes live.
-	column 'Completion Date' = EDATE(InvestmentProjects[EarliestStart], InvestmentProjects[DurationMonths])
+	/// Earliest start, or the month the prerequisite (DependsOn) goes live if that is later: GI-02 kiosks start when the GI-01 app is live.
+	column 'Planned Start' = VAR dep = InvestmentProjects[DependsOn] VAR own = InvestmentProjects[EarliestStart] RETURN IF ( dep = "", own, MAX ( own, EDATE ( LOOKUPVALUE ( InvestmentProjects[EarliestStart], InvestmentProjects[ProjectID], dep ), LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], dep ) ) ) )
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a7272cc5-f01c-5f35-983c-6178c01093d7
+		summarizeBy: none
+		isDataTypeInferred
+	/// Planned start plus duration: the month the project goes live.
+	column 'Completion Date' = EDATE(InvestmentProjects[Planned Start], InvestmentProjects[DurationMonths])
 		dataType: dateTime
 		formatString: Short Date
 		lineageTag: 71192867-f11b-5bad-9ab5-3ee230af5912
+		summarizeBy: none
+		isDataTypeInferred
+	/// The Brand Review finding (F1 to F4 on page 1) the initiative answers; Goodnight Inn projects only (opzet 2026-11-06).
+	column 'Answers Finding' = SWITCH(InvestmentProjects[ProjectID], "GI-01", "F2", "GI-02", "F3", "GI-03", "F1", "GI-04", "F4", "GI-05", "F4", "GI-06", "F4", "GI-07", "F3", "GI-08", "F4", "GI-09", "F3", "GI-10", "F1")
+		dataType: string
+		lineageTag: 8e9d65ba-97d8-539a-b76d-606ffd64d7a9
 		summarizeBy: none
 		isDataTypeInferred
 

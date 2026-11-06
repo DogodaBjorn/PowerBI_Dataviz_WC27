@@ -1,0 +1,39 @@
+/// Bridge: one row per package and initiative it contains (Package 1-* PackageProject *-1 InvestmentProjects).
+table PackageProject
+	lineageTag: 4459f637-a168-5726-914c-8ef905178a77
+
+	column PackageID
+		dataType: string
+		lineageTag: 064592e0-d67a-5168-b69b-13e63ab19211
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [PackageID]
+
+	column ProjectID
+		dataType: string
+		lineageTag: f714f78a-0b83-51af-af93-eecfff7015f0
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [ProjectID]
+
+	partition PackageProject = calculated
+		mode: import
+		source = ```
+				SELECTCOLUMNS (
+				    GENERATE (
+				        SELECTCOLUMNS ( ALLNOBLANKROW ( Package ), "@Pkg", Package[PackageID], "@Mask", Package[Mask] ),
+				        VAR m = [@Mask]
+				        RETURN
+				            FILTER (
+				                SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ), "@Pid", InvestmentProjects[ProjectID] ),
+				                MOD ( INT ( m / POWER ( 2, VALUE ( RIGHT ( [@Pid], 2 ) ) - 1 ) ), 2 ) = 1
+				            )
+				    ),
+				    "PackageID", [@Pkg],
+				    "ProjectID", [@Pid]
+				)
+				```
+
+	annotation PBI_ResultType = Table
