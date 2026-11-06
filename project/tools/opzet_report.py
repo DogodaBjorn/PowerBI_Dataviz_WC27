@@ -42,8 +42,10 @@ BG = ROOT / "project" / "deliverables" / "backgrounds"
 CANVAS, SURFACE, INK, INK2, HAIR = "#F5F3F0", "#FFFFFF", "#24192B", "#5B5163", "#E4DEE3"
 ACCENT, GOOD, BAD, SLATE, PLUM = "#B5175F", "#1D5FA8", "#B45309", "#82798A", "#3E2C55"
 DISPLAY, BODY = "Trebuchet MS", "Verdana"
-FOOTER = ("Data: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027 (Microsoft Fabric Community). Guest scores weighted by survey responses. "
-          "Margins exclude distribution cost unless marked 'after commissions'. 2021 is a depressed base year. Projections are scenario logic from the organisers' FinanceParameters.")
+FOOTER = ("Data: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores response-weighted. "
+          "Margins before commissions unless marked. 2021 is a depressed base year. Projections: scenario logic from FinanceParameters.")
+# Kit type scale (brand.yaml scale_pt 28 / 20 / 13 / 11 / 10): textboxes in px (28 pt = 37 px, 13 pt = 17 px, 10 pt = 13 px),
+# cards and visual objects in pt. Nothing below the 10 pt caption floor.
 BRANDS = [("GI", "Goodnight Inn"), ("PS", "P&K Select"), ("MO", "Maison d'Or"), ("PP", "Pebble & Pine")]
 WILD = {"data": [{"dataViewWildcard": {"matchingOption": 1}}]}
 
@@ -81,7 +83,7 @@ def state_of(page, name):
     return SLOT[page][name].get("state")
 
 
-def tb(page, name, txt, font=BODY, size=12, colour=INK2, bold=False, align="left", alt=None):
+def tb(page, name, txt, font=BODY, size=13, colour=INK2, bold=False, align="left", alt=None):
     return textbox(name, *at(page, name), [[(txt, font, size, colour, bold)]], align=align, alt=alt)
 
 
@@ -110,11 +112,11 @@ def gi_filter():
 
 
 def p1_visuals():
-    v = [tb(P1, "z_masthead", "THE BRAND REVIEW  ·  2021 TO 2025  ·  FOR THE BOARD OF PILLOW & KEY GROUP", size=12, align="right"),
-         tb(P1, "z_headline", "Do not disturb, since 2020.", font=DISPLAY, size=36, colour=INK, bold=True, alt="Page headline: Do not disturb, since 2020."),
+    v = [tb(P1, "z_masthead", "THE BRAND REVIEW  ·  2021 TO 2025  ·  FOR THE BOARD OF PILLOW & KEY GROUP", align="right"),
+         tb(P1, "z_headline", "Do not disturb, since 2020.", font=DISPLAY, size=37, colour=INK, bold=True, alt="Page headline: Do not disturb, since 2020."),
          dyn(P1, "c_subtitle", "Subtitle P1 (text)", size=11),
          tb(P1, "c_compare_title", "Goodnight Inn leads on occupancy, and is last of four on what guests and booking channels say", font=DISPLAY, size=17, colour=INK, bold=True),
-         tb(P1, "c_compare_sub", "2025, the four Pillow & Key brands. Rank: best of four in the stated direction; rates reflect each segment and are not ranked. Change: 2023 to 2025.", size=12)]
+         tb(P1, "c_compare_sub", "The brand promise is “A good night. A fair price.” The lines test it: booked with us, a good night, a fair price, recommend us. 2025, the four Pillow & Key brands; rates reflect each segment and are not ranked; change is 2023 to 2025.")]
 
     # hero: the four-brand comparison (table-studio: right-aligned figures, Goodnight Inn column tinted, verdict in words)
     proj = [proj_col("KpiLine", "Finding", display="Finding"), proj_col("KpiLine", "Measure", display="Measure")]
@@ -125,24 +127,24 @@ def p1_visuals():
              {"properties": {"backColorPrimary": fv("GN Column Tint")}, "selector": {**WILD, "metadata": mref("KPI Text GI")}}]
     colfmt = [{"properties": {"alignment": enum("Right")}, "selector": {"metadata": mref(f"KPI Text {c}")}} for c, _ in BRANDS]
     colfmt += [{"properties": {"alignment": enum("Right")}, "selector": {"metadata": mref(m)}} for m in ("KPI Rank (text)", "KPI Change since 2023 (text)")]
-    objs = table_objects(BODY, 10, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=8, header_size=9, extra_values=extra, column_formatting=colfmt)
+    objs = table_objects(BODY, 11, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=7, header_size=10, extra_values=extra, column_formatting=colfmt)
     v.append(visual("hero_brand_compare", "tableEx", *at(P1, "hero_brand_compare"), query={"Values": {"projections": proj}}, objects=objs,
                     vcos=vco(alt="Table comparing Goodnight Inn with P&K Select, Maison d'Or and Pebble & Pine on thirteen 2025 measures, grouped by findings F1 to F3, with Goodnight Inn's rank and its change since 2023", padding=0),
                     sort=sort_by_column("KpiLine", "Measure")))
 
     # geography
     v.append(dyn(P1, "c_geo_title", "Geo Title (text)", size=13, colour=INK, font=DISPLAY, bold=True))
-    v.append(tb(P1, "c_geo_sub", "Occupancy 2025 by region and location type  ·  number of hotels", size=12))
+    v.append(tb(P1, "c_geo_sub", "Occupancy 2025 by region and location type  ·  number of hotels"))
     q = {"Rows": {"projections": [proj_col("Hotels", "Region")]}, "Columns": {"projections": [proj_col("Hotels", "LocationType")]},
          "Values": {"projections": [proj_mea("Occupancy and Hotels (text)", "Occupancy · hotels")]}}
-    objs = {"columnHeaders": [{"properties": {"fontFamily": text(BODY), "fontSize": num(9), "fontColor": color(INK2), "backColor": color(SURFACE), "outlineStyle": enum("None"), "alignment": enum("Right")}}],
-            "rowHeaders": [{"properties": {"fontFamily": text(BODY), "fontSize": num(10), "fontColor": color(INK), "backColor": color(SURFACE), "outlineStyle": enum("None")}}],
-            "values": [{"properties": {"fontFamily": text(BODY), "fontSize": num(10), "fontColorPrimary": color(INK), "backColorPrimary": color(SURFACE), "backColorSecondary": color(SURFACE), "outlineStyle": enum("None")}},
+    objs = {"columnHeaders": [{"properties": {"fontFamily": text(BODY), "fontSize": num(10), "fontColor": color(INK2), "backColor": color(SURFACE), "outlineStyle": enum("None"), "alignment": enum("Right")}}],
+            "rowHeaders": [{"properties": {"fontFamily": text(BODY), "fontSize": num(11), "fontColor": color(INK), "backColor": color(SURFACE), "outlineStyle": enum("None")}}],
+            "values": [{"properties": {"fontFamily": text(BODY), "fontSize": num(11), "fontColorPrimary": color(INK), "backColorPrimary": color(SURFACE), "backColorSecondary": color(SURFACE), "outlineStyle": enum("None")}},
                        {"properties": {"backColor": fv("Occupancy Heat Color")}, "selector": {**WILD, "metadata": mref("Occupancy and Hotels (text)")}}],
             "grid": [{"properties": {"gridVertical": b(False), "gridHorizontal": b(True), "gridHorizontalColor": color(HAIR), "rowPadding": num(8), "outlineStyle": enum("None")}}]}
     v.append(visual("tbl_geo", "pivotTable", *at(P1, "tbl_geo"), query=q, objects=objs, filters=[gi_filter()],
                     vcos=vco(alt="Matrix of Goodnight Inn occupancy in 2025 by region (rows) and location type (columns), with hotel counts and totals; airport cells are the fullest", padding=0)))
-    v.append(tb(P1, "c_full_title", "The seven fullest hotels, 2025 occupancy  ·  airports in raspberry", size=12))
+    v.append(tb(P1, "c_full_title", "The seven fullest hotels, 2025 occupancy  ·  airports in raspberry"))
     q = {"Category": {"projections": [proj_col("Hotels", "Hotel Short Name")]}, "Y": {"projections": [proj_mea("Occupancy % 2025", "Occupancy 2025")]}}
     objs = {"categoryAxis": axis(BODY, 10, INK), "valueAxis": axis(BODY, 9, INK2, show=False, gridlines=False, start=0, end=1),
             "dataPoint": [{"properties": {"fill": fv("Hotel Bar Color")}, "selector": WILD}], "labels": labels(True, BODY, 10, INK), "legend": legend(False)}
@@ -153,13 +155,13 @@ def p1_visuals():
     for slot_name, key, title_m, fmt in (("ch_trend_margin", "Margin after", "Trend Title Margin (text)", 0), ("ch_trend_ota", "OTA", "Trend Title OTA (text)", 0), ("ch_trend_nps", "NPS", "Trend Title NPS (text)", 1)):
         ms = [f"Trend {key} {c}" for c, _ in BRANDS]
         q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m, nm) for m, (_, nm) in zip(ms, BRANDS)]}}
-        objs = {"categoryAxis": axis(BODY, 9, INK2), "valueAxis": axis(BODY, 9, INK2, gridlines=True, grid_color=HAIR),
-                "legend": legend(True, BODY, 9, INK2, "Right"),
+        objs = {"categoryAxis": axis(BODY, 10, INK2), "valueAxis": axis(BODY, 10, INK2, gridlines=True, grid_color=HAIR),
+                "legend": legend(True, BODY, 10, INK2, "Right"),
                 "dataPoint": series_colors({mref(ms[0]): ACCENT, **{mref(m): SLATE for m in ms[1:]}}),
                 "lineStyles": line_styles({mref(ms[0]): 3, **{mref(m): 1.5 for m in ms[1:]}})}
         v.append(chart(P1, slot_name, "lineChart", q, objs, f"Line chart 2021 to 2025: Goodnight Inn against the three sister brands, {key.lower()}",
                        title_measure=title_m, filters=[filter_in("Date", "Year", [2021, 2022, 2023, 2024, 2025], "flt_hist")]))
-    v.append(tb(P1, "z_footer", FOOTER, size=11))
+    v.append(tb(P1, "z_footer", FOOTER))
     return v
 
 
@@ -168,7 +170,7 @@ P2 = "p2-investment-strategy"
 
 
 def nums_card(name, measures, labs, alt):
-    return card(name, *at(P2, name), measures, BODY, 16, INK, BODY, 8, INK2, labels=labs, alt=alt)
+    return card(name, *at(P2, name), measures, BODY, 16, INK, BODY, 10, INK2, labels=labs, alt=alt)
 
 
 def button(name, label, bookmark, filled, alt):
@@ -191,11 +193,11 @@ def tile(name, card_id):
 
 
 def p2_visuals():
-    v = [tb(P2, "z_masthead2", "THE INVESTMENT STRATEGY  ·  2027 TO 2032  ·  GOODNIGHT INN BUDGET $60.0M", size=12, align="right"),
-         tb(P2, "z_headline2", "Please make up the room.", font=DISPLAY, size=36, colour=INK, bold=True, alt="Page headline: Please make up the room."),
+    v = [tb(P2, "z_masthead2", "THE INVESTMENT STRATEGY  ·  2027 TO 2032  ·  GOODNIGHT INN BUDGET $60.0M", align="right"),
+         tb(P2, "z_headline2", "Please make up the room.", font=DISPLAY, size=37, colour=INK, bold=True, alt="Page headline: Please make up the room."),
          dyn(P2, "c_subtitle2", "Subtitle P2 (text)", size=11),
          dyn(P2, "c_scatter_title", "Scatter Title (text)", size=13, colour=INK, font=DISPLAY, bold=True),
-         tb(P2, "c_scatter_sub", "One dot per package the rules allow: 3+ initiatives, 1+ growth, within $60M, kiosks only with the app. Raspberry: in focus  ·  plum: no room refresh  ·  grey: with it.", size=12)]
+         tb(P2, "c_scatter_sub", "One dot per package the rules allow: three or more initiatives, at least one growth initiative, within $60M, kiosks only with the app. Raspberry: the package in focus  ·  plum: without the room refresh  ·  grey: with it.")]
     q = {"Category": {"projections": [proj_col("Package", "PackageID")]}, "X": {"projections": [proj_mea("Package Capex", "Capex")]},
          "Y": {"projections": [proj_mea("Package NPV (sel)", "NPV through 2032")]}, "Size": {"projections": [proj_mea("Package Point Size", "In focus")]}}
     objs = {"categoryAxis": axis(BODY, 10, INK2, title=True, start=0, end=60000000, extra={"titleText": text("Capex of the package, $M"), "titleFontFamily": text(BODY), "titleFontSize": num(10), "titleColor": color(INK2)}),
@@ -217,41 +219,45 @@ def p2_visuals():
     heads = {"a": "A · Highest NPV through 2032", "b": "B · Most hotels with a guest-score effect, NPV at least zero", "c": "C · Highest NPV that includes the refresh of the ten oldest hotels"}
     for k in "abc":
         v.append(tile(f"z_tile_preset_{k}", f"tile_preset_{k}"))
-        v.append(tb(P2, f"c_preset_{k}_head", heads[k], size=13, colour=INK, bold=True))
-        v.append(dyn(P2, f"c_preset_{k}_mix", f"Preset {k.upper()} Mix (text)", size=10, colour=INK))
+        v.append(tb(P2, f"c_preset_{k}_head", heads[k], size=15, colour=INK, bold=True))
+        v.append(dyn(P2, f"c_preset_{k}_mix", f"Preset {k.upper()} Mix (text)", size=11, colour=INK))
         K = k.upper()
         v.append(nums_card(f"c_preset_{k}_nums", [f"Preset {K} Capex", f"Preset {K} NPV (sel)", f"Preset {K} Range (text)", f"Preset {K} Run-rate (sel)"],
                            ["capex", "NPV, selected case", "NPV, Low to High, $M", "a year by 2032"], f"Preset {K}: capex, NPV, NPV range and 2032 run-rate"))
-    v.append(dyn(P2, "c_uncertainty", "Uncertainty (text)", size=9))
+    v.append(dyn(P2, "c_uncertainty", "Uncertainty (text)", size=10))
     v.append(button("btn_open_plan", "Open the plan for the package in focus  →", "bm_p2_plan", True, "Button: open the plan for the package in focus"))
 
     # state: plan (hidden by default)
     v.append(dyn(P2, "c_plan_title", "Plan Title (text)", size=13, colour=INK, font=DISPLAY, bold=True))
     q = {"Category": {"projections": [proj_col("InvestmentProjects", "Short Name")]}, "Y": {"projections": [proj_mea("Focus Project NPV (sel)", "NPV through 2032")]}}
-    objs = {"categoryAxis": axis(BODY, 9, INK2, gridlines=None), "valueAxis": axis(BODY, 9, INK2, gridlines=False),
+    objs = {"categoryAxis": axis(BODY, 10, INK2, gridlines=None), "valueAxis": axis(BODY, 10, INK2, gridlines=False),
             "sentimentColors": [{"properties": {"increaseFill": color(GOOD), "decreaseFill": color(BAD), "totalFill": color(INK), "otherFill": color(SLATE)}}],
-            "labels": labels(True, BODY, 9, INK), "legend": legend(False)}
+            "labels": labels(True, BODY, 10, INK), "legend": legend(False)}
     v.append(chart(P2, "ch_plan_waterfall", "waterfallChart", q, objs, "Waterfall of each initiative's NPV contribution through 2032 to the package in focus, ending in the package total",
                    title="Where the NPV comes from, $M through 2032", filters=[filter_measure_gt("Focus Project Flag", 0, "flt_focus_wf")]))
-    proj = [proj_col("InvestmentProjects", "Short Name", display="Initiative"), proj_col("InvestmentProjects", "Answers Finding", display="Answers"),
-            proj_mea("Focus Project Capex", "Capex"), proj_mea("Focus Project Live (text)", "Live"), proj_mea("Focus Project Run-rate (sel)", "Run-rate 2032"),
-            proj_mea("Focus Project NPV (sel)", "NPV"), proj_mea("Focus Project Guest Effect (text)", "Guest pts")]
-    colfmt = [{"properties": {"alignment": enum("Right")}, "selector": {"metadata": mref(m)}} for m in ("Focus Project Capex", "Focus Project Live (text)", "Focus Project Run-rate (sel)", "Focus Project NPV (sel)", "Focus Project Guest Effect (text)")]
-    objs = table_objects(BODY, 10, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=6, header_size=9, column_formatting=colfmt)
+    # all ten initiatives, funded ones first, each with the kit's state chip (brand-guide section 6): the chip is the
+    # decorative carrier (shape + color), the Status word the accessible one
+    proj = [proj_mea("Initiative Chip", " "), proj_mea("Initiative Status (text)", "Status"), proj_col("InvestmentProjects", "Short Name", display="Initiative"),
+            proj_col("InvestmentProjects", "Answers Finding", display="Answers"), proj_mea("Initiative Capex", "Capex"), proj_mea("Live (text)", "Live"),
+            proj_mea("Initiative Run-rate (sel)", "Run-rate"), proj_mea("Initiative NPV (sel)", "NPV"), proj_mea("Initiative Guest Effect (text)", "Guest pts")]
+    colfmt = [{"properties": {"alignment": enum("Right")}, "selector": {"metadata": mref(m)}} for m in ("Initiative Capex", "Live (text)", "Initiative Run-rate (sel)", "Initiative NPV (sel)", "Initiative Guest Effect (text)")]
+    extra = [{"properties": {"fontColorPrimary": fv("Initiative Status Color")}, "selector": {**WILD, "metadata": mref("Initiative Status (text)")}}]
+    objs = table_objects(BODY, 10, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=4, header_size=10, extra_values=extra, column_formatting=colfmt)
+    # VERIFY: image size of the chip column (grid image height); fallback: Format > Image size 24 px in Desktop
     v.append(visual("tbl_plan_initiatives", "tableEx", *at(P2, "tbl_plan_initiatives"), query={"Values": {"projections": proj}}, objects=objs,
-                    filters=[filter_measure_gt("Focus Project Flag", 0, "flt_focus_tbl")], sort=sort_by_measure("Focus Project Capex"),
-                    vcos=vco(alt="Table of the initiatives in the package in focus: the page-1 finding each answers, capex, go-live month, 2032 run-rate, NPV and the dataset guest-score effect", padding=0)))
+                    sort=sort_by_measure("Initiative Status (text)", desc=False),
+                    vcos=vco(alt="Table of all ten Goodnight Inn initiatives, funded ones first: status in the package in focus, the page-1 finding each answers, capex, go-live month, 2032 run-rate, NPV and the dataset guest-score effect", padding=0)))
     ms = ["Focus Cumulative Net (Low)", "Focus Cumulative Net (Expected)", "Focus Cumulative Net (High)"]
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(ms[0], "Low"), proj_mea(ms[1], "Expected"), proj_mea(ms[2], "High")]}}
-    objs = {"categoryAxis": axis(BODY, 8, INK2), "valueAxis": axis(BODY, 8, INK2, gridlines=True, grid_color=HAIR), "legend": legend(True, BODY, 8, INK2, "Right"),
-            "dataPoint": series_colors({mref(m): ACCENT for m in ms}), "lineStyles": line_styles({mref(ms[0]): 1, mref(ms[1]): 3, mref(ms[2]): 1}, dashed=(mref(ms[0]), mref(ms[2])))}
+    objs = {"categoryAxis": axis(BODY, 10, INK2), "valueAxis": axis(BODY, 10, INK2, gridlines=True, grid_color=HAIR), "legend": legend(False),
+            "dataPoint": series_colors({mref(m): ACCENT for m in ms}), "lineStyles": line_styles({mref(ms[0]): 1, mref(ms[1]): 2, mref(ms[2]): 1})}
     v.append(chart(P2, "ch_plan_cumulative", "lineChart", q, objs, "Line chart of the cumulative net impact of the package in focus 2027 to 2032 in the Low, Expected and High scenarios",
-                   title="Cumulative net impact, $M", filters=[filter_in("Date", "Year", [2027, 2028, 2029, 2030, 2031, 2032], "flt_horizon2")]))
-    v.append(card("c_plan_ops", *at(P2, "c_plan_ops"), ["Focus Rooms Added", "Focus Rooms Refreshed", "Focus Hotels Rated"], BODY, 16, INK, BODY, 8, INK2,
-                  labels=["rooms added", "rooms refreshed", "hotels with a guest-score effect"], alt="Operational impact of the package in focus"))
-    v.append(dyn(P2, "c_plan_risk", "Plan Risk (text)", size=9))
+                   title="Cumulative net impact, $M  ·  Low to High", filters=[filter_in("Date", "Year", [2027, 2028, 2029, 2030, 2031, 2032], "flt_horizon2")]))
+    v.append(card("c_plan_ops", *at(P2, "c_plan_ops"), ["Focus Rooms Added", "Focus Rooms Refreshed", "Focus Hotels Rated"], BODY, 16, INK, BODY, 10, INK2,
+                  labels=["rooms added", "rooms refreshed", "hotels, guest effect"], alt="Operational impact of the package in focus: rooms added, rooms refreshed, hotels with a dataset guest-score effect"))
+    v.append(dyn(P2, "c_plan_risk", "Plan Risk (text)", size=10))
     v.append(button("btn_back", "←  Back to the three packages", "bm_p2_shortlist", False, "Button: back to the three shortlist packages"))
-    v.append(tb(P2, "z_footer2", FOOTER, size=11))
+    v.append(tb(P2, "z_footer2", FOOTER))
     return v
 
 

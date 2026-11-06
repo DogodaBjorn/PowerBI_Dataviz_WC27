@@ -533,6 +533,26 @@ m("Capacity (text)", 'VAR y = [First Capped Year] RETURN IF ( ISBLANK ( [Baselin
 # ================================================================ opzet 2026-11-06 (05-doorlichting-nieuwe-opzet.md)
 # P1: the factual four-brand comparison and Goodnight Inn geography. P2: the package matrix
 # with the focus swap (04-p2-build-method.md). Offline reference: project/analysis/40_ and 41_.
+def _hanger(tile, eyes, awake):
+    mask = "<mask id='h'><rect width='64' height='104' fill='white'/><circle cx='32' cy='24' r='10' fill='black'/><rect x='32' y='22.5' width='40' height='3' fill='black'/></mask>"
+    face = (f"<circle cx='22' cy='62' r='4' fill='{eyes}'/><circle cx='42' cy='62' r='4' fill='{eyes}'/>" if awake
+            else f"<path d='M16 60 q6 7 12 0 M36 60 q6 7 12 0' fill='none' stroke='{eyes}' stroke-width='4' stroke-linecap='round'/>")
+    return f"{mask}<rect x='4' y='4' width='56' height='96' rx='14' fill='{tile}' mask='url(%23h)'/>{face}"
+
+
+def _chip(on):
+    fill, stroke = ("%23B5175F", "%23B5175F") if on else ("%23FFFFFF", "%23E4DEE3")
+    hanger = _hanger("%23FFFFFF", "%23B5175F", True) if on else _hanger("%23B5175F", "%23FFFFFF", False)
+    svg = (f"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='28' viewBox='0 0 40 28'>"
+           f"<rect x='0.5' y='0.5' width='39' height='27' rx='13.5' fill='{fill}' stroke='{stroke}'/>"
+           f"<g transform='translate(14.2 3) scale(0.2115)'>{hanger}</g></svg>")
+    return '"' + svg + '"'
+
+
+CHIP_ON, CHIP_OFF = _chip(True), _chip(False)
+IMAGE_MEASURES = {"Initiative Chip"}
+
+
 C8 = "08 Brand comparison"
 C9 = "09 Package matrix"
 SUSDM = r"+\$#,0.0,,\M;" + "−" + r"\$#,0.0,,\M;\$0.0\M"
@@ -571,8 +591,8 @@ m("KPI Rank",
   "0", C8, "Goodnight Inn's rank among the four brands in the line's good direction (1 = best); blank for segment measures that are not ranked.")
 m("KPI Rank (text)",
   "VAR r = [KPI Rank] VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR dir = SELECTEDVALUE ( KpiLine[Direction] ) "
-  'RETURN IF ( ISBLANK ( SELECTEDVALUE ( KpiLine[Key] ) ), BLANK (), IF ( dir = 0, "not ranked", SWITCH ( TRUE (), r = 1, "best of " & n, r = n, "last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) ) )',
-  TXT, C8, "Rank as words; the word carries the verdict, the color repeats it.")
+  'RETURN IF ( ISBLANK ( SELECTEDVALUE ( KpiLine[Key] ) ), BLANK (), IF ( dir = 0, "not ranked", SWITCH ( TRUE (), r = 1, UNICHAR ( 9650 ) & " best of " & n, r = n, UNICHAR ( 9660 ) & " last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) ) )',
+  TXT, C8, "Rank as words with an arrow (brand-guide section 6: the verdict never rests on color alone); the color repeats it.")
 m("KPI Rank Color", f'VAR r = [KPI Rank] VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) RETURN SWITCH ( TRUE (), ISBLANK ( r ), "{INK2}", r = 1, "{GOOD}", r = n, "{BAD}", "{INK2}" )', TXT, C8, "Harbour blue for best, Ember for last, plum-grey otherwise (field-value font color).")
 m("KPI Change since 2023 (text)",
   "VAR d = [KPI GI 2025] - [KPI GI 2023] VAR s = SELECTEDVALUE ( KpiLine[DeltaScale] ) VAR u = SELECTEDVALUE ( KpiLine[DeltaUnit] ) "
@@ -597,9 +617,9 @@ m("Geo Title (text)",
   f'VAR a = CALCULATE ( [Occupancy % 2025], {gi}, Hotels[LocationType] = "Airport" ) VAR h = CALCULATE ( [Occupancy % 2025], {gi}, Hotels[LocationType] = "Highway" ) '
   'RETURN "F4 · The airports are the fullest: " & FORMAT ( a, "0.0%" ) & " occupancy, against " & FORMAT ( h, "0.0%" ) & " on the highway"',
   TXT, C8, "Geography card title.")
-m("Trend Title Margin (text)", f'"F1 · After commissions the margin fell from " & FORMAT ( CALCULATE ( [GOP Margin after Distribution %], {gi}, REMOVEFILTERS ( \'Date\' ), \'Date\'[Year] = 2023 ), "0.0%" ) & " (2023) to " & FORMAT ( CALCULATE ( [GOP Margin after Distribution % 2025], {gi} ), "0.0%" )', TXT, C8, "Trend title, margin after commissions.")
-m("Trend Title OTA (text)", f'"F2 · OTAs book " & FORMAT ( CALCULATE ( [OTA Share % 2025], {gi} ), "0.0%" ) & " of room revenue, up from " & FORMAT ( CALCULATE ( [OTA Share %], {gi}, REMOVEFILTERS ( \'Date\' ), \'Date\'[Year] = 2021 ), "0.0%" ) & " in 2021"', TXT, C8, "Trend title, OTA share.")
-m("Trend Title NPS (text)", f'VAR n = CALCULATE ( [NPS (weighted) 2025], {gi} ) RETURN "F3 · NPS fell every year, to " & ' + signed("n", 'FORMAT ( ABS ( n ), "0.0" )') + ' & "; sister brands higher"', TXT, C8, "Trend title, NPS (the yearly fall is checked in 41_opzet_facts.py; re-check on refresh).")
+m("Trend Title Margin (text)", f'"F1 · After commissions: " & FORMAT ( CALCULATE ( [GOP Margin after Distribution %], {gi}, REMOVEFILTERS ( \'Date\' ), \'Date\'[Year] = 2023 ), "0.0%" ) & " (2023) down to " & FORMAT ( CALCULATE ( [GOP Margin after Distribution % 2025], {gi} ), "0.0%" )', TXT, C8, "Trend title, margin after commissions.")
+m("Trend Title OTA (text)", f'"F2 · OTAs book " & FORMAT ( CALCULATE ( [OTA Share % 2025], {gi} ), "0.0%" ) & " of room revenue, up from " & FORMAT ( CALCULATE ( [OTA Share %], {gi}, REMOVEFILTERS ( \'Date\' ), \'Date\'[Year] = 2021 ), "0.0%" )', TXT, C8, "Trend title, OTA share.")
+m("Trend Title NPS (text)", f'VAR n = CALCULATE ( [NPS (weighted) 2025], {gi} ) RETURN "F3 · NPS down every year, to " & ' + signed("n", 'FORMAT ( ABS ( n ), "0.0" )') + ' & "; sisters higher"', TXT, C8, "Trend title, NPS (the yearly fall is checked in 41_opzet_facts.py; re-check on refresh).")
 
 # ---------------------------------------------------------------- P2: package matrix
 def pkgval(col):
@@ -616,7 +636,7 @@ m("Preset C Package", TV + 'RETURN MAXX ( TOPN ( 1, FILTER ( t, Package[Contains
 m("Focus Package", 'VAR k = SELECTEDVALUE ( PlanSelector[Key], "A" ) RETURN SWITCH ( k, "A", [Preset A Package], "B", [Preset B Package], "C", [Preset C Package], k )', TXT, C9,
   "The package in focus: a preset letter resolves through its rule in the selected scenario, a package id stands for itself. Default A, so the panel is never empty.")
 m("Focus Highlight", "IF ( SELECTEDVALUE ( Package[PackageID] ) = [Focus Package], 1, 0 )", "0", C9, "1 for the scatter point in focus.")
-m("Package Point Color", f'SWITCH ( TRUE (), [Focus Highlight] = 1, "{ACCENT}", SELECTEDVALUE ( Package[ContainsRefresh] ) = "Yes", "{LILAC}", "{PLUM}" )', TXT, C9, "Scatter color: raspberry in focus, plum without the refresh, lilac-grey with it (field value).")
+m("Package Point Color", f'SWITCH ( TRUE (), [Focus Highlight] = 1, "{ACCENT}", SELECTEDVALUE ( Package[ContainsRefresh] ) = "Yes", "{SLATE}", "{PLUM}" )', TXT, C9, "Scatter color: raspberry in focus, plum without the refresh, plum-slate with it (4.2:1 on Sheet; the kit's lilac-grey is 2.1:1, below the 3:1 floor for a meaning carrier).")
 m("Package Point Size", "IF ( [Focus Highlight] = 1, 6, 1 )", "0", C9, "Scatter size: the point in focus drawn larger.")
 
 
@@ -643,6 +663,17 @@ m("Focus Project Live (text)", "IF ( [Focus Project Flag] = 1, [Live (text)] )",
 m("Focus Project Guest Effect (text)",
   'VAR p = SELECTEDVALUE ( InvestmentProjects[ProjectID] ) VAR s = [Selected Scenario] VAR pts = CALCULATE ( MAX ( InvestmentScenarios[SatisfactionChangePts] ), InvestmentScenarios[Scenario] = s ) '
   'RETURN IF ( [Focus Project Flag] = 1, IF ( pts > 0, "+" & FORMAT ( pts, "0.00" ) & " on " & [Hotels Touched], "·" ) )',
+  TXT, C9, "Dataset guest-score effect in points on the touched hotels; per initiative, never summed, never shown as NPS.")
+m("Initiative Status (text)", 'IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ), BLANK (), IF ( [Focus Project Flag] = 1, "Funded", "Not funded" ) )', TXT, C9, "Funded = inside the package in focus; the word carries the state, the chip and color repeat it.")
+m("Initiative Status Color", f'IF ( [Focus Project Flag] = 1, "{ACCENT}", "{INK2}" )', TXT, C9, "Raspberry for funded, plum-grey for not funded (field-value font color).")
+m("Initiative Chip", "VAR f = [Focus Project Flag] RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ), BLANK (), \"data:image/svg+xml;utf8,\" & IF ( f = 1, " + CHIP_ON + ", " + CHIP_OFF + " ) )", TXT, C9,
+  "The brand's state chip (brand-guide section 6) as an SVG image: awake hanger on raspberry when funded, sleeping hanger on Sheet when not. Decorative; the Status word is the accessible carrier.")
+m("Initiative Capex", "SUM ( InvestmentProjects[CapexUSD] )", USDM1, C9, "Capex per initiative.")
+m("Initiative NPV (sel)", "[NPV @ 8%]", SUSDM, C9, "NPV through 2032 per initiative, selected scenario (same convention as the package matrix).")
+m("Initiative Run-rate (sel)", "[2032 Run-rate]", SUSDM, C9, "Organisers' annual operating-profit impact per initiative, reached by 2032.")
+m("Initiative Guest Effect (text)",
+  'VAR s = [Selected Scenario] VAR pts = CALCULATE ( MAX ( InvestmentScenarios[SatisfactionChangePts] ), InvestmentScenarios[Scenario] = s ) '
+  'RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ), BLANK (), IF ( pts > 0, "+" & FORMAT ( pts, "0.00" ) & " on " & [Hotels Touched], "·" ) )',
   TXT, C9, "Dataset guest-score effect in points on the touched hotels; per initiative, never summed, never shown as NPS.")
 for scn in ("Low", "Expected", "High"):
     m(f"Focus Cumulative Net ({scn})",
@@ -696,19 +727,22 @@ m("Uncertainty (text)",
   TXT, C9, "Standing uncertainty line on the shortlist (the Low-case claim is checked in 40_package_matrix.py; re-check on refresh).")
 
 KPI_ROWS = [  # Sort, Key, FindingLabel, Measure, Direction, Format, DeltaScale, DeltaUnit, DeltaFormat
+    # Read along the brand promise "A good night. A fair price." and Keller's ladder (goodnight-inn-hanger
+    # brand-guide.md section 2): salience = booked with us, performance = a good night,
+    # judgment = a fair price, resonance = would they recommend us.
     (1, "occ", "F1 · Full, margin slipping", "Occupancy", 1, "0.0%", 100, "pt", "0.0"),
     (2, "adr", "", "Average daily rate (segment)", 0, "$#,0", 1, "$", "0"),
     (3, "revpar", "", "RevPAR (segment)", 0, "$#,0", 1, "$", "0"),
     (4, "gop", "", "GOP margin before commissions", 1, "0.0%", 100, "pt", "0.0"),
     (5, "gopa", "", "GOP margin after commissions", 1, "0.0%", 100, "pt", "0.0"),
-    (6, "ota", "F2 · Paying the middleman", "OTA share of room revenue", -1, "0.0%", 100, "pt", "0.0"),
+    (6, "ota", "F2 · Booked with us?", "OTA share of room revenue", -1, "0.0%", 100, "pt", "0.0"),
     (7, "direct", "", "Direct share (web, app, phone)", 1, "0.0%", 100, "pt", "0.0"),
     (8, "dist", "", "Distribution cost, % of room revenue", -1, "0.0%", 100, "pt", "0.0"),
-    (9, "nps", "F3 · The weakest welcome", "Net promoter score", 1, "+0.0;−0.0;0.0", 1, "", "0.0"),
-    (10, "comfort", "", "Room comfort score (0 to 10)", 1, "0.00", 1, "", "0.00"),
-    (11, "value", "", "Value for money score (0 to 10)", 1, "0.00", 1, "", "0.00"),
-    (12, "compl", "", "Complaints per 1,000 room nights", -1, "0.0", 1, "", "0.0"),
-    (13, "roomcond", "", "Room-condition complaints per 1,000", -1, "0.00", 1, "", "0.00"),
+    (9, "comfort", "F3 · A good night?", "Room comfort score (0 to 10)", 1, "0.00", 1, "", "0.00"),
+    (10, "roomcond", "", "Room-condition complaints per 1,000", -1, "0.00", 1, "", "0.00"),
+    (11, "compl", "", "All complaints per 1,000 room nights", -1, "0.0", 1, "", "0.0"),
+    (12, "value", "F3 · A fair price?", "Value for money score (0 to 10)", 1, "0.00", 1, "", "0.00"),
+    (13, "nps", "F3 · Recommend us?", "Net promoter score", 1, "+0.0;\u22120.0;0.0", 1, "", "0.0"),
 ]
 
 PACKAGE = r"""
@@ -816,6 +850,8 @@ def measures_table():
         out.append(f"\tmeasure {q(name)} = {dax}")
         out.append(f"\t\tformatString: {fmt}")
         out.append(f"\t\tdisplayFolder: {folder}")
+        if name in IMAGE_MEASURES:
+            out.append("\t\tdataCategory: ImageUrl")
         out.append(f"\t\tlineageTag: {tag('measure.' + name)}")
         out.append("")
     out.append("\tcolumn Placeholder")
