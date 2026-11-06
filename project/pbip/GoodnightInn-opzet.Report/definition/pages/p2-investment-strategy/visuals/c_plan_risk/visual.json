@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_plan_risk",
   "position": {
-    "x": 1208,
+    "x": 1112,
     "y": 920,
     "z": 1055,
-    "width": 656,
+    "width": 752,
     "height": 40,
     "tabOrder": 550
   },
@@ -54,7 +54,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "10D"
                 }
               }
             },

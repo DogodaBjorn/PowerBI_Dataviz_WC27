@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_plan_cumulative",
   "position": {
-    "x": 1208,
-    "y": 784,
+    "x": 1112,
+    "y": 808,
     "z": 1053,
-    "width": 424,
-    "height": 120,
+    "width": 440,
+    "height": 104,
     "tabOrder": 530
   },
   "visual": {
@@ -104,7 +104,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "10D"
                 }
               }
             },
@@ -156,7 +156,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "10D"
                 }
               }
             },
@@ -210,45 +210,6 @@
         {
           "properties": {
             "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Right'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Verdana'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "labelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#5B5163'"
-                    }
-                  }
-                }
-              }
-            },
-            "showTitle": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -348,13 +309,6 @@
                   "Value": "1D"
                 }
               }
-            },
-            "lineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
-                }
-              }
             }
           },
           "selector": {
@@ -366,7 +320,7 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "3D"
+                  "Value": "2D"
                 }
               }
             }
@@ -381,13 +335,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
-                }
-              }
-            },
-            "lineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
                 }
               }
             }
@@ -412,7 +359,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Cumulative net impact, $M'"
+                  "Value": "'Cumulative net impact, $M  ·  Low to High'"
                 }
               }
             },
@@ -562,7 +509,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_horizon2_8",
+        "name": "flt_horizon2_7",
         "field": {
           "Column": {
             "Expression": {

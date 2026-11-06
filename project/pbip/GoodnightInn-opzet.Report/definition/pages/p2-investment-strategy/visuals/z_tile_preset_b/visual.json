@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_tile_preset_b",
   "position": {
-    "x": 1208,
+    "x": 1112,
     "y": 520,
     "z": 1100,
-    "width": 656,
+    "width": 752,
     "height": 184,
     "tabOrder": 9500
   },

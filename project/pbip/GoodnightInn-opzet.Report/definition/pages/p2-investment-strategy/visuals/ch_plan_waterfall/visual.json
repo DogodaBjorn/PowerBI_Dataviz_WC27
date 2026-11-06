@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_plan_waterfall",
   "position": {
-    "x": 1208,
+    "x": 1112,
     "y": 320,
     "z": 1051,
-    "width": 656,
-    "height": 232,
+    "width": 752,
+    "height": 152,
     "tabOrder": 510
   },
   "visual": {
@@ -73,7 +73,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "10D"
                 }
               }
             },
@@ -118,7 +118,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "10D"
                 }
               }
             },
@@ -220,7 +220,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "10D"
                 }
               }
             },

@@ -860,8 +860,8 @@ table _Measures
 		displayFolder: 08 Brand comparison
 		lineageTag: 1ecde652-543e-54f2-960a-e1511d5b45da
 
-	/// Rank as words; the word carries the verdict, the color repeats it.
-	measure 'KPI Rank (text)' = VAR r = [KPI Rank] VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR dir = SELECTEDVALUE ( KpiLine[Direction] ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( KpiLine[Key] ) ), BLANK (), IF ( dir = 0, "not ranked", SWITCH ( TRUE (), r = 1, "best of " & n, r = n, "last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) ) )
+	/// Rank as words with an arrow (brand-guide section 6: the verdict never rests on color alone); the color repeats it.
+	measure 'KPI Rank (text)' = VAR r = [KPI Rank] VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR dir = SELECTEDVALUE ( KpiLine[Direction] ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( KpiLine[Key] ) ), BLANK (), IF ( dir = 0, "not ranked", SWITCH ( TRUE (), r = 1, UNICHAR ( 9650 ) & " best of " & n, r = n, UNICHAR ( 9660 ) & " last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) ) )
 		formatString: @
 		displayFolder: 08 Brand comparison
 		lineageTag: 030b9b7c-61b0-57f4-ada8-d349aa4bc4eb
@@ -993,19 +993,19 @@ table _Measures
 		lineageTag: f9c86351-0f87-5a28-bca4-560d18c1d3cd
 
 	/// Trend title, margin after commissions.
-	measure 'Trend Title Margin (text)' = "F1 · After commissions the margin fell from " & FORMAT ( CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2023 ), "0.0%" ) & " (2023) to " & FORMAT ( CALCULATE ( [GOP Margin after Distribution % 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" )
+	measure 'Trend Title Margin (text)' = "F1 · After commissions: " & FORMAT ( CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2023 ), "0.0%" ) & " (2023) down to " & FORMAT ( CALCULATE ( [GOP Margin after Distribution % 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" )
 		formatString: @
 		displayFolder: 08 Brand comparison
 		lineageTag: 56696f02-e0c6-52eb-aa2b-07cb0d8059d1
 
 	/// Trend title, OTA share.
-	measure 'Trend Title OTA (text)' = "F2 · OTAs book " & FORMAT ( CALCULATE ( [OTA Share % 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & " of room revenue, up from " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ), "0.0%" ) & " in 2021"
+	measure 'Trend Title OTA (text)' = "F2 · OTAs book " & FORMAT ( CALCULATE ( [OTA Share % 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & " of room revenue, up from " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ), "0.0%" )
 		formatString: @
 		displayFolder: 08 Brand comparison
 		lineageTag: 33595229-b477-57d9-81af-792f953115b6
 
 	/// Trend title, NPS (the yearly fall is checked in 41_opzet_facts.py; re-check on refresh).
-	measure 'Trend Title NPS (text)' = VAR n = CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) RETURN "F3 · NPS fell every year, to " & IF ( n < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( n ), "0.0" ) & "; sister brands higher"
+	measure 'Trend Title NPS (text)' = VAR n = CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) RETURN "F3 · NPS down every year, to " & IF ( n < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( n ), "0.0" ) & "; sisters higher"
 		formatString: @
 		displayFolder: 08 Brand comparison
 		lineageTag: 93d3ded8-1aa2-555d-9aaf-ef1d1d627057
@@ -1058,8 +1058,8 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: 77b08ff6-956c-5929-a889-e5d448002e13
 
-	/// Scatter color: raspberry in focus, plum without the refresh, lilac-grey with it (field value).
-	measure 'Package Point Color' = SWITCH ( TRUE (), [Focus Highlight] = 1, "#B5175F", SELECTEDVALUE ( Package[ContainsRefresh] ) = "Yes", "#B8B0BE", "#3E2C55" )
+	/// Scatter color: raspberry in focus, plum without the refresh, plum-slate with it (4.2:1 on Sheet; the kit's lilac-grey is 2.1:1, below the 3:1 floor for a meaning carrier).
+	measure 'Package Point Color' = SWITCH ( TRUE (), [Focus Highlight] = 1, "#B5175F", SELECTEDVALUE ( Package[ContainsRefresh] ) = "Yes", "#82798A", "#3E2C55" )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 88ed7370-015c-50b1-a96b-e3f6ab6a6b56
@@ -1159,6 +1159,49 @@ table _Measures
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 18d74fd7-7cf8-59d3-885a-c9f260a78b2d
+
+	/// Funded = inside the package in focus; the word carries the state, the chip and color repeat it.
+	measure 'Initiative Status (text)' = IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ), BLANK (), IF ( [Focus Project Flag] = 1, "Funded", "Not funded" ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: e34f2711-9faf-5726-b9d0-eab0969a0471
+
+	/// Raspberry for funded, plum-grey for not funded (field-value font color).
+	measure 'Initiative Status Color' = IF ( [Focus Project Flag] = 1, "#B5175F", "#5B5163" )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: e5fcd1f6-1a53-52be-9ff6-fdcbb60b0d25
+
+	/// The brand's state chip (brand-guide section 6) as an SVG image: awake hanger on raspberry when funded, sleeping hanger on Sheet when not. Decorative; the Status word is the accessible carrier.
+	measure 'Initiative Chip' = VAR f = [Focus Project Flag] RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ), BLANK (), "data:image/svg+xml;utf8," & IF ( f = 1, "<svg xmlns='http://www.w3.org/2000/svg' width='40' height='28' viewBox='0 0 40 28'><rect x='0.5' y='0.5' width='39' height='27' rx='13.5' fill='%23B5175F' stroke='%23B5175F'/><g transform='translate(14.2 3) scale(0.2115)'><mask id='h'><rect width='64' height='104' fill='white'/><circle cx='32' cy='24' r='10' fill='black'/><rect x='32' y='22.5' width='40' height='3' fill='black'/></mask><rect x='4' y='4' width='56' height='96' rx='14' fill='%23FFFFFF' mask='url(%23h)'/><circle cx='22' cy='62' r='4' fill='%23B5175F'/><circle cx='42' cy='62' r='4' fill='%23B5175F'/></g></svg>", "<svg xmlns='http://www.w3.org/2000/svg' width='40' height='28' viewBox='0 0 40 28'><rect x='0.5' y='0.5' width='39' height='27' rx='13.5' fill='%23FFFFFF' stroke='%23E4DEE3'/><g transform='translate(14.2 3) scale(0.2115)'><mask id='h'><rect width='64' height='104' fill='white'/><circle cx='32' cy='24' r='10' fill='black'/><rect x='32' y='22.5' width='40' height='3' fill='black'/></mask><rect x='4' y='4' width='56' height='96' rx='14' fill='%23B5175F' mask='url(%23h)'/><path d='M16 60 q6 7 12 0 M36 60 q6 7 12 0' fill='none' stroke='%23FFFFFF' stroke-width='4' stroke-linecap='round'/></g></svg>" ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		dataCategory: ImageUrl
+		lineageTag: 43a26361-00be-5286-bf6c-6f0307bee712
+
+	/// Capex per initiative.
+	measure 'Initiative Capex' = SUM ( InvestmentProjects[CapexUSD] )
+		formatString: \$#,0.0,,\M
+		displayFolder: 09 Package matrix
+		lineageTag: 3f94a216-9428-5112-87ad-c7beff751c20
+
+	/// NPV through 2032 per initiative, selected scenario (same convention as the package matrix).
+	measure 'Initiative NPV (sel)' = [NPV @ 8%]
+		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: 1e8470d5-73bf-59b3-987e-50f281a03ae0
+
+	/// Organisers' annual operating-profit impact per initiative, reached by 2032.
+	measure 'Initiative Run-rate (sel)' = [2032 Run-rate]
+		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: b82fade9-a58f-5faf-8320-a049b7aee3a5
+
+	/// Dataset guest-score effect in points on the touched hotels; per initiative, never summed, never shown as NPS.
+	measure 'Initiative Guest Effect (text)' = VAR s = [Selected Scenario] VAR pts = CALCULATE ( MAX ( InvestmentScenarios[SatisfactionChangePts] ), InvestmentScenarios[Scenario] = s ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ), BLANK (), IF ( pts > 0, "+" & FORMAT ( pts, "0.00" ) & " on " & [Hotels Touched], "·" ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 6e0b35e7-e6df-58ac-a56f-363c3a9b97cc
 
 	/// Cumulative net impact of the package in focus, undiscounted 2025 dollars, Low scenario.
 	measure 'Focus Cumulative Net (Low)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR y = MAX ( 'Date'[Year] ) RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = "Low", TREATAS ( ids, ProjectCashflow[ProjectID] ) )

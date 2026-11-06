@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "btn_back",
   "position": {
-    "x": 1208,
+    "x": 1112,
     "y": 968,
     "z": 1056,
-    "width": 656,
+    "width": 752,
     "height": 40,
     "tabOrder": 560
   },

@@ -3,10 +3,10 @@
   "name": "hero_brand_compare",
   "position": {
     "x": 56,
-    "y": 264,
+    "y": 280,
     "z": 1012,
     "width": 1088,
-    "height": 504,
+    "height": 488,
     "tabOrder": 220
   },
   "visual": {
@@ -171,7 +171,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "10D"
                 }
               }
             },
@@ -241,7 +241,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -427,7 +427,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "7D"
                 }
               }
             },

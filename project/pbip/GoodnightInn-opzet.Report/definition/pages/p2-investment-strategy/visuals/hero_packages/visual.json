@@ -3,10 +3,10 @@
   "name": "hero_packages",
   "position": {
     "x": 56,
-    "y": 264,
+    "y": 280,
     "z": 1012,
-    "width": 1088,
-    "height": 728,
+    "width": 992,
+    "height": 712,
     "tabOrder": 220
   },
   "visual": {

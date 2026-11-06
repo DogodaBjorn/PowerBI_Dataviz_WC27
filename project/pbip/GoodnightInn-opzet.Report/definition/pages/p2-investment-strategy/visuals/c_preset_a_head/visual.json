@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_preset_a_head",
   "position": {
-    "x": 1224,
+    "x": 1128,
     "y": 336,
     "z": 1031,
-    "width": 624,
+    "width": 720,
     "height": 24,
     "tabOrder": 410
   },
@@ -22,7 +22,7 @@
                     "value": "A · Highest NPV through 2032",
                     "textStyle": {
                       "fontFamily": "Verdana",
-                      "fontSize": "13px",
+                      "fontSize": "15px",
                       "color": "#24192B",
                       "fontWeight": "bold"
                     }

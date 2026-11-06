@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_preset_c_head",
   "position": {
-    "x": 1224,
+    "x": 1128,
     "y": 736,
     "z": 1037,
-    "width": 624,
+    "width": 720,
     "height": 24,
     "tabOrder": 430
   },
@@ -22,7 +22,7 @@
                     "value": "C · Highest NPV that includes the refresh of the ten oldest hotels",
                     "textStyle": {
                       "fontFamily": "Verdana",
-                      "fontSize": "13px",
+                      "fontSize": "15px",
                       "color": "#24192B",
                       "fontWeight": "bold"
                     }

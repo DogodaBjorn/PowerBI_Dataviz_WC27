@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_plan_ops",
   "position": {
-    "x": 1648,
-    "y": 784,
+    "x": 1568,
+    "y": 808,
     "z": 1054,
-    "width": 216,
-    "height": 120,
+    "width": 296,
+    "height": 104,
     "tabOrder": 540
   },
   "visual": {
@@ -249,7 +249,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "10D"
                 }
               }
             },
@@ -316,7 +316,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'hotels with a guest-score effect'"
+                  "Value": "'hotels, guest effect'"
                 }
               }
             }
@@ -446,7 +446,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Operational impact of the package in focus'"
+                  "Value": "'Operational impact of the package in focus: rooms added, rooms refreshed, hotels with a dataset guest-score effect'"
                 }
               }
             }

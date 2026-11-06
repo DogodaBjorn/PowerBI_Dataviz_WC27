@@ -61,7 +61,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_page_projects_9",
+        "name": "flt_page_projects_8",
         "field": {
           "Column": {
             "Expression": {
@@ -115,7 +115,7 @@
         "howCreated": "User"
       },
       {
-        "name": "flt_page_brand_10",
+        "name": "flt_page_brand_9",
         "field": {
           "Column": {
             "Expression": {
