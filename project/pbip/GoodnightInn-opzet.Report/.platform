@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Goodnight Inn · opzet"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "fb790de0-8ead-53be-8c50-ae63a9ca248e"
+  }
+}
