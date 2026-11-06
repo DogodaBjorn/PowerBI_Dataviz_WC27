@@ -56,8 +56,11 @@ def topn_filter(table, column, n, measure, name):
     """TopN as an In-condition over a subquery (the shape the semanticQuery schema allows; pbir_lib.filter_topn's
     'Top' condition does not validate against it)."""
     sel = {"Column": {"Expression": {"SourceRef": {"Source": "t"}}, "Property": column}}
-    sub = {"Version": 2, "From": [{"Name": "t", "Entity": table, "Type": 0}], "Select": [{**sel, "Name": "field"}],
-           "OrderBy": [{"Direction": 2, "Expression": {"Measure": {"Expression": {"SourceRef": {"Entity": "_Measures"}}, "Property": measure}}}], "Top": n}
+    # Every SourceRef inside the subquery must name an alias declared in its own From; an Entity ref here crashes
+    # Desktop's SemanticQueryRewriter.rewriteOrderBy ("Cannot read properties of undefined (reading 'accept')").
+    sub = {"Version": 2, "From": [{"Name": "t", "Entity": table, "Type": 0}, {"Name": "m", "Entity": "_Measures", "Type": 0}],
+           "Select": [{**sel, "Name": "field"}],
+           "OrderBy": [{"Direction": 2, "Expression": {"Measure": {"Expression": {"SourceRef": {"Source": "m"}}, "Property": measure}}}], "Top": n}
     return {"name": name, "field": col(table, column), "type": "TopN",
             "filter": {"Version": 2, "From": [{"Name": "subquery", "Expression": {"Subquery": {"Query": sub}}, "Type": 2}, {"Name": "t", "Entity": table, "Type": 0}],
                        "Where": [{"Condition": {"In": {"Expressions": [sel], "Table": {"SourceRef": {"Source": "subquery"}}}}}]},

@@ -484,6 +484,11 @@
                         "Name": "t",
                         "Entity": "Hotels",
                         "Type": 0
+                      },
+                      {
+                        "Name": "m",
+                        "Entity": "_Measures",
+                        "Type": 0
                       }
                     ],
                     "Select": [
@@ -506,7 +511,7 @@
                           "Measure": {
                             "Expression": {
                               "SourceRef": {
-                                "Entity": "_Measures"
+                                "Source": "m"
                               }
                             },
                             "Property": "Occupancy % 2025"
