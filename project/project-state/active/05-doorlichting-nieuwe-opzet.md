@@ -63,13 +63,14 @@ headline > subtitle > comparison table > geography > three trends > footer.
 
 | Slot | Visual | Bound to | Why it is there |
 |---|---|---|---|
-| `hero_brand_compare` | table, 13 lines x 4 brands + rank + change since 2023, grouped F1-F3 | `KpiLine`, `KPI Text GI/PS/MO/PP`, `KPI Rank (text)`, `KPI Change since 2023 (text)` | the factual comparison 01-richting asks for: matrix first. Rank is a word ("last of 4"), color repeats it (Harbour / Ember), ADR and RevPAR shown but not ranked (segment) |
+| `hero_brand_compare` | table, 13 lines x 4 brands + rank + change since 2023, grouped F1-F3 along the brand promise | `KpiLine`, `KPI Text GI/PS/MO/PP`, `KPI Rank (text)`, `KPI Change since 2023 (text)` | the factual comparison 01-richting asks for: matrix first. Rank is a word ("last of 4"), color repeats it (Harbour / Ember), ADR and RevPAR shown but not ranked (segment) |
 | `tbl_geo` | matrix, region x location type, occupancy and hotel count, three-step tint | `Occupancy and Hotels (text)`, `Occupancy Heat Color` | F4, the geography: airports 82.0 %, highway 77.5 % |
 | `ch_fullest_hotels` | bar, top 7 by 2025 occupancy, airports in raspberry | `Occupancy % 2025`, `Hotel Bar Color` | where the brand is full (five of seven are airports) |
 | `ch_trend_margin`, `ch_trend_ota`, `ch_trend_nps` | lines 2021-2025, Goodnight Inn raspberry, sisters plum-slate | `Trend * GI/PS/MO/PP`; titles from `Trend Title * (text)` | F1-F3 over time: margin after commissions 36.5 % (2023) -> 33.7 %; OTA share 33.0 % -> 50.0 % while the sisters stayed at 23-36 %; NPS down every year to +3.3 |
 
 Findings carry codes so P2 can answer them: **F1** full, margin slipping · **F2**
-paying the middleman · **F3** the weakest welcome · **F4** full at the airports.
+booked with us? (half of room revenue through OTAs) · **F3** a good night? a fair
+price? recommend us? (last of four on each) · **F4** full at the airports.
 
 ### P2 · The Investment Strategy: "Please make up the room."
 
@@ -82,7 +83,7 @@ scenario selector, two panel states swapped by display-only bookmarks.
 | `hero_packages` | scatter of the 456 packages, X capex, Y NPV through 2032 (selected scenario), zero line; raspberry = in focus, plum = no refresh, lilac-grey = with refresh | `Package`, `Package NPV (sel)`, `Package Point Color/Size` |
 | `sl_scenario`, `sl_package` | Low / Expected / High tiles; dropdown with A / B / C first, then every package | `Scenario`, `PlanSelector[Label]` |
 | shortlist state | three preset tiles: criterion, composition, capex, NPV, Low-High range, 2032 run-rate; the standing uncertainty line; button to the plan | `Preset A/B/C *`, `Uncertainty (text)`, `bm_p2_plan` |
-| plan state (hidden by default) | title, waterfall of NPV per initiative, initiative table (finding answered, capex, live, run-rate, NPV, dataset guest points), cumulative net Low / Expected / High, rooms added / refreshed / hotels rated, risk sentence, back button | `Focus *`, `Plan Title (text)`, `Plan Risk (text)`, `bm_p2_shortlist` |
+| plan state (hidden by default) | title, waterfall of NPV per initiative, table of all ten initiatives with the state chip and Status (funded first; finding answered, capex, live, run-rate, NPV, dataset guest points), cumulative net Low / Expected / High, rooms added / refreshed / hotels rated, risk sentence, back button | `Focus *`, `Plan Title (text)`, `Plan Risk (text)`, `bm_p2_shortlist` |
 
 Contest coverage on P2: >= 3 initiatives and >= 1 growth (validity rules of every
 point), within $60 M (validity and subtitle), costs and returns per initiative
@@ -90,6 +91,31 @@ point), within $60 M (validity and subtitle), costs and returns per initiative
 chart, run-rate, rooms, hotels rated), choices/risks/trade-offs (preset criteria,
 risk sentence, uncertainty line), each initiative tied to a P1 finding (`Answers
 Finding`). Core visuals: 10 tables/charts across both pages (minimum 4).
+
+### Brand kit applied: goodnight-inn-hanger (pass of 6 Nov, at Björn's request "ook de gekozen brand kit meenemen")
+
+Each line of the kit (`design/brand-kits/goodnight-inn-hanger/brand.yaml`, `brand-guide.md`) and where the opzet honours it:
+
+| Kit element | In the opzet |
+|---|---|
+| Tokens: Pillowcase canvas, Sheet cards, Seam hairline, plum-black / plum-grey ink | page background and every visual; compiled theme `deliverables/theme.json` registered as the report theme |
+| One accent, raspberry `#B5175F` = the story | Goodnight Inn's column tint and lines, the airport bars, the package in focus, the funded chip, the primary button. Never good or bad |
+| Harbour / Ember = good / bad only, never alone | rank words ("▲ best of 4", "▼ last of 4"), signed changes, waterfall increase/decrease; the word or sign always carries the verdict |
+| Two live series, then grey | trends: Goodnight Inn raspberry, sisters plum-slate; scatter: raspberry focus, plum without refresh, plum-slate with refresh (lilac-grey dropped there: 2.1:1 is below the 3:1 floor for a meaning carrier) |
+| Fonts Trebuchet MS (display), Verdana (body, figures) | everywhere; nothing else |
+| Type scale 28 / 20 / 13 / 11 / 10 pt | headline 28 pt (37 px), card titles 13 pt, body and tables 11 pt, captions, axes and labels 10 pt; the dense plan table runs at the 10 pt caption size |
+| Radius 12 cards, chips and buttons fully round, no shadow | background cards and shortlist tiles at 12, buttons and the state chips round, no shadows |
+| Grid 8 / margin 32 / gutter 16 at 1920x1080 | slot map, checked (0 exceptions) |
+| Brand promise "A good night. A fair price." and Keller's ladder | the comparison table is read along it: F2 Booked with us? (salience), F3 A good night? (performance), F3 A fair price? (judgment), F3 Recommend us? (resonance), with the promise named in the caption. 01-richting rules out a row of KPI cards, so the promise scorecard lives in the table, not in three cards |
+| Masthead state: sleeping hanger on P1, awake on P2 | P1 lockup asleep; P2 lockup awake, derived from the lockup plus the awake mark's eyes (identical tile geometry) until `brand_logos.py` emits an awake lockup |
+| State chip: awake hanger on raspberry = funded, sleeping on Sheet = not funded | the plan table lists all ten initiatives, funded first, each with its chip (SVG image measure) and the Status word as the accessible carrier |
+| Scenario band: raspberry hairlines Low and High, 2 px Expected | cumulative chart; the 15 % fill between the lines is a Desktop polish (error-bar band), not promised |
+| Wordplay only in the two headlines and the chips | "Do not disturb, since 2020." / "Please make up the room."; every other title is plain analytical English |
+| Number format: $51.3M, true minus, one decimal for percentages, no parentheses | format strings and text measures (`−` U+2212) |
+| Contrast contract | every text pair used checked with `scripts/check_contrast.py`: lowest text pair Ember on Sheet 5.0:1; white on raspberry 6.5:1 |
+| Not used yet | the icon set (ic-icons, brand-guide section 7) and the reversed lockup for a method overlay (no overlay in this set-up) |
+
+The scenario toggle should be the kit's segmented pill (selected option plum-black with white text); the native tile slicer only approximates it. Converting it to a button slicer with a selected state is a Desktop step.
 
 ### Conventions recorded (the canvas states them)
 
@@ -136,8 +162,10 @@ this file.
 4. **Fonts:** Trebuchet MS and Verdana in Desktop's font menu; a column of 1s and 8s
    right-aligned in Verdana (00-brand-decision open question).
 5. **Publish-to-Web** at 1920x1080 and 1366 width, both P2 states.
-6. **Logo state on P2:** the kit wants the awake hanger on P2; only the sleeping
-   lockup exists as a lockup. Needs an awake lockup from `brand_logos.py`.
+6. **Brand-kit renders:** the awake lockup on the P2 background; the state chips in
+   `tbl_plan_initiatives` render as images (`dataCategory: ImageUrl`) at about 24 px
+   (fallback: Format > Image size); the ▲ / ▼ glyphs in Verdana; the scenario slicer
+   restyled as the kit's segmented pill (button slicer, selected = plum-black).
 
 ## Open questions (for Björn)
 
