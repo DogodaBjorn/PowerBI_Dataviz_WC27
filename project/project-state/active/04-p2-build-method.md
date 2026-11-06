@@ -90,3 +90,60 @@ without overlap stress).
   unchanged.
 - Test 4 confirms clicks die on state swap (expected) -> clicks are documented
   view-only; nothing in the design depends on them.
+
+## The package matrix (the source of the scatter and the shortlist)
+
+The matrix is built once, reproducibly, and everything on P2 reads from it. It is
+never assembled ad hoc for the scatter, and the presets are never hand-picked
+points. Axes confirmed by Björn 16:41: **X = total package capex in $M; Y = NPV
+through 2032 in $M for the selected scenario** (Low/Expected/High), with the zero
+line visible. There is deliberately **no NPS-growth axis**: the provided
+quality effects cannot be summed into a defensible NPS prediction.
+
+**Universe and validity.** The 10 initiatives in `InvestmentProjects` give 1,024
+subsets. A subset is a valid package when: total capex <= $60 M
+(`Brands[InvestmentBudgetUSD]`); it holds >= 3 initiatives; >= 1 has
+`GrowthInitiative = Yes`; GI-02 appears only with GI-01 and is phased after it.
+That leaves **456 valid packages** - the validation count for the `Package`
+table at stage 4.
+
+**Cash-flow engine (per package, per scenario).** Derived only from
+`InvestmentProjects`, `InvestmentScenarios`, `InvestmentProjectProperties`,
+`FinanceParameters` and `FinanceAssumptions`: capex phased per project,
+disruption (rooms out of service), ramped benefit from go-live, dependency
+sequencing (GI-02 after GI-01). Conventions: constant 2025 dollars; 8% monthly
+discounting; horizon through December 2032; no residual value. Outputs per
+package per scenario: capex, NPV, 2032 run-rate, payback year (or "beyond
+horizon"), rooms added/refreshed, hotel counts.
+
+**Uncertainty is stated, not smoothed.** Zero packages are NPV-positive in Low;
+six in Expected. Running costs net are unverified (GI-01 netting is no proof
+for GI-10; a gross reading moves the best base package's Expected NPV to about
+-0.5). Project overlap is only partially stress-tested (top package +3.26 ->
++1.83 in the tested case). The panel carries this as a standing line; no
+absolute invest/do-not-invest claim (no residual value in the model).
+
+**Shortlist selection rules (explicit, Expected lens).**
+- **A - max NPV:** argmax NPV over all 456 -> 01+02+10 (capex $9.4 M, NPV
+  -5.4 / +3.3 / +12.6).
+- **B - widest rated reach with NPV >= 0:** argmax count of hotels with a
+  dataset satisfaction value, subject to Expected NPV >= 0; ties broken by
+  higher NPV -> 01+09+10 (capex $11.65 M, Expected +2.7).
+- **C - best with the ten-oldest refresh:** argmax NPV subject to containing
+  GI-07 -> 01+07+10 (capex $36.9 M, Expected -23.3).
+The rules, not the points, are recorded; when the scenario slicer changes, the
+matrix and the ranking recompute while the preset labels keep their criterion.
+Known label corrections: an earlier PDF called C "01+02+07+10, $38.9 M, -23.9"
+(wrong label, right ranking CSV) and B "01+02+09+10" (the criterion selects
+01+09+10); cheapest valid refresh 07+09+10 at $36.1 M is not the best-refresh
+package. Earlier start plan 01+02+04+05+07+10 = -31.1 in this model vs -29.5 in
+the repo convention (monthly discounting, GI-02 sequencing); the canvas states
+its convention.
+
+**Reproducibility and checks.** Reference implementation:
+`project/analysis/15_portfolio_search.py`. At stage 3/4 the matrix is rebuilt
+inside the model (calculated table or reshaped helper, both allowed); checks:
+456 rows; per-scenario reconciliation of bridge totals against package rows
+(offline max abs error 1.4e-14 without overlap stress); every figure on the
+canvas traceable to a matrix row. Synthetic fixture data stays out of the
+submission.
