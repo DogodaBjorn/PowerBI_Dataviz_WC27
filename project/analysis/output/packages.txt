@@ -1,0 +1,68 @@
+== conventions: monthly, (1+r)^(k/12), k = months after Jan 2027; rate 8%; ramp (0.5, 0.85, 1.0); horizon 2027-2032; budget $60.0M
+
+== per project
+-- Low
+  GI-01 Direct booking app & member rates          capex   5.00  start 2027-01 live 2027-10  disr  0.00  benefit   2.78  NPV  -2.76  run-rate 2032  0.60  payback after 2032  sat +0.00 on 50 hotels  growth Yes
+  GI-02 Self check-in kiosks - 20 busiest hotels   capex   2.00  start 2027-10 live 2028-04  disr  0.00  benefit   0.84  NPV  -1.23  run-rate 2032  0.21  payback after 2032  sat +0.10 on 20 hotels  growth No
+  GI-03 Energy efficiency program                  capex  15.00  start 2027-01 live 2028-07  disr  3.19  benefit   4.56  NPV -13.86  run-rate 2032  1.18  payback after 2032  sat +0.00 on 50 hotels  growth No
+  GI-04 40-room extension - Goodnight Inn Toronto  capex   5.80  start 2027-01 live 2028-05  disr  0.22  benefit   2.32  NPV  -4.01  run-rate 2032  0.58  payback after 2032  sat +0.00 on 1 hotels  growth Yes
+  GI-05 40-room extension - Goodnight Inn London G capex   6.60  start 2027-01 live 2028-05  disr  0.36  benefit   3.52  NPV  -4.01  run-rate 2032  0.88  payback after 2032  sat +0.00 on 1 hotels  growth Yes
+  GI-06 40-room extension - Goodnight Inn Kingston capex   5.40  start 2027-01 live 2028-05  disr  0.09  benefit  -0.55  NPV  -5.65  run-rate 2032 -0.14  payback after 2032  sat +0.00 on 1 hotels  growth Yes
+  GI-07 Room refresh - 10 oldest hotels            capex  29.50  start 2027-01 live 2028-03  disr  6.62  benefit   5.53  NPV -30.52  run-rate 2032  1.32  payback after 2032  sat +0.30 on 10 hotels  growth No
+  GI-08 New hotel - Goodnight Inn Boston Logan Air capex  24.75  start 2027-01 live 2029-03  disr  0.00  benefit   5.19  NPV -19.12  run-rate 2032  1.63  payback after 2032  sat +0.00 on 0 hotels  growth Yes
+  GI-09 Breakfast & grab-and-go upgrade            capex   4.25  start 2027-01 live 2027-09  disr  0.00  benefit   1.97  NPV  -2.65  run-rate 2032  0.42  payback after 2032  sat +0.05 on 50 hotels  growth Yes
+  GI-10 Revenue management system                  capex   2.40  start 2027-01 live 2027-07  disr  0.00  benefit   1.13  NPV  -1.49  run-rate 2032  0.23  payback after 2032  sat +0.00 on 50 hotels  growth Yes
+-- Expected
+  GI-01 Direct booking app & member rates          capex   5.00  start 2027-01 live 2027-10  disr  0.00  benefit  10.81  NPV   3.37  run-rate 2032  2.35  payback 2030  sat +0.00 on 50 hotels  growth Yes
+  GI-02 Self check-in kiosks - 20 busiest hotels   capex   2.00  start 2027-10 live 2028-04  disr  0.00  benefit   1.69  NPV  -0.60  run-rate 2032  0.41  payback after 2032  sat +0.25 on 20 hotels  growth No
+  GI-03 Energy efficiency program                  capex  15.00  start 2027-01 live 2028-07  disr  3.19  benefit   6.83  NPV -12.18  run-rate 2032  1.78  payback after 2032  sat +0.00 on 50 hotels  growth No
+  GI-04 40-room extension - Goodnight Inn Toronto  capex   5.80  start 2027-01 live 2028-05  disr  0.22  benefit   2.69  NPV  -3.74  run-rate 2032  0.67  payback after 2032  sat +0.00 on 1 hotels  growth Yes
+  GI-05 40-room extension - Goodnight Inn London G capex   6.60  start 2027-01 live 2028-05  disr  0.36  benefit   4.18  NPV  -3.52  run-rate 2032  1.04  payback after 2032  sat +0.00 on 1 hotels  growth Yes
+  GI-06 40-room extension - Goodnight Inn Kingston capex   5.40  start 2027-01 live 2028-05  disr  0.09  benefit   1.78  NPV  -3.92  run-rate 2032  0.44  payback after 2032  sat +0.00 on 1 hotels  growth Yes
+  GI-07 Room refresh - 10 oldest hotels            capex  29.50  start 2027-01 live 2028-03  disr  6.62  benefit   9.80  NPV -27.31  run-rate 2032  2.34  payback after 2032  sat +0.60 on 10 hotels  growth No
+  GI-08 New hotel - Goodnight Inn Boston Logan Air capex  24.75  start 2027-01 live 2029-03  disr  0.00  benefit   6.38  NPV -18.27  run-rate 2032  2.00  payback after 2032  sat +0.00 on 0 hotels  growth Yes
+  GI-09 Breakfast & grab-and-go upgrade            capex   4.25  start 2027-01 live 2027-09  disr  0.00  benefit   3.95  NPV  -1.14  run-rate 2032  0.84  payback after 2032  sat +0.10 on 50 hotels  growth Yes
+  GI-10 Revenue management system                  capex   2.40  start 2027-01 live 2027-07  disr  0.00  benefit   3.72  NPV   0.51  run-rate 2032  0.77  payback 2031  sat +0.00 on 50 hotels  growth Yes
+-- High
+  GI-01 Direct booking app & member rates          capex   5.00  start 2027-01 live 2027-10  disr  0.00  benefit  18.87  NPV   9.52  run-rate 2032  4.10  payback 2029  sat +0.00 on 50 hotels  growth Yes
+  GI-02 Self check-in kiosks - 20 busiest hotels   capex   2.00  start 2027-10 live 2028-04  disr  0.00  benefit   2.53  NPV   0.03  run-rate 2032  0.62  payback 2032  sat +0.35 on 20 hotels  growth No
+  GI-03 Energy efficiency program                  capex  15.00  start 2027-01 live 2028-07  disr  3.19  benefit   9.11  NPV -10.49  run-rate 2032  2.37  payback after 2032  sat +0.00 on 50 hotels  growth No
+  GI-04 40-room extension - Goodnight Inn Toronto  capex   5.80  start 2027-01 live 2028-05  disr  0.22  benefit   2.88  NPV  -3.60  run-rate 2032  0.72  payback after 2032  sat +0.00 on 1 hotels  growth Yes
+  GI-05 40-room extension - Goodnight Inn London G capex   6.60  start 2027-01 live 2028-05  disr  0.36  benefit   4.47  NPV  -3.30  run-rate 2032  1.11  payback after 2032  sat +0.00 on 1 hotels  growth Yes
+  GI-06 40-room extension - Goodnight Inn Kingston capex   5.40  start 2027-01 live 2028-05  disr  0.09  benefit   1.94  NPV  -3.79  run-rate 2032  0.48  payback after 2032  sat +0.00 on 1 hotels  growth Yes
+  GI-07 Room refresh - 10 oldest hotels            capex  29.50  start 2027-01 live 2028-03  disr  6.62  benefit  14.14  NPV -24.06  run-rate 2032  3.38  payback after 2032  sat +0.80 on 10 hotels  growth No
+  GI-08 New hotel - Goodnight Inn Boston Logan Air capex  24.75  start 2027-01 live 2029-03  disr  0.00  benefit   7.09  NPV -17.76  run-rate 2032  2.23  payback after 2032  sat +0.00 on 0 hotels  growth Yes
+  GI-09 Breakfast & grab-and-go upgrade            capex   4.25  start 2027-01 live 2027-09  disr  0.00  benefit   5.26  NPV  -0.13  run-rate 2032  1.12  payback 2032  sat +0.15 on 50 hotels  growth Yes
+  GI-10 Revenue management system                  capex   2.40  start 2027-01 live 2027-07  disr  0.00  benefit   7.18  NPV   3.17  run-rate 2032  1.48  payback 2029  sat +0.00 on 50 hotels  growth Yes
+
+== valid packages: 456 of 1024 subsets
+  NPV >= 0 in Low: 0
+  NPV >= 0 in Expected: 6
+  NPV >= 0 in High: 57
+
+== presets, Low lens
+  A max NPV: 01+02+10  capex 9.40M  NPV L/E/H -5.5 / +3.3 / +12.7  run-rate E +3.53M  rated hotels 20  rooms added 0
+  B widest rated reach, NPV >= 0: none (no package has NPV >= 0)
+  C best with the refresh (GI-07): 01+02+07  capex 36.50M  NPV L/E/H -34.5 / -24.5 / -14.5  run-rate E +5.10M  rated hotels 27  rooms added 0
+
+== presets, Expected lens
+  A max NPV: 01+02+10  capex 9.40M  NPV L/E/H -5.5 / +3.3 / +12.7  run-rate E +3.53M  rated hotels 20  rooms added 0
+  B widest rated reach, NPV >= 0: 01+09+10  capex 11.65M  NPV L/E/H -6.9 / +2.7 / +12.6  run-rate E +3.96M  rated hotels 50  rooms added 0
+  C best with the refresh (GI-07): 01+07+10  capex 36.90M  NPV L/E/H -34.8 / -23.4 / -11.4  run-rate E +5.46M  rated hotels 10  rooms added 0
+
+== presets, High lens
+  A max NPV: 01+02+10  capex 9.40M  NPV L/E/H -5.5 / +3.3 / +12.7  run-rate E +3.53M  rated hotels 20  rooms added 0
+  B widest rated reach, NPV >= 0: 01+02+09+10  capex 13.65M  NPV L/E/H -8.1 / +2.1 / +12.6  run-rate E +4.37M  rated hotels 50  rooms added 0
+  C best with the refresh (GI-07): 01+02+07+10  capex 38.90M  NPV L/E/H -36.0 / -24.0 / -11.3  run-rate E +5.87M  rated hotels 27  rooms added 0
+
+== reference package 01+02+04+05+07+10: capex 51.30M  NPV L/E/H -44.0 / -31.3 / -18.2  run-rate E +7.58M
+
+== reference package 01+02+04+05+07+09+10: capex 55.55M  NPV L/E/H -46.7 / -32.4 / -18.4  run-rate E +8.42M
+
+== reference package 01+02+03+05+08+09+10: capex 60.00M  NPV L/E/H -45.1 / -31.8 / -19.0  run-rate E +9.19M
+
+== sensitivity: annual running cost subtracted on top of the OP impact (gross reading)
+  GI-01: running cost $0.60M/yr; Expected run-rate 2.35 -> 1.75
+  GI-10: running cost $0.30M/yr; Expected run-rate 0.77 -> 0.47
+
+written: project/analysis/output/packages.csv (456 rows), project/analysis/output/project_economics.csv

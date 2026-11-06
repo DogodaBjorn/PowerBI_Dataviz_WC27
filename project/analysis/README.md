@@ -6,7 +6,9 @@ organisers' starter file. They are the provenance of the evidence pack, not the
 report's source of truth: the semantic model re-derives everything at stage 4.
 
 Requirements: Python ≥ 3.11, `pip install -r requirements.txt` (pandas, pyarrow,
-pbixray, numpy). Run scripts with `python -I` and pass paths as arguments.
+pbixray, numpy). Since 6 Nov the parquet folder can also come straight from the
+workbook (`PillowKey_Dataset.xlsx`, one parquet per sheet, `Contents` kept as CSV):
+the crosscheck output reproduces identically from either source. Run scripts with `python -I` and pass paths as arguments.
 
 | Script | Reads | Produces |
 |---|---|---|
@@ -24,6 +26,8 @@ pbixray, numpy). Run scripts with `python -I` and pass paths as arguments.
 | `21_baseline_projection.py <data>` | parquet | do-nothing 2026–2032 from FinanceAssumptions, capacity wall |
 | `22_column_codex.py <data>` | parquet | every column of every table with ranges and distinct values (`output/codex.txt`) |
 | `30_pitch_data.py <data> <json>` + `31_baseline_bridge.py <data> <json>` | parquet | the JSON behind `deliverables/pitch/goodnight-inn-three-ways.html` |
+| `40_package_matrix.py <data> <outdir> [--annual]` | parquet | the P2 package matrix: 456 valid Goodnight Inn packages, NPV / run-rate per scenario, presets A/B/C per lens, sensitivity (`output/packages.txt`, `packages.csv`, `project_economics.csv`, `project_yearly.csv`); monthly discounting by default (04-p2-build-method) |
+| `41_opzet_facts.py <data> <packages.csv> <project_economics.csv> <json>` | parquet + 40's output | the facts behind the opzet comp: four-brand comparison and ranks, geography, refresh ages, P2 projects (`output/opzet_facts.txt`, `design-prototypes/opzet-data.json`) |
 | `17_crosscheck_dutch_review.py <data>` | parquet | verification of the Dutch data review of 4 Nov 2026: margins after distribution, per-hotel trends, comfort vs renovation age, complaint momentum, renovation spend per brand, sister event study, NPV conventions (`output/crosscheck.txt`) |
 | `tools/extract_mht.py` | the saved blog page | the contest brief as text and its links (`project/contest/`) |
 
