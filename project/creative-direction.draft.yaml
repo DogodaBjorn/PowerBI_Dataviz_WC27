@@ -41,6 +41,18 @@ directions:
       variance: "strict"
     comp: "project/design-prototypes/d3-two-futures.html"
 
+  - id: D4
+    name: "What if (merged)"
+    concept: "D3's two-futures frame as the basis: page 1 answers what if we do nothing (today, and the organisers' assumptions carried to 2032) with D1's three findings as the drivers of that path; page 2 answers what if we do this with a plan the Board can change under its own eyes. D2's hotel evidence (capacity wall, the ten oldest, the wall as a tooltip page) and the Dutch review's findings (margin after commissions, renovation history, event study) folded in. Written 2026-11-06 for a second opinion: PITCH-D4-what-if-merged.md."
+    visual_language: "D1's paper-white surface, navy ink, one amber accent; Georgia for headlines and hero numbers, Segoe UI for everything else with tabular figures (two built-in families only); balanced density; one hero per page (the fan), nine-element and 180-word budget per page."
+    signature_moment: "The fan that reacts: tick a project in the builder and the funded band on the two-futures chart moves. The folio travels along as the quotable detail."
+    risk: "Density (two pages carrying three directions' content; the delete test is applied before the comp is approved) and honesty optics of the projection (its label on the canvas, every time)."
+    design_read: "The headline, then the fan splitting into grey and amber, then the three drivers under it."
+    dials:
+      density: "balanced"
+      variance: "strict"
+    comp: "project/design-prototypes/d4-what-if.html"
+
 design_intelligence:
   queries: "<to run at stage 5: search.py 'hospitality board report', 'investment dashboard', 'budget economy hotel brand' — domains style, color, typography, product>"
   cited: "<fill after the queries; record what was used or overruled and why>"
@@ -51,9 +63,10 @@ critique:
     D1 (50/70): highest floor; reading path 8, accessibility 8; gaps are slop risk on the KPI band (6) and copy weight. Signature quotable but small.
     D2 (49/70): highest ceiling; signature 9, slop 8, brand 8; gaps are reading path (6: the wall is texture before message), state coverage (6: long names, year slicer cleared), accessibility (6: dark surface), dial fit (6: compact leaking to cramped).
     D3 (48/70): strongest analytic spine; dial fit 8, signature 8; gaps are slop risk (5: finance-deck look), brand (6), and honesty optics on projected marks.
-    Scores: reading 8/6/7 · states 7/6/7 · slop 6/8/5 · brand 7/8/6 · a11y 8/6/7 · dials 7/6/8 · signature 7/9/8.
+    D4 (48/70, 6 Nov): strongest Analytical Quality and Creativity story (projection + reacting plan); pays in density (dials 6) and reading path (7); designed to answer the canon audit's must-change list; the do-nothing projection on the canvas is the open judgment (reviewer question 2).
+    Scores: reading 8/6/7/7 · states 7/6/7/7 · slop 6/8/5/6 · brand 7/8/6/7 · a11y 8/6/7/7 · dials 7/6/8/6 · signature 7/9/8/8.
 
-chosen: "<D1 | D2 | D3>"
+chosen: "<D1 | D2 | D3 | D4>"
 chosen_because: "<the deciding argument, in the user's words>"
 user_decided: false
 

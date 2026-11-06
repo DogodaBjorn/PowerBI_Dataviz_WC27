@@ -116,6 +116,16 @@ November 4; cross-checked against the Dutch review on November 5 (see
     participate is prohibited" concerns entry mechanics; the starter file
     explicitly allows AI-assisted design tools.
 
+> **Status 6 Nov.** Page count: exactly two visible pages plus hidden tooltip pages,
+> ruled with every source quoted in `contest/page-count-ruling.md`. The story and
+> page map below are direction D1's. A merged direction **D4** (*What if*: D3's
+> two-futures frame as the basis, D1's diagnosis and D2's hotel evidence folded in)
+> is written up in `PITCH-D4-what-if-merged.md` and awaits a second opinion; the
+> canon audit (`project-state/active/00-best-in-class-audit.md`, 17/40) and the
+> three sketches in `pbip/` (`pbip/SKETCHES.md`) are the other inputs to that
+> decision. Whichever direction is chosen replaces §2 and §4 at stage 5; nothing
+> below is deleted until then.
+
 ## 2 · The story (stage 0/1 seed)
 
 **Concept: "Wake-up call."** Goodnight Inn looks like the group's most profitable
