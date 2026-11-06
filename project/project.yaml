@@ -2,9 +2,9 @@
 name: PowerBI_Dataviz_WC27
 client_alias: fabric-contest
 language: en
-template_version: 0.3.1
+template_version: 0.4.0
 created: 2026-11-05
-brand_kit: none
+brand_kit: goodnight-inn-hanger   # chosen by Björn 2026-11-06 over goodnight-inn (option 1); see project-state/active/00-brand-decision.md
 modules:
   - brand-kit-studio
   - nav-studio

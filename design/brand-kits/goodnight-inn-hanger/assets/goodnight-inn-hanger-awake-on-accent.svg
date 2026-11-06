@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="104" viewBox="0 0 64 104" role="img" aria-label="Goodnight Inn, awake">
+<defs><mask id="hole-aoa"><rect x="0" y="0" width="64" height="104" fill="white"/><circle cx="32" cy="24" r="10" fill="black"/><rect x="32" y="22.5" width="40" height="3" fill="black"/></mask></defs>
+<rect x="4" y="4" width="56" height="96" rx="14" fill="#FFFFFF" mask="url(#hole-aoa)"/>
+<circle cx="22" cy="62" r="4" fill="#B5175F"/><circle cx="42" cy="62" r="4" fill="#B5175F"/>
+</svg>

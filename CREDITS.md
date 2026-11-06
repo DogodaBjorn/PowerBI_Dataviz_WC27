@@ -147,3 +147,22 @@ Power BI Dataviz World Champs 2027 Round 1 (post by slindsay); Contest Advisory
 Committee: Karin Szilágyi, Aanor Le Gouic, Taylor Amy, Santhana Lakshmi
 Ponnurasan, Paulo Grijo. The starter model was decoded offline with
 `pbixray` (MIT, Hugoberry) for the evidence pack.
+
+### Brand kits for this project (goodnight-inn, goodnight-inn-hanger)
+
+Both kits are original work (2026-11-06); these are the people and tools they
+stand on. Re-derived in our own words; nothing copied.
+
+| Who | What we owe them | Where it lands |
+|---|---|---|
+| **Jenni Romaniuk** (*Building Distinctive Brand Assets*; category entry points) | The test for assets that are unique, famous and ownable; thinking in the moments a traveller needs a bed. | goodnight-inn-hanger guide §2-3 |
+| **Byron Sharp** (*How Brands Grow*) | Mental availability and distinctiveness over differentiation: why option 2 breaks the category's navy-and-gold code. | goodnight-inn-hanger guide §2-3, brand-options page |
+| **Kevin Lane Keller** (customer-based brand equity) | The salience-performance-judgment-resonance ladder used to read the brand data. | goodnight-inn-hanger guide §2, promise scorecard |
+| **Margaret Mark & Carol S. Pearson** (*The Hero and the Outlaw*) | The Everyman archetype as the brand's voice. | goodnight-inn-hanger guide §2 |
+| **April Dunford** (*Obviously Awesome*) | Positioning by components: who it is for, category, unique value, proof. | goodnight-inn-hanger guide §2 |
+| **Theodore Levitt** | Sell the outcome, not the product: the asleep-to-awake story. | goodnight-inn-hanger guide §2 |
+| **Paul Rand; Chermayeff & Geismar & Haviv** (*Identify*) | Logo principles (simple, appropriate, distinctive; works small and in one color) and the tests run on both marks. | both guides, logo sections |
+| **Vincent Connare** (Trebuchet MS), **Matthew Carter** (Verdana, Georgia) | Screen typefaces that ship with Windows and macOS. | both kits' typography |
+| **Eben Sorkin** (Gelasio, OFL-1.1) | Georgia's metric twin, outlined in option 1's wordmark. | goodnight-inn assets |
+| **Bonnie Shaver-Troup, Thomas Jockin et al.** (Lexend, OFL-1.1) | The lettering outlined in option 2's wordmark. | goodnight-inn-hanger assets |
+| **Fontsource** (MIT packaging), **HarfBuzz** (Behdad Esfahbod et al., MIT), **fontTools** (Just van Rossum et al., MIT) | Font delivery, shaping and outlining for `project/tools/brand_logos.py`. | logo generator |

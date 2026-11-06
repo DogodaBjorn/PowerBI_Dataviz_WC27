@@ -29,8 +29,10 @@ grey context.
 
 Construction: a 96-unit Night tile, corner radius 10 (the report's 4 px
 radius scaled), a Linen crescent at the upper right, a four-pane window in
-Lamp at the lower left standing on a Linen sill. Wordmark in Georgia, "Inn"
-italic, Night ink. Clear space: half the tile on every side. Minimum size:
+Lamp at the lower left standing on a Linen sill. Wordmark "Goodnight Inn",
+"Inn" italic, Night ink, outlined from Gelasio (Eben Sorkin, OFL-1.1, drawn
+metric-compatible with Georgia) so the logo needs no installed font and the
+embedded PNG renders the same everywhere. Clear space: half the tile on every side. Minimum size:
 mark 24 px, lockup 120 px wide. Never recolor beyond the four files, never
 place on a chart, never as a watermark, never with a drop shadow. Power BI
 takes the PNGs (image visual, embedded), the SVGs are the source.
@@ -105,11 +107,13 @@ icon fonts (Publish-to-Web and the contest licence).
 ## 7. Typography rules in practice
 
 Georgia for words in display sizes only (headline, page name, wordmark).
-Segoe UI for everything else; Segoe UI Semibold for every figure. Arial is
-the declared fallback and shares Segoe UI's width class closely enough that
-rects survive; the stage-5 comp is rendered with the real fonts on a
-Windows machine and checked once on macOS before `px-prototype` measures
-it. Sizes at 1920x1080: 28 / 20 / 14 / 12 / 10 pt; nothing smaller, so the
+Segoe UI for everything else; Segoe UI Semibold for every figure.
+Correction (2026-11-06): Georgia and Arial ship with Windows and macOS,
+Segoe UI with Windows only. Whether a Mac judge sees Segoe UI depends on the
+Power BI service serving it as a web font, which is unverified. Before G7,
+open the Publish-to-Web link in a browser without Segoe UI. If it falls
+back, switch body and numbers to Arial or Tahoma and re-measure the comp
+before `px-prototype` trusts its rects. Sizes at 1920x1080: 28 / 20 / 14 / 12 / 10 pt; nothing smaller, so the
 1366-wide laptop test still reads.
 
 ## 8. Designed states
@@ -132,7 +136,8 @@ names: the slicer shows the short name, the full name in the tooltip.
   tab order follows the reading order (headline, KPI band, hero, supports,
   detail, chrome last).
 - Keyboard walk of the plan builder and scenario toggle before G7.
-- Fonts on both platforms; no R or Python visuals; images embedded.
+- Georgia and Arial on both platforms; Segoe UI tested on a Mac browser
+  before G7; no R or Python visuals; images embedded.
 
 ## 10. Hand-off
 

@@ -1,0 +1,113 @@
+# Brand kit: Goodnight Inn, option 2 "the door hanger" (2026-11-06).
+# The same fictional brand as kit goodnight-inn (option 1, "paper at night"),
+# read by a dataviz specialist with a brand-marketing background: brand
+# platform first (brand-guide.md section 1), visual identity second. Option 1
+# speaks in the hotel category's code (navy and gold, the default the
+# design-intelligence layer itself returns for "hotel hospitality"); option 2
+# breaks that code on purpose so a judge remembers the entry (Romaniuk,
+# distinctive brand assets). All marks, colors and lettering are original work
+# licensable to Microsoft under the contest rules.
+#
+# Validation 2026-11-06 (scripts/check_contrast.py --kit, Machado-matrix
+# color-blindness simulation, CIE76 distances, scratch script):
+#   ink/canvas 15.2  ink_secondary/canvas 6.8  accent/canvas 5.8
+#   white-on-accent 6.5  accent mark weight/canvas 4.2 (non-text and large text)
+#   good/canvas 5.8  bad/canvas 4.5  (AA text: pass, bad at the floor)
+#   good-vs-bad deltaE protan 91 / deutan 104 / tritan 87 (blue-orange, the
+#   classic color-blind-safe pair); accent-vs-bad deltaE >= 47 under deutan
+#   categorical slots 1-3 pairwise deltaE >= 14 protan, >= 18 deutan; slots 1-3
+#   >= 3.7:1 on canvas. Slots 4-5 are labelled context fills below 3:1 (accepted).
+#   hairline 1.2:1 (accepted: dividers are not meaning carriers).
+# Fonts: every family ships with BOTH Windows and macOS and is in Power BI's
+# font list, so this kit makes no assumption about Power BI web-font delivery
+# (option 1's Segoe UI does; see its brand.yaml).
+
+kit: "goodnight-inn-hanger"
+version: 1
+date: "2026-11-06"
+
+identity:
+  organization_alias: "Goodnight Inn"
+  personality: "honest, friendly, wide-awake"
+  # Must never radiate: luxury-glossy, cutesy, salesy.
+  # Brand promise: "A good night. A fair price." Archetype: the Everyman.
+  # Readers: the Board and contest judges, 1920-wide monitors and 1366-wide
+  # laptops, in a browser under Publish-to-Web, Windows or macOS.
+
+color:
+  canvas: "#F5F3F0"          # Pillowcase: warm-neutral, never pure white
+  surface: "#FFFFFF"         # Sheet: cards
+  ink: "#24192B"             # Plum-black: primary text, never #000000
+  ink_secondary: "#5B5163"   # Plum-grey: labels, captions, axes (6.8:1)
+  hairline: "#E4DEE3"        # Seam: borders and rules
+
+  accent: "#B5175F"          # Raspberry, ink weight: THE door-hanger color. Text,
+                             # the story series, the headline figure. 5.8:1.
+                             # Fills and bars may use the mark weight #D6336C
+                             # (4.2:1); never both weights on one visual.
+  good: "#1D5FA8"            # Harbour blue: direction-is-good, never decoration
+  bad: "#B45309"             # Ember orange: direction-is-bad, never decoration
+                             # Blue-orange separates for every color-vision type;
+                             # still always paired with a sign, arrow or word.
+  neutral_data: "#82798A"    # Plum-slate: context series, sister brands (3.7:1)
+
+  # Two live series at most, then grey. A third series means highlight plus
+  # grey, or small multiples (the third live color was dropped: the only one
+  # that separated for color-blind readers was the good blue).
+  categorical:
+    - "#B5175F"              # Raspberry: the story (OTA, the recommended plan)
+    - "#3E2C55"              # Plum: our own (direct web, the Board's own numbers)
+    - "#82798A"              # Plum-slate: context
+    - "#B8B0BE"              # Lilac-grey: context fill, labelled (1.9:1, accepted)
+    - "#D9D2CC"              # Linen-grey: background series, labelled (1.4:1, accepted)
+
+  sequential: ["#F8D7E3", "#EE9DBA", "#D6336C", "#B5175F", "#7A0E3F"]
+  diverging: ["#B45309", "#E3B07E", "#DCD6DA", "#8FB0D6", "#1D5FA8"]
+
+typography:
+  # Trebuchet MS (Vincent Connare) and Verdana (Matthew Carter) were drawn for
+  # screens, ship with Windows and macOS, and are in Power BI's font list:
+  # verify both in Desktop's font menu before stage 6 (research-first).
+  # Verdana runs large: 11 pt Verdana reads like 12 pt Segoe UI, hence the scale.
+  display: "Trebuchet MS, Verdana"     # headlines, page names, section titles
+  body: "Verdana, Arial"               # labels, axes, captions, tables
+  numeric: "Verdana, Arial"            # every figure: lining; verify tabular widths
+                                       # in Desktop (right-align a column of 1s and 8s)
+  scale_pt: [28, 20, 13, 11, 10]       # hero / page title / section / body / caption
+
+shape:
+  radius_px: 12              # pillow-soft cards; chips and buttons fully round
+                             # (documented 2-step scale, consistency lock 8)
+  shadow: "none"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 32
+  gutter_px: 16
+
+assets:
+  logo: "assets/goodnight-inn-lockup.svg"
+  # Variants: goodnight-inn-hanger.svg (the mark, sleeping), goodnight-inn-hanger-awake.svg
+  # (state icon for P2), goodnight-inn-hanger-awake-on-accent.svg (white, for funded chips on
+  # raspberry), goodnight-inn-hanger-mono.svg (one color),
+  # goodnight-inn-lockup-reversed.svg (white on plum-black). Wordmark outlined from
+  # Lexend SemiBold (OFL-1.1): no font dependency. PNG at 2x beside each SVG.
+  usage: "chrome only: masthead (sleeping hanger on P1, awake hanger on P2), overlay header, gallery thumbnail; state icon in plan-builder chips; never inside a chart, never as a watermark; minimum height 24 px"
+
+voice:
+  title_style: "insight sentences; two page headlines in the door-hanger voice ('Do not disturb, since 2020.' / 'Please make up the room.')"
+  number_format_notes: "English (contest language): thousands with a comma, $ before the figure, M for millions ($51.3M), one decimal per visual for percentages, true minus sign, never parentheses"
+
+forbidden:
+  - "pure white canvas or pure black text"
+  - "raspberry as good or bad: it marks the story, never the verdict"
+  - "blue or orange as decoration: they only ever mean good and bad"
+  - "the mark-weight raspberry as body text, or both raspberry weights on one visual"
+  - "a third live series color"
+  - "the hanger face inside a chart, or any other character or mascot"
+  - "category cliches: navy and gold, moons and stars, 'Zzz', bed photography"
+  - "fonts outside Trebuchet MS, Verdana and Arial"
+  - "the door-hanger wordplay beyond the two page headlines and the state chips"
+  - "gradients, shadows, glassmorphism, decorative imagery in the data area"
+  - "bar, alcohol or political imagery anywhere (contest rules)"

@@ -1,0 +1,53 @@
+# Imagery profile: Goodnight Inn, option 2 "the door hanger" (imagery-studio).
+# Chrome imagery only; the data area never carries imagery (hard rule 6).
+# Contest rules: own images only, embedded, no bar, alcohol or political content.
+
+kit: "goodnight-inn-hanger"
+version: 1
+date: "2026-11-06"
+
+method: generative
+
+style_spec: >-
+  Bold flat color-block illustration, no outlines, rounded geometric shapes
+  with generous corner radii, on a warm pillowcase-white ground. Recurring
+  motifs: a door hanger on a hotel door handle, a key on a rounded fob, a
+  plumped pillow, an airport control tower, a highway exit sign, a low
+  city block at morning light. Friendly, plain and wide-awake; the mood of
+  a good morning after an honest night.
+
+palette:
+  dominant: color.canvas
+  ink: color.ink
+  accent: color.accent
+  support:
+    - color.neutral_data
+
+negative: >-
+  no stock photo, no photorealism, no 3D render, no gradients, no moons or
+  stars, no "Zzz", no faces other than the hanger's two eyes, no bedroom
+  photography, no luxury interiors, no busy background, no more than one
+  raspberry element per image
+
+style_anchors:
+  - "design/brand-kits/goodnight-inn-hanger/assets/goodnight-inn-lockup.svg"
+  - "design/brand-kits/goodnight-inn-hanger/assets/goodnight-inn-hanger-awake.svg"
+
+sizes:
+  cover_hero:
+    width: 3840
+    height: 2160
+    aspect_ratio: "16:9"
+  section_divider:
+    width: 3840
+    height: 1620
+    aspect_ratio: "21:9"
+  background_texture:
+    width: 3840
+    height: 2160
+    aspect_ratio: "16:9"
+    note: "flat color fields only, far below data-ink contrast; canvas is 1920x1080"
+  empty_state:
+    width: 1024
+    height: 1024
+    aspect_ratio: "1:1"

@@ -17,8 +17,15 @@
 #   >= 10 tritan, all >= 3.3:1 on canvas. Slots 5-6 are context greys BELOW the
 #   3:1 floor by design (accepted): they carry labelled context series only.
 #   hairline 1.3:1 (accepted: dividers are not meaning carriers).
-# Publish-to-Web rule: built-in fonts only, embedded images only. Fonts here
-# exist on both Windows and macOS so a Mac judge sees the same metrics.
+# Publish-to-Web rule: built-in fonts only, embedded images only.
+# Correction 2026-11-06: Georgia and Arial ship with Windows and macOS; Segoe UI
+# ships with Windows only. Whether a Mac judge sees Segoe UI depends on the
+# Power BI service delivering it as a web font, which is UNVERIFIED (Learn's
+# theme docs are silent; a community thread reports text boxes shifting on
+# Mac). Test before G7: open the Publish-to-Web link in a browser without
+# Segoe UI (a Mac, or a Linux browser). If it falls back, switch body/numeric
+# to Arial or Tahoma and re-measure the comp. Option 2 (goodnight-inn-hanger)
+# avoids the question with Trebuchet MS and Verdana.
 
 kit: "goodnight-inn"
 version: 1
@@ -67,8 +74,9 @@ color:
   diverging: ["#B3402E", "#D9A28F", "#D9D4CB", "#7FA9A0", "#134B41"]
 
 typography:
-  # Every family exists on Windows AND macOS, so a judge on a Mac sees the same
-  # metrics under Publish-to-Web. Georgia carries words only: its old-style
+  # Georgia and Arial exist on Windows and macOS; Segoe UI is Windows-only and
+  # relies on Power BI web-font delivery on a Mac (unverified, see header).
+  # Georgia carries words only: its old-style
   # figures (descending 3, 4, 5, 7, 9) misalign in tables and cards, so every
   # number is set in Segoe UI with Arial as the metric-close fallback.
   display: "Georgia, Georgia"                 # page titles, insight headlines, the wordmark
@@ -93,7 +101,9 @@ assets:
   # Variants: goodnight-inn-mark.svg (tile only), goodnight-inn-lockup-reversed.svg
   # (Linen wordmark on Night for dark chrome), goodnight-inn-mark-mono.svg
   # (single-color Night, for favicon-size and print). PNG exports at 2x beside
-  # each SVG for Power BI image visuals (embedded images only).
+  # each SVG for Power BI image visuals (embedded images only). The wordmark is
+  # outlined from Gelasio (Eben Sorkin, OFL-1.1, metric-compatible with Georgia)
+  # so it needs no installed font; regenerate with project/tools/brand_logos.py.
   usage: "chrome only: masthead top-left on both pages, the overlay header, the gallery thumbnail; never inside a chart, never as a watermark, never recolored outside the three variants"
 
 voice:

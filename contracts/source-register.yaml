@@ -144,4 +144,13 @@ first_party_internal:            # Bjorn's own repos backported into the templat
     path: "E:/TrainerBjornOps/.claude/skills/figma-infographic-design"
     use_for: "origin of the fg-figma module's Figma working discipline (content-first, mechanism-mapping, screenshot-per-step, feedback-derived rules)"
 
-project_additions: []            # per-project sources appended at stage 0
+project_additions:               # per-project sources appended at stage 0
+  - name: Brand-marketing canon for the brand kits (Romaniuk, Sharp, Keller, Mark & Pearson, Dunford, Levitt)
+    url: https://www.marketingscience.info/
+    use_for: "brand platform of kit goodnight-inn-hanger: distinctive assets, category entry points, brand equity ladder, archetype, positioning (informing, tier 3)"
+  - name: Logo principles (Paul Rand; Chermayeff & Geismar & Haviv, Identify)
+    url: https://www.cghnyc.com/
+    use_for: "logo construction and tests for both kits (informing, tier 3)"
+  - name: Fontsource (OFL fonts Gelasio and Lexend, outlined in the wordmarks)
+    url: https://fontsource.org/
+    use_for: "font files for project/tools/brand_logos.py; fonts are OFL-1.1, never shipped in the report"

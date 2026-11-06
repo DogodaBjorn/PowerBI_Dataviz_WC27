@@ -7,7 +7,7 @@ stages:
   s0_intake:
     status: in_progress
     evidence: ""
-    gate_note: "canon audit of the pitched entry filed: project-state/active/00-best-in-class-audit.md (17/40, caps A2+B8); direction not yet recorded"
+    gate_note: "canon audit of the pitched entry filed: project-state/active/00-best-in-class-audit.md (17/40, caps A2+B8); brand kit goodnight-inn-hanger chosen 2026-11-06 (project-state/active/00-brand-decision.md); direction not yet recorded"
   s1_requirements:
     status: pending
     evidence: ""
