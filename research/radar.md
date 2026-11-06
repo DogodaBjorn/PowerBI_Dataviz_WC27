@@ -5,7 +5,7 @@ Rings: **adopted** (in the repo) · **trial** (in, unproven on a real
 project) · **assess** (promising, not built) · **hold** (deliberately not,
 with reason). Maintained by `/scout` runs and stage-7 retrospectives.
 
-Last updated: 2026-11-05 (dashboard canon adopted from the three-run best-in-class research; see log).
+Last updated: 2026-11-06 (dashboard canon adopted from the three-run best-in-class research; see log).
 
 ## Adopted
 
@@ -28,6 +28,7 @@ Last updated: 2026-11-05 (dashboard canon adopted from the three-run best-in-cla
 | Wireframe-first SVG page backgrounds | canvas-studio | background-image format support; regeneration discipline |
 | Scripted WCAG contrast gate + audit checklist | a11y-studio + scripts/check_contrast.py | alt-text/tab-order property surface in PBIR |
 | HTML-comp → pixel-perfect PBIR pipeline (rects verbatim, ±2px) | px-prototype + scripts/prototype/ | comp-vs-rendered divergence; Playwright/Node churn |
+| Focus swap: display-only bookmarks + disconnected single-select selector + highlight-by-measure | fx-focus (this project; see project-state/active/02) | bookmarks clear cross-selection by design; scatter conditional-formatting surface |
 | Design-intelligence queries at s5 (palettes/typography/charts/styles) | design/intelligence/ + chart-selection.csv | data staleness vs Power BI visual evolution |
 | Deterministic PBIR taste-lint with waivers | scripts/pbir_detect.py (G6/G7 gate, warn-only hook) | false-positive rate on legitimate showpiece layouts |
 | Scored dual-isolated fidelity review + fix queue | design-critique + fix-tasks.jsonl | scoring overhead vs value on small reports |
@@ -59,6 +60,7 @@ Last updated: 2026-11-05 (dashboard canon adopted from the three-run best-in-cla
 | Parallel per-page PBIR builds (task-brief per page, progress ledger) | PBIR pages are separate folders — conflict-free fan-out; evening instead of a week on 7-page builds | pattern in superpowers subagent-driven-development |
 | Deneb preview harness (render Vega-Lite specs to PNG pre-Desktop) | visual iteration for the one fully-controlled visual type | vl-convert or Playwright page; cheap once px-prototype's Node footprint exists |
 | Monthly release-radar automation (PBIR/TMDL/Deneb schema churn) | research-first rule's fastest-aging knowledge | pattern in last30days-skill (keyless Reddit/HN/GitHub) |
+| Deneb 2.0 Continuous View / Data Patching for one persistent custom visual with internal focus state | patches data updates without redraw (deneb issue 374); candidate route-B upgrade for the P2 focus swap | still no animation; selection + performance spike in project-state/active/03-focuswissel-testplan.md |
 
 ## Hold
 
@@ -68,3 +70,6 @@ Last updated: 2026-11-05 (dashboard canon adopted from the three-run best-in-cla
 | Persona-pack module | stage-1 audience/decision mapping already covers the need |
 | Performance-tooling module | real subject, different skillset (model/DAX perf, not UI/UX); reconsider as its own track |
 | Hand-rolled DAX bar-charts-in-SVG beyond simple marks | maintenance trap; real charts belong in visuals (icon-studio guide draws the line) |
+| Native morph/animated transition between bookmarks or layout states | not a documented Power BI feature (checked 2026-11-06); a swap is a visibility change, not a transition |
+| Vega/Deneb built-in interpolation engine | refuted: Vega dropped animated transitions in 3.0 (porting guide); Vega-Lite animation is discrete frames only (issue 9590 open) |
+| HTML Content Regular as page architecture | animates only inside its own frame, scripting not formally supported by the maker, certification/export risk; a Secure `<details>` card stays allowed as a detail extra |
