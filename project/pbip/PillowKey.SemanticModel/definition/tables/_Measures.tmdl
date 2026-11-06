@@ -1,0 +1,788 @@
+/// Measure home for the three sketches. Base measures read columns; everything else reads measures.
+table _Measures
+	lineageTag: 1458bfa0-b6ec-5a43-b70a-dba08e4c82c9
+
+	/// Room nights on offer in the period.
+	measure 'Rooms Available' = SUM ( MonthlyPerformance[RoomsAvailable] )
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: 15e620f0-72e5-5bb0-af92-a42e8b058465
+
+	/// Room nights sold in the period.
+	measure 'Rooms Sold' = SUM ( MonthlyPerformance[RoomsSold] )
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: bc28c802-0b83-558e-bfc9-0a5f5e50f676
+
+	/// Rooms sold over rooms available.
+	measure 'Occupancy %' = DIVIDE ( [Rooms Sold], [Rooms Available] )
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: 81edb257-d639-55c7-a515-2a1dc41d7d00
+
+	/// Room revenue from MonthlyPerformance.
+	measure 'Room Revenue' = SUM ( MonthlyPerformance[RoomRevenue] )
+		formatString: \$#,0;(\$#,0)
+		displayFolder: 01 Core
+		lineageTag: 6c9fd4c1-1eab-582d-91bc-ac6adc59f88e
+
+	/// Room, food and beverage and other revenue.
+	measure 'Total Revenue' = SUM ( MonthlyPerformance[TotalRevenue] )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 01 Core
+		lineageTag: 611eda89-e11a-51f9-852c-84ad2869c1ed
+
+	/// Average daily rate: room revenue per room night sold.
+	measure ADR = DIVIDE ( [Room Revenue], [Rooms Sold] )
+		formatString: \$#,0.00
+		displayFolder: 01 Core
+		lineageTag: 4e3b018b-5c85-54e6-b87b-03305e86610e
+
+	/// Room revenue per available room night.
+	measure RevPAR = DIVIDE ( [Room Revenue], [Rooms Available] )
+		formatString: \$#,0.00
+		displayFolder: 01 Core
+		lineageTag: f991f809-aa2a-5bee-abc0-e2694d36590a
+
+	/// Total operating expenses; excludes distribution cost (workbook convention).
+	measure 'Operating Expenses' = SUM ( MonthlyPerformance[TotalOperatingExpenses] )
+		formatString: \$#,0;(\$#,0)
+		displayFolder: 01 Core
+		lineageTag: c8e49cde-76f5-5dc3-a8e8-2d7ddd917544
+
+	/// Gross operating profit before distribution cost.
+	measure GOP = [Total Revenue] - [Operating Expenses]
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 01 Core
+		lineageTag: 9522763a-3950-59b3-b72b-5044bac9cc91
+
+	/// GOP as a share of total revenue.
+	measure 'GOP Margin %' = DIVIDE ( [GOP], [Total Revenue] )
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: 79725232-88a8-572a-871e-1251de9a9e45
+
+	/// Total revenue per room night sold.
+	measure 'Revenue per Occupied Room' = DIVIDE ( [Total Revenue], [Rooms Sold] )
+		formatString: \$#,0.00
+		displayFolder: 01 Core
+		lineageTag: 368af188-2f3f-5577-a485-f03517dac7ad
+
+	/// Operating expenses per room night sold.
+	measure 'Cost per Occupied Room' = DIVIDE ( [Operating Expenses], [Rooms Sold] )
+		formatString: \$#,0.00
+		displayFolder: 01 Core
+		lineageTag: 812e1ca5-09e2-5891-b039-2555a42919c3
+
+	/// Revenue per occupied room indexed to 2023 (2021 is a depressed base year).
+	measure 'RevPOR Index (2023 = 100)' = DIVIDE ( [Revenue per Occupied Room], CALCULATE ( [Revenue per Occupied Room], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2023 ) ) * 100
+		formatString: 0.0
+		displayFolder: 01 Core
+		lineageTag: 7672193a-1a50-53ff-80b2-9a52b3567ef5
+
+	/// Cost per occupied room indexed to 2023.
+	measure 'CPOR Index (2023 = 100)' = DIVIDE ( [Cost per Occupied Room], CALCULATE ( [Cost per Occupied Room], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2023 ) ) * 100
+		formatString: 0.0
+		displayFolder: 01 Core
+		lineageTag: 8a13ed34-1476-584a-91b0-581dc3f3a7f5
+
+	/// Rooms in the hotels in context.
+	measure 'Hotel Rooms' = SUM ( Hotels[Rooms] )
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: 14b5b665-4757-54c6-82e8-4555218fe8fc
+
+	/// Number of hotels in context.
+	measure 'Hotels in Context' = DISTINCTCOUNT ( Hotels[HotelID] )
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: 015b332f-be85-57fa-bc9c-2abf93898329
+
+	/// Years since the last refresh for the hotel in context (scatter axis).
+	measure 'Refresh Age' = MAX ( Hotels[Years Since Refresh] )
+		formatString: 0
+		displayFolder: 01 Core
+		lineageTag: 87c5d21c-6213-5e62-8957-238e5336be48
+
+	/// Renovation capex since 2018 divided by the hotels in context.
+	measure 'Renovation Spend per Hotel since 2018' = DIVIDE ( CALCULATE ( SUM ( Renovations[CostUSD] ), Renovations[StartDate] >= DATE ( 2018, 1, 1 ) ), [Hotels in Context] )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 01 Core
+		lineageTag: f8841b09-39ea-58eb-9629-f5a70a7189b2
+
+	/// Room revenue by booking channel (reconciles to MonthlyPerformance).
+	measure 'Channel Room Revenue' = SUM ( BookingChannels[RoomRevenue] )
+		formatString: \$#,0;(\$#,0)
+		displayFolder: 02 Channels
+		lineageTag: 63c08a11-af6c-5f11-9d97-a3508d14034b
+
+	/// Room nights by booking channel.
+	measure 'Channel Room Nights' = SUM ( BookingChannels[RoomNights] )
+		formatString: #,0
+		displayFolder: 02 Channels
+		lineageTag: 0c30643e-51b4-5929-a5d4-a0c86f8a8c92
+
+	/// Commissions and fees paid to booking channels; outside operating expenses.
+	measure 'Distribution Cost' = SUM ( BookingChannels[DistributionCost] )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 02 Channels
+		lineageTag: 92403efb-edbf-551f-a49e-beb303313859
+
+	/// Distribution cost as a share of room revenue.
+	measure 'Distribution Cost % of Room Revenue' = DIVIDE ( [Distribution Cost], [Channel Room Revenue] )
+		formatString: 0.0%
+		displayFolder: 02 Channels
+		lineageTag: 2c9291bd-7430-52de-8a8f-c389672e9ee7
+
+	/// A channel's share of room revenue in context.
+	measure 'Channel Share %' = DIVIDE ( [Channel Room Revenue], CALCULATE ( [Channel Room Revenue], ALL ( BookingChannels[Channel] ) ) )
+		formatString: 0.0%
+		displayFolder: 02 Channels
+		lineageTag: bd865932-a5f0-5c0b-b548-c0f812916144
+
+	/// Share of room revenue booked through online travel agencies.
+	measure 'OTA Share %' = CALCULATE ( [Channel Share %], BookingChannels[Channel] = "Online Travel Agencies" )
+		formatString: 0.0%
+		displayFolder: 02 Channels
+		lineageTag: f4591194-41ca-5fe2-b414-8179f3432176
+
+	/// Share of room revenue booked directly (web, app, phone, walk-in).
+	measure 'Direct Share %' = CALCULATE ( [Channel Share %], BookingChannels[Channel] IN { "Direct Website & App", "Direct Phone & Walk-in" } )
+		formatString: 0.0%
+		displayFolder: 02 Channels
+		lineageTag: 887d3a1e-03cf-542f-bd41-93a3d7eda110
+
+	/// GOP after commissions and channel fees.
+	measure 'GOP after Distribution' = [GOP] - [Distribution Cost]
+		formatString: \$#,0;(\$#,0)
+		displayFolder: 02 Channels
+		lineageTag: ef3a40f4-8904-58c6-90dc-8fc578b7da82
+
+	/// Margin after distribution cost; the like-for-like benchmark across brands.
+	measure 'GOP Margin after Distribution %' = DIVIDE ( [GOP after Distribution], [Total Revenue] )
+		formatString: 0.0%
+		displayFolder: 02 Channels
+		lineageTag: e2e5cd3f-bb4a-5ef3-b6f4-a199afea1738
+
+	/// Counterfactual, labeled as such: this period's room revenue at the 2021 channel mix, at each channel's current cost rate.
+	measure 'Distribution Cost at 2021 Mix' = SUMX ( VALUES ( BookingChannels[Channel] ), VAR share21 = CALCULATE ( [Channel Share %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ) VAR rate = [Distribution Cost % of Room Revenue] VAR total = CALCULATE ( [Channel Room Revenue], ALL ( BookingChannels[Channel] ) ) RETURN share21 * total * rate )
+		formatString: \$#,0;(\$#,0)
+		displayFolder: 02 Channels
+		lineageTag: 592d2231-41ee-5fc4-af2e-977ec1a92673
+
+	/// What the channel drift since 2021 costs per period (counterfactual).
+	measure 'Distribution Cost above 2021 Mix' = [Distribution Cost] - [Distribution Cost at 2021 Mix]
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 02 Channels
+		lineageTag: 21b93e32-ba99-5974-bf0c-fbad68f61752
+
+	/// Guest survey responses.
+	measure 'Survey Responses' = SUM ( GuestExperience[SurveyResponses] )
+		formatString: #,0
+		displayFolder: 03 Guest
+		lineageTag: 08fe88a8-c4c9-5d98-9874-85883fb6f133
+
+	/// Net promoter score weighted by survey responses (an unweighted average is a contract violation).
+	measure 'NPS (weighted)' = DIVIDE ( SUMX ( GuestExperience, GuestExperience[NetPromoterScore] * GuestExperience[SurveyResponses] ), [Survey Responses] )
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 03 Guest
+		lineageTag: a0f109f1-4572-5b54-8803-9ae71c64aff9
+
+	/// Overall guest score weighted by responses.
+	measure 'Overall Score (weighted)' = DIVIDE ( SUMX ( GuestExperience, GuestExperience[OverallScore] * GuestExperience[SurveyResponses] ), [Survey Responses] )
+		formatString: 0.00
+		displayFolder: 03 Guest
+		lineageTag: 69817232-b610-5a17-8e62-b2578b86095e
+
+	/// Room comfort score weighted by responses.
+	measure 'Room Comfort (weighted)' = DIVIDE ( SUMX ( GuestExperience, GuestExperience[RoomComfortScore] * GuestExperience[SurveyResponses] ), [Survey Responses] )
+		formatString: 0.00
+		displayFolder: 03 Guest
+		lineageTag: 9bc42302-2d1f-5b67-b2fe-14bfd3ad1dae
+
+	/// Complaints logged.
+	measure Complaints = SUM ( GuestComplaints[Complaints] )
+		formatString: #,0
+		displayFolder: 03 Guest
+		lineageTag: ea9b0731-8f5a-5aec-a139-2aff8a3e5a5f
+
+	/// Complaints normalised per thousand room nights sold.
+	measure 'Complaints per 1k Room Nights' = DIVIDE ( [Complaints], [Rooms Sold] ) * 1000
+		formatString: 0.00
+		displayFolder: 03 Guest
+		lineageTag: 3f04b828-56b8-54e8-befc-2f34af4e0866
+
+	/// Occupancy % fixed to calendar 2024, ignoring the page's date context.
+	measure 'Occupancy % 2024' = CALCULATE ( [Occupancy %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 )
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: 53f56e3a-0f6d-5998-8207-4103d479c716
+
+	/// Occupancy % fixed to calendar 2025, ignoring the page's date context.
+	measure 'Occupancy % 2025' = CALCULATE ( [Occupancy %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: 7640b601-d6d0-5ab5-b9b6-4edfd10e57e3
+
+	/// RevPAR fixed to calendar 2024, ignoring the page's date context.
+	measure 'RevPAR 2024' = CALCULATE ( [RevPAR], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 )
+		formatString: \$#,0.00
+		displayFolder: 01 Core
+		lineageTag: 5d812a2a-f983-53e1-8332-87e82201855c
+
+	/// RevPAR fixed to calendar 2025, ignoring the page's date context.
+	measure 'RevPAR 2025' = CALCULATE ( [RevPAR], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0.00
+		displayFolder: 01 Core
+		lineageTag: f5ed19d9-8242-5736-8f5f-863ccdf8335a
+
+	/// ADR fixed to calendar 2025, ignoring the page's date context.
+	measure 'ADR 2025' = CALCULATE ( [ADR], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0.00
+		displayFolder: 01 Core
+		lineageTag: fab2a2eb-3ca6-52ac-9ef6-85b42a2e820c
+
+	/// GOP Margin % fixed to calendar 2023, ignoring the page's date context.
+	measure 'GOP Margin % 2023' = CALCULATE ( [GOP Margin %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2023 )
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: 5a60b903-9b0e-5bc5-a505-2d8855ca2f68
+
+	/// GOP Margin % fixed to calendar 2024, ignoring the page's date context.
+	measure 'GOP Margin % 2024' = CALCULATE ( [GOP Margin %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 )
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: c948e2d8-d9dc-51be-adcc-0dc9809128a1
+
+	/// GOP Margin % fixed to calendar 2025, ignoring the page's date context.
+	measure 'GOP Margin % 2025' = CALCULATE ( [GOP Margin %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%
+		displayFolder: 01 Core
+		lineageTag: d2b301a4-d17c-51e5-81a2-f054b5f3fcbe
+
+	/// GOP Margin after Distribution % fixed to calendar 2025, ignoring the page's date context.
+	measure 'GOP Margin after Distribution % 2025' = CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%
+		displayFolder: 02 Channels
+		lineageTag: 37f892d8-44b9-5078-8fb4-c2cf96b0d4c2
+
+	/// NPS (weighted) fixed to calendar 2021, ignoring the page's date context.
+	measure 'NPS (weighted) 2021' = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 )
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 03 Guest
+		lineageTag: edb5f5d0-0958-565f-99fb-d48a86707322
+
+	/// NPS (weighted) fixed to calendar 2025, ignoring the page's date context.
+	measure 'NPS (weighted) 2025' = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 03 Guest
+		lineageTag: 5a57e5a8-c937-52d2-ace4-4ce0ab4e4220
+
+	/// Room Comfort (weighted) fixed to calendar 2025, ignoring the page's date context.
+	measure 'Room Comfort (weighted) 2025' = CALCULATE ( [Room Comfort (weighted)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.00
+		displayFolder: 03 Guest
+		lineageTag: e9a38773-6685-5d2a-845b-0be48ff21b77
+
+	/// Complaints per 1k Room Nights fixed to calendar 2025, ignoring the page's date context.
+	measure 'Complaints per 1k Room Nights 2025' = CALCULATE ( [Complaints per 1k Room Nights], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.00
+		displayFolder: 03 Guest
+		lineageTag: e300978d-a1e0-5d54-bdc0-0b423082a1e1
+
+	/// OTA Share % fixed to calendar 2025, ignoring the page's date context.
+	measure 'OTA Share % 2025' = CALCULATE ( [OTA Share %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%
+		displayFolder: 02 Channels
+		lineageTag: c3b9be8a-03ef-5e57-b136-f48d2c8ab30b
+
+	/// Direct Share % fixed to calendar 2025, ignoring the page's date context.
+	measure 'Direct Share % 2025' = CALCULATE ( [Direct Share %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%
+		displayFolder: 02 Channels
+		lineageTag: 7301053e-5c43-5b3d-bd2c-0f8cdbd053bf
+
+	/// Distribution Cost fixed to calendar 2025, ignoring the page's date context.
+	measure 'Distribution Cost 2025' = CALCULATE ( [Distribution Cost], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 02 Channels
+		lineageTag: 354fc9e4-d222-57c0-9558-6c293693ebe6
+
+	/// Distribution Cost % of Room Revenue fixed to calendar 2021, ignoring the page's date context.
+	measure 'Distribution Cost % of Room Revenue 2021' = CALCULATE ( [Distribution Cost % of Room Revenue], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 )
+		formatString: 0.0%
+		displayFolder: 02 Channels
+		lineageTag: 1f3fdc50-267b-521b-862e-6a9dc9b4237c
+
+	/// Distribution Cost % of Room Revenue fixed to calendar 2025, ignoring the page's date context.
+	measure 'Distribution Cost % of Room Revenue 2025' = CALCULATE ( [Distribution Cost % of Room Revenue], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%
+		displayFolder: 02 Channels
+		lineageTag: ebb802dc-0def-56f1-973f-49c55ba617bf
+
+	/// Distribution Cost at 2021 Mix fixed to calendar 2025, ignoring the page's date context.
+	measure 'Distribution Cost at 2021 Mix 2025' = CALCULATE ( [Distribution Cost at 2021 Mix], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0;(\$#,0)
+		displayFolder: 02 Channels
+		lineageTag: c243d64e-c492-5020-bd12-9d4d051d0297
+
+	/// Distribution Cost above 2021 Mix fixed to calendar 2025, ignoring the page's date context.
+	measure 'Distribution Cost above 2021 Mix 2025' = CALCULATE ( [Distribution Cost above 2021 Mix], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 02 Channels
+		lineageTag: f397a61b-9620-5567-ae1e-838987425999
+
+	/// Rooms Sold fixed to calendar 2025, ignoring the page's date context.
+	measure 'Rooms Sold 2025' = CALCULATE ( [Rooms Sold], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: #,0
+		displayFolder: 01 Core
+		lineageTag: 0e79d2cc-cb09-52b3-b84a-9c3c5d046bd3
+
+	/// Total Revenue fixed to calendar 2025, ignoring the page's date context.
+	measure 'Total Revenue 2025' = CALCULATE ( [Total Revenue], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 01 Core
+		lineageTag: 62fe9cd9-4a87-54b9-9390-b96496d5020a
+
+	/// GOP fixed to calendar 2025, ignoring the page's date context.
+	measure 'GOP 2025' = CALCULATE ( [GOP], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 01 Core
+		lineageTag: 2f6a136c-7372-537b-bf2b-bfc6bbba4aa3
+
+	/// Revenue per Occupied Room fixed to calendar 2025, ignoring the page's date context.
+	measure 'Revenue per Occupied Room 2025' = CALCULATE ( [Revenue per Occupied Room], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: \$#,0.00
+		displayFolder: 01 Core
+		lineageTag: efb7519c-603c-5f98-abe9-dd7b03bae391
+
+	/// Full (85 percent or more), Tired (negative NPS), Weak (under 65 percent), else Fine; 2025.
+	measure 'Hotel Status 2025' = VAR occ = [Occupancy % 2025] VAR nps = [NPS (weighted) 2025] RETURN SWITCH ( TRUE (), occ >= 0.85, "Full", nps < 0, "Tired", occ < 0.65, "Weak", "Fine" )
+		formatString: @
+		displayFolder: 03 Guest
+		lineageTag: ae5fd3c4-3894-5ae1-b5ae-5127f340ef7c
+
+	/// Investment budget of the brand in context.
+	measure Budget = SUM ( Brands[InvestmentBudgetUSD] )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 04 Plan builder
+		lineageTag: 4ff60ba8-b286-538a-af8a-7a6ba42ec304
+
+	/// Capex of the projects currently selected in the plan builder.
+	measure 'Capex Selected' = SUM ( InvestmentProjects[CapexUSD] )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 04 Plan builder
+		lineageTag: 2bd6d633-c903-5d48-90df-2d506f2fe30a
+
+	/// Selected capex over the brand budget.
+	measure 'Budget Used %' = DIVIDE ( [Capex Selected], [Budget] )
+		formatString: 0.0%
+		displayFolder: 04 Plan builder
+		lineageTag: 2a9f54f9-477c-546e-b86d-0a6ccd0dacb4
+
+	/// Budget left after the selection.
+	measure 'Budget Remaining' = [Budget] - [Capex Selected]
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 04 Plan builder
+		lineageTag: 72a2ee5e-1411-51eb-8c5e-a3b08e11852a
+
+	/// Projects in the selection.
+	measure 'Projects Selected' = COUNTROWS ( InvestmentProjects )
+		formatString: 0
+		displayFolder: 04 Plan builder
+		lineageTag: 3b4e0ff8-7234-5676-b69b-c2fd301a7beb
+
+	/// Selected projects flagged as growth initiatives by the organisers.
+	measure 'Growth Initiatives Selected' = CALCULATE ( COUNTROWS ( InvestmentProjects ), InvestmentProjects[GrowthInitiative] = "Yes" )
+		formatString: 0
+		displayFolder: 04 Plan builder
+		lineageTag: accb5c31-ac19-5c56-a1c4-2a6b8c699da5
+
+	/// Contest constraints as a lamp: at least 3 projects, at least 1 growth initiative, within budget, GI-02 needs GI-01.
+	measure 'Plan Valid (text)' = VAR n = [Projects Selected] VAR g = [Growth Initiatives Selected] VAR over = [Capex Selected] > [Budget] VAR kiosk = CALCULATE ( COUNTROWS ( InvestmentProjects ), InvestmentProjects[ProjectID] = "GI-02" ) > 0 VAR app = CALCULATE ( COUNTROWS ( InvestmentProjects ), InvestmentProjects[ProjectID] = "GI-01" ) > 0 VAR issues = IF ( n < 3, "fewer than 3 projects; ", "" ) & IF ( g < 1, "no growth initiative; ", "" ) & IF ( over, "over budget; ", "" ) & IF ( kiosk && NOT app, "kiosks need the booking app; ", "" ) RETURN IF ( issues = "", "Plan valid: " & n & " projects, " & g & " growth, within budget, dependencies met", "Not yet valid: " & issues )
+		formatString: @
+		displayFolder: 04 Plan builder
+		lineageTag: f384d754-5497-5c09-89d2-48c2cc0618b2
+
+	/// Rooms added by the selected projects.
+	measure 'Rooms Added' = SUM ( InvestmentProjects[AddedRooms] )
+		formatString: #,0
+		displayFolder: 04 Plan builder
+		lineageTag: 93f013e1-4ae4-50d2-b8e6-376298b4e73e
+
+	/// Rooms in the hotels touched by selected renovation projects.
+	measure 'Rooms Refreshed' = CALCULATE ( SUM ( Hotels[Rooms] ), CROSSFILTER ( InvestmentProjectProperties[HotelID], Hotels[HotelID], BOTH ), InvestmentProjects[Category] = "Renovation" )
+		formatString: #,0
+		displayFolder: 04 Plan builder
+		lineageTag: 20a23206-dd88-5cbc-937d-24802b1949f6
+
+	/// Hotels receiving self check-in kiosks when GI-02 is selected.
+	measure 'Kiosk Desks' = CALCULATE ( COUNTROWS ( InvestmentProjectProperties ), InvestmentProjects[ProjectID] = "GI-02" )
+		formatString: #,0
+		displayFolder: 04 Plan builder
+		lineageTag: 476616dd-f7d6-5e9c-87ff-1d3e6186ab32
+
+	/// Longest works period with rooms out of service in the selection.
+	measure 'Disruption Months' = MAXX ( FILTER ( InvestmentProjects, InvestmentProjects[RoomsOutOfServicePct] > 0 ), InvestmentProjects[DurationMonths] )
+		formatString: 0
+		displayFolder: 04 Plan builder
+		lineageTag: fc6b05cb-e116-503c-a5b7-a86c4fbbca25
+
+	/// Earliest start of the project in context.
+	measure 'Start (text)' = FORMAT ( MIN ( InvestmentProjects[EarliestStart] ), "mmm yyyy" )
+		formatString: @
+		displayFolder: 04 Plan builder
+		lineageTag: 9dbfb661-a208-5fe5-94d4-6abcdbe870e8
+
+	/// Go-live month of the project in context.
+	measure 'Live (text)' = FORMAT ( MIN ( InvestmentProjects[Completion Date] ), "mmm yyyy" )
+		formatString: @
+		displayFolder: 04 Plan builder
+		lineageTag: 907975e2-b3ed-5f78-9167-c765071b3929
+
+	/// Hotels mapped to the project in context.
+	measure 'Hotels Touched' = DISTINCTCOUNT ( InvestmentProjectProperties[HotelID] )
+		formatString: #,0
+		displayFolder: 04 Plan builder
+		lineageTag: e245eb25-e3d2-54c6-ab7e-277528527057
+
+	/// Scenario chosen in the toggle; Expected when nothing is selected.
+	measure 'Selected Scenario' = SELECTEDVALUE ( Scenario[Scenario], "Expected" )
+		formatString: @
+		displayFolder: 04 Plan builder
+		lineageTag: a667d7ba-5113-5697-b333-732f2553aa79
+
+	/// Capex spread evenly over each project's duration (FinanceParameters rule).
+	measure 'Capex Phased' = VAR s = [Selected Scenario] RETURN CALCULATE ( SUM ( ProjectCashflow[Capex] ), ProjectCashflow[Scenario] = s )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 440cd6f5-1702-5253-b7fb-c15628431eaf
+
+	/// Revenue lost from rooms out of service during works, no cost relief (conservative).
+	measure Disruption = VAR s = [Selected Scenario] RETURN CALCULATE ( SUM ( ProjectCashflow[Disruption] ), ProjectCashflow[Scenario] = s )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 85e3fc0f-1b5c-5304-a872-7cdef0868843
+
+	/// Annual operating-profit impact per month after go-live, ramped 50 / 85 / 100 percent per FinanceParameters.
+	measure 'Benefit (ramped)' = VAR s = [Selected Scenario] RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ), ProjectCashflow[Scenario] = s )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: d59933f7-7abb-5a4c-a741-4a67e1c0eae7
+
+	/// Benefit at the Low scenario regardless of the toggle.
+	measure 'Benefit (ramped, Low)' = VAR s = "Low" RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ), ProjectCashflow[Scenario] = s )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 2d428f3b-a3ab-5ee2-a6e4-3d430285ceed
+
+	/// Benefit at the High scenario regardless of the toggle.
+	measure 'Benefit (ramped, High)' = VAR s = "High" RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ), ProjectCashflow[Scenario] = s )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: f72018de-ce8d-5c87-b300-3b05c2407724
+
+	/// Benefit minus capex minus disruption, in 2025 dollars.
+	measure 'Net Impact' = [Benefit (ramped)] - [Capex Phased] - [Disruption]
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 634c3de2-8a15-54dc-89c7-9f5b523f376a
+
+	/// Operating-profit effect only (capex is cash, not profit).
+	measure 'OP Impact' = [Benefit (ramped)] - [Disruption]
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 8d708e5c-957e-5974-864f-ca9af69a65c6
+
+	/// Operating-profit effect at the Low scenario.
+	measure 'OP Impact (Low)' = [Benefit (ramped, Low)] - [Disruption]
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: e29083ea-439d-5a68-9401-c077c7c91a9a
+
+	/// Net impact at the Low scenario.
+	measure 'Net Impact (Low)' = VAR s = "Low" RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), ProjectCashflow[Scenario] = s )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 7b73f8a8-1b11-5a3d-9a68-3cf69ae852d1
+
+	/// Operating-profit effect at the High scenario.
+	measure 'OP Impact (High)' = [Benefit (ramped, High)] - [Disruption]
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 1fc0f844-1608-538e-88f0-40c2794a40cf
+
+	/// Net impact at the High scenario.
+	measure 'Net Impact (High)' = VAR s = "High" RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), ProjectCashflow[Scenario] = s )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 32b37e29-95d8-55fa-96f7-57777f67df87
+
+	/// Net impact accumulated from January 2027 to the end of the period in context.
+	measure 'Cumulative Net Impact' = VAR d = MAX ( 'Date'[Date] ) RETURN CALCULATE ( [Net Impact], REMOVEFILTERS ( 'Date' ), 'Date'[Date] <= d )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 3e3aa1ee-1b24-572a-9a5b-bc542ece51fd
+
+	/// Cumulative net impact at the Low scenario.
+	measure 'Cumulative Net Impact (Low)' = VAR d = MAX ( 'Date'[Date] ) RETURN CALCULATE ( [Net Impact (Low)], REMOVEFILTERS ( 'Date' ), 'Date'[Date] <= d )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 9c9bcde6-f81e-5b41-a520-0bdeb5049d17
+
+	/// Cumulative net impact at the High scenario.
+	measure 'Cumulative Net Impact (High)' = VAR d = MAX ( 'Date'[Date] ) RETURN CALCULATE ( [Net Impact (High)], REMOVEFILTERS ( 'Date' ), 'Date'[Date] <= d )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: bde6ce3d-9c8f-50c7-90d0-597390e98fd6
+
+	/// Full annual operating-profit impact of the selection once ramped (every project is at 100 percent by 2032).
+	measure '2032 Run-rate' = VAR s = [Selected Scenario] RETURN CALCULATE ( SUM ( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), InvestmentScenarios[Scenario] = s )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 6ff79109-49fe-5ba6-892f-e12f3569b0b2
+
+	/// Run-rate at the Low scenario.
+	measure '2032 Run-rate (Low)' = CALCULATE ( SUM ( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), InvestmentScenarios[Scenario] = "Low" )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 220e71d6-a59e-5fdc-8435-a28478390a63
+
+	/// Run-rate at the High scenario.
+	measure '2032 Run-rate (High)' = CALCULATE ( SUM ( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), InvestmentScenarios[Scenario] = "High" )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: 37430e6e-c73f-5b56-9b34-2079d5b657c3
+
+	/// Run-rate relative to 2025 gross operating profit.
+	measure 'Run-rate % of 2025 GOP' = DIVIDE ( [2032 Run-rate], [GOP 2025] )
+		formatString: 0.0%
+		displayFolder: 05 Impact
+		lineageTag: c67cacb6-7202-52d4-9be0-8bc88fc6dba0
+
+	/// Net impact discounted to 2026 at the FinanceParameters rate, through 2032, no terminal value.
+	measure 'NPV @ 8%' = VAR r = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ) RETURN SUMX ( FILTER ( ALL ( 'Date'[Year] ), 'Date'[Year] >= 2027 ), CALCULATE ( [Net Impact] ) / ( 1 + r ) ^ ( 'Date'[Year] - 2026 ) )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 05 Impact
+		lineageTag: fc5fb743-e30c-5399-ad34-115471b592a1
+
+	/// First year the cumulative net impact turns positive; blank when after 2032.
+	measure 'Payback Year' = VAR t = ADDCOLUMNS ( FILTER ( ALL ( 'Date'[Year] ), 'Date'[Year] >= 2027 ), "@cum", VAR y = 'Date'[Year] RETURN CALCULATE ( [Net Impact], REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y ) ) RETURN MINX ( FILTER ( t, [@cum] >= 0 ), 'Date'[Year] )
+		formatString: 0
+		displayFolder: 05 Impact
+		lineageTag: 8b5280b9-86d2-58dd-b7d1-31d46bab6388
+
+	/// Payback year as text, with the horizon trap spelled out.
+	measure 'Payback (text)' = IF ( ISBLANK ( [Payback Year] ), "after 2032", FORMAT ( [Payback Year], "0" ) )
+		formatString: @
+		displayFolder: 05 Impact
+		lineageTag: b8c585db-c8e9-5928-86cd-90ac0e164910
+
+	/// Rooms available in the do-nothing projection (2025 capacity held).
+	measure 'Baseline Rooms Available' = SUM ( HotelOutlook[RoomsAvailable] )
+		formatString: #,0
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 53f968a1-4a98-564f-bf59-1058ed1972cd
+
+	/// Room nights the market would fill, 2025 sold nights grown by regional demand (scenario logic).
+	measure 'Baseline Demand Room Nights' = SUM ( HotelOutlook[DemandRoomNights] )
+		formatString: #,0
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 2eb155e8-64f7-5b49-a18c-e0e52b0e5778
+
+	/// Demand capped at 97 percent occupancy (scenario logic).
+	measure 'Baseline Rooms Sold' = SUM ( HotelOutlook[RoomsSold] )
+		formatString: #,0
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 696a4d13-45a8-5f35-8b06-319b45b5be5a
+
+	/// Do-nothing occupancy (scenario logic).
+	measure 'Baseline Occupancy %' = DIVIDE ( [Baseline Rooms Sold], [Baseline Rooms Available] )
+		formatString: 0.0%
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 561f617d-a3a2-5672-b371-f9ec19e04683
+
+	/// Uncapped demand over available rooms; above 97 percent means rooms are turned away.
+	measure 'Baseline Demand Occupancy %' = DIVIDE ( [Baseline Demand Room Nights], [Baseline Rooms Available] )
+		formatString: 0.0%
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: aadd6791-1870-5258-a06e-7e8be617581d
+
+	/// The occupancy ceiling used by the baseline (highest observed).
+	measure 'Capacity Cap %' = 0.97
+		formatString: 0.0%
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: ceef3cf7-ea32-5126-9893-0f211a38ba67
+
+	/// Demand turned away by the capacity cap.
+	measure 'Unmet Room Nights' = [Baseline Demand Room Nights] - [Baseline Rooms Sold]
+		formatString: #,0
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 051c194f-aea7-5f2c-bd90-abb791c25d03
+
+	/// Do-nothing revenue: 2025 revenue per occupied room grown by ADR inflation (scenario logic).
+	measure 'Baseline Revenue' = SUM ( HotelOutlook[Revenue] )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 69a921d6-e4fb-53df-9340-245ad8a72114
+
+	/// Do-nothing opex: 2025 cost per occupied room grown by cost inflation (scenario logic).
+	measure 'Baseline Opex' = SUM ( HotelOutlook[Opex] )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 77b190d9-b6c4-5cf7-9bab-6fb4ecf526cb
+
+	/// Do-nothing gross operating profit (scenario logic).
+	measure 'Baseline GOP' = [Baseline Revenue] - [Baseline Opex]
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 029591af-a941-5363-b605-e2e4477f30e1
+
+	/// Do-nothing margin (scenario logic).
+	measure 'Baseline GOP Margin %' = DIVIDE ( [Baseline GOP], [Baseline Revenue] )
+		formatString: 0.0%
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 93fc55a1-58d4-526c-961b-5ab2eaffc05a
+
+	/// First year the hotel in context runs out of rooms (scenario logic).
+	measure 'First Capped Year' = MIN ( HotelOutlook[FirstCappedYear] )
+		formatString: 0
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 1151104a-b2b2-51f9-93bd-091a38665ba3
+
+	/// Actual GOP margin on the 2021-2032 timeline axis (blank after 2025).
+	measure 'Margin Actual (timeline)' = CALCULATE ( [GOP Margin %], TREATAS ( VALUES ( Timeline[Year] ), 'Date'[Year] ) )
+		formatString: 0.0%
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: a5b4942b-3d8a-50b8-b34f-2c662c7be205
+
+	/// Do-nothing margin on the timeline axis, 2025 onward (scenario logic).
+	measure 'Margin Baseline (timeline)' = CALCULATE ( [Baseline GOP Margin %], TREATAS ( VALUES ( Timeline[Year] ), HotelOutlook[Year] ) )
+		formatString: 0.0%
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 039decd2-aada-5aca-ab75-5ab9152ac52d
+
+	/// Do-nothing GOP on the timeline axis (scenario logic).
+	measure 'GOP Baseline (timeline)' = CALCULATE ( [Baseline GOP], TREATAS ( VALUES ( Timeline[Year] ), HotelOutlook[Year] ) )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 4d1a22c0-5fea-585e-8eb5-c75e6c5d3a86
+
+	/// Baseline GOP plus the selected plan's operating-profit effect (scenario logic).
+	measure 'GOP Plan (timeline)' = [GOP Baseline (timeline)] + CALCULATE ( [OP Impact], TREATAS ( VALUES ( Timeline[Year] ), 'Date'[Year] ) )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 4dba8651-ae03-55b6-a294-1237bc601a89
+
+	/// Plan GOP at the Low scenario.
+	measure 'GOP Plan (timeline, Low)' = [GOP Baseline (timeline)] + CALCULATE ( [OP Impact (Low)], TREATAS ( VALUES ( Timeline[Year] ), 'Date'[Year] ) )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 6660cc4a-3387-57c1-a788-610b8a0459a1
+
+	/// Plan GOP at the High scenario.
+	measure 'GOP Plan (timeline, High)' = [GOP Baseline (timeline)] + CALCULATE ( [OP Impact (High)], TREATAS ( VALUES ( Timeline[Year] ), 'Date'[Year] ) )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 06 Outlook (scenario logic)
+		lineageTag: 7c65dfc7-56fe-514c-b9db-45bf995dcffa
+
+	/// One value per bridge step: the 2024 to 2025 GOP bridge (actuals) and the 2025 to 2032 baseline bridge (scenario logic).
+	measure 'Bridge Value' = VAR s = SELECTEDVALUE ( BridgeStep[Step] ) VAR sold24 = CALCULATE ( [Rooms Sold], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 ) VAR sold25 = CALCULATE ( [Rooms Sold], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR rev24 = CALCULATE ( [Total Revenue], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 ) VAR rev25 = CALCULATE ( [Total Revenue], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR volume = ( sold25 - sold24 ) * DIVIDE ( rev24, sold24 ) VAR rate = rev25 - rev24 - volume VAR bsold25 = CALCULATE ( [Baseline Rooms Sold], HotelOutlook[Year] = 2025 ) VAR bsold32 = CALCULATE ( [Baseline Rooms Sold], HotelOutlook[Year] = 2032 ) VAR brev25 = CALCULATE ( [Baseline Revenue], HotelOutlook[Year] = 2025 ) VAR brev32 = CALCULATE ( [Baseline Revenue], HotelOutlook[Year] = 2032 ) VAR bopex25 = CALCULATE ( [Baseline Opex], HotelOutlook[Year] = 2025 ) VAR bopex32 = CALCULATE ( [Baseline Opex], HotelOutlook[Year] = 2032 ) VAR revpor = DIVIDE ( brev25, bsold25 ) VAR cpor = DIVIDE ( bopex25, bsold25 ) RETURN SWITCH ( s, "GOP 2024", CALCULATE ( [GOP], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 ), "Volume", volume, "Rate", rate, "Staff", - ( CALCULATE ( SUM ( MonthlyPerformance[StaffCost] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) - CALCULATE ( SUM ( MonthlyPerformance[StaffCost] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 ) ), "Energy", - ( CALCULATE ( SUM ( MonthlyPerformance[EnergyCost] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) - CALCULATE ( SUM ( MonthlyPerformance[EnergyCost] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 ) ), "Maintenance", - ( CALCULATE ( SUM ( MonthlyPerformance[MaintenanceCost] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) - CALCULATE ( SUM ( MonthlyPerformance[MaintenanceCost] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 ) ), "Food and beverage cost", - ( CALCULATE ( SUM ( MonthlyPerformance[FoodBeverageCost] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) - CALCULATE ( SUM ( MonthlyPerformance[FoodBeverageCost] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 ) ), "Other cost", - ( CALCULATE ( SUM ( MonthlyPerformance[OtherOperatingCost] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) - CALCULATE ( SUM ( MonthlyPerformance[OtherOperatingCost] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2024 ) ), "GOP 2025 (baseline)", brev25 - bopex25, "Volume the market gives", ( bsold32 - bsold25 ) * ( revpor - cpor ), "Price inflation", brev32 - bsold32 * revpor, "Cost inflation", - ( bopex32 - bsold32 * cpor ) )
+		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
+		displayFolder: 07 Display
+		lineageTag: 7df0bd39-fe6e-566c-be81-d903e4431d9a
+
+	/// The folio: a 2025 OTA room night, what the channel takes and what the hotel keeps.
+	measure 'Folio OTA Guest' = VAR line = SELECTEDVALUE ( FolioLine[Line] ) VAR rate = CALCULATE ( DIVIDE ( [Channel Room Revenue], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) VAR comm = CALCULATE ( DIVIDE ( [Distribution Cost], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) RETURN SWITCH ( line, "Room night, average rate", rate, "Paid to the channel", - comm, "What we keep", rate - comm )
+		formatString: \$#,0.00;(\$#,0.00)
+		displayFolder: 07 Display
+		lineageTag: 5941f4d7-1478-5c1b-809f-4f91b4a440a4
+
+	/// The folio: the same room night booked on the brand's own site or app.
+	measure 'Folio Direct Guest' = VAR line = SELECTEDVALUE ( FolioLine[Line] ) VAR rate = CALCULATE ( DIVIDE ( [Channel Room Revenue], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) VAR comm = CALCULATE ( DIVIDE ( [Distribution Cost], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) RETURN SWITCH ( line, "Room night, average rate", rate, "Paid to the channel", - comm, "What we keep", rate - comm )
+		formatString: \$#,0.00;(\$#,0.00)
+		displayFolder: 07 Display
+		lineageTag: 35259f79-1541-5b72-bfdb-0c160fee599a
+
+	/// Sister-brand margins after distribution in 2025, for the benchmark note.
+	measure 'Benchmark after Distribution (text)' = CONCATENATEX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), Brands[Brand] & " " & FORMAT ( CALCULATE ( [GOP Margin after Distribution % 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), TREATAS ( { Brands[Brand] }, Hotels[Brand] ) ), "0.0%" ), ", ", Brands[Brand] )
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: e7447d36-b936-5d69-ad5a-e48a0508f28a
+
+	/// Sister-brand GOP margins before distribution in 2025.
+	measure 'Benchmark before Distribution (text)' = CONCATENATEX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), Brands[Brand] & " " & FORMAT ( CALCULATE ( [GOP Margin % 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), TREATAS ( { Brands[Brand] }, Hotels[Brand] ) ), "0.0%" ), ", ", Brands[Brand] )
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: 92aea387-b62d-5690-9067-4822ab52627e
+
+	/// KPI delta line.
+	measure 'Occupancy vs 2024 (text)' = FORMAT ( ( [Occupancy % 2025] - [Occupancy % 2024] ) * 100, "+0.0;-0.0;0.0" ) & " pt vs 2024"
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: 938a740d-6615-54b7-8c05-84cb61dc2f42
+
+	/// KPI delta line.
+	measure 'RevPAR vs 2024 (text)' = FORMAT ( DIVIDE ( [RevPAR 2025], [RevPAR 2024] ) - 1, "+0.0%;-0.0%;0.0%" ) & " vs 2024"
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: 4b188063-f95e-50b5-8463-49cec2b03bc2
+
+	/// KPI delta line.
+	measure 'GOP Margin vs 2023 (text)' = FORMAT ( ( [GOP Margin % 2025] - [GOP Margin % 2023] ) * 100, "+0.0;-0.0;0.0" ) & " pt vs 2023, " & FORMAT ( [GOP Margin after Distribution % 2025], "0.0%" ) & " after commissions"
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: e2ac5ff0-f885-5467-b3dd-1b009fe00b6e
+
+	/// KPI delta line.
+	measure 'NPS vs 2021 (text)' = FORMAT ( [NPS (weighted) 2025] - [NPS (weighted) 2021], "+0.0;-0.0;0.0" ) & " vs 2021"
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: 8623bd07-f45b-5d78-8bea-de8308f73530
+
+	/// The $ at the 2021 mix callout.
+	measure 'Counterfactual (text)' = FORMAT ( [Distribution Cost above 2021 Mix 2025] / 1000000, "$0.0" ) & " M a year above the 2021 channel mix, at today's rates per channel (counterfactual)"
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: 313cffdd-4f74-5ce0-83a9-034086489f07
+
+	/// Dynamic page-2 headline from the selection.
+	measure 'Headline Plan (text)' = FORMAT ( [Capex Selected] / 1000000, "$0.0" ) & " M of " & FORMAT ( [Budget] / 1000000, "$0" ) & " M on " & [Projects Selected] & " projects: " & FORMAT ( [2032 Run-rate] / 1000000, "+$0.0;-$0.0" ) & " M a year of operating profit by 2032 (" & [Selected Scenario] & ")"
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: ec071969-e324-5ea9-86e5-8a081f75ba04
+
+	/// Dynamic headline for the wall: counts of Full and Tired hotels.
+	measure 'Headline Wall (text)' = VAR full = COUNTROWS ( FILTER ( VALUES ( Hotels[HotelID] ), [Hotel Status 2025] = "Full" ) ) VAR tired = COUNTROWS ( FILTER ( VALUES ( Hotels[HotelID] ), [Hotel Status 2025] = "Tired" ) ) RETURN full & " are full. " & tired & " are tired."
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: 9bd6dd6f-ed95-54ce-a063-37932f40221c
+
+	/// The wall: lit once the project is live in the chosen year, planned before that, blank when the hotel is not touched.
+	measure 'Wall Light' = VAR y = SELECTEDVALUE ( PlanYear[Year], 2032 ) VAR n = COUNTROWS ( InvestmentProjectProperties ) VAR done = MAXX ( InvestmentProjects, YEAR ( InvestmentProjects[Completion Date] ) ) RETURN IF ( n > 0, IF ( done <= y, "lit", "planned" ) )
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: fbad4479-2470-59c3-8a1e-d02272b21dff
+
+	/// Capacity wall label per hotel.
+	measure 'Capacity (text)' = VAR y = [First Capped Year] RETURN IF ( ISBLANK ( [Baseline Rooms Available] ), BLANK (), IF ( ISBLANK ( y ), "room to grow", "full in " & y ) )
+		formatString: @
+		displayFolder: 07 Display
+		lineageTag: a3848b7f-4745-5d28-9446-132077b1237b
+
+	column Placeholder
+		dataType: string
+		isHidden
+		lineageTag: c4315546-1a37-5d10-81ae-2f137aeba1bf
+		summarizeBy: none
+		sourceColumn: Placeholder
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = #table({"Placeholder"}, {{"x"}})
+				in
+				    Source
+
+	annotation PBI_ResultType = Table

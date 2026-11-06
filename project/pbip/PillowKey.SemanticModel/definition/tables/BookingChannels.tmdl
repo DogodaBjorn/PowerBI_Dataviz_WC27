@@ -1,0 +1,70 @@
+/// Grain: one row per hotel, month and channel. Room revenue and nights reconcile to MonthlyPerformance; DistributionCost sits outside opex.
+table BookingChannels
+	lineageTag: f9ef95ba-3fb2-5b17-b575-af3e86b92905
+
+	column HotelID
+		dataType: string
+		isHidden
+		lineageTag: f668e6cb-ba9e-5cfa-9640-717a55c18210
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	column Month
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: b2051edd-6132-5247-b94a-1644a47cbc9f
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Channel
+		dataType: string
+		lineageTag: 88997138-c3fd-5152-98dd-e36e62f976d5
+		summarizeBy: none
+		sourceColumn: Channel
+
+	column Bookings
+		dataType: int64
+		formatString: 0
+		lineageTag: f8d28548-3e6b-5f9c-a46e-13267f1178d2
+		summarizeBy: none
+		sourceColumn: Bookings
+
+	column RoomNights
+		dataType: int64
+		formatString: 0
+		lineageTag: e6d5860c-a350-538c-9a89-d4c2baaab029
+		summarizeBy: none
+		sourceColumn: RoomNights
+
+	column RoomRevenue
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ed69dd8-1d29-5650-a3f6-8cbe27eaa548
+		summarizeBy: none
+		sourceColumn: RoomRevenue
+
+	column DistributionCost
+		dataType: int64
+		formatString: 0
+		lineageTag: 20b5924a-886a-5574-b327-fc099d486de7
+		summarizeBy: none
+		sourceColumn: DistributionCost
+
+
+	partition BookingChannels = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="BookingChannels",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"Channel", type text}, {"Bookings", Int64.Type}, {"RoomNights", Int64.Type}, {"RoomRevenue", Int64.Type}, {"DistributionCost", Int64.Type}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

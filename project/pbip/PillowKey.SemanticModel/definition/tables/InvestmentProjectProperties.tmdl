@@ -1,0 +1,33 @@
+/// Bridge: which hotels each project touches. Related to both Hotels and InvestmentProjects.
+table InvestmentProjectProperties
+	lineageTag: 32c76b70-0e5e-53ab-adf2-5a6ede57897e
+
+	column ProjectID
+		dataType: string
+		isHidden
+		lineageTag: e4bf4540-31d0-5377-a7fc-f1e4b925174d
+		summarizeBy: none
+		sourceColumn: ProjectID
+
+	column HotelID
+		dataType: string
+		isHidden
+		lineageTag: fb063e0c-ed45-5d57-b81a-2b45b1c22c6b
+		summarizeBy: none
+		sourceColumn: HotelID
+
+
+	partition InvestmentProjectProperties = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="InvestmentProjectProperties",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"ProjectID", type text}, {"HotelID", type text}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

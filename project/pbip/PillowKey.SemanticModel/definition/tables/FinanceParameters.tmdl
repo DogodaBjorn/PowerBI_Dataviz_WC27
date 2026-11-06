@@ -1,0 +1,43 @@
+/// The organisers' valuation rules (discount rate, ramp-up, horizon). Read by ProjectCashflow, never retyped.
+table FinanceParameters
+	lineageTag: 971ae1a6-2e9c-55e2-8bce-a376f79c833a
+
+	column Parameter
+		dataType: string
+		lineageTag: 63c348e7-4a3d-5e19-a2b7-b615c147979a
+		summarizeBy: none
+		sourceColumn: Parameter
+
+	column Value
+		dataType: double
+		lineageTag: 93a2b841-0887-581d-adc2-08921109cc24
+		summarizeBy: none
+		sourceColumn: Value
+
+	column Unit
+		dataType: string
+		lineageTag: 3299f552-933d-5788-9e4f-f634457cea68
+		summarizeBy: none
+		sourceColumn: Unit
+
+	column Notes
+		dataType: string
+		lineageTag: 0c9b0840-9b95-5dd3-aca8-71939b32ea9f
+		summarizeBy: none
+		sourceColumn: Notes
+
+
+	partition FinanceParameters = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="FinanceParameters",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Parameter", type text}, {"Value", type number}, {"Unit", type text}, {"Notes", type text}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

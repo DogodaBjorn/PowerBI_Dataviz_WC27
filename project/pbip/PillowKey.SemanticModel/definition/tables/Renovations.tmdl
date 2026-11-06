@@ -1,0 +1,69 @@
+/// Grain: one renovation per row (1985-2023). Used for renovation spend per hotel only.
+table Renovations
+	lineageTag: ef621b43-0bc1-5ba8-8d4a-da19f306b6f4
+
+	column RenovationID
+		dataType: string
+		lineageTag: 4e695ed7-ece2-515d-83f8-fa045b42a7bf
+		summarizeBy: none
+		sourceColumn: RenovationID
+
+	column HotelID
+		dataType: string
+		isHidden
+		lineageTag: 1d48291f-b7f8-571c-9e7a-8f317afe98a4
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	column StartDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 156609d4-20a8-516b-aeb5-da68091ec150
+		summarizeBy: none
+		sourceColumn: StartDate
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column EndDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 09a53baa-f199-53ed-8889-4d7607fe0936
+		summarizeBy: none
+		sourceColumn: EndDate
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column RenovationType
+		dataType: string
+		lineageTag: 867ef162-2c8a-57d4-9cca-7fb59f02c7f4
+		summarizeBy: none
+		sourceColumn: RenovationType
+
+	column RoomsOutOfServicePct
+		dataType: double
+		lineageTag: 2594a1ec-873a-51c1-a480-f6fdd0aca47c
+		summarizeBy: none
+		sourceColumn: RoomsOutOfServicePct
+
+	column CostUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 22aa808a-837a-5d0e-82e2-c118bca1e8a5
+		summarizeBy: none
+		sourceColumn: CostUSD
+
+
+	partition Renovations = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Renovations",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"RenovationID", type text}, {"HotelID", type text}, {"StartDate", type date}, {"EndDate", type date}, {"RenovationType", type text}, {"RoomsOutOfServicePct", type number}, {"CostUSD", Int64.Type}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,25 @@
+/// Region dimension.
+table Region
+	lineageTag: db845892-d5f9-526d-9025-7dd02b8fb696
+
+	column Region
+		dataType: string
+		lineageTag: d2d2057e-566c-5642-8c08-dbef797200cd
+		summarizeBy: none
+		sourceColumn: Region
+
+
+	partition Region = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Region",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Region", type text}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

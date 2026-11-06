@@ -1,0 +1,37 @@
+/// Steps of the two waterfall bridges; the measure Bridge Value supplies the amounts.
+table BridgeStep
+	lineageTag: 510f30eb-582e-58cc-8f33-1afc2f2b72f5
+
+	column Bridge
+		dataType: string
+		lineageTag: d7f8af29-7fd6-5ba2-ae83-c3aafab6cc35
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Bridge]
+
+	column Step
+		dataType: string
+		sortByColumn: Sort
+		lineageTag: 71e180ff-33c0-5d9c-a323-5e7a3bea4724
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Step]
+
+	column Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: c95ed92a-3b0b-5c43-8a36-b519543be13c
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Sort]
+
+	partition BridgeStep = calculated
+		mode: import
+		source = ```
+				DATATABLE ( "Bridge", STRING, "Step", STRING, "Sort", INTEGER, { { "GOP 2024 to 2025", "GOP 2024", 1 }, { "GOP 2024 to 2025", "Volume", 2 }, { "GOP 2024 to 2025", "Rate", 3 }, { "GOP 2024 to 2025", "Staff", 4 }, { "GOP 2024 to 2025", "Energy", 5 }, { "GOP 2024 to 2025", "Maintenance", 6 }, { "GOP 2024 to 2025", "Food and beverage cost", 7 }, { "GOP 2024 to 2025", "Other cost", 8 }, { "Baseline 2025 to 2032", "GOP 2025 (baseline)", 1 }, { "Baseline 2025 to 2032", "Volume the market gives", 2 }, { "Baseline 2025 to 2032", "Price inflation", 3 }, { "Baseline 2025 to 2032", "Cost inflation", 4 } } )
+				```
+
+	annotation PBI_ResultType = Table

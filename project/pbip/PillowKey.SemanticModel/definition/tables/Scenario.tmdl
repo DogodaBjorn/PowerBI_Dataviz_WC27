@@ -1,0 +1,33 @@
+/// Scenario dimension (disconnected): drives the Low / Expected / High toggle through TREATAS in the measures.
+table Scenario
+	lineageTag: 1c0408ce-876a-5fbe-989c-3a657f3b2af1
+
+	column Scenario
+		dataType: string
+		lineageTag: a14bbbd6-e4ff-55c7-acee-d861290b3bb5
+		summarizeBy: none
+		sourceColumn: Scenario
+		sortByColumn: ScenarioOrder
+
+	column ScenarioOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: bb656798-d693-55ee-8a96-0fa0e6130a11
+		summarizeBy: none
+		sourceColumn: ScenarioOrder
+
+
+	partition Scenario = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Scenario",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Scenario", type text}, {"ScenarioOrder", Int64.Type}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

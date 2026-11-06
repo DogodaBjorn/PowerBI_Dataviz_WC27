@@ -1,0 +1,125 @@
+/// Grain: one row per project, scenario and month, January 2027 to December 2032. Capex phased evenly, disruption from rooms out of service against the mapped hotels' 2025 revenue, benefit ramped 50 / 85 / 100 percent after go-live. Rules read from FinanceParameters.
+table ProjectCashflow
+	lineageTag: 484bb6df-1ac6-5c99-a4df-787ee78738e8
+
+	column ProjectID
+		dataType: string
+		lineageTag: 585c384e-c9ff-5cbe-b56c-f1932a3a8b2d
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [ProjectID]
+
+	column Scenario
+		dataType: string
+		lineageTag: 4b127c0f-41bb-595d-abc3-834e2524752c
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Scenario]
+
+	column Month
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 7c2daf68-31ff-52d7-8db3-5139754ad5d7
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Month]
+
+	column Capex
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: 8bfd55fd-1ef7-5c36-b970-57145b0e0453
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Capex]
+
+	column Disruption
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: e8628c81-1e84-57e6-bdf6-4d1e25540fd4
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Disruption]
+
+	column Benefit
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: a5e3126a-d2b9-57ee-bb92-fa0a9f89c7bd
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Benefit]
+
+	column RevenueBenefit
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: f400941b-1689-53aa-9860-617cd7ca0f7a
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [RevenueBenefit]
+
+	partition ProjectCashflow = calculated
+		mode: import
+		source = ```
+				VAR RampY1 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - first year after completion" )
+				VAR RampY2 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - second year after completion" )
+				VAR RampY3 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - third year onwards" )
+				VAR FirstYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Earliest investment date" )
+				VAR LastYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" )
+				VAR Horizon =
+				    FILTER ( ALLNOBLANKROW ( 'Date'[Date] ), YEAR ( 'Date'[Date] ) >= FirstYear && YEAR ( 'Date'[Date] ) <= LastYear && DAY ( 'Date'[Date] ) = 1 )
+				VAR Hotel25 =
+				    ADDCOLUMNS (
+				        SELECTCOLUMNS ( ALLNOBLANKROW ( Hotels[HotelID] ), "@Hid", Hotels[HotelID] ),
+				        "@Brand", LOOKUPVALUE ( Hotels[Brand], Hotels[HotelID], [@Hid] ),
+				        "@Rev25", VAR vHid = [@Hid] RETURN SUMX ( FILTER ( MonthlyPerformance, MonthlyPerformance[HotelID] = vHid && YEAR ( MonthlyPerformance[Month] ) = 2025 ), MonthlyPerformance[TotalRevenue] )
+				    )
+				RETURN
+				    SELECTCOLUMNS (
+				        GENERATE (
+				            InvestmentScenarios,
+				            VAR vPid = InvestmentScenarios[ProjectID]
+				            VAR vStart = LOOKUPVALUE ( InvestmentProjects[EarliestStart], InvestmentProjects[ProjectID], vPid )
+				            VAR vDur = LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], vPid )
+				            VAR vCapex = LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], vPid )
+				            VAR vOos = LOOKUPVALUE ( InvestmentProjects[RoomsOutOfServicePct], InvestmentProjects[ProjectID], vPid )
+				            VAR vScope = LOOKUPVALUE ( InvestmentProjects[Scope], InvestmentProjects[ProjectID], vPid )
+				            VAR vBrand = LOOKUPVALUE ( InvestmentProjects[Brand], InvestmentProjects[ProjectID], vPid )
+				            VAR vDone = EDATE ( vStart, vDur )
+				            VAR vMappedRev =
+				                IF (
+				                    vScope = "Brand-wide",
+				                    SUMX ( FILTER ( Hotel25, [@Brand] = vBrand ), [@Rev25] ),
+				                    SUMX ( FILTER ( InvestmentProjectProperties, InvestmentProjectProperties[ProjectID] = vPid ), VAR vHid = InvestmentProjectProperties[HotelID] RETURN MAXX ( FILTER ( Hotel25, [@Hid] = vHid ), [@Rev25] ) )
+				                )
+				            VAR vOP = InvestmentScenarios[AnnualOperatingProfitImpactUSD]
+				            VAR vRev = InvestmentScenarios[AnnualRevenueImpactUSD]
+				            RETURN
+				                ADDCOLUMNS (
+				                    Horizon,
+				                    "@Capex", IF ( 'Date'[Date] >= vStart && 'Date'[Date] < vDone, DIVIDE ( vCapex, vDur ), 0 ),
+				                    "@Disruption", IF ( 'Date'[Date] >= vStart && 'Date'[Date] < vDone, vOos * vMappedRev / 12, 0 ),
+				                    "@Benefit",
+				                        VAR vM = DATEDIFF ( vDone, 'Date'[Date], MONTH )
+				                        RETURN IF ( 'Date'[Date] >= vDone, vOP / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 ),
+				                    "@RevenueBenefit",
+				                        VAR vM = DATEDIFF ( vDone, 'Date'[Date], MONTH )
+				                        RETURN IF ( 'Date'[Date] >= vDone, vRev / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 )
+				                )
+				        ),
+				        "ProjectID", InvestmentScenarios[ProjectID],
+				        "Scenario", InvestmentScenarios[Scenario],
+				        "Month", 'Date'[Date],
+				        "Capex", [@Capex],
+				        "Disruption", [@Disruption],
+				        "Benefit", [@Benefit],
+				        "RevenueBenefit", [@RevenueBenefit]
+				    )
+				```
+
+	annotation PBI_ResultType = Table

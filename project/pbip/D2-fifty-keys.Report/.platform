@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "D2 Fifty keys"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4039f318-2fcb-52ec-a701-281d2fac1274"
+  }
+}

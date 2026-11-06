@@ -1,0 +1,85 @@
+/// Grain: one row per hotel and month. Scores are averages: every brand-level score is weighted by SurveyResponses in _Measures.
+table GuestExperience
+	lineageTag: f6070278-e63b-55c6-9c02-b35b761e498c
+
+	column HotelID
+		dataType: string
+		isHidden
+		lineageTag: 7ec3d391-1621-5580-8419-2c75e380bd24
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	column Month
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: baf9dd96-4bf7-5333-98f0-e671a231fa56
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SurveyResponses
+		dataType: int64
+		formatString: 0
+		lineageTag: ce4467db-e679-531a-a26b-2f97635f2781
+		summarizeBy: none
+		sourceColumn: SurveyResponses
+
+	column OverallScore
+		dataType: double
+		lineageTag: 73869406-1bae-5c50-8821-e098d0bdd3d8
+		summarizeBy: none
+		sourceColumn: OverallScore
+
+	column CleanlinessScore
+		dataType: double
+		lineageTag: c21e01fe-ce33-5c2b-8fc5-2e7c7efbc3d7
+		summarizeBy: none
+		sourceColumn: CleanlinessScore
+
+	column ServiceScore
+		dataType: double
+		lineageTag: ef919ab4-7ec3-5d73-9c4f-56f57c46675d
+		summarizeBy: none
+		sourceColumn: ServiceScore
+
+	column RoomComfortScore
+		dataType: double
+		lineageTag: 11155032-aeb7-50a4-96cc-220f8d164ffa
+		summarizeBy: none
+		sourceColumn: RoomComfortScore
+
+	column AmenitiesScore
+		dataType: double
+		lineageTag: 60e239a8-4c13-5c77-9a48-a031b91152ac
+		summarizeBy: none
+		sourceColumn: AmenitiesScore
+
+	column ValueForMoneyScore
+		dataType: double
+		lineageTag: 4c6f0f7a-a81d-5d2f-a2b3-63dedd41bc98
+		summarizeBy: none
+		sourceColumn: ValueForMoneyScore
+
+	column NetPromoterScore
+		dataType: double
+		lineageTag: c085e2bb-46b2-573d-b524-9ae3b79787e7
+		summarizeBy: none
+		sourceColumn: NetPromoterScore
+
+
+	partition GuestExperience = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="GuestExperience",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"SurveyResponses", Int64.Type}, {"OverallScore", type number}, {"CleanlinessScore", type number}, {"ServiceScore", type number}, {"RoomComfortScore", type number}, {"AmenitiesScore", type number}, {"ValueForMoneyScore", type number}, {"NetPromoterScore", type number}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

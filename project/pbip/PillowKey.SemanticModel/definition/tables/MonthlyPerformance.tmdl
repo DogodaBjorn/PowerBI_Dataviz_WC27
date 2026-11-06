@@ -1,0 +1,120 @@
+/// Grain: one row per hotel and month, 2021-01 to 2025-12. Revenue and opex components sum to the totals.
+table MonthlyPerformance
+	lineageTag: 9b5602f1-a220-5eb5-8caa-795b2129bfe4
+
+	column HotelID
+		dataType: string
+		isHidden
+		lineageTag: c4f14f83-6046-5691-87d8-40ab3e276ba8
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	column Month
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: beb33b13-38db-52c9-a2f4-ba8f0ba29ae7
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column RoomsAvailable
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f045eac-932b-506e-b1bb-e103f84188fd
+		summarizeBy: none
+		sourceColumn: RoomsAvailable
+
+	column RoomsSold
+		dataType: int64
+		formatString: 0
+		lineageTag: 5fd0002a-714f-542b-b471-9303b65a5edb
+		summarizeBy: none
+		sourceColumn: RoomsSold
+
+	column RoomRevenue
+		dataType: int64
+		formatString: 0
+		lineageTag: 76c175bd-2f9c-506d-a8ac-e37b51850052
+		summarizeBy: none
+		sourceColumn: RoomRevenue
+
+	column FoodBeverageRevenue
+		dataType: int64
+		formatString: 0
+		lineageTag: 49c23332-e724-5c04-8a32-1c365b68ba83
+		summarizeBy: none
+		sourceColumn: FoodBeverageRevenue
+
+	column OtherRevenue
+		dataType: int64
+		formatString: 0
+		lineageTag: c1c42b0f-e75a-5997-bd97-fd524343e46b
+		summarizeBy: none
+		sourceColumn: OtherRevenue
+
+	column TotalRevenue
+		dataType: int64
+		formatString: 0
+		lineageTag: 05c5e1cb-7aa8-58e3-8721-47aea9133e5c
+		summarizeBy: none
+		sourceColumn: TotalRevenue
+
+	column StaffCost
+		dataType: int64
+		formatString: 0
+		lineageTag: f9fcae94-e7fd-55a9-bd4c-0832ba641714
+		summarizeBy: none
+		sourceColumn: StaffCost
+
+	column EnergyCost
+		dataType: int64
+		formatString: 0
+		lineageTag: f4c00eae-8635-55ed-a92d-b8ec27e209c9
+		summarizeBy: none
+		sourceColumn: EnergyCost
+
+	column MaintenanceCost
+		dataType: int64
+		formatString: 0
+		lineageTag: bdb4d0b1-d352-564f-99a8-1e82252fab43
+		summarizeBy: none
+		sourceColumn: MaintenanceCost
+
+	column FoodBeverageCost
+		dataType: int64
+		formatString: 0
+		lineageTag: ec27358a-0dfb-562f-8a7d-2f4bcba01f0e
+		summarizeBy: none
+		sourceColumn: FoodBeverageCost
+
+	column OtherOperatingCost
+		dataType: int64
+		formatString: 0
+		lineageTag: d0f18f04-e788-58d8-bd08-fd3b6f2d503b
+		summarizeBy: none
+		sourceColumn: OtherOperatingCost
+
+	column TotalOperatingExpenses
+		dataType: int64
+		formatString: 0
+		lineageTag: 12d1eff9-db36-5131-b8ce-63cbc3921525
+		summarizeBy: none
+		sourceColumn: TotalOperatingExpenses
+
+
+	partition MonthlyPerformance = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="MonthlyPerformance",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"RoomsAvailable", Int64.Type}, {"RoomsSold", Int64.Type}, {"RoomRevenue", Int64.Type}, {"FoodBeverageRevenue", Int64.Type}, {"OtherRevenue", Int64.Type}, {"TotalRevenue", Int64.Type}, {"StaffCost", Int64.Type}, {"EnergyCost", Int64.Type}, {"MaintenanceCost", Int64.Type}, {"FoodBeverageCost", Int64.Type}, {"OtherOperatingCost", Int64.Type}, {"TotalOperatingExpenses", Int64.Type}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

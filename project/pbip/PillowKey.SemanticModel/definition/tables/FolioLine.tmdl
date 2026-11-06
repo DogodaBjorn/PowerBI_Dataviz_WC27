@@ -1,0 +1,29 @@
+/// The three lines of the folio (a hotel bill): rate, what the channel takes, what we keep.
+table FolioLine
+	lineageTag: 157f2318-16a3-5af6-8b83-e974c153c155
+
+	column Line
+		dataType: string
+		sortByColumn: Sort
+		lineageTag: 533df0f5-c0fb-5a6a-87c9-500480cc80c3
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Line]
+
+	column Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 83881183-bf1c-511e-8c2d-8489334aceb5
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Sort]
+
+	partition FolioLine = calculated
+		mode: import
+		source = ```
+				DATATABLE ( "Line", STRING, "Sort", INTEGER, { { "Room night, average rate", 1 }, { "Paid to the channel", 2 }, { "What we keep", 3 } } )
+				```
+
+	annotation PBI_ResultType = Table

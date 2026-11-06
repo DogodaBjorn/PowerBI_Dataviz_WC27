@@ -1,0 +1,8 @@
+/// URL of PillowKey_Dataset.xlsx in the organisers' public blob (anonymous). Switch to a
+/// local copy under project/data/ via Transform data > Edit parameters if the blob is down.
+expression DataFile = "https://datavizcontests.blob.core.windows.net/worldchamps-atl27/PillowKey_Dataset.xlsx" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 59cee2e0-d908-52cc-bafe-48ab7788f3fa
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation

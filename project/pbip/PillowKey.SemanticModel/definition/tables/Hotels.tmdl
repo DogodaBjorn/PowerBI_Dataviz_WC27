@@ -1,0 +1,123 @@
+/// Hotel dimension as shipped, plus refresh-age and capacity flags derived in the model.
+table Hotels
+	lineageTag: 9f6b3b0c-e135-5093-a8de-6ca456a9359e
+
+	column HotelID
+		dataType: string
+		lineageTag: 69e53df1-2be6-57d0-a285-671c04629856
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	column HotelName
+		dataType: string
+		lineageTag: 4edc4f1c-fa00-50e2-9be0-cb5a1456a988
+		summarizeBy: none
+		sourceColumn: HotelName
+
+	column Brand
+		dataType: string
+		lineageTag: 77a0b5f7-05cd-56f7-a8cf-abcf6d29731e
+		summarizeBy: none
+		sourceColumn: Brand
+
+	column City
+		dataType: string
+		lineageTag: f9887a73-1206-5e5c-b0b7-c054adb409e4
+		summarizeBy: none
+		sourceColumn: City
+
+	column Country
+		dataType: string
+		lineageTag: 538b7c2d-7cf1-541f-a1d1-2eb176dfd74f
+		summarizeBy: none
+		sourceColumn: Country
+
+	column Region
+		dataType: string
+		lineageTag: f11b7e9d-d09f-57dc-a64d-5b3b79d4ca06
+		summarizeBy: none
+		sourceColumn: Region
+
+	column Latitude
+		dataType: double
+		lineageTag: 8661dd05-affc-50d2-89dd-3bee73955275
+		summarizeBy: none
+		sourceColumn: Latitude
+
+	column Longitude
+		dataType: double
+		lineageTag: 535167c4-895a-561e-9f29-35f5b6b50076
+		summarizeBy: none
+		sourceColumn: Longitude
+
+	column LocationType
+		dataType: string
+		lineageTag: e3ce4dd6-4d9f-5646-bfbc-6a2040e38dec
+		summarizeBy: none
+		sourceColumn: LocationType
+
+	column Rooms
+		dataType: int64
+		formatString: 0
+		lineageTag: 8e2ec8f6-90e4-5f6a-923a-7c96fe864aa4
+		summarizeBy: none
+		sourceColumn: Rooms
+
+	column OpeningDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: ac8d0b08-3136-531e-b883-2f87763da84d
+		summarizeBy: none
+		sourceColumn: OpeningDate
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column LastRenovationDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 24206335-fa71-5829-9f1c-ba8e4f5a932c
+		summarizeBy: none
+		sourceColumn: LastRenovationDate
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Hotel name without the brand prefix, for dense walls and tables.
+	column 'Hotel Short Name' = TRIM(SUBSTITUTE(Hotels[HotelName], Hotels[Brand] & " ", ""))
+		dataType: string
+		lineageTag: 89acea06-0df5-550e-ab00-d8598f64a77e
+		summarizeBy: none
+		isDataTypeInferred
+	/// Years between the last refresh (or opening, for the never-renovated) and 2025.
+	column 'Years Since Refresh' = 2025 - YEAR(COALESCE(Hotels[LastRenovationDate], Hotels[OpeningDate]))
+		dataType: int64
+		formatString: 0
+		lineageTag: e72eceb0-c667-5af9-9988-6c04fba584b0
+		summarizeBy: none
+		isDataTypeInferred
+	/// Refresh-age cohort used by the fading-welcome panel.
+	column 'Refresh Age Band' = SWITCH(TRUE(), Hotels[Years Since Refresh] <= 5, "0 to 5 y", Hotels[Years Since Refresh] <= 9, "6 to 9 y", "10 y or more")
+		dataType: string
+		lineageTag: 1f5b2902-5c2e-50e8-ab66-ce19dc1d258b
+		summarizeBy: none
+		isDataTypeInferred
+	/// Yes when the hotel is in the organisers' GI-07 room-refresh list.
+	column 'Is Refresh Candidate' = IF(CALCULATE(COUNTROWS(InvestmentProjectProperties), InvestmentProjectProperties[ProjectID] = "GI-07") > 0, "Yes", "No")
+		dataType: string
+		lineageTag: c1d8c222-8840-5c65-861c-67a953a29bb2
+		summarizeBy: none
+		isDataTypeInferred
+
+	partition Hotels = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Hotels",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"HotelName", type text}, {"Brand", type text}, {"City", type text}, {"Country", type text}, {"Region", type text}, {"Latitude", type number}, {"Longitude", type number}, {"LocationType", type text}, {"Rooms", Int64.Type}, {"OpeningDate", type date}, {"LastRenovationDate", type date}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

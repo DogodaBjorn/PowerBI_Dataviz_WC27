@@ -1,0 +1,147 @@
+/// Project dimension as shipped, plus the recommended-plan grouping (Move) used by the plan builder.
+table InvestmentProjects
+	lineageTag: 6d130973-8812-5200-b052-9dded4643640
+
+	column ProjectID
+		dataType: string
+		lineageTag: a563b1f0-46da-540d-9ec9-b30b37b91ee0
+		summarizeBy: none
+		sourceColumn: ProjectID
+
+	column Brand
+		dataType: string
+		lineageTag: bb69145f-ffcc-5417-9f64-4476ca519eff
+		summarizeBy: none
+		sourceColumn: Brand
+
+	column ProjectName
+		dataType: string
+		lineageTag: 7aaaf263-8002-59ae-8fb2-48118380dfe3
+		summarizeBy: none
+		sourceColumn: ProjectName
+
+	column Category
+		dataType: string
+		lineageTag: 3c308a68-e9a2-5faa-ad6f-5c0aba661636
+		summarizeBy: none
+		sourceColumn: Category
+
+	column Scope
+		dataType: string
+		lineageTag: 84ee9755-b0d6-5bcb-94db-dce9d43591f1
+		summarizeBy: none
+		sourceColumn: Scope
+
+	column GrowthInitiative
+		dataType: string
+		lineageTag: 6559ae53-db35-544e-82e7-8c7c5eb1f9f1
+		summarizeBy: none
+		sourceColumn: GrowthInitiative
+
+	column CapexUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 622e5854-148a-5d3f-b555-5c5befbfa6d0
+		summarizeBy: none
+		sourceColumn: CapexUSD
+
+	column EarliestStart
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b897178f-227c-58c5-9a13-3c5a1219b22e
+		summarizeBy: none
+		sourceColumn: EarliestStart
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DurationMonths
+		dataType: int64
+		formatString: 0
+		lineageTag: a5066bbf-4110-5e8d-91c9-30e419511a43
+		summarizeBy: none
+		sourceColumn: DurationMonths
+
+	column RoomsOutOfServicePct
+		dataType: double
+		lineageTag: b4695fd0-1d15-5967-bfbb-8ef4539b2c87
+		summarizeBy: none
+		sourceColumn: RoomsOutOfServicePct
+
+	column AddedRooms
+		dataType: int64
+		formatString: 0
+		lineageTag: 9cd0faea-d827-5a91-8bd6-2d64a5a21ce6
+		summarizeBy: none
+		sourceColumn: AddedRooms
+
+	column AnnualRunningCostUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 53b57025-76b3-56ba-a4f0-956b78883d7b
+		summarizeBy: none
+		sourceColumn: AnnualRunningCostUSD
+
+	column DependsOn
+		dataType: string
+		lineageTag: 7ff131d7-4d78-5cd7-a9a3-42c01b1699a1
+		summarizeBy: none
+		sourceColumn: DependsOn
+
+	column ExclusiveWith
+		dataType: string
+		lineageTag: 730cb600-e113-582d-8882-f0591dfc3fd5
+		summarizeBy: none
+		sourceColumn: ExclusiveWith
+
+	column Description
+		dataType: string
+		lineageTag: 7dc6752c-76a9-5f19-9ea8-8b7d71c372d8
+		summarizeBy: none
+		sourceColumn: Description
+
+	/// Short label for the plan builder and the departures board (Goodnight Inn projects only).
+	column 'Short Name' = SWITCH(InvestmentProjects[ProjectID], "GI-01", "Booking app", "GI-02", "Kiosks at 20 desks", "GI-03", "Energy programme", "GI-04", "Toronto +40 rooms", "GI-05", "Gatwick +40 rooms", "GI-06", "Kingston +40 rooms", "GI-07", "Refresh 10 oldest", "GI-08", "Boston new hotel", "GI-09", "Breakfast upgrade", "GI-10", "Revenue management", InvestmentProjects[ProjectName])
+		dataType: string
+		lineageTag: 81538601-0b07-5e7d-8737-df951bf1d8ff
+		summarizeBy: none
+		isDataTypeInferred
+	/// The recommended plan grouping from the mission (hypothesis A); the plan builder lets the Board overrule it.
+	column Move = SWITCH(InvestmentProjects[ProjectID], "GI-01", "Buy the guest back", "GI-10", "Buy the guest back", "GI-02", "Buy the guest back", "GI-07", "Fix the welcome", "GI-05", "Build where we are full", "GI-04", "Build where we are full", IF(InvestmentProjects[Brand] = "Goodnight Inn", "Not funded", "Other brand"))
+		dataType: string
+		lineageTag: 76ec3059-2b73-55c9-990a-20605d4d70f1
+		summarizeBy: none
+		isDataTypeInferred
+	column 'Move Sort' = SWITCH(InvestmentProjects[Move], "Buy the guest back", 1, "Fix the welcome", 2, "Build where we are full", 3, "Not funded", 4, 9)
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c3aa4d5-7ae1-5cb4-b848-626e92a4c165
+		summarizeBy: none
+		isDataTypeInferred
+	/// Yes for the six projects of the recommended plan.
+	column 'In Recommended Plan' = IF(InvestmentProjects[Move] IN {"Buy the guest back", "Fix the welcome", "Build where we are full"}, "Yes", "No")
+		dataType: string
+		lineageTag: baf902d2-c45a-5828-88cc-45267257da2c
+		summarizeBy: none
+		isDataTypeInferred
+	/// Earliest start plus duration: the month the project goes live.
+	column 'Completion Date' = EDATE(InvestmentProjects[EarliestStart], InvestmentProjects[DurationMonths])
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 71192867-f11b-5bad-9ab5-3ee230af5912
+		summarizeBy: none
+		isDataTypeInferred
+
+	partition InvestmentProjects = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="InvestmentProjects",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"ProjectID", type text}, {"Brand", type text}, {"ProjectName", type text}, {"Category", type text}, {"Scope", type text}, {"GrowthInitiative", type text}, {"CapexUSD", Int64.Type}, {"EarliestStart", type date}, {"DurationMonths", Int64.Type}, {"RoomsOutOfServicePct", type number}, {"AddedRooms", Int64.Type}, {"AnnualRunningCostUSD", Int64.Type}, {"DependsOn", type text}, {"ExclusiveWith", type text}, {"Description", type text}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

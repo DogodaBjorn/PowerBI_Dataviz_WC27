@@ -1,0 +1,50 @@
+/// Regional demand, ADR and cost inflation 2026-2032. Drives the do-nothing baseline in HotelOutlook.
+table FinanceAssumptions
+	lineageTag: c01ad6ac-f159-5f37-bc55-1807135e3f7b
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 7bb0c323-857f-51cd-8129-422d0d6866b0
+		summarizeBy: none
+		sourceColumn: Year
+
+	column Region
+		dataType: string
+		lineageTag: 2d17deab-631c-5d39-89d6-5a6a58e73a16
+		summarizeBy: none
+		sourceColumn: Region
+
+	column MarketDemandGrowthPct
+		dataType: double
+		lineageTag: a4ac7f6f-f2a8-531c-a2ad-4852369c179f
+		summarizeBy: none
+		sourceColumn: MarketDemandGrowthPct
+
+	column ADRInflationPct
+		dataType: double
+		lineageTag: 0563f8b4-6c42-59d8-85f4-b985998077e0
+		summarizeBy: none
+		sourceColumn: ADRInflationPct
+
+	column CostInflationPct
+		dataType: double
+		lineageTag: c1fb0250-30ca-5782-9d59-81993007dd10
+		summarizeBy: none
+		sourceColumn: CostInflationPct
+
+
+	partition FinanceAssumptions = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="FinanceAssumptions",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Year", Int64.Type}, {"Region", type text}, {"MarketDemandGrowthPct", type number}, {"ADRInflationPct", type number}, {"CostInflationPct", type number}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,63 @@
+/// Grain: one row per hotel, month and guest segment.
+table GuestSegments
+	lineageTag: db3781ec-7686-59ab-9af5-c1b5a2b56cfe
+
+	column HotelID
+		dataType: string
+		isHidden
+		lineageTag: 954157eb-40cb-5388-ad05-bd7eecb05676
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	column Month
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 493340a0-08de-51f7-bd6b-b8c6ee0aa071
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Segment
+		dataType: string
+		lineageTag: faeacb0e-8fb9-5c88-8925-ccbe71bdaeaa
+		summarizeBy: none
+		sourceColumn: Segment
+
+	column Bookings
+		dataType: int64
+		formatString: 0
+		lineageTag: 4fde1ae4-2643-5f94-ab0a-9ef84286d1e8
+		summarizeBy: none
+		sourceColumn: Bookings
+
+	column RoomNights
+		dataType: int64
+		formatString: 0
+		lineageTag: 7eee8b61-163f-50ee-81e2-f018b54ac7ec
+		summarizeBy: none
+		sourceColumn: RoomNights
+
+	column RoomRevenue
+		dataType: int64
+		formatString: 0
+		lineageTag: 117a1709-06be-5d3e-938f-b6b6762bf305
+		summarizeBy: none
+		sourceColumn: RoomRevenue
+
+
+	partition GuestSegments = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="GuestSegments",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"Segment", type text}, {"Bookings", Int64.Type}, {"RoomNights", Int64.Type}, {"RoomRevenue", Int64.Type}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

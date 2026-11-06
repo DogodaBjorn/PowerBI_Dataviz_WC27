@@ -1,0 +1,106 @@
+/// Grain: one row per project and scenario (Low / Expected / High), organisers' annual impacts in 2025 dollars.
+table InvestmentScenarios
+	lineageTag: b473dfc2-fc47-5e8d-b80e-e38b22615614
+
+	column ProjectID
+		dataType: string
+		isHidden
+		lineageTag: eb6df782-7524-5708-a3a0-d730cf4ccc9b
+		summarizeBy: none
+		sourceColumn: ProjectID
+
+	column Scenario
+		dataType: string
+		lineageTag: 52432b7e-9c98-5950-af8d-b9dc199f9a0e
+		summarizeBy: none
+		sourceColumn: Scenario
+
+	column OccupancyChangePts
+		dataType: double
+		lineageTag: fba92c6a-5eec-5627-98a9-93bddcae5ea5
+		summarizeBy: none
+		sourceColumn: OccupancyChangePts
+
+	column ADRChangePct
+		dataType: double
+		lineageTag: 5275f0dc-9e63-5273-a394-65be8550ac91
+		summarizeBy: none
+		sourceColumn: ADRChangePct
+
+	column AddedRoomsOccupancy
+		dataType: double
+		lineageTag: 46931661-1208-53fd-b8b3-148605c991e4
+		summarizeBy: none
+		sourceColumn: AddedRoomsOccupancy
+
+	column FoodBeverageRevenueChangePct
+		dataType: double
+		lineageTag: f455fe86-9bdd-577d-95c9-4c08a871bd39
+		summarizeBy: none
+		sourceColumn: FoodBeverageRevenueChangePct
+
+	column OtherRevenueChangePct
+		dataType: double
+		lineageTag: f2f65370-e3c6-5d83-bb6f-6d0660c5c780
+		summarizeBy: none
+		sourceColumn: OtherRevenueChangePct
+
+	column OperatingExpenseChangePct
+		dataType: double
+		lineageTag: b8e0b035-ae81-562c-a8c2-d2a98cf8548e
+		summarizeBy: none
+		sourceColumn: OperatingExpenseChangePct
+
+	column DistributionCostChangePts
+		dataType: double
+		lineageTag: 273f37da-e545-521b-b6ba-2c6d4649eb43
+		summarizeBy: none
+		sourceColumn: DistributionCostChangePts
+
+	column SatisfactionChangePts
+		dataType: double
+		lineageTag: dd7d617d-ba58-5b7f-9b6b-24b57d066b19
+		summarizeBy: none
+		sourceColumn: SatisfactionChangePts
+
+	column NewPropertyOccupancy
+		dataType: double
+		lineageTag: 1661d818-b3bf-5e77-aa41-9799d1375b76
+		summarizeBy: none
+		sourceColumn: NewPropertyOccupancy
+
+	column NewPropertyADR
+		dataType: double
+		lineageTag: 0525de96-56b4-5c5f-aaa4-a21d27f6dfbd
+		summarizeBy: none
+		sourceColumn: NewPropertyADR
+
+	column AnnualRevenueImpactUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 562b4381-b8b1-5eb9-921c-19b94aeed1dc
+		summarizeBy: none
+		sourceColumn: AnnualRevenueImpactUSD
+
+	column AnnualOperatingProfitImpactUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ebfbc94-d86e-5e12-b728-258bf5365b40
+		summarizeBy: none
+		sourceColumn: AnnualOperatingProfitImpactUSD
+
+
+	partition InvestmentScenarios = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="InvestmentScenarios",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"ProjectID", type text}, {"Scenario", type text}, {"OccupancyChangePts", type number}, {"ADRChangePct", type number}, {"AddedRoomsOccupancy", type number}, {"FoodBeverageRevenueChangePct", type number}, {"OtherRevenueChangePct", type number}, {"OperatingExpenseChangePct", type number}, {"DistributionCostChangePts", type number}, {"SatisfactionChangePts", type number}, {"NewPropertyOccupancy", type number}, {"NewPropertyADR", type number}, {"AnnualRevenueImpactUSD", Int64.Type}, {"AnnualOperatingProfitImpactUSD", Int64.Type}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "D3 Two futures"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e9a990a3-7c80-5b0c-bee1-5a4e3587f910"
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "name": "D1-wake-up-call.json",
+  "dataColors": [
+    "#D9960A",
+    "#1C2B3A",
+    "#A7B0B8",
+    "#2E7D4F",
+    "#B23A2E",
+    "#5A6B7B",
+    "#E6E0D4",
+    "#FFFFFF"
+  ],
+  "good": "#2E7D4F",
+  "neutral": "#A7B0B8",
+  "bad": "#B23A2E",
+  "maximum": "#D9960A",
+  "center": "#A7B0B8",
+  "minimum": "#5A6B7B",
+  "null": "#E6E0D4",
+  "background": "#FBF8F1",
+  "secondaryBackground": "#FFFFFF",
+  "foreground": "#1C2B3A",
+  "foregroundNeutralSecondary": "#5A6B7B",
+  "foregroundNeutralTertiary": "#E6E0D4",
+  "firstLevelElements": "#1C2B3A",
+  "secondLevelElements": "#5A6B7B",
+  "thirdLevelElements": "#E6E0D4",
+  "fourthLevelElements": "#A7B0B8",
+  "backgroundLight": "#FFFFFF",
+  "backgroundNeutral": "#E6E0D4",
+  "tableAccent": "#D9960A",
+  "shapeStroke": "#E6E0D4",
+  "disabledText": "#A7B0B8",
+  "hyperlink": "#D9960A",
+  "visitedHyperlink": "#D9960A",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Georgia",
+      "fontSize": 24,
+      "color": "#1C2B3A"
+    },
+    "title": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#5A6B7B"
+    },
+    "largeTitle": {
+      "fontFace": "Georgia",
+      "fontSize": 20,
+      "color": "#1C2B3A"
+    },
+    "header": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#1C2B3A"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 9,
+      "color": "#1C2B3A"
+    },
+    "semiboldLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 9,
+      "color": "#1C2B3A"
+    },
+    "boldLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 9,
+      "color": "#1C2B3A"
+    },
+    "largeLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 11,
+      "color": "#1C2B3A"
+    },
+    "smallLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 8,
+      "color": "#1C2B3A"
+    },
+    "lightLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 9,
+      "color": "#5A6B7B"
+    },
+    "largeLightLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 11,
+      "color": "#5A6B7B"
+    },
+    "smallLightLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 8,
+      "color": "#5A6B7B"
+    },
+    "dataTitle": {
+      "fontFace": "Consolas",
+      "fontSize": 9,
+      "color": "#5A6B7B"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "padding": [
+          {
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        ],
+        "title": [
+          {
+            "show": false
+          }
+        ],
+        "subTitle": [
+          {
+            "show": false
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#FBF8F1"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#FBF8F1"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "columnHeaders": [
+          {
+            "autoSizeColumnWidth": true,
+            "columnAdjustment": "growToFit"
+          }
+        ]
+      }
+    },
+    "pivotTable": {
+      "*": {
+        "columnHeaders": [
+          {
+            "autoSizeColumnWidth": true,
+            "columnAdjustment": "growToFit"
+          }
+        ]
+      }
+    }
+  }
+}

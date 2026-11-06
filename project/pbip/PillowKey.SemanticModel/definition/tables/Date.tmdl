@@ -1,0 +1,69 @@
+/// Daily calendar 2021-2032 as shipped; Period separates Historical / Planning year / Investment horizon. Marked as the date table.
+table Date
+	lineageTag: ce9f0c39-c5ce-520c-979e-d37745aff908
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 946a7c46-32ac-5741-8c78-2199e3989449
+		summarizeBy: none
+		sourceColumn: Date
+		isKey
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: bef50939-a266-57d5-8fa3-af95c47ab635
+		summarizeBy: none
+		sourceColumn: Year
+
+	column Quarter
+		dataType: string
+		lineageTag: 85fe1491-b5e2-55aa-93a8-db48667c5463
+		summarizeBy: none
+		sourceColumn: Quarter
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: f0bb81d0-bbd5-5566-8e79-2fe6ae0a26d3
+		summarizeBy: none
+		sourceColumn: MonthNumber
+
+	column Month
+		dataType: string
+		lineageTag: 9496ca9a-2d0a-5391-ade4-9dceeb2ee1cd
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: MonthNumber
+
+	column YearMonth
+		dataType: string
+		lineageTag: de3b3a9b-cf98-543a-bf22-ff542edbdf87
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+	column Period
+		dataType: string
+		lineageTag: 353f87a5-f834-5738-a36d-c7248d0538af
+		summarizeBy: none
+		sourceColumn: Period
+
+
+	partition Date = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Date",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"Year", Int64.Type}, {"Quarter", type text}, {"MonthNumber", Int64.Type}, {"Month", type text}, {"YearMonth", type text}, {"Period", type text}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

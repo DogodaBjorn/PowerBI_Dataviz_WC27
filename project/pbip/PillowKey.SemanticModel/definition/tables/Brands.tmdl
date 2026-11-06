@@ -1,0 +1,51 @@
+/// Brand dimension with the investment budget per brand.
+table Brands
+	lineageTag: 74b777e8-06f0-5160-adb1-44b521338dfe
+
+	column Brand
+		dataType: string
+		lineageTag: 17a5d7ae-4ba9-54e0-8df7-013a8e070d07
+		summarizeBy: none
+		sourceColumn: Brand
+
+	column Segment
+		dataType: string
+		lineageTag: 25e15e8d-4b1a-52a9-acb4-50543957042b
+		summarizeBy: none
+		sourceColumn: Segment
+
+	column Properties
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e751704-0dba-5810-bdd5-507bf13ff7b5
+		summarizeBy: none
+		sourceColumn: Properties
+
+	column Positioning
+		dataType: string
+		lineageTag: f6d7ba6c-1979-59ca-b1fa-5662fa0d496e
+		summarizeBy: none
+		sourceColumn: Positioning
+
+	column InvestmentBudgetUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e2f1d0a-cc7e-5ecd-9813-207a7604ace5
+		summarizeBy: none
+		sourceColumn: InvestmentBudgetUSD
+
+
+	partition Brands = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Brands",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Brand", type text}, {"Segment", type text}, {"Properties", Int64.Type}, {"Positioning", type text}, {"InvestmentBudgetUSD", Int64.Type}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

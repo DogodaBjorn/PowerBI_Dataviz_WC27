@@ -1,0 +1,129 @@
+/// Scenario logic, labeled as such on every visual: the do-nothing projection per hotel and year 2025-2032. 2025 unit economics grown by the organisers' regional demand, ADR and cost assumptions; demand capped at 97 percent occupancy.
+table HotelOutlook
+	lineageTag: 92ea33c3-8c78-5b81-87fa-7c0b489b135d
+
+	column HotelID
+		dataType: string
+		lineageTag: b967f18f-ab95-5a4a-a286-0b4638316c4d
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [HotelID]
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: a80ce448-1436-5894-9bcb-984c940c12d9
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Year]
+
+	column RoomsAvailable
+		dataType: double
+		formatString: #,0
+		lineageTag: 3746106e-8163-5937-a729-96b8e536cde5
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [RoomsAvailable]
+
+	column DemandRoomNights
+		dataType: double
+		formatString: #,0
+		lineageTag: 24dbe3ec-7de4-5eed-b684-d985e8482ead
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [DemandRoomNights]
+
+	column RoomsSold
+		dataType: double
+		formatString: #,0
+		lineageTag: 4fdf1bef-e5f9-5efc-a80c-1efa23c4bc8b
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [RoomsSold]
+
+	column Revenue
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: b0152fce-0ba1-5b55-8a06-1724aac7a52c
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Revenue]
+
+	column Opex
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: 69013922-4a26-5901-9e4d-a93c9a4e5e71
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Opex]
+
+	column FirstCappedYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d9f722d-64b9-526d-a05e-3c92d8aae23d
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [FirstCappedYear]
+
+	column CappedBy2032
+		dataType: string
+		lineageTag: cdd71766-3efe-5663-b666-12246f9f072f
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [CappedBy2032]
+
+	partition HotelOutlook = calculated
+		mode: import
+		source = ```
+				VAR Cap = 0.97
+				VAR Base =
+				    ADDCOLUMNS (
+				        SELECTCOLUMNS ( ALLNOBLANKROW ( Hotels[HotelID] ), "@Hid", Hotels[HotelID] ),
+				        "@Region", LOOKUPVALUE ( Hotels[Region], Hotels[HotelID], [@Hid] ),
+				        "@Avail", VAR vHid = [@Hid] RETURN SUMX ( FILTER ( MonthlyPerformance, MonthlyPerformance[HotelID] = vHid && YEAR ( MonthlyPerformance[Month] ) = 2025 ), MonthlyPerformance[RoomsAvailable] ),
+				        "@Sold", VAR vHid = [@Hid] RETURN SUMX ( FILTER ( MonthlyPerformance, MonthlyPerformance[HotelID] = vHid && YEAR ( MonthlyPerformance[Month] ) = 2025 ), MonthlyPerformance[RoomsSold] ),
+				        "@Rev", VAR vHid = [@Hid] RETURN SUMX ( FILTER ( MonthlyPerformance, MonthlyPerformance[HotelID] = vHid && YEAR ( MonthlyPerformance[Month] ) = 2025 ), MonthlyPerformance[TotalRevenue] ),
+				        "@Opex", VAR vHid = [@Hid] RETURN SUMX ( FILTER ( MonthlyPerformance, MonthlyPerformance[HotelID] = vHid && YEAR ( MonthlyPerformance[Month] ) = 2025 ), MonthlyPerformance[TotalOperatingExpenses] )
+				    )
+				VAR Years = SELECTCOLUMNS ( GENERATESERIES ( 2025, 2032, 1 ), "@Yr", [Value] )
+				RETURN
+				    SELECTCOLUMNS (
+				        FILTER (
+				            GENERATE (
+				                Base,
+				                VAR vReg = [@Region]
+				                VAR vT =
+				                    ADDCOLUMNS (
+				                        Years,
+				                        "@Dem", COALESCE ( PRODUCTX ( FILTER ( FinanceAssumptions, FinanceAssumptions[Region] = vReg && FinanceAssumptions[Year] >= 2026 && FinanceAssumptions[Year] <= [@Yr] ), 1 + FinanceAssumptions[MarketDemandGrowthPct] ), 1 ),
+				                        "@Adr", COALESCE ( PRODUCTX ( FILTER ( FinanceAssumptions, FinanceAssumptions[Region] = vReg && FinanceAssumptions[Year] >= 2026 && FinanceAssumptions[Year] <= [@Yr] ), 1 + FinanceAssumptions[ADRInflationPct] ), 1 ),
+				                        "@Cost", COALESCE ( PRODUCTX ( FILTER ( FinanceAssumptions, FinanceAssumptions[Region] = vReg && FinanceAssumptions[Year] >= 2026 && FinanceAssumptions[Year] <= [@Yr] ), 1 + FinanceAssumptions[CostInflationPct] ), 1 )
+				                    )
+				                VAR vFc = MINX ( FILTER ( vT, [@Sold] * [@Dem] > [@Avail] * Cap ), [@Yr] )
+				                RETURN
+				                    ADDCOLUMNS ( vT, "@FirstCapped", vFc )
+				            ),
+				            [@Sold] > 0
+				        ),
+				        "HotelID", [@Hid],
+				        "Year", [@Yr],
+				        "RoomsAvailable", [@Avail],
+				        "DemandRoomNights", [@Sold] * [@Dem],
+				        "RoomsSold", MIN ( [@Sold] * [@Dem], [@Avail] * Cap ),
+				        "Revenue", MIN ( [@Sold] * [@Dem], [@Avail] * Cap ) * DIVIDE ( [@Rev], [@Sold] ) * [@Adr],
+				        "Opex", MIN ( [@Sold] * [@Dem], [@Avail] * Cap ) * DIVIDE ( [@Opex], [@Sold] ) * [@Cost],
+				        "FirstCappedYear", [@FirstCapped],
+				        "CappedBy2032", IF ( ISBLANK ( [@FirstCapped] ), "No", "Yes" )
+				    )
+				```
+
+	annotation PBI_ResultType = Table
