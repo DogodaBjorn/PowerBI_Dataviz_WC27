@@ -43,3 +43,7 @@ ref table Timeline
 ref table PlanYear
 ref table BridgeStep
 ref table FolioLine
+ref table KpiLine
+ref table Package
+ref table PackageProject
+ref table PlanSelector

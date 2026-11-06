@@ -1,0 +1,193 @@
+/// Grain: one row per valid Goodnight Inn package (456 of the 1,024 subsets of the ten initiatives): capex within the brand budget, three or more initiatives, at least one growth initiative, every DependsOn met. Values are sums of the initiatives' ProjectCashflow (monthly discounting at the FinanceParameters rate to January 2027; 2032 run-rate). Offline reference: project/analysis/40_package_matrix.py.
+table Package
+	lineageTag: cd5b91dc-0744-5f9d-bbac-861604a21213
+
+	column PackageID
+		dataType: string
+		lineageTag: 535b8a06-c1af-5c8d-8009-8ab4879406e8
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [PackageID]
+
+	column Mask
+		dataType: int64
+		formatString: 0
+		lineageTag: 615441c3-3177-5c78-9f87-ac3d16dab699
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Mask]
+
+	column Projects
+		dataType: int64
+		formatString: 0
+		lineageTag: bf4c2d20-fc8b-5883-b9c0-6ec3d616dc93
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Projects]
+
+	column Growth
+		dataType: int64
+		formatString: 0
+		lineageTag: fe0c586a-d803-5cf5-884b-d1e32bb30bd2
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Growth]
+
+	column CapexUSD
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: 8aa117a6-e7b4-51bb-ba48-ea1e6ccb4a55
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [CapexUSD]
+
+	column ContainsRefresh
+		dataType: string
+		lineageTag: f5c5b788-2523-5a66-ba0b-f528d7213720
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [ContainsRefresh]
+
+	column RoomsAdded
+		dataType: int64
+		formatString: #,0
+		lineageTag: a285f82e-f8f7-547e-a34a-c80081ca48c0
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [RoomsAdded]
+
+	column HotelsRated
+		dataType: int64
+		formatString: #,0
+		lineageTag: 12ba08ae-9543-5b77-9395-783150a089b5
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [HotelsRated]
+
+	column 'NPV Low'
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: a3d34d99-020b-5051-99d5-5948ec7962cc
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [NPV Low]
+
+	column 'NPV Expected'
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: 579db6ab-3104-5ccc-a247-60aaee3d63d4
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [NPV Expected]
+
+	column 'NPV High'
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: 842d1ba2-b33f-5755-b600-9bbed95d95bc
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [NPV High]
+
+	column 'RunRate Low'
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: b92d74c9-0257-542d-b521-944090782016
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [RunRate Low]
+
+	column 'RunRate Expected'
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: ef719aa3-b914-5414-9c26-c029d79c6c06
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [RunRate Expected]
+
+	column 'RunRate High'
+		dataType: double
+		formatString: \$#,0;(\$#,0)
+		lineageTag: 3f637c8e-abec-5203-b7d2-a1eb9ef95c7e
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [RunRate High]
+
+	partition Package = calculated
+		mode: import
+		source = ```
+				VAR LastYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" )
+				VAR Budget = LOOKUPVALUE ( Brands[InvestmentBudgetUSD], Brands[Brand], "Goodnight Inn" )
+				VAR CF =
+				    SELECTCOLUMNS (
+				        ProjectCashflow,
+				        "@CPid", ProjectCashflow[ProjectID], "@CScn", ProjectCashflow[Scenario], "@CYr", YEAR ( ProjectCashflow[Month] ),
+				        "@CNet", ProjectCashflow[Benefit] - ProjectCashflow[Capex] - ProjectCashflow[Disruption],
+				        "@CDf", ProjectCashflow[DiscountFactor], "@CBen", ProjectCashflow[Benefit]
+				    )
+				VAR Proj =
+				    ADDCOLUMNS (
+				        SELECTCOLUMNS (
+				            FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ),
+				            "@Pid", InvestmentProjects[ProjectID],
+				            "@Capex", InvestmentProjects[CapexUSD],
+				            "@Growth", IF ( InvestmentProjects[GrowthInitiative] = "Yes", 1, 0 ),
+				            "@Dep", InvestmentProjects[DependsOn],
+				            "@Added", InvestmentProjects[AddedRooms],
+				            "@Refresh", IF ( InvestmentProjects[Category] = "Renovation", 1, 0 )
+				        ),
+				        "@Bit", VALUE ( RIGHT ( [@Pid], 2 ) ) - 1,
+				        "@Rated", VAR p = [@Pid] RETURN IF ( LOOKUPVALUE ( InvestmentScenarios[SatisfactionChangePts], InvestmentScenarios[ProjectID], p, InvestmentScenarios[Scenario], "Expected" ) > 0, 1, 0 ),
+				        "@NpvL", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "Low" ), [@CNet] * [@CDf] ),
+				        "@NpvE", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "Expected" ), [@CNet] * [@CDf] ),
+				        "@NpvH", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "High" ), [@CNet] * [@CDf] ),
+				        "@RrL", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "Low" && [@CYr] = LastYear ), [@CBen] ),
+				        "@RrE", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "Expected" && [@CYr] = LastYear ), [@CBen] ),
+				        "@RrH", VAR p = [@Pid] RETURN SUMX ( FILTER ( CF, [@CPid] = p && [@CScn] = "High" && [@CYr] = LastYear ), [@CBen] )
+				    )
+				VAR Masks = SELECTCOLUMNS ( GENERATESERIES ( 0, POWER ( 2, COUNTROWS ( Proj ) ) - 1, 1 ), "@Mask", [Value] )
+				VAR Rows =
+				    ADDCOLUMNS (
+				        Masks,
+				        "@Ids", VAR m = [@Mask] RETURN CONCATENATEX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), RIGHT ( [@Pid], 2 ), "+", [@Bit], ASC ),
+				        "@N", VAR m = [@Mask] RETURN COUNTROWS ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ) ) + 0,
+				        "@G", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@Growth] ) + 0,
+				        "@Capex", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@Capex] ) + 0,
+				        "@Broken", VAR m = [@Mask] VAR inP = FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ) VAR have = SELECTCOLUMNS ( inP, "@Have", [@Pid] )
+				            RETURN COUNTROWS ( FILTER ( inP, [@Dep] <> "" && NOT ( [@Dep] IN have ) ) ) + 0,
+				        "@Added", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@Added] ) + 0,
+				        "@Refresh", VAR m = [@Mask] RETURN MAXX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@Refresh] ) + 0,
+				        "@Rated", VAR m = [@Mask] VAR rp = SELECTCOLUMNS ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 && [@Rated] = 1 ), "@Rp", [@Pid] )
+				            RETURN COUNTROWS ( DISTINCT ( SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] IN rp ), "@H", InvestmentProjectProperties[HotelID] ) ) ) + 0,
+				        "@NpvL", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@NpvL] ),
+				        "@NpvE", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@NpvE] ),
+				        "@NpvH", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@NpvH] ),
+				        "@RrL", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@RrL] ),
+				        "@RrE", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@RrE] ),
+				        "@RrH", VAR m = [@Mask] RETURN SUMX ( FILTER ( Proj, MOD ( INT ( m / POWER ( 2, [@Bit] ) ), 2 ) = 1 ), [@RrH] )
+				    )
+				VAR Valid = FILTER ( Rows, [@N] >= 3 && [@G] >= 1 && [@Capex] <= Budget && [@Broken] = 0 )
+				RETURN
+				    SELECTCOLUMNS (
+				        Valid,
+				        "PackageID", [@Ids], "Mask", [@Mask], "Projects", [@N], "Growth", [@G], "CapexUSD", [@Capex],
+				        "ContainsRefresh", IF ( [@Refresh] = 1, "Yes", "No" ), "RoomsAdded", [@Added], "HotelsRated", [@Rated],
+				        "NPV Low", [@NpvL], "NPV Expected", [@NpvE], "NPV High", [@NpvH],
+				        "RunRate Low", [@RrL], "RunRate Expected", [@RrE], "RunRate High", [@RrH]
+				    )
+				```
+
+	annotation PBI_ResultType = Table

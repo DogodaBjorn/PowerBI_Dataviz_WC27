@@ -148,6 +148,15 @@ Committee: Karin Szilágyi, Aanor Le Gouic, Taylor Amy, Santhana Lakshmi
 Ponnurasan, Paulo Grijo. The starter model was decoded offline with
 `pbixray` (MIT, Hugoberry) for the evidence pack.
 
+### Report set-up (opzet) of 2026-11-06
+
+| Who | What we owe them | Where it lands |
+|---|---|---|
+| **Microsoft** — [json-schemas](https://github.com/microsoft/json-schemas) (MIT) | The published PBIR schemas (page, visual container, visual configuration, semantic query, bookmark) that the generated report is validated against, read from the public mirror because developer.microsoft.com is not reachable here; the schema showed that `visualLink` sits in `visualContainerObjects` and that a TopN filter is an `In` over a subquery. | `project/tools/schema_check.py`, `project/tools/opzet_report.py` |
+| **Julian Berman et al.** — [jsonschema](https://github.com/python-jsonschema/jsonschema) and referencing (MIT) | The validator behind `schema_check.py` (installed with pip, not vendored). | `project/tools/schema_check.py` |
+| **Microsoft Fabric Community forum contributors** (threads on the Azure Maps visual and Publish to web, 2023-2024) | The reported limitation that Azure Maps does not render under Publish to web, which is why the geography is a native matrix. Community reports, not documentation: recorded as an open check. | `project-state/active/05-doorlichting-nieuwe-opzet.md` A11 |
+| **Microsoft Playwright team** (Apache-2.0) | Headless Chromium for the comp capture, slot check and background rendering (the machine's install; the px-prototype pin is unchanged). | `project/tools/opzet_capture.mjs`, `opzet_backgrounds.mjs` |
+
 ### Brand kits for this project (goodnight-inn, goodnight-inn-hanger)
 
 Both kits are original work (2026-11-06); these are the people and tools they

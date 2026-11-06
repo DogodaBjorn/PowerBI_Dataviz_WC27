@@ -1,0 +1,28 @@
+{
+ "tolerance_px": 2,
+ "screens": {
+  "p1-brand-review": {
+   "size": [
+    1920,
+    1080
+   ],
+   "checked": 15
+  },
+  "p2-investment-strategy": {
+   "size": [
+    1920,
+    1080
+   ],
+   "checked": 21
+  },
+  "p2-investment-strategy--plan": {
+   "size": [
+    1920,
+    1080
+   ],
+   "checked": 16
+  }
+ },
+ "failures": [],
+ "overflow": []
+}
