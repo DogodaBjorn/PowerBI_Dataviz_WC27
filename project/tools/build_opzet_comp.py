@@ -76,6 +76,20 @@ svg text{font-family:Verdana,Arial,sans-serif}
 td.chipc{padding:0 4px;width:40px}
 td.chipc svg{display:inline-block;vertical-align:middle}
 .st-on{color:var(--accent);font-weight:bold}.st-off{color:var(--ink2)}
+.rule{position:absolute;width:1px;background:var(--hair)}
+.kick{font-size:13px;line-height:24px;letter-spacing:.08em;color:var(--accent);font-weight:bold}
+.kpi .lab{font-size:13px;line-height:20px;color:var(--ink2)}
+.kpi .val{font-family:var(--display);font-size:37px;line-height:44px;font-weight:bold;color:var(--ink)}
+.kpi .ctx{font-size:13px;line-height:20px;color:var(--ink2);white-space:nowrap}
+.folio table{font-size:13px}.folio th{height:28px;font-size:12px}.folio td{height:26px}
+.folio td.keep{font-weight:bold;border-bottom:none}
+.figs{display:flex;gap:24px}.figs div{flex:1}
+.figs b{display:block;font-family:var(--display);font-size:28px;line-height:36px}
+.figs span{display:block;font-size:13px;line-height:20px;color:var(--ink2)}
+.recn{display:flex;gap:16px}.recn div{flex:1}
+.recn b{display:block;font-family:var(--display);font-size:28px;line-height:40px;white-space:nowrap}
+.recn span{display:block;font-size:13px;line-height:18px;color:var(--ink2)}
+.alt{font-size:14px;line-height:20px;color:var(--ink)}.alt b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -120,11 +134,13 @@ const SLEEP_EYES = '<path d="M16 60 q6 7 12 0 M36 60 q6 7 12 0" fill="none" stro
 const AWAKE_EYES = '<circle cx="22" cy="62" r="4" fill="#FFFFFF"/><circle cx="42" cy="62" r="4" fill="#FFFFFF"/>';
 function cards(s, page, state){
   for (const c of page.cards) { if (c.state && c.state !== state) continue; const d = el('div', c.id.startsWith('tile') ? 'tile' : 'card'); Object.assign(d.style, {left:c.x+'px', top:c.y+'px', width:c.w+'px', height:c.h+'px'}); s.appendChild(d); }
+  for (const r of (page.rules || [])) { const d = el('div', 'rule'); Object.assign(d.style, {left:r.x+'px', top:r.y+'px', height:r.h+'px'}); s.appendChild(d); }
   const svgLogo = document.getElementById('lockup').innerHTML; // asleep on P1, awake on P2 (brand-guide sections 3-5)
   const lg = el('div', 'logo', page.name.startsWith('p2') ? svgLogo.replace(SLEEP_EYES, AWAKE_EYES) : svgLogo); Object.assign(lg.style, {left:page.logo.x+'px', top:page.logo.y+'px', width:page.logo.w+'px', height:page.logo.h+'px'}); s.appendChild(lg);
 }
 const slots = page => Object.fromEntries(page.visuals.map(v => [v.name, v]));
-const FOOTER = "Data: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores response-weighted. Margins before commissions unless marked. 2021 is a depressed base year. Projections: scenario logic from FinanceParameters.";
+const FOOTER = "Source: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores weighted by survey responses. 2021 is a depressed base year.";
+const FOOTER2 = "Source: Pillow & Key Group dataset and its FinanceParameters (ramp-up, 8% discount rate, impact horizon 2032). Package values are scenario logic, labelled Low, Expected and High.";
 
 // ---------------------------------------------------------------- P1
 const KPI = [
@@ -150,38 +166,59 @@ function rankText(key, dir){
 }
 function p1(page){
   const s = screen(page, page.name); cards(s, page); const S = slots(page);
+  const y = G.y2025, y21 = G.y2021, y23 = G.y2023, t = G.trend;
+  const others = key => BR.slice(1).map(b => F.brands[b].y2025[key]);
   place(s, S.z_masthead, 'mast', 'THE BRAND REVIEW &nbsp;·&nbsp; 2021 TO 2025 &nbsp;·&nbsp; FOR THE BOARD OF PILLOW &amp; KEY GROUP');
-  place(s, S.z_headline, 'head', 'Do not disturb, since 2020.');
-  const y = G.y2025;
-  place(s, S.c_subtitle, 'sub', `Goodnight Inn fills the most rooms (${pct(y.occupancy)}) and keeps the widest margin before commissions (${pct(y.gop_margin)}); after commissions it is second (${pct(y.gop_margin_after)}), and on guests, channels and complaints it is last of four. The last renovation started in ${monthText(G.last_reno_start.slice(0,7))}.`);
-  place(s, S.c_compare_title, 'title', 'Goodnight Inn leads on occupancy, and is last of four on what guests and booking channels say');
-  place(s, S.c_compare_sub, 'cap', 'The brand promise is “A good night. A fair price.” The lines test it: booked with us, a good night, a fair price, recommend us. 2025, the four Pillow & Key brands; rates reflect each segment and are not ranked; change is 2023 to 2025.');
-  let rows = '';
-  for (const [code, fname, label, key, dir, fmt, dfmt] of KPI) {
-    const [rk, rc] = rankText(key, dir);
-    const dv = G.y2025[key] - G.y2023[key]; const dc = !dir ? 'mute' : (dir*dv > 0 ? 'good' : 'bad');
-    rows += `<tr><td class="l f">${fname ? code + ' · ' + fname : ''}</td><td class="l">${label}</td>` + BR.map((b,i) => `<td class="${i===0?'gn':''}">${fmt(F.brands[b].y2025[key])}</td>`).join('') + `<td class="${rc}">${rk}</td><td class="${dc}">${dfmt(dv)}</td></tr>`;
-  }
-  place(s, S.hero_brand_compare, '', `<table><thead><tr><th>Finding</th><th>Measure</th>${BR.map((b,i)=>`<th class="${i===0?'gn':''}">${b}</th>`).join('')}<th>Goodnight Inn rank</th><th>Change since 2023</th></tr></thead><tbody>${rows}</tbody></table>`, 'Four-brand comparison table');
-  const L1 = F.location;
-  place(s, S.c_geo_title, 'title', `F4 · The airports are the fullest: ${pct(L1.Airport.occ)} occupancy, against ${pct(L1.Highway.occ)} on the highway`);
-  place(s, S.c_geo_sub, 'cap', 'Occupancy 2025 by region and location type · number of hotels');
-  const types = ['Airport','City','Highway'], regs = ['Asia-Pacific','Europe','North America'];
-  const cell = (hs) => { if (!hs.length) return ['', '#FFFFFF']; const sold = hs.reduce((a,h)=>a+h.occ*h.rooms,0), rooms = hs.reduce((a,h)=>a+h.rooms,0); const o = sold/rooms; return [`${pct(o)} · ${hs.length}`, o >= .85 ? C.tint2 : o >= .80 ? C.tint : '#FFFFFF']; };
-  let g = `<table class="geo"><thead><tr><th>Region</th>${types.map(t=>`<th>${t}</th>`).join('')}<th>Total</th></tr></thead><tbody>`;
-  for (const r of [...regs, 'Total']) {
-    const hr = F.hotels.filter(h => r === 'Total' || h.region === r);
-    g += `<tr><td class="l">${r}</td>` + [...types.map(t => hr.filter(h => h.type === t)), hr].map(hs => { const [t, bg] = cell(hs); return `<td style="background:${bg}">${t}</td>`; }).join('') + '</tr>';
-  }
-  place(s, S.tbl_geo, '', g + '</tbody></table>', 'Occupancy by region and location type');
-  place(s, S.c_full_title, 'cap', 'The seven fullest hotels, 2025 occupancy · airports in raspberry');
-  const top = [...F.hotels].sort((a,b) => b.occ - a.occ).slice(0, 7);
-  { const sl = S.ch_fullest_hotels, sv = svg(sl.w, sl.h), lw = 232, bw = sl.w - lw - 72, rh = sl.h / top.length;
-    top.forEach((h, i) => { const yy = i*rh; add(sv,'text',{x:0,y:yy+rh/2+5,'font-size':13,fill:C.ink},h.name); add(sv,'rect',{x:lw,y:yy+8,width:bw*h.occ,height:rh-16,fill:h.type==='Airport'?C.accent:C.neutral,rx:2}); add(sv,'text',{x:lw+bw*h.occ+8,y:yy+rh/2+5,'font-size':13,fill:C.ink},pct(h.occ)); });
-    place(s, sl, '', '').appendChild(sv); }
+  place(s, S.z_headline, 'head', 'Full rooms, a slipping margin: Goodnight Inn pays the middleman and is losing its guests.');
+  place(s, S.c_subtitle, 'sub', 'Goodnight Inn in 2025, against the three other Pillow &amp; Key Group brands.');
+  // the KPI band: one value, one comparison each (DC-051), drawn as one card with hairline rules, not four cards
+  const kpi = (slot, lab, val, ctx) => place(s, slot, 'kpi', `<div class="lab">${lab}</div><div class="val">${val}</div><div class="ctx">${ctx}</div>`, lab + ' ' + val + ', ' + ctx);
+  const [rOcc] = rankText('occupancy', 1), [rMar] = rankText('gop_margin_after', 1), [rOta] = rankText('ota_share', -1), [rNps] = rankText('nps', 1);
+  const sig1 = v => sgn(v, Math.abs(v).toFixed(1));
+  kpi(S.kpi_occ, 'Occupancy', pct(y.occupancy), `${rOcc} · the others ${pct(Math.min(...others('occupancy')))} to ${pct(Math.max(...others('occupancy')))}`);
+  kpi(S.kpi_margin, 'Operating margin after commissions', pct(y.gop_margin_after), `${rMar} · ${sgn(y.gop_margin_after - y23.gop_margin_after, Math.abs((y.gop_margin_after - y23.gop_margin_after)*100).toFixed(1) + ' pt')} since 2023`);
+  kpi(S.kpi_ota, 'Room revenue booked through online agencies', pct(y.ota_share), `${rOta.replace('last', 'highest')} · ${pct(y21.ota_share)} in 2021`);
+  kpi(S.kpi_nps, 'Net promoter score', sig1(y.nps), `${rNps} · the others ${sig1(Math.min(...others('nps')))} to ${sig1(Math.max(...others('nps')))}`);
+  // the three findings, one chart each
+  place(s, S.c_f1_kicker, 'kick', 'F1 · THE MARGIN');
+  place(s, S.c_f1_title, 'title', `After commissions, the margin fell from ${pct(t[2023].gop_margin_after)} to ${pct(t[2025].gop_margin_after)}`);
+  place(s, S.c_f1_note, 'cap', `Before commissions Goodnight Inn still has the widest margin of the four. The gap, what the booking channels take, grew every year.`);
+  place(s, S.c_f2_kicker, 'kick', 'F2 · THE MIDDLEMAN');
+  place(s, S.c_f2_title, 'title', `Online agencies now book ${pct(y.ota_share, 0)} of room revenue, up from ${pct(y21.ota_share, 0)}`);
+  { const o = F.folio['Online Travel Agencies'], d = F.folio['Direct Website & App'], m = v => '$' + v.toFixed(2);
+    place(s, S.tbl_f2_folio, 'folio', `<table><thead><tr><th style="text-align:left">One room night, 2025</th><th>Via an online agency</th><th>Direct, web and app</th></tr></thead><tbody>`
+      + `<tr><td class="l">The guest pays</td><td>${m(o.adr)}</td><td>${m(d.adr)}</td></tr>`
+      + `<tr><td class="l">Commission and fees</td><td>${MINUS}${m(o.dist)}</td><td>${MINUS}${m(d.dist)}</td></tr>`
+      + `<tr><td class="l keep">Goodnight Inn keeps</td><td class="keep">${m(o.kept)}</td><td class="keep">${m(d.kept)}</td></tr></tbody></table>`, 'One room night by channel'); }
+  place(s, S.c_f2_note, 'cap', `The guest pays about the same either way. At the 2021 channel mix, 2025 commissions would have been ${usdM(F.counterfactual_2021_mix)} lower.`);
+  place(s, S.c_f3_kicker, 'kick', 'F3 · THE FADING WELCOME');
+  const AB = F.age_bands, old = AB[AB.length - 1];
+  place(s, S.c_f3_title, 'title', `Hotels last renovated ${old.band} ago score NPS ${sig1(old.nps)}`);
+  { const sl = S.ch_f3_age, sv = svg(sl.w, sl.h), top0 = 24, bot = sl.h - 48, n = AB.length, bw = (sl.w - 32) / n;
+    const vals = AB.map(a => a.nps), mn = Math.min(0, ...vals) - 2, mx = Math.max(0, ...vals) + 2, Y = v => bot - (v - mn)/(mx - mn)*(bot - top0);
+    add(sv,'line',{x1:0,x2:sl.w,y1:Y(0),y2:Y(0),stroke:C.ink2});
+    AB.forEach((a, i) => { const x = 16 + i*bw + bw*.2, w = bw*.6, last = i === n - 1;
+      add(sv,'rect',{x, y:Math.min(Y(0), Y(a.nps)), width:w, height:Math.max(2, Math.abs(Y(a.nps) - Y(0))), fill:last ? C.accent : C.neutral});
+      add(sv,'text',{x:x + w/2, y:(a.nps >= 0 ? Y(a.nps) - 8 : Y(a.nps) + 20), 'font-size':15, 'font-weight':'bold', 'text-anchor':'middle', fill:last ? C.accent : C.ink}, sig1(a.nps));
+      add(sv,'text',{x:x + w/2, y:sl.h - 26, 'font-size':13, 'text-anchor':'middle', fill:C.ink}, a.band);
+      add(sv,'text',{x:x + w/2, y:sl.h - 8, 'font-size':12, 'text-anchor':'middle', fill:C.ink2}, a.hotels + ' hotels'); });
+    place(s, sl, '', '', 'Net promoter score by years since the last renovation').appendChild(sv); }
+  place(s, S.c_f3_note, 'cap', `Occupancy is the same in every group (${pct(Math.min(...AB.map(a=>a.occ)),0)} to ${pct(Math.max(...AB.map(a=>a.occ)),0)}): age costs loyalty, not yet rooms. An association, not proof of cause.`);
+  // F4
+  const L1 = F.location, top = [...F.hotels].sort((a,b) => b.occ - a.occ).slice(0, 7), nAir = top.filter(h => h.type === 'Airport').length;
+  place(s, S.c_f4_kicker, 'kick', 'F4 · WHERE WE ARE FULL');
+  place(s, S.c_f4_title, 'title', `The airports are the fullest at ${pct(L1.Airport.occ)}, and ${nAir} of the 7 fullest hotels are airports`);
+  place(s, S.c_f4_types, 'figs', ['Airport','City','Highway'].map(k => `<div><b style="color:${k==='Airport'?C.accent:C.ink}">${pct(L1[k].occ)}</b><span>${k} · ${L1[k].hotels} hotels</span></div>`).join(''), 'Occupancy by location type');
+  { const sl = S.ch_f4_fullest, sv = svg(sl.w, sl.h), n = top.length, cw = sl.w / n, top0 = 20, bot = sl.h - 40, Y = v => bot - (v - .7)/(.95 - .7)*(bot - top0);
+    top.forEach((h, i) => { const x = i*cw + cw*.15, w = cw*.7;
+      add(sv,'rect',{x, y:Y(h.occ), width:w, height:bot - Y(h.occ), fill:h.type === 'Airport' ? C.accent : C.neutral});
+      add(sv,'text',{x:x + w/2, y:Y(h.occ) - 6, 'font-size':13, 'text-anchor':'middle', fill:C.ink}, pct(h.occ));
+      add(sv,'text',{x:x + w/2, y:sl.h - 20, 'font-size':12, 'text-anchor':'middle', fill:C.ink}, h.name.replace(' Airport',''));
+      add(sv,'text',{x:x + w/2, y:sl.h - 4, 'font-size':11, 'text-anchor':'middle', fill:C.ink2}, h.type); });
+    add(sv,'line',{x1:0,x2:sl.w,y1:bot,y2:bot,stroke:C.ink2});
+    place(s, sl, '', '', 'The seven fullest hotels, 2025 occupancy').appendChild(sv); }
   const trend = (slot, key, title, scale, fmt) => {
-    const sv = svg(slot.w, slot.h), top0 = 40, bot = slot.h - 24, left = 48, right = slot.w - 120;
-    add(sv,'text',{x:0,y:16,'font-size':14,'font-weight':'bold',fill:C.ink,'font-family':'Trebuchet MS, Verdana'},title);
+    const sv = svg(slot.w, slot.h), top0 = 16, bot = slot.h - 24, left = 48, right = slot.w - 120;
     const yrs = [2021,2022,2023,2024,2025]; const all = BR.flatMap(b => yrs.map(y => F.brands[b].trend[y][key]*scale));
     const mn = Math.min(...all), mx = Math.max(...all), pad = (mx-mn)*.08, y0 = mn - pad, y1 = mx + pad;
     const X = i => left + i*(right-left)/4, Y = v => bot - (v - y0)/(y1 - y0)*(bot - top0);
@@ -194,10 +231,21 @@ function p1(page){
     for (const l of labs) { const gn = l.b === 'Goodnight Inn'; add(sv,'text',{x:right+8,y:l.y+4,'font-size':13,fill:gn?C.accent:C.ink2,'font-weight':gn?'bold':'normal'},l.b); }
     place(s, slot, '', '').appendChild(sv);
   };
-  const t = G.trend;
-  trend(S.ch_trend_margin, 'gop_margin_after', `F1 · After commissions: ${pct(t[2023].gop_margin_after)} (2023) down to ${pct(t[2025].gop_margin_after)}`, 100, v => v.toFixed(0)+'%');
-  trend(S.ch_trend_ota, 'ota_share', `F2 · OTAs book ${pct(t[2025].ota_share)} of room revenue, up from ${pct(t[2021].ota_share)}`, 100, v => v.toFixed(0)+'%');
-  trend(S.ch_trend_nps, 'nps', `F3 · NPS down every year, to ${sgn(t[2025].nps, Math.abs(t[2025].nps).toFixed(1))}; sisters higher`, 1, v => (v>0?'+':'')+v.toFixed(0));
+  // F1: Goodnight Inn's margin before and after commissions; the shaded gap is what the channels take
+  { const sl = S.ch_f1_margin, sv = svg(sl.w, sl.h), top0 = 16, bot = sl.h - 28, left = 48, right = sl.w - 176, yrs = [2021,2022,2023,2024,2025];
+    const bef = yrs.map(yy => t[yy].gop_margin*100), aft = yrs.map(yy => t[yy].gop_margin_after*100), y0 = 25, y1 = 50;
+    const X = i => left + i*(right-left)/4, Y = v => bot - (v-y0)/(y1-y0)*(bot-top0);
+    for (const tk of [25,30,35,40,45,50]) { add(sv,'line',{x1:left,x2:right,y1:Y(tk),y2:Y(tk),stroke:C.hair}); add(sv,'text',{x:left-6,y:Y(tk)+4,'font-size':13,fill:C.ink2,'text-anchor':'end'},tk+'%'); }
+    yrs.forEach((yy,i) => add(sv,'text',{x:X(i),y:sl.h-6,'font-size':13,fill:C.ink2,'text-anchor':'middle'},yy));
+    add(sv,'polygon',{points:[...bef.map((v,i)=>`${X(i)},${Y(v)}`), ...aft.map((v,i)=>`${X(i)},${Y(v)}`).reverse()].join(' '),fill:C.tint,'fill-opacity':.7});
+    add(sv,'polyline',{points:bef.map((v,i)=>`${X(i)},${Y(v)}`).join(' '),fill:'none',stroke:C.neutral,'stroke-width':2});
+    add(sv,'polyline',{points:aft.map((v,i)=>`${X(i)},${Y(v)}`).join(' '),fill:'none',stroke:C.accent,'stroke-width':3});
+    add(sv,'text',{x:right+8,y:Y(bef[4])+4,'font-size':13,fill:C.ink2},`Before ${bef[4].toFixed(1)}%`);
+    add(sv,'text',{x:right+8,y:Y(aft[4])+4,'font-size':13,'font-weight':'bold',fill:C.accent},`After ${aft[4].toFixed(1)}%`);
+    add(sv,'text',{x:(X(3)+X(4))/2,y:(Y(bef[4])+Y(aft[4]))/2+4,'font-size':12,fill:C.ink,'text-anchor':'middle'},`commissions ${(bef[4]-aft[4]).toFixed(1)} pt`);
+    add(sv,'text',{x:X(0)+4,y:(Y(bef[0])+Y(aft[0]))/2+4,'font-size':12,fill:C.ink},`${(bef[0]-aft[0]).toFixed(1)} pt`);
+    place(s, sl, '', '', 'Goodnight Inn operating margin before and after commissions, 2021 to 2025').appendChild(sv); }
+  trend(S.ch_f2_ota, 'ota_share', '', 100, v => v.toFixed(0)+'%');
   place(s, S.z_footer, 'foot', FOOTER);
 }
 
@@ -221,40 +269,49 @@ const mix = pkg => ids(pkg).map(id => SHORT[id]).join(' + ');
 function p2common(s, page, S, focus, state){
   cards(s, page, state);
   place(s, S.z_masthead2, 'mast', 'THE INVESTMENT STRATEGY &nbsp;·&nbsp; 2027 TO 2032 &nbsp;·&nbsp; GOODNIGHT INN BUDGET $60.0M');
-  place(s, S.z_headline2, 'head', 'Please make up the room.');
-  const n = ids(focus).length, g = ids(focus).filter(id => PROJ[id].growth === 'Yes').length;
-  place(s, S.c_subtitle2, 'sub', `In focus, package ${focus.id}: ${usdM(focus.capex)} of the $60.0M budget on ${n} initiatives (${g} growth). NPV through 2032 ${susdM(focus.npv[SCEN])} (${SCEN}; Low ${susdM(focus.npv.Low)}, High ${susdM(focus.npv.High)}); ${susdM(focus.rr[SCEN])} a year of operating profit by 2032.`);
-  const pos = PK.filter(p => p.npv[SCEN] >= 0).length;
-  place(s, S.c_scatter_title, 'title', `${pos === 0 ? 'None' : pos} of ${PK.length} valid packages ${pos === 1 ? 'is' : 'are'} worth more than ${pos === 1 ? 'it costs' : 'they cost'} by December 2032 (${SCEN} case)`);
-  place(s, S.c_scatter_sub, 'cap', 'One dot per package the rules allow: three or more initiatives, at least one growth initiative, within $60M, kiosks only with the app. Raspberry: the package in focus · plum: without the room refresh · grey: with it.');
+  const P3 = presets(SCEN), A = P3.A, held = 60e6 - A.capex;
+  place(s, S.z_headline2, 'head', `Fund the three moves that pay: ${usdM(A.capex)} now, ${usdM(held)} held back.`);
+  place(s, S.c_subtitle2, 'sub', `${SCEN} case unless stated · NPV through 2032 in 2025 dollars at 8% · nothing after 2032 is counted`);
+  const posP = PK.filter(p => p.npv[SCEN] >= 0), pos = posP.length, maxCap = Math.max(...posP.map(p => p.capex));
+  place(s, S.c_scatter_title, 'title', `${pos} of ${PK.length} possible packages pay back by 2032, all of them under ${usdM(Math.ceil(maxCap/1e6)*1e6, 0)}`);
+  place(s, S.c_scatter_sub, 'cap', 'Each dot is a package the contest rules allow. Raspberry: our recommendation.');
   { const sl = S.hero_packages, sv = svg(sl.w, sl.h), left = 72, right = sl.w - 16, top0 = 16, bot = sl.h - 48;
-    const xs = PK.map(p => p.capex/1e6), ys = PK.map(p => p.npv[SCEN]/1e6);
-    const x0 = 0, x1 = 60, y0 = Math.floor(Math.min(...ys)/5)*5 - 5, y1 = Math.ceil(Math.max(...ys)/5)*5 + 5;
+    // one fixed axis for all three scenarios, so a switch never rescales the picture (DC-034)
+    const every = PK.flatMap(p => ['Low','Expected','High'].map(k => p.npv[k]/1e6));
+    const x0 = 0, x1 = 60, y0 = Math.floor(Math.min(...every)/10)*10, y1 = Math.ceil(Math.max(...every)/10)*10;
     const X = v => left + (v-x0)/(x1-x0)*(right-left), Y = v => bot - (v-y0)/(y1-y0)*(bot-top0);
+    add(sv,'rect',{x:left,y:Y(y1),width:right-left,height:Y(0)-Y(y1),fill:'#F5F3F0'});
+    add(sv,'text',{x:left+12,y:Y(y1)+22,'font-size':13,fill:C.ink2},'Pays back by 2032');
     for (const t of ticks(y0, y1, 8)) { add(sv,'line',{x1:left,x2:right,y1:Y(t),y2:Y(t),stroke:t===0?C.ink2:C.hair,'stroke-width':t===0?1.5:1}); add(sv,'text',{x:left-8,y:Y(t)+4,'font-size':13,fill:C.ink2,'text-anchor':'end'},(t>0?'+':t<0?MINUS:'')+'$'+Math.abs(t)+'M'); }
     for (const t of ticks(x0, x1, 6)) add(sv,'text',{x:X(t),y:bot+20,'font-size':13,fill:C.ink2,'text-anchor':'middle'},'$'+t+'M');
     add(sv,'text',{x:(left+right)/2,y:sl.h-6,'font-size':13,fill:C.ink2,'text-anchor':'middle'},'Capex of the package, $M');
-    const yl = add(sv,'text',{x:16,y:(top0+bot)/2,'font-size':13,fill:C.ink2,'text-anchor':'middle',transform:`rotate(-90 16 ${(top0+bot)/2})`},'NPV through 2032, $M (2025 dollars, 8%)');
-    add(sv,'text',{x:right-4,y:Y(0)-8,'font-size':13,fill:C.ink2,'text-anchor':'end'},'worth its cost by 2032 above this line');
-    PK.forEach(p => { if (p.id !== focus.id) add(sv,'circle',{cx:X(p.capex/1e6),cy:Y(p.npv[SCEN]/1e6),r:4.5,fill:p.refresh?C.neutral:C.plum,'fill-opacity':.85}); });
+    add(sv,'text',{x:16,y:(top0+bot)/2,'font-size':13,fill:C.ink2,'text-anchor':'middle',transform:`rotate(-90 16 ${(top0+bot)/2})`},'NPV through 2032, $M');
+    PK.forEach(p => { if (p.id !== focus.id) add(sv,'circle',{cx:X(p.capex/1e6),cy:Y(p.npv[SCEN]/1e6),r:4,fill:C.neutral,'fill-opacity':.45}); });
+    for (const [k, p] of [['B', P3.B], ['C', P3.C]]) { if (!p || p.id === focus.id) continue;
+      add(sv,'circle',{cx:X(p.capex/1e6),cy:Y(p.npv[SCEN]/1e6),r:7,fill:'#FFFFFF',stroke:C.ink,'stroke-width':2});
+      add(sv,'text',{x:X(p.capex/1e6)+12,y:Y(p.npv[SCEN]/1e6)+5,'font-size':13,'font-weight':'bold',fill:C.ink},k); }
     add(sv,'circle',{cx:X(focus.capex/1e6),cy:Y(focus.npv[SCEN]/1e6),r:11,fill:C.accent,stroke:'#fff','stroke-width':2});
-    add(sv,'text',{x:X(focus.capex/1e6)+16,y:Y(focus.npv[SCEN]/1e6)+5,'font-size':13,'font-weight':'bold',fill:C.accent},focus.id);
+    add(sv,'text',{x:X(focus.capex/1e6)-4,y:Y(focus.npv[SCEN]/1e6)-20,'font-size':13,'font-weight':'bold',fill:C.accent},focus === A ? 'A · our recommendation' : focus.id);
     place(s, sl, '', '', 'Scatter of all valid packages').appendChild(sv); }
   place(s, S.sl_scenario, '', `<div class="slh">Scenario</div>${['Low','Expected','High'].map(x => `<span class="chip ${x===SCEN?'on':''}">${x}</span>`).join('')}`);
-  place(s, S.sl_package, '', `<div class="slh">Package in focus</div><div class="dd"><span>A · Highest NPV through 2032</span><span>▾</span></div>`);
-  place(s, S.z_footer2, 'foot', FOOTER);
+  place(s, S.sl_package, '', `<div class="slh">Package in focus</div><div class="dd"><span>A · Our recommendation</span><span>▾</span></div>`);
+  place(s, S.z_footer2, 'foot', FOOTER2);
 }
 function p2shortlist(page){
   const s = screen(page, page.name); const S = slots(page); const P3 = presets(SCEN);
   p2common(s, page, S, P3.A, 'shortlist');
-  place(s, S.c_short_title, 'title', `Three packages, one per criterion (${SCEN} case)`);
-  const heads = {A:'A · Highest NPV through 2032', B:'B · Most hotels with a guest-score effect, NPV at least zero', C:'C · Highest NPV that includes the refresh of the ten oldest hotels'};
-  for (const k of ['A','B','C']) { const p = P3[k], lk = k.toLowerCase();
-    place(s, S[`c_preset_${lk}_head`], 'ph', heads[k]);
-    place(s, S[`c_preset_${lk}_mix`], 'mix', p ? `${p.id}: ${mix(p)}` : 'No package qualifies in this case.');
-    place(s, S[`c_preset_${lk}_nums`], 'nums', p ? [[usdM(p.capex),'capex'],[susdM(p.npv[SCEN]),'NPV, '+SCEN],[`${sgn(p.npv.Low, Math.abs(p.npv.Low/1e6).toFixed(1))} to ${sgn(p.npv.High, Math.abs(p.npv.High/1e6).toFixed(1))}`,'NPV, Low to High, $M'],[susdM(p.rr[SCEN]),'a year by 2032']].map(([v,l]) => `<div class="num"><b>${v}</b><span>${l}</span></div>`).join('') : ''); }
-  const gross = PROJ['GI-01'];
-  place(s, S.c_uncertainty, 'note', `Read with care: no package is worth its cost by 2032 in the Low case, and nothing after 2032 is counted. Profit impacts are taken as net of running costs; read gross, the booking app earns $0.6M a year less.`);
+  const A = P3.A, B = P3.B, C3 = P3.C, rng = p => `${sgn(p.npv.Low, Math.abs(p.npv.Low/1e6).toFixed(1))} to ${sgn(p.npv.High, Math.abs(p.npv.High/1e6).toFixed(1))}`;
+  place(s, S.c_rec_title, 'title', 'Our recommendation: package A');
+  place(s, S.c_rec_mix, 'mix', mix(A));
+  place(s, S.c_rec_nums, 'recn', [[usdM(A.capex),'capex, of the $60.0M budget'],[susdM(A.npv[SCEN]),'NPV through 2032'],[rng(A),'NPV, Low to High, $M'],[susdM(A.rr[SCEN]),'operating profit a year by 2032']].map(([v,l]) => `<div><b>${v}</b><span>${l}</span></div>`).join(''), 'Package A in numbers');
+  place(s, S.c_rec_answers, 'cap', `Each move answers a finding on page 1: the app F2, the kiosks F3, revenue management F1. The other ${usdM(60e6 - A.capex)} is held back.`);
+  place(s, S.c_alt_title, 'title', 'Considered, not recommended');
+  const swapped = ids(B).filter(id => !ids(A).includes(id)).map(id => SHORT[id].toLowerCase());
+  place(s, S.c_alt_b, 'alt', `<b>B</b> · With the ${swapped.join(' and ')} instead of the kiosks: ${usdM(B.capex)}, NPV ${susdM(B.npv[SCEN])}. A guest-score effect in ${B.rated} hotels instead of ${A.rated}, for ${usdM(B.capex - A.capex)} more and a lower NPV.`);
+  place(s, S.c_alt_c, 'alt', `<b>C</b> · With the refresh of the 10 oldest hotels: ${usdM(C3.capex)}, NPV ${susdM(C3.npv[SCEN])}. It answers F3 most directly, but pays back after 2032.`);
+  const late = F.projects.filter(p => !ids(A).includes(p.id) && !ids(B).includes(p.id) && p.id !== 'GI-07' && p.payback[SCEN] === null).map(p => SHORT[p.id].replace(' +40 rooms',' extension'));
+  place(s, S.c_not_funded, 'alt', `<b>Not funded</b> · ${late.join(', ')}: none of them pays back by 2032, the airport extensions for F4 included.`);
+  place(s, S.c_uncertainty, 'note', `Read with care: in the Low case no package pays back by 2032, and A ends at ${susdM(A.npv.Low)}.`);
   place(s, S.btn_open_plan, 'btn', 'Open the plan for the package in focus &nbsp;→');
 }
 function p2plan(page){
@@ -279,7 +336,7 @@ function p2plan(page){
   let t = '<table><thead><tr><th></th><th style="text-align:left">Status</th><th style="text-align:left">Initiative</th><th style="text-align:left">Answers</th><th>Capex</th><th>Live</th><th>Run-rate</th><th>NPV</th><th>Guest pts</th></tr></thead><tbody>';
   for (const id of all) { const p = PROJ[id], on = pr.includes(id); t += `<tr><td class="chipc">${chip(on)}</td><td class="l ${on ? 'st-on' : 'st-off'}">${on ? 'Funded' : 'Not funded'}</td><td class="l">${SHORT[id]}</td><td class="l f">${ANSWERS[id]}</td><td>${usdM(p.capex)}</td><td>${monthText(p.live)}</td><td>${susdM(p.runrate[SCEN])}</td><td>${susdM(p.npv[SCEN])}</td><td>${p.sat[SCEN] ? '+' + p.sat[SCEN].toFixed(2) + ' on ' + p.hotels : '·'}</td></tr>`; }
   place(s, S.tbl_plan_initiatives, 'plan', t + '</tbody></table>', 'All ten initiatives: funded in the package in focus, or not');
-  { const sl = S.ch_plan_cumulative, sv = svg(sl.w, sl.h), left = 48, right = sl.w - 8, top0 = 28, bot = sl.h - 20;
+  { const sl = S.ch_plan_cumulative, sv = svg(sl.w, sl.h), left = 48, right = sl.w - 24, top0 = 28, bot = sl.h - 20;
     add(sv,'text',{x:0,y:14,'font-size':13,'font-weight':'bold',fill:C.ink},'Cumulative net impact, $M · Low to High');
     const series = ['Low','Expected','High'].map(sc => cumulative(focus, sc).map(v => v/1e6)); const all = series.flat().concat([0]);
     const mn = Math.min(...all), mx = Math.max(...all); const X = i => left + i*(right-left)/5, Y = v => bot - (v-mn)/(mx-mn)*(bot-top0);
@@ -293,7 +350,7 @@ function p2plan(page){
   const pb = payback(focus, SCEN);
   const dis = pr.includes('GI-07') ? `15% of ${F.refresh10.rooms.toLocaleString('en-US')} rooms out of service for 14 months; ` : '';
   place(s, S.c_plan_risk, 'note', `Risks: ${dis}NPV in the Low case ${susdM(focus.npv.Low)}; the cumulative net turns positive ${pb ? 'in ' + pb : 'after 2032'} (${SCEN}). Kiosks wait for the app: they start when it goes live.`);
-  place(s, S.btn_back, 'btn ghost', '←&nbsp; Back to the three packages');
+  place(s, S.btn_back, 'btn ghost', '←&nbsp; Back to the recommendation');
 }
 
 const [P1, P2] = L.pages;

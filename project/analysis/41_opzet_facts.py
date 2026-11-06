@@ -92,6 +92,23 @@ reg = {t: dict(hotels=int(x.hotels), occ=float(x.sold / x.avail)) for t, x in re
 ref = gi[gi.projects.apply(lambda v: "GI-07" in v)]
 comfort_corr = float(np.corrcoef(gi.dropna(subset=["LastRenovationDate"]).years, gi.dropna(subset=["LastRenovationDate"]).comfort)[0, 1])
 
+# D1 briefing facts (2026-11-07): the folio (MISSION E8), the channel-mix counterfactual (E7) and
+# NPS by years since the last renovation (E10; dated hotels only, scores weighted by SurveyResponses).
+c25 = BC[(BC.Brand == "Goodnight Inn") & (BC.Year == 2025)].groupby("Channel")[["RoomRevenue", "RoomNights", "DistributionCost"]].sum()
+folio = {ch: dict(adr=float(x.RoomRevenue / x.RoomNights), dist=float(x.DistributionCost / x.RoomNights),
+                  kept=float((x.RoomRevenue - x.DistributionCost) / x.RoomNights), share=float(x.RoomRevenue / c25.RoomRevenue.sum()))
+         for ch, x in c25.iterrows()}
+c21 = BC[(BC.Brand == "Goodnight Inn") & (BC.Year == 2021)].groupby("Channel").RoomRevenue.sum()
+mix21 = c21 / c21.sum(); rate25 = c25.DistributionCost / c25.RoomRevenue
+counterfactual = float(c25.DistributionCost.sum() - (mix21.reindex(c25.index).fillna(0) * c25.RoomRevenue.sum() * rate25).sum())
+dated = gi.dropna(subset=["LastRenovationDate"]).copy()
+dated["band"] = pd.cut(dated.years, [-1, 5, 9, 99], labels=["5 years or less", "6 to 9 years", "10 years or more"])
+ge25 = GE[(GE.Brand == "Goodnight Inn") & (GE.Year == 2025)]
+age_bands = []
+for band, hs in dated.groupby("band", observed=True):
+    age_bands.append(dict(band=str(band), hotels=int(len(hs)), nps=wavg(ge25[ge25.HotelID.isin(hs.index)], "NetPromoterScore"),
+                          comfort=wavg(ge25[ge25.HotelID.isin(hs.index)], "RoomComfortScore"), occ=float(hs.RoomsSold.sum() / hs.RoomsAvailable.sum())))
+
 # P2
 proj = []
 for _, x in P[P.Brand == "Goodnight Inn"].sort_values("ProjectID").iterrows():
@@ -111,7 +128,8 @@ scatter = [dict(id=x.PackageID, capex=float(x.CapexUSD), refresh=x.ContainsRefre
 facts = dict(brands=brands, ranks=ranks, hotels=hotels, location=loc, region=reg,
              refresh10=dict(n=int(len(ref)), rooms=int(ref.Rooms.sum()), comfort=float(ref.comfort.mean()), comfort_rest=float(gi[~gi.index.isin(ref.index)].comfort.mean()),
                             neg_nps=int((ref.nps < 0).sum()), neg_nps_all=int((gi.nps < 0).sum())),
-             comfort_years_r=comfort_corr, projects=proj, packages=scatter)
+             comfort_years_r=comfort_corr, projects=proj, packages=scatter,
+             folio=folio, counterfactual_2021_mix=counterfactual, age_bands=age_bands)
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps(facts, indent=1, default=float), encoding="utf-8")
 g = brands["Goodnight Inn"]["y2025"]
@@ -120,5 +138,8 @@ print("ranks (1 = best of four):", ranks)
 for b in BR:
     y = brands[b]["y2025"]
     print(f"{b:14} occ {y['occupancy']:.1%} ADR {y['adr']:.0f} RevPAR {y['revpar']:.0f} GOP% {y['gop_margin']:.1%} after {y['gop_margin_after']:.1%} dist/room {y['dist_pct_room']:.1%} OTA {y['ota_share']:.1%} direct {y['direct_share']:.1%} NPS {y['nps']:+.1f} comfort {y['comfort']:.2f} value {y['value']:.2f} compl {y['complaints_1k']:.2f} roomcond {y['room_cond_1k']:.2f} refresh {brands[b]['refresh']}")
+print("folio 2025:", {ch: {k: round(v, 2) for k, v in f.items()} for ch, f in folio.items()})
+print("distribution cost above the 2021 channel mix, 2025:", round(counterfactual / 1e6, 2), "M")
+print("NPS by years since last renovation:", [(a["band"], a["hotels"], round(a["nps"], 1), round(a["comfort"], 2), round(a["occ"], 3)) for a in age_bands])
 print("location:", loc); print("region:", reg); print("refresh10:", facts["refresh10"], "r(years, comfort) dated:", round(comfort_corr, 3))
 print("written", out)
