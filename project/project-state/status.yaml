@@ -2,12 +2,12 @@
 project: PowerBI_Dataviz_WC27
 template_version: 0.4.0
 current_stage: 0
-updated: 2026-11-05
+updated: 2026-11-06
 stages:
   s0_intake:
     status: in_progress
     evidence: ""
-    gate_note: "canon audit of the pitched entry filed: project-state/active/00-best-in-class-audit.md (17/40, caps A2+B8); brand kit goodnight-inn-hanger chosen 2026-11-06 (project-state/active/00-brand-decision.md); direction not yet recorded"
+    gate_note: "canon audit filed: project-state/active/00-best-in-class-audit.md (17/40, caps A2+B8); brand kit goodnight-inn-hanger chosen 2026-11-06 (00-brand-decision.md); direction and P2 focus-swap method recorded 2026-11-06 (01-richting-p1-p2.md, 02-focuswissel-methode.md, fx-focus skill); build description recorded (04-p2-build-method.md); interaction proof pending (03-focuswissel-testplan.md)"
   s1_requirements:
     status: pending
     evidence: ""
