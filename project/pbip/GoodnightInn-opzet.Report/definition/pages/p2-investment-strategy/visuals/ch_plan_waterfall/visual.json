@@ -146,6 +146,13 @@
                   "Value": "false"
                 }
               }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
             }
           }
         }
@@ -232,6 +239,13 @@
                       "Value": "'#24192B'"
                     }
                   }
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
                 }
               }
             }
@@ -416,7 +430,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_focus_wf_6",
+        "name": "flt_focus_wf_7",
         "field": {
           "Measure": {
             "Expression": {

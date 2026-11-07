@@ -15,10 +15,10 @@
       "icon": [
         {
           "properties": {
-            "show": {
+            "shapeType": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'blank'"
                 }
               }
             }
@@ -37,11 +37,15 @@
                   "Value": "true"
                 }
               }
-            },
+            }
+          }
+        },
+        {
+          "properties": {
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'←  Back to the three packages'"
+                  "Value": "'←  Back to the recommendation'"
                 }
               }
             },
@@ -92,7 +96,11 @@
                   "Value": "true"
                 }
               }
-            },
+            }
+          }
+        },
+        {
+          "properties": {
             "fillColor": {
               "solid": {
                 "color": {
@@ -126,7 +134,11 @@
                   "Value": "true"
                 }
               }
-            },
+            }
+          }
+        },
+        {
+          "properties": {
             "lineColor": {
               "solid": {
                 "color": {
@@ -142,13 +154,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
-                }
-              }
-            },
-            "roundEdge": {
-              "expr": {
-                "Literal": {
-                  "Value": "20D"
                 }
               }
             }
@@ -278,7 +283,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Button: back to the three shortlist packages'"
+                  "Value": "'Button: back to the recommendation and its alternatives'"
                 }
               }
             }

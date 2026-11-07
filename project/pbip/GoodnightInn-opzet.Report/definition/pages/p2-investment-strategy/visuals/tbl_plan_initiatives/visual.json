@@ -392,6 +392,20 @@
                   "Value": "'None'"
                 }
               }
+            },
+            "imageHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            },
+            "imageWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "28D"
+                }
+              }
             }
           }
         }

@@ -3,10 +3,10 @@
   "name": "hero_packages",
   "position": {
     "x": 56,
-    "y": 280,
+    "y": 264,
     "z": 1012,
     "width": 992,
-    "height": 712,
+    "height": 728,
     "tabOrder": 220
   },
   "visual": {
@@ -84,7 +84,7 @@
               },
               "queryRef": "_Measures.Package Point Size",
               "nativeQueryRef": "Package Point Size",
-              "displayName": "In focus"
+              "displayName": "Marker size"
             }
           ]
         }
@@ -137,6 +137,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
                 }
               }
             },
@@ -256,10 +263,31 @@
                 }
               }
             },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Literal": {
+                  "Value": "-60000000.0D"
+                }
+              }
+            },
+            "end": {
+              "expr": {
+                "Literal": {
+                  "Value": "20000000.0D"
+                }
+              }
+            },
             "titleText": {
               "expr": {
                 "Literal": {
-                  "Value": "'NPV through 2032, $M (2025 dollars, 8%)'"
+                  "Value": "'NPV through 2032, $M'"
                 }
               }
             },
@@ -328,7 +356,7 @@
             "bubbleSize": {
               "expr": {
                 "Literal": {
-                  "Value": "-25L"
+                  "Value": "-40L"
                 }
               }
             }
@@ -413,32 +441,14 @@
             "displayName": {
               "expr": {
                 "Literal": {
-                  "Value": "'worth its cost by 2032 above this line'"
+                  "Value": "'Pays back by 2032 above this line'"
                 }
               }
             },
             "dataLabelShow": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "dataLabelText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Name'"
-                }
-              }
-            },
-            "dataLabelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#5B5163'"
-                    }
-                  }
+                  "Value": "false"
                 }
               }
             }
@@ -568,7 +578,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Scatter of the 456 valid investment packages: capex on the horizontal axis, NPV through 2032 in the selected scenario on the vertical axis; the package in focus is the large raspberry dot'"
+                  "Value": "'Scatter of the 456 valid investment packages: capex on the horizontal axis, NPV through 2032 in the selected scenario on the vertical axis; the recommendation, package A, is the large raspberry dot, the alternatives B and C are plum-black'"
                 }
               }
             }

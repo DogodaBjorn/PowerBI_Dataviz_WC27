@@ -3,10 +3,10 @@
   "name": "c_plan_risk",
   "position": {
     "x": 1112,
-    "y": 920,
+    "y": 912,
     "z": 1055,
     "width": 752,
-    "height": 40,
+    "height": 48,
     "tabOrder": 550
   },
   "visual": {
@@ -216,6 +216,29 @@
             "id": "default"
           }
         }
+      ],
+      "fillCustom": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -239,6 +262,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
                 }
               }
             }

@@ -35,9 +35,9 @@ table PlanSelector
 				    DATATABLE (
 				        "Key", STRING, "Label", STRING, "Sort", INTEGER,
 				        {
-				            { "A", "A · Highest NPV through 2032", 1 },
+				            { "A", "A · Our recommendation", 1 },
 				            { "B", "B · Most hotels with a guest-score effect, NPV at least zero", 2 },
-				            { "C", "C · Highest NPV with the refresh of the ten oldest hotels", 3 }
+				            { "C", "C · Highest NPV with the refresh of the 10 oldest hotels", 3 }
 				        }
 				    ),
 				    SELECTCOLUMNS (

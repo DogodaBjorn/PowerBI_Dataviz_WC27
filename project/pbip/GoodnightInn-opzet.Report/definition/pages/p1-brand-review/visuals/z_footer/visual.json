@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Data: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores response-weighted. Margins before commissions unless marked. 2021 is a depressed base year. Projections: scenario logic from FinanceParameters.",
+                    "value": "Source: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores weighted by survey responses. 2021 is a depressed base year.",
                     "textStyle": {
                       "fontFamily": "Verdana",
                       "fontSize": "13px",

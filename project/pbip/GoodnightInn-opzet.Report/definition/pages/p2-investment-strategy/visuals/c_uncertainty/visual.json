@@ -3,11 +3,11 @@
   "name": "c_uncertainty",
   "position": {
     "x": 1112,
-    "y": 920,
+    "y": 904,
     "z": 1040,
     "width": 752,
-    "height": 40,
-    "tabOrder": 440
+    "height": 48,
+    "tabOrder": 480
   },
   "visual": {
     "visualType": "cardVisual",
@@ -216,6 +216,29 @@
             "id": "default"
           }
         }
+      ],
+      "fillCustom": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -239,6 +262,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
                 }
               }
             }

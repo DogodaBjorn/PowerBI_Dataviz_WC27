@@ -64,13 +64,13 @@
           "type": "CustomTheme"
         },
         {
-          "name": "bg-p1-brand-review.png",
-          "path": "bg-p1-brand-review.png",
+          "name": "lockup-p1-brand-review.png",
+          "path": "lockup-p1-brand-review.png",
           "type": "Image"
         },
         {
-          "name": "bg-p2-investment-strategy.png",
-          "path": "bg-p2-investment-strategy.png",
+          "name": "lockup-p2-investment-strategy.png",
+          "path": "lockup-p2-investment-strategy.png",
           "type": "Image"
         }
       ]
