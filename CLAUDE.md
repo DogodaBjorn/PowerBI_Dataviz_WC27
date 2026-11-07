@@ -98,6 +98,7 @@ The daily driver is `/next` — it reads the state, reports gate status, and rou
 | Build documentation | skill `build-log` |
 | Add-on modules (brand kit, custom visuals, NL, icons, nav, Deneb, tables, tooltips, canvas, a11y, imagery, pixel comps) | `modules/README.md`; module skills are prefixed `bk-`, `cv-`, `nl-`, `ic-`, `nv-`, `dn-`, `tb-`, `tt-`, `ca-`, `ax-`, `im-`, `px-` |
 | P2 focus swap (package selector, bookmark states, Deneb/HTML route gates) | skill `fx-focus` + `project/project-state/active/02-focuswissel-methode.md` |
+| Screenshot review v2 op de opzet (fixgids met acceptatiechecks, volgorde tot 18 nov) | `project/project-state/active/07-fixgids-review-v2.md` + `research/log/2026-11-07-screenshot-review-v2.md` |
 | Keep the toolkit first-in-class (research any subject) | skill `scout` + `research/radar.md` |
 
 ## Environment notes
