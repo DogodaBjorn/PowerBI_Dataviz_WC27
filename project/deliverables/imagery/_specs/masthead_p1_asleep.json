@@ -1,0 +1,35 @@
+{
+  "placement": "P1 masthead vignette, right of the headline (square, shown at 152 x 152 px on the 1920 x 1080 canvas)",
+  "aspect_ratio": "1:1",
+  "scene": "Close view of a closed hotel room door, seen straight on, filling most of the square. On the lever door handle hangs one raspberry door hanger with two small CLOSED eyes drawn as gentle downward curves: the guest is asleep, do not disturb. Quiet late-evening calm: door in plum-grey, wall in light lilac-grey, a soft warm glow from a small round wall lamp beside the door, a plain blank plate where a room number would be. Simple, centred composition with calm space around the hanger.",
+  "style_anchors": [
+    "design/brand-kits/goodnight-inn-hanger/assets/goodnight-inn-hanger@2x.png",
+    "design/brand-kits/goodnight-inn-hanger/assets/goodnight-inn-lockup@2x.png"
+  ],
+  "style_spec": "Bold flat color-block illustration, no outlines, rounded geometric shapes with generous corner radii, on a warm pillowcase-white ground. Friendly, plain and wide-awake; the mood of a good morning after an honest night. The door hanger must look exactly like the reference mark: a tall raspberry tile with fully rounded corners, a round hole near the top with a thin slit running from the hole to the right edge, and only two small eyes as its face.",
+  "palette": {
+    "dominant": "#F5F3F0",
+    "ink": "#24192B",
+    "accent": "#B5175F",
+    "support": "#82798A",
+    "support_light": "#B8B0BE",
+    "plum": "#3E2C55"
+  },
+  "negative": [
+    "no stock photo",
+    "no photorealism",
+    "no 3D render",
+    "no gradients",
+    "no moons or stars",
+    "no Zzz",
+    "no faces other than the hanger's two eyes",
+    "no bedroom photography",
+    "no luxury interiors",
+    "no busy background",
+    "no more than one raspberry element per image",
+    "no people",
+    "no room number digits"
+  ],
+  "profile": "design/brand-kits/goodnight-inn-hanger/imagery-profile.yaml",
+  "date": "2026-11-07"
+}

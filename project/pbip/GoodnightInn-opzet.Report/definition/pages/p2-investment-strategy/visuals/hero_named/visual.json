@@ -6,7 +6,7 @@
     "y": 264,
     "z": 1014,
     "width": 992,
-    "height": 728,
+    "height": 736,
     "tabOrder": 221
   },
   "visual": {
@@ -112,7 +112,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -148,13 +148,6 @@
                 }
               }
             },
-            "start": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
             "titleText": {
               "expr": {
                 "Literal": {
@@ -172,7 +165,7 @@
             "titleFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -184,6 +177,18 @@
                       "Value": "'#5B5163'"
                     }
                   }
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Scatter X Start"
                 }
               }
             },
@@ -222,7 +227,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -293,7 +298,7 @@
             "titleFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -571,7 +576,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'The three named packages on the same axes: A, our recommendation, in raspberry; the alternatives B and C in plum-black; the package in focus largest'"
+                  "Value": "'The three named packages on the same axes: A, our recommendation, in raspberry; B, the alternative, and C, the answer to why not renovate, in plum-black; the package in focus largest'"
                 }
               }
             }

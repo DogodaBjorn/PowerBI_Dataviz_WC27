@@ -36,7 +36,7 @@ table PlanSelector
 				    {
 				        { "A", "A · Our recommendation", 1 },
 				        { "B", "B · Breakfast instead of kiosks", 2 },
-				        { "C", "C · Refresh instead of kiosks", 3 }
+				        { "C", "C · Why not renovate? For comparison", 3 }
 				    }
 				)
 				```

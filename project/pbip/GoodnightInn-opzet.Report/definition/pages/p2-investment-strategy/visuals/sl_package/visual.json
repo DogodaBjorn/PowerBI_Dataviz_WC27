@@ -3,10 +3,10 @@
   "name": "sl_package",
   "position": {
     "x": 1496,
-    "y": 200,
+    "y": 224,
     "z": 1021,
     "width": 368,
-    "height": 72,
+    "height": 40,
     "tabOrder": 310
   },
   "visual": {
@@ -53,7 +53,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -74,7 +74,7 @@
             "textSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -112,7 +112,7 @@
             "textSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -356,7 +356,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Package in focus: the recommendation A or the alternatives B and C'"
+                  "Value": "'Package in focus: the recommendation A, the alternative B, or C, the answer to why not renovate'"
                 }
               }
             }

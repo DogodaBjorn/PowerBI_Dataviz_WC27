@@ -3,10 +3,10 @@
   "name": "tbl_f2_folio",
   "position": {
     "x": 680,
-    "y": 600,
+    "y": 592,
     "z": 1033,
     "width": 560,
-    "height": 112,
+    "height": 120,
     "tabOrder": 430
   },
   "visual": {
@@ -78,7 +78,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -148,7 +148,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },

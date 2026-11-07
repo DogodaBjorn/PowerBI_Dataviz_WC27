@@ -6,7 +6,7 @@
     "y": 400,
     "z": 1042,
     "width": 560,
-    "height": 288,
+    "height": 272,
     "tabOrder": 520
   },
   "visual": {
@@ -92,7 +92,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -144,7 +144,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "11D"
                 }
               }
             },

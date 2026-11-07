@@ -99,6 +99,7 @@ The daily driver is `/next` — it reads the state, reports gate status, and rou
 | Add-on modules (brand kit, custom visuals, NL, icons, nav, Deneb, tables, tooltips, canvas, a11y, imagery, pixel comps) | `modules/README.md`; module skills are prefixed `bk-`, `cv-`, `nl-`, `ic-`, `nv-`, `dn-`, `tb-`, `tt-`, `ca-`, `ax-`, `im-`, `px-` |
 | P2 focus swap (package selector, bookmark states, Deneb/HTML route gates) | skill `fx-focus` + `project/project-state/active/02-focuswissel-methode.md` |
 | Screenshot review v2 op de opzet (fixgids met acceptatiechecks, volgorde tot 18 nov) | `project/project-state/active/07-fixgids-review-v2.md` + `research/log/2026-11-07-screenshot-review-v2.md` |
+| Verbeterplan ronde 3 (Bjorns feedback 7 nov: C-framing, scatter-tooltips, nullijn, canvasruimte, merkherkenning + open punten ronde 2) | `project/project-state/active/08-verbeterplan-ronde-3.md` |
 | Keep the toolkit first-in-class (research any subject) | skill `scout` + `research/radar.md` |
 
 ## Environment notes
@@ -107,3 +108,4 @@ The daily driver is `/next` — it reads the state, reports gate status, and rou
 - External tools are pinned in `DEPENDENCIES.md`. The `pbir` CLI has a
   **non-commercial license** — see that file before paid use; direct JSON editing
   is the documented fallback.
+

@@ -38,6 +38,7 @@ mkdirSync(out, { recursive: true });
 const browser = chromium ? await chromium.launch() : null;
 const page = browser ? await browser.newPage({ viewport: { width: layout.canvas.w, height: layout.canvas.h }, deviceScaleFactor: 1 }) : null;
 for (const p of layout.pages) {
+  if (!p.logo) continue;  // v3: the tooltip page (tt-package) has no masthead
   // v2: the cards are report visuals now (opzet_report.py card_frames), so they scale with the content on any
   // viewport; the background keeps only the canvas colour and the lockup.
   const cards = '';

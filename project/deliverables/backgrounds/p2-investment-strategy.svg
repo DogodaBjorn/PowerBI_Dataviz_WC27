@@ -2,7 +2,7 @@
 <rect width="100%" height="100%" fill="#F5F3F0"/>
 
 
-<g transform="translate(32 32) scale(0.38461538461538464)">
+<g transform="translate(32 24) scale(0.5384615384615384)">
 <defs><mask id="hole-h"><rect x="0" y="0" width="64" height="104" fill="white"/><circle cx="32" cy="24" r="10" fill="black"/><rect x="32" y="22.5" width="40" height="3" fill="black"/></mask></defs>
 <rect x="4" y="4" width="56" height="96" rx="14" fill="#B5175F" mask="url(#hole-h)"/>
 <circle cx="22" cy="62" r="4" fill="#FFFFFF"/><circle cx="42" cy="62" r="4" fill="#FFFFFF"/>

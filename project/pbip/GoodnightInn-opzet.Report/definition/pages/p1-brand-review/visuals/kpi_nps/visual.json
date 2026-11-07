@@ -3,10 +3,10 @@
   "name": "kpi_nps",
   "position": {
     "x": 1448,
-    "y": 224,
+    "y": 216,
     "z": 1013,
     "width": 416,
-    "height": 40,
+    "height": 48,
     "tabOrder": 231
   },
   "visual": {

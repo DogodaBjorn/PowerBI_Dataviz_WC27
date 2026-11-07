@@ -3,10 +3,10 @@
   "name": "z_logo",
   "position": {
     "x": 32,
-    "y": 32,
+    "y": 24,
     "z": 1003,
-    "width": 144,
-    "height": 40,
+    "width": 200,
+    "height": 56,
     "tabOrder": 9050
   },
   "visual": {
@@ -185,7 +185,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Goodnight Inn logo'"
+                  "Value": "'Goodnight Inn logo: the door hanger asleep'"
                 }
               }
             }

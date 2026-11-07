@@ -3,10 +3,10 @@
   "name": "c_not_funded",
   "position": {
     "x": 1112,
-    "y": 760,
-    "z": 1037,
+    "y": 784,
+    "z": 1039,
     "width": 752,
-    "height": 88,
+    "height": 72,
     "tabOrder": 470
   },
   "visual": {
@@ -54,7 +54,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },

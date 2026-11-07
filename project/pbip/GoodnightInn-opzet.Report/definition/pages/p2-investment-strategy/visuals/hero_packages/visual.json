@@ -6,7 +6,7 @@
     "y": 264,
     "z": 1012,
     "width": 992,
-    "height": 728,
+    "height": 736,
     "tabOrder": 220
   },
   "visual": {
@@ -92,7 +92,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -128,13 +128,6 @@
                 }
               }
             },
-            "start": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
             "titleText": {
               "expr": {
                 "Literal": {
@@ -152,7 +145,7 @@
             "titleFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -164,6 +157,18 @@
                       "Value": "'#5B5163'"
                     }
                   }
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Scatter X Start"
                 }
               }
             },
@@ -202,7 +207,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -273,7 +278,7 @@
             "titleFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -421,7 +426,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#5B5163'"
+                      "Value": "'#82798A'"
                     }
                   }
                 }
@@ -431,6 +436,13 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
                 }
               }
             },
@@ -444,21 +456,85 @@
             "position": {
               "expr": {
                 "Literal": {
-                  "Value": "'front'"
+                  "Value": "'back'"
                 }
               }
             },
             "displayName": {
               "expr": {
                 "Literal": {
-                  "Value": "'Pays back by 2032 above this line'"
+                  "Value": "'Pays back by 2032'"
                 }
               }
             },
             "dataLabelShow": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "dataLabelText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Name'"
+                }
+              }
+            },
+            "dataLabelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#5B5163'"
+                    }
+                  }
+                }
+              }
+            },
+            "dataLabelHorizontalPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'right'"
+                }
+              }
+            },
+            "dataLabelVerticalPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'above'"
+                }
+              }
+            },
+            "shadeShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "shadeRegion": {
+              "expr": {
+                "Literal": {
+                  "Value": "'after'"
+                }
+              }
+            },
+            "shadeColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#B5175F'"
+                    }
+                  }
+                }
+              }
+            },
+            "shadeTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "90D"
                 }
               }
             }
@@ -588,7 +664,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Scatter of the 456 valid investment packages: capex on the horizontal axis, NPV through 2032 in the selected scenario on the vertical axis; light dots are the packages not proposed'"
+                  "Value": "'Scatter of the 456 valid investment packages: capex on the horizontal axis, NPV through 2032 in the selected scenario on the vertical axis; the band above zero, where a package pays back by 2032, is shaded'"
                 }
               }
             }
