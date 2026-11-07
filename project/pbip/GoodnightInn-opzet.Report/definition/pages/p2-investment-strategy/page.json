@@ -31,6 +31,203 @@
       }
     ]
   },
+  "visualInteractions": [
+    {
+      "source": "hero_hover",
+      "target": "z_card_card_scatter",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "z_card_card_panel",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "z_payoff2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "z_vignette2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "z_masthead2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_scatter_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "hero_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "hero_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "sl_view",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "lbl_package",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "sl_package",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_focus_line",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_rec_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_rec_mix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_rec_answers",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_rec_held",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_rec_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_alt_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_alt_b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_alt_c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_not_funded",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_uncertainty",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "btn_open_plan",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_plan_ops",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "ch_plan_waterfall",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "tbl_plan_initiatives",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "ch_plan_cumulative",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "c_plan_risk",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    }
+  ],
   "filterConfig": {
     "filters": [
       {

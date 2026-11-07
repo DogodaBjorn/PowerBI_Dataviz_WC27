@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_rec_title",
   "position": {
-    "x": 1112,
+    "x": 1160,
     "y": 304,
     "z": 1030,
-    "width": 752,
+    "width": 704,
     "height": 32,
     "tabOrder": 400
   },
@@ -22,7 +22,7 @@
                     "value": "Our recommendation: package A",
                     "textStyle": {
                       "fontFamily": "Trebuchet MS",
-                      "fontSize": "17px",
+                      "fontSize": "20px",
                       "color": "#24192B",
                       "fontWeight": "bold"
                     }

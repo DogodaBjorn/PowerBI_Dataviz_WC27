@@ -69,8 +69,18 @@
           "type": "Image"
         },
         {
+          "name": "goodnight-inn-door-asleep@2x.png",
+          "path": "goodnight-inn-door-asleep@2x.png",
+          "type": "Image"
+        },
+        {
           "name": "lockup-p2-investment-strategy.png",
           "path": "lockup-p2-investment-strategy.png",
+          "type": "Image"
+        },
+        {
+          "name": "goodnight-inn-door-awake@2x.png",
+          "path": "goodnight-inn-door-awake@2x.png",
           "type": "Image"
         }
       ]

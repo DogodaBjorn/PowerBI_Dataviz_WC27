@@ -3,10 +3,10 @@
   "name": "ch_f4_fullest",
   "position": {
     "x": 616,
-    "y": 880,
+    "y": 872,
     "z": 1053,
     "width": 1248,
-    "height": 120,
+    "height": 128,
     "tabOrder": 630
   },
   "visual": {
@@ -91,7 +91,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -143,7 +143,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "11D"
                 }
               }
             },
@@ -240,7 +240,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },

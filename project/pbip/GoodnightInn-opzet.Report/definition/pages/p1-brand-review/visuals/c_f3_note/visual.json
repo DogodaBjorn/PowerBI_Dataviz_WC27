@@ -3,10 +3,10 @@
   "name": "c_f3_note",
   "position": {
     "x": 1304,
-    "y": 696,
+    "y": 680,
     "z": 1043,
     "width": 560,
-    "height": 80,
+    "height": 96,
     "tabOrder": 530
   },
   "visual": {
@@ -54,7 +54,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },

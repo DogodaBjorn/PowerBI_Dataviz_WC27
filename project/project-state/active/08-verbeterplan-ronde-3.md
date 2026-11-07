@@ -195,3 +195,26 @@ ongemoeid; dit plan wordt op een eigen branch gebouwd.
    voor de deadline.
 
 Deadline: 18 november 2026 23:59 PT; streven blijft inleveren op 17 november.
+
+## 5. Status na batch 3 (7 november, Claude Code)
+
+Gebouwd in de generators op branch `upgrade-opzet-v3` (op de build van PR #5). Renders en eigen review:
+`project/deliverables/screenshots/2026-11-07-desktop-batch3/` (README + SELF-REVIEW, 35 beelden).
+
+| Punt | Status | Kort |
+|---|---|---|
+| V1 C-framing | gedaan | Dropdown "C · Why not renovate? For comparison"; landing, plantitel en eerste planregel noemen C het antwoord op "waarom niet renoveren"; "in elk scenario onder nul (High −$11,4M)" wordt berekend, niet getypt. |
+| V2 Tooltips | gedaan (P2W-check bij Björn) | Native tooltip-pagina `tt-package`: chip (wakker/slapend), naam, NPV in raspberry/ember, capex, drie scenario's, payback, de ingrepen. Werkt op A, B, C én de wolk via een derde, transparante scatterlaag; N3 is daarmee dicht. |
+| V3 Nullijn | gedaan | 1 px plum-slate; het vlak erboven licht gearceerd met het label "Pays back by 2032". |
+| V4 Canvasruimte | deels | Assen in stappen van $5M met marge, capex vanaf $5M, het lege vlak boven nul is nu de payback-zone. Zoom als default afgewogen en niet gedaan (Björns keuze "All packages"; "6 of 456" heeft de hele wolk nodig); omzetten is één waarde. |
+| V5 Merk | gedaan | Merkrij op beide pagina's: lockup op 56 px, pay-off in raspberry, masthead, en een met Gemini gegenereerde vignet van dezelfde hoteldeur (P1 dicht, hanger slaapt; P2 open, hanger wakker). Vastgelegd in `design/brand-kits/goodnight-inn-hanger/assets/GENERATED-ASSETS.md`, embedded via de generator. Chip bij de aanbeveling en in de tooltip. |
+| S1 Tegels | gedaan | Button slicers in huisstijl (afgeronde outline, geselecteerd plum-black met witte tekst), 40 px, uitgelijnd op x 1112. |
+| N8 Hover Back | gedaan | L2b/Z1: grijze hover, label leesbaar; Z2: de risicoregel draagt geen knopactie. |
+| N9 Risicoregel | gedaan | "in this case" voor het scenario in beeld. |
+| N11 Horizon | gedaan | Geen claim meer na 2032 ("does not pay back by 2032"). |
+| R4 Minimumfont | gedaan, op 11 pt | 11 pt (15 px) is de kleinste tekst; renders op 1366 breed in W1366a-c. 16 px op 1920 zou een derde minder tekst in het P2-paneel vragen. |
+| S10 Open vragen | gedaan | Kiosks naar de 20 volste hotels (9 airport, 7 highway, 4 city; gecontroleerd op bezetting 2025); $50,6M wordt achtergehouden tot alle drie de ingrepen live zijn (apr 2028), omdat geen ander initiatief vóór 2032 terugverdient, ook niet in High. |
+| R6/N10 P2W | open, Björn | Ongewijzigd het kritieke pad. |
+
+Nieuwe eigen bevindingen N12-N17 (o.a. hover op de rand van B kan een buur-stip tonen, de cumulatieve grafiek is
+kleiner geworden, het paneel blijft het dichtste deel): zie SELF-REVIEW.

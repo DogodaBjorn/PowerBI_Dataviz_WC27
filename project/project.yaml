@@ -16,3 +16,4 @@ modules:
   - px-prototype
   - deneb-studio
   - custom-visual-studio
+  - imagery-studio   # enabled 2026-11-07 for the masthead vignettes (08-verbeterplan V5, Björn: brand content via Gemini)

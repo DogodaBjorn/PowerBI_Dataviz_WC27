@@ -6,10 +6,12 @@
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
       "c_focus_line",
+      "img_rec_chip",
       "c_rec_title",
       "c_rec_mix",
       "c_rec_nums",
       "c_rec_answers",
+      "c_rec_held",
       "c_rec_rules",
       "c_alt_title",
       "c_alt_b",
@@ -42,6 +44,14 @@
               }
             }
           },
+          "img_rec_chip": {
+            "singleVisual": {
+              "visualType": "image",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
           "c_rec_title": {
             "singleVisual": {
               "visualType": "textbox",
@@ -67,6 +77,14 @@
             }
           },
           "c_rec_answers": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_rec_held": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {

@@ -3,7 +3,7 @@
   "name": "c_uncertainty",
   "position": {
     "x": 1112,
-    "y": 864,
+    "y": 856,
     "z": 1040,
     "width": 752,
     "height": 48,
@@ -54,7 +54,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },

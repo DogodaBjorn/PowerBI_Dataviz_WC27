@@ -3,10 +3,10 @@
   "name": "tbl_plan_initiatives",
   "position": {
     "x": 1112,
-    "y": 496,
+    "y": 504,
     "z": 1052,
     "width": 752,
-    "height": 264,
+    "height": 280,
     "tabOrder": 520
   },
   "visual": {
@@ -62,33 +62,18 @@
             },
             {
               "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "InvestmentProjects"
-                    }
-                  },
-                  "Property": "Answers Finding"
-                }
-              },
-              "queryRef": "InvestmentProjects.Answers Finding",
-              "nativeQueryRef": "Answers Finding",
-              "displayName": "Answers"
-            },
-            {
-              "field": {
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Initiative Growth (text)"
+                  "Property": "Initiative Answers (text)"
                 }
               },
-              "queryRef": "_Measures.Initiative Growth (text)",
-              "nativeQueryRef": "Initiative Growth (text)",
-              "displayName": "Type"
+              "queryRef": "_Measures.Initiative Answers (text)",
+              "nativeQueryRef": "Initiative Answers (text)",
+              "displayName": "Answers"
             },
             {
               "field": {
@@ -186,7 +171,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -256,7 +241,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -396,14 +381,14 @@
             "imageHeight": {
               "expr": {
                 "Literal": {
-                  "Value": "17D"
+                  "Value": "18D"
                 }
               }
             },
             "imageWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "24D"
+                  "Value": "26D"
                 }
               }
             }
@@ -657,7 +642,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Table of all ten Goodnight Inn initiatives, those in the package in focus first: status, the page-1 finding each answers, the growth flag, capex, profit a year by 2032, NPV and the dataset guest-score effect'"
+                  "Value": "'Table of all ten Goodnight Inn initiatives, those in the package in focus first: status, the page-1 finding each answers and whether it is a growth initiative, capex, profit a year by 2032, NPV and the dataset guest-score effect'"
                 }
               }
             }

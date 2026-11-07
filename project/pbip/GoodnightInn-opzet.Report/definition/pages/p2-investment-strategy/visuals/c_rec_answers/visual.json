@@ -3,10 +3,10 @@
   "name": "c_rec_answers",
   "position": {
     "x": 1112,
-    "y": 472,
+    "y": 456,
     "z": 1033,
     "width": 752,
-    "height": 88,
+    "height": 72,
     "tabOrder": 430
   },
   "visual": {
@@ -54,7 +54,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#5B5163'"
+                      "Value": "'#24192B'"
                     }
                   }
                 }

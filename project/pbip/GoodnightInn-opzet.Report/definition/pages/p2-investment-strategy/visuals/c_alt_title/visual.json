@@ -3,8 +3,8 @@
   "name": "c_alt_title",
   "position": {
     "x": 1112,
-    "y": 616,
-    "z": 1034,
+    "y": 632,
+    "z": 1035,
     "width": 752,
     "height": 32,
     "tabOrder": 440
@@ -22,7 +22,7 @@
                     "value": "Considered, not recommended",
                     "textStyle": {
                       "fontFamily": "Trebuchet MS",
-                      "fontSize": "17px",
+                      "fontSize": "20px",
                       "color": "#24192B",
                       "fontWeight": "bold"
                     }
