@@ -6,7 +6,7 @@
     "y": 200,
     "z": 1021,
     "width": 368,
-    "height": 56,
+    "height": 72,
     "tabOrder": 310
   },
   "visual": {
@@ -222,7 +222,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'A · Highest NPV through 2032'"
+                                "Value": "'A · Our recommendation'"
                               }
                             }
                           ]
@@ -356,7 +356,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Package in focus: one of the three shortlist rules, or any valid package'"
+                  "Value": "'Package in focus: the recommendation A, the alternatives B and C, or any valid package'"
                 }
               }
             }

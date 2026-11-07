@@ -23,7 +23,7 @@ table FolioLine
 	partition FolioLine = calculated
 		mode: import
 		source = ```
-				DATATABLE ( "Line", STRING, "Sort", INTEGER, { { "Room night, average rate", 1 }, { "Paid to the channel", 2 }, { "What we keep", 3 } } )
+				DATATABLE ( "Line", STRING, "Sort", INTEGER, { { "The guest pays", 1 }, { "Commission and fees", 2 }, { "Goodnight Inn keeps", 3 } } )
 				```
 
 	annotation PBI_ResultType = Table

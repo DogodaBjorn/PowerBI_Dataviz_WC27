@@ -1,5 +1,5 @@
 {
-  "_doc": "Slot map, v2 of 2026-11-07: the D1 'Wake-up call' briefing, stripped (Björn: 'an investor deck, not a playground'). P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 keeps the package scatter and the focus swap; the shortlist state becomes one recommendation (package A) plus the alternatives. Single source of positions for the HTML comp (opzet-goodnight-inn.html) and the PBIR generator (project/tools/opzet_report.py; not yet updated to v2, so do not regenerate the report from this file until it is). Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-hanger). 'cards' are page-background furniture (drawn into the background SVG, radius 12, Sheet fill, Seam hairline); no card is state-dependent any more, so no tile visual can sit on top of content. 'visuals' are Power BI visuals. state: null = always visible; 'shortlist' / 'plan' = the two P2 panel states swapped by display-only bookmarks.",
+  "_doc": "Slot map, v2 of 2026-11-07: the D1 'Wake-up call' briefing, stripped (Björn: 'an investor deck, not a playground'). P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 keeps the package scatter and the focus swap; the shortlist state becomes one recommendation (package A) plus the alternatives. Single source of positions for the HTML comp (opzet-goodnight-inn.html) and the PBIR generator (project/tools/opzet_report.py; not yet updated to v2, so do not regenerate the report from this file until it is). Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-hanger). 'cards' are furniture (radius 12, Sheet fill, Seam hairline): the comp draws them as divs, the report as empty textbox visuals UNDER the content (z below 1000, last in tab order), so they scale with the visuals on any viewport; the page background image carries only the canvas colour and the lockup (Desktop scaled this canvas non-uniformly in a narrow window on 7 Nov, and a 16:9 background then drifted off the visuals). 'visuals' are Power BI visuals. state: null = always visible; 'shortlist' / 'plan' = the two P2 panel states swapped by display-only bookmarks.",
   "canvas": {
     "w": 1920,
     "h": 1080
@@ -14,11 +14,6 @@
         {"id": "card_f2", "x": 656, "y": 320, "w": 608, "h": 464},
         {"id": "card_f3", "x": 1280, "y": 320, "w": 608, "h": 464},
         {"id": "card_f4", "x": 32, "y": 800, "w": 1856, "h": 216}
-      ],
-      "rules": [
-        {"x": 496, "y": 208, "h": 72},
-        {"x": 960, "y": 208, "h": 72},
-        {"x": 1424, "y": 208, "h": 72}
       ],
       "logo": {"x": 32, "y": 32, "w": 144, "h": 40},
       "visuals": [
@@ -64,8 +59,8 @@
         {"name": "c_scatter_title", "x": 56, "y": 200, "w": 992, "h": 32, "z": 1010, "tab": 200},
         {"name": "c_scatter_sub", "x": 56, "y": 232, "w": 992, "h": 24, "z": 1011, "tab": 210},
         {"name": "hero_packages", "x": 56, "y": 264, "w": 992, "h": 728, "z": 1012, "tab": 220},
-        {"name": "sl_scenario", "x": 1112, "y": 200, "w": 368, "h": 56, "z": 1020, "tab": 300},
-        {"name": "sl_package", "x": 1496, "y": 200, "w": 368, "h": 56, "z": 1021, "tab": 310},
+        {"name": "sl_scenario", "x": 1112, "y": 200, "w": 368, "h": 72, "z": 1020, "tab": 300},
+        {"name": "sl_package", "x": 1496, "y": 200, "w": 368, "h": 72, "z": 1021, "tab": 310},
         {"name": "c_rec_title", "x": 1112, "y": 288, "w": 752, "h": 32, "z": 1030, "tab": 400, "state": "shortlist"},
         {"name": "c_rec_mix", "x": 1112, "y": 320, "w": 752, "h": 32, "z": 1031, "tab": 410, "state": "shortlist"},
         {"name": "c_rec_nums", "x": 1112, "y": 368, "w": 752, "h": 96, "z": 1032, "tab": 420, "state": "shortlist"},
@@ -79,9 +74,9 @@
         {"name": "c_plan_title", "x": 1112, "y": 280, "w": 752, "h": 32, "z": 1050, "tab": 500, "state": "plan"},
         {"name": "ch_plan_waterfall", "x": 1112, "y": 320, "w": 752, "h": 152, "z": 1051, "tab": 510, "state": "plan"},
         {"name": "tbl_plan_initiatives", "x": 1112, "y": 480, "w": 752, "h": 320, "z": 1052, "tab": 520, "state": "plan"},
-        {"name": "ch_plan_cumulative", "x": 1112, "y": 808, "w": 440, "h": 104, "z": 1053, "tab": 530, "state": "plan"},
-        {"name": "c_plan_ops", "x": 1568, "y": 808, "w": 296, "h": 104, "z": 1054, "tab": 540, "state": "plan"},
-        {"name": "c_plan_risk", "x": 1112, "y": 920, "w": 752, "h": 40, "z": 1055, "tab": 550, "state": "plan"},
+        {"name": "ch_plan_cumulative", "x": 1112, "y": 808, "w": 376, "h": 96, "z": 1053, "tab": 530, "state": "plan"},
+        {"name": "c_plan_ops", "x": 1504, "y": 808, "w": 360, "h": 96, "z": 1054, "tab": 540, "state": "plan"},
+        {"name": "c_plan_risk", "x": 1112, "y": 912, "w": 752, "h": 48, "z": 1055, "tab": 550, "state": "plan"},
         {"name": "btn_back", "x": 1112, "y": 968, "w": 752, "h": 40, "z": 1056, "tab": 560, "state": "plan"},
         {"name": "z_footer2", "x": 32, "y": 1032, "w": 1856, "h": 24, "z": 1090, "tab": 9000}
       ]

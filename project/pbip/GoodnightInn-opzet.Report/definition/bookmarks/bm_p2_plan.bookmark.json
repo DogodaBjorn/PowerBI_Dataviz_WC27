@@ -5,19 +5,14 @@
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
-      "c_short_title",
-      "z_tile_preset_a",
-      "c_preset_a_head",
-      "c_preset_a_mix",
-      "c_preset_a_nums",
-      "z_tile_preset_b",
-      "c_preset_b_head",
-      "c_preset_b_mix",
-      "c_preset_b_nums",
-      "z_tile_preset_c",
-      "c_preset_c_head",
-      "c_preset_c_mix",
-      "c_preset_c_nums",
+      "c_rec_title",
+      "c_rec_mix",
+      "c_rec_nums",
+      "c_rec_answers",
+      "c_alt_title",
+      "c_alt_b",
+      "c_alt_c",
+      "c_not_funded",
       "c_uncertainty",
       "btn_open_plan",
       "c_plan_title",
@@ -37,15 +32,7 @@
     "sections": {
       "p2-investment-strategy": {
         "visualContainers": {
-          "c_short_title": {
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "z_tile_preset_a": {
+          "c_rec_title": {
             "singleVisual": {
               "visualType": "textbox",
               "display": {
@@ -53,15 +40,7 @@
               }
             }
           },
-          "c_preset_a_head": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_preset_a_mix": {
+          "c_rec_mix": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -69,7 +48,7 @@
               }
             }
           },
-          "c_preset_a_nums": {
+          "c_rec_nums": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -77,23 +56,7 @@
               }
             }
           },
-          "z_tile_preset_b": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_preset_b_head": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_preset_b_mix": {
+          "c_rec_answers": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -101,15 +64,7 @@
               }
             }
           },
-          "c_preset_b_nums": {
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "z_tile_preset_c": {
+          "c_alt_title": {
             "singleVisual": {
               "visualType": "textbox",
               "display": {
@@ -117,15 +72,7 @@
               }
             }
           },
-          "c_preset_c_head": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_preset_c_mix": {
+          "c_alt_b": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -133,7 +80,15 @@
               }
             }
           },
-          "c_preset_c_nums": {
+          "c_alt_c": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_not_funded": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {

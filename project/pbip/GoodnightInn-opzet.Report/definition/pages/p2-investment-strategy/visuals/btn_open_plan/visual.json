@@ -7,7 +7,7 @@
     "z": 1041,
     "width": 752,
     "height": 40,
-    "tabOrder": 450
+    "tabOrder": 490
   },
   "visual": {
     "visualType": "actionButton",
@@ -15,10 +15,10 @@
       "icon": [
         {
           "properties": {
-            "show": {
+            "shapeType": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'blank'"
                 }
               }
             }
@@ -37,7 +37,11 @@
                   "Value": "true"
                 }
               }
-            },
+            }
+          }
+        },
+        {
+          "properties": {
             "text": {
               "expr": {
                 "Literal": {
@@ -92,7 +96,11 @@
                   "Value": "true"
                 }
               }
-            },
+            }
+          }
+        },
+        {
+          "properties": {
             "fillColor": {
               "solid": {
                 "color": {
@@ -126,7 +134,11 @@
                   "Value": "false"
                 }
               }
-            },
+            }
+          }
+        },
+        {
+          "properties": {
             "lineColor": {
               "solid": {
                 "color": {
@@ -142,13 +154,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
-                }
-              }
-            },
-            "roundEdge": {
-              "expr": {
-                "Literal": {
-                  "Value": "20D"
                 }
               }
             }

@@ -5,8 +5,8 @@
     "x": 1112,
     "y": 808,
     "z": 1053,
-    "width": 440,
-    "height": 104,
+    "width": 376,
+    "height": 96,
     "tabOrder": 530
   },
   "visual": {
@@ -200,6 +200,13 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
                 }
               }
             }
@@ -509,7 +516,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_horizon2_7",
+        "name": "flt_horizon2_8",
         "field": {
           "Column": {
             "Expression": {

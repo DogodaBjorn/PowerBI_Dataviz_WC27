@@ -692,15 +692,15 @@ table _Measures
 		displayFolder: 07 Display
 		lineageTag: 7df0bd39-fe6e-566c-be81-d903e4431d9a
 
-	/// The folio: a 2025 OTA room night, what the channel takes and what the hotel keeps.
-	measure 'Folio OTA Guest' = VAR line = SELECTEDVALUE ( FolioLine[Line] ) VAR rate = CALCULATE ( DIVIDE ( [Channel Room Revenue], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) VAR comm = CALCULATE ( DIVIDE ( [Distribution Cost], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) RETURN SWITCH ( line, "Room night, average rate", rate, "Paid to the channel", - comm, "What we keep", rate - comm )
-		formatString: \$#,0.00;(\$#,0.00)
+	/// The folio: a 2025 OTA room night, what the channel takes and what the hotel keeps (filter the visual to one brand).
+	measure 'Folio OTA Guest' = VAR line = SELECTEDVALUE ( FolioLine[Line] ) VAR rate = CALCULATE ( DIVIDE ( [Channel Room Revenue], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) VAR comm = CALCULATE ( DIVIDE ( [Distribution Cost], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) RETURN SWITCH ( line, "The guest pays", rate, "Commission and fees", - comm, "Goodnight Inn keeps", rate - comm )
+		formatString: \$#,0.00;−\$#,0.00
 		displayFolder: 07 Display
 		lineageTag: 5941f4d7-1478-5c1b-809f-4f91b4a440a4
 
-	/// The folio: the same room night booked on the brand's own site or app.
-	measure 'Folio Direct Guest' = VAR line = SELECTEDVALUE ( FolioLine[Line] ) VAR rate = CALCULATE ( DIVIDE ( [Channel Room Revenue], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) VAR comm = CALCULATE ( DIVIDE ( [Distribution Cost], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) RETURN SWITCH ( line, "Room night, average rate", rate, "Paid to the channel", - comm, "What we keep", rate - comm )
-		formatString: \$#,0.00;(\$#,0.00)
+	/// The folio: the same room night booked on the brand's own site or app (filter the visual to one brand).
+	measure 'Folio Direct Guest' = VAR line = SELECTEDVALUE ( FolioLine[Line] ) VAR rate = CALCULATE ( DIVIDE ( [Channel Room Revenue], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) VAR comm = CALCULATE ( DIVIDE ( [Distribution Cost], [Channel Room Nights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) RETURN SWITCH ( line, "The guest pays", rate, "Commission and fees", - comm, "Goodnight Inn keeps", rate - comm )
+		formatString: \$#,0.00;−\$#,0.00
 		displayFolder: 07 Display
 		lineageTag: 35259f79-1541-5b72-bfdb-0c160fee599a
 
@@ -1012,19 +1012,19 @@ table _Measures
 
 	/// Capex of the package(s) in context.
 	measure 'Package Capex' = SUM ( Package[CapexUSD] )
-		formatString: \$#,0.0,,\M
+		formatString: \$#,0,,.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 305768c2-ca80-5ebd-8cc9-cffc083628f2
 
 	/// Package NPV through 2032 in the selected scenario (scatter Y).
 	measure 'Package NPV (sel)' = VAR s = [Selected Scenario] RETURN SWITCH ( s, "Low", SUM ( Package[NPV Low] ), "High", SUM ( Package[NPV High] ), SUM ( Package[NPV Expected] ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 8d5996a9-7e10-58b7-bc3c-2dd1ce3b9283
 
 	/// Package operating-profit run-rate in 2032, selected scenario.
 	measure 'Package Run-rate (sel)' = VAR s = [Selected Scenario] RETURN SWITCH ( s, "Low", SUM ( Package[RunRate Low] ), "High", SUM ( Package[RunRate High] ), SUM ( Package[RunRate Expected] ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: bcb320b0-8072-5bf2-a2fc-2ae56c42a979
 
@@ -1046,8 +1046,14 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: e83c21c8-4e0c-5bed-a7ee-f14f4e832df8
 
-	/// The package in focus: a preset letter resolves through its rule in the selected scenario, a package id stands for itself. Default A, so the panel is never empty.
-	measure 'Focus Package' = VAR k = SELECTEDVALUE ( PlanSelector[Key], "A" ) RETURN SWITCH ( k, "A", [Preset A Package], "B", [Preset B Package], "C", [Preset C Package], k )
+	/// The Board recommendation (06-d1-briefing-opzet.md, Björn 7 Nov): the valid package with the highest NPV through 2032 in the Expected case. Fixed: the scenario switch changes its numbers, never the package.
+	measure 'Recommended Package' = MAXX ( TOPN ( 1, ALLNOBLANKROW ( Package ), Package[NPV Expected], DESC ), Package[PackageID] )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: a67c2caa-6b07-5730-96fb-7d19afe68cff
+
+	/// The package in focus: A is the fixed recommendation, B and C resolve through their rule in the selected scenario, a package id stands for itself. Default A, so the panel is never empty.
+	measure 'Focus Package' = VAR k = SELECTEDVALUE ( PlanSelector[Key], "A" ) RETURN SWITCH ( k, "A", [Recommended Package], "B", [Preset B Package], "C", [Preset C Package], k )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: b5794ca9-42c3-54cc-aeb8-6a2b69c748e4
@@ -1058,45 +1064,45 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: 77b08ff6-956c-5929-a889-e5d448002e13
 
-	/// Scatter color: raspberry in focus, plum without the refresh, plum-slate with it (4.2:1 on Sheet; the kit's lilac-grey is 2.1:1, below the 3:1 floor for a meaning carrier).
-	measure 'Package Point Color' = SWITCH ( TRUE (), [Focus Highlight] = 1, "#B5175F", SELECTEDVALUE ( Package[ContainsRefresh] ) = "Yes", "#82798A", "#3E2C55" )
+	/// Scatter color: raspberry for the recommendation, plum-black for the alternatives B and C and for any other package in focus, plum-slate for the rest (4.2:1 on Sheet).
+	measure 'Package Point Color' = VAR p = SELECTEDVALUE ( Package[PackageID] ) RETURN SWITCH ( TRUE (), p = [Recommended Package], "#B5175F", [Focus Highlight] = 1 || p = [Preset B Package] || p = [Preset C Package], "#24192B", "#82798A" )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 88ed7370-015c-50b1-a96b-e3f6ab6a6b56
 
-	/// Scatter size: the point in focus drawn larger.
-	measure 'Package Point Size' = IF ( [Focus Highlight] = 1, 6, 1 )
+	/// Scatter size: the recommendation and the package in focus largest, B and C medium, the rest small.
+	measure 'Package Point Size' = VAR p = SELECTEDVALUE ( Package[PackageID] ) RETURN SWITCH ( TRUE (), p = [Recommended Package] || [Focus Highlight] = 1, 6, p = [Preset B Package] || p = [Preset C Package], 3, 1 )
 		formatString: 0
 		displayFolder: 09 Package matrix
 		lineageTag: 0196c53d-5938-5f6a-b575-f4f77acc7bc1
 
 	/// Capex of the package in focus.
 	measure 'Focus Capex' = VAR f = [Focus Package] RETURN CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = f )
-		formatString: \$#,0.0,,\M
+		formatString: \$#,0,,.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: bb50bec5-33fc-5185-a99a-d7532fbcccc6
 
 	/// NPV through 2032 of the package in focus, selected scenario.
 	measure 'Focus NPV (sel)' = VAR f = [Focus Package] RETURN CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = f )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: f5a3d202-f1ef-54ea-9762-1009f11e85d0
 
 	/// NPV of the package in focus, Low scenario.
 	measure 'Focus NPV Low' = VAR f = [Focus Package] RETURN CALCULATE ( SUM ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = f )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 1f09d876-0a95-5669-b3dc-e01d0cd3a426
 
 	/// NPV of the package in focus, High scenario.
 	measure 'Focus NPV High' = VAR f = [Focus Package] RETURN CALCULATE ( SUM ( Package[NPV High] ), REMOVEFILTERS ( Package ), Package[PackageID] = f )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: dfee4b57-6dd3-5e79-b3cb-727d7bcfb6bb
 
 	/// 2032 run-rate of the package in focus.
 	measure 'Focus Run-rate (sel)' = VAR f = [Focus Package] RETURN CALCULATE ( [Package Run-rate (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = f )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 48aa2409-8112-5837-a61f-b85e202222a2
 
@@ -1132,19 +1138,19 @@ table _Measures
 
 	/// NPV contribution per initiative in focus; at the total it sums to the package NPV (waterfall; reconciles with Package by construction).
 	measure 'Focus Project NPV (sel)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) RETURN SUMX ( FILTER ( VALUES ( InvestmentProjects[ProjectID] ), InvestmentProjects[ProjectID] IN ids ), [NPV @ 8%] )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: f388ce1d-5179-55e6-b1d6-f145003f7902
 
 	/// Capex per initiative in focus.
 	measure 'Focus Project Capex' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) RETURN SUMX ( FILTER ( VALUES ( InvestmentProjects[ProjectID] ), InvestmentProjects[ProjectID] IN ids ), CALCULATE ( SUM ( InvestmentProjects[CapexUSD] ) ) )
-		formatString: \$#,0.0,,\M
+		formatString: \$#,0,,.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 851fdb26-e5f7-56a0-a200-76a586dd618c
 
 	/// Organisers' annual operating-profit impact per initiative in focus (reached by 2032).
 	measure 'Focus Project Run-rate (sel)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) RETURN SUMX ( FILTER ( VALUES ( InvestmentProjects[ProjectID] ), InvestmentProjects[ProjectID] IN ids ), [2032 Run-rate] )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 476f649f-38e2-5042-8db6-b7a14bbfafe7
 
@@ -1181,19 +1187,19 @@ table _Measures
 
 	/// Capex per initiative.
 	measure 'Initiative Capex' = SUM ( InvestmentProjects[CapexUSD] )
-		formatString: \$#,0.0,,\M
+		formatString: \$#,0,,.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 3f94a216-9428-5112-87ad-c7beff751c20
 
 	/// NPV through 2032 per initiative, selected scenario (same convention as the package matrix).
 	measure 'Initiative NPV (sel)' = [NPV @ 8%]
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 1e8470d5-73bf-59b3-987e-50f281a03ae0
 
 	/// Organisers' annual operating-profit impact per initiative, reached by 2032.
 	measure 'Initiative Run-rate (sel)' = [2032 Run-rate]
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: b82fade9-a58f-5faf-8320-a049b7aee3a5
 
@@ -1205,19 +1211,19 @@ table _Measures
 
 	/// Cumulative net impact of the package in focus, undiscounted 2025 dollars, Low scenario.
 	measure 'Focus Cumulative Net (Low)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR y = MAX ( 'Date'[Year] ) RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = "Low", TREATAS ( ids, ProjectCashflow[ProjectID] ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 4b5d2e90-2f5d-599b-9f8b-81396ff65151
 
 	/// Cumulative net impact of the package in focus, undiscounted 2025 dollars, Expected scenario.
 	measure 'Focus Cumulative Net (Expected)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR y = MAX ( 'Date'[Year] ) RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = "Expected", TREATAS ( ids, ProjectCashflow[ProjectID] ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 682865fc-9cdd-5054-a696-0f591fbff0de
 
 	/// Cumulative net impact of the package in focus, undiscounted 2025 dollars, High scenario.
 	measure 'Focus Cumulative Net (High)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR y = MAX ( 'Date'[Year] ) RETURN CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = "High", TREATAS ( ids, ProjectCashflow[ProjectID] ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 13c12ff8-63d6-5f55-a0d5-c2482210c819
 
@@ -1241,19 +1247,19 @@ table _Measures
 
 	/// Preset A: capex.
 	measure 'Preset A Capex' = VAR f = [Preset A Package] RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) )
-		formatString: \$#,0.0,,\M
+		formatString: \$#,0,,.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 46a2e199-e497-5930-a283-413063b64ef2
 
 	/// Preset A: npv (sel).
 	measure 'Preset A NPV (sel)' = VAR f = [Preset A Package] RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = f ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: cc2f33e5-27cb-513a-b477-eec63909c6b6
 
 	/// Preset A: run-rate (sel).
 	measure 'Preset A Run-rate (sel)' = VAR f = [Preset A Package] RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( [Package Run-rate (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = f ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: e0a39405-3720-5430-8a92-bd7fd70306da
 
@@ -1271,19 +1277,19 @@ table _Measures
 
 	/// Preset B: capex.
 	measure 'Preset B Capex' = VAR f = [Preset B Package] RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) )
-		formatString: \$#,0.0,,\M
+		formatString: \$#,0,,.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: c8d9a4d9-adc7-5c61-a8ea-9436ec43fcce
 
 	/// Preset B: npv (sel).
 	measure 'Preset B NPV (sel)' = VAR f = [Preset B Package] RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = f ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 41d4b473-fa25-565e-b6e7-efed6d4ebeeb
 
 	/// Preset B: run-rate (sel).
 	measure 'Preset B Run-rate (sel)' = VAR f = [Preset B Package] RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( [Package Run-rate (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = f ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 26da20e6-4560-5ee0-b680-5aa553d95ae4
 
@@ -1301,19 +1307,19 @@ table _Measures
 
 	/// Preset C: capex.
 	measure 'Preset C Capex' = VAR f = [Preset C Package] RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) )
-		formatString: \$#,0.0,,\M
+		formatString: \$#,0,,.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: bd006f42-85de-5326-b9a3-76bcd6366dad
 
 	/// Preset C: npv (sel).
 	measure 'Preset C NPV (sel)' = VAR f = [Preset C Package] RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = f ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: ebb5e682-9b2f-5595-b42b-4b01c95c231a
 
 	/// Preset C: run-rate (sel).
 	measure 'Preset C Run-rate (sel)' = VAR f = [Preset C Package] RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( [Package Run-rate (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = f ) )
-		formatString: +\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 09 Package matrix
 		lineageTag: ec08316d-2515-5810-a471-47f61aca7091
 
@@ -1329,14 +1335,14 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: 8b77f91e-c87a-566d-b2b8-c8d9534972b6
 
-	/// Page-2 subtitle bound to the package in focus and the scenario.
-	measure 'Subtitle P2 (text)' = VAR f = [Focus Package] VAR s = [Selected Scenario] RETURN IF ( ISBLANK ( f ), "No package qualifies for this rule in the " & s & " case.", "In focus, package " & f & ": " & FORMAT ( [Focus Capex], "\$#,0.0,,\M" ) & " of the " & FORMAT ( [Budget], "\$#,0.0,,\M" ) & " budget on " & [Focus Projects] & " initiatives (" & [Focus Growth] & " growth). NPV through 2032 " & FORMAT ( [Focus NPV (sel)], "+\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M" ) & " (" & s & "; Low " & FORMAT ( [Focus NPV Low], "+\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M" ) & ", High " & FORMAT ( [Focus NPV High], "+\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M" ) & "); " & FORMAT ( [Focus Run-rate (sel)], "+\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M" ) & " a year of operating profit by 2032." )
+	/// Page-2 subtitle: the scenario in view and the valuation rules, read from FinanceParameters.
+	measure 'Subtitle P2 (text)' = VAR s = [Selected Scenario] VAR rate = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ) VAR h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN s & " case  ·  NPV through " & h & " in 2025 dollars at " & FORMAT ( rate, "0%" ) & "  ·  nothing after " & h & " is counted"
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 2db176a3-ef97-52f9-a12f-36e38557f148
 
-	/// Scatter title: how many packages have NPV at least zero in the selected scenario.
-	measure 'Scatter Title (text)' = VAR s = [Selected Scenario] VAR n = COUNTROWS ( ALLNOBLANKROW ( Package ) ) VAR pos = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Package ), SWITCH ( s, "Low", Package[NPV Low], "High", Package[NPV High], Package[NPV Expected] ) >= 0 ) ) + 0 RETURN IF ( pos = 0, "None", FORMAT ( pos, "0" ) ) & " of " & n & " valid packages " & IF ( pos = 1, "is worth more than it costs", "are worth more than they cost" ) & " by December 2032 (" & s & " case)"
+	/// Scatter title: how many packages have NPV through 2032 at least zero in the selected scenario, and the capex ceiling they share (the next whole $M above the largest).
+	measure 'Scatter Title (text)' = VAR s = [Selected Scenario] VAR t = ADDCOLUMNS ( ALLNOBLANKROW ( Package ), "@v", SWITCH ( s, "Low", Package[NPV Low], "High", Package[NPV High], Package[NPV Expected] ) ) VAR n = COUNTROWS ( t ) VAR pos = FILTER ( t, [@v] >= 0 ) VAR k = COUNTROWS ( pos ) + 0 VAR cap = INT ( MAXX ( pos, Package[CapexUSD] ) / 1000000 ) + 1 RETURN IF ( k = 0, "None of the " & n & " possible packages pays back by 2032 in the " & s & " case", k & " of " & n & " possible packages " & IF ( k = 1, "pays back by 2032, at under $", "pay back by 2032, all of them under $" ) & cap & "M" )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 3366b508-0764-521c-bee2-1243025a51a2
@@ -1348,22 +1354,214 @@ table _Measures
 		lineageTag: 8bd80225-553a-5ab4-827a-7b7aba1feb92
 
 	/// Plan state title.
-	measure 'Plan Title (text)' = VAR f = [Focus Package] RETURN IF ( ISBLANK ( f ), "No package in focus", f & " in focus: " & FORMAT ( [Focus Capex], "\$#,0.0,,\M" ) & " on " & [Focus Projects] & " initiatives, all live by " & [Focus Live By (text)] )
+	measure 'Plan Title (text)' = VAR f = [Focus Package] RETURN IF ( ISBLANK ( f ), "No package in focus", f & " in focus: " & FORMAT ( ( [Focus Capex] ) / 1000000, "$#,0.0" ) & "M" & " on " & [Focus Projects] & " initiatives, all live by " & [Focus Live By (text)] )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 5ef22c33-8a86-5aaa-98b0-3dabd5dbe9b9
 
 	/// Plan state: the risks of the package in focus in one sentence.
-	measure 'Plan Risk (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR s = [Selected Scenario] VAR ren = "GI-07" IN ids VAR pb = [Focus Payback Year] VAR oos = LOOKUPVALUE ( InvestmentProjects[RoomsOutOfServicePct], InvestmentProjects[ProjectID], "GI-07" ) VAR dur = LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], "GI-07" ) RETURN "Risks: " & IF ( ren, FORMAT ( oos, "0%" ) & " of " & FORMAT ( [Focus Rooms Refreshed], "#,0" ) & " rooms out of service for " & dur & " months; ", "" ) & "NPV in the Low case " & FORMAT ( [Focus NPV Low], "+\$#,0.0,,\M;−\$#,0.0,,\M;\$0.0\M" ) & "; the cumulative net turns positive " & IF ( ISBLANK ( pb ), "after 2032", "in " & pb ) & " (" & s & ")." & IF ( "GI-02" IN ids, " Kiosks wait for the app: they start when it goes live.", "" )
+	measure 'Plan Risk (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR s = [Selected Scenario] VAR ren = "GI-07" IN ids VAR pb = [Focus Payback Year] VAR oos = LOOKUPVALUE ( InvestmentProjects[RoomsOutOfServicePct], InvestmentProjects[ProjectID], "GI-07" ) VAR dur = LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], "GI-07" ) RETURN "Risks: " & IF ( ren, FORMAT ( oos, "0%" ) & " of " & FORMAT ( [Focus Rooms Refreshed], "#,0" ) & " rooms out of service for " & dur & " months; ", "" ) & "NPV in the Low case " & IF ( ( [Focus NPV Low] ) < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( [Focus NPV Low] ) / 1000000, "$#,0.0" ) & "M" & "; the cumulative net turns positive " & IF ( ISBLANK ( pb ), "after 2032", "in " & pb ) & " (" & s & ")." & IF ( "GI-02" IN ids, " Kiosks wait for the app: they start when it goes live.", "" )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 2fbfa611-f119-586b-b0f0-72e54f2a0a63
 
-	/// Standing uncertainty line on the shortlist (the Low-case claim is checked in 40_package_matrix.py; re-check on refresh).
-	measure 'Uncertainty (text)' = VAR rc = LOOKUPVALUE ( InvestmentProjects[AnnualRunningCostUSD], InvestmentProjects[ProjectID], "GI-01" ) RETURN "Read with care: no package is worth its cost by 2032 in the Low case, and nothing after 2032 is counted. Profit impacts are taken as net of running costs; read gross, the booking app earns " & FORMAT ( rc, "\$#,0.0,,\M" ) & " a year less."
+	/// Standing uncertainty line under the recommendation: the Low case, counted from Package.
+	measure 'Uncertainty (text)' = VAR a = [Recommended Package] VAR k = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Package ), Package[NPV Low] >= 0 ) ) + 0 VAR lo = CALCULATE ( SUM ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) RETURN "Read with care: in the Low case " & IF ( k = 0, "no package pays back by 2032", k & " packages pay back by 2032" ) & ", and A ends at " & IF ( ( lo ) < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( lo ) / 1000000, "$#,0.0" ) & "M" & "."
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: b1c5ebaa-c24c-59b5-bdd8-103c51d2b19d
+
+	/// Goodnight Inn occupancy, 2025 (KPI band).
+	measure 'KPI Occupancy GI' = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%
+		displayFolder: 08 Brand comparison
+		lineageTag: 282fcb4b-110e-5438-b209-b30978b13886
+
+	/// Goodnight Inn operating margin after commissions, 2025 (KPI band).
+	measure 'KPI Margin after GI' = CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%
+		displayFolder: 08 Brand comparison
+		lineageTag: ab4d3a00-2fe6-531a-b64d-0f9010944ccc
+
+	/// Share of Goodnight Inn room revenue booked through online travel agencies, 2025 (KPI band).
+	measure 'KPI OTA GI' = CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%
+		displayFolder: 08 Brand comparison
+		lineageTag: d6a4df5c-ae0b-5518-b443-a622717c79b0
+
+	/// Goodnight Inn net promoter score, response-weighted, 2025 (KPI band).
+	measure 'KPI NPS GI' = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: +0.0;−0.0;0.0
+		displayFolder: 08 Brand comparison
+		lineageTag: 6c35f2b4-3620-5c0a-87e7-d3e6f561d6db
+
+	/// KPI band: rank among the four brands and the range of the other three, 2025.
+	measure 'KPI Occupancy Context (text)' = VAR gn = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR better = COUNTROWS ( FILTER ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN 1 * CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) > 1 * gn ) ) VAR r = better + 1 VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR words = SWITCH ( TRUE (), r = 1, UNICHAR ( 9650 ) & " best of " & n, r = n, UNICHAR ( 9660 ) & " last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) RETURN words & " · the others " & FORMAT ( MINX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), "0.0%" ) & " to " & FORMAT ( MAXX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), "0.0%" )
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 5d689a92-6a4b-5e03-89c5-cf249cb933ef
+
+	/// KPI band: rank among the four brands and the change since 2023 in points.
+	measure 'KPI Margin after Context (text)' = VAR gn = CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR better = COUNTROWS ( FILTER ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN 1 * CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) > 1 * gn ) ) VAR r = better + 1 VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR words = SWITCH ( TRUE (), r = 1, UNICHAR ( 9650 ) & " best of " & n, r = n, UNICHAR ( 9660 ) & " last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) VAR d = ( gn - CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2023 ) ) * 100 RETURN words & " · " & IF ( d < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( d ), "0.0" ) & " pt since 2023"
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 9f0d7234-ccd6-5bc6-8381-6760de015019
+
+	/// KPI band: rank among the four brands (lower is better) and the 2021 share.
+	measure 'KPI OTA Context (text)' = VAR gn = CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR better = COUNTROWS ( FILTER ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN -1 * CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) > -1 * gn ) ) VAR r = better + 1 VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR words = SWITCH ( TRUE (), r = 1, UNICHAR ( 9650 ) & " lowest of " & n, r = n, UNICHAR ( 9660 ) & " highest of " & n, r = 2, "2nd of " & n, "3rd of " & n ) RETURN words & " · " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ), "0.0%" ) & " in 2021"
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 08606a6e-392f-5863-a576-b2983b9afb8b
+
+	/// KPI band: rank among the four brands and the range of the other three, 2025.
+	measure 'KPI NPS Context (text)' = VAR gn = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR better = COUNTROWS ( FILTER ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN 1 * CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) > 1 * gn ) ) VAR r = better + 1 VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR words = SWITCH ( TRUE (), r = 1, UNICHAR ( 9650 ) & " best of " & n, r = n, UNICHAR ( 9660 ) & " last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) VAR lo = MINX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) VAR hi = MAXX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) RETURN words & " · the others " & IF ( lo < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( lo ), "0.0" ) & " to " & IF ( hi < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( hi ), "0.0" )
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 6d7378fc-b65f-5ba0-8878-8e4aa6a0a37b
+
+	/// Goodnight Inn GOP margin before commissions on the trend axis.
+	measure 'Trend Margin before GI' = CALCULATE ( [GOP Margin %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" )
+		formatString: 0.0%
+		displayFolder: 08 Brand comparison
+		lineageTag: fbcffbca-09f6-5624-95ff-94f9476d82c5
+
+	/// F1 title: Goodnight Inn margin after commissions, 2023 to 2025.
+	measure 'F1 Title (text)' = VAR a = CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2023 ) VAR z = CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) RETURN "After commissions, the margin " & IF ( z < a, "fell", "rose" ) & " from " & FORMAT ( a, "0.0%" ) & " to " & FORMAT ( z, "0.0%" )
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 2bfd36e4-ab5d-5ff6-9867-f719160e348c
+
+	/// F1 note: the before-commissions rank and the commission gap, 2021 and 2025.
+	measure 'F1 Note (text)' = VAR gn = CALCULATE ( [GOP Margin %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR better = COUNTROWS ( FILTER ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN 1 * CALCULATE ( [GOP Margin %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) > 1 * gn ) ) VAR r = better + 1 VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR words = SWITCH ( TRUE (), r = 1, UNICHAR ( 9650 ) & " best of " & n, r = n, UNICHAR ( 9660 ) & " last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) VAR g0 = ( CALCULATE ( [GOP Margin %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ) - CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ) ) * 100 VAR g1 = ( gn - CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) * 100 RETURN "Before commissions Goodnight Inn " & IF ( r = 1, "still has the widest margin of the four", "ranks " & r & " of " & n ) & ". The gap, what the booking channels take, " & IF ( g1 > g0, "grew", "narrowed" ) & " from " & FORMAT ( g0, "0.0" ) & " to " & FORMAT ( g1, "0.0" ) & " points since 2021."
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: f88fcce5-b25b-5b98-9232-84c61d5be430
+
+	/// F2 title: OTA share of Goodnight Inn room revenue, 2021 to 2025.
+	measure 'F2 Title (text)' = VAR a = CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ) VAR z = CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) RETURN "Online agencies now book " & FORMAT ( z, "0%" ) & " of room revenue, " & IF ( z > a, "up", "down" ) & " from " & FORMAT ( a, "0%" )
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 556bd95e-bb6e-5cb3-ac07-e41e6d19728f
+
+	/// F2 note under the folio: the rate gap between channels (said only when within 5 percent) and the 2021-mix counterfactual.
+	measure 'F2 Note (text)' = VAR o = CALCULATE ( [Channel Room Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) / CALCULATE ( [Channel Room Nights], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) VAR d = CALCULATE ( [Channel Room Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) / CALCULATE ( [Channel Room Nights], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) VAR x = CALCULATE ( [Distribution Cost above 2021 Mix 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) RETURN IF ( ABS ( d - o ) <= 0.05 * o, "The guest pays about the same either way. ", "" ) & "At the 2021 channel mix, 2025 commissions would have been " & FORMAT ( ( x ) / 1000000, "$#,0.0" ) & "M" & " lower."
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 4a63674e-4605-5afd-b76e-8aa3d1771daf
+
+	/// Response-weighted NPS 2025 with a true minus, for chart labels.
+	measure 'NPS 2025 (signed)' = [NPS (weighted) 2025]
+		formatString: +0.0;−0.0;0.0
+		displayFolder: 08 Brand comparison
+		lineageTag: 53398b16-6664-51da-9887-f13521070e6a
+
+	/// Raspberry for the oldest band (the story), plum-slate for the others.
+	measure 'Age Band Color' = IF ( SELECTEDVALUE ( Hotels[Renovation Age Sort] ) = 3, "#B5175F", "#82798A" )
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 2efdec81-1469-55f7-b6b8-6b8e9f94fc01
+
+	/// F3 title: NPS 2025 of the Goodnight Inn hotels last renovated 10 or more years ago.
+	measure 'F3 Title (text)' = VAR v = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[Renovation Age Sort] = 3 ) RETURN "Hotels last renovated 10 years or more ago score NPS " & IF ( v < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( v ), "0.0" )
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 129a8a75-8887-59f6-b8d4-322a3f1fdba5
+
+	/// F3 note: occupancy across the age bands (the 'not yet rooms' clause only when they sit within 2 points) and the causality caveat (05 caveat A2).
+	measure 'F3 Note (text)' = VAR o1 = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[Renovation Age Sort] = 1 ) VAR o2 = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[Renovation Age Sort] = 2 ) VAR o3 = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[Renovation Age Sort] = 3 ) VAR lo = MIN ( MIN ( o1, o2 ), o3 ) VAR hi = MAX ( MAX ( o1, o2 ), o3 ) RETURN IF ( hi - lo <= 0.02, "Occupancy is the same in every group (" & FORMAT ( lo, "0%" ) & " to " & FORMAT ( hi, "0%" ) & "): age costs loyalty, not yet rooms. ", "" ) & "An association, not proof of cause."
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 62309ed8-b20e-5b90-a712-b484b5504f9e
+
+	/// Goodnight Inn occupancy 2025 in airport hotels.
+	measure 'Occupancy Airport GI' = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[LocationType] = "Airport" )
+		formatString: 0.0%
+		displayFolder: 08 Brand comparison
+		lineageTag: 1df47ab8-8749-5993-a4ae-b47d5aed4084
+
+	/// Goodnight Inn occupancy 2025 in city hotels.
+	measure 'Occupancy City GI' = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[LocationType] = "City" )
+		formatString: 0.0%
+		displayFolder: 08 Brand comparison
+		lineageTag: 6c59ecc6-8caa-577d-bdb4-45c4b38e6811
+
+	/// Goodnight Inn occupancy 2025 in highway hotels.
+	measure 'Occupancy Highway GI' = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[LocationType] = "Highway" )
+		formatString: 0.0%
+		displayFolder: 08 Brand comparison
+		lineageTag: 0e0748b9-8a18-5efe-9ee1-fc3d0e6c52b1
+
+	/// F4 title: airport occupancy and how many of the seven fullest Goodnight Inn hotels are airports, 2025.
+	measure 'F4 Title (text)' = VAR air = [Occupancy Airport GI] VAR best = MAX ( [Occupancy City GI], [Occupancy Highway GI] ) VAR hs = CALCULATETABLE ( VALUES ( Hotels[HotelID] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) VAR t7 = TOPN ( 7, hs, CALCULATE ( [Occupancy %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) VAR na = COUNTROWS ( FILTER ( t7, CALCULATE ( SELECTEDVALUE ( Hotels[LocationType] ) ) = "Airport" ) ) RETURN IF ( air >= best, "The airports are the fullest at ", "The airports run at " ) & FORMAT ( air, "0.0%" ) & ", and " & na & " of the 7 fullest hotels are airports"
+		formatString: @
+		displayFolder: 08 Brand comparison
+		lineageTag: 79e91d5d-ce2c-5b0a-9f13-a6f95fcf6a5e
+
+	/// Capex of the recommendation.
+	measure 'Rec Capex' = VAR a = [Recommended Package] RETURN CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a )
+		formatString: \$#,0,,.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: f1d14dc7-758e-518a-9766-49931344c1b3
+
+	/// NPV through 2032 of the recommendation, selected scenario.
+	measure 'Rec NPV (sel)' = VAR a = [Recommended Package] RETURN CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: 48901272-99f2-59d5-891a-6d9d680f84c1
+
+	/// Operating-profit run-rate in 2032 of the recommendation, selected scenario.
+	measure 'Rec Run-rate (sel)' = VAR a = [Recommended Package] RETURN CALCULATE ( [Package Run-rate (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: 26dc2cb5-dde3-593b-9f76-8416b1e8242f
+
+	/// NPV of the recommendation from the Low to the High scenario, $M.
+	measure 'Rec Range (text)' = VAR a = [Recommended Package] VAR lo = CALCULATE ( SUM ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) / 1000000 VAR hi = CALCULATE ( SUM ( Package[NPV High] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) / 1000000 RETURN IF ( lo < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( lo ), "0.0" ) & " to " & IF ( hi < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( hi ), "0.0" )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: f71fde11-ee80-597b-b9da-1d3ab7d19808
+
+	/// The initiatives in the recommendation.
+	measure 'Rec Mix (text)' = VAR a = [Recommended Package] RETURN CONCATENATEX ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], PackageProject[ProjectID] ), " + ", PackageProject[ProjectID], ASC )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 276c6e3c-39d0-58e9-b974-75af201ad967
+
+	/// Which page-1 finding each initiative of the recommendation answers, and the budget held back.
+	measure 'Rec Answers (text)' = VAR a = [Recommended Package] VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) RETURN "Each move answers a finding on page 1: " & CONCATENATEX ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], PackageProject[ProjectID] ) ) & " " & LOOKUPVALUE ( InvestmentProjects[Answers Finding], InvestmentProjects[ProjectID], PackageProject[ProjectID] ), ", ", PackageProject[ProjectID], ASC ) & ". The other " & FORMAT ( ( budget - cap ) / 1000000, "$#,0.0" ) & "M" & " is held back."
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 3d7a2d59-6b3d-5162-98e1-3cf1853474a7
+
+	/// Page-2 headline: the recommendation in one sentence (Expected case; the verb is guarded on its NPV).
+	measure 'Headline P2 (text)' = VAR a = [Recommended Package] VAR k = COUNTROWS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ) ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR npv = CALCULATE ( SUM ( Package[NPV Expected] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR word = SWITCH ( k, 3, "three", 4, "four", 5, "five", 6, "six", 7, "seven", FORMAT ( k, "0" ) ) RETURN "Fund the " & word & " moves that " & IF ( npv >= 0, "pay", "lose least" ) & ": " & FORMAT ( ( cap ) / 1000000, "$#,0.0" ) & "M" & " now, " & FORMAT ( ( budget - cap ) / 1000000, "$#,0.0" ) & "M" & " held back."
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: fdde1c1c-b230-5954-8801-4288f3ba71ae
+
+	/// The first alternative: preset B against the recommendation, in the selected scenario.
+	measure 'Alt B (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR s = [Selected Scenario] VAR bp = [Preset B Package] VAR bIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = bp ), "@p", PackageProject[ProjectID] ) VAR added = CONCATENATEX ( FILTER ( bIds, NOT ( [@p] IN aIds ) ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), " and ", [@p], ASC ) VAR dropped = CONCATENATEX ( FILTER ( aIds, NOT ( [@p] IN bIds ) ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), " and ", [@p], ASC ) VAR capA = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR capB = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = bp ) VAR npvA = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR npvB = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = bp ) VAR rA = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR rB = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = bp ) RETURN SWITCH ( TRUE (), ISBLANK ( bp ), "B · In the " & s & " case no package with a guest-score effect pays back by 2032.", bp = a, "B · In the " & s & " case the widest guest-score reach that pays back is A itself.", IF ( dropped = "", "B · A plus the " & added, "B · With the " & added & " instead of the " & dropped ) & ": " & FORMAT ( ( capB ) / 1000000, "$#,0.0" ) & "M" & ", NPV " & IF ( ( npvB ) < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( npvB ) / 1000000, "$#,0.0" ) & "M" & ". " & IF ( rB > rA, "A guest-score effect in " & rB & " hotels instead of " & rA & ", for " & FORMAT ( ( capB - capA ) / 1000000, "$#,0.0" ) & "M" & " more and a " & IF ( npvB < npvA, "lower", "higher" ) & " NPV.", "" ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 4c581561-ac98-50c2-b461-486462c885cb
+
+	/// The second alternative: preset C (best package with the refresh), selected scenario; 'pays back by 2032' means NPV through 2032 at least zero, as on the scatter.
+	measure 'Alt C (text)' = VAR c = [Preset C Package] VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = c ) VAR npv = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = c ) RETURN "C · With the refresh of the 10 oldest hotels: " & FORMAT ( ( cap ) / 1000000, "$#,0.0" ) & "M" & ", NPV " & IF ( ( npv ) < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( npv ) / 1000000, "$#,0.0" ) & "M" & ". It answers F3 most directly, " & IF ( npv < 0, "but it does not pay back by 2032.", "and it pays back by 2032." )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 4da4c946-bb87-5819-94c5-70a3d16f8e16
+
+	/// The initiatives outside A, B and C that lose money through 2032 in the selected scenario.
+	measure 'Not Funded (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR bp = [Preset B Package] VAR bIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = bp ), "@p", PackageProject[ProjectID] ) VAR t = FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" && NOT ( InvestmentProjects[ProjectID] IN aIds ) && NOT ( InvestmentProjects[ProjectID] IN bIds ) && InvestmentProjects[ProjectID] <> "GI-07" && CALCULATE ( [NPV @ 8%] ) < 0 ) VAR names = CONCATENATEX ( t, SUBSTITUTE ( InvestmentProjects[Short Name], " +40 rooms", " extension" ), ", ", InvestmentProjects[ProjectID], ASC ) VAR f4 = COUNTROWS ( FILTER ( t, InvestmentProjects[ProjectID] IN { "GI-04", "GI-05" } ) ) RETURN IF ( ISBLANK ( names ), BLANK (), "Not funded · " & names & ": each has a negative NPV through 2032" & IF ( f4 = 2, ", the airport extensions for F4 included", "" ) & "." )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: a3b635f6-a03b-5701-8900-898cfc08f1df
+
+	/// Page-2 source line with the valuation parameters.
+	measure 'Footer P2 (text)' = VAR rate = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ) VAR h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Source: Pillow & Key Group dataset and its FinanceParameters (ramp-up, " & FORMAT ( rate, "0%" ) & " discount rate, impact horizon " & h & "). Package values are scenario logic, labelled Low, Expected and High."
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 8ac5c564-37f8-574e-8b35-36e5c61646be
 
 	column Placeholder
 		dataType: string

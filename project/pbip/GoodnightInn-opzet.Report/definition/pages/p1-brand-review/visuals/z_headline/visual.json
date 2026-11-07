@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Do not disturb, since 2020.",
+                    "value": "Full rooms, a slipping margin: Goodnight Inn pays the middleman and is losing its guests.",
                     "textStyle": {
                       "fontFamily": "Trebuchet MS",
                       "fontSize": "37px",
@@ -154,7 +154,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Page headline: Do not disturb, since 2020.'"
+                  "Value": "'Page headline: Full rooms, a slipping margin: Goodnight Inn pays the middleman and is losing its guests.'"
                 }
               }
             }

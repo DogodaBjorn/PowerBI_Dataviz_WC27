@@ -50,10 +50,29 @@ supersedes the P1 page map of `05-doorlichting-nieuwe-opzet.md` §2 and closes i
 - **Footer:** one source line.
 - **Uncertainty:** stays on the canvas as one sentence.
 
-## Next
+## Status (7 Nov, night)
 
-1. Björn reviews the comp: `project/design-prototypes/opzet-goodnight-inn.html`.
-2. After approval:
-   - Model measures (`sketch_model.py`): KPI band, folio, age bands, recommendation, fixed axis.
-   - PBIR (`opzet_report.py`) on the v2 slot map.
-   - The Desktop loop.
+- **Approval:** Björn approved the comp ("Yes go ahead and build. With precision").
+- **Built:** the model, the report and the comp. The comp now follows the report one to one: no point labels on the
+  scatter, no pays-back zone, and texts word for word from the measures. See `project/deliverables/BUILD_LOG.md` for
+  the item list.
+- **Verified in Desktop:**
+  - The model loads with 0 partition errors.
+  - Every number on both pages equals the offline facts.
+  - Both pages and the P2 plan state rendered.
+- **Found and fixed in Desktop:**
+  1. NPS rank shown as "3rd of 4". Floating-point noise counted Goodnight Inn as better than itself; it is now
+     excluded from its own count.
+  2. `FORMAT()` with `,,` scaling did not scale. Text measures now divide explicitly.
+  3. `USDM1` / `SUSDM` used the wrong comma position for .NET scaling.
+  4. Axis display units doubled the scaling ("$0MM").
+  5. Button text did not render. `show` now sits outside the state selector.
+  6. Card visuals drew white fills of their own.
+  7. The background image drifted off the visuals when Desktop scaled the canvas non-uniformly. Cards and logo are
+     visuals now.
+  8. A stale background was copied because Edge wrote its PNG late.
+  9. The plan table's chips were too tall.
+- **Still owed (Björn):**
+  - The focus-swap click test (`03-focuswissel-testplan.md`).
+  - A full-size review on a normal screen.
+  - Publish to Web at 1920 and 1366 wide.

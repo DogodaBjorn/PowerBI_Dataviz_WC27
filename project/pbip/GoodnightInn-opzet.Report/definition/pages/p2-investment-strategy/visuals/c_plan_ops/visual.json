@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_plan_ops",
   "position": {
-    "x": 1568,
+    "x": 1504,
     "y": 808,
     "z": 1054,
-    "width": 296,
-    "height": 104,
+    "width": 360,
+    "height": 96,
     "tabOrder": 540
   },
   "visual": {
@@ -82,7 +82,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "16D"
+                  "Value": "14D"
                 }
               }
             },
@@ -316,13 +316,36 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'hotels, guest effect'"
+                  "Value": "'hotels, score up'"
                 }
               }
             }
           },
           "selector": {
             "metadata": "_Measures.Focus Hotels Rated"
+          }
+        }
+      ],
+      "fillCustom": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ]
@@ -348,6 +371,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
                 }
               }
             }

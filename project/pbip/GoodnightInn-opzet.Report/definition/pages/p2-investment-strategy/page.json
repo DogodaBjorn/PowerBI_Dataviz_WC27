@@ -26,33 +26,6 @@
                 "Value": "0D"
               }
             }
-          },
-          "image": {
-            "image": {
-              "name": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'bg-p2-investment-strategy.png'"
-                  }
-                }
-              },
-              "url": {
-                "expr": {
-                  "ResourcePackageItem": {
-                    "PackageName": "RegisteredResources",
-                    "PackageType": 1,
-                    "ItemName": "bg-p2-investment-strategy.png"
-                  }
-                }
-              },
-              "scaling": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'Fit'"
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -61,7 +34,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_page_projects_8",
+        "name": "flt_page_projects_9",
         "field": {
           "Column": {
             "Expression": {
@@ -115,7 +88,7 @@
         "howCreated": "User"
       },
       {
-        "name": "flt_page_brand_9",
+        "name": "flt_page_brand_10",
         "field": {
           "Column": {
             "Expression": {

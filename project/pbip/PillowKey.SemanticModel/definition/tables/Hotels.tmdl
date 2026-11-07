@@ -106,6 +106,20 @@ table Hotels
 		lineageTag: c1d8c222-8840-5c65-861c-67a953a29bb2
 		summarizeBy: none
 		isDataTypeInferred
+	/// 1, 2 or 3 for 5 years or less, 6 to 9 and 10 or more years since the last renovation (2025); blank when never renovated.
+	column 'Renovation Age Sort' = VAR y = 2025 - YEAR ( Hotels[LastRenovationDate] ) RETURN IF ( ISBLANK ( Hotels[LastRenovationDate] ), BLANK (), SWITCH ( TRUE (), y <= 5, 1, y <= 9, 2, 3 ) )
+		dataType: int64
+		formatString: 0
+		lineageTag: b7d349c6-4bfe-5243-b980-0543a84fa6bb
+		summarizeBy: none
+		isDataTypeInferred
+	/// Axis label of the fading-welcome chart: the age band and how many of the brand's hotels sit in it.
+	column 'Renovation Age Label' = VAR s = Hotels[Renovation Age Sort] VAR br = Hotels[Brand] VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Hotels[HotelID], Hotels[Brand], Hotels[Renovation Age Sort] ), Hotels[Brand] = br && Hotels[Renovation Age Sort] = s ) ) RETURN IF ( ISBLANK ( s ), BLANK (), SWITCH ( s, 1, "5 years or less", 2, "6 to 9 years", "10 years or more" ) & " · " & n & " hotels" )
+		dataType: string
+		lineageTag: 13dee0f0-1d4b-522c-b8dc-0866d6fe65dc
+		summarizeBy: none
+		isDataTypeInferred
+		sortByColumn: 'Renovation Age Sort'
 
 	partition Hotels = m
 		mode: import
