@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_plan_ops",
   "position": {
-    "x": 1504,
-    "y": 808,
+    "x": 1112,
+    "y": 312,
     "z": 1054,
-    "width": 360,
-    "height": 96,
-    "tabOrder": 540
+    "width": 752,
+    "height": 24,
+    "tabOrder": 505
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,39 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Focus Rooms Added"
+                  "Property": "Plan Ops (text)"
                 }
               },
-              "queryRef": "_Measures.Focus Rooms Added",
-              "nativeQueryRef": "Focus Rooms Added"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Focus Rooms Refreshed"
-                }
-              },
-              "queryRef": "_Measures.Focus Rooms Refreshed",
-              "nativeQueryRef": "Focus Rooms Refreshed"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Focus Hotels Rated"
-                }
-              },
-              "queryRef": "_Measures.Focus Hotels Rated",
-              "nativeQueryRef": "Focus Hotels Rated"
+              "queryRef": "_Measures.Plan Ops (text)",
+              "nativeQueryRef": "Plan Ops (text)"
             }
           ]
         }
@@ -82,7 +54,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14D"
+                  "Value": "10D"
                 }
               }
             },
@@ -91,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#24192B'"
+                      "Value": "'#5B5163'"
                     }
                   }
                 }
@@ -235,94 +207,13 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Verdana'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#5B5163'"
-                    }
-                  }
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'belowValue'"
-                }
-              }
-            },
-            "horizontalAlignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
+                  "Value": "false"
                 }
               }
             }
           },
           "selector": {
             "id": "default"
-          }
-        },
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'rooms added'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Focus Rooms Added"
-          }
-        },
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'rooms refreshed'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Focus Rooms Refreshed"
-          }
-        },
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'hotels, score up'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Focus Hotels Rated"
           }
         }
       ],
@@ -476,7 +367,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Operational impact of the package in focus: rooms added, rooms refreshed, hotels with a dataset guest-score effect'"
+                  "Value": "'Plan Ops'"
                 }
               }
             }

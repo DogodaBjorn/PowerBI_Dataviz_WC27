@@ -14,6 +14,10 @@ supersedes the P1 page map of `05-doorlichting-nieuwe-opzet.md` §2 and closes i
    01+02+10 (booking app, kiosks at 20 desks, revenue management), $9.4 M, NPV through 2032
    +$3.3 M Expected (Low -$5.5 M, High +$12.7 M), +$3.5 M operating profit a year by 2032.
    The other $50.6 M is held back. B and C are shown as "considered, not recommended".
+   **Revised 7 Nov (review v2, `07-fixgids-review-v2.md` F2/K1):** the wording "the three moves that pay" was false
+   (the kiosks alone return -$0.6 M through 2032); the headline is now "Fund one package of three moves", and the
+   landing says why the kiosks stay (the cheapest answer to F3). A, B and C are fixed packages, picked once by their
+   rules on the Expected case (B = 01+09+10, C = 01+07+10), so their composition never changes with the scenario.
 3. **P2 keeps the package scatter and the focus swap** (Björn, 7 Nov: "houden zoals bedacht"). The
    scatter gets one fixed Y axis for all three scenarios, a "pays back by 2032" zone, light dots, and
    labels only on A, B and C. The shortlist state becomes one recommendation block plus the alternatives.
@@ -21,12 +25,15 @@ supersedes the P1 page map of `05-doorlichting-nieuwe-opzet.md` §2 and closes i
 
 ## Page messages
 
-- **P1:** "Full rooms, a slipping margin: Goodnight Inn pays the middleman and is losing its guests."
+- **P1:** "Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome is fading."
+  (Revised 7 Nov from "... and is losing its guests", which overclaimed: occupancy is best of four; REVIEW M4.)
   - F1 margin before vs after commissions; the gap grew every year.
-  - F2 OTA share plus the folio: one room night, the guest pays the same, the inn keeps $89.64 vs $107.09.
+  - F2 OTA share plus the folio: one room night, the guest pays the same, the inn keeps $89.63 vs $107.10
+    (the difference of the shown amounts; $89.64 / $107.09 unrounded).
   - F3 NPS by years since the last renovation.
   - F4 airports are the fullest.
-- **P2:** "Fund the three moves that pay: $9.4M now, $50.6M held back."
+- **P2:** "Fund one package of three moves: $9.4M now, $50.6M held back." (Revised 7 Nov from "Fund the three
+  moves that pay", see decision 2.)
 
 ## Facts added (project/analysis/41_opzet_facts.py, regenerated from the starter .pbix)
 

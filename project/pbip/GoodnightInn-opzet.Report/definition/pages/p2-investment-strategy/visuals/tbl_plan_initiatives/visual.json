@@ -3,10 +3,10 @@
   "name": "tbl_plan_initiatives",
   "position": {
     "x": 1112,
-    "y": 480,
+    "y": 496,
     "z": 1052,
     "width": 752,
-    "height": 320,
+    "height": 264,
     "tabOrder": 520
   },
   "visual": {
@@ -83,11 +83,26 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Initiative Capex"
+                  "Property": "Initiative Growth (text)"
                 }
               },
-              "queryRef": "_Measures.Initiative Capex",
-              "nativeQueryRef": "Initiative Capex",
+              "queryRef": "_Measures.Initiative Growth (text)",
+              "nativeQueryRef": "Initiative Growth (text)",
+              "displayName": "Type"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Initiative Capex (text)"
+                }
+              },
+              "queryRef": "_Measures.Initiative Capex (text)",
+              "nativeQueryRef": "Initiative Capex (text)",
               "displayName": "Capex"
             },
             {
@@ -98,12 +113,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Live (text)"
+                  "Property": "Initiative Run-rate (text)"
                 }
               },
-              "queryRef": "_Measures.Live (text)",
-              "nativeQueryRef": "Live (text)",
-              "displayName": "Live"
+              "queryRef": "_Measures.Initiative Run-rate (text)",
+              "nativeQueryRef": "Initiative Run-rate (text)",
+              "displayName": "Profit/yr"
             },
             {
               "field": {
@@ -113,26 +128,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Initiative Run-rate (sel)"
+                  "Property": "Initiative NPV (text)"
                 }
               },
-              "queryRef": "_Measures.Initiative Run-rate (sel)",
-              "nativeQueryRef": "Initiative Run-rate (sel)",
-              "displayName": "Run-rate"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Initiative NPV (sel)"
-                }
-              },
-              "queryRef": "_Measures.Initiative NPV (sel)",
-              "nativeQueryRef": "Initiative NPV (sel)",
+              "queryRef": "_Measures.Initiative NPV (text)",
+              "nativeQueryRef": "Initiative NPV (text)",
               "displayName": "NPV"
             },
             {
@@ -163,7 +163,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Initiative Status (text)"
+                "Property": "Initiative Chip"
               }
             },
             "direction": "Ascending"
@@ -382,7 +382,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "4D"
+                  "Value": "2D"
                 }
               }
             },
@@ -396,14 +396,14 @@
             "imageHeight": {
               "expr": {
                 "Literal": {
-                  "Value": "20D"
+                  "Value": "17D"
                 }
               }
             },
             "imageWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "28D"
+                  "Value": "24D"
                 }
               }
             }
@@ -432,10 +432,24 @@
                   "Value": "'Right'"
                 }
               }
+            },
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleValues": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           },
           "selector": {
-            "metadata": "_Measures.Initiative Capex"
+            "metadata": "_Measures.Initiative Capex (text)"
           }
         },
         {
@@ -446,10 +460,24 @@
                   "Value": "'Right'"
                 }
               }
+            },
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleValues": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           },
           "selector": {
-            "metadata": "_Measures.Live (text)"
+            "metadata": "_Measures.Initiative Run-rate (text)"
           }
         },
         {
@@ -460,10 +488,24 @@
                   "Value": "'Right'"
                 }
               }
+            },
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleValues": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           },
           "selector": {
-            "metadata": "_Measures.Initiative Run-rate (sel)"
+            "metadata": "_Measures.Initiative NPV (text)"
           }
         },
         {
@@ -474,18 +516,18 @@
                   "Value": "'Right'"
                 }
               }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Initiative NPV (sel)"
-          }
-        },
-        {
-          "properties": {
-            "alignment": {
+            },
+            "styleHeader": {
               "expr": {
                 "Literal": {
-                  "Value": "'Right'"
+                  "Value": "true"
+                }
+              }
+            },
+            "styleValues": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -615,7 +657,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Table of all ten Goodnight Inn initiatives, funded ones first: status in the package in focus, the page-1 finding each answers, capex, go-live month, 2032 run-rate, NPV and the dataset guest-score effect'"
+                  "Value": "'Table of all ten Goodnight Inn initiatives, those in the package in focus first: status, the page-1 finding each answers, the growth flag, capex, profit a year by 2032, NPV and the dataset guest-score effect'"
                 }
               }
             }

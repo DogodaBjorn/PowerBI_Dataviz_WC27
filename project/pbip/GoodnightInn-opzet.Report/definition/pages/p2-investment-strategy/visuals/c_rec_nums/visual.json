@@ -3,10 +3,10 @@
   "name": "c_rec_nums",
   "position": {
     "x": 1112,
-    "y": 368,
+    "y": 376,
     "z": 1032,
     "width": 752,
-    "height": 96,
+    "height": 88,
     "tabOrder": 420
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Rec Capex"
+                  "Property": "Rec Capex (text)"
                 }
               },
-              "queryRef": "_Measures.Rec Capex",
-              "nativeQueryRef": "Rec Capex"
+              "queryRef": "_Measures.Rec Capex (text)",
+              "nativeQueryRef": "Rec Capex (text)"
             },
             {
               "field": {
@@ -37,11 +37,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Rec NPV (sel)"
+                  "Property": "Rec NPV (text)"
                 }
               },
-              "queryRef": "_Measures.Rec NPV (sel)",
-              "nativeQueryRef": "Rec NPV (sel)"
+              "queryRef": "_Measures.Rec NPV (text)",
+              "nativeQueryRef": "Rec NPV (text)"
             },
             {
               "field": {
@@ -65,11 +65,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Rec Run-rate (sel)"
+                  "Property": "Rec Run-rate (text)"
                 }
               },
-              "queryRef": "_Measures.Rec Run-rate (sel)",
-              "nativeQueryRef": "Rec Run-rate (sel)"
+              "queryRef": "_Measures.Rec Run-rate (text)",
+              "nativeQueryRef": "Rec Run-rate (text)"
             }
           ]
         }
@@ -308,7 +308,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Rec Capex"
+            "metadata": "_Measures.Rec Capex (text)"
           }
         },
         {
@@ -322,7 +322,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Rec NPV (sel)"
+            "metadata": "_Measures.Rec NPV (text)"
           }
         },
         {
@@ -350,7 +350,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Rec Run-rate (sel)"
+            "metadata": "_Measures.Rec Run-rate (text)"
           }
         }
       ],
@@ -504,7 +504,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Package A in numbers: capex, NPV through 2032 in the selected scenario, the NPV range from Low to High, and the 2032 run-rate'"
+                  "Value": "'Package A in numbers: capex, NPV through 2032 in the selected scenario, the NPV range from Low to High, and the profit a year by 2032'"
                 }
               }
             }

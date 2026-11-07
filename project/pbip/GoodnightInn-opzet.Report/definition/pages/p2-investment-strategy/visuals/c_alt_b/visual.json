@@ -3,10 +3,10 @@
   "name": "c_alt_b",
   "position": {
     "x": 1112,
-    "y": 600,
+    "y": 648,
     "z": 1035,
     "width": 752,
-    "height": 64,
+    "height": 48,
     "tabOrder": 450
   },
   "visual": {

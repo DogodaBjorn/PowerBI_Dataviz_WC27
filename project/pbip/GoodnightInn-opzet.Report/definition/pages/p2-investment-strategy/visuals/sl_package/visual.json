@@ -356,7 +356,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Package in focus: the recommendation A, the alternatives B and C, or any valid package'"
+                  "Value": "'Package in focus: the recommendation A or the alternatives B and C'"
                 }
               }
             }

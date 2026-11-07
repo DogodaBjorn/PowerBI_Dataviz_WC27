@@ -3,10 +3,10 @@
   "name": "ch_plan_cumulative",
   "position": {
     "x": 1112,
-    "y": 808,
+    "y": 768,
     "z": 1053,
-    "width": 376,
-    "height": 96,
+    "width": 752,
+    "height": 136,
     "tabOrder": 530
   },
   "visual": {
@@ -78,6 +78,21 @@
               "queryRef": "_Measures.Focus Cumulative Net (High)",
               "nativeQueryRef": "Focus Cumulative Net (High)",
               "displayName": "High"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Focus Cumulative Net (sel)"
+                }
+              },
+              "queryRef": "_Measures.Focus Cumulative Net (sel)",
+              "nativeQueryRef": "Focus Cumulative Net (sel)",
+              "displayName": "In view"
             }
           ]
         }
@@ -181,25 +196,7 @@
             "gridlineShow": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "gridlineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#E4DEE3'"
-                    }
-                  }
-                }
-              }
-            },
-            "gridlineThickness": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
+                  "Value": "false"
                 }
               }
             },
@@ -234,7 +231,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#B5175F'"
+                      "Value": "'#82798A'"
                     }
                   }
                 }
@@ -252,7 +249,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#B5175F'"
+                      "Value": "'#82798A'"
                     }
                   }
                 }
@@ -270,7 +267,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#B5175F'"
+                      "Value": "'#82798A'"
                     }
                   }
                 }
@@ -279,6 +276,24 @@
           },
           "selector": {
             "metadata": "_Measures.Focus Cumulative Net (High)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#B5175F'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Focus Cumulative Net (sel)"
           }
         }
       ],
@@ -313,7 +328,7 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "1.5D"
                 }
               }
             }
@@ -327,7 +342,7 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "1.5D"
                 }
               }
             }
@@ -341,13 +356,144 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "1.5D"
                 }
               }
             }
           },
           "selector": {
             "metadata": "_Measures.Focus Cumulative Net (High)"
+          }
+        },
+        {
+          "properties": {
+            "strokeWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Focus Cumulative Net (sel)"
+          }
+        }
+      ],
+      "seriesLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "seriesPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Right'"
+                }
+              }
+            },
+            "seriesMatchColor": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "seriesFontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Verdana'"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Focus Cumulative Net (sel)"
+          }
+        }
+      ],
+      "y1AxisReferenceLine": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "lineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#5B5163'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "style": {
+              "expr": {
+                "Literal": {
+                  "Value": "'solid'"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'back'"
+                }
+              }
+            },
+            "dataLabelShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "1"
           }
         }
       ]
@@ -366,7 +512,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Cumulative net impact, $M  ·  Low to High'"
+                  "Value": "'Cumulative net impact, $M: it pays back where its line crosses zero'"
                 }
               }
             },
@@ -503,7 +649,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Line chart of the cumulative net impact of the package in focus 2027 to 2032 in the Low, Expected and High scenarios'"
+                  "Value": "'Line chart of the cumulative net impact of the package in focus 2027 to 2032 in the Low, Expected and High scenarios; the scenario in view in raspberry, the zero line marks payback'"
                 }
               }
             }
@@ -516,7 +662,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_horizon2_8",
+        "name": "flt_horizon2_10",
         "field": {
           "Column": {
             "Expression": {

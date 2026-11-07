@@ -5,10 +5,12 @@
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
+      "c_focus_line",
       "c_rec_title",
       "c_rec_mix",
       "c_rec_nums",
       "c_rec_answers",
+      "c_rec_rules",
       "c_alt_title",
       "c_alt_b",
       "c_alt_c",
@@ -16,10 +18,10 @@
       "c_uncertainty",
       "btn_open_plan",
       "c_plan_title",
+      "c_plan_ops",
       "ch_plan_waterfall",
       "tbl_plan_initiatives",
       "ch_plan_cumulative",
-      "c_plan_ops",
       "c_plan_risk",
       "btn_back"
     ],
@@ -32,6 +34,14 @@
     "sections": {
       "p2-investment-strategy": {
         "visualContainers": {
+          "c_focus_line": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
           "c_rec_title": {
             "singleVisual": {
               "visualType": "textbox",
@@ -57,6 +67,14 @@
             }
           },
           "c_rec_answers": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_rec_rules": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -117,6 +135,11 @@
               "visualType": "cardVisual"
             }
           },
+          "c_plan_ops": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
           "ch_plan_waterfall": {
             "singleVisual": {
               "visualType": "waterfallChart"
@@ -130,11 +153,6 @@
           "ch_plan_cumulative": {
             "singleVisual": {
               "visualType": "lineChart"
-            }
-          },
-          "c_plan_ops": {
-            "singleVisual": {
-              "visualType": "cardVisual"
             }
           },
           "c_plan_risk": {

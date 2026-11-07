@@ -133,6 +133,11 @@ absolute invest/do-not-invest claim (no residual value in the model).
   GI-07 -> 01+07+10 (capex $36.9 M, Expected -23.3).
 The rules, not the points, are recorded; when the scenario slicer changes, the
 matrix and the ranking recompute while the preset labels keep their criterion.
+**Superseded 7 Nov (review v2, `07-fixgids-review-v2.md` K1):** the rules are
+applied once, on the Expected case (`Package[Preset]`), and the three packages
+stay fixed in every scenario; only their numbers follow the scenario. Re-applying
+the rules per scenario left B empty in Low (a broken plan state) and gave C two
+different Low NPVs (REVIEW B1, M6).
 Known label corrections: an earlier PDF called C "01+02+07+10, $38.9 M, -23.9"
 (wrong label, right ranking CSV) and B "01+02+09+10" (the criterion selects
 01+09+10); cheapest valid refresh 07+09+10 at $36.1 M is not the best-refresh

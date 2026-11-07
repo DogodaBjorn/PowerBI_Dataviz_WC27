@@ -4,6 +4,7 @@ table Package
 
 	column PackageID
 		dataType: string
+		sortByColumn: 'Draw Rank'
 		lineageTag: 535b8a06-c1af-5c8d-8009-8ab4879406e8
 		summarizeBy: none
 		isNameInferred
@@ -125,6 +126,21 @@ table Package
 		isNameInferred
 		isDataTypeInferred
 		sourceColumn: [RunRate High]
+
+	/// A, B or C for the three named packages (rules on the Expected case, fixed across scenarios); blank for the rest.
+	column Preset = VAR me = Package[Mask] VAR t = ALLNOBLANKROW ( Package[Mask], Package[NPV Expected], Package[HotelsRated], Package[ContainsRefresh] ) VAR a = MAXX ( TOPN ( 1, t, Package[NPV Expected], DESC ), Package[Mask] ) VAR b = MAXX ( TOPN ( 1, FILTER ( t, Package[NPV Expected] >= 0 ), Package[HotelsRated], DESC, Package[NPV Expected], DESC ), Package[Mask] ) VAR c = MAXX ( TOPN ( 1, FILTER ( t, Package[ContainsRefresh] = "Yes" ), Package[NPV Expected], DESC ), Package[Mask] ) RETURN SWITCH ( me, a, "A", b, "B", c, "C", "" )
+		dataType: string
+		lineageTag: 14edf4a5-789b-5caf-83a3-e33adf4c6495
+		summarizeBy: none
+		isDataTypeInferred
+
+	/// Sort order of PackageID, which is the scatter's drawing order: every other package first (by mask), then B, C and A on top.
+	column 'Draw Rank' = IF ( Package[Preset] = "", Package[Mask], 2000 + SWITCH ( Package[Preset], "B", 1, "C", 2, "A", 3 ) )
+		dataType: int64
+		formatString: 0
+		lineageTag: a2c072f8-eb30-5d0e-ada1-4c2c191df437
+		summarizeBy: none
+		isDataTypeInferred
 
 	partition Package = calculated
 		mode: import

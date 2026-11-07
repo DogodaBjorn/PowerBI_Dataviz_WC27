@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "KPI OTA GI"
+                  "Property": "KPI OTA GI (text)"
                 }
               },
-              "queryRef": "_Measures.KPI OTA GI",
-              "nativeQueryRef": "KPI OTA GI"
+              "queryRef": "_Measures.KPI OTA GI (text)",
+              "nativeQueryRef": "KPI OTA GI (text)"
             }
           ]
         }

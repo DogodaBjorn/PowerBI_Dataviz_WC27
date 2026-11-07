@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Occupancy Airport GI"
+                  "Property": "Occupancy Airport GI (text)"
                 }
               },
-              "queryRef": "_Measures.Occupancy Airport GI",
-              "nativeQueryRef": "Occupancy Airport GI"
+              "queryRef": "_Measures.Occupancy Airport GI (text)",
+              "nativeQueryRef": "Occupancy Airport GI (text)"
             },
             {
               "field": {
@@ -37,11 +37,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Occupancy City GI"
+                  "Property": "Occupancy City GI (text)"
                 }
               },
-              "queryRef": "_Measures.Occupancy City GI",
-              "nativeQueryRef": "Occupancy City GI"
+              "queryRef": "_Measures.Occupancy City GI (text)",
+              "nativeQueryRef": "Occupancy City GI (text)"
             },
             {
               "field": {
@@ -51,11 +51,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Occupancy Highway GI"
+                  "Property": "Occupancy Highway GI (text)"
                 }
               },
-              "queryRef": "_Measures.Occupancy Highway GI",
-              "nativeQueryRef": "Occupancy Highway GI"
+              "queryRef": "_Measures.Occupancy Highway GI (text)",
+              "nativeQueryRef": "Occupancy Highway GI (text)"
             }
           ]
         }
@@ -294,7 +294,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Occupancy Airport GI"
+            "metadata": "_Measures.Occupancy Airport GI (text)"
           }
         },
         {
@@ -308,7 +308,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Occupancy City GI"
+            "metadata": "_Measures.Occupancy City GI (text)"
           }
         },
         {
@@ -322,7 +322,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Occupancy Highway GI"
+            "metadata": "_Measures.Occupancy Highway GI (text)"
           }
         }
       ],

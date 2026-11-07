@@ -191,7 +191,7 @@
             "start": {
               "expr": {
                 "Literal": {
-                  "Value": "0.25D"
+                  "Value": "0.3D"
                 }
               }
             },

@@ -68,25 +68,6 @@
               "displayName": "NPV through 2032"
             }
           ]
-        },
-        "Size": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Package Point Size"
-                }
-              },
-              "queryRef": "_Measures.Package Point Size",
-              "nativeQueryRef": "Package Point Size",
-              "displayName": "Marker size"
-            }
-          ]
         }
       }
     },
@@ -154,13 +135,6 @@
                 }
               }
             },
-            "end": {
-              "expr": {
-                "Literal": {
-                  "Value": "60000000D"
-                }
-              }
-            },
             "titleText": {
               "expr": {
                 "Literal": {
@@ -190,6 +164,18 @@
                       "Value": "'#5B5163'"
                     }
                   }
+                }
+              }
+            },
+            "end": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Scatter X End"
                 }
               }
             }
@@ -270,20 +256,6 @@
                 }
               }
             },
-            "start": {
-              "expr": {
-                "Literal": {
-                  "Value": "-60000000.0D"
-                }
-              }
-            },
-            "end": {
-              "expr": {
-                "Literal": {
-                  "Value": "20000000.0D"
-                }
-              }
-            },
             "titleText": {
               "expr": {
                 "Literal": {
@@ -313,6 +285,30 @@
                       "Value": "'#5B5163'"
                     }
                   }
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Scatter Y Start"
+                }
+              }
+            },
+            "end": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Scatter Y End"
                 }
               }
             }
@@ -356,7 +352,21 @@
             "bubbleSize": {
               "expr": {
                 "Literal": {
-                  "Value": "-40L"
+                  "Value": "0L"
+                }
+              }
+            },
+            "markerRangeType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'magnitude'"
+                }
+              }
+            },
+            "preventOverflow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -578,7 +588,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Scatter of the 456 valid investment packages: capex on the horizontal axis, NPV through 2032 in the selected scenario on the vertical axis; the recommendation, package A, is the large raspberry dot, the alternatives B and C are plum-black'"
+                  "Value": "'Scatter of the 456 valid investment packages: capex on the horizontal axis, NPV through 2032 in the selected scenario on the vertical axis; light dots are the packages not proposed'"
                 }
               }
             }
@@ -587,5 +597,63 @@
       ]
     },
     "drillFilterOtherVisuals": false
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "flt_cloud_7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Package"
+              }
+            },
+            "Property": "Preset"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "f",
+              "Entity": "Package",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "f"
+                          }
+                        },
+                        "Property": "Preset"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "''"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
   }
 }

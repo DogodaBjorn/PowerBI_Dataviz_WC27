@@ -38,11 +38,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Folio OTA Guest"
+                  "Property": "Folio OTA Guest (text)"
                 }
               },
-              "queryRef": "_Measures.Folio OTA Guest",
-              "nativeQueryRef": "Folio OTA Guest",
+              "queryRef": "_Measures.Folio OTA Guest (text)",
+              "nativeQueryRef": "Folio OTA Guest (text)",
               "displayName": "Via an online agency"
             },
             {
@@ -53,33 +53,15 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Folio Direct Guest"
+                  "Property": "Folio Direct Guest (text)"
                 }
               },
-              "queryRef": "_Measures.Folio Direct Guest",
-              "nativeQueryRef": "Folio Direct Guest",
+              "queryRef": "_Measures.Folio Direct Guest (text)",
+              "nativeQueryRef": "Folio Direct Guest (text)",
               "displayName": "Direct, web and app"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "FolioLine"
-                  }
-                },
-                "Property": "Line"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
@@ -298,10 +280,24 @@
                   "Value": "'Right'"
                 }
               }
+            },
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleValues": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           },
           "selector": {
-            "metadata": "_Measures.Folio OTA Guest"
+            "metadata": "_Measures.Folio OTA Guest (text)"
           }
         },
         {
@@ -312,10 +308,24 @@
                   "Value": "'Right'"
                 }
               }
+            },
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleValues": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           },
           "selector": {
-            "metadata": "_Measures.Folio Direct Guest"
+            "metadata": "_Measures.Folio Direct Guest (text)"
           }
         }
       ]
@@ -439,7 +449,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'The folio: one Goodnight Inn room night in 2025. Via an online agency the guest pays $109.31, commission and fees take $19.68 and the inn keeps $89.64; booked direct the guest pays $111.56 and the inn keeps $107.09'"
+                  "Value": "'The folio: one Goodnight Inn room night in 2025. Via an online agency the guest pays $109.31, commission and fees take $19.68 and the inn keeps $89.63; booked direct the guest pays $111.56, fees take $4.46 and the inn keeps $107.10'"
                 }
               }
             }

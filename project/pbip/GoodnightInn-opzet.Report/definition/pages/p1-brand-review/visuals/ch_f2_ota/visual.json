@@ -234,46 +234,48 @@
             "show": {
               "expr": {
                 "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "seriesLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
                   "Value": "true"
                 }
               }
             },
-            "position": {
+            "seriesPosition": {
               "expr": {
                 "Literal": {
                   "Value": "'Right'"
                 }
               }
             },
-            "fontFamily": {
+            "seriesMatchColor": {
               "expr": {
                 "Literal": {
-                  "Value": "'Verdana'"
+                  "Value": "true"
                 }
               }
             },
-            "fontSize": {
+            "textSize": {
               "expr": {
                 "Literal": {
                   "Value": "10D"
                 }
               }
             },
-            "labelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#5B5163'"
-                    }
-                  }
-                }
-              }
-            },
-            "showTitle": {
+            "seriesFontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'Verdana'"
                 }
               }
             }

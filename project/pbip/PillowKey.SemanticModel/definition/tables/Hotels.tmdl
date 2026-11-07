@@ -114,7 +114,7 @@ table Hotels
 		summarizeBy: none
 		isDataTypeInferred
 	/// Axis label of the fading-welcome chart: the age band and how many of the brand's hotels sit in it.
-	column 'Renovation Age Label' = VAR s = Hotels[Renovation Age Sort] VAR br = Hotels[Brand] VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Hotels[HotelID], Hotels[Brand], Hotels[Renovation Age Sort] ), Hotels[Brand] = br && Hotels[Renovation Age Sort] = s ) ) RETURN IF ( ISBLANK ( s ), BLANK (), SWITCH ( s, 1, "5 years or less", 2, "6 to 9 years", "10 years or more" ) & " · " & n & " hotels" )
+	column 'Renovation Age Label' = VAR s = Hotels[Renovation Age Sort] VAR br = Hotels[Brand] VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Hotels[HotelID], Hotels[Brand], Hotels[Renovation Age Sort] ), Hotels[Brand] = br && Hotels[Renovation Age Sort] = s ) ) RETURN IF ( ISBLANK ( s ) || n = 0, BLANK (), SWITCH ( s, 1, "5 years or less", 2, "6 to 9 years", "10 years or more" ) )
 		dataType: string
 		lineageTag: 13dee0f0-1d4b-522c-b8dc-0866d6fe65dc
 		summarizeBy: none

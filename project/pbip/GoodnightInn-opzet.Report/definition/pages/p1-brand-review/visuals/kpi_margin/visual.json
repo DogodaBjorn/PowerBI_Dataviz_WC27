@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "KPI Margin after GI"
+                  "Property": "KPI Margin after GI (text)"
                 }
               },
-              "queryRef": "_Measures.KPI Margin after GI",
-              "nativeQueryRef": "KPI Margin after GI"
+              "queryRef": "_Measures.KPI Margin after GI (text)",
+              "nativeQueryRef": "KPI Margin after GI (text)"
             }
           ]
         }

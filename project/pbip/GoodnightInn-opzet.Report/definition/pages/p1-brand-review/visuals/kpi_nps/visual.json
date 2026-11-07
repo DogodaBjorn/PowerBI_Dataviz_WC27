@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "KPI NPS GI"
+                  "Property": "KPI NPS GI (text)"
                 }
               },
-              "queryRef": "_Measures.KPI NPS GI",
-              "nativeQueryRef": "KPI NPS GI"
+              "queryRef": "_Measures.KPI NPS GI (text)",
+              "nativeQueryRef": "KPI NPS GI (text)"
             }
           ]
         }

@@ -47,3 +47,4 @@ ref table KpiLine
 ref table Package
 ref table PackageProject
 ref table PlanSelector
+ref table ScatterView

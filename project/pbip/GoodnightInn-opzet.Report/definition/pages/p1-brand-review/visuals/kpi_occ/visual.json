@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "KPI Occupancy GI"
+                  "Property": "KPI Occupancy GI (text)"
                 }
               },
-              "queryRef": "_Measures.KPI Occupancy GI",
-              "nativeQueryRef": "KPI Occupancy GI"
+              "queryRef": "_Measures.KPI Occupancy GI (text)",
+              "nativeQueryRef": "KPI Occupancy GI (text)"
             }
           ]
         }
