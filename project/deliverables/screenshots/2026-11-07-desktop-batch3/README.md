@@ -4,6 +4,17 @@
 (`project/project-state/active/08-verbeterplan-ronde-3.md`) against a screenshot (fixed / partly / open) and lists what
 the builder found. Batch 2: [../2026-11-07-desktop-batch2/](../2026-11-07-desktop-batch2/README.md).
 
+## Published report (Björn, 7 Nov)
+**https://app.powerbi.com/groups/me/reports/4888e342-dfcc-49d7-8df1-ad893b9789a0/p1-brand-review?experience=power-bi**
+
+Björn published the round-3 build to the Power BI service (his workspace, "My workspace"); the reviewer can check the
+live report there next to these renders. This is a workspace link: it needs a sign-in with access to that workspace.
+It is not yet the anonymous Publish-to-Web link (`app.powerbi.com/view?r=...`) the contest asks for, so the P2W gate
+(R6/N10: the link in a clean browser, signed out, in nl-NL and en-US) is still open. The Desktop file it was published
+from left a re-save in the working tree with the same 304 measures and the round-3 visuals (both door vignettes), so the
+published report is the build these renders show.
+
+## How these renders were made
 Rendered by Power BI Desktop itself (2.159, Store app), the same way as batches 1 and 2:
 - Desktop starts with a local WebView2 DevTools port for one launch. The canvas viewport is set so that the
   fit-to-page page is exactly 1920 px wide (and 1366 px for the W-series), then captured page by page.

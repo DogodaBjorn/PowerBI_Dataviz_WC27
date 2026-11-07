@@ -214,7 +214,7 @@ Gebouwd in de generators op branch `upgrade-opzet-v3` (op de build van PR #5). R
 | N11 Horizon | gedaan | Geen claim meer na 2032 ("does not pay back by 2032"). |
 | R4 Minimumfont | gedaan, op 11 pt | 11 pt (15 px) is de kleinste tekst; renders op 1366 breed in W1366a-c. 16 px op 1920 zou een derde minder tekst in het P2-paneel vragen. |
 | S10 Open vragen | gedaan | Kiosks naar de 20 volste hotels (9 airport, 7 highway, 4 city; gecontroleerd op bezetting 2025); $50,6M wordt achtergehouden tot alle drie de ingrepen live zijn (apr 2028), omdat geen ander initiatief vóór 2032 terugverdient, ook niet in High. |
-| R6/N10 P2W | open, Björn | Ongewijzigd het kritieke pad. |
+| R6/N10 P2W | deels, Björn | Gepubliceerd in de Power BI-service (7 nov): https://app.powerbi.com/groups/me/reports/4888e342-dfcc-49d7-8df1-ad893b9789a0/p1-brand-review?experience=power-bi . Dat is een werkruimtelink met inlog; de anonieme Publish-to-Web-link (`view?r=...`) en de browsertest in nl-NL en en-US blijven het kritieke pad. |
 
 Nieuwe eigen bevindingen N12-N17 (o.a. hover op de rand van B kan een buur-stip tonen, de cumulatieve grafiek is
 kleiner geworden, het paneel blijft het dichtste deel): zie SELF-REVIEW.

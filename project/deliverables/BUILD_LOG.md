@@ -7,6 +7,8 @@ manual, which numbers rest on assumptions, when it was last validated. -->
 Last validated: 2026-11-07, round 3 (`08-verbeterplan-ronde-3.md`), batch 3 (rendered, hovered, clicked and queried in Power BI Desktop 2.159; screenshots in `project/deliverables/screenshots/2026-11-07-desktop-batch3/`)
 Model: `PillowKey.SemanticModel`, 28 tables, 304 measures, 22 relationships (shared by all four reports)
 Report: `GoodnightInn-opzet.Report`, 2 pages at 1920x1080 plus the hidden tooltip page `tt-package` (432x296); 88 visuals (P1 41, P2 40, tooltip 7), 11 core chart/table visuals (the scatter counts three layers), 2 bookmarks.
+Published (Björn, 2026-11-07, round-3 build, workspace link, sign-in needed): https://app.powerbi.com/groups/me/reports/4888e342-dfcc-49d7-8df1-ad893b9789a0/p1-brand-review?experience=power-bi
+Publish to Web (anonymous `view?r=` link, the contest's requirement): not yet; R6/N10 in `08-verbeterplan-ronde-3.md`.
 Also on disk: the three direction sketches D1/D2/D3 (`project/pbip/SKETCHES.md`), not rebuilt in this pass.
 
 Lifecycle note: `status.yaml` still says stage 0. This is a pre-gate opzet (set-up)
