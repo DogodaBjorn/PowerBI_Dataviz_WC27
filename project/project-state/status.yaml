@@ -2,12 +2,12 @@
 project: PowerBI_Dataviz_WC27
 template_version: 0.4.0
 current_stage: 0
-updated: 2026-11-07
+updated: 2026-11-09
 stages:
   s0_intake:
     status: in_progress
     evidence: ""
-    gate_note: "canon audit filed: project-state/active/00-best-in-class-audit.md (17/40, caps A2+B8); brand kit goodnight-inn-hanger chosen 2026-11-06 (00-brand-decision.md); direction and P2 focus-swap method recorded 2026-11-06 (01-richting-p1-p2.md, 02-focuswissel-methode.md, fx-focus skill); build description recorded (04-p2-build-method.md); interaction proof pending (03-focuswissel-testplan.md); repo audit and new report set-up recorded 2026-11-06 (05-doorlichting-nieuwe-opzet.md: GoodnightInn-opzet report + model additions, Desktop checks owed, recommendation open); screenshot review v2 recorded 2026-11-07 (07-fixgids-review-v2.md + research/log/2026-11-07-screenshot-review-v2.md: 7 fouten, 6 risicos, kansen, volgorde tot 18 nov; fixes generator-first, nog niet ingeleverd); review ronde 2 (32 renders): dealbreakers F1-F3 opgelost, 0 blockers; verbeterplan ronde 3 recorded 2026-11-07 (08-verbeterplan-ronde-3.md: C-framing, scatter-tooltips, nullijn, canvasruimte, merkherkenning + open punten N8/N9/N11/S1/R4/S10; Publish-to-Web-gate is user-owned)"
+    gate_note: "canon audit filed: project-state/active/00-best-in-class-audit.md (17/40, caps A2+B8); brand kit goodnight-inn-hanger chosen 2026-11-06 (00-brand-decision.md); direction and P2 focus-swap method recorded 2026-11-06 (01-richting-p1-p2.md, 02-focuswissel-methode.md, fx-focus skill); build description recorded (04-p2-build-method.md); interaction proof pending (03-focuswissel-testplan.md); repo audit and new report set-up recorded 2026-11-06 (05-doorlichting-nieuwe-opzet.md: GoodnightInn-opzet report + model additions, Desktop checks owed, recommendation open); screenshot review v2 recorded 2026-11-07 (07-fixgids-review-v2.md + research/log/2026-11-07-screenshot-review-v2.md: 7 fouten, 6 risicos, kansen, volgorde tot 18 nov; fixes generator-first, nog niet ingeleverd); review ronde 2 (32 renders): dealbreakers F1-F3 opgelost, 0 blockers; verbeterplan ronde 3 recorded 2026-11-07 (08-verbeterplan-ronde-3.md: C-framing, scatter-tooltips, nullijn, canvasruimte, merkherkenning + open punten N8/N9/N11/S1/R4/S10; Publish-to-Web-gate is user-owned); rebuild package recorded 2026-11-09: part A 09-research-based-rebuild.md (content, PR #10) + part B 10-design-rebuild.md (design: kit goodnight-inn-wakeup 3.1 night header, chosen by Björn, see 00-brand-decision.md addendum; plan only, build after go-ahead; D7 night-glow needs a waiver)"
   s1_requirements:
     status: pending
     evidence: ""
