@@ -163,3 +163,15 @@ project_additions:               # per-project sources appended at stage 0
   - name: Fontsource (OFL fonts Plus Jakarta Sans for the 3.x wordmark, Open Sans as Segoe UI stand-in in the comps)
     url: https://fontsource.org/
     use_for: "font files for project/tools/brand_logos_v3.py and comps_v3.py; never shipped in the report"
+  - name: Research-based rebuild sources (Björn's note research/2026-11-09-brand-kpis-wat-echt-telt.md)
+    url: https://ipa.co.uk/knowledge/ipa-blog/why-brand-difference-matters-and-what-you-can-do-to-drive-it
+    use_for: "plan 09 R1: pricing power (ADR / RevPAR index) as the brand KPI that reaches the P&L; Kantar BrandZ methodology https://www.kantar.com/campaigns/brandz/methodology (informing, tier 3)"
+  - name: Keiningham et al. (2007), A Longitudinal Examination of Net Promoter and Firm Revenue Growth, Journal of Marketing
+    url: https://www.researchgate.net/publication/346845995_A_Longitudinal_Examination_of_Net_Promoter_and_Firm_Revenue_Growth
+    use_for: "plan 09 R2 and R4: NPS not shown as the headline brand KPI or a growth measure (informing, tier 3)"
+  - name: Profit Ability 2 (Thinkbox and partners, 2024)
+    url: https://assets.ctfassets.net/ptzdhtf6t0jg/KkqtmmsDkxlGl0wlE72TF/178b9f6af6d3af215154e12455485e92/Profit_Ability_2_The_new_business_case_for_advertising_report.pdf
+    use_for: "plan 09 R3 and R4: the marginal test on P2 and the deliberately-not-shown footer (informing, tier 3)"
+  - name: Ehrenberg, Goodhardt & Barwise (1990), Double Jeopardy; Ehrenberg-Bass Institute
+    url: https://marketingscience.info/
+    use_for: "plan 09 R5: reach over loyalty as a labelled interpretation only (informing, tier 3)"

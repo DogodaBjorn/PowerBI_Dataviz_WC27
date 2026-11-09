@@ -176,6 +176,20 @@ stand on. Re-derived in our own words; nothing copied.
 | **Bonnie Shaver-Troup, Thomas Jockin et al.** (Lexend, OFL-1.1) | The lettering outlined in option 2's wordmark. | goodnight-inn-hanger assets |
 | **Fontsource** (MIT packaging), **HarfBuzz** (Behdad Esfahbod et al., MIT), **fontTools** (Just van Rossum et al., MIT) | Font delivery, shaping and outlining for `project/tools/brand_logos.py`. | logo generator |
 
+### Research-based rebuild (plan 09, applied on v3 in plan 11)
+
+The KPI choices of the 9 November rebuild follow Björn's research note
+`research/2026-11-09-brand-kpis-wat-echt-telt.md`. No figure from these
+sources lands on the canvas; they argue for the form only (plan 09,
+do-not-fabricate). Re-derived in our own words; nothing copied.
+
+| Who | What we owe them | Where it lands |
+|---|---|---|
+| **Kantar BrandZ** (Meaningful Different framework) and the **IPA** (brand difference and pricing power) | Pricing power as the place where brand equity reaches the P&L: a RevPAR and ADR index against the sister brands instead of NPS as a headline KPI. | `project/tools/sketch_model.py` (`RevPAR Index GI`, `KPI RevPAR Index *`), P1 KPI cell 4 |
+| **Timothy L. Keiningham, Bruce Cooil, Lerzan Aksoy, Tor W. Andreassen, Jay Weiner** (*A Longitudinal Examination of Net Promoter and Firm Revenue Growth*, Journal of Marketing, 2007) | NPS predicts growth no better than satisfaction: NPS stays on P1 as an operational quality signal in F3, not as the brand's one number. | P1 KPI band, F3, the footer line |
+| **Thinkbox, Ebiquity, EssenceMediacom, Gain Theory, Mindshare, Wavemaker** (*Profit Ability 2*, 2024) | Business metrics over media metrics, and the marginal test: show why the next euro is not spent. | `Rec Held (text)` (the marginal clause), the footer line on P1 and P2 |
+| **Andrew Ehrenberg, Gerald Goodhardt, Patrick Barwise** (Double Jeopardy, Journal of Marketing, 1990) and the **Ehrenberg-Bass Institute** | Growth through reach rather than loyalty, used only as a labelled reading of the data ("Our reading:"), never as a chart. | `F2 Note (text)` |
+
 ### Brand kit goodnight-inn-wakeup 3.1 (design rebuild, plan 10)
 
 Original work (2026-11-08/09). The palette's three hex values come from a
