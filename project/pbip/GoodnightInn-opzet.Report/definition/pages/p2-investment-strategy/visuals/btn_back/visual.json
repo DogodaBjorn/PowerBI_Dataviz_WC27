@@ -383,7 +383,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Button: back to the recommendation and its alternatives'"
+                  "Value": "'Back to the recommendation and its alternatives'"
                 }
               }
             }

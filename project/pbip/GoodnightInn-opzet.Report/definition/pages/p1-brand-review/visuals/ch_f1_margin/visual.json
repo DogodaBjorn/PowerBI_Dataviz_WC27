@@ -6,7 +6,7 @@
     "y": 400,
     "z": 1022,
     "width": 560,
-    "height": 272,
+    "height": 264,
     "tabOrder": 320
   },
   "visual": {
@@ -354,6 +354,19 @@
           },
           "selector": {
             "metadata": "_Measures.Trend Margin after GI"
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "responsive": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]

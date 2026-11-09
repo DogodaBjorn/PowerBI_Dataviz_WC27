@@ -3,10 +3,10 @@
   "name": "tbl_f2_folio",
   "position": {
     "x": 680,
-    "y": 568,
+    "y": 592,
     "z": 1033,
     "width": 560,
-    "height": 120,
+    "height": 96,
     "tabOrder": 430
   },
   "visual": {
@@ -244,7 +244,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "4D"
+                  "Value": "0D"
                 }
               }
             },

@@ -6,7 +6,7 @@
     "y": 400,
     "z": 1032,
     "width": 560,
-    "height": 160,
+    "height": 184,
     "tabOrder": 420
   },
   "visual": {
@@ -447,6 +447,19 @@
           },
           "selector": {
             "metadata": "_Measures.Trend OTA PP"
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "responsive": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]

@@ -236,7 +236,8 @@ def p1_visuals():
     fol = ("Folio OTA Guest (text)", "Folio Direct Guest (text)")
     proj = [proj_col("FolioLine", "Line", display="One room night, 2025"), proj_mea(fol[0], "Via an online agency"), proj_mea(fol[1], "Direct, web and app")]
     colfmt = [{"properties": {"alignment": enum("Right"), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": mref(m)}} for m in fol]
-    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=4, header_size=S, column_formatting=colfmt)
+    # row padding 0: at 12 pt three rows and the header must fit 96 px without a scrollbar (renders 9 Nov: padding 4 scrolled at 120, padding 1 at 96)
+    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=0, header_size=S, column_formatting=colfmt)
     # no explicit sort: FolioLine[Line] is sorted by its Sort column in the model, and an explicit sort drew an arrow
     # under 'One room night, 2025' (REVIEW m5)
     v.append(visual("tbl_f2_folio", "tableEx", *at(P1, "tbl_f2_folio"), query={"Values": {"projections": proj}}, objects=objs, filters=[gi_filter()],
@@ -386,7 +387,7 @@ def scatter_axes(objs):
 
 def p2_visuals():
     # the budget comes from the model (Masthead P2 (text)); it was typed in here
-    v = [dyn(P2, "z_masthead2", "Masthead P2 (text)", size=S, colour=ZONE_MUTED, align="right"),
+    v = [dyn(P2, "z_masthead2", "Masthead P2 (text)", size=S, colour=ZONE_MUTED, align="right", alt_measure="Alt Masthead P2 (text)"),
          dyn(P2, "z_headline2", "Headline P2 (text)", size=28, colour=ZONE_TEXT, font=DISPLAY),
          dyn(P2, "c_subtitle2", "Subtitle P2 (text)", size=S, colour=ZONE_MUTED),
          title(P2, "c_scatter_title", "Scatter Title (text)"),
@@ -462,18 +463,23 @@ def p2_visuals():
     v.append(dyn(P2, "c_alt_c", "Alt C (text)", colour=INK))
     v.append(dyn(P2, "c_not_funded", "Not Funded (text)", colour=INK))
     v.append(dyn(P2, "c_uncertainty", "Uncertainty (text)"))
-    v.append(button("btn_open_plan", "Open the plan for the package in focus  →", "bm_p2_plan", True, "Button: open the plan for the package in focus",
+    v.append(button("btn_open_plan", "Open the plan for the package in focus  →", "bm_p2_plan", True, "Open the plan for the package in focus",
                     label_measure="Open Plan Label (text)"))
 
     # state: plan (hidden by default)
     v.append(dyn(P2, "c_plan_title", "Plan Title (text)", size=TITLE_PT, colour=INK, font=DISPLAY))
     v.append(dyn(P2, "c_plan_ops", "Plan Ops (text)"))
     q = {"Category": {"projections": [proj_col("InvestmentProjects", "Short Name")]}, "Y": {"projections": [proj_mea("Focus Project NPV (shown)", "NPV through 2032")]}}
-    objs = {"categoryAxis": axis(BODY, S, INK2, gridlines=None), "valueAxis": axis(BODY, S, INK2, gridlines=False, units=1),
+    # no value axis: every bar carries its own signed label, and at 12 pt with 'responsive' off (plan 11) the axis
+    # labels piled up in the 120 px plot (render 9 Nov)
+    objs = {"categoryAxis": axis(BODY, S, INK2, gridlines=None), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, units=1),
+    # the ends from the model, so the bar labels always have room (Waterfall Y Start / End)
             # plan 10 D6: an increase in Coffee Blue, a decrease in Tangerine (a signal), the total in Night; the labels
             # carry the sign (+ / true minus) too
             "sentimentColors": [{"properties": {"increaseFill": color(ACCENT_MARK), "decreaseFill": color(SIGNAL_MARK), "totalFill": color(INK), "otherFill": color(SLATE)}}],
             "labels": labels(True, BODY, S, INK, units=1, position="OutsideEnd"), "legend": legend(False)}
+    objs["valueAxis"][0]["properties"]["start"] = mtext("Waterfall Y Start")
+    objs["valueAxis"][0]["properties"]["end"] = mtext("Waterfall Y End")
     v.append(chart(P2, "ch_plan_waterfall", "waterfallChart", q, objs, None,
                    title_measure="Waterfall Title (text)", filters=[filter_measure_gt("Focus Project Flag", 0, "flt_focus_wf")], alt_measure="Alt Waterfall (text)"))
     # All ten initiatives, the package first, each group by NPV. At 11 pt the finding and the growth flag share one
@@ -485,7 +491,8 @@ def p2_visuals():
     right = ("Initiative Capex (text)", "Initiative Run-rate (text)", "Initiative NPV (text)", "Initiative Guest Effect (text)")
     colfmt = [{"properties": {"alignment": enum("Right"), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": mref(m)}} for m in right]
     extra = [{"properties": {"fontColorPrimary": fv("Initiative Status Color")}, "selector": {**WILD, "metadata": mref("Initiative Status (text)")}}]
-    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=2, header_size=S, extra_values=extra, column_formatting=colfmt)
+    # row padding 0: ten rows and the header in 264 px at 12 pt (renders 9 Nov: padding 2 scrolled at 280, padding 0 at 248)
+    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=0, header_size=S, extra_values=extra, column_formatting=colfmt)
     objs["grid"][0]["properties"]["imageHeight"] = num(18)
     objs["grid"][0]["properties"]["imageWidth"] = num(26)
     v.append(visual("tbl_plan_initiatives", "tableEx", *at(P2, "tbl_plan_initiatives"), query={"Values": {"projections": proj}}, objects=objs,
@@ -495,7 +502,9 @@ def p2_visuals():
     ms = ["Focus Cumulative Net (Low)", "Focus Cumulative Net (Expected)", "Focus Cumulative Net (High)", "Focus Cumulative Net (sel)"]
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]},
          "Y": {"projections": [proj_mea(ms[0], "Low"), proj_mea(ms[1], "Expected"), proj_mea(ms[2], "High"), proj_mea(ms[3], "In view")]}}
-    objs = {"categoryAxis": axis(BODY, S, INK2), "valueAxis": axis(BODY, S, INK2, gridlines=False, units=1), "legend": legend(False),
+    # no year axis in 104 px (what 'responsive' used to hide; plan 11 turned it off so text never shrinks): the payback
+    # year is in the risk sentence under the chart and in the alt text
+    objs = {"categoryAxis": axis(BODY, S, INK2, show=False), "valueAxis": axis(BODY, S, INK2, gridlines=False, units=1), "legend": legend(False),
             # plan 10 D6: the Low case is a signal (Tangerine, and dashed, so not by colour alone), Expected and High in
             # Warm Grey, the case in view emphasised in Coffee Blue; the end labels in Dusk (series colours fail 4.5:1)
             "dataPoint": series_colors({mref(ms[0]): SIGNAL_MARK, mref(ms[1]): SLATE, mref(ms[2]): SLATE, mref(ms[3]): ACCENT_MARK}),
@@ -508,7 +517,7 @@ def p2_visuals():
                    title="Cumulative net impact, $M: it pays back where its line crosses zero", filters=[filter_in("Date", "Year", [2027, 2028, 2029, 2030, 2031, 2032], "flt_horizon2")],
                    alt_measure="Alt Cumulative (text)"))
     v.append(dyn(P2, "c_plan_risk", "Plan Risk (text)"))
-    v.append(button("btn_back", "←  Back to the recommendation", "bm_p2_shortlist", False, "Button: back to the recommendation and its alternatives"))
+    v.append(button("btn_back", "←  Back to the recommendation", "bm_p2_shortlist", False, "Back to the recommendation and its alternatives"))
     v.append(dyn(P2, "z_footer2", "Footer P2 (text)"))
     return v
 
@@ -589,7 +598,7 @@ DATA_VISUALS = {"lineChart", "clusteredColumnChart", "scatterChart", "tableEx", 
 def finish(visuals):
     """Plan 11, the same for every visual: (1) Segoe UI Semibold is the bold cut, so no synthetic bold on top of it;
     (2) data visuals keep their header (focus mode, 'show as a table': the accessibility features the theme keeps for
-    them, compile_theme.py), except layers that are out of the tab order."""
+    them, compile_theme.py), except layers that are out of the tab order; (3) charts are not responsive."""
     def walk(o):
         if isinstance(o, dict):
             if o.get("fontFamily") == text(DISPLAY) and "bold" in o:
@@ -603,6 +612,11 @@ def finish(visuals):
                 walk(x)
     for v in visuals:
         walk(v)
+        # (3) charts never shrink their text to fit: 'responsive' scaled F2's 12 pt axis labels down in its 184 px chart
+        # (render 9 Nov), under the floor (catalog: objects.general.responsive)
+        if v["visual"]["visualType"] in DATA_VISUALS - {"tableEx"}:
+            gen = v["visual"].setdefault("objects", {}).setdefault("general", [{"properties": {}}])
+            gen[0]["properties"]["responsive"] = b(False)
         if v["visual"]["visualType"] in DATA_VISUALS and v["position"]["tabOrder"] >= 0:
             v["visual"]["visualContainerObjects"]["visualHeader"] = [{"properties": {"show": b(True)}}]
     return visuals
@@ -634,7 +648,9 @@ def page(name, display, visuals, filters=None, tooltip=False, interactions=None)
     if filters:
         p["filterConfig"] = {"filters": filters}
     for vis in visuals:
-        if state_of(name, vis["name"]) == ("shortlist" if PLAN_STATE else "plan"):
+        # inner tiles (z_tile_*) belong to the shortlist state, as in bookmark()
+        st = "shortlist" if vis["name"].startswith("z_tile_") else state_of(name, vis["name"])
+        if st == ("shortlist" if PLAN_STATE else "plan"):
             vis["isHidden"] = True
     return p, visuals
 

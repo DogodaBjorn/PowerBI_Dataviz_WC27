@@ -3,7 +3,7 @@
   "name": "ch_f4_fullest",
   "position": {
     "x": 616,
-    "y": 872,
+    "y": 880,
     "z": 1053,
     "width": 1248,
     "height": 128,
@@ -269,6 +269,19 @@
         {
           "properties": {
             "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "responsive": {
               "expr": {
                 "Literal": {
                   "Value": "false"

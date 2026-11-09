@@ -6,7 +6,7 @@
     "y": 792,
     "z": 1053,
     "width": 752,
-    "height": 112,
+    "height": 88,
     "tabOrder": 530
   },
   "visual": {
@@ -105,7 +105,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -519,6 +519,19 @@
           },
           "selector": {
             "id": "1"
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "responsive": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]

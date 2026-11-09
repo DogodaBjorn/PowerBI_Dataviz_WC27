@@ -398,7 +398,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Button: open the plan for the package in focus'"
+                  "Value": "'Open the plan for the package in focus'"
                 }
               }
             }

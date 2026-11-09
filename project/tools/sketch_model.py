@@ -771,6 +771,13 @@ def shown_parts(expr):
 m("Focus Project NPV (shown)",
   FIDS + shown_parts("[NPV @ 8%]") + "RETURN SUMX ( FILTER ( adj, [@p] IN VALUES ( InvestmentProjects[ProjectID] ) ), [@s] )", SUSDM, C9,
   "Waterfall: each initiative's NPV in the package in focus, rounded to $0.1M so the bars add up to the shown total.")
+# The waterfall's value axis ends (plan 11): its axis is hidden (the bars carry signed labels), so the labels need
+# headroom the automatic range does not leave in a 144 px chart. Bounds of the running total: every positive shown
+# part stacked, every negative one stacked, plus 30 % and $0.5M for the label; zero always inside.
+m("Waterfall Y End", FIDS + shown_parts("[NPV @ 8%]") + "RETURN SUMX ( adj, IF ( [@s] > 0, [@s], 0 ) ) * 1.3 + 500000", "0", C9,
+  "Waterfall value axis end: all positive shown parts stacked, plus 30 percent and $0.5M of room for the labels.")
+m("Waterfall Y Start", FIDS + shown_parts("[NPV @ 8%]") + "RETURN SUMX ( adj, IF ( [@s] < 0, [@s], 0 ) ) * 1.3 - 500000", "0", C9,
+  "Waterfall value axis start: all negative shown parts stacked, plus 30 percent and $0.5M of room for the labels.")
 for nm, expr in (("NPV", "[NPV @ 8%]"), ("Run-rate", "[2032 Run-rate]")):
     m(f"Initiative {nm} (text)",
       FIDS + shown_parts(expr) + f"VAR me = SELECTEDVALUE ( InvestmentProjects[ProjectID] ) VAR v = IF ( me IN ids, MAXX ( FILTER ( adj, [@p] = me ), [@s] ), {expr} ) "
@@ -1060,7 +1067,8 @@ m("F2 Note (text)",
   f"VAR nh = CALCULATE ( COUNTROWS ( Hotels ), {gi} ) "
   + rank_words("Occupancy %", 2025, 1) +
   'RETURN IF ( ABS ( d - o ) <= 0.05 * o, "The guest pays about the same either way. ", "" ) & "At the 2021 channel mix, 2025 commissions would have been " & ' + fm("x") + ' & " lower. " '
-  '& "Our reading: with " & nh & " hotels" & IF ( r = 1, " and the highest occupancy of the four", "" ) & ", Goodnight Inn grows by reaching more guests and winning their next booking direct, not through a loyalty scheme."',
+  # short enough for three lines under the folio at 12 pt (render 9 Nov); the hotel count went, the rank stayed
+  '& "Our reading: " & IF ( r = 1, "the fullest brand of the four", "a brand with " & nh & " hotels" ) & " grows by reach and direct rebooking, not loyalty schemes."',
   TXT, C8, "F2 note under the folio: the rate gap between channels (said only when within 5 percent), the 2021-mix counterfactual, and the reach-over-loyalty reading, labelled as interpretation (plan 09 R5).")
 
 # P1 F3 the fading welcome (Hotels[Renovation Age Sort]: dated hotels only)
@@ -1146,7 +1154,7 @@ m("Rec Held (text)",
   # plan 09 R3 (Profit Ability 2: show why the next euro is not spent; CREDITS.md): the best package that holds all of
   # A plus at least one more initiative, in the scenario in view. Said only when it lowers the NPV (shown, rounded to
   # $0.1M); otherwise blank, so no false claim in any case. Offline: A + breakfast upgrade, $4.25M more, -$1.1M
-  # (Expected), -$2.7M (Low), -$0.1M (High), recounted from project/analysis/output/packages.csv.
+  # (Expected), -$2.6M (Low), -$0.1M (High) as shown (offline -$2.65M), recounted from project/analysis/output/packages.csv.
   'VAR s = [Selected Scenario] VAR nA = COUNTROWS ( aIds ) '
   'VAR sup = FILTER ( ALLNOBLANKROW ( Package ), Package[Projects] > nA && COUNTROWS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = Package[PackageID] && PackageProject[ProjectID] IN aIds ) ) = nA ) '
   'VAR t = ADDCOLUMNS ( sup, "@v", SWITCH ( s, "Low", Package[NPV Low], "High", Package[NPV High], Package[NPV Expected] ) ) '
@@ -1160,8 +1168,9 @@ m("Rec Held (text)",
 m("Rec Rules (text)",
   REC_IDS + f"VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR budget = {BUDGET_GI} VAR h = {FP.format('Impact horizon')} "
   'VAR g = FILTER ( aIds, LOOKUPVALUE ( InvestmentProjects[GrowthInitiative], InvestmentProjects[ProjectID], [@p] ) = "Yes" ) '
-  'RETURN "Within the rules: " & COUNTROWS ( aIds ) & " initiatives, " & COUNTROWS ( g ) & " of them growth (" & CONCATENATEX ( g, LOWER ( ' + NAME_OF.format("[@p]") + ' ), " and ", [@p], ASC ) & "), " '
-  '& ' + fmc("cap") + ' & " of the " & ' + fmc("budget") + ' & " budget, impact counted through " & h & "."',
+  # one line at 12 pt (plan 11): the growth initiatives are named in the plan table ("· growth") and Rec Mix
+  'RETURN "Within the rules: " & COUNTROWS ( aIds ) & " initiatives, " & COUNTROWS ( g ) & " of them growth, " '
+  '& ' + fmc("cap") + ' & " of " & ' + fmc("budget") + ' & ", impact through " & h & "."',
   TXT, C9, "The contest rules ticked off for A: initiatives, growth initiatives (dataset flag), budget, horizon (REVIEW M11).")
 m("Headline P2 (text)",
   # "the three moves that pay" was false: the kiosks alone return -$0.6M (REVIEW M3); the package is what pays
@@ -1207,13 +1216,16 @@ m("Not Funded (text)",
   'VAR t = FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" && NOT ( InvestmentProjects[ProjectID] IN aIds ) && NOT ( InvestmentProjects[ProjectID] IN bc ) ) '
   'VAR names = CONCATENATEX ( t, InvestmentProjects[Short Name], ", ", InvestmentProjects[ProjectID], ASC ) '
   'VAR f4 = COUNTROWS ( FILTER ( t, InvestmentProjects[Answers Finding] = "F4" ) ) '
-  'RETURN IF ( ISBLANK ( names ), BLANK (), "Not funded · " & names & IF ( f4 > 0, " (" & f4 & " of them answer F4)", "" ) & ": A has the highest NPV of all packages in the Expected case, so adding any of them lowers it." )',
+  'RETURN IF ( ISBLANK ( names ), BLANK (), "Not funded · " & names & IF ( f4 > 0, " (" & f4 & " of them answer F4)", "" ) & ": A has the highest NPV (Expected), so adding any lowers it." )',
   TXT, C9, "The initiatives outside A, B and C, and the reason the selection leaves them out.")
+m("Alt Masthead P2 (text)", f'"2027 to 2032, Goodnight Inn budget " & ' + fmc(BUDGET_GI), TXT, "11 Accessibility",
+  "The P2 masthead read aloud in sentence case (the canvas line is in capitals, which a screen reader may spell out).")
 m("Masthead P2 (text)", f'"2027 TO 2032  ·  GOODNIGHT INN BUDGET " & ' + fmc(BUDGET_GI), TXT, C9,
   "Page-2 masthead line on the night zone: the horizon and the brand budget, read from Brands (was typed into the report generator).")
 m("Footer P2 (text)",
   f'VAR rate = {FP.format("Discount rate")} VAR h = {FP.format("Impact horizon")} '
-  'RETURN "Source: Pillow & Key Group dataset and its finance parameters (ramp-up, " & FORMAT ( rate, "0%" ) & " discount rate, impact horizon " & h & "). Low, Expected and High are the dataset\'s scenarios. In the plan, parts are rounded so they add up to the package total. Deliberately not shown: impressions, likes, and NPS as a growth measure; effectiveness research does not support them."',
+  # one line at 12 pt: a card shows one line in the 56 px the footer has (renders 9 Nov); R4 kept in short form
+  'RETURN "Source: Pillow & Key Group dataset and finance parameters (" & FORMAT ( rate, "0%" ) & " discount rate, horizon " & h & "); Low, Expected and High are its cases; plan parts are rounded to add up. Deliberately not shown: impressions, likes, NPS as a growth measure."',
   TXT, C9, "Page-2 source line with the valuation parameters (REVIEW p7).")
 # the P2 panel's numbers as text, so a card never mixes a visual-formatted number with DAX text (REVIEW M7)
 m("Rec Capex (text)", "VAR a = [Recommended Package] RETURN " + fmc("CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a )"), TXT, C9, "Capex of A as text.")
@@ -1255,7 +1267,7 @@ alt_m("F1 Chart",
       "F1 chart: both margin lines at their ends, 2021 and 2025.")
 alt_m("F2 Chart",
       '"Line chart, 2021 to 2025, of the share of room revenue booked through online agencies. Goodnight Inn went from " & FORMAT ( ' + gi_at("OTA Share %", 2021) + ', "0.0%" ) & " to " & FORMAT ( ' + gi_at("OTA Share %", 2025) + ', "0.0%" ) '
-      '& "; the other brands in 2025: " & CONCATENATEX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), Brands[Brand] & " " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( \'Date\' ), \'Date\'[Year] = 2025 ), "0.0%" ), ", ", Brands[Brand], ASC ) & "."',
+      '& "; the other brands in 2025: " & CONCATENATEX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN b & " " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( \'Date\' ), \'Date\'[Year] = 2025 ), "0.0%" ), ", ", Brands[Brand], ASC ) & "."',
       "F2 chart: Goodnight Inn's OTA share 2021 and 2025, and the sisters' 2025 values.")
 
 

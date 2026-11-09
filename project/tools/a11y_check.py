@@ -11,7 +11,8 @@ What it checks, per visual and per page:
             the tab order (negative tabOrder, as Desktop stores 'hidden from tab order')
   order     tab order is unique per page and follows the reading order: header chrome, then the cards top to
             bottom and left to right, inside a card row by row, the footer last; checked per P2 panel state
-  type      every font size at or above the 12 pt floor (16 px in text boxes); only the Segoe UI / Arial stacks
+  type      every font size at or above the 12 pt floor (16 px in text boxes), charts not responsive (it shrinks
+            their text); only the Segoe UI / Arial stacks
   contrast  every text colour against what it really sits on (a white card, the Oat page or the night zone, whose
             lightest pixel under the text is read from the canvas): 4.5:1, 3:1 from 24 px; colours that come from
             a measure are checked for every hex the measure can return; marks against white 3:1; button and
@@ -225,6 +226,8 @@ for pname in pages_meta["pageOrder"]:
             if alt_text or alt_meas:
                 note(where, "out of the tab order but still carries alt text")
 
+        if vtype in DATA_VISUALS - {"tableEx", "pivotTable"} and literal((vis.get("objects", {}).get("general") or [{}])[0].get("properties", {}).get("responsive")) != "false":
+            fail(where, "chart is responsive: Power BI may shrink its text under the floor in a small slot")
         # -------- type: sizes and families
         def type_check(o, path):
             for k in ("fontSize", "textSize", "titleFontSize"):

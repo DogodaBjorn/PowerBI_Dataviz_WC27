@@ -3,10 +3,10 @@
   "name": "tbl_plan_initiatives",
   "position": {
     "x": 1112,
-    "y": 504,
+    "y": 528,
     "z": 1052,
     "width": 752,
-    "height": 280,
+    "height": 264,
     "tabOrder": 520
   },
   "visual": {
@@ -367,7 +367,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "0D"
                 }
               }
             },
