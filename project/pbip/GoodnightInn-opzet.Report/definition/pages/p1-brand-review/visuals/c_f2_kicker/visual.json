@@ -7,7 +7,7 @@
     "z": 1030,
     "width": 560,
     "height": 24,
-    "tabOrder": 400
+    "tabOrder": -1602
   },
   "visual": {
     "visualType": "textbox",
@@ -141,19 +141,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "altText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'F2: THE MIDDLEMAN'"
                 }
               }
             }

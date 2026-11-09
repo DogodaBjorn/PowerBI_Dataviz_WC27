@@ -3,10 +3,10 @@
   "name": "ch_plan_cumulative",
   "position": {
     "x": 1112,
-    "y": 792,
+    "y": 784,
     "z": 1053,
     "width": 752,
-    "height": 88,
+    "height": 96,
     "tabOrder": 530
   },
   "visual": {
@@ -42,11 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Focus Cumulative Net (Low)"
+                  "Property": "Cumulative Line (Low)"
                 }
               },
-              "queryRef": "_Measures.Focus Cumulative Net (Low)",
-              "nativeQueryRef": "Focus Cumulative Net (Low)",
+              "queryRef": "_Measures.Cumulative Line (Low)",
+              "nativeQueryRef": "Cumulative Line (Low)",
               "displayName": "Low"
             },
             {
@@ -57,11 +57,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Focus Cumulative Net (Expected)"
+                  "Property": "Cumulative Line (Expected)"
                 }
               },
-              "queryRef": "_Measures.Focus Cumulative Net (Expected)",
-              "nativeQueryRef": "Focus Cumulative Net (Expected)",
+              "queryRef": "_Measures.Cumulative Line (Expected)",
+              "nativeQueryRef": "Cumulative Line (Expected)",
               "displayName": "Expected"
             },
             {
@@ -72,11 +72,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Focus Cumulative Net (High)"
+                  "Property": "Cumulative Line (High)"
                 }
               },
-              "queryRef": "_Measures.Focus Cumulative Net (High)",
-              "nativeQueryRef": "Focus Cumulative Net (High)",
+              "queryRef": "_Measures.Cumulative Line (High)",
+              "nativeQueryRef": "Cumulative Line (High)",
               "displayName": "High"
             },
             {
@@ -92,7 +92,7 @@
               },
               "queryRef": "_Measures.Focus Cumulative Net (sel)",
               "nativeQueryRef": "Focus Cumulative Net (sel)",
-              "displayName": "In view"
+              "displayName": "This case"
             }
           ]
         }
@@ -157,7 +157,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -216,7 +216,53 @@
             "show": {
               "expr": {
                 "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4B5466'"
+                    }
+                  }
+                }
+              }
+            },
+            "showTitle": {
+              "expr": {
+                "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "legendMarkerRendering": {
+              "expr": {
+                "Literal": {
+                  "Value": "'lineOnly'"
                 }
               }
             }
@@ -239,7 +285,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Focus Cumulative Net (Low)"
+            "metadata": "_Measures.Cumulative Line (Low)"
           }
         },
         {
@@ -257,7 +303,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Focus Cumulative Net (Expected)"
+            "metadata": "_Measures.Cumulative Line (Expected)"
           }
         },
         {
@@ -275,7 +321,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Focus Cumulative Net (High)"
+            "metadata": "_Measures.Cumulative Line (High)"
           }
         },
         {
@@ -341,7 +387,28 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Focus Cumulative Net (Low)"
+            "metadata": "_Measures.Cumulative Line (Low)"
+          }
+        },
+        {
+          "properties": {
+            "strokeWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "1.5D"
+                }
+              }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'dotted'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Cumulative Line (Expected)"
           }
         },
         {
@@ -355,21 +422,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Focus Cumulative Net (Expected)"
-          }
-        },
-        {
-          "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "1.5D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Focus Cumulative Net (High)"
+            "metadata": "_Measures.Cumulative Line (High)"
           }
         },
         {
@@ -393,63 +446,10 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "seriesPosition": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Right'"
-                }
-              }
-            },
-            "seriesMatchColor": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "seriesColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#4B5466'"
-                    }
-                  }
-                }
-              }
-            },
-            "textSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
-            "seriesFontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            }
-          }
-        },
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
                   "Value": "false"
                 }
               }
             }
-          },
-          "selector": {
-            "metadata": "_Measures.Focus Cumulative Net (sel)"
           }
         }
       ],
@@ -509,10 +509,49 @@
                 }
               }
             },
+            "displayName": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Break-even'"
+                }
+              }
+            },
             "dataLabelShow": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "dataLabelText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Name'"
+                }
+              }
+            },
+            "dataLabelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4B5466'"
+                    }
+                  }
+                }
+              }
+            },
+            "dataLabelHorizontalPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            },
+            "dataLabelVerticalPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'above'"
                 }
               }
             }
@@ -549,8 +588,13 @@
             },
             "text": {
               "expr": {
-                "Literal": {
-                  "Value": "'Cumulative net impact, $M: it pays back where its line crosses zero'"
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Cumulative Title (text)"
                 }
               }
             },
@@ -576,6 +620,13 @@
                       "Value": "'#12233D'"
                     }
                   }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

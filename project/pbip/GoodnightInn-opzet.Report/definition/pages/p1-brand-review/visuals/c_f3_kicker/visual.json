@@ -7,7 +7,7 @@
     "z": 1040,
     "width": 560,
     "height": 24,
-    "tabOrder": 500
+    "tabOrder": -1603
   },
   "visual": {
     "visualType": "textbox",
@@ -141,19 +141,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "altText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'F3: THE FADING WELCOME'"
                 }
               }
             }

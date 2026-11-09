@@ -7,7 +7,7 @@
     "z": 1012,
     "width": 992,
     "height": 736,
-    "tabOrder": -1001
+    "tabOrder": 221
   },
   "visual": {
     "visualType": "scatterChart",
@@ -66,6 +66,55 @@
               "queryRef": "_Measures.Package NPV (sel)",
               "nativeQueryRef": "Package NPV (sel)",
               "displayName": "NPV through 2032"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "TT Payback (text)"
+                }
+              },
+              "queryRef": "_Measures.TT Payback (text)",
+              "nativeQueryRef": "TT Payback (text)",
+              "displayName": "Payback"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "TT Range (text)"
+                }
+              },
+              "queryRef": "_Measures.TT Range (text)",
+              "nativeQueryRef": "TT Range (text)",
+              "displayName": "NPV in Low, Expected, High"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "TT Mix (text)"
+                }
+              },
+              "queryRef": "_Measures.TT Mix (text)",
+              "nativeQueryRef": "TT Mix (text)",
+              "displayName": "Initiatives"
             }
           ]
         }
@@ -617,7 +666,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -665,6 +714,24 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Alt Scatter Cloud (text)"
                 }
               }
             }

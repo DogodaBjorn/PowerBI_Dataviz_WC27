@@ -836,7 +836,7 @@ for k in "ABC":
 FP = 'LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "{}" )'
 m("Subtitle P2 (text)",
   f'VAR s = [Selected Scenario] VAR rate = {FP.format("Discount rate")} VAR h = {FP.format("Impact horizon")} '
-  'RETURN s & " case  ·  NPV through " & h & " in 2025 dollars at " & FORMAT ( rate, "0%" ) & "  ·  nothing after " & h & " is counted" '
+  'RETURN s & " case  ·  net present value (NPV) through " & h & " in 2025 dollars at " & FORMAT ( rate, "0%" ) & "  ·  nothing after " & h & " is counted" '
   '& IF ( s <> "Expected", "  ·  the recommendation is set on the Expected case", "" )',
   TXT, C9, "Page-2 subtitle: the scenario in view and the valuation rules, read from FinanceParameters; outside Expected it says where the recommendation was set (REVIEW M3).")
 # The scatter's two views (Björn 7 Nov): every package, or a zoom on the region where A, B and C sit in any scenario.
@@ -956,6 +956,11 @@ m("Plan Ops (text)",
   'RETURN IF ( COUNTROWS ( parts ) = 0 && why = "", BLANK (), why & IF ( COUNTROWS ( parts ) = 0, "", "In the hotels: " & CONCATENATEX ( parts, [Value2], ", ", [Value1], ASC ) & "." ) )',
   TXT, C9, "What the package changes in the hotels, without zero tiles (REVIEW p9, 07-fixgids S6); under C first why it is shown.")
 m("Waterfall Title (text)", '"Where the NPV comes from, $M through 2032 (" & [Selected Scenario] & ")"', TXT, C9, "Waterfall title with the scenario in view (REVIEW m6).")
+# The plan chart's three context lines step aside for the case in view: the emphasised line ("This case") would
+# otherwise lie on top of its twin and Power BI drops both labels (pass-3 review: the blue line had no label).
+for scn in ("Low", "Expected", "High"):
+    m(f"Cumulative Line ({scn})", f'IF ( [Selected Scenario] = "{scn}", BLANK (), [Focus Cumulative Net ({scn})] )', SUSDM, C9,
+      f"Plan chart: the {scn} case line, blank when {scn} is the case in view (the emphasised line draws it).")
 m("Focus Cumulative Net (sel)",
   'SWITCH ( [Selected Scenario], "Low", [Focus Cumulative Net (Low)], "High", [Focus Cumulative Net (High)], [Focus Cumulative Net (Expected)] )', SUSDM, C9,
   "Cumulative net impact of the package in focus in the selected scenario: the emphasised line (REVIEW M9).")
@@ -1073,7 +1078,7 @@ m("F2 Note (text)",
 
 # P1 F3 the fading welcome (Hotels[Renovation Age Sort]: dated hotels only)
 m("NPS 2025 (signed)", "[NPS (weighted) 2025]", SIGNED1, C8, "Response-weighted NPS 2025 with a true minus, for chart labels.")
-m("Age Band Color", f'IF ( SELECTEDVALUE ( Hotels[Renovation Age Sort] ) = 3, "{ACCENT_MARK}", "{SLATE}" )', TXT, C8, "Coffee Blue for the oldest band (the story), Warm Grey for the others; the axis label and the signed value carry it too.")
+m("Age Band Color", f'IF ( SELECTEDVALUE ( Hotels[Renovation Age Sort] ) = 3, "{SIGNAL_MARK}", "{SLATE}" )', TXT, C8, "Tangerine for the oldest band (a risk signal: the only negative NPS), Warm Grey for the others; the axis label and the signed value carry it too.")
 m("F3 Title (text)",
   "VAR v = " + gi_at("NPS (weighted)", 2025, "Hotels[Renovation Age Sort] = 3") + ' RETURN "Hotels last renovated 10 years or more ago score NPS " & ' + signed("v", 'FORMAT ( ABS ( v ), "0.0" )'),
   TXT, C8, "F3 title: NPS 2025 of the Goodnight Inn hotels last renovated 10 or more years ago.")
@@ -1260,15 +1265,20 @@ for key, label, value, ctx in (
         ("NPS", "Guest quality: Goodnight Inn net promoter score in 2025", "KPI NPS GI (text)", "KPI NPS Context (text)")):
     alt_m(f"KPI {key}", f'"{label}: " & [{value}] & ", " & {semi(ctx)} & "."', f"KPI band, read aloud: the label, the value and the comparison ({key}).")
 
+# Pass-3 review (plan 11): lead with the message (Power BI already announces the chart type), stay under 250
+# characters (the alt-text limit Desktop enforces on typed text), spell out NPV and capex, and agree with the title.
 alt_m("F1 Chart",
-      '"Line chart, 2021 to 2025, of Goodnight Inn\'s operating margin before commissions, from " & FORMAT ( ' + gi_at("GOP Margin %", 2021) + ', "0.0%" ) & " to " & FORMAT ( ' + gi_at("GOP Margin %", 2025) + ', "0.0%" ) '
-      '& ", and after commissions, from " & FORMAT ( ' + gi_at("GOP Margin after Distribution %", 2021) + ', "0.0%" ) & " to " & FORMAT ( ' + gi_at("GOP Margin after Distribution %", 2025) + ', "0.0%" ) '
-      '& ". The gap between the lines is what the booking channels take."',
-      "F1 chart: both margin lines at their ends, 2021 and 2025.")
+      "VAR a1 = " + gi_at("GOP Margin after Distribution %", 2021) + " VAR a3 = " + gi_at("GOP Margin after Distribution %", 2023) + " VAR a5 = " + gi_at("GOP Margin after Distribution %", 2025) + " "
+      "VAR b1 = " + gi_at("GOP Margin %", 2021) + " VAR b5 = " + gi_at("GOP Margin %", 2025) + " "
+      'RETURN "After commissions, Goodnight Inn\'s operating margin " & IF ( a3 > a1, "rose", "fell" ) & " from " & FORMAT ( a1, "0.0%" ) & " in 2021 to " & FORMAT ( a3, "0.0%" ) & " in 2023 and " '
+      '& IF ( a5 < a3, "fell back", "rose" ) & " to " & FORMAT ( a5, "0.0%" ) & " in 2025. The gap to the margin before commissions grew from " '
+      '& FORMAT ( ( b1 - a1 ) * 100, "0.0" ) & " to " & FORMAT ( ( b5 - a5 ) * 100, "0.0" ) & " points."',
+      "F1 chart read aloud: the after-commissions path 2021, 2023, 2025 (as the title) and the commission gap.")
 alt_m("F2 Chart",
-      '"Line chart, 2021 to 2025, of the share of room revenue booked through online agencies. Goodnight Inn went from " & FORMAT ( ' + gi_at("OTA Share %", 2021) + ', "0.0%" ) & " to " & FORMAT ( ' + gi_at("OTA Share %", 2025) + ', "0.0%" ) '
-      '& "; the other brands in 2025: " & CONCATENATEX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN b & " " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( \'Date\' ), \'Date\'[Year] = 2025 ), "0.0%" ), ", ", Brands[Brand], ASC ) & "."',
-      "F2 chart: Goodnight Inn's OTA share 2021 and 2025, and the sisters' 2025 values.")
+      "VAR o1 = " + gi_at("OTA Share %", 2021) + " VAR o5 = " + gi_at("OTA Share %", 2025) + " "
+      'RETURN "Online agencies booked " & FORMAT ( o5, "0.0%" ) & " of Goodnight Inn\'s room revenue in 2025, " & IF ( o5 > o1, "up", "down" ) & " from " & FORMAT ( o1, "0.0%" ) & " in 2021. The other brands in 2025: " '
+      '& CONCATENATEX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN b & " " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( \'Date\' ), \'Date\'[Year] = 2025 ), "0.0%" ), ", ", Brands[Brand], ASC ) & "."',
+      "F2 chart read aloud: Goodnight Inn's OTA share 2021 and 2025, and the sisters' 2025 values.")
 
 
 def folio_pair(channel):
@@ -1280,12 +1290,12 @@ def folio_pair(channel):
 (_or, _oc), (_dr, _dc) = folio_pair("Online Travel Agencies"), folio_pair("Direct Website & App")
 alt_m("F2 Folio",
       f"VAR orate = {_or} VAR ocomm = {_oc} VAR drate = {_dr} VAR dcomm = {_dc} "
-      'RETURN "Table, the folio of one Goodnight Inn room night in 2025. Via an online agency the guest pays " & FORMAT ( orate, "$#,0.00" ) & ", commission and fees take " & FORMAT ( ocomm, "$#,0.00" ) '
-      '& " and the inn keeps " & FORMAT ( orate - ocomm, "$#,0.00" ) & ". Booked direct, on the web or in the app, the guest pays " & FORMAT ( drate, "$#,0.00" ) & ", fees take " & FORMAT ( dcomm, "$#,0.00" ) '
-      '& " and the inn keeps " & FORMAT ( drate - dcomm, "$#,0.00" ) & "."',
+      'RETURN "One Goodnight Inn room night in 2025. Via an online agency the guest pays " & FORMAT ( orate, "$#,0.00" ) & ", fees take " & FORMAT ( ocomm, "$#,0.00" ) '
+      '& ", the inn keeps " & FORMAT ( orate - ocomm, "$#,0.00" ) & ". Booked direct: " & FORMAT ( drate, "$#,0.00" ) & ", fees " & FORMAT ( dcomm, "$#,0.00" ) '
+      '& ", the inn keeps " & FORMAT ( drate - dcomm, "$#,0.00" ) & "."',
       "F2 folio table read aloud, the same rounding as the table (keeps = the difference of the shown amounts).")
 alt_m("F3 Chart",
-      '"Column chart of Goodnight Inn\'s 2025 net promoter score by years since the last renovation: 5 years or less " & ' + gi_sgn("NPS (weighted)", 2025, "Hotels[Renovation Age Sort] = 1")
+      '"Goodnight Inn\'s 2025 net promoter score by years since the last renovation: 5 years or less " & ' + gi_sgn("NPS (weighted)", 2025, "Hotels[Renovation Age Sort] = 1")
       + ' & ", 6 to 9 years " & ' + gi_sgn("NPS (weighted)", 2025, "Hotels[Renovation Age Sort] = 2") + ' & ", 10 years or more " & ' + gi_sgn("NPS (weighted)", 2025, "Hotels[Renovation Age Sort] = 3") + ' & "."',
       "F3 chart: the three bands' NPS 2025 (dated hotels only).")
 alt_m("F4 Types",
@@ -1296,33 +1306,45 @@ alt_m("F4 Chart",
       "VAR t7 = ADDCOLUMNS ( TOPN ( 7, hs, CALCULATE ( [Occupancy %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), \"@o\", CALCULATE ( [Occupancy %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ), "
       "\"@n\", CALCULATE ( SELECTEDVALUE ( Hotels[Hotel Short Name] ) ), \"@t\", CALCULATE ( SELECTEDVALUE ( Hotels[LocationType] ) ) ) "
       'VAR na = COUNTROWS ( FILTER ( t7, [@t] = "Airport" ) ) '
-      'RETURN "Column chart of the seven Goodnight Inn hotels with the highest occupancy in 2025, " & na & " of them airport hotels: " & CONCATENATEX ( t7, [@n] & " " & FORMAT ( [@o], "0%" ), ", ", [@o], DESC ) & "."',
-      "F4 chart read aloud: the seven fullest hotels with their occupancy, and how many are airports.")
+      'RETURN "The 7 fullest Goodnight Inn hotels in 2025, " & na & " of them airports: " & CONCATENATEX ( t7, [@n] & " " & FORMAT ( [@o], "0.0%" ), ", ", [@o], DESC ) & "."',
+      "F4 chart read aloud: the seven fullest hotels with their occupancy (one decimal, as the bars), and how many are airports.")
+for k, (code, words) in enumerate((("F1", "the margin"), ("F2", "the middleman"), ("F3", "the fading welcome"), ("F4", "where we are full")), 1):
+    alt_m(f"{code} Title", f'"{code}, {words}. " & [{code} Title (text)]',
+          f"{code} card title read aloud with its kicker (the kicker leaves the tab order; pass-3 review: fewer stops).")
 alt_m("Scatter",
-      '[Scatter Title (text)] & ", in the " & [Selected Scenario] & " case, out of every combination of the ten initiatives that fits the rules. Capex runs along the horizontal axis, NPV through 2032 up the vertical one. '
-      'A, our recommendation: " & ' + fmc("[Preset A Capex]") + ' & ", NPV " & ' + sfm("[Preset A NPV (sel)]") + ' & ". B, the alternative: " & ' + fmc("[Preset B Capex]") + ' & ", NPV " & ' + sfm("[Preset B NPV (sel)]")
-      + ' & ". C, the answer to why not renovate: " & ' + fmc("[Preset C Capex]") + ' & ", NPV " & ' + sfm("[Preset C NPV (sel)]") + ' & ". Hover a dot for its package card."',
-      "The scatter read aloud (its one tab stop is the A/B/C layer): how many packages pay back, then A, B and C with capex and NPV in the case in view.")
+      '[Scatter Title (text)] & " (" & [Selected Scenario] & " case). A, our recommendation: capex " & ' + fmc("[Preset A Capex]") + ' & ", net present value " & ' + sfm("[Preset A NPV (sel)]")
+      + ' & ". B, the alternative: " & ' + fmc("[Preset B Capex]") + ' & ", " & ' + sfm("[Preset B NPV (sel)]")
+      + ' & ". C, the answer to why not renovate: " & ' + fmc("[Preset C Capex]") + ' & ", " & ' + sfm("[Preset C NPV (sel)]") + ' & "."',
+      "The A/B/C layer of the scatter read aloud: how many packages pay back, then A, B and C with capex and net present value in the case in view.")
+alt_m("Scatter Cloud",
+      '"All " & COUNTROWS ( ALLNOBLANKROW ( Package ) ) & " possible packages, each with its capex, net present value through 2032 (" & [Selected Scenario] & " case), range, payback and initiatives. Show as table lists them."',
+      "The 456-dot layer read aloud: what its table holds (keyboard users reach the package details there, not in the hover card).")
 alt_m("Rec Nums",
-      '"Package A in numbers, " & [Selected Scenario] & " case: capex " & [Rec Capex (text)] & ", NPV through 2032 " & [Rec NPV (text)] & ", NPV from the Low to the High case " & [Rec Range (text)] & " $M, profit a year by 2032 " & [Rec Run-rate (text)] & "."',
+      '"Package A, " & [Selected Scenario] & " case: capex " & [Rec Capex (text)] & ", net present value through 2032 " & [Rec NPV (text)] & ", from " & [Rec Range (text)] & " $M between the Low and High cases, profit a year by 2032 " & [Rec Run-rate (text)] & "."',
       "The recommendation's numbers card read aloud.")
 alt_m("Waterfall",
       FIDS + shown_parts("[NPV @ 8%]") +
-      'RETURN IF ( ISBLANK ( f ), BLANK (), "Waterfall, " & [Selected Scenario] & " case: where the NPV through 2032 of package " & [Focus Key] & " comes from. " '
-      '& CONCATENATEX ( adj, ' + NAME_OF.format("[@p]") + ' & " " & ' + sfm("[@s]") + ', ", ", [@s], DESC ) & "; together " & ' + sfm("SUMX ( adj, [@s] )") + ' & "." )',
-      "The plan waterfall read aloud: each initiative's shown NPV and the package total, in the case in view.")
+      'RETURN IF ( ISBLANK ( f ), BLANK (), "Where the net present value of package " & [Focus Key] & " comes from, " & [Selected Scenario] & " case: " '
+      '& CONCATENATEX ( adj, ' + NAME_OF.format("[@p]") + ' & " " & ' + sfm("[@s]") + ', ", ", ' + NAME_OF.format("[@p]") + ', ASC ) & "; together " & ' + sfm("SUMX ( adj, [@s] )") + ' & "." )',
+      "The plan waterfall read aloud, in the chart's order (by name): each initiative's shown NPV and the package total.")
 alt_m("Plan Table",
-      FIDS + 'RETURN IF ( ISBLANK ( f ), BLANK (), "Table of the ten Goodnight Inn initiatives, those in package " & [Focus Key] & " first, with their status, the page-1 finding each answers, capex, profit a year by 2032, NPV and the dataset guest-score effect. In package " & [Focus Key] & ": " '
+      FIDS + 'RETURN IF ( ISBLANK ( f ), BLANK (), "The ten Goodnight Inn initiatives, package " & [Focus Key] & "\'s first: status, finding answered, capex, profit a year by 2032, net present value, guest-score effect. In package " & [Focus Key] & ": " '
       '& CONCATENATEX ( ids, ' + NAME_OF.format("[@p]") + ', ", ", [@p], ASC ) & "." )',
       "The plan table read aloud: what it lists and which initiatives are in the package in focus.")
 alt_m("Cumulative",
       'VAR pb = [Focus Payback Year] VAR s = [Selected Scenario] '
       "VAR lo = CALCULATE ( [Focus Cumulative Net (Low)], 'Date'[Year] = 2032 ) VAR ex = CALCULATE ( [Focus Cumulative Net (Expected)], 'Date'[Year] = 2032 ) VAR hi = CALCULATE ( [Focus Cumulative Net (High)], 'Date'[Year] = 2032 ) "
-      'RETURN IF ( ISBLANK ( [Focus Package] ), BLANK (), "Line chart, 2027 to 2032, of the cumulative net impact of package " & [Focus Key] & " in the Low, Expected and High cases. " '
-      '& IF ( ISBLANK ( pb ), "In the " & s & " case it does not pay back by 2032", "In the " & s & " case it turns positive in " & pb ) '
+      'RETURN IF ( ISBLANK ( [Focus Package] ), BLANK (), "Package " & [Focus Key] & ", cumulative net impact 2027 to 2032: " '
+      '& IF ( ISBLANK ( pb ), "not positive by 2032 in the " & s & " case", "positive from " & pb & " in the " & s & " case" ) '
       '& ". By 2032: Low " & ' + sfm("lo") + ' & ", Expected " & ' + sfm("ex") + ' & ", High " & ' + sfm("hi") + ' & "." )',
       "The cumulative chart read aloud: payback year in the case in view and the 2032 end points of the three cases.")
-
+alt_m("Rec Held", 'SUBSTITUTE ( SUBSTITUTE ( [Rec Held (text)], "The best way to spend more, A plus the ", "Adding the " ), ", costs ", " costs " )',
+      "The held-back card read aloud in under 250 characters (with R3 the canvas sentence runs to 261): same facts, shorter lead-in to the marginal test.")
+alt_m("Open Plan", '"Open the plan for package " & [Focus Key]',
+      "The plan button's accessible name, which contains its visible label (WCAG 2.5.3 Label in Name; the arrow is left out).")
+m("Cumulative Title (text)",
+  'VAR pb = [Focus Payback Year] RETURN "Cumulative net impact, $M: " & IF ( ISBLANK ( pb ), "not positive by 2032 in this case", "positive from " & pb & " in this case" )',
+  TXT, C9, "Plan state chart title with the payback year: the year axis does not fit the 88 px chart (pass-3 review: the crossing was unreadable).")
 
 KPI_ROWS = [  # Sort, Key, FindingLabel, Measure, Direction, Format, DeltaScale, DeltaUnit, DeltaFormat
     # Read along the brand promise "A good night. A fair price." and Keller's ladder (goodnight-inn-hanger

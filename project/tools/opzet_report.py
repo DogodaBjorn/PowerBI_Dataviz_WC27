@@ -181,13 +181,18 @@ def kpi_cell(slot, label, value_measure, context_measure, alt_measure):
     return [decorative(lab, 100 + tab), bind_alt(val, alt_measure), decorative(ctx, 200 + tab)]
 
 
+_KICK = [0]
+
+
 def kicker(page, name, txt):
-    # the kit's eyebrow on a white card: Deep Coffee capitals (6.2:1), at the 12 pt floor (was 13 px)
-    return tb(page, name, txt, font=DISPLAY, size=SPX, colour=ACCENT, alt=txt.replace("  ·  ", ": "))
+    # the kit's eyebrow on a white card: Deep Coffee capitals (6.2:1), at the 12 pt floor (was 13 px). Out of the tab
+    # order: the title after it reads the kicker's words first (Alt F# Title (text); pass-3 review: 27 stops on P1)
+    _KICK[0] += 1
+    return decorative(tb(page, name, txt, font=DISPLAY, size=SPX, colour=ACCENT), 600 + _KICK[0])
 
 
-def title(page, name, measure):
-    return dyn(page, name, measure, size=TITLE_PT, colour=INK, font=DISPLAY)
+def title(page, name, measure, alt_measure=None):
+    return dyn(page, name, measure, size=TITLE_PT, colour=INK, font=DISPLAY, alt_measure=alt_measure)
 
 
 def p1_visuals():
@@ -208,18 +213,21 @@ def p1_visuals():
     years = filter_in("Date", "Year", [2021, 2022, 2023, 2024, 2025], "flt_hist")
 
     # F1 the margin: before vs after commissions, Goodnight Inn only; the gap between the lines is the channels' take
-    v += [kicker(P1, "c_f1_kicker", "F1  ·  THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)")]
+    v += [kicker(P1, "c_f1_kicker", "F1  ·  THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)")]
     ms = ["Trend Margin before GI", "Trend Margin after GI"]
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(ms[0], "Before commissions"), proj_mea(ms[1], "After commissions")]}}
     # 30 % to 50 %: from 25 % an empty band sat between the lowest gridline and the years (REVIEW p4)
     objs = {"categoryAxis": axis(BODY, S, INK2), "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=0.3, end=0.5, extra={"labelPrecision": integer(0)}),
-            "legend": legend(True, BODY, S, INK2, "Top"),
+            # the lines named at their ends in Dusk, as on F2 (pass-3 review: a legend of a grey and a blue dot was colour
+            # only, 1.07:1 between them)
+            "legend": legend(False),
+            "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2), "textSize": num(S), "seriesFontFamily": text(BODY)}}],
             "dataPoint": series_colors({mref(ms[0]): SLATE, mref(ms[1]): ACCENT_MARK}), "lineStyles": line_styles({mref(ms[0]): 2, mref(ms[1]): 3})}
     v.append(chart(P1, "ch_f1_margin", "lineChart", q, objs, None, filters=[years], alt_measure="Alt F1 Chart (text)"))
     v.append(dyn(P1, "c_f1_note", "F1 Note (text)"))
 
     # F2 the middleman: OTA share for the four brands, and the folio (one 2025 room night by channel)
-    v += [kicker(P1, "c_f2_kicker", "F2  ·  THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)")]
+    v += [kicker(P1, "c_f2_kicker", "F2  ·  THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)", "Alt F2 Title (text)")]
     ms = [f"Trend OTA {c}" for c, _ in BRANDS]
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m, nm) for m, (_, nm) in zip(ms, BRANDS)]}}
     # the line ends carry the names, as in the comp: a legend of three identical grey dots could not be decoded (REVIEW m3).
@@ -246,7 +254,7 @@ def p1_visuals():
     v.append(dyn(P1, "c_f2_note", "F2 Note (text)"))
 
     # F3 the fading welcome: NPS 2025 by years since the last renovation (dated hotels only)
-    v += [kicker(P1, "c_f3_kicker", "F3  ·  THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)")]
+    v += [kicker(P1, "c_f3_kicker", "F3  ·  THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)", "Alt F3 Title (text)")]
     q = {"Category": {"projections": [proj_col("Hotels", "Renovation Age Label", display="Years since the last renovation")]}, "Y": {"projections": [proj_mea("NPS 2025 (signed)", "NPS 2025")]}}
     objs = {"categoryAxis": axis(BODY, S, INK), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False),
             "dataPoint": [{"properties": {"fill": fv("Age Band Color")}, "selector": WILD}], "labels": labels(True, BODY, 12, INK), "legend": legend(False),
@@ -259,19 +267,20 @@ def p1_visuals():
     v.append(dyn(P1, "c_f3_note", "F3 Note (text)"))
 
     # F4 where we are full
-    v += [kicker(P1, "c_f4_kicker", "F4  ·  WHERE WE ARE FULL"), title(P1, "c_f4_title", "F4 Title (text)")]
+    v += [kicker(P1, "c_f4_kicker", "F4  ·  WHERE WE ARE FULL"), title(P1, "c_f4_title", "F4 Title (text)", "Alt F4 Title (text)")]
     v.append(card("c_f4_types", *at(P1, "c_f4_types"), ["Occupancy Airport GI (text)", "Occupancy City GI (text)", "Occupancy Highway GI (text)"], DISPLAY, 21, INK, BODY, S, INK2,
                   labels=["Airport hotels", "City hotels", "Highway hotels"]))
     bind_alt(v[-1], "Alt F4 Types (text)")
     q = {"Category": {"projections": [proj_col("Hotels", "Hotel Short Name")]}, "Y": {"projections": [proj_mea("Occupancy % 2025", "Occupancy 2025")]}}
-    # axis from zero (never truncate a bar axis, CP-066); end 1.1 leaves room for the labels above the 90 % bars
-    objs = {"categoryAxis": axis(BODY, S, INK), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, start=0, end=1.1),
+    # axis from zero (never truncate a bar axis, CP-066); end 1.3 leaves room for the labels above the 90 % bars (pass 3)
+    objs = {"categoryAxis": axis(BODY, S, INK), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, start=0, end=1.3),
             "dataPoint": [{"properties": {"fill": fv("Hotel Bar Color")}, "selector": WILD}], "labels": labels(True, BODY, S, INK, position="OutsideEnd"), "legend": legend(False)}
     # the airport hotels are Coffee Blue and every one of their names ends in "Airport", so colour is not the only carrier
     v.append(chart(P1, "ch_f4_fullest", "clusteredColumnChart", q, objs, None,
                    filters=[gi_filter(), topn_filter("Hotels", "Hotel Short Name", 7, "Occupancy % 2025", "flt_top7")], sort=sort_by_measure("Occupancy % 2025"),
                    alt_measure="Alt F4 Chart (text)"))
-    v.append(tb(P1, "z_footer", FOOTER))
+    v.append(tb(P1, "z_footer", FOOTER, alt="Source: Pillow & Key Group dataset. Guest scores weighted by survey responses; 2021 is a depressed base year. "
+                                           "Not shown on purpose: impressions, likes, and NPS as a growth measure."))
     return v
 
 
@@ -369,7 +378,7 @@ def brand_row(page_name, sfx):
     reader starts with whose report this is and which page. The vignettes and pay-offs of kit 2.x are gone."""
     pg = next(p for p in LAYOUT["pages"] if p["name"] == page_name)
     L = pg["logo"]
-    out = [image_file("z_logo", L["x"], L["y"], L["w"], L["h"], 1003, L["tab"], LOCKUP, "Goodnight Inn logo"),
+    out = [image_file("z_logo", L["x"], L["y"], L["w"], L["h"], 1003, L["tab"], LOCKUP, "Goodnight Inn"),
            # ZONE_EYEBROW on Night 9.5:1; at the 12 pt floor instead of the kit's 11 pt eyebrow
            tb(page_name, f"z_eyebrow{sfx}", EYEBROW[page_name], font=DISPLAY, size=SPX, colour=ZONE_EYEBROW,
               alt=("Page 1 of 2: the brand review" if sfx == "" else "Page 2 of 2: the investment strategy"))]
@@ -422,10 +431,13 @@ def p2_visuals():
     q_cloud = {k: val for k, val in q.items() if k != "Size"}
     o_cloud = copy.deepcopy(objs)
     o_cloud["bubbles"][0]["properties"]["bubbleSize"] = integer(0)
-    # the cloud and the hover layer leave the tab order: the A/B/C layer is the scatter's one tab stop and its alt text
-    # reads the whole picture (Alt Scatter (text), plan 11)
-    v.append(decorative(visual("hero_packages", "scatterChart", x, y, w, h, z, tab, query=q_cloud, objects=o_cloud, filters=[filter_in("Package", "Preset", [""], "flt_cloud")],
-                               vcos=vco(padding=0)), 1))
+    # The cloud is a tab stop after the A/B/C layer (pass-3 review: the package card is hover-only). Its header gives
+    # 'Show as table', and the card's facts ride in its Tooltips well, so a keyboard user reads every package's
+    # payback, range and initiatives there. The hover layer stays out of the tab order (mouse only).
+    q_cloud_kb = {**q_cloud, "Tooltips": {"projections": [proj_mea("TT Payback (text)", "Payback"), proj_mea("TT Range (text)", "NPV in Low, Expected, High"),
+                                                          proj_mea("TT Mix (text)", "Initiatives")]}}
+    v.append(bind_alt(visual("hero_packages", "scatterChart", x, y, w, h, z, tab + 1, query=q_cloud_kb, objects=o_cloud, filters=[filter_in("Package", "Preset", [""], "flt_cloud")],
+                             vcos=vco(padding=0)), "Alt Scatter Cloud (text)"))
     quiet = lambda o: (o["valueAxis"][0]["properties"].__setitem__("gridlineShow", b(False)), o.pop("y1AxisReferenceLine", None), o)[-1]
     q2 = {**q, "Category": {"projections": [proj_col("Package", "Preset", display="Package")]}}
     o2 = quiet(copy.deepcopy(objs))
@@ -437,7 +449,7 @@ def p2_visuals():
     o3["markers"] = [{"properties": {"transparency": num(100), "borderShow": b(False)}}]
     hv = vco(padding=0)
     hv["visualTooltip"] = [{"properties": {"show": b(True), "type": enum("Canvas"), "section": text(TT)}}]
-    v.append(decorative(visual("hero_hover", "scatterChart", x, y, w, h, z + 4, tab + 2, query=q_cloud, objects=o3, vcos=hv), 2))
+    v.append(decorative(visual("hero_hover", "scatterChart", x, y, w, h, z + 4, 0, query=q_cloud, objects=o3, vcos=hv), 2))
     v.append(button_slicer("sl_view", "ScatterView", "View", "All packages", "Scatter view: all packages, or a zoom on the region where A, B and C sit", 2, size=S))
     # the labels above the two slicers are in the slicers' alt text, so they leave the tab order (plan 11)
     v.append(decorative(tb(P2, "lbl_scenario", "Scenario", size=SPX, colour=INK2), 3))
@@ -446,6 +458,7 @@ def p2_visuals():
     v.append(slicer("sl_package", *at(P2, "sl_package"), "PlanSelector", "Label", "Package in focus", BODY, INK, INK2, SURFACE, ACCENT, mode="Dropdown", single=True,
                     selected=["A · Our recommendation"], alt="Package in focus: the recommendation A, the alternative B, or C, the answer to why not renovate", size=S))
     v[-1]["visual"]["objects"]["header"][0]["properties"]["show"] = b(False)
+    v[-1]["visual"]["visualContainerObjects"]["border"] = [{"properties": {"show": b(True), "color": color(INK2), "radius": num(20), "width": num(1)}}]
 
     # state: shortlist = the recommendation and what was weighed against it
     v.append(dyn(P2, "c_focus_line", "Focus Line (text)"))
@@ -456,15 +469,15 @@ def p2_visuals():
                   labels=["capex", "NPV through 2032", "NPV, Low to High, $M", "profit a year by 2032"]))
     bind_alt(v[-1], "Alt Rec Nums (text)")
     v.append(dyn(P2, "c_rec_answers", "Rec Answers (text)", colour=INK))
-    v.append(dyn(P2, "c_rec_held", "Rec Held (text)", colour=INK))
+    v.append(dyn(P2, "c_rec_held", "Rec Held (text)", colour=INK, alt_measure="Alt Rec Held (text)"))
     v.append(dyn(P2, "c_rec_rules", "Rec Rules (text)"))
     v.append(tb(P2, "c_alt_title", "Considered, not recommended", font=DISPLAY, size=20, colour=INK))
     v.append(dyn(P2, "c_alt_b", "Alt B (text)", colour=INK))
     v.append(dyn(P2, "c_alt_c", "Alt C (text)", colour=INK))
     v.append(dyn(P2, "c_not_funded", "Not Funded (text)", colour=INK))
     v.append(dyn(P2, "c_uncertainty", "Uncertainty (text)"))
-    v.append(button("btn_open_plan", "Open the plan for the package in focus  →", "bm_p2_plan", True, "Open the plan for the package in focus",
-                    label_measure="Open Plan Label (text)"))
+    v.append(bind_alt(button("btn_open_plan", "Open the plan for the package in focus  →", "bm_p2_plan", True, None,
+                             label_measure="Open Plan Label (text)"), "Alt Open Plan (text)"))
 
     # state: plan (hidden by default)
     v.append(dyn(P2, "c_plan_title", "Plan Title (text)", size=TITLE_PT, colour=INK, font=DISPLAY))
@@ -499,22 +512,29 @@ def p2_visuals():
                     sort=sort_by_measure("Initiative Chip", desc=False),
                     vcos=vco(padding=0)))
     bind_alt(v[-1], "Alt Plan Table (text)")
-    ms = ["Focus Cumulative Net (Low)", "Focus Cumulative Net (Expected)", "Focus Cumulative Net (High)", "Focus Cumulative Net (sel)"]
+    ms = ["Cumulative Line (Low)", "Cumulative Line (Expected)", "Cumulative Line (High)", "Focus Cumulative Net (sel)"]
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]},
-         "Y": {"projections": [proj_mea(ms[0], "Low"), proj_mea(ms[1], "Expected"), proj_mea(ms[2], "High"), proj_mea(ms[3], "In view")]}}
+         "Y": {"projections": [proj_mea(ms[0], "Low"), proj_mea(ms[1], "Expected"), proj_mea(ms[2], "High"), proj_mea(ms[3], "This case")]}}
     # no year axis in 104 px (what 'responsive' used to hide; plan 11 turned it off so text never shrinks): the payback
     # year is in the risk sentence under the chart and in the alt text
-    objs = {"categoryAxis": axis(BODY, S, INK2, show=False), "valueAxis": axis(BODY, S, INK2, gridlines=False, units=1), "legend": legend(False),
+    # A legend that draws each line (lineOnly), not end labels: in 96 px the three end points sit closer than a label
+    # is tall and Power BI dropped the labels of the line in view (pass-3 review). Each line differs by pattern too:
+    # Low dashed, Expected dotted, High solid, the case in view thick.
+    lg = legend(True, BODY, S, INK2, "Top")
+    lg[0]["properties"]["legendMarkerRendering"] = enum("lineOnly")
+    # no axes in 96 px: the payback year is in the title, the end values in the alt text, and the zero line is labelled
+    objs = {"categoryAxis": axis(BODY, S, INK2, show=False), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, units=1), "legend": lg,
             # plan 10 D6: the Low case is a signal (Tangerine, and dashed, so not by colour alone), Expected and High in
             # Warm Grey, the case in view emphasised in Coffee Blue; the end labels in Dusk (series colours fail 4.5:1)
             "dataPoint": series_colors({mref(ms[0]): SIGNAL_MARK, mref(ms[1]): SLATE, mref(ms[2]): SLATE, mref(ms[3]): ACCENT_MARK}),
             "lineStyles": line_styles({**{mref(m): 1.5 for m in ms[:3]}, mref(ms[3]): 3}, dashed=(mref(ms[0]),)),
-            "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2), "textSize": num(S), "seriesFontFamily": text(BODY)}},
-                             {"properties": {"show": b(False)}, "selector": {"metadata": mref(ms[3])}}],
+            "seriesLabels": [{"properties": {"show": b(False)}}],
             "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(SLATE), "transparency": num(0), "width": num(1), "style": enum("solid"), "position": enum("back"),
-                                                    "dataLabelShow": b(False)}, "selector": {"id": "1"}}]}
+                                                    "displayName": text("Break-even"), "dataLabelShow": b(True), "dataLabelText": text("Name"), "dataLabelColor": color(INK2),
+                                                    "dataLabelHorizontalPosition": enum("left"), "dataLabelVerticalPosition": enum("above")}, "selector": {"id": "1"}}]}
+    next(e for e in objs["lineStyles"] if e.get("selector", {}).get("metadata") == mref(ms[1]))["properties"]["lineStyle"] = enum("dotted")
     v.append(chart(P2, "ch_plan_cumulative", "lineChart", q, objs, None,
-                   title="Cumulative net impact, $M: it pays back where its line crosses zero", filters=[filter_in("Date", "Year", [2027, 2028, 2029, 2030, 2031, 2032], "flt_horizon2")],
+                   title_measure="Cumulative Title (text)", filters=[filter_in("Date", "Year", [2027, 2028, 2029, 2030, 2031, 2032], "flt_horizon2")],
                    alt_measure="Alt Cumulative (text)"))
     v.append(dyn(P2, "c_plan_risk", "Plan Risk (text)"))
     v.append(button("btn_back", "←  Back to the recommendation", "bm_p2_shortlist", False, "Back to the recommendation and its alternatives"))

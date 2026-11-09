@@ -7,7 +7,8 @@ Reads the PBIR the generators wrote, the model's measures (for alt-text and colo
 the panel states and the cards) and the night-glow canvas (for text on the header zone). Exit code 1 on any FAIL.
 What it checks, per visual and per page:
   alt       every visual in the tab order has alt text (static or a measure that exists); no placeholder (a
-            measure's name), no colour words, no typed numbers other than years; decorative visuals sit out of
+            measure's name), no colour words, no typed numbers other than years, at most 250 characters, no
+            leading chart type; a button's spoken name carries its visible label; decorative visuals sit out of
             the tab order (negative tabOrder, as Desktop stores 'hidden from tab order')
   order     tab order is unique per page and follows the reading order: header chrome, then the cards top to
             bottom and left to right, inside a card row by row, the footer last; checked per P2 panel state
@@ -220,6 +221,16 @@ for pname in pages_meta["pageOrder"]:
                     fail(where, f"typed number in static alt text (bind it to a measure): {alt_text!r}")
             if alt_meas and COLOUR_WORDS.search(re.sub(r'\[[^\]]*\]|\'[^\']*\'', "", MEAS.get(alt_meas, ""))):
                 fail(where, f"colour word in the alt text measure [{alt_meas}]")
+            if alt_text and len(alt_text) > 250:
+                fail(where, f"static alt text is {len(alt_text)} characters (Desktop's limit is 250)")
+            if alt_meas and re.match(r'\s*"(line chart|column chart|bar chart|scatter|table|waterfall|chart)\b', MEAS.get(alt_meas, ""), re.I):
+                fail(where, f"alt text measure [{alt_meas}] opens with the chart type, which Power BI already announces")
+            if vtype == "actionButton":
+                lab = next((e["properties"].get("text") for e in vis.get("objects", {}).get("text", []) if e.get("selector", {}).get("id") == "default"), None)
+                if measure_of(lab) and not alt_meas:
+                    fail(where, "button label comes from a measure but its alt text is static: the spoken name may not carry the visible label (WCAG 2.5.3)")
+                elif literal(lab) and alt_text and re.sub(r"[^a-z ]", "", literal(lab).lower()).strip() not in alt_text.lower():
+                    fail(where, f"button alt text does not contain its visible label {literal(lab)!r} (WCAG 2.5.3)")
             if vtype in DATA_VISUALS and not literal((vco.get("visualHeader") or [{}])[0].get("properties", {}).get("show")) == "true":
                 fail(where, "data visual in the tab order with its header off (no focus mode / show as a table)")
         else:

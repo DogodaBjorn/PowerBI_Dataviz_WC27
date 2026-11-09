@@ -1421,7 +1421,7 @@ table _Measures
 		lineageTag: 8b77f91e-c87a-566d-b2b8-c8d9534972b6
 
 	/// Page-2 subtitle: the scenario in view and the valuation rules, read from FinanceParameters; outside Expected it says where the recommendation was set (REVIEW M3).
-	measure 'Subtitle P2 (text)' = VAR s = [Selected Scenario] VAR rate = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ) VAR h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN s & " case  ·  NPV through " & h & " in 2025 dollars at " & FORMAT ( rate, "0%" ) & "  ·  nothing after " & h & " is counted" & IF ( s <> "Expected", "  ·  the recommendation is set on the Expected case", "" )
+	measure 'Subtitle P2 (text)' = VAR s = [Selected Scenario] VAR rate = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ) VAR h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN s & " case  ·  net present value (NPV) through " & h & " in 2025 dollars at " & FORMAT ( rate, "0%" ) & "  ·  nothing after " & h & " is counted" & IF ( s <> "Expected", "  ·  the recommendation is set on the Expected case", "" )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 2db176a3-ef97-52f9-a12f-36e38557f148
@@ -1559,6 +1559,24 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: e4e86fb3-6de8-5c38-acf9-46a14157eefd
 
+	/// Plan chart: the Low case line, blank when Low is the case in view (the emphasised line draws it).
+	measure 'Cumulative Line (Low)' = IF ( [Selected Scenario] = "Low", BLANK (), [Focus Cumulative Net (Low)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: cc965468-0fee-5876-982c-34e5ea05a789
+
+	/// Plan chart: the Expected case line, blank when Expected is the case in view (the emphasised line draws it).
+	measure 'Cumulative Line (Expected)' = IF ( [Selected Scenario] = "Expected", BLANK (), [Focus Cumulative Net (Expected)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: 82b8f226-d55c-513f-aad4-7917bf5cb8e8
+
+	/// Plan chart: the High case line, blank when High is the case in view (the emphasised line draws it).
+	measure 'Cumulative Line (High)' = IF ( [Selected Scenario] = "High", BLANK (), [Focus Cumulative Net (High)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: 04d5f1b0-0b12-52e6-8fd0-7bca561ab015
+
 	/// Cumulative net impact of the package in focus in the selected scenario: the emphasised line (REVIEW M9).
 	measure 'Focus Cumulative Net (sel)' = SWITCH ( [Selected Scenario], "Low", [Focus Cumulative Net (Low)], "High", [Focus Cumulative Net (High)], [Focus Cumulative Net (Expected)] )
 		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
@@ -1691,8 +1709,8 @@ table _Measures
 		displayFolder: 08 Brand comparison
 		lineageTag: 53398b16-6664-51da-9887-f13521070e6a
 
-	/// Coffee Blue for the oldest band (the story), Warm Grey for the others; the axis label and the signed value carry it too.
-	measure 'Age Band Color' = IF ( SELECTEDVALUE ( Hotels[Renovation Age Sort] ) = 3, "#2589D8", "#8E897D" )
+	/// Tangerine for the oldest band (a risk signal: the only negative NPS), Warm Grey for the others; the axis label and the signed value carry it too.
+	measure 'Age Band Color' = IF ( SELECTEDVALUE ( Hotels[Renovation Age Sort] ) = 3, "#E05A22", "#8E897D" )
 		formatString: @
 		displayFolder: 08 Brand comparison
 		lineageTag: 2efdec81-1469-55f7-b6b8-6b8e9f94fc01
@@ -1883,26 +1901,26 @@ table _Measures
 		displayFolder: 11 Accessibility
 		lineageTag: 8469e8ab-b697-5aab-8702-a590462c4a5d
 
-	/// F1 chart: both margin lines at their ends, 2021 and 2025.
-	measure 'Alt F1 Chart (text)' = "Line chart, 2021 to 2025, of Goodnight Inn's operating margin before commissions, from " & FORMAT ( CALCULATE ( [GOP Margin %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ), "0.0%" ) & " to " & FORMAT ( CALCULATE ( [GOP Margin %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ), "0.0%" ) & ", and after commissions, from " & FORMAT ( CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ), "0.0%" ) & " to " & FORMAT ( CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ), "0.0%" ) & ". The gap between the lines is what the booking channels take."
+	/// F1 chart read aloud: the after-commissions path 2021, 2023, 2025 (as the title) and the commission gap.
+	measure 'Alt F1 Chart (text)' = VAR a1 = CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ) VAR a3 = CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2023 ) VAR a5 = CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR b1 = CALCULATE ( [GOP Margin %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ) VAR b5 = CALCULATE ( [GOP Margin %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) RETURN "After commissions, Goodnight Inn's operating margin " & IF ( a3 > a1, "rose", "fell" ) & " from " & FORMAT ( a1, "0.0%" ) & " in 2021 to " & FORMAT ( a3, "0.0%" ) & " in 2023 and " & IF ( a5 < a3, "fell back", "rose" ) & " to " & FORMAT ( a5, "0.0%" ) & " in 2025. The gap to the margin before commissions grew from " & FORMAT ( ( b1 - a1 ) * 100, "0.0" ) & " to " & FORMAT ( ( b5 - a5 ) * 100, "0.0" ) & " points."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: f762e6ee-6e72-542c-966d-dd9149fdd66b
 
-	/// F2 chart: Goodnight Inn's OTA share 2021 and 2025, and the sisters' 2025 values.
-	measure 'Alt F2 Chart (text)' = "Line chart, 2021 to 2025, of the share of room revenue booked through online agencies. Goodnight Inn went from " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ), "0.0%" ) & " to " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ), "0.0%" ) & "; the other brands in 2025: " & CONCATENATEX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN b & " " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ), "0.0%" ), ", ", Brands[Brand], ASC ) & "."
+	/// F2 chart read aloud: Goodnight Inn's OTA share 2021 and 2025, and the sisters' 2025 values.
+	measure 'Alt F2 Chart (text)' = VAR o1 = CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ) VAR o5 = CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) RETURN "Online agencies booked " & FORMAT ( o5, "0.0%" ) & " of Goodnight Inn's room revenue in 2025, " & IF ( o5 > o1, "up", "down" ) & " from " & FORMAT ( o1, "0.0%" ) & " in 2021. The other brands in 2025: " & CONCATENATEX ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN b & " " & FORMAT ( CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ), "0.0%" ), ", ", Brands[Brand], ASC ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: e4b33df5-4660-58df-8bca-6b8d18dbd0af
 
 	/// F2 folio table read aloud, the same rounding as the table (keeps = the difference of the shown amounts).
-	measure 'Alt F2 Folio (text)' = VAR orate = ROUND ( CALCULATE ( DIVIDE ( [Channel Room Revenue], [Channel Room Nights] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ), 2 ) VAR ocomm = ROUND ( CALCULATE ( DIVIDE ( [Distribution Cost], [Channel Room Nights] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ), 2 ) VAR drate = ROUND ( CALCULATE ( DIVIDE ( [Channel Room Revenue], [Channel Room Nights] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ), 2 ) VAR dcomm = ROUND ( CALCULATE ( DIVIDE ( [Distribution Cost], [Channel Room Nights] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ), 2 ) RETURN "Table, the folio of one Goodnight Inn room night in 2025. Via an online agency the guest pays " & FORMAT ( orate, "$#,0.00" ) & ", commission and fees take " & FORMAT ( ocomm, "$#,0.00" ) & " and the inn keeps " & FORMAT ( orate - ocomm, "$#,0.00" ) & ". Booked direct, on the web or in the app, the guest pays " & FORMAT ( drate, "$#,0.00" ) & ", fees take " & FORMAT ( dcomm, "$#,0.00" ) & " and the inn keeps " & FORMAT ( drate - dcomm, "$#,0.00" ) & "."
+	measure 'Alt F2 Folio (text)' = VAR orate = ROUND ( CALCULATE ( DIVIDE ( [Channel Room Revenue], [Channel Room Nights] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ), 2 ) VAR ocomm = ROUND ( CALCULATE ( DIVIDE ( [Distribution Cost], [Channel Room Nights] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ), 2 ) VAR drate = ROUND ( CALCULATE ( DIVIDE ( [Channel Room Revenue], [Channel Room Nights] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ), 2 ) VAR dcomm = ROUND ( CALCULATE ( DIVIDE ( [Distribution Cost], [Channel Room Nights] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ), 2 ) RETURN "One Goodnight Inn room night in 2025. Via an online agency the guest pays " & FORMAT ( orate, "$#,0.00" ) & ", fees take " & FORMAT ( ocomm, "$#,0.00" ) & ", the inn keeps " & FORMAT ( orate - ocomm, "$#,0.00" ) & ". Booked direct: " & FORMAT ( drate, "$#,0.00" ) & ", fees " & FORMAT ( dcomm, "$#,0.00" ) & ", the inn keeps " & FORMAT ( drate - dcomm, "$#,0.00" ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: c3df5313-c696-52b5-b299-ccfd6f9c12e2
 
 	/// F3 chart: the three bands' NPS 2025 (dated hotels only).
-	measure 'Alt F3 Chart (text)' = "Column chart of Goodnight Inn's 2025 net promoter score by years since the last renovation: 5 years or less " & ( VAR __v = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[Renovation Age Sort] = 1 ) RETURN IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( __v ), "0.0" ) ) & ", 6 to 9 years " & ( VAR __v = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[Renovation Age Sort] = 2 ) RETURN IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( __v ), "0.0" ) ) & ", 10 years or more " & ( VAR __v = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[Renovation Age Sort] = 3 ) RETURN IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( __v ), "0.0" ) ) & "."
+	measure 'Alt F3 Chart (text)' = "Goodnight Inn's 2025 net promoter score by years since the last renovation: 5 years or less " & ( VAR __v = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[Renovation Age Sort] = 1 ) RETURN IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( __v ), "0.0" ) ) & ", 6 to 9 years " & ( VAR __v = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[Renovation Age Sort] = 2 ) RETURN IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( __v ), "0.0" ) ) & ", 10 years or more " & ( VAR __v = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, Hotels[Renovation Age Sort] = 3 ) RETURN IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( __v ), "0.0" ) ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 1346f4d5-f4f0-55c8-bc46-c99a10b12102
@@ -1913,41 +1931,89 @@ table _Measures
 		displayFolder: 11 Accessibility
 		lineageTag: a30d3cb0-19f9-5a37-8b65-a49cb76785ba
 
-	/// F4 chart read aloud: the seven fullest hotels with their occupancy, and how many are airports.
-	measure 'Alt F4 Chart (text)' = VAR hs = CALCULATETABLE ( VALUES ( Hotels[HotelID] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) VAR t7 = ADDCOLUMNS ( TOPN ( 7, hs, CALCULATE ( [Occupancy %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), "@o", CALCULATE ( [Occupancy %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ), "@n", CALCULATE ( SELECTEDVALUE ( Hotels[Hotel Short Name] ) ), "@t", CALCULATE ( SELECTEDVALUE ( Hotels[LocationType] ) ) ) VAR na = COUNTROWS ( FILTER ( t7, [@t] = "Airport" ) ) RETURN "Column chart of the seven Goodnight Inn hotels with the highest occupancy in 2025, " & na & " of them airport hotels: " & CONCATENATEX ( t7, [@n] & " " & FORMAT ( [@o], "0%" ), ", ", [@o], DESC ) & "."
+	/// F4 chart read aloud: the seven fullest hotels with their occupancy (one decimal, as the bars), and how many are airports.
+	measure 'Alt F4 Chart (text)' = VAR hs = CALCULATETABLE ( VALUES ( Hotels[HotelID] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) VAR t7 = ADDCOLUMNS ( TOPN ( 7, hs, CALCULATE ( [Occupancy %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), "@o", CALCULATE ( [Occupancy %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ), "@n", CALCULATE ( SELECTEDVALUE ( Hotels[Hotel Short Name] ) ), "@t", CALCULATE ( SELECTEDVALUE ( Hotels[LocationType] ) ) ) VAR na = COUNTROWS ( FILTER ( t7, [@t] = "Airport" ) ) RETURN "The 7 fullest Goodnight Inn hotels in 2025, " & na & " of them airports: " & CONCATENATEX ( t7, [@n] & " " & FORMAT ( [@o], "0.0%" ), ", ", [@o], DESC ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: e7beb809-c0fe-5ac7-b128-957041637b02
 
-	/// The scatter read aloud (its one tab stop is the A/B/C layer): how many packages pay back, then A, B and C with capex and NPV in the case in view.
-	measure 'Alt Scatter (text)' = [Scatter Title (text)] & ", in the " & [Selected Scenario] & " case, out of every combination of the ten initiatives that fits the rules. Capex runs along the horizontal axis, NPV through 2032 up the vertical one. A, our recommendation: " & FORMAT ( ( [Preset A Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", NPV " & ( VAR __t = ROUND ( ( [Preset A NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ". B, the alternative: " & FORMAT ( ( [Preset B Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", NPV " & ( VAR __t = ROUND ( ( [Preset B NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ". C, the answer to why not renovate: " & FORMAT ( ( [Preset C Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", NPV " & ( VAR __t = ROUND ( ( [Preset C NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ". Hover a dot for its package card."
+	/// F1 card title read aloud with its kicker (the kicker leaves the tab order; pass-3 review: fewer stops).
+	measure 'Alt F1 Title (text)' = "F1, the margin. " & [F1 Title (text)]
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 4f37b58c-e0e4-5a0f-a84b-88aff692a26b
+
+	/// F2 card title read aloud with its kicker (the kicker leaves the tab order; pass-3 review: fewer stops).
+	measure 'Alt F2 Title (text)' = "F2, the middleman. " & [F2 Title (text)]
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 4cbfed86-4c2b-5498-9400-27c4226eb754
+
+	/// F3 card title read aloud with its kicker (the kicker leaves the tab order; pass-3 review: fewer stops).
+	measure 'Alt F3 Title (text)' = "F3, the fading welcome. " & [F3 Title (text)]
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 7538b32b-42a0-590c-9a90-e31b6afde0cb
+
+	/// F4 card title read aloud with its kicker (the kicker leaves the tab order; pass-3 review: fewer stops).
+	measure 'Alt F4 Title (text)' = "F4, where we are full. " & [F4 Title (text)]
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 13b95952-84ae-5020-9ac3-e2658b097f9d
+
+	/// The A/B/C layer of the scatter read aloud: how many packages pay back, then A, B and C with capex and net present value in the case in view.
+	measure 'Alt Scatter (text)' = [Scatter Title (text)] & " (" & [Selected Scenario] & " case). A, our recommendation: capex " & FORMAT ( ( [Preset A Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", net present value " & ( VAR __t = ROUND ( ( [Preset A NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ". B, the alternative: " & FORMAT ( ( [Preset B Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", " & ( VAR __t = ROUND ( ( [Preset B NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ". C, the answer to why not renovate: " & FORMAT ( ( [Preset C Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", " & ( VAR __t = ROUND ( ( [Preset C NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 1c782b3e-b1ad-510b-9d6d-433e8ad14a8e
 
+	/// The 456-dot layer read aloud: what its table holds (keyboard users reach the package details there, not in the hover card).
+	measure 'Alt Scatter Cloud (text)' = "All " & COUNTROWS ( ALLNOBLANKROW ( Package ) ) & " possible packages, each with its capex, net present value through 2032 (" & [Selected Scenario] & " case), range, payback and initiatives. Show as table lists them."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: e4b38ddc-cd53-5a10-a03a-00b266122cdd
+
 	/// The recommendation's numbers card read aloud.
-	measure 'Alt Rec Nums (text)' = "Package A in numbers, " & [Selected Scenario] & " case: capex " & [Rec Capex (text)] & ", NPV through 2032 " & [Rec NPV (text)] & ", NPV from the Low to the High case " & [Rec Range (text)] & " $M, profit a year by 2032 " & [Rec Run-rate (text)] & "."
+	measure 'Alt Rec Nums (text)' = "Package A, " & [Selected Scenario] & " case: capex " & [Rec Capex (text)] & ", net present value through 2032 " & [Rec NPV (text)] & ", from " & [Rec Range (text)] & " $M between the Low and High cases, profit a year by 2032 " & [Rec Run-rate (text)] & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 977bdced-42ac-58aa-b9a6-55b5c6db9576
 
-	/// The plan waterfall read aloud: each initiative's shown NPV and the package total, in the case in view.
-	measure 'Alt Waterfall (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( ISBLANK ( f ), BLANK (), "Waterfall, " & [Selected Scenario] & " case: where the NPV through 2032 of package " & [Focus Key] & " comes from. " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __t = ROUND ( ( [@s] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ), ", ", [@s], DESC ) & "; together " & ( VAR __t = ROUND ( ( SUMX ( adj, [@s] ) ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "." )
+	/// The plan waterfall read aloud, in the chart's order (by name): each initiative's shown NPV and the package total.
+	measure 'Alt Waterfall (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( ISBLANK ( f ), BLANK (), "Where the net present value of package " & [Focus Key] & " comes from, " & [Selected Scenario] & " case: " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __t = ROUND ( ( [@s] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ), ", ", LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ASC ) & "; together " & ( VAR __t = ROUND ( ( SUMX ( adj, [@s] ) ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "." )
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: f9e32720-9549-5bab-8b5a-94d236b200e1
 
 	/// The plan table read aloud: what it lists and which initiatives are in the package in focus.
-	measure 'Alt Plan Table (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) RETURN IF ( ISBLANK ( f ), BLANK (), "Table of the ten Goodnight Inn initiatives, those in package " & [Focus Key] & " first, with their status, the page-1 finding each answers, capex, profit a year by 2032, NPV and the dataset guest-score effect. In package " & [Focus Key] & ": " & CONCATENATEX ( ids, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ", ", [@p], ASC ) & "." )
+	measure 'Alt Plan Table (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) RETURN IF ( ISBLANK ( f ), BLANK (), "The ten Goodnight Inn initiatives, package " & [Focus Key] & "'s first: status, finding answered, capex, profit a year by 2032, net present value, guest-score effect. In package " & [Focus Key] & ": " & CONCATENATEX ( ids, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ", ", [@p], ASC ) & "." )
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: df87fef2-6ede-5087-b775-018bf68e57fe
 
 	/// The cumulative chart read aloud: payback year in the case in view and the 2032 end points of the three cases.
-	measure 'Alt Cumulative (text)' = VAR pb = [Focus Payback Year] VAR s = [Selected Scenario] VAR lo = CALCULATE ( [Focus Cumulative Net (Low)], 'Date'[Year] = 2032 ) VAR ex = CALCULATE ( [Focus Cumulative Net (Expected)], 'Date'[Year] = 2032 ) VAR hi = CALCULATE ( [Focus Cumulative Net (High)], 'Date'[Year] = 2032 ) RETURN IF ( ISBLANK ( [Focus Package] ), BLANK (), "Line chart, 2027 to 2032, of the cumulative net impact of package " & [Focus Key] & " in the Low, Expected and High cases. " & IF ( ISBLANK ( pb ), "In the " & s & " case it does not pay back by 2032", "In the " & s & " case it turns positive in " & pb ) & ". By 2032: Low " & ( VAR __t = ROUND ( ( lo ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ", Expected " & ( VAR __t = ROUND ( ( ex ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ", High " & ( VAR __t = ROUND ( ( hi ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "." )
+	measure 'Alt Cumulative (text)' = VAR pb = [Focus Payback Year] VAR s = [Selected Scenario] VAR lo = CALCULATE ( [Focus Cumulative Net (Low)], 'Date'[Year] = 2032 ) VAR ex = CALCULATE ( [Focus Cumulative Net (Expected)], 'Date'[Year] = 2032 ) VAR hi = CALCULATE ( [Focus Cumulative Net (High)], 'Date'[Year] = 2032 ) RETURN IF ( ISBLANK ( [Focus Package] ), BLANK (), "Package " & [Focus Key] & ", cumulative net impact 2027 to 2032: " & IF ( ISBLANK ( pb ), "not positive by 2032 in the " & s & " case", "positive from " & pb & " in the " & s & " case" ) & ". By 2032: Low " & ( VAR __t = ROUND ( ( lo ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ", Expected " & ( VAR __t = ROUND ( ( ex ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ", High " & ( VAR __t = ROUND ( ( hi ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "." )
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 747baf92-06ce-55ab-8eca-191e2c5e532b
+
+	/// The held-back card read aloud in under 250 characters (with R3 the canvas sentence runs to 261): same facts, shorter lead-in to the marginal test.
+	measure 'Alt Rec Held (text)' = SUBSTITUTE ( SUBSTITUTE ( [Rec Held (text)], "The best way to spend more, A plus the ", "Adding the " ), ", costs ", " costs " )
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: b6e13c6b-e8d3-5fb8-ab7c-d243992fafbc
+
+	/// The plan button's accessible name, which contains its visible label (WCAG 2.5.3 Label in Name; the arrow is left out).
+	measure 'Alt Open Plan (text)' = "Open the plan for package " & [Focus Key]
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 6711087f-4093-5747-b97e-9818825a23b9
+
+	/// Plan state chart title with the payback year: the year axis does not fit the 88 px chart (pass-3 review: the crossing was unreadable).
+	measure 'Cumulative Title (text)' = VAR pb = [Focus Payback Year] RETURN "Cumulative net impact, $M: " & IF ( ISBLANK ( pb ), "not positive by 2032 in this case", "positive from " & pb & " in this case" )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: e7902a0e-f6b2-5eaf-93f1-c47db8b0250c
 
 	column Placeholder
 		dataType: string

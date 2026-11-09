@@ -7,7 +7,7 @@
     "z": 1020,
     "width": 560,
     "height": 24,
-    "tabOrder": 300
+    "tabOrder": -1601
   },
   "visual": {
     "visualType": "textbox",
@@ -141,19 +141,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "altText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'F1: THE MARGIN'"
                 }
               }
             }
