@@ -1,6 +1,7 @@
 """OPTIONAL canvas for the night-glow variant (plan 10-design-rebuild.md, item D7): only used if
-Bjorn waives design hard rule 6 for the header zone. The spec itself (variant "night") needs no
-image from this script: its flat Night zone is drawn by opzet_backgrounds.mjs.
+Bjorn waives design hard rule 6 for gradients. The spec itself (variant "night") needs no image
+from this script: its flat Night zone and the faded hanger (D2b) are drawn as SVG by
+opzet_backgrounds.mjs.
 Requires numpy and Pillow (design-time tool, not part of the stdlib build pipeline).
 
 Canvas backgrounds for the Goodnight Inn 3.x report (1920 x 1080 JPEG, for

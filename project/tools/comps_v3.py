@@ -99,7 +99,10 @@ def band(active):
 
 # Depth variants (kit 3.1, plan 10-design-rebuild.md).
 #   night       THE SPEC. A flat Night header zone from the top of the page to the horizon
-#               (first card row + 128 px); the first card row hangs over it. One card style per
+#               (first card row + 128 px); the first card row hangs over it. In the zone, top right,
+#               the faceless door hanger at 6 % Oat, tilted 10 degrees and cut off by the horizon
+#               (item D2b, kept on Bjorn's request of 9 Nov; waives hard rule 6 "decorative images"
+#               and the canvas-guide "no logos" rule for the header zone only). One card style per
 #               page (design hard rule lock 9): no hairline, one shadow, Night at 10 %, y 8, blur 24
 #               (hard-rule token "subtle only: ~10 % opacity"). In Power BI the zone and the shadows
 #               are drawn into the page background image (opzet_backgrounds.mjs), not set per visual.
@@ -109,6 +112,28 @@ def band(active):
 #               Coffee Blue glow under the recommended plan.
 #   flat        kit 3.0 baseline, for before/after.
 HORIZON = 340   # comp geometry: first card row at 212 + 128
+
+
+def hanger_layer(horizon, k=7.2, x=1350, y=-150, tilt=10, opacity=0.06):
+    """The faded hanger (D2b) as a 1920 x 1080 SVG, clipped to the zone. Same geometry as
+    brand_canvas_v3.py and the D2b block in opzet_backgrounds.mjs: the mark's 56 x 96 tile
+    (radius 14, hole r 10, slit to the right edge) scaled by k, rotated -10 degrees (counter-
+    clockwise) about the hole."""
+    ox, oy = x + 12 * k, y + 7 * k
+    cx, cy = ox + 28 * k, oy + 20 * k
+    return ('<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">'
+            f'<defs><clipPath id="zone"><rect width="1920" height="{horizon}"/></clipPath>'
+            '<mask id="hole" maskUnits="userSpaceOnUse" x="0" y="-400" width="1920" height="1600">'
+            '<rect x="0" y="-400" width="1920" height="1600" fill="white"/>'
+            f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{10 * k:.1f}" fill="black"/>'
+            f'<rect x="{cx:.1f}" y="{oy + 18.5 * k:.1f}" width="{28 * k + 1:.1f}" height="{3 * k:.1f}" fill="black"/></mask></defs>'
+            f'<g clip-path="url(#zone)"><g transform="rotate({-tilt} {cx:.1f} {cy:.1f})">'
+            f'<rect x="{ox:.1f}" y="{oy:.1f}" width="{56 * k:.1f}" height="{96 * k:.1f}" rx="{14 * k:.1f}" '
+            f'fill="#E9E5D6" fill-opacity="{opacity}" mask="url(#hole)"/></g></g></svg>')
+
+
+def svg_url(svg):
+    return 'url("data:image/svg+xml;base64,' + base64.b64encode(svg.encode()).decode() + '")'
 CARD_SHADOW = "0 8px 24px rgba(18,35,61,.10)"
 ZONE_TEXT = """
 .band{background:transparent;border-bottom:1px solid rgba(233,229,214,.14)}
@@ -117,7 +142,7 @@ ZONE_TEXT = """
 .lbl{color:#C9D0DC!important}
 """
 NIGHT = ZONE_TEXT + f"""
-.page{{background:linear-gradient(to bottom,#12233D 0,#12233D {HORIZON}px,#F3F1EA {HORIZON}px)}}
+.page{{background:{svg_url(hanger_layer(HORIZON))} 0 0/1920px 1080px no-repeat,linear-gradient(to bottom,#12233D 0,#12233D {HORIZON}px,#F3F1EA {HORIZON}px)}}
 .card,.plan{{border-color:transparent!important;box-shadow:{CARD_SHADOW}}}
 .plan.sel{{border-color:var(--coffee)!important}}
 .segtrack{{border-color:transparent!important}}

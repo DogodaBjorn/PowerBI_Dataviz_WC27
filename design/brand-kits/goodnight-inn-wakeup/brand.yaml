@@ -103,7 +103,8 @@ depth:
     dy: 8
     blur: 24
   one_style: "every top-level card on a page carries the same shadow (consistency lock 9); inner tiles (P2 tile_preset_a/b/c) keep the canvas fill and hairline, no shadow"
-  optional_glow: "night-glow variant (gradient, Coffee Blue glow, faceless hanger at 6 %, stronger hero shadow, plan glow) only with Björn's recorded waiver of hard rule 6; see plan 10, item D7"
+  zone_hanger: "the faceless hanger in the zone, top right: Oat at 6 %, scale 7.2, tilted 10 degrees counter-clockwise about its hole, clipped by the horizon (plan 10, D2b). Kept on Björn's request of 2026-11-09; waives hard rule 6 (decorative image) and the canvas-guide 'no logos' rule for the header zone only. Text over it: 12.6 / 8.8 / 8.3:1"
+  optional_glow: "night-glow variant (Night-to-navy gradient, Coffee Blue glow, stronger hero shadow, plan glow) only with Björn's recorded waiver of hard rule 6 for gradients; see plan 10, item D7"
 
 grid:
   canvas_px: [1920, 1080]
@@ -117,7 +118,7 @@ assets:
   # gi-lockup.svg (Night wordmark on light), gi-mark.svg (the faceless hanger),
   # gi-mark-mono-night.svg / -oat.svg, gi-wordmark.svg. Wordmark outlined from
   # Plus Jakarta Sans ExtraBold (OFL-1.1). Generator: project/tools/brand_logos_v3.py.
-  usage: "the lockup once per page in the band; the mark alone as the gallery icon and favicon; never in a chart, never as a watermark"
+  usage: "the lockup once per page in the band; the mark alone as the gallery icon and favicon; never in a chart; as a background shape only the D2b zone hanger"
   parked: "assets/hank/, the 2.0 mascot and the 1.0 poster wordmark stay in the repo for guest-facing use; they do not appear in the contest entry"
 
 voice:
@@ -126,7 +127,7 @@ voice:
   number_format_notes: "English: thousands with a comma, $ before the figure, M for millions ($51.3M), one decimal for percentages, true minus sign, pt for percentage points"
 
 forbidden:
-  - "characters, faces, mascots, illustrations or decorative imagery anywhere in the report"
+  - "characters, faces, mascots, illustrations or decorative imagery anywhere in the report (the one exception: the D2b zone hanger, by waiver)"
   - "Tangerine as a brand or series identity; Coffee Blue for anything that is not Goodnight Inn, ours or the plan"
   - "a third live color; sisters in anything but Warm Grey"
   - "Coffee Blue or Tangerine as body text (use Deep Coffee and Burnt Tangerine)"

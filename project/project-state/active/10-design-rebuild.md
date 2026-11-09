@@ -7,7 +7,7 @@
 | Deel | Plan | Over | Raakt |
 |---|---|---|---|
 | A | `09-research-based-rebuild.md` (PR #10) | inhoud: KPI's, framing, copy (R1-R5) | `sketch_model.py`, `opzet_report.py` (copy) |
-| B | dit document | vorm: merkkit, kleur, typografie, diepte (D1-D7) | `project.yaml`, theme, `opzet_backgrounds.mjs`, `opzet_report.py`, `sketch_model.py` (kleurmeasures) |
+| B | dit document | vorm: merkkit, kleur, typografie, diepte (D1-D7, met D2b) | `project.yaml`, theme, `opzet_backgrounds.mjs`, `opzet_report.py`, `sketch_model.py` (kleurmeasures) |
 
 Beide delen raken dezelfde generators, dus ze worden samen gebouwd: één rebuild van `sketch_model.py` en één van `opzet_backgrounds.mjs` + `opzet_report.py`, in de gezamenlijke volgorde van paragraaf 4. Dit plan verandert niets aan de inhoud van 09; waar de twee elkaar raken staat het in paragraaf 3.
 
@@ -22,18 +22,18 @@ Beide delen raken dezelfde generators, dus ze worden samen gebouwd: één rebuil
 
 | Bestand | Wat |
 |---|---|
-| `p1-brand-review-night.jpg`, `p2-investment-strategy-night.jpg` | **de spec** (D1-D6) |
+| `p1-brand-review-night.jpg`, `p2-investment-strategy-night.jpg` | **de spec** (D1-D6, met de vervaagde hanger uit D2b) |
 | `p1-brand-review-night-glow.jpg`, `p2-investment-strategy-night-glow.jpg` | optionele variant, alleen met waiver (D7) |
 | `p1-brand-review-flat.jpg`, `p2-investment-strategy-flat.jpg` | 3.0 zonder diepte, ter vergelijking |
 | `*.html` | de bron-comps, gegenereerd door `project/tools/comps_v3.py` uit `project/design-prototypes/opzet-data.json` |
-| `opzet-background-p1-night.png`, `opzet-background-p2-night.png` | de D2-achtergrond op de **echte** slotmap (`opzet-layout.json`), getest met de code uit D2 |
+| `opzet-background-p1-night.png`, `opzet-background-p2-night.png` | de D2/D2b-achtergrond op de **echte** slotmap (`opzet-layout.json`), getest met de code uit D2 en D2b |
 
 De comps tonen de look, niet de slotmap of de lettergroottes: ze gebruiken de 3.0-compositie (band met paginatabs, iets andere kaartindeling) en enkele labels van 11-13 px. Voor de build blijven `opzet-layout.json` (met de twee wijzigingen uit D2 en D3) en het R4-minimum uit plan 08 leidend.
 
 **Geldende randvoorwaarden (ongewijzigd):**
 
 - *Do-not-fabricate:* de cijfers in de comps komen uit de offline decode (`opzet-data.json`); niets landt op het canvas zonder heraflelding uit het model (stage 4/6).
-- *Design hard rules* (`.claude/rules/design-hard-rules.md`). Regel 6 (geen gradients of decoratieve beelden): de zone is vlak Night, zonder hanger of gloed. Schaduw-token "subtle only, ~10% opacity": de kaartschaduw is 10 %. Lock 7 (één accent): Coffee Blue; Deep Coffee is de tekstsnede van dezelfde tint. Lock 8 (radius): kaarten 12 px, chips en knoppen volrond, gedocumenteerd in de kit. Lock 9 (één kaartstijl per pagina): alle kaarten dezelfde schaduw, geen haarlijn.
+- *Design hard rules* (`.claude/rules/design-hard-rules.md`). Regel 6 (geen gradients of decoratieve beelden): de zone is vlak Night, zonder gradient of gloed; voor de vervaagde hanger in de zone (D2b) geldt Bjorns waiver van 9 november. Schaduw-token "subtle only, ~10% opacity": de kaartschaduw is 10 %. Lock 7 (één accent): Coffee Blue; Deep Coffee is de tekstsnede van dezelfde tint. Lock 8 (radius): kaarten 12 px, chips en knoppen volrond, gedocumenteerd in de kit. Lock 9 (één kaartstijl per pagina): alle kaarten dezelfde schaduw, geen haarlijn.
 - *Publish-to-Web:* alleen ingebouwde fonts, alleen ingebedde beelden. Segoe UI zit alleen op Windows: zie D1 en de open vragen.
 - *Mutatieveiligheid:* alles via de generators; `project/pbip/` alleen via de pbir-operator; niets handmatig in Desktop behalve de bestaande VERIFY-fallbacks.
 - *Accessibility:* contrast gemeten (D1-tabel, D3); een verdict nooit alleen in kleur.
@@ -112,6 +112,34 @@ ${cards}
 - Registratie blijft zoals nu (`opzet_report.py` `page()`, regels 268-273, VERIFY-fallback: Format page > Canvas background > image, Fit, 0 %).
 
 **Acceptatiecheck.** De renders op 1920 en 1366 tonen de zone tot y 312 en de eerste kaartrij die erover hangt; geen haarlijnen om de kaarten; de schaduw is op beide pagina's identiek; de PNG's zijn per pagina gegenereerd, niet met de hand bewerkt (canvas-guide paragraaf 4).
+
+---
+
+## D2b - De vervaagde hanger in de zone
+
+**Inhoudelijk.** Rechtsboven in de zone de gezichtsloze hanger, groot, Oat op 6 %, 10 graden gekanteld en afgesneden door de horizon. Het enige stuk merktheater op de pagina, en het blijft in het kader. Bjorn wilde hem houden (chat, 9 november 10:24: "It feels like the faded door hanger on the right top has been lost ... Can you verify and fix when needed"). Daarmee vervallen voor de header-zone hard rule 6 (decoratieve beelden) en de canvas-guide-regel "no logos" in de achtergrond; vastgelegd in `status.yaml`. De gradient en de gloed blijven buiten de spec (D7).
+
+**Data.** Geen.
+
+**Technisch.** `opzet_backgrounds.mjs`, in de `<defs>` en direct na de zone-rect (`${hangerLayer(horizon)}`). Getest op de echte slotmap; de hanger valt in de opzet rechts van de headline en boven `card_geo` / `card_panel`.
+
+```js
+// D2b: 6 % Oat, scale 7.2, tilted 10 degrees counter-clockwise about the hole, clipped by the horizon.
+// Same geometry as comps_v3.hanger_layer and brand_canvas_v3.py.
+function hangerLayer(horizon, k = 7.2, x = 1350, y = -150, tilt = 10, opacity = 0.06) {
+  const ox = x + 12 * k, oy = y + 7 * k, cx = ox + 28 * k, cy = oy + 20 * k;
+  return `<clipPath id="zone-clip"><rect width="${W}" height="${horizon}"/></clipPath>
+<mask id="hanger-hole" maskUnits="userSpaceOnUse" x="0" y="-400" width="${W}" height="1600">
+<rect x="0" y="-400" width="${W}" height="1600" fill="white"/>
+<circle cx="${cx}" cy="${cy}" r="${10 * k}" fill="black"/><rect x="${cx}" y="${oy + 18.5 * k}" width="${28 * k + 1}" height="${3 * k}" fill="black"/></mask>
+<g id="zone-hanger" clip-path="url(#zone-clip)"><g transform="rotate(${-tilt} ${cx} ${cy})">
+<rect x="${ox}" y="${oy}" width="${56 * k}" height="${96 * k}" rx="${14 * k}" fill="#E9E5D6" fill-opacity="${opacity}" mask="url(#hanger-hole)"/></g></g>`;
+}
+```
+
+Contrast van de zonetekst over de hanger (achtergrond dan `#1E2E46`): headline 12.6:1, masthead/subtitel 8.8:1, eyebrow 8.3:1.
+
+**Acceptatiecheck.** De hanger is zichtbaar maar zacht (6 %), staat alleen in de zone, wordt door de horizon afgesneden en raakt geen data; zonder de waiver in `status.yaml` gaat deze `hangerLayer`-regel eruit.
 
 ---
 
@@ -197,7 +225,7 @@ ZONE_TEXT, ZONE_MUTED, ZONE_EYEBROW = "#F7F5EE", "#C9D0DC", "#A9CDF0"
 
 ## D7 - Optioneel, alleen met waiver: night-glow
 
-**Inhoudelijk.** De variant die Bjorn als eerste zag: de zone als verloop van Night naar navy, een Coffee Blue gloed, de gezichtsloze hanger groot en gekanteld op 6 %, een zwaardere schaduw onder de hoofdkaart en een blauwe gloed onder het aanbevolen pakket. Iets rijker, maar het buigt drie regels: hard rule 6 (gradients, decoratieve beelden), canvas-guide paragraaf 2 ("no logos" in de achtergrond) en lock 9 (twee kaartstijlen op één pagina).
+**Inhoudelijk.** De variant die Bjorn als eerste zag, minus de hanger (die zit sinds 9 november in de spec, D2b): de zone als verloop van Night naar navy, een Coffee Blue gloed, een zwaardere schaduw onder de hoofdkaart en een blauwe gloed onder het aanbevolen pakket. Iets rijker, maar het buigt hard rule 6 (gradients) en lock 9 (twee kaartstijlen op één pagina).
 
 **Data.** Geen.
 
@@ -216,10 +244,10 @@ ZONE_TEXT, ZONE_MUTED, ZONE_EYEBROW = "#F7F5EE", "#C9D0DC", "#A9CDF0"
 
 ## 4. Gezamenlijke implementatievolgorde (rebuild-pakket 09 + 10)
 
-0. **Bjorn:** go-ahead op het pakket; besluit over D7 (waiver ja of nee); de kitwissel staat in het addendum van `00-brand-decision.md`.
+0. **Bjorn:** go-ahead op het pakket; besluit over D7 (waiver voor de gradient ja of nee; de hanger-waiver D2b staat al); de kitwissel staat in het addendum van `00-brand-decision.md`.
 1. **D1:** `project.yaml` + `compile_theme.py` + `check_contrast.py --theme` (één commit).
 2. **Eén rebuild van `sketch_model.py`:** 09 R3 met K1/V1, R2, R4, R5, plus D6 (kleurmeasures, chip) en de D5-docstrings.
-3. **Eén rebuild van `opzet_backgrounds.mjs` + `opzet_report.py`:** D2, D3, D4, D5, D6 (+ de `opzet-layout.json`-wijzigingen uit D2).
+3. **Eén rebuild van `opzet_backgrounds.mjs` + `opzet_report.py`:** D2, D2b, D3, D4, D5, D6 (+ de `opzet-layout.json`-wijzigingen uit D2).
 4. **09 R1** na de haalbaarheidscheck van de indexlijnen; trend-slot alleen als het canvas het toelaat (V4).
 5. **De vaste cyclus:** `schema_check.py`, rebuild, renders op 1920 en 1366, vergelijking met `comps/*-night.jpg` (look) en de slotmap (posities), `ax-audit`, eigen-ogen review (K6), en de Publish-to-Web-gate bij Bjorn, **inclusief de Segoe UI-test op een Mac of in een browser zonder Segoe UI**.
 
