@@ -154,3 +154,12 @@ project_additions:               # per-project sources appended at stage 0
   - name: Fontsource (OFL fonts Gelasio and Lexend, outlined in the wordmarks)
     url: https://fontsource.org/
     use_for: "font files for project/tools/brand_logos.py; fonts are OFL-1.1, never shipped in the report"
+  - name: Palette reference, Instagram reel by @niki.aroca (shared by Björn 2026-11-08)
+    url: https://www.instagram.com/niki.aroca/
+    use_for: "the three palette hex values of kit goodnight-inn-wakeup (informing, tier 3); no layout, image or lettering used"
+  - name: Machado, Oliveira & Fernandes (2009), physiologically-based color vision deficiency simulation
+    url: https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html
+    use_for: "protan/deutan/tritan simulation in the palette validation of the brand kits (method, tier 2 strength, recorded here as a project addition)"
+  - name: Fontsource (OFL fonts Plus Jakarta Sans for the 3.x wordmark, Open Sans as Segoe UI stand-in in the comps)
+    url: https://fontsource.org/
+    use_for: "font files for project/tools/brand_logos_v3.py and comps_v3.py; never shipped in the report"
