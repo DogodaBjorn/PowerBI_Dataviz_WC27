@@ -175,3 +175,18 @@ stand on. Re-derived in our own words; nothing copied.
 | **Eben Sorkin** (Gelasio, OFL-1.1) | Georgia's metric twin, outlined in option 1's wordmark. | goodnight-inn assets |
 | **Bonnie Shaver-Troup, Thomas Jockin et al.** (Lexend, OFL-1.1) | The lettering outlined in option 2's wordmark. | goodnight-inn-hanger assets |
 | **Fontsource** (MIT packaging), **HarfBuzz** (Behdad Esfahbod et al., MIT), **fontTools** (Just van Rossum et al., MIT) | Font delivery, shaping and outlining for `project/tools/brand_logos.py`. | logo generator |
+
+### Brand kit goodnight-inn-wakeup 3.1 (design rebuild, plan 10)
+
+Original work (2026-11-08/09). The palette's three hex values come from a
+reference Björn shared; everything else is drawn here. Re-derived in our own
+words; nothing copied.
+
+| Who | What we owe them | Where it lands |
+|---|---|---|
+| **@niki.aroca** (Instagram reel, shared by Björn on 2026-11-08) | The palette Oat Cream `#E9E5D6`, Coffee Blue `#2589D8`, Tangerine `#FF783D`, used as given. No layout, image or lettering from the reel or its posters is used. | `design/brand-kits/goodnight-inn-wakeup/brand.yaml` color block |
+| **Tokotype** (Plus Jakarta Sans, OFL-1.1) | The lettering outlined in the 3.x wordmark "goodnight inn." | `assets/gi-*.svg`, `project/tools/brand_logos_v3.py` |
+| **Microsoft** (Segoe UI) | The report typeface: Power BI's own default (Windows only; Mac fallback Arial). | kit typography |
+| **Steve Matteson** (Open Sans, OFL-1.1) | Open stand-in for Segoe UI, embedded in the HTML comps so they render the same everywhere; never in the report. | `comps/*.html`, `project/tools/comps_v3.py` |
+| **Gustavo M. Machado, Manuel M. Oliveira, Leandro A. F. Fernandes** (*A Physiologically-based Model for Simulation of Color Vision Deficiency*, IEEE TVCG 2009) | The simulation matrices behind the protan/deutan/tritan separation checks of the palette. | kit validation notes |
+| **Fontsource** (MIT packaging), **HarfBuzz**, **fontTools**, **Microsoft Playwright team** (Apache-2.0), **NumPy** and **Pillow** (BSD, HPND) | Font delivery and outlining; comp and background rendering; the optional night-glow canvas. | `project/tools/brand_logos_v3.py`, `comps_v3.py`, `brand_canvas_v3.py` |

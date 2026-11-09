@@ -76,3 +76,24 @@ The visual header stays visible by default (show as table, focus mode).
 - Canvas size (audit item 2): the kit assumes 1920x1080.
 - Direction (D1 / D2 / D3) is still unrecorded in the draft contract
   (`user_decided: false`).
+
+## Addendum 2026-11-08/09: kit goodnight-inn-wakeup 3.1 (night header)
+
+- **Decision (Björn, chat):** the brand moves to a new kit, `goodnight-inn-wakeup`,
+  in its 3.1 form: Oat Cream, Coffee Blue and Tangerine (from a reference he
+  shared), Segoe UI, the faceless door hanger with the wordmark "goodnight inn.",
+  and the night header. Asked for "hip, modern en zakelijk" (8 Nov); chose the
+  night depth variant for P1 and P2 on 9 Nov ("I like the last two ones").
+- **Rejected on the way:** a mascot version (2.0, the hanger as a character with
+  riso illustrations): "dit lijkt toch niet op een high end basis voor dashboard
+  visual passend bij een zakelijk/business focused internationaal hotel merk en
+  ook niet op iets voor een investor deck." Not in the repo.
+- **Kept from option 2:** the door hanger as the symbol (without a face), the
+  brand promise "A good night. A fair price.", the Everyman archetype, the
+  numbered findings.
+- **Not yet active:** `project.yaml` still names `goodnight-inn-hanger`. The
+  switch is step 1 of the rebuild package (`10-design-rebuild.md`, D1), after
+  Björn's go-ahead on the package.
+- **Kit:** `design/brand-kits/goodnight-inn-wakeup/` (brand.yaml, brand-guide.md,
+  assets, comps). Contrast 10/10 on the kit, 8/8 on the compiled theme
+  (tested in a copy, 2026-11-09).

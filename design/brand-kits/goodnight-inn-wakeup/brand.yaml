@@ -1,0 +1,139 @@
+# Brand kit: Goodnight Inn, option 3 "the wake-up call", version 3.1 (2026-11-09).
+# 3.1 adds the night header (depth block below), chosen by Björn on 2026-11-09 from
+# three depth variants; build plan: project/project-state/active/10-design-rebuild.md.
+# 3.0 is the business register Björn asked for: hip, modern and businesslike,
+# fit for a Board report and an investor deck. It keeps 1.0's color logic and
+# measured weights, and drops 2.0's mascot, riso, grain and illustrations from
+# everything a judge or investor sees (see brand-guide.md section 0).
+# Palette after a reel Björn shared (Oat Cream #E9E5D6, Coffee Blue #2589D8,
+# Tangerine #FF783D); nothing else from the reference is used.
+#
+# Validation 2026-11-08 (scripts/check_contrast.py --kit, Machado-matrix
+# color-blindness simulation, CIE76 distances, scratch script):
+#   ink/canvas 13.9  ink/surface 15.8  ink_secondary/canvas 6.7  /surface 7.6
+#   accent (Deep Coffee) 5.5 canvas / 6.2 white; accent_mark (Coffee Blue) 3.3 / 3.7
+#   signal (Burnt Tangerine) 5.6 / 6.3; signal_mark (Tangerine) 3.3 / 3.7
+#   neutral_data 3.1 / 3.5; chips: blue 5.3, tangerine 5.2, neutral 6.4
+#   masthead: Oat on Night 12.5, muted text on Night 6.2, Coffee Blue on Night 4.2
+#   Coffee Blue vs Tangerine deltaE protan 94 / deutan 111 / tritan 112;
+#   Coffee Blue vs neutral >= 38 under every simulation.
+# Fonts: Segoe UI is Power BI's own default and is what makes the page read as
+# modern; it ships with Windows only. Under Publish-to-Web a Mac judge sees it
+# only if the service delivers it as a web font: UNVERIFIED. Test before stage 6
+# in a browser without Segoe UI; the fallback is Arial, metrics re-checked.
+
+kit: "goodnight-inn-wakeup"
+version: 3
+revision: "3.1"
+date: "2026-11-09"
+revises: "goodnight-inn-hanger"
+
+identity:
+  organization_alias: "Goodnight Inn"
+  personality: "sharp, warm, confident"
+  # Must never radiate: playful, cartoon, craft-zine, luxury-glossy, salesy.
+  # Brand promise: "A good night. A fair price." Archetype: the Everyman, dressed
+  # for the boardroom: plain words, exact numbers, generous space.
+  # Readers: the Board and contest judges (and, by extension, investors),
+  # 1920-wide monitors and 1366-wide laptops, Publish-to-Web, Windows or macOS.
+
+color:
+  canvas: "#F3F1EA"          # Oat Light: the page. Warm, never pure white.
+  surface: "#FFFFFF"         # White cards: crisp against the warm page.
+  ink: "#12233D"             # Night: text, the masthead band, the package total.
+  ink_secondary: "#4B5466"   # Dusk: labels, axes, captions (6.7 / 7.6)
+  hairline: "#E3DFD3"        # Seam: card borders and table rules
+
+  zone: "#12233D"            # Night header zone (depth block); in the comps also the band
+  zone_text: "#F7F5EE"       # headline on the zone (14.4)
+  zone_text_muted: "#C9D0DC" # masthead line and subtitle on the zone (10.2)
+  zone_eyebrow: "#A9CDF0"    # eyebrow on the zone (9.5)
+  oat: "#E9E5D6"             # Oat Cream: neutral chip fills, table header band
+
+  accent: "#1763A8"          # Deep Coffee: blue text, the recommended plan, ▲ better
+  accent_mark: "#2589D8"     # Coffee Blue: Goodnight Inn's series everywhere (3.3 / 3.7)
+  accent_tint: "#EAF2FB"     # Goodnight Inn column and selected-card tint (ink 13.9)
+  signal: "#A63F0E"          # Burnt Tangerine: text and signs for what needs attention
+  signal_mark: "#E05A22"     # Tangerine: attention marks (costs, the Low case)
+  signal_tint: "#FCE6DB"     # chip fill for "last of 4" and risks (Burnt on it 5.2)
+  good: "#1763A8"
+  bad: "#A63F0E"             # always with ▲ ▼ or a word
+  neutral_data: "#8E897D"    # Warm Grey: sister brands, context, packages with the refresh
+  neutral_light: "#C9C4B7"   # labelled background marks only
+
+  # Goodnight Inn is always Coffee Blue; the sisters are always Warm Grey.
+  # Tangerine never draws a brand: it marks a signal (a cost, a risk, a slide).
+  categorical:
+    - "#2589D8"              # Goodnight Inn / ours / the plan
+    - "#8E897D"              # sister brands / context
+    - "#E05A22"              # signal series (OTA, the Low case)
+    - "#C9C4B7"              # background, labelled
+  sequential: ["#EAF2FB", "#C5DCF3", "#8DBBE8", "#4F9BE0", "#2589D8", "#1763A8"]
+  diverging: ["#A63F0E", "#F0A882", "#EEEBE2", "#8DBBE8", "#1763A8"]
+
+typography:
+  display: "Segoe UI Semibold, Arial"   # headline 30 pt (40 px at 1920), card titles 14 pt
+  body: "Segoe UI, Arial"               # body and all secondary text 12 pt minimum
+  numeric: "Segoe UI Semibold, Arial"   # hero figures 20-30 pt, table figures 12 pt; tabular
+  scale_pt: [30, 20, 14, 12, 12]        # headline / hero figure / card title / body / caption
+  floor: "12 pt (16 px at 1920, 11-12 px at 1366): plan 08 R4 minimum for table, axis and tooltip text. The comps draw some labels at 11-13 px for density; the build does not."
+  eyebrow: "11 pt Segoe UI Semibold capitals, letter-spaced, Deep Coffee: '01  THE BRAND REVIEW'"
+  rule: "sentence case everywhere except eyebrows and chips; one hero figure per card at most"
+
+shape:
+  radius_px: 12              # cards
+  chip_radius: "full"        # chips, segmented controls, buttons
+  shadow: "none"
+  hairline_px: 1
+  selected: "2 px Coffee Blue border + Ice tint"
+
+depth:
+  # 3.1 "night header". Drawn into the page background image (canvas-studio method,
+  # project/tools/opzet_backgrounds.mjs); nothing here becomes a theme or visual property,
+  # so shape.shadow stays "none" (compile_theme.py turns it into a default shadow on
+  # every visual, which would shade text boxes and slicers too).
+  zone: "flat color.zone from y 0 to the horizon; no gradient (design hard rule 6)"
+  horizon: "top of the first card row + 128 px (opzet-layout.json: 184 + 128 = 312; comps: 212 + 128 = 340)"
+  overlap: "the first card row starts inside the zone and hangs over the horizon"
+  card_border: "none: cards are separated by the shadow, not a hairline"
+  card_shadow:               # SVG feDropShadow: dx 0, dy 8, stdDeviation 12, flood Night at 0.10
+    color: "#12233D"
+    opacity: 0.10
+    dx: 0
+    dy: 8
+    blur: 24
+  one_style: "every top-level card on a page carries the same shadow (consistency lock 9); inner tiles (P2 tile_preset_a/b/c) keep the canvas fill and hairline, no shadow"
+  zone_hanger: "the faceless hanger in the zone, top right: Oat at 6 %, scale 7.2, tilted 10 degrees counter-clockwise about its hole, clipped by the horizon (plan 10, D2b). Kept on Björn's request of 2026-11-09; waives hard rule 6 (decorative image) and the canvas-guide 'no logos' rule for the header zone only. Text over it: 12.6 / 8.8 / 8.3:1"
+  optional_glow: "night-glow variant (Night-to-navy gradient, Coffee Blue glow, stronger hero shadow, plan glow) only with Björn's recorded waiver of hard rule 6 for gradients; see plan 10, item D7"
+
+grid:
+  canvas_px: [1920, 1080]
+  band_px: 64                # Night masthead with lockup and page tabs
+  page_margin_px: 32
+  gutter_px: 20
+  layout: "bento: one large card per page carries the argument (P1 scorecard, P2 package scatter); supporting cards sized by importance; no loose KPI row"
+
+assets:
+  logo: "assets/gi-lockup-reversed.svg"   # on the Night zone; 194 x 40 px in the opzet logo slot
+  # gi-lockup.svg (Night wordmark on light), gi-mark.svg (the faceless hanger),
+  # gi-mark-mono-night.svg / -oat.svg, gi-wordmark.svg. Wordmark outlined from
+  # Plus Jakarta Sans ExtraBold (OFL-1.1). Generator: project/tools/brand_logos_v3.py.
+  usage: "the lockup once per page in the band; the mark alone as the gallery icon and favicon; never in a chart; as a background shape only the D2b zone hanger"
+  parked: "assets/hank/, the 2.0 mascot and the 1.0 poster wordmark stay in the repo for guest-facing use; they do not appear in the contest entry"
+
+voice:
+  title_style: "short, declarative page headlines (P1 'Full rooms, fading guests.', P2 'Fix the booking before the building.'); every card title states its finding with the number in it"
+  chips: "Best of 4 / 2nd of 4 / Last of 4; Funded / Not funded; Recommended / Alternative / Comparator"
+  number_format_notes: "English: thousands with a comma, $ before the figure, M for millions ($51.3M), one decimal for percentages, true minus sign, pt for percentage points"
+
+forbidden:
+  - "characters, faces, mascots, illustrations or decorative imagery anywhere in the report (the one exception: the D2b zone hanger, by waiver)"
+  - "Tangerine as a brand or series identity; Coffee Blue for anything that is not Goodnight Inn, ours or the plan"
+  - "a third live color; sisters in anything but Warm Grey"
+  - "Coffee Blue or Tangerine as body text (use Deep Coffee and Burnt Tangerine)"
+  - "verdict color without ▲, ▼ or a word"
+  - "a loose row of KPI cards"
+  - "gradients, textures, glassmorphism; shadows other than the one card shadow in the depth block"
+  - "fonts outside Segoe UI and Arial in the report"
+  - "pure white canvas or pure black text"
+  - "bar, alcohol or political imagery (contest rules)"
