@@ -1,0 +1,50 @@
+== ADR, RevPAR and occupancy by brand and year
+                   ADR                                       RevPAR                                        Occ                            
+Year              2021     2022     2023     2024     2025     2021     2022     2023     2024     2025   2021   2022   2023   2024   2025
+Brand                                                                                                                                     
+Goodnight Inn   93.213  100.586  104.007  105.891  106.824   62.315   75.638   81.478   83.937   84.804  0.669  0.752  0.783  0.793  0.794
+Maison d'Or    439.057  505.912  518.440  527.892  527.914  216.237  333.755  368.178  381.830  384.823  0.493  0.660  0.710  0.723  0.729
+P&K Select     188.410  210.521  222.571  228.927  232.978   71.070  113.852  140.631  155.650  167.176  0.377  0.541  0.632  0.680  0.718
+Pebble & Pine  213.055  233.712  237.765  239.573  241.455  120.552  149.732  153.710  153.448  156.142  0.566  0.641  0.646  0.641  0.647
+
+==================== base 2021 = 100
+
+-- ADR index (2021 = 100)
+Year            2021   2022   2023   2024   2025
+Brand                                           
+Goodnight Inn  100.0  107.9  111.6  113.6  114.6
+Maison d'Or    100.0  115.2  118.1  120.2  120.2
+P&K Select     100.0  111.7  118.1  121.5  123.7
+Pebble & Pine  100.0  109.7  111.6  112.4  113.3
+ADR 2025: Goodnight Inn 114.6, rank 3 of 4 (higher = more pricing power); sisters 113.3 to 123.7; gap to sister mean -4.5 pts; spread of the four 10.3 pts; mean of the four 118.0
+
+-- RevPAR index (2021 = 100)
+Year            2021   2022   2023   2024   2025
+Brand                                           
+Goodnight Inn  100.0  121.4  130.8  134.7  136.1
+Maison d'Or    100.0  154.3  170.3  176.6  178.0
+P&K Select     100.0  160.2  197.9  219.0  235.2
+Pebble & Pine  100.0  124.2  127.5  127.3  129.5
+RevPAR 2025: Goodnight Inn 136.1, rank 3 of 4 (higher = more pricing power); sisters 129.5 to 235.2; gap to sister mean -44.8 pts; spread of the four 105.7 pts; mean of the four 169.7
+
+==================== base 2023 = 100
+
+-- ADR index (2023 = 100)
+Year           2021  2022   2023   2024   2025
+Brand                                         
+Goodnight Inn  89.6  96.7  100.0  101.8  102.7
+Maison d'Or    84.7  97.6  100.0  101.8  101.8
+P&K Select     84.7  94.6  100.0  102.9  104.7
+Pebble & Pine  89.6  98.3  100.0  100.8  101.6
+ADR 2025: Goodnight Inn 102.7, rank 2 of 4 (higher = more pricing power); sisters 101.6 to 104.7; gap to sister mean +0.0 pts; spread of the four 3.1 pts; mean of the four 102.7
+
+-- RevPAR index (2023 = 100)
+Year           2021  2022   2023   2024   2025
+Brand                                         
+Goodnight Inn  76.5  92.8  100.0  103.0  104.1
+Maison d'Or    58.7  90.7  100.0  103.7  104.5
+P&K Select     50.5  81.0  100.0  110.7  118.9
+Pebble & Pine  78.4  97.4  100.0   99.8  101.6
+RevPAR 2025: Goodnight Inn 104.1, rank 3 of 4 (higher = more pricing power); sisters 101.6 to 118.9; gap to sister mean -4.2 pts; spread of the four 17.3 pts; mean of the four 107.3
+
+Decision rule (plan 11 step 3): build R1 when Goodnight Inn's 2021-based RevPAR index tells a distinct story (a clear rank or gap against the sisters). If the four move together (small spread against a large shared rise), the 2021 base measures the recovery, not pricing power: show Bjorn both bases before building.
