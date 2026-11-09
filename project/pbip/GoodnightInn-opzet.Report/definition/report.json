@@ -11,7 +11,7 @@
       "type": "SharedResources"
     },
     "customTheme": {
-      "name": "goodnight-inn-hanger.json",
+      "name": "goodnight-inn-wakeup.json",
       "reportVersionAtImport": {
         "visual": "2.10.0",
         "report": "3.4.0",
@@ -59,28 +59,18 @@
       "type": "RegisteredResources",
       "items": [
         {
-          "name": "goodnight-inn-hanger.json",
-          "path": "goodnight-inn-hanger.json",
+          "name": "goodnight-inn-wakeup.json",
+          "path": "goodnight-inn-wakeup.json",
           "type": "CustomTheme"
         },
         {
-          "name": "lockup-p1-brand-review.png",
-          "path": "lockup-p1-brand-review.png",
+          "name": "gi-lockup-reversed@2x.png",
+          "path": "gi-lockup-reversed@2x.png",
           "type": "Image"
         },
         {
-          "name": "goodnight-inn-door-asleep@2x.png",
-          "path": "goodnight-inn-door-asleep@2x.png",
-          "type": "Image"
-        },
-        {
-          "name": "lockup-p2-investment-strategy.png",
-          "path": "lockup-p2-investment-strategy.png",
-          "type": "Image"
-        },
-        {
-          "name": "goodnight-inn-door-awake@2x.png",
-          "path": "goodnight-inn-door-awake@2x.png",
+          "name": "canvas-night.jpg",
+          "path": "canvas-night.jpg",
           "type": "Image"
         }
       ]

@@ -5,7 +5,7 @@
     "x": 32,
     "y": 88,
     "z": 1001,
-    "width": 1680,
+    "width": 1856,
     "height": 48,
     "tabOrder": 100
   },
@@ -47,7 +47,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trebuchet MS'"
+                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
                 }
               }
             },
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#24192B'"
+                      "Value": "'#F7F5EE'"
                     }
                   }
                 }
@@ -87,13 +87,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1L"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
                 }
               }
             }
@@ -373,8 +366,13 @@
           "properties": {
             "altText": {
               "expr": {
-                "Literal": {
-                  "Value": "'Page headline: the recommendation'"
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Headline P2 (text)"
                 }
               }
             }

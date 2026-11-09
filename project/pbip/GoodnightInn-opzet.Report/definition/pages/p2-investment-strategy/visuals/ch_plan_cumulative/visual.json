@@ -112,14 +112,14 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Verdana'"
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
@@ -128,7 +128,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#5B5163'"
+                      "Value": "'#4B5466'"
                     }
                   }
                 }
@@ -164,14 +164,14 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Verdana'"
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
@@ -180,7 +180,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#5B5163'"
+                      "Value": "'#4B5466'"
                     }
                   }
                 }
@@ -231,7 +231,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#82798A'"
+                      "Value": "'#E05A22'"
                     }
                   }
                 }
@@ -249,7 +249,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#82798A'"
+                      "Value": "'#8E897D'"
                     }
                   }
                 }
@@ -267,7 +267,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#82798A'"
+                      "Value": "'#8E897D'"
                     }
                   }
                 }
@@ -285,7 +285,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#B5175F'"
+                      "Value": "'#2589D8'"
                     }
                   }
                 }
@@ -329,6 +329,13 @@
               "expr": {
                 "Literal": {
                   "Value": "1.5D"
+                }
+              }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'dashed'"
                 }
               }
             }
@@ -400,21 +407,32 @@
             "seriesMatchColor": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
+                }
+              }
+            },
+            "seriesColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4B5466'"
+                    }
+                  }
                 }
               }
             },
             "textSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
             "seriesFontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Verdana'"
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             }
@@ -457,7 +475,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#82798A'"
+                      "Value": "'#8E897D'"
                     }
                   }
                 }
@@ -526,14 +544,14 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trebuchet MS'"
+                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "13D"
+                  "Value": "14D"
                 }
               }
             },
@@ -542,7 +560,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#24192B'"
+                      "Value": "'#12233D'"
                     }
                   }
                 }
@@ -596,7 +614,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -655,8 +673,13 @@
           "properties": {
             "altText": {
               "expr": {
-                "Literal": {
-                  "Value": "'Line chart of the cumulative net impact of the package in focus 2027 to 2032 in the Low, Expected and High scenarios; the scenario in view in raspberry, the zero line marks payback'"
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Alt Cumulative (text)"
                 }
               }
             }

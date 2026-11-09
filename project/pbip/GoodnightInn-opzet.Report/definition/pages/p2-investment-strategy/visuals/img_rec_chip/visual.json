@@ -7,7 +7,7 @@
     "z": 1029,
     "width": 40,
     "height": 32,
-    "tabOrder": 395
+    "tabOrder": -1005
   },
   "visual": {
     "visualType": "image",
@@ -30,7 +30,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Chip Awake"
+                  "Property": "Chip Funded"
                 }
               }
             },
@@ -152,19 +152,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "altText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Decorative: the brand''s funded chip, the door hanger awake'"
                 }
               }
             }

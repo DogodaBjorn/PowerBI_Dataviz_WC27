@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "z_payoff",
+  "name": "z_eyebrow2",
   "position": {
     "x": 248,
     "y": 40,
     "z": 1004,
     "width": 448,
-    "height": 32,
-    "tabOrder": 9060
+    "height": 24,
+    "tabOrder": 20
   },
   "visual": {
     "visualType": "textbox",
@@ -19,12 +19,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "Do not disturb, since 2020.",
+                    "value": "02  THE INVESTMENT STRATEGY",
                     "textStyle": {
-                      "fontFamily": "Trebuchet MS",
-                      "fontSize": "21px",
-                      "color": "#B5175F",
-                      "fontWeight": "bold"
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#A9CDF0"
                     }
                   }
                 ],
@@ -154,7 +153,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Goodnight Inn pay-off: Do not disturb, since 2020.'"
+                  "Value": "'Page 2 of 2: the investment strategy'"
                 }
               }
             }

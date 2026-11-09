@@ -3,11 +3,11 @@
   "name": "z_logo",
   "position": {
     "x": 32,
-    "y": 24,
+    "y": 32,
     "z": 1003,
     "width": 200,
-    "height": 56,
-    "tabOrder": 9050
+    "height": 40,
+    "tabOrder": 10
   },
   "visual": {
     "visualType": "image",
@@ -27,7 +27,7 @@
                 "name": {
                   "expr": {
                     "Literal": {
-                      "Value": "'lockup-p2-investment-strategy.png'"
+                      "Value": "'gi-lockup-reversed@2x.png'"
                     }
                   }
                 },
@@ -36,7 +36,7 @@
                     "ResourcePackageItem": {
                       "PackageName": "RegisteredResources",
                       "PackageType": 1,
-                      "ItemName": "lockup-p2-investment-strategy.png"
+                      "ItemName": "gi-lockup-reversed@2x.png"
                     }
                   }
                 },
@@ -185,7 +185,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Goodnight Inn logo: the door hanger awake'"
+                  "Value": "'Goodnight Inn logo'"
                 }
               }
             }

@@ -5,6 +5,7 @@
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
+      "z_tile_rec",
       "c_focus_line",
       "img_rec_chip",
       "c_rec_title",
@@ -36,6 +37,14 @@
     "sections": {
       "p2-investment-strategy": {
         "visualContainers": {
+          "z_tile_rec": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
           "c_focus_line": {
             "singleVisual": {
               "visualType": "cardVisual",

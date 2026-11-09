@@ -7,7 +7,7 @@
     "z": 1019,
     "width": 368,
     "height": 24,
-    "tabOrder": 305
+    "tabOrder": -1004
   },
   "visual": {
     "visualType": "textbox",
@@ -21,9 +21,9 @@
                   {
                     "value": "Package in focus",
                     "textStyle": {
-                      "fontFamily": "Verdana",
-                      "fontSize": "15px",
-                      "color": "#5B5163"
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#4B5466"
                     }
                   }
                 ],

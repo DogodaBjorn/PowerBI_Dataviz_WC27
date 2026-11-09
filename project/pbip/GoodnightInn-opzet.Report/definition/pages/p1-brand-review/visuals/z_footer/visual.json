@@ -3,10 +3,10 @@
   "name": "z_footer",
   "position": {
     "x": 32,
-    "y": 1032,
+    "y": 1024,
     "z": 1090,
     "width": 1856,
-    "height": 24,
+    "height": 48,
     "tabOrder": 9000
   },
   "visual": {
@@ -19,11 +19,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "Source: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores weighted by survey responses. 2021 is a depressed base year.",
+                    "value": "Source: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores weighted by survey responses. 2021 is a depressed base year. Deliberately not shown: impressions, likes, and NPS as a growth measure; effectiveness research does not support them.",
                     "textStyle": {
-                      "fontFamily": "Verdana",
-                      "fontSize": "15px",
-                      "color": "#5B5163"
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#4B5466"
                     }
                   }
                 ],
@@ -141,6 +141,19 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Source: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores weighted by survey responses. 2021 is a depressed base year. Deliberately not shown: impressions, likes, and NPS as a growth measure; effectiveness research does not support them.'"
                 }
               }
             }

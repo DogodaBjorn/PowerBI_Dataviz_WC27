@@ -14,7 +14,7 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#F5F3F0'"
+                    "Value": "'#F3F1EA'"
                   }
                 }
               }
@@ -34,6 +34,11 @@
   "visualInteractions": [
     {
       "source": "hero_hover",
+      "target": "z_canvas",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
       "target": "z_card_card_scatter",
       "type": "NoFilter"
     },
@@ -44,17 +49,17 @@
     },
     {
       "source": "hero_hover",
+      "target": "z_tile_rec",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_hover",
       "target": "z_logo",
       "type": "NoFilter"
     },
     {
       "source": "hero_hover",
-      "target": "z_payoff2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
-      "target": "z_vignette2",
+      "target": "z_eyebrow2",
       "type": "NoFilter"
     },
     {

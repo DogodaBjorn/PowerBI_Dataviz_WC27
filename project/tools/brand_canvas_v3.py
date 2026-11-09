@@ -18,14 +18,26 @@ Depth lives in the chrome only: nothing here sits behind a chart's plot area
 except the warm glow, which stays under 4 % luminance change on white cards
 (cards are opaque, so it never reaches the data).
 
-Run: python project/tools/brand_canvas_v3.py <out_dir>
+Run: python project/tools/brand_canvas_v3.py <out_dir>                      # the comps (horizon 340)
+     python project/tools/brand_canvas_v3.py <out_dir> <opzet-layout.json>   # the report (plan 11)
+
+Plan 11 (Björn chose night-glow, D7 waiver in status.yaml 2026-11-09): with a slot map the horizon is the top of the
+report's first card row + 64 px (y 248 on v3; plan 10's +128 assumed main's layout), the Coffee Blue light keeps its
+place in the zone (250 of 340), and the result is project/deliverables/backgrounds/canvas-night.jpg, which
+project/tools/opzet_report.py places as a decorative image visual (z_canvas) under every other visual: an image
+visual scales with the content, where a page background with Fit drifted (7 Nov, BUILD_LOG).
 """
-import os, sys
+import json, os, sys
 import numpy as np
 from PIL import Image, ImageDraw
 
 W, H = 1920, 1080
-HORIZON = 340                     # bottom of the dark header zone (night canvas)
+HORIZON = 340                     # bottom of the dark header zone (night canvas); the report's comes from its slot map
+if len(sys.argv) > 2:
+    _layout = json.load(open(sys.argv[2], encoding="utf-8"))
+    _tops = {min(c["y"] for c in p["cards"] if not c.get("state")) for p in _layout["pages"] if p.get("cards")}
+    assert len(_tops) == 1, f"pages start their first card row at different heights: {_tops}"
+    HORIZON = _tops.pop() + 64
 rng = np.random.default_rng(7)
 yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
 
@@ -75,7 +87,7 @@ def night(out):
     img = mix(img, "#E3EDF8", glow(0, HORIZON, 800, 0.45))
     t = (xx / W)[..., None]                                    # Night (left) to navy (right)
     top = rgb("#0F1E36") * (1 - t) + rgb("#163760") * t
-    top = mix(top, "#2589D8", glow(1760, 250, 620, 0.22))      # Coffee Blue light, right, below the band text
+    top = mix(top, "#2589D8", glow(1760, round(HORIZON * 250 / 340), 620, 0.22))  # Coffee Blue light, right, below the band text
     zone = (yy < HORIZON)[..., None]
     img = np.where(zone, top, img)
     # the faceless hanger, tilted 10 degrees, cropped by the horizon

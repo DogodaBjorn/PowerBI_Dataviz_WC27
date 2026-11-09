@@ -1,36 +1,67 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "z_payoff2",
+  "name": "z_canvas",
   "position": {
-    "x": 248,
-    "y": 40,
-    "z": 1004,
-    "width": 448,
-    "height": 32,
-    "tabOrder": 9060
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "width": 1920,
+    "height": 1080,
+    "tabOrder": -1000
   },
   "visual": {
-    "visualType": "textbox",
+    "visualType": "image",
     "objects": {
-      "general": [
+      "image": [
         {
           "properties": {
-            "paragraphs": [
-              {
-                "textRuns": [
-                  {
-                    "value": "Please make up the room.",
-                    "textStyle": {
-                      "fontFamily": "Trebuchet MS",
-                      "fontSize": "21px",
-                      "color": "#B5175F",
-                      "fontWeight": "bold"
+            "sourceType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'image'"
+                }
+              }
+            },
+            "sourceFile": {
+              "image": {
+                "name": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'canvas-night.jpg'"
                     }
                   }
-                ],
-                "horizontalTextAlignment": "left"
+                },
+                "url": {
+                  "expr": {
+                    "ResourcePackageItem": {
+                      "PackageName": "RegisteredResources",
+                      "PackageType": 1,
+                      "ItemName": "canvas-night.jpg"
+                    }
+                  }
+                },
+                "scaling": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'Fit'"
+                    }
+                  }
+                }
               }
-            ]
+            }
+          }
+        }
+      ],
+      "imageScaling": [
+        {
+          "properties": {
+            "imageScalingType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Fit'"
+                }
+              }
+            }
           }
         }
       ]
@@ -142,19 +173,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "altText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Goodnight Inn pay-off: Please make up the room.'"
                 }
               }
             }

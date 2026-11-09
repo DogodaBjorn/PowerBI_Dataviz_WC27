@@ -1088,6 +1088,12 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: 88ed7370-015c-50b1-a96b-e3f6ab6a6b56
 
+	/// Marker colour of the A/B/C layer only (it draws nothing else): Deep Coffee for A, Night for B and C, so its white letters read at 6.2:1 and 15.8:1 (plan 11).
+	measure 'Named Point Color' = IF ( SELECTEDVALUE ( Package[Preset] ) = "A", "#1763A8", "#12233D" )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 4682440d-8100-5463-8c6e-43783fc783e0
+
 	/// Scatter size: the package in focus largest, then A, then B and C, the rest small.
 	measure 'Package Point Size' = VAR k = SELECTEDVALUE ( Package[Preset] ) RETURN SWITCH ( TRUE (), [Focus Highlight] = 1, 6, k = "A", 5, k IN { "B", "C" }, 3, 1 )
 		formatString: 0

@@ -3,10 +3,10 @@
   "name": "c_f2_note",
   "position": {
     "x": 680,
-    "y": 720,
+    "y": 696,
     "z": 1034,
     "width": 560,
-    "height": 56,
+    "height": 88,
     "tabOrder": 440
   },
   "visual": {
@@ -47,14 +47,14 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Verdana'"
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#5B5163'"
+                      "Value": "'#4B5466'"
                     }
                   }
                 }
@@ -366,8 +366,13 @@
           "properties": {
             "altText": {
               "expr": {
-                "Literal": {
-                  "Value": "'F2 Note'"
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "F2 Note (text)"
                 }
               }
             }

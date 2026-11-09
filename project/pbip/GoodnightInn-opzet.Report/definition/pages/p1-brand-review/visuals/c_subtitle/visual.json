@@ -5,7 +5,7 @@
     "x": 32,
     "y": 136,
     "z": 1002,
-    "width": 1680,
+    "width": 1856,
     "height": 32,
     "tabOrder": 110
   },
@@ -47,7 +47,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Verdana'"
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             },
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#5B5163'"
+                      "Value": "'#C9D0DC'"
                     }
                   }
                 }
@@ -366,8 +366,13 @@
           "properties": {
             "altText": {
               "expr": {
-                "Literal": {
-                  "Value": "'Subtitle P1 Briefing'"
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Subtitle P1 Briefing (text)"
                 }
               }
             }

@@ -21,9 +21,9 @@
                   {
                     "value": "Above the line a package pays back by 2032. A: our recommendation  ·  B: the alternative  ·  C: why not renovate?",
                     "textStyle": {
-                      "fontFamily": "Verdana",
-                      "fontSize": "15px",
-                      "color": "#5B5163"
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#4B5466"
                     }
                   }
                 ],
@@ -141,6 +141,19 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Above the line a package pays back by 2032. A: our recommendation  ·  B: the alternative  ·  C: why not renovate?'"
                 }
               }
             }

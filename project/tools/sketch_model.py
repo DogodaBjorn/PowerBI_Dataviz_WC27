@@ -703,6 +703,8 @@ m("Focus Highlight", "IF ( SELECTEDVALUE ( Package[PackageID] ) = [Focus Package
 m("Package Point Color",
   f'VAR k = SELECTEDVALUE ( Package[Preset] ) RETURN SWITCH ( k, "A", "{ACCENT}", "B", "{INK}", "C", "{INK}", "{SLATE}" )',
   TXT, C9, "Scatter color: Deep Coffee for A (the recommended plan; its white letter 6.2:1), Night for the alternatives B and C, Warm Grey for the other packages (3.5:1 on white; the earlier light lilac was 2.1:1). Plan 10 D6 on the v3 presets.")
+m("Named Point Color", f'IF ( SELECTEDVALUE ( Package[Preset] ) = "A", "{ACCENT}", "{INK}" )', TXT, C9,
+  "Marker colour of the A/B/C layer only (it draws nothing else): Deep Coffee for A, Night for B and C, so its white letters read at 6.2:1 and 15.8:1 (plan 11).")
 m("Package Point Size",
   'VAR k = SELECTEDVALUE ( Package[Preset] ) RETURN SWITCH ( TRUE (), [Focus Highlight] = 1, 6, k = "A", 5, k IN { "B", "C" }, 3, 1 )',
   "0", C9, "Scatter size: the package in focus largest, then A, then B and C, the rest small.")

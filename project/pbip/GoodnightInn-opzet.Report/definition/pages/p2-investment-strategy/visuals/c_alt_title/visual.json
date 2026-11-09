@@ -3,7 +3,7 @@
   "name": "c_alt_title",
   "position": {
     "x": 1112,
-    "y": 632,
+    "y": 664,
     "z": 1035,
     "width": 752,
     "height": 32,
@@ -21,10 +21,9 @@
                   {
                     "value": "Considered, not recommended",
                     "textStyle": {
-                      "fontFamily": "Trebuchet MS",
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "20px",
-                      "color": "#24192B",
-                      "fontWeight": "bold"
+                      "color": "#12233D"
                     }
                   }
                 ],
@@ -142,6 +141,19 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Considered, not recommended'"
                 }
               }
             }

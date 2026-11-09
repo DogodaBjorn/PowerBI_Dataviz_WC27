@@ -1,3 +1,7 @@
+// RETIRED in plan 11 (2026-11-09, kit goodnight-inn-wakeup 3.1): the report no longer uses this script's output.
+// The canvas is project/tools/brand_canvas_v3.py (canvas-night.jpg, placed as the z_canvas image visual) and the
+// logo is the kit's own gi-lockup-reversed@2x.png. Kept for the record of the hanger-kit builds (v2, v3).
+//
 // Page backgrounds for the opzet report (canvas-studio method: furniture only, brand tokens).
 //
 // usage (from the repo root):  node project/tools/opzet_backgrounds.mjs

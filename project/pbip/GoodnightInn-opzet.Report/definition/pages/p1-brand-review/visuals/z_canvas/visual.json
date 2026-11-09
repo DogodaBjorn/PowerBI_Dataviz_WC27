@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "z_vignette2",
+  "name": "z_canvas",
   "position": {
-    "x": 1728,
-    "y": 16,
-    "z": 1005,
-    "width": 160,
-    "height": 160,
-    "tabOrder": 9070
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "width": 1920,
+    "height": 1080,
+    "tabOrder": -1000
   },
   "visual": {
     "visualType": "image",
@@ -27,7 +27,7 @@
                 "name": {
                   "expr": {
                     "Literal": {
-                      "Value": "'goodnight-inn-door-awake@2x.png'"
+                      "Value": "'canvas-night.jpg'"
                     }
                   }
                 },
@@ -36,7 +36,7 @@
                     "ResourcePackageItem": {
                       "PackageName": "RegisteredResources",
                       "PackageType": 1,
-                      "ItemName": "goodnight-inn-door-awake@2x.png"
+                      "ItemName": "canvas-night.jpg"
                     }
                   }
                 },
@@ -173,19 +173,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "altText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Illustration: a hotel room door in the morning, open, the hanger awake on the handle'"
                 }
               }
             }

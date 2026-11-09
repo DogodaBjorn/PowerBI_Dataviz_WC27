@@ -21,10 +21,9 @@
                   {
                     "value": "Our recommendation: package A",
                     "textStyle": {
-                      "fontFamily": "Trebuchet MS",
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "20px",
-                      "color": "#24192B",
-                      "fontWeight": "bold"
+                      "color": "#12233D"
                     }
                   }
                 ],
@@ -142,6 +141,19 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Our recommendation: package A'"
                 }
               }
             }

@@ -1,67 +1,35 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "z_vignette",
+  "name": "z_eyebrow",
   "position": {
-    "x": 1728,
-    "y": 16,
-    "z": 1005,
-    "width": 160,
-    "height": 160,
-    "tabOrder": 9070
+    "x": 248,
+    "y": 40,
+    "z": 1004,
+    "width": 448,
+    "height": 24,
+    "tabOrder": 20
   },
   "visual": {
-    "visualType": "image",
+    "visualType": "textbox",
     "objects": {
-      "image": [
+      "general": [
         {
           "properties": {
-            "sourceType": {
-              "expr": {
-                "Literal": {
-                  "Value": "'image'"
-                }
-              }
-            },
-            "sourceFile": {
-              "image": {
-                "name": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'goodnight-inn-door-asleep@2x.png'"
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "01  THE BRAND REVIEW",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#A9CDF0"
                     }
                   }
-                },
-                "url": {
-                  "expr": {
-                    "ResourcePackageItem": {
-                      "PackageName": "RegisteredResources",
-                      "PackageType": 1,
-                      "ItemName": "goodnight-inn-door-asleep@2x.png"
-                    }
-                  }
-                },
-                "scaling": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'Fit'"
-                    }
-                  }
-                }
+                ],
+                "horizontalTextAlignment": "left"
               }
-            }
-          }
-        }
-      ],
-      "imageScaling": [
-        {
-          "properties": {
-            "imageScalingType": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Fit'"
-                }
-              }
-            }
+            ]
           }
         }
       ]
@@ -185,7 +153,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Illustration: a hotel room door at night, closed, the hanger asleep on the handle'"
+                  "Value": "'Page 1 of 2: the brand review'"
                 }
               }
             }

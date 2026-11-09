@@ -7,7 +7,7 @@
     "z": 1013,
     "width": 416,
     "height": 24,
-    "tabOrder": 230
+    "tabOrder": -1330
   },
   "visual": {
     "visualType": "textbox",
@@ -19,11 +19,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "Net promoter score",
+                    "value": "Guest quality: net promoter score",
                     "textStyle": {
-                      "fontFamily": "Verdana",
-                      "fontSize": "15px",
-                      "color": "#5B5163"
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#4B5466"
                     }
                   }
                 ],
@@ -141,19 +141,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "altText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Net promoter score'"
                 }
               }
             }
