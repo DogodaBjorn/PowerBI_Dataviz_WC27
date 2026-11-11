@@ -679,6 +679,9 @@ for key, base in (("Margin after", "GOP Margin after Distribution %"), ("OTA", "
     fmt = next(x[2] for x in MEASURES if x[0] == base)
     for code, b in BRANDS:
         m(f"Trend {key} {code}", f"CALCULATE ( [{base}], {brand(b)} )", fmt, C8, f"{b}: {base} on the trend axis.")
+# round 10: the three sister brands as one line for the small F2 chart in the chip tooltip (four names did not fit a 416 px chart)
+m("Trend OTA Sisters", 'CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] <> "Goodnight Inn" )', "0.0%", C8,
+  "The three sister brands together: OTA share of room revenue on the trend axis (room-revenue weighted), for the compact F2 tooltip chart.")
 gi = brand("Goodnight Inn")
 m("Subtitle P1 (text)",
   f"VAR occ = CALCULATE ( [Occupancy % 2025], {gi} ) VAR gm = CALCULATE ( [GOP Margin % 2025], {gi} ) VAR ga = CALCULATE ( [GOP Margin after Distribution % 2025], {gi} ) "
@@ -1591,10 +1594,10 @@ SVG_FONT = "font-family='Segoe UI, Arial, sans-serif' font-size='16'"
 NUM = lambda x: f'FORMAT ( {x}, "0.0", "en-US" )'  # noqa: E731
 SVG_OPEN = lambda w, h: f"\"<svg xmlns='http://www.w3.org/2000/svg' width='{w}' height='{h}' viewBox='0 0 {w} {h}'>\""  # noqa: E731
 HX = lambda hexv: hexv.replace("#", "%23")  # noqa: E731  (the SVG colour form of a hex; PCT stays the percent format string)
-TTW = 496  # the inner width of a tooltip card (560 - 2 x 32), round 7
-TTL = 496  # the moves list, the same width
+TTW = 416  # the inner width of a tooltip card (480 - 2 x 32), round 10
+TTL = 416  # the moves list, the same width
 
-# the range bar, 496 x 48: one fixed axis for every package (min Low .. max High over all 456, rounded out to $5M),
+# the range bar, 416 x 48 (round 10): one fixed axis for every package (min Low .. max High over all 456, rounded out to $5M),
 # A/B/C ticks with their letters (A and B pushed apart when they touch), the hovered package's Low-High band with its
 # Expected dot, the break-even line in Night, the Low and High numbers under the band. The round-6 histogram strip of
 # the cloud left in round 7 (Björn: too busy). TT Range (text) is its text twin and names the line.
@@ -1624,7 +1627,7 @@ m("TT Range SVG",
             "the A/B/C ticks, the break-even line and the Low and High numbers; decorative, TT Range (text) is its text twin (keyboard tooltip, alt text).")
 IMAGE_MEASURES.add("TT Range SVG")
 
-# the moves list, 496 x 200 (round 7, Björn: leaner): a header row, one row per move (positives first, the sinker
+# the moves list, 376 x 180 (round 10: 440 px tooltips, row pitch 18; round 7, Björn: leaner): a header row, one row per move (positives first, the sinker
 # last), a totals row; columns Move | Capex | NPV, the NPV in Burnt Tangerine below zero. The waterfall bars and the
 # Answers column of round 6 left with the move grid: the numbers add up without them.
 TT_RUN = (TT_IDS + shown_parts("[NPV @ 8%]", 10000) +
@@ -1635,18 +1638,18 @@ _capex = 'LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[Project
 m("TT Moves SVG",
   TT_RUN +
   # one row per move: y from its rank (positives first); 'rows' is a reserved word in DAX, hence moveRows
-  'VAR moveRows = CONCATENATEX ( adj, VAR y = 20 * RANKX ( adj, [@s] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.0000001, , DESC ) RETURN '
-  + _cell(0, "start", HX(INK), NAME_OF.format("[@p]")) + ' & ' + _cell(400, "end", HX(INK), fmc2(_capex))
-  + ' & ' + _cell(496, "end", 'PLACEHOLDER_NPV_COLOUR', sfm2("[@s]")).replace("fill='PLACEHOLDER_NPV_COLOUR'", _npv_fill("[@s]")) + ', "" ) '
+  'VAR moveRows = CONCATENATEX ( adj, VAR y = 18 * RANKX ( adj, [@s] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.0000001, , DESC ) RETURN '
+  + _cell(0, "start", HX(INK), NAME_OF.format("[@p]")) + ' & ' + _cell(TTL - 96, "end", HX(INK), fmc2(_capex))
+  + ' & ' + _cell(TTL, "end", 'PLACEHOLDER_NPV_COLOUR', sfm2("[@s]")).replace("fill='PLACEHOLDER_NPV_COLOUR'", _npv_fill("[@s]")) + ', "" ) '
   # the totals row under the moves (its own VAR name: DAX forbids shadowing the rows' y)
-  "VAR yT = 20 * ( nrows + 1 ) "
-  'VAR total = ' + _cell(0, "start", HX(INK), '"Total"', " font-weight='600'", "yT") + ' & ' + _cell(400, "end", HX(INK), fmc2("cap"), " font-weight='600'", "yT")
-  + ' & ' + _cell(496, "end", 'PLACEHOLDER_NPV_COLOUR', sfm2("tot"), " font-weight='600'", "yT").replace("fill='PLACEHOLDER_NPV_COLOUR'", _npv_fill("tot")) + ' '
-  'RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & ' + SVG_OPEN(TTL, 200) + ' '
+  "VAR yT = 18 * ( nrows + 1 ) "
+  'VAR total = ' + _cell(0, "start", HX(INK), '"Total"', " font-weight='600'", "yT") + ' & ' + _cell(TTL - 96, "end", HX(INK), fmc2("cap"), " font-weight='600'", "yT")
+  + ' & ' + _cell(TTL, "end", 'PLACEHOLDER_NPV_COLOUR', sfm2("tot"), " font-weight='600'", "yT").replace("fill='PLACEHOLDER_NPV_COLOUR'", _npv_fill("tot")) + ' '
+  'RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & ' + SVG_OPEN(TTL, 184) + ' '
   # the header row and its hairline, the hairline over the totals row
-  '& "<text x=\'0\' y=\'14\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Move</text><text x=\'400\' y=\'14\' text-anchor=\'end\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Capex</text><text x=\'496\' y=\'14\' text-anchor=\'end\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>NPV</text>" '
-  '& "<line x1=\'0\' x2=\'' + str(TTL) + '\' y1=\'19.5\' y2=\'19.5\' stroke=\'' + HX(HAIR) + '\'/>" '
-  '& "<line x1=\'0\' x2=\'' + str(TTL) + '\' y1=\'" & ( 20 * ( nrows + 1 ) + 0.5 ) & "\' y2=\'" & ( 20 * ( nrows + 1 ) + 0.5 ) & "\' stroke=\'' + HX(HAIR) + '\'/>" '
+  '& "<text x=\'0\' y=\'14\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Move</text><text x=\'' + str(TTL - 96) + '\' y=\'14\' text-anchor=\'end\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Capex</text><text x=\'' + str(TTL) + '\' y=\'14\' text-anchor=\'end\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>NPV</text>" '
+  '& "<line x1=\'0\' x2=\'' + str(TTL) + '\' y1=\'17.5\' y2=\'17.5\' stroke=\'' + HX(HAIR) + '\'/>" '
+  '& "<line x1=\'0\' x2=\'' + str(TTL) + '\' y1=\'" & ( 18 * ( nrows + 1 ) + 0.5 ) & "\' y2=\'" & ( 18 * ( nrows + 1 ) + 0.5 ) & "\' stroke=\'' + HX(HAIR) + '\'/>" '
   '& moveRows & total & "</svg>" )',
   TXT, C10, "Tooltip: the moves of the hovered package as a list with capex and NPV each (positives first, the sinker last) and a totals row; "
             "the move NPVs are rounded so they add up to the package. Decorative: TT Moves (text) and Alt TT Moves say the same in words.")

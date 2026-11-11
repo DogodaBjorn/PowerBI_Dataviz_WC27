@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tt_kicker",
   "position": {
     "x": 16,
     "y": 16,
-    "z": 3000,
+    "z": 1000,
+    "width": 448,
     "height": 24,
-    "width": 528,
-    "tabOrder": -3001
+    "tabOrder": -1005
   },
   "visual": {
     "visualType": "cardVisual",
@@ -374,6 +374,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

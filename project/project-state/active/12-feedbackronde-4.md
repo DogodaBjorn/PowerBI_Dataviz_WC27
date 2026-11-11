@@ -251,3 +251,68 @@ Set v8 opnieuw opgenomen (28 beelden). Poorten: schema_check 195 bestanden 0 fal
 
 **Open.** Bjorns ja op V9; de commit op `feedback-ronde-4` (rondes 8 en 9 staan ongecommit); Publish to Web met Deneb en de
 tooltips, muis- en toetsenbordronde, merge.
+
+## 11. Ronde 10 (11 november: de tooltips compact en op schaal; de overlay overal weg)
+
+**Wat Bjorn zag en vroeg.** Na de lagenronde en het weghalen van de `z_canvas`-overlay op P1, P2 en vijf tooltip-pagina's:
+de overlay moet overal weg; de tooltips zijn te groot, "buitenproportioneel als je hovert in de service"; en een grondige
+verbeterronde met de taste-skill, met bronnen die te verifiëren zijn.
+
+**Bronnen (geverifieerd, 11 november).**
+- Microsoft Learn, *Extend visuals with report page tooltips* (guidance): "Configure your page tooltip to be small. You can use
+  the built-in Tooltip option (320 pixels wide, 240 pixels high) ... Take care not to use a page size that's too large: it can
+  obscure the visuals on the source page"; ontwerp op *Actual Size*; "the same theme and style as the report"; niet interactief,
+  geen scrollen; altijd verborgen. https://learn.microsoft.com/en-us/power-bi/guidance/report-page-tooltips
+- Microsoft Learn, *Visual tooltips in Power BI*: de rapportinstelling "Tooltip size is affected by canvas size" (tooltip
+  autoscale): "resizes tooltips based on the canvas size so they look right on different screen sizes".
+  https://learn.microsoft.com/en-us/power-bi/visuals/power-bi-visualization-visual-tooltips
+- Het PBIR-rapportschema 3.3.0 (`settings`): `useScaledTooltips` = "If enabled, the tooltip will scale to match canvas zoom";
+  `useEnhancedTooltips` = "Uses better tooltips for the visuals in this report".
+  https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json
+- Microsoft Learn, *Create report tooltips*: "Your tooltip can be any size, but keep in mind that tooltips hover over the report
+  canvas"; screenreaders lezen een tooltip-pagina niet. https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-tooltips
+- Fabric Community (Power BI Updates Blog), *Deep dive into tooltip options in Power BI visuals*: report-page tooltips zijn niet
+  interactief; voor interactie een drillthrough-pagina. https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Deep-dive-into-tooltip-options-in-Power-BI-visuals-Generally/ba-p/5255518
+- Niet gevonden bij Havens, Kolosko of Data Goblins: een gepubliceerde maatregel voor tooltip-pagina's; de maat hieronder volgt
+  Microsofts "klein" en de 320 x 240-referentie.
+
+**Diagnose.** Een tooltip-pagina rendert op ware pixelgrootte terwijl de rapportpagina (1920 breed) in de Service naar het
+venster schaalt; zonder autoscale is een tooltip van 560 px op een 1366-venster dus 40 % groter ten opzichte van de pagina
+dan in Desktop op 100 %. Daarbij waren de pagina's zelf groot (560 x 448 tot 560 x 560; de F3-band-tooltip werd op P1 aan de
+bovenkant afgekapt, render v8 02) en droegen zij de titel in de banner, twee kaarten met eigen marges en veel lucht.
+
+**Gedaan.**
+- `report.json` `settings.useScaledTooltips: true` (naast `useEnhancedTooltips: false`): de tooltip schaalt mee met de
+  canvas-zoom, in Desktop, de Service en Publish to Web.
+- Alle acht tooltip-pagina's 440 px breed (was 560), op het 8 px-raster, `opzet-layout.json`: bevindingen F1-F3 440 x 336
+  (was 448), F4 440 x 376 (was 424), de detailpagina's F3-band en F4-hotel 440 x 448 (was 560) in één kaart, het pakket
+  440 x 504 (was 536), het jaar 440 x 312 (was 376). Met autoscale is dat op een 1366-venster 313 px breed, bij Microsofts
+  320-referentie.
+- De huid: de oranje band (ronde 9, Bjorns keuze) draagt alleen nog de kicker (24 px op y 16, horizon op 72); de titel staat
+  in Night in de kaart, als eerste regel, zoals de F-kaarten op P1 (kicker, titel, inhoud). Eén kaart per pagina waar het kan
+  (detailpagina's), twee op het pakket en het jaar. Inhoud ongewijzigd: dezelfde maten, grafieken en SVG's.
+- De SVG's op pakketbreedte: `TTW`/`TTL` 376 (was 496); de zettenlijst met rijhoogte 18 en hoogte 184 (was 20 / 200), de
+  kolommen Capex op `TTL - 96` en NPV op `TTL`. `sketch_model.py`, 452 maten, ongewijzigd in aantal.
+- `SCENE_VISUAL = False` in `opzet_report.py`: de generator zet de `z_canvas`-overlay nergens meer (Bjorns besluit van vandaag,
+  de scene is overal het pagina-achtergrondbeeld met Fit). De scenes zijn op de nieuwe maten opnieuw gegenereerd
+  (`brand_canvas_v3.py`, acht `canvas-tt-*.jpg`).
+- P1 en P2 niet opnieuw gegenereerd: Bjorns lagen- en tabvolgorde uit Desktop (commit `e63aa76`) blijft staan; de generator
+  schrijft die nog niet.
+
+**Poorten.** validate_tmdl 30 bestanden 0 fouten; a11y_check 0 fouten, 0 notities; pbir_detect: de tooltip-pagina's zonder
+bevinding (de acht open bevindingen zijn de P1/P2-kopposities op het 4 px-raster en de chip- en tegelkleuren, van vóór deze
+ronde); Microsofts validator: dezelfde ene fout als ervoor (de geneste kleur in `categoryLabels.backgroundColor` van de
+A/B/C-laag van de scatter; Desktop rendert hem). `schema_check` haalde één schema niet op (404); open.
+
+**Open.** Renders van de acht pagina's in Desktop; Bjorns blik; de hover-set (v9) opnieuw; Publish to Web met autoscale.
+
+**Na de renders (11 november, drie bouwrondes op de pagina's zelf, Desktop met tijdelijke voorbeeldfilters).** Eindmaten
+480 px breed (440 liet de titels en jaartallen niet staan): F1 tot F3 480 x 456, F4 480 x 416, F3-band en F4-hotel
+480 x 464, pakket 480 x 536, jaar 480 x 320; met autoscale op een 1366-venster 341 px breed. Geleerd en vastgelegd in de
+lay-out: een cardVisual-titel van 14 pt heeft 80 px voor twee regels, een noot van 12 pt 136 px voor vier regels (F2), de
+drie cijfers met label 56 px. In de kleine grafieken staan de lijnlabels niet meer aan het lijneinde (ze kantelden de
+jaartallen en verdrongen elkaar); de legenda staat bovenaan (F1, F3-band, F4-hotel). De kleine F2 toont Goodnight Inn tegen
+"the other three brands" als één lijn (`Trend OTA Sisters`, 453 maten): vier merknamen passen op 416 px in geen legenda en
+niet aan de lijneinden. De maandas van het hotel blijft de gewone as (een categorische as van twaalf letters kreeg een
+schuifbalk). Renders: `project/deliverables/screenshots/2026-11-11-feedbackronde-10/` (de acht pagina's op ware grootte;
+de hover-set op P1/P2 is nog niet opnieuw opgenomen). `schema_check` haalt één schema niet meer op (404), was al zo.

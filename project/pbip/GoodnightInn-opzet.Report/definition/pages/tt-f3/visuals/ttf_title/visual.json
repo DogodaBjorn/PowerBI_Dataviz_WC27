@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttf_title",
   "position": {
-    "x": 16,
-    "y": 40,
-    "z": 3000,
-    "height": 72,
-    "width": 528,
+    "x": 32,
+    "y": 56,
+    "z": 1001,
+    "width": 416,
+    "height": 80,
     "tabOrder": 110
   },
   "visual": {
@@ -392,6 +392,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

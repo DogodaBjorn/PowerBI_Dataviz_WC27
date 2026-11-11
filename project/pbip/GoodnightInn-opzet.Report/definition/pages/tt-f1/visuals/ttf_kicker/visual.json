@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttf_kicker",
   "position": {
     "x": 16,
     "y": 16,
-    "z": 2000,
+    "z": 1000,
+    "width": 448,
     "height": 24,
-    "width": 528,
     "tabOrder": -1605
   },
   "visual": {
@@ -21,12 +21,13 @@
                   {
                     "value": "F1  ·  THE MARGIN",
                     "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
-                      "color": "#12233d"
+                      "color": "#12233D"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "left"
               }
             ]
           }
@@ -159,6 +160,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

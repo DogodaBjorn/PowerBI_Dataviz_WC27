@@ -3,8 +3,8 @@
   "name": "tt-f1",
   "displayName": "tt-f1",
   "displayOption": "ActualSize",
-  "height": 448,
-  "width": 560,
+  "height": 456,
+  "width": 480,
   "objects": {
     "background": [
       {

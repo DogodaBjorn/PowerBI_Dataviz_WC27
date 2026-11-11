@@ -992,6 +992,12 @@ table _Measures
 		displayFolder: 08 Brand comparison
 		lineageTag: fc8d51de-5e61-5cd5-a079-ca67c660dcbc
 
+	/// The three sister brands together: OTA share of room revenue on the trend axis (room-revenue weighted), for the compact F2 tooltip chart.
+	measure 'Trend OTA Sisters' = CALCULATE ( [OTA Share %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] <> "Goodnight Inn" )
+		formatString: 0.0%
+		displayFolder: 08 Brand comparison
+		lineageTag: 3934539a-33a7-5015-b7a4-023f5530316f
+
 	/// Page-1 subtitle; the ranks it names are the KPI Rank values of the comparison table (verify on refresh).
 	measure 'Subtitle P1 (text)' = VAR occ = CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) VAR gm = CALCULATE ( [GOP Margin % 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) VAR ga = CALCULATE ( [GOP Margin after Distribution % 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) VAR last = CALCULATE ( MAX ( Renovations[StartDate] ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) RETURN "Goodnight Inn fills the most rooms (" & FORMAT ( occ, "0.0%" ) & ") and keeps the widest margin before commissions (" & FORMAT ( gm, "0.0%" ) & "); after commissions it is second (" & FORMAT ( ga, "0.0%" ) & "), and on guests, channels and complaints it is last of four. The last renovation started in " & FORMAT ( last, "mmm yyyy" ) & "."
 		formatString: @
@@ -1099,6 +1105,18 @@ table _Measures
 		formatString: 0
 		displayFolder: 09 Package matrix
 		lineageTag: 0196c53d-5938-5f6a-b575-f4f77acc7bc1
+
+	/// Size of the A/B/C layer's dots in the full-size scatter: about 24 and 22 px, so Power BI centres each letter inside its dot (round 5: at the cloud's sizes B and C were too small for their letters, which fell beside the dots).
+	measure 'Named Point Size' = IF ( SELECTEDVALUE ( Package[Preset] ) = "A", 5.8, 5.3 )
+		formatString: 0
+		displayFolder: 09 Package matrix
+		lineageTag: 99fdc34c-ca72-5a60-9e08-665b8470b83b
+
+	/// Size of the A/B/C layer's dots in the small scatter (alts and build), about 23 px (the stack's cap at its multiplier). Measured 10 Nov: in this smaller plot Power BI puts the letters UNDER the dots whatever their size, so the small layer draws each letter as a tag in the dot's colour instead.
+	measure 'Named Point Size (small)' = IF ( SELECTEDVALUE ( Package[Preset] ) = "A", 7.2, 6.6 )
+		formatString: 0
+		displayFolder: 09 Package matrix
+		lineageTag: a9941996-fe80-5651-9d15-973caf2f8184
 
 	/// Capex of the package in focus.
 	measure 'Focus Capex' = VAR f = [Focus Package] RETURN CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = f )
@@ -1212,8 +1230,8 @@ table _Measures
 	measure 'Initiative Chip' = VAR f = [Focus Project Flag] RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ), BLANK (), "data:image/svg+xml;utf8,<!--" & FORMAT ( [Initiative Order], "000" ) & "-->" & IF ( f = 1, "<svg xmlns='http://www.w3.org/2000/svg' width='40' height='28' viewBox='0 0 40 28'><rect x='0.5' y='0.5' width='39' height='27' rx='13.5' fill='%23EAF2FB' stroke='%23EAF2FB'/><g transform='translate(14.2 3) scale(0.2115)'><mask id='h'><rect width='64' height='104' fill='white'/><circle cx='32' cy='24' r='10' fill='black'/><rect x='32' y='22.5' width='40' height='3' fill='black'/></mask><rect x='4' y='4' width='56' height='96' rx='14' fill='%232589D8' mask='url(%23h)'/></g></svg>", "<svg xmlns='http://www.w3.org/2000/svg' width='40' height='28' viewBox='0 0 40 28'><rect x='0.5' y='0.5' width='39' height='27' rx='13.5' fill='%23FFFFFF' stroke='%23E3DFD3'/><g transform='translate(14.2 3) scale(0.2115)'><mask id='h'><rect width='64' height='104' fill='white'/><circle cx='32' cy='24' r='10' fill='black'/><rect x='32' y='22.5' width='40' height='3' fill='black'/></mask><rect x='4' y='4' width='56' height='96' rx='14' fill='%23C9C4B7' mask='url(%23h)'/></g></svg>" ) )
 		formatString: @
 		displayFolder: 09 Package matrix
-		lineageTag: 43a26361-00be-5286-bf6c-6f0307bee712
 		dataCategory: ImageUrl
+		lineageTag: 43a26361-00be-5286-bf6c-6f0307bee712
 
 	/// Waterfall: each initiative's NPV in the package in focus, rounded to $0.1M so the bars add up to the shown total.
 	measure 'Focus Project NPV (shown)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN SUMX ( FILTER ( adj, [@p] IN VALUES ( InvestmentProjects[ProjectID] ) ), [@s] )
@@ -1267,15 +1285,15 @@ table _Measures
 	measure 'Chip Funded' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='40' height='28' viewBox='0 0 40 28'><rect x='0.5' y='0.5' width='39' height='27' rx='13.5' fill='%23EAF2FB' stroke='%23EAF2FB'/><g transform='translate(14.2 3) scale(0.2115)'><mask id='h'><rect width='64' height='104' fill='white'/><circle cx='32' cy='24' r='10' fill='black'/><rect x='32' y='22.5' width='40' height='3' fill='black'/></mask><rect x='4' y='4' width='56' height='96' rx='14' fill='%232589D8' mask='url(%23h)'/></g></svg>"
 		formatString: @
 		displayFolder: 09 Package matrix
-		lineageTag: c7181024-7080-5d26-a367-3bb1954bc727
 		dataCategory: ImageUrl
+		lineageTag: c7181024-7080-5d26-a367-3bb1954bc727
 
 	/// The brand's plain chip (light grey hanger on white) as an image, beside the titles of B and C: not funded; decorative.
 	measure 'Chip Plain' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='40' height='28' viewBox='0 0 40 28'><rect x='0.5' y='0.5' width='39' height='27' rx='13.5' fill='%23FFFFFF' stroke='%23E3DFD3'/><g transform='translate(14.2 3) scale(0.2115)'><mask id='h'><rect width='64' height='104' fill='white'/><circle cx='32' cy='24' r='10' fill='black'/><rect x='32' y='22.5' width='40' height='3' fill='black'/></mask><rect x='4' y='4' width='56' height='96' rx='14' fill='%23C9C4B7' mask='url(%23h)'/></g></svg>"
 		formatString: @
 		displayFolder: 09 Package matrix
-		lineageTag: cc0d453a-c52c-539c-bc42-0ad12d8fb35d
 		dataCategory: ImageUrl
+		lineageTag: cc0d453a-c52c-539c-bc42-0ad12d8fb35d
 
 	/// Capex per initiative.
 	measure 'Initiative Capex' = SUM ( InvestmentProjects[CapexUSD] )
@@ -2171,6 +2189,96 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: bedff3a5-ab9b-59e9-a20d-fa5f4fbbe9f2
 
+	/// Year tooltip: cumulative net impact of package A to the end of the hovered year, Low case.
+	measure 'TT Year A (Low)' = VAR f = [Preset A Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR y = MAX ( 'Date'[Year] ) RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = "Low", TREATAS ( ids, ProjectCashflow[ProjectID] ) ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: 63d8b4f8-8c30-56e2-98af-4f1dc4df5b8c
+
+	/// Year tooltip: package A's cumulative net impact in the Low case, as text.
+	measure 'TT Year A Low (text)' = ( VAR __t = ROUND ( ( [TT Year A (Low)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 70f69259-447c-58bc-a48b-e694c2f9f5cc
+
+	/// Year tooltip: cumulative net impact of package A to the end of the hovered year, Expected case.
+	measure 'TT Year A (Expected)' = VAR f = [Preset A Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR y = MAX ( 'Date'[Year] ) RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = "Expected", TREATAS ( ids, ProjectCashflow[ProjectID] ) ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: 6ed57d5e-f696-5894-9dea-76b0a1f001ea
+
+	/// Year tooltip: package A's cumulative net impact in the Expected case, as text.
+	measure 'TT Year A Expected (text)' = ( VAR __t = ROUND ( ( [TT Year A (Expected)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: ebe9036d-b302-5d10-a747-5a80467c47fc
+
+	/// Year tooltip: cumulative net impact of package A to the end of the hovered year, High case.
+	measure 'TT Year A (High)' = VAR f = [Preset A Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR y = MAX ( 'Date'[Year] ) RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = "High", TREATAS ( ids, ProjectCashflow[ProjectID] ) ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 09 Package matrix
+		lineageTag: 4851eba7-1224-51df-9ed2-32e49bc4822e
+
+	/// Year tooltip: package A's cumulative net impact in the High case, as text.
+	measure 'TT Year A High (text)' = ( VAR __t = ROUND ( ( [TT Year A (High)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 68ad3359-61aa-523f-a20d-7a53509c23e2
+
+	/// Year tooltip: package A's cumulative net impact to the end of the hovered year, case in view, as text.
+	measure 'TT Year A (text)' = ( VAR __t = ROUND ( ( [Preset A Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 5f871a24-c64b-5792-94ee-03e1eba8ec8e
+
+	/// Year tooltip: package B's cumulative net impact to the end of the hovered year, case in view, as text.
+	measure 'TT Year B (text)' = ( VAR __t = ROUND ( ( [Preset B Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 7f1bbde5-e93b-5fe7-b3e5-ea9d434f1fb0
+
+	/// Year tooltip: package C's cumulative net impact to the end of the hovered year, case in view, as text.
+	measure 'TT Year C (text)' = ( VAR __t = ROUND ( ( [Preset C Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: a32ce970-47ee-5ff8-9012-c3f9c732ee0e
+
+	/// Year tooltip: the plan being built, cumulative net impact to the end of the hovered year, case in view; 'none yet' before a move is picked.
+	measure 'TT Year Plan (text)' = IF ( [Build Count] = 0, "none yet", ( VAR __t = ROUND ( ( [Build Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) )
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: e9753595-65c1-5856-adf5-9a5dcd4e313d
+
+	/// Year tooltip title: the hovered year.
+	measure 'TT Year Title (text)' = VAR y = MAX ( 'Date'[Year] ) RETURN "To the end of " & y & ": where every package stands"
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: e502d20c-f25b-54a1-8caf-7adb27a61274
+
+	/// Year tooltip, second card's title: the case in view.
+	measure 'TT Year All Title (text)' = VAR s = [Selected Scenario] RETURN "A, B, C and your plan in the " & s & " case"
+		formatString: @
+		displayFolder: 09 Package matrix
+		lineageTag: 3755196c-cbfa-5800-ae8c-c4ce8b453198
+
+	/// The year tooltip's first card read aloud.
+	measure 'Alt TT Year A (text)' = VAR y = MAX ( 'Date'[Year] ) RETURN "Package A, cumulative net impact to the end of " & y & ": Low " & [TT Year A Low (text)] & ", Expected " & [TT Year A Expected (text)] & ", High " & [TT Year A High (text)] & "."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 4c55b96f-e8f0-5b1e-8c5f-936a6d5e648b
+
+	/// The year tooltip's second card read aloud.
+	measure 'Alt TT Year All (text)' = VAR y = MAX ( 'Date'[Year] ) VAR s = [Selected Scenario] RETURN "Cumulative net impact to the end of " & y & ", " & s & " case: A " & [TT Year A (text)] & ", B " & [TT Year B (text)] & ", C " & [TT Year C (text)] & ", your plan " & [TT Year Plan (text)] & "."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 0fbf6b12-0e24-5aa5-ac1c-919ccafae5dc
+
+	/// Package B's payback line on its card (undiscounted cumulative), scenario in view.
+	measure 'Preset B Payback (text)' = VAR f = [Preset B Package] VAR pb = [Preset B Payback Year] RETURN IF ( ISBLANK ( f ), BLANK (), IF ( ISBLANK ( pb ), "Not cash positive by 2032 in the ", "Cash positive from " & pb & " in the " ) & [Selected Scenario] & " case" )
+		formatString: @
+		displayFolder: 13 Round 4 copy
+		lineageTag: 663c49ca-e8bb-5231-adc0-444f2cd90d28
+
 	/// 1 for an initiative inside package B (visual filter of its waterfall).
 	measure 'Preset B Project Flag' = VAR f = [Preset B Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) RETURN IF ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) IN ids, 1, 0 )
 		formatString: 0
@@ -2194,6 +2302,12 @@ table _Measures
 		formatString: 0
 		displayFolder: 09 Package matrix
 		lineageTag: 221a1343-c574-5035-8481-057bf9bb21dc
+
+	/// Package C's payback line on its card (undiscounted cumulative), scenario in view.
+	measure 'Preset C Payback (text)' = VAR f = [Preset C Package] VAR pb = [Preset C Payback Year] RETURN IF ( ISBLANK ( f ), BLANK (), IF ( ISBLANK ( pb ), "Not cash positive by 2032 in the ", "Cash positive from " & pb & " in the " ) & [Selected Scenario] & " case" )
+		formatString: @
+		displayFolder: 13 Round 4 copy
+		lineageTag: 7910bd0c-595d-5d47-aa34-a01cfc3201ee
 
 	/// 1 for an initiative inside package C (visual filter of its waterfall).
 	measure 'Preset C Project Flag' = VAR f = [Preset C Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) RETURN IF ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) IN ids, 1, 0 )
@@ -2272,6 +2386,18 @@ table _Measures
 		formatString: @
 		displayFolder: 12 Build your own
 		lineageTag: f1c18fa0-d54a-5b8c-a8f7-6955ba2bc640
+
+	/// Fill of the your-plan title row: Tangerine while the picked capex passes the budget (the alarm band), white otherwise. Paired with Build Title Ink, branch for branch.
+	measure 'Build Title Fill' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( over, "#E05A22", "#FFFFFF" )
+		formatString: @
+		displayFolder: 12 Build your own
+		lineageTag: 4cc138a1-5a32-564c-86a1-9fced830b373
+
+	/// Text of the your-plan title row: white on the Tangerine alarm band (18 pt: 4.2:1, WCAG large text), Night otherwise.
+	measure 'Build Title Ink' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( over, "#FFFFFF", "#12233D" )
+		formatString: @
+		displayFolder: 12 Build your own
+		lineageTag: 445da63e-1ec4-5a64-83e9-2d6e763c6752
 
 	/// Capex of the plan being built as text ($0.0M when empty).
 	measure 'Build Capex (text)' = FORMAT ( ( COALESCE ( [Build Capex], 0 ) ) / 1000000, "$#,0.0#" ) & "M"
@@ -2381,6 +2507,18 @@ table _Measures
 		displayFolder: 12 Build your own
 		lineageTag: 468d3026-bcb7-57c9-bf35-d5616209c6c2
 
+	/// Selector row: capex of the move as a number (the footer sums the picked rows).
+	measure 'Move Capex (num)' = VAR p = SELECTEDVALUE ( BuildMove[ProjectID] ) RETURN IF ( ISBLANK ( p ), BLANK (), LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], p ) )
+		formatString: 0
+		displayFolder: 12 Build your own
+		lineageTag: 78596957-209b-50d7-bea6-534fb178cbf0
+
+	/// Selector: the Goodnight Inn budget, repeated on every row (the footer's cap).
+	measure 'Move Budget (num)' = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" )
+		formatString: 0
+		displayFolder: 12 Build your own
+		lineageTag: 6e676f80-fef1-5e05-86cc-4ec8c40c2ea3
+
 	/// Tooltip: the line above the moves list.
 	measure 'TT Moves Label (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ), "@p", PackageProject[ProjectID] ) RETURN IF ( ISBLANK ( pkg ), BLANK (), "In this package: " & COUNTROWS ( ids ) & " moves" )
 		formatString: @
@@ -2392,6 +2530,140 @@ table _Measures
 		formatString: @
 		displayFolder: 10 Package tooltip
 		lineageTag: 33f2f3aa-ec6d-598d-8c1e-1f0632e99baa
+
+	/// Tooltip kicker on the night banner (round 7): the package's letter when it has one and the case in view, in the page's eyebrow style.
+	measure 'TT Kicker (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR k = LOOKUPVALUE ( Package[Preset], Package[PackageID], pkg ) RETURN IF ( ISBLANK ( pkg ), BLANK (), "PACKAGE" & IF ( k <> "", "  " & k, "" ) & "  ·  " & UPPER ( [Selected Scenario] ) & " CASE" )
+		formatString: @
+		displayFolder: 10 Package tooltip
+		lineageTag: 35eca03e-56b0-5fc6-966c-b9386baae031
+
+	/// Tooltip: the hovered package's Low-High band and Expected dot on one fixed NPV axis shared by every package, the A/B/C ticks, the break-even line and the Low and High numbers; decorative, TT Range (text) is its text twin (keyboard tooltip, alt text).
+	measure 'TT Range SVG' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR dMin = FLOOR ( MINX ( ALL ( Package ), Package[NPV Low] ) / 5000000, 1 ) * 5000000 VAR dMax = CEILING ( MAXX ( ALL ( Package ), Package[NPV High] ) / 5000000, 1 ) * 5000000 VAR k = 400 / ( dMax - dMin ) VAR lo = LOOKUPVALUE ( Package[NPV Low], Package[PackageID], pkg ) VAR ex = LOOKUPVALUE ( Package[NPV Expected], Package[PackageID], pkg ) VAR hi = LOOKUPVALUE ( Package[NPV High], Package[PackageID], pkg ) VAR x0 = 8 + ( 0 - dMin ) * k VAR xL = 8 + ( lo - dMin ) * k VAR xE = 8 + ( ex - dMin ) * k VAR xH = 8 + ( hi - dMin ) * k VAR xA = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "A" ) - dMin ) * k VAR xB = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "B" ) - dMin ) * k VAR xC = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "C" ) - dMin ) * k VAR xAOff = IF ( ABS ( xA - xB ) < 18, IF ( xA <= xB, -6, 6 ), 0 ) VAR xBOff = -xAOff VAR xCOff = 0 VAR dotc = IF ( ROUND ( ex / 100000, 0 ) >= 0, "%231763A8", "%23A63F0E" ) VAR xLo = MAX ( xL, 44 ) VAR xHi = MIN ( xH + 4, 328 ) RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='416' height='48' viewBox='0 0 416 48'>" & "<line x1='1' x2='1' y1='2' y2='14' stroke='%2312233D' stroke-width='1.5'/><text x='6' y='13' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>break-even</text>" & "<line x1='" & FORMAT ( xA, "0.0", "en-US" ) & "' x2='" & FORMAT ( xA, "0.0", "en-US" ) & "' y1='14' y2='36' stroke='%231763A8' stroke-width='2'/><text x='" & FORMAT ( xA + xAOff, "0.0", "en-US" ) & "' y='13' text-anchor='middle' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%231763A8'>A</text>" & "<line x1='" & FORMAT ( xB, "0.0", "en-US" ) & "' x2='" & FORMAT ( xB, "0.0", "en-US" ) & "' y1='14' y2='36' stroke='%2312233D' stroke-width='2'/><text x='" & FORMAT ( xB + xBOff, "0.0", "en-US" ) & "' y='13' text-anchor='middle' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>B</text>" & "<line x1='" & FORMAT ( xC, "0.0", "en-US" ) & "' x2='" & FORMAT ( xC, "0.0", "en-US" ) & "' y1='14' y2='36' stroke='%2312233D' stroke-width='2'/><text x='" & FORMAT ( xC + xCOff, "0.0", "en-US" ) & "' y='13' text-anchor='middle' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>C</text>" & "<rect x='" & FORMAT ( xL, "0.0", "en-US" ) & "' y='26' width='" & FORMAT ( xH - xL, "0.0", "en-US" ) & "' height='8' rx='4' fill='%238E897D' fill-opacity='0.45'/>" & "<line x1='" & FORMAT ( x0, "0.0", "en-US" ) & "' x2='" & FORMAT ( x0, "0.0", "en-US" ) & "' y1='13' y2='37' stroke='%2312233D' stroke-width='1.5'/>" & "<circle cx='" & FORMAT ( xE, "0.0", "en-US" ) & "' cy='30' r='5' fill='" & dotc & "' stroke='%23FFFFFF' stroke-width='2'/>" & "<text x='" & FORMAT ( xLo, "0.0", "en-US" ) & "' y='46' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Low " & IF ( lo < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( lo ) / 1000000, "0.0", "en-US" ) & "</text>" & "<text x='" & FORMAT ( xHi, "0.0", "en-US" ) & "' y='46' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>High " & IF ( hi < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( hi ) / 1000000, "0.0", "en-US" ) & "</text></svg>" )
+		formatString: @
+		displayFolder: 10 Package tooltip
+		dataCategory: ImageUrl
+		lineageTag: 2e74355c-f4db-5197-b21c-9ec9620b064e
+
+	/// Tooltip: the moves of the hovered package as a list with capex and NPV each (positives first, the sinker last) and a totals row; the move NPVs are rounded so they add up to the package. Decorative: TT Moves (text) and Alt TT Moves say the same in words.
+	measure 'TT Moves SVG' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 10000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 10000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 10000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 10000 ) VAR tot = SUMX ( adj, [@s] ) VAR cap = LOOKUPVALUE ( Package[CapexUSD], Package[PackageID], pkg ) VAR nrows = COUNTROWS ( adj ) VAR moveRows = CONCATENATEX ( adj, VAR y = 18 * RANKX ( adj, [@s] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.0000001, , DESC ) RETURN "<text x='0' y='" & ( y + 14 ) & "' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%2312233D'>" & LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & "</text>" & "<text x='320' y='" & ( y + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%2312233D'>" & FORMAT ( ( LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], [@p] ) ) / 1000000, "$#,0.00" ) & "M" & "</text>" & "<text x='416' y='" & ( y + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='" & IF ( [@s] < 0, "%23A63F0E", "%2312233D" ) & "'>" & ( VAR __t = ROUND ( ( [@s] ) / 10000, 0 ) / 100 RETURN IF ( __t = 0, "$0.00M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.00" ) & "M" ) ) & "</text>", "" ) VAR yT = 18 * ( nrows + 1 ) VAR total = "<text x='0' y='" & ( yT + 14 ) & "' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>" & "Total" & "</text>" & "<text x='320' y='" & ( yT + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>" & FORMAT ( ( cap ) / 1000000, "$#,0.00" ) & "M" & "</text>" & "<text x='416' y='" & ( yT + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='" & IF ( tot < 0, "%23A63F0E", "%2312233D" ) & "'>" & ( VAR __t = ROUND ( ( tot ) / 10000, 0 ) / 100 RETURN IF ( __t = 0, "$0.00M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.00" ) & "M" ) ) & "</text>" RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='416' height='184' viewBox='0 0 416 184'>" & "<text x='0' y='14' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Move</text><text x='320' y='14' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Capex</text><text x='416' y='14' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>NPV</text>" & "<line x1='0' x2='416' y1='17.5' y2='17.5' stroke='%23E3DFD3'/>" & "<line x1='0' x2='416' y1='" & ( 18 * ( nrows + 1 ) + 0.5 ) & "' y2='" & ( 18 * ( nrows + 1 ) + 0.5 ) & "' stroke='%23E3DFD3'/>" & moveRows & total & "</svg>" )
+		formatString: @
+		displayFolder: 10 Package tooltip
+		dataCategory: ImageUrl
+		lineageTag: 9ca4b6cc-849d-5c24-9f04-b7258da9503e
+
+	/// Tooltip text twin of the moves list: each move with its NPV inside the package, positives first (the keyboard layer's tooltip and the alt text).
+	measure 'TT Moves (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 10000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 10000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 10000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 10000 ) RETURN IF ( ISBLANK ( pkg ), BLANK (), CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __t = ROUND ( ( [@s] ) / 10000, 0 ) / 100 RETURN IF ( __t = 0, "$0.00M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.00" ) & "M" ) ), "; ", [@s], DESC ) )
+		formatString: @
+		displayFolder: 10 Package tooltip
+		lineageTag: b8c66b16-0bef-57c3-a10b-81142196875a
+
+	/// The F1 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
+	measure 'Finding Chip F1 (text)' = "F1"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 422dd68b-9a40-5707-a8bc-444b65e52203
+
+	/// The F2 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
+	measure 'Finding Chip F2 (text)' = "F2"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: efd7f9c8-b2e2-589c-8e7f-64afc7500187
+
+	/// The F3 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
+	measure 'Finding Chip F3 (text)' = "F3"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 7985fb53-1cec-559b-9545-68ec587486f4
+
+	/// The F4 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
+	measure 'Finding Chip F4 (text)' = "F4"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: ab34835d-7946-5f61-8dd9-b66a92c157ef
+
+	/// Header of the F3 band tooltip: the band, its hotels and rooms.
+	measure 'Band Header (text)' = VAR bnd = SELECTEDVALUE ( Hotels[Renovation Age Label] ) RETURN IF ( ISBLANK ( bnd ), BLANK (), bnd & ": " & COUNTROWS ( Hotels ) & " hotels, " & FORMAT ( SUM ( Hotels[Rooms] ), "#,0" ) & " rooms" )
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 6e2a0089-24f5-5cb1-89ea-914f74bcdb88
+
+	/// F3 band tooltip: the brand's own 2025 figures under the band's three, the same formatters.
+	measure 'Band vs Brand (text)' = "Goodnight Inn, all hotels, 2025: NPS " & IF ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) ), "0.0" ) & ", occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0" )
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 189a7e04-3179-5f45-916d-32dbfa78b1ca
+
+	/// F3 band tooltip, line: the band's response-weighted NPS by year.
+	measure 'NPS Band (line)' = [NPS (weighted)]
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: a4e19789-f2e8-53bc-ae5b-d6befc454d02
+
+	/// F3 band tooltip, line: Goodnight Inn's response-weighted NPS by year, every hotel.
+	measure 'NPS Brand (line)' = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" )
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: c72756bc-a058-5559-98df-82a04c3529ed
+
+	/// F3 band tooltip: the two lowest of the five guest-score dimensions in 2025, response-weighted (what a refresh would have to fix).
+	measure 'Weakest Scores (text)' = VAR t = UNION ( ROW ( "@n", "cleanliness", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[CleanlinessScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "service", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[ServiceScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "room comfort", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[RoomComfortScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "amenities", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[AmenitiesScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "value for money", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[ValueForMoneyScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( Hotels[Renovation Age Label] ) ), BLANK (), "Weakest guest scores 2025: " & CONCATENATEX ( TOPN ( 2, t, [@v], ASC ), [@n] & " " & FORMAT ( [@v], "0.0" ), ", ", [@v], ASC ) & " (of 10)" )
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: b6d0a913-af44-5683-aaaf-834c047fad83
+
+	/// The F3 band tooltip's three figures read aloud.
+	measure 'Alt Band Nums (text)' = "This band in 2025: NPS " & [NPS 2025 (signed)] & ", occupancy " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", revenue per available room " & FORMAT ( [RevPAR 2025], "$#,0" ) & "."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 0a12882e-b70b-51e1-82d5-2fd9d5d312cf
+
+	/// The F3 band tooltip's line chart read aloud.
+	measure 'Alt NPS Band Line (text)' = "Net promoter score by year, 2021 to 2025, this band against the whole brand: the band from " & FORMAT ( [NPS (weighted) 2021], "+0.0;-0.0;0.0" ) & " to " & FORMAT ( [NPS (weighted) 2025], "+0.0;-0.0;0.0" ) & ", the brand from " & FORMAT ( CALCULATE ( [NPS (weighted) 2021], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "+0.0;-0.0;0.0" ) & " to " & FORMAT ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "+0.0;-0.0;0.0" ) & "."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 923cef95-153b-571c-9a22-3f2d2c8fbf02
+
+	/// Header of the F4 hotel tooltip: the hotel, its location type and rooms.
+	measure 'Hotel Header (text)' = VAR h = SELECTEDVALUE ( Hotels[Hotel Short Name] ) RETURN IF ( ISBLANK ( h ), BLANK (), h & ", " & LOWER ( SELECTEDVALUE ( Hotels[LocationType] ) ) & ", " & FORMAT ( SUM ( Hotels[Rooms] ), "#,0" ) & " rooms" )
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 70cdf61d-21d1-5b34-af2a-575e2efdd1e5
+
+	/// F4 hotel tooltip: the brand's own 2025 figures under the hotel's three.
+	measure 'Hotel vs Brand (text)' = "Goodnight Inn, all hotels, 2025: occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & ", ADR " & FORMAT ( CALCULATE ( [ADR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0" )
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 9505e74c-5a93-53e8-9d09-8b4fce534510
+
+	/// F4 hotel tooltip, line: the hotel's occupancy by month.
+	measure 'Occupancy Hotel (line)' = [Occupancy %]
+		formatString: 0.0%
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: e266f597-55d9-505c-8687-222f7c409923
+
+	/// F4 hotel tooltip, line: Goodnight Inn's occupancy by month, every hotel.
+	measure 'Occupancy Brand (line)' = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" )
+		formatString: 0.0%
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 86d49a63-98d9-5729-ab1a-c81d6967be2c
+
+	/// F4 hotel tooltip: who fills the hotel, the three largest guest segments by 2025 room nights and the rest.
+	measure 'Segments 2025 (text)' = VAR t = ADDCOLUMNS ( VALUES ( GuestSegments[Segment] ), "@s", CALCULATE ( SUM ( GuestSegments[RoomNights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) VAR tot = SUMX ( t, [@s] ) VAR top3 = TOPN ( 3, t, [@s], DESC ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( Hotels[Hotel Short Name] ) ) || ISBLANK ( tot ), BLANK (), "Room nights 2025: " & CONCATENATEX ( top3, LOWER ( GuestSegments[Segment] ) & " " & FORMAT ( DIVIDE ( [@s], tot ), "0%" ), ", ", [@s], DESC ) & ", other " & FORMAT ( 1 - DIVIDE ( SUMX ( top3, [@s] ), tot ), "0%" ) )
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: bca0f778-ba11-50f6-bc11-15e6ef5a6501
+
+	/// The F4 hotel tooltip's three figures read aloud.
+	measure 'Alt Hotel Nums (text)' = "This hotel in 2025: occupancy " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", average daily rate " & FORMAT ( [ADR 2025], "$#,0" ) & ", revenue per available room " & FORMAT ( [RevPAR 2025], "$#,0" ) & "."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 53e33675-924d-55a5-a9b7-23235150c360
+
+	/// The F4 hotel tooltip's line chart read aloud.
+	measure 'Alt Occupancy Hotel Line (text)' = "Occupancy by month in 2025, this hotel against the whole brand: the hotel averages " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", the brand " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & "."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: f94bb586-30d4-5704-bb84-4f2d9497615c
 
 	/// The reading guide read aloud.
 	measure 'Alt Guide (text)' = "How to read the chart. " & [Guide (text)] & " A is our recommendation; B and C were considered and not recommended."
@@ -2453,272 +2725,6 @@ table _Measures
 		displayFolder: 11 Accessibility
 		lineageTag: 059d365b-3752-553d-8900-9a2d063f4e0e
 
-	/// Package C's payback line on its card (undiscounted cumulative), scenario in view.
-	measure 'Preset C Payback (text)' = VAR f = [Preset C Package] VAR pb = [Preset C Payback Year] RETURN IF ( ISBLANK ( f ), BLANK (), IF ( ISBLANK ( pb ), "Not cash positive by 2032 in the ", "Cash positive from " & pb & " in the " ) & [Selected Scenario] & " case" )
-		formatString: @
-		displayFolder: 13 Round 4 copy
-		lineageTag: 7910bd0c-595d-5d47-aa34-a01cfc3201ee
-
-	/// Package B's payback line on its card (undiscounted cumulative), scenario in view.
-	measure 'Preset B Payback (text)' = VAR f = [Preset B Package] VAR pb = [Preset B Payback Year] RETURN IF ( ISBLANK ( f ), BLANK (), IF ( ISBLANK ( pb ), "Not cash positive by 2032 in the ", "Cash positive from " & pb & " in the " ) & [Selected Scenario] & " case" )
-		formatString: @
-		displayFolder: 13 Round 4 copy
-		lineageTag: 663c49ca-e8bb-5231-adc0-444f2cd90d28
-
-	/// Size of the A/B/C layer's dots in the full-size scatter: about 24 and 22 px, so Power BI centres each letter inside its dot (round 5: at the cloud's sizes B and C were too small for their letters, which fell beside the dots).
-	measure 'Named Point Size' = IF ( SELECTEDVALUE ( Package[Preset] ) = "A", 5.8, 5.3 )
-		formatString: 0
-		displayFolder: 09 Package matrix
-		lineageTag: 99fdc34c-ca72-5a60-9e08-665b8470b83b
-
-	/// Fill of the your-plan title row: Tangerine while the picked capex passes the budget (the alarm band), white otherwise. Paired with Build Title Ink, branch for branch.
-	measure 'Build Title Fill' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( over, "#E05A22", "#FFFFFF" )
-		formatString: @
-		displayFolder: 12 Build your own
-		lineageTag: 4cc138a1-5a32-564c-86a1-9fced830b373
-
-	/// Selector: the Goodnight Inn budget, repeated on every row (the footer's cap).
-	measure 'Move Budget (num)' = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" )
-		formatString: 0
-		displayFolder: 12 Build your own
-		lineageTag: 6e676f80-fef1-5e05-86cc-4ec8c40c2ea3
-
-	/// Selector row: capex of the move as a number (the footer sums the picked rows).
-	measure 'Move Capex (num)' = VAR p = SELECTEDVALUE ( BuildMove[ProjectID] ) RETURN IF ( ISBLANK ( p ), BLANK (), LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], p ) )
-		formatString: 0
-		displayFolder: 12 Build your own
-		lineageTag: 78596957-209b-50d7-bea6-534fb178cbf0
-
-	/// Text of the your-plan title row: white on the Tangerine alarm band (18 pt: 4.2:1, WCAG large text), Night otherwise.
-	measure 'Build Title Ink' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( over, "#FFFFFF", "#12233D" )
-		formatString: @
-		displayFolder: 12 Build your own
-		lineageTag: 445da63e-1ec4-5a64-83e9-2d6e763c6752
-
-	/// Size of the A/B/C layer's dots in the small scatter (alts and build), about 23 px (the stack's cap at its multiplier). Measured 10 Nov: in this smaller plot Power BI puts the letters UNDER the dots whatever their size, so the small layer draws each letter as a tag in the dot's colour instead.
-	measure 'Named Point Size (small)' = IF ( SELECTEDVALUE ( Package[Preset] ) = "A", 7.2, 6.6 )
-		formatString: 0
-		displayFolder: 09 Package matrix
-		lineageTag: a9941996-fe80-5651-9d15-973caf2f8184
-
-	/// Tooltip: the hovered package's Low-High band and Expected dot on one fixed NPV axis shared by every package, the A/B/C ticks, the break-even line and the Low and High numbers; decorative, TT Range (text) is its text twin (keyboard tooltip, alt text).
-	measure 'TT Range SVG' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR dMin = FLOOR ( MINX ( ALL ( Package ), Package[NPV Low] ) / 5000000, 1 ) * 5000000 VAR dMax = CEILING ( MAXX ( ALL ( Package ), Package[NPV High] ) / 5000000, 1 ) * 5000000 VAR k = 480 / ( dMax - dMin ) VAR lo = LOOKUPVALUE ( Package[NPV Low], Package[PackageID], pkg ) VAR ex = LOOKUPVALUE ( Package[NPV Expected], Package[PackageID], pkg ) VAR hi = LOOKUPVALUE ( Package[NPV High], Package[PackageID], pkg ) VAR x0 = 8 + ( 0 - dMin ) * k VAR xL = 8 + ( lo - dMin ) * k VAR xE = 8 + ( ex - dMin ) * k VAR xH = 8 + ( hi - dMin ) * k VAR xA = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "A" ) - dMin ) * k VAR xB = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "B" ) - dMin ) * k VAR xC = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "C" ) - dMin ) * k VAR xAOff = IF ( ABS ( xA - xB ) < 18, IF ( xA <= xB, -6, 6 ), 0 ) VAR xBOff = -xAOff VAR xCOff = 0 VAR dotc = IF ( ROUND ( ex / 100000, 0 ) >= 0, "%231763A8", "%23A63F0E" ) VAR xLo = MAX ( xL, 44 ) VAR xHi = MIN ( xH + 4, 408 ) RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='496' height='48' viewBox='0 0 496 48'>" & "<line x1='1' x2='1' y1='2' y2='14' stroke='%2312233D' stroke-width='1.5'/><text x='6' y='13' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>break-even</text>" & "<line x1='" & FORMAT ( xA, "0.0", "en-US" ) & "' x2='" & FORMAT ( xA, "0.0", "en-US" ) & "' y1='14' y2='36' stroke='%231763A8' stroke-width='2'/><text x='" & FORMAT ( xA + xAOff, "0.0", "en-US" ) & "' y='13' text-anchor='middle' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%231763A8'>A</text>" & "<line x1='" & FORMAT ( xB, "0.0", "en-US" ) & "' x2='" & FORMAT ( xB, "0.0", "en-US" ) & "' y1='14' y2='36' stroke='%2312233D' stroke-width='2'/><text x='" & FORMAT ( xB + xBOff, "0.0", "en-US" ) & "' y='13' text-anchor='middle' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>B</text>" & "<line x1='" & FORMAT ( xC, "0.0", "en-US" ) & "' x2='" & FORMAT ( xC, "0.0", "en-US" ) & "' y1='14' y2='36' stroke='%2312233D' stroke-width='2'/><text x='" & FORMAT ( xC + xCOff, "0.0", "en-US" ) & "' y='13' text-anchor='middle' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>C</text>" & "<rect x='" & FORMAT ( xL, "0.0", "en-US" ) & "' y='26' width='" & FORMAT ( xH - xL, "0.0", "en-US" ) & "' height='8' rx='4' fill='%238E897D' fill-opacity='0.45'/>" & "<line x1='" & FORMAT ( x0, "0.0", "en-US" ) & "' x2='" & FORMAT ( x0, "0.0", "en-US" ) & "' y1='13' y2='37' stroke='%2312233D' stroke-width='1.5'/>" & "<circle cx='" & FORMAT ( xE, "0.0", "en-US" ) & "' cy='30' r='5' fill='" & dotc & "' stroke='%23FFFFFF' stroke-width='2'/>" & "<text x='" & FORMAT ( xLo, "0.0", "en-US" ) & "' y='46' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Low " & IF ( lo < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( lo ) / 1000000, "0.0", "en-US" ) & "</text>" & "<text x='" & FORMAT ( xHi, "0.0", "en-US" ) & "' y='46' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>High " & IF ( hi < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( hi ) / 1000000, "0.0", "en-US" ) & "</text></svg>" )
-		formatString: @
-		displayFolder: 10 Package tooltip
-		lineageTag: 2e74355c-f4db-5197-b21c-9ec9620b064e
-		dataCategory: ImageUrl
-
-	/// Tooltip text twin of the moves list: each move with its NPV inside the package, positives first (the keyboard layer's tooltip and the alt text).
-	measure 'TT Moves (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 10000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 10000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 10000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 10000 ) RETURN IF ( ISBLANK ( pkg ), BLANK (), CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __t = ROUND ( ( [@s] ) / 10000, 0 ) / 100 RETURN IF ( __t = 0, "$0.00M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.00" ) & "M" ) ), "; ", [@s], DESC ) )
-		formatString: @
-		displayFolder: 10 Package tooltip
-		lineageTag: b8c66b16-0bef-57c3-a10b-81142196875a
-
-	/// Tooltip: the moves of the hovered package as a list with capex and NPV each (positives first, the sinker last) and a totals row; the move NPVs are rounded so they add up to the package. Decorative: TT Moves (text) and Alt TT Moves say the same in words.
-	measure 'TT Moves SVG' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 10000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 10000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 10000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 10000 ) VAR tot = SUMX ( adj, [@s] ) VAR cap = LOOKUPVALUE ( Package[CapexUSD], Package[PackageID], pkg ) VAR nrows = COUNTROWS ( adj ) VAR moveRows = CONCATENATEX ( adj, VAR y = 20 * RANKX ( adj, [@s] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.0000001, , DESC ) RETURN "<text x='0' y='" & ( y + 14 ) & "' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%2312233D'>" & LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & "</text>" & "<text x='400' y='" & ( y + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%2312233D'>" & FORMAT ( ( LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], [@p] ) ) / 1000000, "$#,0.00" ) & "M" & "</text>" & "<text x='496' y='" & ( y + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='" & IF ( [@s] < 0, "%23A63F0E", "%2312233D" ) & "'>" & ( VAR __t = ROUND ( ( [@s] ) / 10000, 0 ) / 100 RETURN IF ( __t = 0, "$0.00M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.00" ) & "M" ) ) & "</text>", "" ) VAR yT = 20 * ( nrows + 1 ) VAR total = "<text x='0' y='" & ( yT + 14 ) & "' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>" & "Total" & "</text>" & "<text x='400' y='" & ( yT + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>" & FORMAT ( ( cap ) / 1000000, "$#,0.00" ) & "M" & "</text>" & "<text x='496' y='" & ( yT + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='" & IF ( tot < 0, "%23A63F0E", "%2312233D" ) & "'>" & ( VAR __t = ROUND ( ( tot ) / 10000, 0 ) / 100 RETURN IF ( __t = 0, "$0.00M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.00" ) & "M" ) ) & "</text>" RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='496' height='200' viewBox='0 0 496 200'>" & "<text x='0' y='14' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Move</text><text x='400' y='14' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Capex</text><text x='496' y='14' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>NPV</text>" & "<line x1='0' x2='496' y1='19.5' y2='19.5' stroke='%23E3DFD3'/>" & "<line x1='0' x2='496' y1='" & ( 20 * ( nrows + 1 ) + 0.5 ) & "' y2='" & ( 20 * ( nrows + 1 ) + 0.5 ) & "' stroke='%23E3DFD3'/>" & moveRows & total & "</svg>" )
-		formatString: @
-		displayFolder: 10 Package tooltip
-		lineageTag: 9ca4b6cc-849d-5c24-9f04-b7258da9503e
-		dataCategory: ImageUrl
-
-	/// The F3 band tooltip's three figures read aloud.
-	measure 'Alt Band Nums (text)' = "This band in 2025: NPS " & [NPS 2025 (signed)] & ", occupancy " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", revenue per available room " & FORMAT ( [RevPAR 2025], "$#,0" ) & "."
-		formatString: @
-		displayFolder: 11 Accessibility
-		lineageTag: 0a12882e-b70b-51e1-82d5-2fd9d5d312cf
-
-	/// F4 hotel tooltip: the brand's own 2025 figures under the hotel's three.
-	measure 'Hotel vs Brand (text)' = "Goodnight Inn, all hotels, 2025: occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & ", ADR " & FORMAT ( CALCULATE ( [ADR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0" )
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 9505e74c-5a93-53e8-9d09-8b4fce534510
-
-	/// F3 band tooltip: the brand's own 2025 figures under the band's three, the same formatters.
-	measure 'Band vs Brand (text)' = "Goodnight Inn, all hotels, 2025: NPS " & IF ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) ), "0.0" ) & ", occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0" )
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 189a7e04-3179-5f45-916d-32dbfa78b1ca
-
-	/// The F4 hotel tooltip's three figures read aloud.
-	measure 'Alt Hotel Nums (text)' = "This hotel in 2025: occupancy " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", average daily rate " & FORMAT ( [ADR 2025], "$#,0" ) & ", revenue per available room " & FORMAT ( [RevPAR 2025], "$#,0" ) & "."
-		formatString: @
-		displayFolder: 11 Accessibility
-		lineageTag: 53e33675-924d-55a5-a9b7-23235150c360
-
-	/// The F3 band tooltip's line chart read aloud.
-	measure 'Alt NPS Band Line (text)' = "Net promoter score by year, 2021 to 2025, this band against the whole brand: the band from " & FORMAT ( [NPS (weighted) 2021], "+0.0;-0.0;0.0" ) & " to " & FORMAT ( [NPS (weighted) 2025], "+0.0;-0.0;0.0" ) & ", the brand from " & FORMAT ( CALCULATE ( [NPS (weighted) 2021], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "+0.0;-0.0;0.0" ) & " to " & FORMAT ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "+0.0;-0.0;0.0" ) & "."
-		formatString: @
-		displayFolder: 11 Accessibility
-		lineageTag: 923cef95-153b-571c-9a22-3f2d2c8fbf02
-
-	/// The F4 hotel tooltip's line chart read aloud.
-	measure 'Alt Occupancy Hotel Line (text)' = "Occupancy by month in 2025, this hotel against the whole brand: the hotel averages " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", the brand " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & "."
-		formatString: @
-		displayFolder: 11 Accessibility
-		lineageTag: f94bb586-30d4-5704-bb84-4f2d9497615c
-
-	/// The F4 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
-	measure 'Finding Chip F4 (text)' = "F4"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: ab34835d-7946-5f61-8dd9-b66a92c157ef
-
-	/// F4 hotel tooltip: who fills the hotel, the three largest guest segments by 2025 room nights and the rest.
-	measure 'Segments 2025 (text)' = VAR t = ADDCOLUMNS ( VALUES ( GuestSegments[Segment] ), "@s", CALCULATE ( SUM ( GuestSegments[RoomNights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) VAR tot = SUMX ( t, [@s] ) VAR top3 = TOPN ( 3, t, [@s], DESC ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( Hotels[Hotel Short Name] ) ) || ISBLANK ( tot ), BLANK (), "Room nights 2025: " & CONCATENATEX ( top3, LOWER ( GuestSegments[Segment] ) & " " & FORMAT ( DIVIDE ( [@s], tot ), "0%" ), ", ", [@s], DESC ) & ", other " & FORMAT ( 1 - DIVIDE ( SUMX ( top3, [@s] ), tot ), "0%" ) )
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: bca0f778-ba11-50f6-bc11-15e6ef5a6501
-
-	/// F3 band tooltip: the two lowest of the five guest-score dimensions in 2025, response-weighted (what a refresh would have to fix).
-	measure 'Weakest Scores (text)' = VAR t = UNION ( ROW ( "@n", "cleanliness", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[CleanlinessScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "service", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[ServiceScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "room comfort", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[RoomComfortScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "amenities", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[AmenitiesScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "value for money", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[ValueForMoneyScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( Hotels[Renovation Age Label] ) ), BLANK (), "Weakest guest scores 2025: " & CONCATENATEX ( TOPN ( 2, t, [@v], ASC ), [@n] & " " & FORMAT ( [@v], "0.0" ), ", ", [@v], ASC ) & " (of 10)" )
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: b6d0a913-af44-5683-aaaf-834c047fad83
-
-	/// Header of the F3 band tooltip: the band, its hotels and rooms.
-	measure 'Band Header (text)' = VAR bnd = SELECTEDVALUE ( Hotels[Renovation Age Label] ) RETURN IF ( ISBLANK ( bnd ), BLANK (), bnd & ": " & COUNTROWS ( Hotels ) & " hotels, " & FORMAT ( SUM ( Hotels[Rooms] ), "#,0" ) & " rooms" )
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 6e2a0089-24f5-5cb1-89ea-914f74bcdb88
-
-	/// F3 band tooltip, line: the band's response-weighted NPS by year.
-	measure 'NPS Band (line)' = [NPS (weighted)]
-		formatString: +0.0;-0.0;0.0
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: a4e19789-f2e8-53bc-ae5b-d6befc454d02
-
-	/// F4 hotel tooltip, line: the hotel's occupancy by month.
-	measure 'Occupancy Hotel (line)' = [Occupancy %]
-		formatString: 0.0%
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: e266f597-55d9-505c-8687-222f7c409923
-
-	/// F3 band tooltip, line: Goodnight Inn's response-weighted NPS by year, every hotel.
-	measure 'NPS Brand (line)' = CALCULATE ( [NPS (weighted)], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" )
-		formatString: +0.0;-0.0;0.0
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: c72756bc-a058-5559-98df-82a04c3529ed
-
-	/// F4 hotel tooltip, line: Goodnight Inn's occupancy by month, every hotel.
-	measure 'Occupancy Brand (line)' = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" )
-		formatString: 0.0%
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 86d49a63-98d9-5729-ab1a-c81d6967be2c
-
-	/// The F2 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
-	measure 'Finding Chip F2 (text)' = "F2"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: efd7f9c8-b2e2-589c-8e7f-64afc7500187
-
-	/// Header of the F4 hotel tooltip: the hotel, its location type and rooms.
-	measure 'Hotel Header (text)' = VAR h = SELECTEDVALUE ( Hotels[Hotel Short Name] ) RETURN IF ( ISBLANK ( h ), BLANK (), h & ", " & LOWER ( SELECTEDVALUE ( Hotels[LocationType] ) ) & ", " & FORMAT ( SUM ( Hotels[Rooms] ), "#,0" ) & " rooms" )
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 70cdf61d-21d1-5b34-af2a-575e2efdd1e5
-
-	/// The F1 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
-	measure 'Finding Chip F1 (text)' = "F1"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 422dd68b-9a40-5707-a8bc-444b65e52203
-
-	/// The F3 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
-	measure 'Finding Chip F3 (text)' = "F3"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 7985fb53-1cec-559b-9545-68ec587486f4
-
-	/// Tooltip kicker on the night banner (round 7): the package's letter when it has one and the case in view, in the page's eyebrow style.
-	measure 'TT Kicker (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR k = LOOKUPVALUE ( Package[Preset], Package[PackageID], pkg ) RETURN IF ( ISBLANK ( pkg ), BLANK (), "PACKAGE" & IF ( k <> "", "  " & k, "" ) & "  ·  " & UPPER ( [Selected Scenario] ) & " CASE" )
-		formatString: @
-		displayFolder: 10 Package tooltip
-		lineageTag: 35eca03e-56b0-5fc6-966c-b9386baae031
-
-	/// Year tooltip: cumulative net impact of package A to the end of the hovered year, Low case.
-	measure 'TT Year A (Low)' = VAR f = [Preset A Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR y = MAX ( 'Date'[Year] ) RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = "Low", TREATAS ( ids, ProjectCashflow[ProjectID] ) ) )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
-		displayFolder: 09 Package matrix
-		lineageTag: 63d8b4f8-8c30-56e2-98af-4f1dc4df5b8c
-
-	/// Year tooltip: package A's cumulative net impact in the Low case, as text.
-	measure 'TT Year A Low (text)' = ( VAR __t = ROUND ( ( [TT Year A (Low)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
-		formatString: @
-		displayFolder: 09 Package matrix
-		lineageTag: 70f69259-447c-58bc-a48b-e694c2f9f5cc
-
-	/// Year tooltip: cumulative net impact of package A to the end of the hovered year, Expected case.
-	measure 'TT Year A (Expected)' = VAR f = [Preset A Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR y = MAX ( 'Date'[Year] ) RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = "Expected", TREATAS ( ids, ProjectCashflow[ProjectID] ) ) )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
-		displayFolder: 09 Package matrix
-		lineageTag: 6ed57d5e-f696-5894-9dea-76b0a1f001ea
-
-	/// Year tooltip: package A's cumulative net impact in the Expected case, as text.
-	measure 'TT Year A Expected (text)' = ( VAR __t = ROUND ( ( [TT Year A (Expected)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
-		formatString: @
-		displayFolder: 09 Package matrix
-		lineageTag: ebe9036d-b302-5d10-a747-5a80467c47fc
-
-	/// Year tooltip: cumulative net impact of package A to the end of the hovered year, High case.
-	measure 'TT Year A (High)' = VAR f = [Preset A Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR y = MAX ( 'Date'[Year] ) RETURN IF ( ISBLANK ( f ), BLANK (), CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = "High", TREATAS ( ids, ProjectCashflow[ProjectID] ) ) )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
-		displayFolder: 09 Package matrix
-		lineageTag: 4851eba7-1224-51df-9ed2-32e49bc4822e
-
-	/// Year tooltip: package A's cumulative net impact in the High case, as text.
-	measure 'TT Year A High (text)' = ( VAR __t = ROUND ( ( [TT Year A (High)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
-		formatString: @
-		displayFolder: 09 Package matrix
-		lineageTag: 68ad3359-61aa-523f-a20d-7a53509c23e2
-
-	/// Year tooltip: package A's cumulative net impact to the end of the hovered year, case in view, as text.
-	measure 'TT Year A (text)' = ( VAR __t = ROUND ( ( [Preset A Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
-		formatString: @
-		displayFolder: 09 Package matrix
-		lineageTag: 5f871a24-c64b-5792-94ee-03e1eba8ec8e
-
-	/// Year tooltip: package B's cumulative net impact to the end of the hovered year, case in view, as text.
-	measure 'TT Year B (text)' = ( VAR __t = ROUND ( ( [Preset B Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
-		formatString: @
-		displayFolder: 09 Package matrix
-		lineageTag: 7f1bbde5-e93b-5fe7-b3e5-ea9d434f1fb0
-
-	/// Year tooltip: package C's cumulative net impact to the end of the hovered year, case in view, as text.
-	measure 'TT Year C (text)' = ( VAR __t = ROUND ( ( [Preset C Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
-		formatString: @
-		displayFolder: 09 Package matrix
-		lineageTag: a32ce970-47ee-5ff8-9012-c3f9c732ee0e
-
-	/// Year tooltip: the plan being built, cumulative net impact to the end of the hovered year, case in view; 'none yet' before a move is picked.
-	measure 'TT Year Plan (text)' = IF ( [Build Count] = 0, "none yet", ( VAR __t = ROUND ( ( [Build Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) )
-		formatString: @
-		displayFolder: 09 Package matrix
-		lineageTag: e9753595-65c1-5856-adf5-9a5dcd4e313d
-
-	/// Year tooltip title: the hovered year.
-	measure 'TT Year Title (text)' = VAR y = MAX ( 'Date'[Year] ) RETURN "To the end of " & y & ": where every package stands"
-		formatString: @
-		displayFolder: 09 Package matrix
-		lineageTag: e502d20c-f25b-54a1-8caf-7adb27a61274
-
-	/// Year tooltip, second card's title: the case in view.
-	measure 'TT Year All Title (text)' = VAR s = [Selected Scenario] RETURN "A, B, C and your plan in the " & s & " case"
-		formatString: @
-		displayFolder: 09 Package matrix
-		lineageTag: 3755196c-cbfa-5800-ae8c-c4ce8b453198
-
-	/// The year tooltip's first card read aloud.
-	measure 'Alt TT Year A (text)' = VAR y = MAX ( 'Date'[Year] ) RETURN "Package A, cumulative net impact to the end of " & y & ": Low " & [TT Year A Low (text)] & ", Expected " & [TT Year A Expected (text)] & ", High " & [TT Year A High (text)] & "."
-		formatString: @
-		displayFolder: 11 Accessibility
-		lineageTag: 4c55b96f-e8f0-5b1e-8c5f-936a6d5e648b
-
-	/// The year tooltip's second card read aloud.
-	measure 'Alt TT Year All (text)' = VAR y = MAX ( 'Date'[Year] ) VAR s = [Selected Scenario] RETURN "Cumulative net impact to the end of " & y & ", " & s & " case: A " & [TT Year A (text)] & ", B " & [TT Year B (text)] & ", C " & [TT Year C (text)] & ", your plan " & [TT Year Plan (text)] & "."
-		formatString: @
-		displayFolder: 11 Accessibility
-		lineageTag: 0fbf6b12-0e24-5aa5-ac1c-919ccafae5dc
-
 	column Placeholder
 		dataType: string
 		isHidden
@@ -2735,4 +2741,3 @@ table _Measures
 				    Source
 
 	annotation PBI_ResultType = Table
-

@@ -3,8 +3,8 @@
   "name": "tt-f3-band",
   "displayName": "tt-f3-band",
   "displayOption": "ActualSize",
-  "height": 560,
-  "width": 560,
+  "height": 464,
+  "width": 480,
   "objects": {
     "background": [
       {

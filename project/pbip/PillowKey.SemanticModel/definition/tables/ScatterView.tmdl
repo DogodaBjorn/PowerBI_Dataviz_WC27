@@ -3,22 +3,27 @@ table ScatterView
 	lineageTag: 261b8a21-dbad-516e-8650-253d9986382e
 
 	column View
+		dataType: string
+		sortByColumn: Sort
 		lineageTag: 009efdd2-7328-5877-901e-859797084a8f
 		summarizeBy: none
 		isNameInferred
+		isDataTypeInferred
 		sourceColumn: [View]
-		sortByColumn: Sort
 
 	column Sort
+		dataType: int64
 		formatString: 0
 		lineageTag: 7ddedb44-3e2b-55ed-b40d-47bc4b954625
 		summarizeBy: none
 		isNameInferred
+		isDataTypeInferred
 		sourceColumn: [Sort]
 
 	partition ScatterView = calculated
 		mode: import
-		source = DATATABLE ( "View", STRING, "Sort", INTEGER, { { "All packages", 1 }, { "Zoom on A, B, C", 2 } } )
+		source = ```
+				DATATABLE ( "View", STRING, "Sort", INTEGER, { { "All packages", 1 }, { "Zoom on A, B, C", 2 } } )
+				```
 
 	annotation PBI_ResultType = Table
-

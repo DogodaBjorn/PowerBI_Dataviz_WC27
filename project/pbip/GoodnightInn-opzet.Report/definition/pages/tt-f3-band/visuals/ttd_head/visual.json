@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttd_head",
   "position": {
-    "x": 16,
-    "y": 40,
-    "z": 4000,
+    "x": 32,
+    "y": 56,
+    "z": 1001,
+    "width": 416,
     "height": 32,
-    "width": 528,
     "tabOrder": 105
   },
   "visual": {
@@ -392,6 +392,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

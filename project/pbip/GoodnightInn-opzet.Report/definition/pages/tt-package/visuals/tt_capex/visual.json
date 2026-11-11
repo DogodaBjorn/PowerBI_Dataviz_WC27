@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tt_capex",
   "position": {
-    "x": 288,
-    "y": 104,
-    "z": 6000,
+    "x": 264,
+    "y": 96,
+    "z": 1004,
+    "width": 184,
     "height": 56,
-    "width": 240,
     "tabOrder": 130
   },
   "visual": {
@@ -438,6 +438,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

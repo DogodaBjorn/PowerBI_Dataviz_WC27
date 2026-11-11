@@ -3,8 +3,8 @@
   "name": "tt-year",
   "displayName": "tt-year",
   "displayOption": "ActualSize",
-  "height": 376,
-  "width": 560,
+  "height": 320,
+  "width": 480,
   "objects": {
     "background": [
       {

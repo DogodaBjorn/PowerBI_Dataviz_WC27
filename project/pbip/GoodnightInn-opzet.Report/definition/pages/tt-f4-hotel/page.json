@@ -3,8 +3,8 @@
   "name": "tt-f4-hotel",
   "displayName": "tt-f4-hotel",
   "displayOption": "ActualSize",
-  "height": 560,
-  "width": 560,
+  "height": 464,
+  "width": 480,
   "objects": {
     "background": [
       {

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttd_chart_title",
   "position": {
     "x": 32,
-    "y": 272,
-    "z": 7000,
+    "y": 232,
+    "z": 1004,
+    "width": 416,
     "height": 24,
-    "width": 496,
     "tabOrder": 130
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Occupancy by month, 2025: this hotel against the whole brand",
+                    "value": "Occupancy by month 2025, this hotel against the brand",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -153,7 +153,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Occupancy by month, 2025: this hotel against the whole brand'"
+                  "Value": "'Occupancy by month 2025, this hotel against the brand'"
                 }
               }
             }
@@ -173,6 +173,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

@@ -305,21 +305,27 @@ def f1_chart(page, slot, small=False):
     objs = {"categoryAxis": axis(BODY, S, INK2, extra=small_axis_type(small)), "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=0.3, end=0.5, extra={"labelPrecision": integer(0)}),
             # the lines named at their ends in Dusk, as on F2 (pass-3 review: a legend of a grey and a blue dot was colour
             # only, 1.07:1 between them)
-            "legend": legend(False),
-            "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2), "textSize": num(S), "seriesFontFamily": text(BODY)}}],
+            # round 10: in the 416 px tooltip chart the line-end names pushed the years into a slant; there the legend sits on top
+            "legend": legend(True, BODY, S, INK2, "Top") if small else legend(False),
+            "seriesLabels": [{"properties": {"show": b(not small), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2), "textSize": num(S), "seriesFontFamily": text(BODY)}}],
             "dataPoint": series_colors({mref(ms[0]): SLATE, mref(ms[1]): ACCENT_MARK}), "lineStyles": line_styles({mref(ms[0]): 2, mref(ms[1]): 3})}
     return chart(page, slot, "lineChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F1 Chart (text)")
 
 
 def f2_chart(page, slot, small=False):
     ms = [f"Trend OTA {c}" for c, _ in BRANDS]
-    q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m, nm) for m, (_, nm) in zip(ms, BRANDS)]}}
+    names = [nm for _, nm in BRANDS]
+    if small:  # round 10: in the chip tooltip the three sister brands are one line; four names fit neither a legend nor the line ends at 416 px
+        ms, names = [ms[0], "Trend OTA Sisters"], [names[0], "The other three brands"]
+    q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m, nm) for m, nm in zip(ms, names)]}}
     # the line ends carry the names, as in the comp: a legend of three identical grey dots could not be decoded (REVIEW m3).
     # The names in Dusk, not in the line's colour: Warm Grey (3.5:1) and Coffee Blue (3.7:1) fail 4.5:1 for 12 pt text
     # (plan 11); the line next to each name still ties them.
     objs = {"categoryAxis": axis(BODY, S, INK2, extra=small_axis_type(small)), "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, extra={"labelPrecision": integer(0)}),
-            "legend": legend(False),
-            "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2), "textSize": num(S), "seriesFontFamily": text(BODY)}}],
+            # round 10: in the 416 px tooltip chart the four line-end names collided (one was dropped) and a legend on top truncated
+            # two names; there the legend stands at the right, one name under the other
+            "legend": legend(True, BODY, S, INK2, "Top") if small else legend(False),
+            "seriesLabels": [{"properties": {"show": b(not small), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2), "textSize": num(S), "seriesFontFamily": text(BODY)}}],
             "dataPoint": series_colors({mref(ms[0]): ACCENT_MARK, **{mref(m): SLATE for m in ms[1:]}}),
             "lineStyles": line_styles({mref(ms[0]): 3, **{mref(m): 1.5 for m in ms[1:]}})}
     return chart(page, slot, "lineChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F2 Chart (text)")
@@ -409,11 +415,12 @@ def finding_page_visuals(k, nm):
     return v
 
 
-def line_pair(page, slot, cat_table, cat_col, own, brand, own_label, brand_label, filters, sort=None, alt_measure=None, start=None, end=None):
+def line_pair(page, slot, cat_table, cat_col, own, brand, own_label, brand_label, filters, sort=None, alt_measure=None, start=None, end=None, categorical=True):
     """A two-line chart: the hovered band or hotel in Night, the brand in Warm Grey, the names at the line ends."""
     q = {"Category": {"projections": [proj_col(cat_table, cat_col, active=True)]}, "Y": {"projections": [proj_mea(own, own_label), proj_mea(brand, brand_label)]}}
-    objs = {"categoryAxis": axis(BODY, S, INK2), "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=start, end=end, extra={"labelPrecision": integer(0)}),
-            "legend": legend(False), "seriesLabels": SERIES_LABELS_RIGHT,
+    objs = {"categoryAxis": axis(BODY, S, INK2, extra={"axisType": enum("Categorical")} if categorical else None),  # round 10: every year labelled at 416 px "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=start, end=end, extra={"labelPrecision": integer(0)}),
+            # round 10: the legend on top (the line-end names left a 12-month axis with a scrollbar at 416 px)
+            "legend": legend(True, BODY, S, INK2, "Top"), "seriesLabels": [{"properties": {"show": b(False)}}],
             "dataPoint": series_colors({mref(own): INK, mref(brand): SLATE}), "lineStyles": line_styles({mref(own): 2.5, mref(brand): 1.5})}
     return chart(page, slot, "lineChart", q, objs, None, filters=filters, sort=sort, alt_measure=alt_measure)
 
@@ -425,15 +432,15 @@ def detail_page_visuals(which):
     if which == TT_F3:
         head, nums, labels_, alt_nums, vs, foot = ("Band Header (text)", ["NPS 2025 (signed)", "Occupancy % 2025", "RevPAR 2025"], ["NPS 2025", "occupancy 2025", "RevPAR 2025"],
                                                   "Alt Band Nums (text)", "Band vs Brand (text)", "Weakest Scores (text)")
-        ch_title = "NPS by year, 2021 to 2025: this band against the whole brand"
+        ch_title = "NPS by year, this band against the brand"
         ch = line_pair(which, "ttd_chart", "Date", "Year", "NPS Band (line)", "NPS Brand (line)", "This band", "Goodnight Inn", [YEARS()], alt_measure="Alt NPS Band Line (text)")
     else:
         head, nums, labels_, alt_nums, vs, foot = ("Hotel Header (text)", ["Occupancy % 2025", "ADR 2025", "RevPAR 2025"], ["occupancy 2025", "ADR 2025", "RevPAR 2025"],
                                                   "Alt Hotel Nums (text)", "Hotel vs Brand (text)", "Segments 2025 (text)")
-        ch_title = "Occupancy by month, 2025: this hotel against the whole brand"
+        ch_title = "Occupancy by month 2025, this hotel against the brand"
         # round 7: month letters on the axis (a 496 px chart rotated the three-letter names)
         ch = line_pair(which, "ttd_chart", "Date", "Month Letter", "Occupancy Hotel (line)", "Occupancy Brand (line)", "This hotel", "Goodnight Inn",
-                       [filter_in("Date", "Year", [2025], "flt_2025")], sort=sort_by_column("Date", "Month Letter"), alt_measure="Alt Occupancy Hotel Line (text)", start=0.5, end=1.0)
+                       [filter_in("Date", "Year", [2025], "flt_2025")], sort=sort_by_column("Date", "Month Letter"), alt_measure="Alt Occupancy Hotel Line (text)", start=0.5, end=1.0, categorical=False)
     v = [night_kicker(which, "ttd_kicker", "F3  ·  THE FADING WELCOME" if which == TT_F3 else "F4  ·  WHERE WE ARE FULL"),
          dyn(which, "ttd_head", head, size=TITLE_PT, colour=TT_TITLE, font=DISPLAY)]
     n = card("ttd_nums", *at(which, "ttd_nums"), nums, DISPLAY, 18, INK, BODY, S, INK2, labels=labels_)
@@ -468,7 +475,7 @@ def year_page_visuals():
     a = card("tty_a_nums", *at(pg, "tty_a_nums"), ["TT Year A Low (text)", "TT Year A Expected (text)", "TT Year A High (text)"], DISPLAY, 18, INK, BODY, S, INK2,
              labels=["Low case", "Expected case", "High case"])
     al = card("tty_all_nums", *at(pg, "tty_all_nums"), ["TT Year A (text)", "TT Year B (text)", "TT Year C (text)", "TT Year Plan (text)"], DISPLAY, 18, INK, BODY, S, INK2,
-              labels=["A, recommended", "B", "C", "Your plan"])
+              labels=["A", "B", "C", "Your plan"])
     return [night_kicker(pg, "tty_kicker", "CUMULATIVE NET IMPACT  ·  $M, UNDISCOUNTED"),
             dyn(pg, "tty_title", "TT Year Title (text)", size=TITLE_PT, colour=TT_TITLE, font=DISPLAY),
             tb(pg, "tty_a_title", "Package A, our recommendation, in the three cases", font=DISPLAY, size=SPX, colour=INK),
@@ -892,6 +899,8 @@ def card_frames(page_name):
 
 
 CANVAS_FILE = "canvas-night.jpg"
+# Round 10 (Björn, 11 Nov): tooltips at 440 px (Microsoft Learn: keep page tooltips small, 320 x 240 is the built-in size),
+# the orange band carries the kicker only and the title sits in the card in Night; scaled with the canvas (useScaledTooltips).
 # Round 7 (Björn, 11 Nov): a tooltip is the page in miniature, with elements made for its size: its own night scene
 # (brand_canvas_v3.tooltip, the horizon 24 px under the first card), the kicker and the title on the banner, white cards
 # with the page's shadow below.
@@ -908,7 +917,7 @@ def TT_CANVAS(name):
 # is too low"): the scene is the LOWEST VISUAL on every page (z 0, out of the tab order), placed in page pixels, so the cards
 # hang into the banner exactly in every host; the page background keeps the same scene with Fit only for the strip Desktop
 # paints above a page. The two coincide on the page (both scale with it), so nothing shows twice.
-SCENE_VISUAL = True
+SCENE_VISUAL = False  # round 10 (Björn, 11 Nov): the overlay is gone everywhere; the page background (Fit) carries the scene
 
 
 def scene_visual(name):
@@ -1054,7 +1063,10 @@ def main():
         files.append(TT_CANVAS(pg))
     rj = rep / "definition" / "report.json"
     report = json.loads(rj.read_text(encoding="utf-8"))
-    report["settings"] = {"useEnhancedTooltips": False}  # round 9: Björn's Desktop setting, kept by the generator
+    # round 9: Björn's Desktop setting (default tooltips off brand); round 10: useScaledTooltips, the report schema's
+    # "the tooltip will scale to match canvas zoom" (Microsoft Learn: tooltip autoscale), so a 440 px tooltip page stays in
+    # proportion to the page in the Service, Publish to Web and Desktop at any zoom
+    report["settings"] = {"useEnhancedTooltips": False, "useScaledTooltips": True}
     for pk in report["resourcePackages"]:
         if pk["name"] == "RegisteredResources":
             pk["items"] += [{"name": f, "path": f, "type": "Image"} for f in files]

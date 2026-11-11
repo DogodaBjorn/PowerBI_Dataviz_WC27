@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_card_tt_return",
   "position": {
     "x": 16,
-    "y": 88,
-    "z": 1000,
-    "height": 160,
-    "width": 528,
-    "tabOrder": -4001
+    "y": 48,
+    "z": 100,
+    "width": 448,
+    "height": 232,
+    "tabOrder": -1500
   },
   "visual": {
     "visualType": "textbox",
@@ -263,6 +263,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

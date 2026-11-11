@@ -26,6 +26,7 @@ table FinanceParameters
 		summarizeBy: none
 		sourceColumn: Notes
 
+
 	partition FinanceParameters = m
 		mode: import
 		queryGroup: Dimensions
@@ -38,5 +39,5 @@ table FinanceParameters
 				in
 				    Typed
 
-	annotation PBI_ResultType = Table
 
+	annotation PBI_ResultType = Table

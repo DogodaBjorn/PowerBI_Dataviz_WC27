@@ -141,3 +141,16 @@ type floor             : no visible text below 10 pt / 13 px (only a hidden valu
 - 2026-11-09: in Desktop's edit mode every visual is focusable and Tab enters the edit-mode visual header; the keyboard walk in reading mode (Publish to Web) is still owed. A screen reader's browse mode reads visuals in DOM order, which Power BI sorts by position, so the three F-columns' headers are read side by side before their charts; Tab follows the set tab order.
 - 2026-11-09: decorative image visuals (the canvas, the funded chip) still appear in the accessibility tree as an unnamed image; Power BI has no way to hide a visual from it.
 - 2026-11-09: `opzet_backgrounds.mjs` and the HTML comp tools (`build_opzet_comp.py`, `opzet_capture.mjs`) still draw the hanger-kit logo; they are not part of the report build.
+
+```
+2026-11-11, round 10 (tooltips 480 px, scaled; z_canvas gone everywhere)
+validate_tmdl --strict : 30 file(s), 0 error(s), 0 warning(s) [strict]
+a11y_check             : 0 failure(s), 0 note(s) over GoodnightInn-opzet.Report
+MS validate (opzet)    : failed errors 1 warnings 26 (the one error is the pre-existing categoryLabels.backgroundColor shape on the A/B/C scatter layer, rendered fine)
+pbir_detect opzet      : 13 finding(s) across 1 report(s) — 8 unwaived, 5 waived -> FAIL (the 8 open findings are the P1/P2 header positions on the 4 px grid and the chip/tile colours, all from before this round; tooltip pages clean)
+schema_check           : urllib.error.HTTPError: HTTP Error 404: Not Found
+Desktop                : model refreshed headlessly (project/tools/refresh_desktop_model.ps1), the eight tooltip pages rendered at actual size
+                         with temporary preview filters (package A, band '5 years or less', Toronto Pearson, 2030), removed before this entry;
+                         renders in project/deliverables/screenshots/2026-11-11-feedbackronde-10/
+report.json            : settings.useScaledTooltips = true (tooltips scale with the canvas zoom), useEnhancedTooltips = false
+```

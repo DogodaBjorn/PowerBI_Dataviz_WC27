@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tty_a_nums",
   "position": {
     "x": 32,
     "y": 128,
-    "z": 6000,
-    "height": 72,
-    "width": 496,
+    "z": 1003,
+    "width": 416,
+    "height": 56,
     "tabOrder": 130
   },
   "visual": {
@@ -501,6 +501,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

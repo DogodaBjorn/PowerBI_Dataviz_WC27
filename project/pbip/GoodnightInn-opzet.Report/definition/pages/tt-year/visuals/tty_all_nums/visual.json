@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tty_all_nums",
   "position": {
     "x": 32,
-    "y": 272,
-    "z": 8000,
-    "height": 72,
-    "width": 496,
+    "y": 240,
+    "z": 1005,
+    "width": 416,
+    "height": 56,
     "tabOrder": 150
   },
   "visual": {
@@ -302,7 +302,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'A, recommended'"
+                  "Value": "'A'"
                 }
               }
             }
@@ -529,6 +529,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

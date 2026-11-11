@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttf_chart",
   "position": {
     "x": 32,
-    "y": 128,
-    "z": 4000,
-    "height": 192,
-    "width": 496,
+    "y": 144,
+    "z": 1003,
+    "width": 416,
+    "height": 144,
     "tabOrder": 120
   },
   "visual": {
@@ -28,7 +28,6 @@
               },
               "queryRef": "Hotels.Renovation Age Label",
               "nativeQueryRef": "Renovation Age Label",
-              "active": true,
               "displayName": "Years since the last renovation"
             }
           ]
@@ -479,7 +478,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "filterConfig": {
     "filters": [
