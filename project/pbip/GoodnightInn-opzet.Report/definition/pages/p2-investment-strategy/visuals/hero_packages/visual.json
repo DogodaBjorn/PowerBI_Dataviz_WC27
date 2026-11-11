@@ -3,10 +3,10 @@
   "name": "hero_packages",
   "position": {
     "x": 56,
-    "y": 264,
+    "y": 384,
     "z": 1012,
     "width": 992,
-    "height": 736,
+    "height": 616,
     "tabOrder": 221
   },
   "visual": {
@@ -109,12 +109,27 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "TT Mix (text)"
+                  "Property": "TT Moves (text)"
                 }
               },
-              "queryRef": "_Measures.TT Mix (text)",
-              "nativeQueryRef": "TT Mix (text)",
-              "displayName": "Initiatives"
+              "queryRef": "_Measures.TT Moves (text)",
+              "nativeQueryRef": "TT Moves (text)",
+              "displayName": "Moves and their NPV"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "TT Not Included (text)"
+                }
+              },
+              "queryRef": "_Measures.TT Not Included (text)",
+              "nativeQueryRef": "TT Not Included (text)",
+              "displayName": "Not in it"
             }
           ]
         }

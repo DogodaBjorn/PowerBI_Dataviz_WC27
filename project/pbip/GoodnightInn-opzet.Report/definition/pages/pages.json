@@ -3,7 +3,13 @@
   "pageOrder": [
     "p1-brand-review",
     "p2-investment-strategy",
-    "tt-package"
+    "tt-package",
+    "tt-f1",
+    "tt-f2",
+    "tt-f3",
+    "tt-f4",
+    "tt-f3-band",
+    "tt-f4-hotel"
   ],
   "activePageName": "p1-brand-review"
 }

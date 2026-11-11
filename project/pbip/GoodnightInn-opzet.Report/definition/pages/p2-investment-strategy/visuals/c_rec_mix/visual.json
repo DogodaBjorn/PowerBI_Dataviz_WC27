@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_rec_mix",
   "position": {
-    "x": 1112,
-    "y": 344,
+    "x": 1120,
+    "y": 352,
     "z": 1031,
-    "width": 752,
+    "width": 736,
     "height": 24,
     "tabOrder": 410
   },

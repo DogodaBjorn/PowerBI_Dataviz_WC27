@@ -1,0 +1,343 @@
+[
+ {
+  "op": "metrics",
+  "w": 2356,
+  "h": 1400,
+  "dsf": 1
+ },
+ {
+  "op": "wait",
+  "ms": 2000
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p1 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "tab",
+  "js": "(() => { const e = [...document.querySelectorAll('.textLabel')].find(x => x.textContent.trim() === 'The Brand Review'); const r = e.getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2]; })()"
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\01_P1_brand-review.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\01_P1_brand-review@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "tab",
+  "js": "(() => { const e = [...document.querySelectorAll('.textLabel')].find(x => x.textContent.trim() === 'The Investment Strategy'); const r = e.getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2]; })()"
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\02_P2_landing_A_Expected.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\02_P2_landing_A_Expected@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Low p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\03_P2_landing_A_Low.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\03_P2_landing_A_Low@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A High p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\04_P2_landing_A_High.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\04_P2_landing_A_High@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist B Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\05_P2_landing_focusB_Expected.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\05_P2_landing_focusB_Expected@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist C Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\06_P2_landing_focusC_Expected.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\06_P2_landing_focusC_Expected@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 zoom | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\07_P2_landing_A_Expected_zoom.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\07_P2_landing_A_Expected_zoom@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' plan A Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\08_P2_plan_A_Expected.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\08_P2_plan_A_Expected@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' plan A Low p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\09_P2_plan_A_Low.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\09_P2_plan_A_Low@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' plan A High p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\10_P2_plan_A_High.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\10_P2_plan_A_High@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' plan B Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\11_P2_plan_B_Expected.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\11_P2_plan_B_Expected@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' plan C Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\12_P2_plan_C_Expected.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\12_P2_plan_C_Expected@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' plan C Low p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\13_P2_plan_C_Low.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\13_P2_plan_C_Low@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' plan B Low p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\14_P2_plan_B_Low.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\14_P2_plan_B_Low@2x.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist C Low p2 zoom | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\15_P2_landing_focusC_Low_zoom.png"
+ },
+ {
+  "op": "pshot",
+  "scale": 2,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\raw3x\\15_P2_landing_focusC_Low_zoom@2x.png"
+ }
+]

@@ -15,7 +15,7 @@ adopt a new idea into it, add its source here in the same change
 | Who | What we owe them | Where it lands |
 |---|---|---|
 | **Kurt Buhler & Maxim Anatsko** — the [pbir CLI](https://pypi.org/project/pbir-cli/) | Headless PBIR authoring as a practice; the reason agent-driven report building is tractable at all. Custom non-commercial license — respected, never vendored. | `pbir-cli` adapter skill, DEPENDENCIES.md |
-| **Daniel Marsh-Patrick** — [Deneb](https://deneb.guide/) and [HTML Content](https://html-content.com/) | Declarative Vega-Lite visuals inside Power BI: the middle rung between native and custom-visual development. His HTML Content docs (interactivity, sanitization) grounded the Secure-card patterns in fx-focus. | deneb-studio; fx-focus |
+| **Daniel Marsh-Patrick** — [Deneb](https://deneb.guide/) and [HTML Content](https://html-content.com/) | Declarative Vega-Lite visuals inside Power BI: the middle rung between native and custom-visual development. His HTML Content docs (interactivity, sanitization) grounded the Secure-card patterns in fx-focus. Round 4 (2026-11-10): the move selector `dn_build_selector` follows his Advanced Cross-Filtering docs (`pbiCrossFilterApply` with a filter expression, `pbiCrossFilterClear`, `__selected__`) and the PBIR Implementation Guide (the `jsonSpec` literal, `provider`, `selectionMode`). | deneb-studio; fx-focus; `project/tools/build_selector_spec.py`, `opzet_report.py` (`deneb_selector`) |
 | **Microsoft Power BI / Fabric teams** | PBIP/PBIR/TMDL open formats, the base themes, `pbiviz` tooling, and the core-visuals work (Miguel Myers and team: new card, reference labels, button slicer). | everywhere; custom-visual-studio; nav-studio |
 | **UW Interactive Data Lab** — [Vega-Lite](https://vega.github.io/vega-lite/) | The grammar Deneb speaks. | deneb-studio |
 | **Microsoft** — [skills-for-fabric](https://github.com/microsoft/skills-for-fabric) | The official powerbi-authoring plugin (five authoring skills), the Power BI Modeling MCP server (Node ≥ 18), and the Desktop Bridge — referenced, never vendored; two short README/Learn quotes cited in the adapter. MIT-licensed repo; consulted via web 2026-08-04 (no local clone to pin — Learn overview `git_commit_id 463305865f2f2b332991b5354bf082098729ee24`). | `ms-authoring` adapter skill, DEPENDENCIES.md |
@@ -26,7 +26,7 @@ adopt a new idea into it, add its source here in the same change
 |---|---|---|
 | **[bibb.pro](https://bibb.pro/)** | Modern button-slicer UI patterns (segmented controls, tabs, toggles, clickable KPI cards, image items), navbar thinking, wireframing and layout writing. | nav-studio, canvas-studio |
 | **[Valerie Junk](https://www.valeriejunk.nl/)** (PorcuBI) | Tables and matrices as visuals that work *with* the user; storytelling per audience; adoption-first design. | table-studio |
-| **[Kerry Kolosko](https://kerrykolosko.com/)** | SVG/HTML micro-visualization craft: sparklines, in-cell marks, SVG-in-DAX as a discipline. | icon-studio, table-studio |
+| **[Kerry Kolosko](https://kerrykolosko.com/)** | SVG/HTML micro-visualization craft: sparklines, in-cell marks, SVG-in-DAX as a discipline. Round 6 (2026-11-10): the package tooltip's range bar, moves list and move grid are SVG-in-DAX measures in native image visuals, after her conventions (`%23` for `#`, single quotes inside the SVG, Image URL data category). | icon-studio, table-studio; `sketch_model.py` (`TT Range SVG`, `TT Moves SVG`, `TT Move Grid (svg)`) |
 | **[Davide Bacci](https://deneb.guide/community/resources)** | What Deneb can really do — the showcase that sets the bar. | deneb-studio |
 | **[Mara Pereira](https://www.datapears.com/)** (Data Pears) | Design-tool-first canvases: wireframes and designed backgrounds as the foundation of premium layout. | canvas-studio |
 | **[Reid Havens](https://www.havensconsulting.net/)** (Havens Consulting) | Report-page tooltips as a designed layer, including field-parameter-driven tooltip content. | tooltip-studio |
@@ -81,7 +81,7 @@ there and are reused by the canon).
 | **Miguel Myers and the Power BI Core Visuals team** *(canon adoption)* | The core-visuals vision (new card, reference labels, button slicer) as the native path for KPI cards. | dataviz-canon DC-051 |
 | **Benn Stancil; Simon Späti** | The "BI is dead" debate and its rebuttal: semantics and governance matter more under AI. | dataviz-canon DC-071 |
 | **Gartner** | The analytics capability ladder (descriptive to prescriptive) used to classify page purpose. | dataviz-canon DC-018 |
-| **Microsoft Learn authors** | Copilot limits and Prep-data-for-AI; implementation-planning test categories; RLS/OLS behavior with workspace roles. | dataviz-canon DC-060, 061, 070 |
+| **Microsoft Learn authors** | Copilot limits and Prep-data-for-AI; implementation-planning test categories; RLS/OLS behavior with workspace roles. Round 6: 'Create report tooltips in Power BI' (any size, not interactive, not read by screen readers), which set the text-twin rule for every SVG in the package tooltip and the chips' alt texts. | dataviz-canon DC-060, 061, 070 |
 
 
 ## Skill repositories whose ideas were adopted

@@ -14,7 +14,58 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#F3F1EA'"
+                    "Value": "'#12233D'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          },
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'canvas-night-page.jpg'"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Normal'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "canvas-night-page.jpg"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#12233D'"
                   }
                 }
               }
@@ -33,202 +84,1442 @@
   },
   "visualInteractions": [
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "z_canvas",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "z_card_card_scatter",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "z_card_card_panel",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
+      "target": "z_card_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "z_card_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "z_card_card_compare",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
       "target": "z_tile_rec",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
+      "target": "z_tile_guide",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "z_tile_b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "z_tile_c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
       "target": "z_logo",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "z_eyebrow2",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "z_masthead2",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "z_headline2",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
+      "target": "chip_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
       "target": "c_subtitle2",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "c_scatter_title",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "c_scatter_sub",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
-      "target": "hero_packages",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
-      "target": "hero_named",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "sl_view",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
+      "target": "c_guide_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_guide_legend",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_guide",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "hero_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "hero_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_alts_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_alts_intro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_build_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_build_intro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
       "target": "lbl_scenario",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "sl_scenario",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "lbl_package",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
-      "target": "sl_package",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
-      "target": "c_focus_line",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "img_rec_chip",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "c_rec_title",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "c_rec_mix",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "c_rec_nums",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "c_rec_answers",
+      "source": "hero_packages_hover",
+      "target": "c_rec_note",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "c_rec_held",
+      "source": "hero_packages_hover",
+      "target": "ch_rec_waterfall",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "c_rec_rules",
+      "source": "hero_packages_hover",
+      "target": "ch_rec_cumulative",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "c_alt_title",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
-      "target": "c_alt_b",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
-      "target": "c_alt_c",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
-      "target": "c_not_funded",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
       "target": "c_uncertainty",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "btn_open_plan",
+      "source": "hero_packages_hover",
+      "target": "img_b_chip",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "c_plan_title",
+      "source": "hero_packages_hover",
+      "target": "c_b_title",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "c_plan_ops",
+      "source": "hero_packages_hover",
+      "target": "c_b_nums",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "ch_plan_waterfall",
+      "source": "hero_packages_hover",
+      "target": "c_b_why",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "tbl_plan_initiatives",
+      "source": "hero_packages_hover",
+      "target": "c_b_whynot",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "ch_plan_cumulative",
+      "source": "hero_packages_hover",
+      "target": "c_b_payback",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "c_plan_risk",
+      "source": "hero_packages_hover",
+      "target": "img_c_chip",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
-      "target": "btn_back",
+      "source": "hero_packages_hover",
+      "target": "c_c_title",
       "type": "NoFilter"
     },
     {
-      "source": "hero_hover",
+      "source": "hero_packages_hover",
+      "target": "c_c_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_c_why",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_c_whynot",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_c_payback",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "dn_build_selector",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "ch_build_waterfall",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_canvas",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_card_card_scatter",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_card_card_panel",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_card_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_card_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_card_card_compare",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_tile_rec",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_tile_guide",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_tile_b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_tile_c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_masthead2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_scatter_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "sl_view",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_guide_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_guide_legend",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_guide",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "hero_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "hero_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "hero_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_alts_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_alts_intro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_build_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_build_intro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_rec_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_rec_mix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_rec_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "ch_rec_waterfall",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "ch_rec_cumulative",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_uncertainty",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "img_b_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_b_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_b_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_b_why",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_b_whynot",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_b_payback",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "img_c_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_c_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_c_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_c_why",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_c_whynot",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_c_payback",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "dn_build_selector",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "ch_build_waterfall",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_canvas",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_card_card_scatter",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_card_card_panel",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_card_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_card_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_card_card_compare",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_tile_rec",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_tile_guide",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_tile_b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_tile_c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_masthead2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_scatter_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "sl_view",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_guide_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_guide_legend",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_guide",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "hero_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "hero_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "hero_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_alts_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_alts_intro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_build_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_build_intro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_rec_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_rec_mix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_rec_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "ch_rec_waterfall",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "ch_rec_cumulative",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_uncertainty",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "img_b_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_b_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_b_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_b_why",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_b_whynot",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_b_payback",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "img_c_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_c_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_c_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_c_why",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_c_whynot",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_c_payback",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "dn_build_selector",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "ch_build_waterfall",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_canvas",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_card_card_scatter",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_card_card_panel",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_card_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_card_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_card_card_compare",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_tile_rec",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_tile_guide",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_tile_b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_tile_c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_masthead2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_scatter_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "sl_view",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_guide_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_guide_legend",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_guide",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "hero_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "hero_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "hero_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "hero_s_packages_build",
+      "type": "DataFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_alts_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_alts_intro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_build_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_build_intro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_rec_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_rec_mix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_rec_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "ch_rec_waterfall",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "ch_rec_cumulative",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_uncertainty",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "img_b_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_b_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_b_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_b_why",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_b_whynot",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_b_payback",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "img_c_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_c_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_c_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_c_why",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_c_whynot",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_c_payback",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_you_title",
+      "type": "DataFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_you_nums",
+      "type": "DataFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "c_you_rules",
+      "type": "DataFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "ch_build_waterfall",
+      "type": "DataFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "ch_cmp_build",
+      "type": "DataFilter"
+    },
+    {
+      "source": "dn_build_selector",
       "target": "z_footer2",
       "type": "NoFilter"
     }
@@ -236,7 +1527,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_page_projects_11",
+        "name": "flt_page_projects_16",
         "field": {
           "Column": {
             "Expression": {
@@ -290,7 +1581,7 @@
         "howCreated": "User"
       },
       {
-        "name": "flt_page_brand_12",
+        "name": "flt_page_brand_17",
         "field": {
           "Column": {
             "Expression": {

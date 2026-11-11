@@ -1,0 +1,19 @@
+/// One row, 'Your plan': the category of the scatter layer that marks the plan being built (its X and Y are the Build Capex and Build NPV measures).
+table BuildPoint
+	lineageTag: 9730eeee-a78c-5229-bb85-a192f99da0eb
+
+	column Label
+		dataType: string
+		lineageTag: fb294a6d-ebaf-5e60-b439-511e18930f27
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Label]
+
+	partition BuildPoint = calculated
+		mode: import
+		source = ```
+				DATATABLE ( "Label", STRING, { { "Your plan" } } )
+				```
+
+	annotation PBI_ResultType = Table

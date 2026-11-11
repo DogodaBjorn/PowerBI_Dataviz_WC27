@@ -1,0 +1,378 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "dn_build_selector",
+  "position": {
+    "x": 792,
+    "y": 312,
+    "z": 1072,
+    "width": 560,
+    "height": 328,
+    "tabOrder": 610
+  },
+  "visual": {
+    "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A",
+    "query": {
+      "queryState": {
+        "dataset": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "BuildMove"
+                    }
+                  },
+                  "Property": "ProjectID"
+                }
+              },
+              "queryRef": "BuildMove.ProjectID",
+              "nativeQueryRef": "ProjectID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "BuildMove"
+                    }
+                  },
+                  "Property": "Short Name"
+                }
+              },
+              "queryRef": "BuildMove.Short Name",
+              "nativeQueryRef": "Short Name",
+              "displayName": "Move"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "BuildMove"
+                    }
+                  },
+                  "Property": "Sort"
+                }
+              },
+              "queryRef": "BuildMove.Sort",
+              "nativeQueryRef": "Sort"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Move Answers (text)"
+                }
+              },
+              "queryRef": "_Measures.Move Answers (text)",
+              "nativeQueryRef": "Move Answers (text)",
+              "displayName": "Answers"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Move Capex (text)"
+                }
+              },
+              "queryRef": "_Measures.Move Capex (text)",
+              "nativeQueryRef": "Move Capex (text)",
+              "displayName": "Capex"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Move NPV (text)"
+                }
+              },
+              "queryRef": "_Measures.Move NPV (text)",
+              "nativeQueryRef": "Move NPV (text)",
+              "displayName": "NPV"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Move NPV (num)"
+                }
+              },
+              "queryRef": "_Measures.Move NPV (num)",
+              "nativeQueryRef": "Move NPV (num)",
+              "displayName": "NPVnum"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Move Case (text)"
+                }
+              },
+              "queryRef": "_Measures.Move Case (text)",
+              "nativeQueryRef": "Move Case (text)",
+              "displayName": "Case"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Move Capex (num)"
+                }
+              },
+              "queryRef": "_Measures.Move Capex (num)",
+              "nativeQueryRef": "Move Capex (num)",
+              "displayName": "CapexNum"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Move Budget (num)"
+                }
+              },
+              "queryRef": "_Measures.Move Budget (num)",
+              "nativeQueryRef": "Move Budget (num)",
+              "displayName": "Budget"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "vega": [
+        {
+          "properties": {
+            "jsonSpec": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"description\":\"dn_build_selector (opzet P2, build state): the ten Goodnight Inn moves as a tappable list. Dataset fields, by display name: ProjectID, Move, Sort, Answers, Capex, NPV, NPVnum, Case, CapexNum, Budget. Advanced cross-filtering: a plain click toggles the row; the handler rebuilds the selected set from __selected__ and applies it with pbiCrossFilterApply. Tokens: Night, Dusk, Seam, Ice, Coffee Blue, Burnt Tangerine (kit goodnight-inn-wakeup 3.1). Source: project/tools/build_selector_spec.py.\",\"autosize\":{\"type\":\"none\",\"contains\":\"padding\"},\"padding\":0,\"background\":\"#FFFFFF\",\"signals\":[{\"name\":\"width\",\"init\":\"containerSize()[0]\",\"on\":[{\"events\":\"window:resize\",\"update\":\"containerSize()[0]\"}]},{\"name\":\"height\",\"init\":\"containerSize()[1]\",\"on\":[{\"events\":\"window:resize\",\"update\":\"containerSize()[1]\"}]},{\"name\":\"headerH\",\"value\":32},{\"name\":\"footerH\",\"value\":28},{\"name\":\"nRows\",\"update\":\"max(1, length(data(''dataset'')))\"},{\"name\":\"rowH\",\"update\":\"(height - headerH - footerH) / nRows\"},{\"name\":\"nOn\",\"update\":\"length(data(''onrows''))\"},{\"name\":\"capOn\",\"update\":\"length(data(''ontotal'')) > 0 ? data(''ontotal'')[0][''cap''] : 0\"},{\"name\":\"budget\",\"update\":\"length(data(''dataset'')) > 0 ? data(''dataset'')[0][''Budget''] : 0\"},{\"name\":\"onIds\",\"update\":\"''|'' + join(pluck(data(''onrows''), ''ProjectID''), ''|'') + ''|''\"},{\"name\":\"caseLabel\",\"update\":\"length(data(''dataset'')) > 0 ? data(''dataset'')[0][''Case''] : ''''\"},{\"name\":\"pbiCrossFilterSelection\",\"value\":[],\"on\":[{\"events\":{\"source\":\"scope\",\"type\":\"mouseup\",\"markname\":\"rowhit\"},\"update\":\"datum[''__selected__''] == ''on'' && nOn == 1 ? pbiCrossFilterClear() : pbiCrossFilterApply(event, datum[''__selected__''] == ''on'' ? \\\"indexof(''\\\" + onIds + \\\"'', ''|'' + datum[''ProjectID''] + ''|'') >= 0 && datum[''ProjectID''] != ''\\\" + datum[''ProjectID''] + \\\"''\\\" : \\\"indexof(''\\\" + onIds + \\\"'', ''|'' + datum[''ProjectID''] + ''|'') >= 0 || datum[''ProjectID''] == ''\\\" + datum[''ProjectID''] + \\\"''\\\", {limit: 50})\"}]}],\"data\":[{\"name\":\"dataset\"},{\"name\":\"rows\",\"source\":\"dataset\",\"transform\":[{\"type\":\"collect\",\"sort\":{\"field\":\"Sort\"}},{\"type\":\"window\",\"ops\":[\"row_number\"],\"as\":[\"r\"]},{\"type\":\"formula\",\"as\":\"y0\",\"expr\":\"headerH + (datum.r - 1) * rowH\"}]},{\"name\":\"onrows\",\"source\":\"dataset\",\"transform\":[{\"type\":\"filter\",\"expr\":\"datum[''__selected__''] == ''on''\"}]},{\"name\":\"ontotal\",\"source\":\"onrows\",\"transform\":[{\"type\":\"aggregate\",\"ops\":[\"sum\"],\"fields\":[\"CapexNum\"],\"as\":[\"cap\"]}]}],\"marks\":[{\"type\":\"text\",\"name\":\"h_move\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":40},\"align\":{\"value\":\"left\"},\"baseline\":{\"value\":\"middle\"},\"fontSize\":{\"value\":16},\"font\":{\"value\":\"Segoe UI, wf_segoe-ui_normal, Arial, sans-serif\"},\"y\":{\"signal\":\"headerH / 2\"},\"fill\":{\"value\":\"#4B5466\"},\"text\":{\"signal\":\"''Move''\"}}}},{\"type\":\"text\",\"name\":\"h_answers\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":236},\"align\":{\"value\":\"left\"},\"baseline\":{\"value\":\"middle\"},\"fontSize\":{\"value\":16},\"font\":{\"value\":\"Segoe UI, wf_segoe-ui_normal, Arial, sans-serif\"},\"y\":{\"signal\":\"headerH / 2\"},\"fill\":{\"value\":\"#4B5466\"},\"text\":{\"signal\":\"''Answers''\"}}}},{\"type\":\"text\",\"name\":\"h_capex\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":400},\"align\":{\"value\":\"right\"},\"baseline\":{\"value\":\"middle\"},\"fontSize\":{\"value\":16},\"font\":{\"value\":\"Segoe UI, wf_segoe-ui_normal, Arial, sans-serif\"},\"y\":{\"signal\":\"headerH / 2\"},\"fill\":{\"value\":\"#4B5466\"},\"text\":{\"signal\":\"''Capex''\"}}}},{\"type\":\"text\",\"name\":\"h_npv\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":548},\"align\":{\"value\":\"right\"},\"baseline\":{\"value\":\"middle\"},\"fontSize\":{\"value\":16},\"font\":{\"value\":\"Segoe UI, wf_segoe-ui_normal, Arial, sans-serif\"},\"y\":{\"signal\":\"headerH / 2\"},\"fill\":{\"value\":\"#4B5466\"},\"text\":{\"signal\":\"''NPV, '' + caseLabel\"}}}},{\"type\":\"rule\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":0},\"x2\":{\"signal\":\"width\"},\"y\":{\"signal\":\"headerH - 1\"},\"stroke\":{\"value\":\"#E3DFD3\"}}}},{\"type\":\"rect\",\"name\":\"rowhit\",\"from\":{\"data\":\"rows\"},\"encode\":{\"update\":{\"x\":{\"value\":0},\"x2\":{\"signal\":\"width\"},\"y\":{\"signal\":\"datum.y0 + 1\"},\"height\":{\"signal\":\"rowH - 2\"},\"fill\":{\"signal\":\"datum[''__selected__''] == ''on'' ? ''#EAF2FB'' : ''#FFFFFF''\"},\"stroke\":{\"value\":\"#E3DFD3\"},\"strokeWidth\":{\"value\":1},\"cornerRadius\":{\"value\":6},\"cursor\":{\"value\":\"pointer\"}},\"hover\":{\"stroke\":{\"value\":\"#2589D8\"},\"strokeWidth\":{\"value\":1.5}}}},{\"type\":\"symbol\",\"interactive\":false,\"from\":{\"data\":\"rows\"},\"encode\":{\"update\":{\"x\":{\"value\":20},\"y\":{\"signal\":\"datum.y0 + rowH / 2\"},\"size\":{\"value\":230},\"shape\":{\"value\":\"circle\"},\"fill\":{\"signal\":\"datum[''__selected__''] == ''on'' ? ''#2589D8'' : ''#FFFFFF''\"},\"stroke\":{\"signal\":\"datum[''__selected__''] == ''on'' ? ''#2589D8'' : ''#8E897D''\"},\"strokeWidth\":{\"value\":1.5}}}},{\"type\":\"text\",\"interactive\":false,\"from\":{\"data\":\"rows\"},\"encode\":{\"update\":{\"x\":{\"value\":20},\"y\":{\"signal\":\"datum.y0 + rowH / 2 + 1\"},\"align\":{\"value\":\"center\"},\"baseline\":{\"value\":\"middle\"},\"text\":{\"signal\":\"datum[''__selected__''] == ''on'' ? ''✓'' : ''''\"},\"fill\":{\"value\":\"#FFFFFF\"},\"fontSize\":{\"value\":13},\"fontWeight\":{\"value\":\"bold\"}}}},{\"type\":\"text\",\"name\":\"t_move\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":40},\"align\":{\"value\":\"left\"},\"baseline\":{\"value\":\"middle\"},\"fontSize\":{\"value\":16},\"font\":{\"value\":\"Segoe UI, wf_segoe-ui_normal, Arial, sans-serif\"},\"y\":{\"signal\":\"datum.y0 + rowH / 2\"},\"fill\":{\"signal\":\"datum[''__selected__''] == ''on'' ? ''#12233D'' : ''#4B5466''\"},\"text\":{\"field\":\"Move\"},\"fontWeight\":{\"signal\":\"datum[''__selected__''] == ''on'' ? 600 : 400\"}}},\"from\":{\"data\":\"rows\"}},{\"type\":\"text\",\"name\":\"t_answers\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":236},\"align\":{\"value\":\"left\"},\"baseline\":{\"value\":\"middle\"},\"fontSize\":{\"value\":16},\"font\":{\"value\":\"Segoe UI, wf_segoe-ui_normal, Arial, sans-serif\"},\"y\":{\"signal\":\"datum.y0 + rowH / 2\"},\"fill\":{\"value\":\"#4B5466\"},\"text\":{\"field\":\"Answers\"}}},\"from\":{\"data\":\"rows\"}},{\"type\":\"text\",\"name\":\"t_capex\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":400},\"align\":{\"value\":\"right\"},\"baseline\":{\"value\":\"middle\"},\"fontSize\":{\"value\":16},\"font\":{\"value\":\"Segoe UI, wf_segoe-ui_normal, Arial, sans-serif\"},\"y\":{\"signal\":\"datum.y0 + rowH / 2\"},\"fill\":{\"signal\":\"datum[''__selected__''] == ''on'' ? ''#12233D'' : ''#4B5466''\"},\"text\":{\"field\":\"Capex\"}}},\"from\":{\"data\":\"rows\"}},{\"type\":\"text\",\"name\":\"t_npv\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":548},\"align\":{\"value\":\"right\"},\"baseline\":{\"value\":\"middle\"},\"fontSize\":{\"value\":16},\"font\":{\"value\":\"Segoe UI, wf_segoe-ui_normal, Arial, sans-serif\"},\"y\":{\"signal\":\"datum.y0 + rowH / 2\"},\"fill\":{\"signal\":\"datum[''NPVnum''] < 0 ? ''#A63F0E'' : (datum[''__selected__''] == ''on'' ? ''#12233D'' : ''#4B5466'')\"},\"text\":{\"field\":\"NPV\"}}},\"from\":{\"data\":\"rows\"}},{\"type\":\"rule\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":0},\"x2\":{\"signal\":\"width\"},\"y\":{\"signal\":\"height - footerH + 0.5\"},\"stroke\":{\"value\":\"#E3DFD3\"}}}},{\"type\":\"text\",\"name\":\"t_footer\",\"interactive\":false,\"encode\":{\"update\":{\"x\":{\"value\":40},\"y\":{\"signal\":\"height - footerH / 2 + 1\"},\"align\":{\"value\":\"left\"},\"baseline\":{\"value\":\"middle\"},\"fontSize\":{\"value\":16},\"font\":{\"signal\":\"nOn > 0 && capOn > budget ? ''Segoe UI Semibold, wf_segoe-ui_semibold, Arial, sans-serif'' : ''Segoe UI, wf_segoe-ui_normal, Arial, sans-serif''\"},\"fontWeight\":{\"signal\":\"nOn > 0 && capOn > budget ? 600 : 400\"},\"fill\":{\"signal\":\"nOn > 0 && capOn > budget ? ''#A63F0E'' : ''#4B5466''\"},\"text\":{\"signal\":\"nOn == 0 ? ''Nothing picked yet'' : (nOn > 0 && capOn > budget ? ''Over budget by '' + replace(format((capOn - budget) / 1e6, ''$.2f''), regexp(''0$''), '''') + ''M'' + '': '' + replace(format((capOn) / 1e6, ''$.2f''), regexp(''0$''), '''') + ''M'' + '' picked, the cap is '' + replace(format((budget) / 1e6, ''$.2f''), regexp(''0$''), '''') + ''M'' : ''Picked: '' + nOn + (nOn == 1 ? '' move, '' : '' moves, '') + replace(format((capOn) / 1e6, ''$.2f''), regexp(''0$''), '''') + ''M'' + '' of '' + replace(format((budget) / 1e6, ''$.2f''), regexp(''0$''), '''') + ''M'')\"}}}}]}'"
+                }
+              }
+            },
+            "jsonConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{}'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'vega'"
+                }
+              }
+            },
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'svg'"
+                }
+              }
+            },
+            "enableSelection": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "selectionMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'advanced'"
+                }
+              }
+            },
+            "selectionMaxDataPoints": {
+              "expr": {
+                "Literal": {
+                  "Value": "50D"
+                }
+              }
+            },
+            "enableTooltips": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "enableContextMenu": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "enableHighlight": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Build your own plan: the ten Goodnight Inn moves with what each costs and returns. Tap a move to add it to the plan or take it out'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": false
+  },
+  "isHidden": true
+}

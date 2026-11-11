@@ -35,7 +35,8 @@ W, H = 1920, 1080
 HORIZON = 340                     # bottom of the dark header zone (night canvas); the report's comes from its slot map
 if len(sys.argv) > 2:
     _layout = json.load(open(sys.argv[2], encoding="utf-8"))
-    _tops = {min(c["y"] for c in p["cards"] if not c.get("state")) for p in _layout["pages"] if p.get("cards")}
+    # report pages only (tooltip pages have their own banner); a card's state (round 4) does not move the first row
+    _tops = {min(c["y"] for c in p["cards"]) for p in _layout["pages"] if p.get("cards") and not p.get("tooltip")}
     assert len(_tops) == 1, f"pages start their first card row at different heights: {_tops}"
     HORIZON = _tops.pop() + 64
 rng = np.random.default_rng(7)
@@ -81,26 +82,38 @@ def light(out):
     finish(img, os.path.join(out, "canvas-light.jpg"))
 
 
-def night(out):
-    img = np.empty((H, W, 3), np.float32); img[:] = rgb("#F3F1EA")
-    img = mix(img, "#F7DFCF", glow(1880, 1180, 900, 0.55))
-    img = mix(img, "#E3EDF8", glow(0, HORIZON, 800, 0.45))
-    t = (xx / W)[..., None]                                    # Night (left) to navy (right)
+def night(out, extra_top=0, name="canvas-night.jpg"):
+    """The night-glow canvas. extra_top (round 6, 11 Nov): the same scene with that many rows of banner added above it,
+    for the page BACKGROUND image: Desktop paints the page background over a display area 20 px taller than the page,
+    so a 1920 x 1100 background whose scene starts 20 px lower shows the banner from the very top, seamless with the
+    on-page canvas visual (which stays the exact 1920 x 1080 scene, aligned with the cards)."""
+    h = H + extra_top
+    y, x = np.mgrid[0:h, 0:W].astype(np.float32)
+    y = y - extra_top                                          # scene coordinates: row 0 of the page at y = 0
+    def g(cx, cy, r, strength):
+        d2 = ((x - cx) ** 2 + (y - cy) ** 2) / (r * r)
+        return (np.exp(-2.2 * d2) * strength)[..., None]
+    img = np.empty((h, W, 3), np.float32); img[:] = rgb("#F3F1EA")
+    img = mix(img, "#F7DFCF", g(1880, 1180, 900, 0.55))
+    img = mix(img, "#E3EDF8", g(0, HORIZON, 800, 0.45))
+    t = (x / W)[..., None]                                     # Night (left) to navy (right)
     top = rgb("#0F1E36") * (1 - t) + rgb("#163760") * t
-    top = mix(top, "#2589D8", glow(1760, round(HORIZON * 250 / 340), 620, 0.22))  # Coffee Blue light, right, below the band text
-    zone = (yy < HORIZON)[..., None]
+    top = mix(top, "#2589D8", g(1760, round(HORIZON * 250 / 340), 620, 0.22))  # Coffee Blue light, right, below the band text
+    zone = (y < HORIZON)[..., None]
     img = np.where(zone, top, img)
     # the faceless hanger, tilted 10 degrees, cropped by the horizon
     m = hanger_mask(7.2, 10)
-    canvas = Image.new("L", (W, H), 0)
-    canvas.paste(m, (1350, -150))
+    canvas = Image.new("L", (W, h), 0)
+    canvas.paste(m, (1350, -150 + extra_top))
     a = (np.asarray(canvas, np.float32) / 255.0 * 0.06)[..., None] * zone
     img = mix(img, "#E9E5D6", a)
-    img[HORIZON - 1:HORIZON] = mix(img[HORIZON - 1:HORIZON], "#2589D8", 0.35)   # a hairline of light on the horizon
-    finish(img, os.path.join(out, "canvas-night.jpg"))
+    hz = HORIZON + extra_top
+    img[hz - 1:hz] = mix(img[hz - 1:hz], "#2589D8", 0.35)     # a hairline of light on the horizon
+    finish(img, os.path.join(out, name))
 
 
 if __name__ == "__main__":
     out = sys.argv[1]
     os.makedirs(out, exist_ok=True)
     night(out)
+    night(out, extra_top=20, name="canvas-night-page.jpg")   # the page background (Desktop's display strip)

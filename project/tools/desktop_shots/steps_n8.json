@@ -1,0 +1,93 @@
+[
+ {
+  "op": "metrics",
+  "w": 2356,
+  "h": 1400,
+  "dsf": 1
+ },
+ {
+  "op": "wait",
+  "ms": 3000
+ },
+ {
+  "op": "tab",
+  "js": "(() => { const e = [...document.querySelectorAll('.textLabel')].find(x => x.textContent.trim() === 'The Investment Strategy'); const r = e.getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2]; })()"
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 980,
+  "ctrl": true
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "phover",
+  "lx": 600,
+  "ly": 1060,
+  "from": 0
+ },
+ {
+  "op": "wait",
+  "ms": 1500
+ },
+ {
+  "op": "phover",
+  "lx": 1488,
+  "ly": 1050,
+  "from": 0
+ },
+ {
+  "op": "wait",
+  "ms": 400
+ },
+ {
+  "op": "phover",
+  "lx": 1488,
+  "ly": 982,
+  "from": 0
+ },
+ {
+  "op": "wait",
+  "ms": 2000
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L2b_mouse-on-Back.png"
+ },
+ {
+  "op": "phover",
+  "lx": 1488,
+  "ly": 1050,
+  "from": 0
+ },
+ {
+  "op": "wait",
+  "ms": 400
+ },
+ {
+  "op": "phover",
+  "lx": 1300,
+  "ly": 928,
+  "from": 0
+ },
+ {
+  "op": "wait",
+  "ms": 2000
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L2c_mouse-on-risk-line.png"
+ }
+]

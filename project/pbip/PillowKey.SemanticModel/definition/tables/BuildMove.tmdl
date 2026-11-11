@@ -1,0 +1,68 @@
+/// Disconnected copy of the ten Goodnight Inn moves for the build-your-own plan (P2, build state). The Deneb selector cross-filters this table; the Build measures carry the selection onto InvestmentProjects with TREATAS. Sort: by Expected NPV, high to low.
+table BuildMove
+	lineageTag: f970d77a-fe1b-501d-9593-62ee64acaf88
+
+	column ProjectID
+		dataType: string
+		lineageTag: ca195d77-63c9-50f7-9903-285096ebc135
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [ProjectID]
+
+	column 'Short Name'
+		dataType: string
+		sortByColumn: Sort
+		lineageTag: 24020c41-81df-5ff3-946a-f6d459b3666c
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Short Name]
+
+	column Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: f4b5fb6f-390f-5433-bd1c-492fee1a528d
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Sort]
+
+	column Growth
+		dataType: string
+		lineageTag: 4d6f390f-2726-5cd7-aa58-7caa731f7725
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Growth]
+
+	column Answers
+		dataType: string
+		lineageTag: 1e803b51-a772-5b70-8b23-a70c539e8c3b
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Answers]
+
+	partition BuildMove = calculated
+		mode: import
+		source = ```
+				VAR Proj = FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" )
+				RETURN
+				    SELECTCOLUMNS (
+				        Proj,
+				        "ProjectID", InvestmentProjects[ProjectID],
+				        "Short Name", InvestmentProjects[Short Name],
+				        "Sort", VAR p = InvestmentProjects[ProjectID]
+				            RETURN RANKX (
+				                Proj,
+				                VAR pp = InvestmentProjects[ProjectID] RETURN SUMX ( FILTER ( ProjectCashflow, ProjectCashflow[ProjectID] = pp && ProjectCashflow[Scenario] = "Expected" ), ( ProjectCashflow[Benefit] - ProjectCashflow[Capex] - ProjectCashflow[Disruption] ) * ProjectCashflow[DiscountFactor] ),
+				                SUMX ( FILTER ( ProjectCashflow, ProjectCashflow[ProjectID] = p && ProjectCashflow[Scenario] = "Expected" ), ( ProjectCashflow[Benefit] - ProjectCashflow[Capex] - ProjectCashflow[Disruption] ) * ProjectCashflow[DiscountFactor] ),
+				                DESC, Dense
+				            ),
+				        "Growth", InvestmentProjects[GrowthInitiative],
+				        "Answers", InvestmentProjects[Answers Finding]
+				    )
+				```
+
+	annotation PBI_ResultType = Table

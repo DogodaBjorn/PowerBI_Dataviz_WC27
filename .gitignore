@@ -31,3 +31,9 @@ project/data/*
 !project/data/README.md
 *.mht
 project/analysis/data/
+
+# --- Power BI Desktop's own folder state (editorSettings etc.), always discarded ---
+**/.pbi/
+
+# --- Render working sheets from the Desktop capture scripts (deliverable renders live in project/deliverables/screenshots) ---
+project/tools/desktop_shots/*.png

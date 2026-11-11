@@ -2,10 +2,13 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmarksMetadata/1.0.0/schema.json",
   "items": [
     {
-      "name": "bm_p2_shortlist"
+      "name": "bm_p2_rec"
     },
     {
-      "name": "bm_p2_plan"
+      "name": "bm_p2_alts"
+    },
+    {
+      "name": "bm_p2_build"
     }
   ]
 }

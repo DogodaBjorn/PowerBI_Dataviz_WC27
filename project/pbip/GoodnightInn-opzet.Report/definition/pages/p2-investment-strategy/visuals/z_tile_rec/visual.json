@@ -3,10 +3,10 @@
   "name": "z_tile_rec",
   "position": {
     "x": 1104,
-    "y": 304,
+    "y": 312,
     "z": 150,
     "width": 768,
-    "height": 368,
+    "height": 240,
     "tabOrder": -1550
   },
   "visual": {

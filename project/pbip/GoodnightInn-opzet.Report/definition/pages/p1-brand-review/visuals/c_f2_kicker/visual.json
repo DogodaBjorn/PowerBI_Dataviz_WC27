@@ -19,7 +19,15 @@
               {
                 "textRuns": [
                   {
-                    "value": "F2  ·  THE MIDDLEMAN",
+                    "value": "F2",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#A63F0E"
+                    }
+                  },
+                  {
+                    "value": "  ·  THE MIDDLEMAN",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",

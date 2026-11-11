@@ -3,11 +3,11 @@
   "name": "tt_payback",
   "position": {
     "x": 16,
-    "y": 160,
+    "y": 112,
     "z": 1005,
-    "width": 400,
+    "width": 528,
     "height": 24,
-    "tabOrder": 150
+    "tabOrder": 140
   },
   "visual": {
     "visualType": "cardVisual",
@@ -62,8 +62,13 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Literal": {
-                      "Value": "'#12233D'"
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "TT Payback Color"
                     }
                   }
                 }

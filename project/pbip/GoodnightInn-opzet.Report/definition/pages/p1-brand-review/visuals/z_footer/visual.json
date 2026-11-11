@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Source: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores weighted by survey responses. 2021 is a depressed base year. Deliberately not shown: impressions, likes, and NPS as a growth measure; effectiveness research does not support them.",
+                    "value": "Source: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores weighted by survey responses; 2021 is a depressed base year.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -153,7 +153,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Source: Pillow & Key Group dataset. Guest scores weighted by survey responses; 2021 is a depressed base year. Not shown on purpose: impressions, likes, and NPS as a growth measure.'"
+                  "Value": "'Source: Pillow & Key Group dataset. Guest scores weighted by survey responses; 2021 is a depressed base year.'"
                 }
               }
             }

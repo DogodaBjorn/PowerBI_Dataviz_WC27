@@ -72,8 +72,16 @@
           "name": "canvas-night.jpg",
           "path": "canvas-night.jpg",
           "type": "Image"
+        },
+        {
+          "name": "canvas-night-page.jpg",
+          "path": "canvas-night-page.jpg",
+          "type": "Image"
         }
       ]
     }
+  ],
+  "publicCustomVisuals": [
+    "deneb7E15AEF80B9E4D4F8E12924291ECE89A"
   ]
 }

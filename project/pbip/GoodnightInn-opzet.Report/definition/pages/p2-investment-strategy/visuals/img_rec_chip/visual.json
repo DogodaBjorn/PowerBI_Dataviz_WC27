@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "img_rec_chip",
   "position": {
-    "x": 1112,
-    "y": 312,
+    "x": 1120,
+    "y": 320,
     "z": 1029,
     "width": 40,
     "height": 32,

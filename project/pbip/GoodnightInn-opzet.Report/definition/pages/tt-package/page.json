@@ -3,10 +3,34 @@
   "name": "tt-package",
   "displayName": "tt-package",
   "displayOption": "ActualSize",
-  "height": 296,
-  "width": 432,
+  "height": 560,
+  "width": 560,
   "objects": {
     "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#FFFFFF'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
       {
         "properties": {
           "color": {

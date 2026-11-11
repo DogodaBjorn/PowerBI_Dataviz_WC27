@@ -3,11 +3,11 @@
   "name": "c_uncertainty",
   "position": {
     "x": 1112,
-    "y": 928,
-    "z": 1040,
+    "y": 968,
+    "z": 1036,
     "width": 752,
-    "height": 24,
-    "tabOrder": 480
+    "height": 32,
+    "tabOrder": 460
   },
   "visual": {
     "visualType": "cardVisual",
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#4B5466'"
+                      "Value": "'#A63F0E'"
                     }
                   }
                 }

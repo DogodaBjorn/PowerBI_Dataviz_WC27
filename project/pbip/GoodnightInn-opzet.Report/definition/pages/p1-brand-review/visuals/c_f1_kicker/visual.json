@@ -19,7 +19,15 @@
               {
                 "textRuns": [
                   {
-                    "value": "F1  ·  THE MARGIN",
+                    "value": "F1",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#A63F0E"
+                    }
+                  },
+                  {
+                    "value": "  ·  THE MARGIN",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",

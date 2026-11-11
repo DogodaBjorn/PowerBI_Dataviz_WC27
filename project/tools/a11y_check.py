@@ -35,6 +35,8 @@ MEASURES_TMDL = ROOT / "project" / "pbip" / "PillowKey.SemanticModel" / "definit
 LAYOUT = json.loads((ROOT / "project" / "design-prototypes" / "opzet-layout.json").read_text(encoding="utf-8"))
 CANVAS = ROOT / "project" / "deliverables" / "backgrounds" / "canvas-night.jpg"
 SURFACE = "#FFFFFF"
+# what a tile paints under its visuals (opzet_report.TILE_KIND): glow and outline are white, tint is Ice, night is Night
+TILE_FILL = {"glow": SURFACE, "tint": "#EAF2FB", "outline": SURFACE, "night": "#12233D"}
 FLOOR_PT, FLOOR_PX = 12, 16
 FONTS_OK = ("segoe ui", "arial")
 COLOUR_WORDS = re.compile(r"\b(raspberry|plum|lilac|ember|pink|magenta|tangerine|blue|grey|gray|red|green|orange|purple|violet|coffee)\b", re.I)
@@ -48,6 +50,7 @@ TEXT_PROPS = {"labels": ["color"], "categoryAxis": ["labelColor", "titleColor"],
               "header": ["fontColor"], "y1AxisReferenceLine": ["dataLabelColor"], "categoryLabels": ["color"], "title": ["fontColor"]}
 
 fails, notes = [], []
+SVG_FONT = re.compile(r"font-size='(\d+(?:\.\d+)?)'")
 
 
 def fail(where, msg):
@@ -102,6 +105,18 @@ def measure_of(v):
     return None
 
 
+def ordered_colours(prop):
+    """Like colours(), but in the order the measure's DAX names them (branch for branch), duplicates kept."""
+    if not isinstance(prop, dict):
+        return []
+    inner = prop.get("solid", {}).get("color", prop)
+    lit = literal(inner)
+    if lit and HEX.fullmatch(lit):
+        return [lit.upper()]
+    mm = measure_of(inner)
+    return [h.upper() for h in HEX.findall(MEAS.get(mm, ""))] if mm else []
+
+
 def colours(prop):
     """Hex colours a colour property can take: a literal, or every hex a field-value measure returns."""
     if not isinstance(prop, dict):
@@ -147,22 +162,48 @@ def page_layout(name):
     return next((p for p in LAYOUT["pages"] if p["name"] == name), None)
 
 
+STATES = ("rec", "alts", "build")  # the P2 panel states (round 4); a slot's state is a list of them, or absent
+
+
+def _states(entry):
+    st = (entry or {}).get("state")
+    if st is None:
+        return None
+    return [st] if isinstance(st, str) else list(st)
+
+
 def state_of(pl, vname):
+    """The states a visual is shown in (a list) or None when always visible; cards and tiles read their own entries."""
     if pl is None:
         return None
+    if vname.startswith("z_card_"):
+        return _states(next((c for c in pl.get("cards", []) if f"z_card_{c['id']}" == vname), None))
+    if vname.startswith("z_tile_"):
+        return _states(next((t for t in pl.get("tiles", []) if f"z_tile_{t['id']}" == vname), None))
     slots = {v["name"]: v for v in pl["visuals"]}
     base = vname if vname in slots else vname.rsplit("_", 1)[0]
-    if vname.startswith("z_tile_"):
-        return next((t.get("state") for t in pl.get("tiles", []) if f"z_tile_{t['id']}" == vname), None)
-    return slots.get(base, {}).get("state")
+    return _states(slots.get(base))
 
 
-def container(pl, x, y, w, h):
-    """The card a visual sits in (by its centre), or None for chrome on the canvas."""
+def container(pl, x, y, w, h, st=None):
+    """The card a visual sits in (by its centre), or None for chrome on the canvas; in a state, only that state's cards."""
     cx, cy = x + w / 2, y + h / 2
     for c in (pl or {}).get("cards", []):
+        if st and _states(c) and st not in _states(c):
+            continue
         if c["x"] <= cx <= c["x"] + c["w"] and c["y"] <= cy <= c["y"] + c["h"]:
             return c
+    return None
+
+
+def tile_of(pl, x, y, w, h, st=None):
+    """The tile a visual sits in (by its centre), or None."""
+    cx, cy = x + w / 2, y + h / 2
+    for t in (pl or {}).get("tiles", []):
+        if st and _states(t) and st not in _states(t):
+            continue
+        if t["x"] <= cx <= t["x"] + t["w"] and t["y"] <= cy <= t["y"] + t["h"]:
+            return t
     return None
 
 
@@ -175,6 +216,14 @@ def walk(o, fn, path=()):
         for v in o:
             walk(v, fn, path)
 
+
+# SVG-in-DAX images (round 6): every font-size inside an image measure's SVG is held to the 16 px floor, because the
+# pixel check cannot see inside a data: URI
+for _name, _dax in MEAS.items():
+    if "data:image/svg" in _dax:
+        for _px in SVG_FONT.findall(_dax):
+            if float(_px) < FLOOR_PX:
+                fail(f"measure [{_name}]", f"SVG text at {_px} px is under the {FLOOR_PX} px floor")
 
 report = json.loads((REPORT / "definition" / "report.json").read_text(encoding="utf-8"))
 registered = {i["name"] for pk in report.get("resourcePackages", []) for i in pk.get("items", [])}
@@ -268,10 +317,23 @@ for pname in pages_meta["pageOrder"]:
         x, y, w, h = pos["x"], pos["y"], pos["width"], pos["height"]
         card = container(pl, x, y, w, h) if pl else None
         if tooltip or card is not None or vtype == "image":
-            bgs = [SURFACE] if (tooltip or card is not None) else []
+            # a tooltip page is Night outside its white panel (round 6); inside a card the surface is white
+            bgs = [SURFACE] if card is not None else (page_bg if tooltip else [])
         else:
             ext = canvas_extremes(x, y, w, h)
             bgs = ["#%02X%02X%02X" % ext[0], "#%02X%02X%02X" % ext[1]] if ext else page_bg
+        # a tile paints its own fill under the visual (round 5: the tooltip's night header band)
+        v_states = state_of(pl, name)
+        tile = tile_of(pl, x, y, w, h, v_states[0] if v_states else None)
+        if tile is not None:
+            bgs = [TILE_FILL.get(tile.get("kind", "glow"), SURFACE)]
+        # a visual with its own background (round 5: the budget alarm band): a literal fill replaces the surface; a
+        # fill from a measure is paired branch for branch with the text colour measure (the two IFs share a condition)
+        own_bg = (vco.get("background") or [{}])[0].get("properties", {})
+        own_fill = own_bg.get("color") if literal(own_bg.get("show")) == "true" and own_bg.get("color") else None
+        paired = bool(own_fill) and measure_of(own_fill.get("solid", {}).get("color", own_fill)) is not None
+        if own_fill and not paired:
+            bgs = colours(own_fill) or bgs
         texts = [(c, px >= 24) for c, px, _ in runs]
         objs = vis.get("objects", {})
         marks = sorted({c for dp in objs.get("dataPoint", []) for k in ("fill", "defaultColor") for c in colours(dp.get("properties", {}).get(k))})
@@ -284,6 +346,14 @@ for pname in pages_meta["pageOrder"]:
                 if obj == "seriesLabels" and literal(pr.get("show")) == "true" and literal(pr.get("seriesMatchColor")) == "true":
                     texts += [(c, big) for c in marks]  # a label in its line's colour
                 for k in keys:
+                    if paired and obj == "value" and k == "fontColor":
+                        inks, fills_ = ordered_colours(pr.get(k)), ordered_colours(own_fill)
+                        if len(inks) != len(fills_) or not inks:
+                            fail(where, f"text colour measure and background measure do not pair branch for branch ({len(inks)} vs {len(fills_)})")
+                        for ic, fc in zip(inks, fills_):
+                            if ratio(ic, fc) < (3.0 if big else 4.5):
+                                fail(where, f"text {ic} on its own fill {fc}: {ratio(ic, fc):.2f}:1 (needs {3.0 if big else 4.5}:1)")
+                        continue
                     for c in colours(pr.get(k)):
                         (on_marks if obj == "categoryLabels" else texts).append((c, big))
         if vtype not in ("actionButton", "advancedSlicerVisual", "image") and bgs:
@@ -348,26 +418,33 @@ for pname in pages_meta["pageOrder"]:
 
     # -------- reading order: chrome, cards (top to bottom, left to right), footer; per P2 panel state
     if pl and not tooltip:
-        cards = sorted(pl.get("cards", []), key=lambda c: (c["y"], c["x"]))
-        first_card_y = min(c["y"] for c in cards)
-        for st in ("shortlist", "plan"):
+        for st in STATES:
+            cards = sorted([c for c in pl.get("cards", []) if not _states(c) or st in _states(c)], key=lambda c: (c["y"], c["x"]))
+            first_card_y = min(c["y"] for c in cards)
             seq = []
             for v in visuals:
                 t = v["position"].get("tabOrder", 0)
                 s_ = state_of(pl, v["name"])
-                if t < 0 or v.get("isHidden") and s_ is None or (s_ and s_ != st):
+                if t < 0 or v.get("isHidden") and s_ is None or (s_ and st not in s_):
                     continue
                 p = v["position"]
-                c = container(pl, p["x"], p["y"], p["width"], p["height"])
+                c = container(pl, p["x"], p["y"], p["width"], p["height"], st)
                 grp = (cards.index(c) + 1) if c else (0 if p["y"] < first_card_y else len(cards) + 1)
-                seq.append((t, grp, p["y"], p["y"] + p["height"], p["x"], p["x"] + p["width"], v["name"]))
-            seq.sort()
+                # a tile is a sub-card (round 4: B and C side by side): a visual inside one is placed by the tile's
+                # rectangle against visuals outside it, so a tile is read whole before the next tile or row
+                tile = tile_of(pl, p["x"], p["y"], p["width"], p["height"], st)
+                seq.append((t, grp, p["y"], p["y"] + p["height"], p["x"], p["x"] + p["width"], v["name"], tile))
+            seq.sort(key=lambda e: e[:2])
             for a, b2 in zip(seq, seq[1:]):
                 if b2[1] < a[1]:
                     fail(f"{pname}[{st}]", f"tab order goes back to an earlier card: {a[6]} -> {b2[6]}")
                 elif b2[1] == a[1]:
-                    above = b2[3] <= a[2]
-                    same_row_left = not (b2[3] <= a[2] or b2[2] >= a[3]) and b2[5] <= a[4]
+                    ra, rb = a[2:6], b2[2:6]
+                    if a[7] != b2[7]:
+                        ra = (a[7]["y"], a[7]["y"] + a[7]["h"], a[7]["x"], a[7]["x"] + a[7]["w"]) if a[7] else ra
+                        rb = (b2[7]["y"], b2[7]["y"] + b2[7]["h"], b2[7]["x"], b2[7]["x"] + b2[7]["w"]) if b2[7] else rb
+                    above = rb[1] <= ra[0]
+                    same_row_left = not (rb[1] <= ra[0] or rb[0] >= ra[1]) and rb[3] <= ra[2]
                     if above or same_row_left:
                         fail(f"{pname}[{st}]", f"tab order against the reading order: {a[6]} (y {a[2]}, x {a[4]}) -> {b2[6]} (y {b2[2]}, x {b2[4]})")
 

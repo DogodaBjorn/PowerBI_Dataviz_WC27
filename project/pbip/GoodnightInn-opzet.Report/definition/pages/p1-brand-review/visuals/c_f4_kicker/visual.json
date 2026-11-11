@@ -19,7 +19,15 @@
               {
                 "textRuns": [
                   {
-                    "value": "F4  ·  WHERE WE ARE FULL",
+                    "value": "F4",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#A63F0E"
+                    }
+                  },
+                  {
+                    "value": "  ·  WHERE WE ARE FULL",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",

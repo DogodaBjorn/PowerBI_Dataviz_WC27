@@ -8,13 +8,13 @@ same way. Requires `pip install jsonschema`. It checks containers, queries, filt
 pages; visual-specific formatting objects are loosely typed in the schema, so a pass there is
 necessary, not sufficient: Desktop remains the final check.
 """
-import json, sys, urllib.request, pathlib, os
+import json, sys, urllib.request, pathlib, os, hashlib
 from jsonschema import Draft7Validator, Draft202012Validator
 from referencing import Registry, Resource
 CACHE = pathlib.Path(os.environ.get("SCHEMA_CACHE", "/tmp/schemacache")); CACHE.mkdir(exist_ok=True)
 def fetch(uri):
     raw = uri.replace("https://developer.microsoft.com/json-schemas/", "https://raw.githubusercontent.com/microsoft/json-schemas/main/")
-    f = CACHE / (str(abs(hash(raw))) + ".json")
+    f = CACHE / (hashlib.sha1(raw.encode()).hexdigest() + ".json")  # stable key: hash() is salted per process, so the cache never hit across runs
     if not f.exists():
         f.write_bytes(urllib.request.urlopen(raw).read())
     return json.loads(f.read_text(encoding="utf-8"))
