@@ -21,13 +21,12 @@
                   {
                     "value": "F1  ·  THE MARGIN",
                     "textStyle": {
-                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontFamily": "Segoe UI Semibold",
                       "fontSize": "16px",
-                      "color": "#12233D"
+                      "color": "#12233d"
                     }
                   }
-                ],
-                "horizontalTextAlignment": "left"
+                ]
               }
             ]
           }
