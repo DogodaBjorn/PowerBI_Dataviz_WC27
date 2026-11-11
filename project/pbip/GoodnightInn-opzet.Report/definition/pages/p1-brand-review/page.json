@@ -26,33 +26,6 @@
                 "Value": "0D"
               }
             }
-          },
-          "image": {
-            "image": {
-              "name": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'canvas-night-page.jpg'"
-                  }
-                }
-              },
-              "scaling": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'Normal'"
-                  }
-                }
-              },
-              "url": {
-                "expr": {
-                  "ResourcePackageItem": {
-                    "PackageName": "RegisteredResources",
-                    "PackageType": 1,
-                    "ItemName": "canvas-night-page.jpg"
-                  }
-                }
-              }
-            }
           }
         }
       }

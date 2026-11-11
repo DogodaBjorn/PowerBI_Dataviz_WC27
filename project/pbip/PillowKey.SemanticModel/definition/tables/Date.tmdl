@@ -52,6 +52,13 @@ table Date
 		summarizeBy: none
 		sourceColumn: Period
 
+	/// First letter of the month name, for narrow month axes (the F4 hotel tooltip).
+	column 'Month Letter' = LEFT ( 'Date'[Month], 1 )
+		dataType: string
+		lineageTag: e939e055-925a-56cc-9dcd-96ed41b31cbc
+		summarizeBy: none
+		isDataTypeInferred
+		sortByColumn: MonthNumber
 
 	partition Date = m
 		mode: import

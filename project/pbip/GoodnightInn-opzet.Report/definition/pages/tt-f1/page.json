@@ -3,7 +3,7 @@
   "name": "tt-f1",
   "displayName": "tt-f1",
   "displayOption": "ActualSize",
-  "height": 424,
+  "height": 448,
   "width": 560,
   "objects": {
     "background": [
@@ -14,7 +14,7 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#FFFFFF'"
+                    "Value": "'#12233D'"
                   }
                 }
               }
@@ -38,7 +38,7 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#FFFFFF'"
+                    "Value": "'#12233D'"
                   }
                 }
               }

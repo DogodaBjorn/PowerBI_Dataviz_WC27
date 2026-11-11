@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "tt_grid_label",
+  "name": "tt_kicker",
   "position": {
     "x": 16,
-    "y": 432,
-    "z": 1010,
+    "y": 16,
+    "z": 1000,
     "width": 528,
     "height": 24,
-    "tabOrder": 165
+    "tabOrder": -1005
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "TT Grid Label (text)"
+                  "Property": "TT Kicker (text)"
                 }
               },
-              "queryRef": "_Measures.TT Grid Label (text)",
-              "nativeQueryRef": "TT Grid Label (text)"
+              "queryRef": "_Measures.TT Kicker (text)",
+              "nativeQueryRef": "TT Kicker (text)"
             }
           ]
         }
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#12233D'"
+                      "Value": "'#A9CDF0'"
                     }
                   }
                 }
@@ -355,24 +355,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "altText": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "TT Grid Label (text)"
                 }
               }
             }

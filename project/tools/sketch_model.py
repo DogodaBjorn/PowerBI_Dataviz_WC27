@@ -160,6 +160,11 @@ def shipped_table(name, cols):
 
 
 EXTRA_COLUMNS = {
+    "Date": "".join([
+        # round 7: the F4 hotel tooltip's month axis at 496 px: one letter per month (J F M A M J J A S O N D), sorted by month
+        calc_col("Date", "Month Letter", "LEFT ( 'Date'[Month], 1 )", "string", doc="First letter of the month name, for narrow month axes (the F4 hotel tooltip).",
+                 extra=("sortByColumn: MonthNumber",)),
+    ]),
     "Hotels": "".join([
         calc_col("Hotels", "Hotel Short Name", 'TRIM(SUBSTITUTE(Hotels[HotelName], Hotels[Brand] & " ", ""))', "string",
                  doc="Hotel name without the brand prefix, for dense walls and tables."),
@@ -935,14 +940,6 @@ m("TT Payback (text)",
   'ex >= 0, "Pays back by 2032 except in Low" & cash, "Pays back by 2032 only in the High case" & cash ) )',
   TXT, C10, "Tooltip verdict: whether the hovered package pays back by 2032 across the three cases (not even in High / only in High / Expected and High / every case), "
             "and the first cash-positive year when the case in view pays back.")
-m("TT Mix (text)",
-  TT_ID + 'VAR ids = FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ) '
-  'RETURN IF ( ISBLANK ( pkg ), BLANK (), COUNTROWS ( ids ) & " moves: " & CONCATENATEX ( ids, ' + "LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], PackageProject[ProjectID] )" + ', ", ", PackageProject[ProjectID], ASC ) )',
-  TXT, C10, "Tooltip: the initiatives in the hovered package, by name.")
-m("TT Chip",
-  TT_ID + TT_NPV + 'RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & IF ( ROUND ( npv / 100000, 0 ) >= 0, ' + CHIP_ON + ", " + CHIP_OFF + " ) )",
-  TXT, C10, "Tooltip: the brand's state chip, the funded chip when the package pays back by 2032 and the plain one when it does not; decorative, the payback line says it in words.")
-IMAGE_MEASURES.add("TT Chip")
 m("Scatter Title (text)",
   'VAR s = [Selected Scenario] VAR t = ADDCOLUMNS ( ALLNOBLANKROW ( Package ), "@v", SWITCH ( s, "Low", Package[NPV Low], "High", Package[NPV High], Package[NPV Expected] ) ) '
   'VAR n = COUNTROWS ( t ) VAR pos = FILTER ( t, [@v] >= 0 ) VAR k = COUNTROWS ( pos ) + 0 VAR cap = INT ( MAXX ( pos, Package[CapexUSD] ) / 1000000 ) + 1 '
@@ -1548,12 +1545,15 @@ m("Move Budget (num)", BUDGET_GI, "0", C12, "Selector: the Goodnight Inn budget,
 
 # ---- the package tooltip: the moves table and the case tag
 TT_IDS = TT_ID + 'VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ), "@p", PackageProject[ProjectID] ) '
-m("TT Moves Label (text)", TT_IDS + 'RETURN IF ( ISBLANK ( pkg ), BLANK (), "In this package: " & COUNTROWS ( ids ) & " moves, how they add up" )', TXT, C10, "Tooltip: the line above the moves list.")
+m("TT Moves Label (text)", TT_IDS + 'RETURN IF ( ISBLANK ( pkg ), BLANK (), "In this package: " & COUNTROWS ( ids ) & " moves" )', TXT, C10, "Tooltip: the line above the moves list.")
 m("TT Not Included (text)",
   TT_IDS + 'VAR t = FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" && NOT ( InvestmentProjects[ProjectID] IN ids ) ) '
   'RETURN IF ( ISBLANK ( pkg ), BLANK (), IF ( COUNTROWS ( t ) = 0, "Every move is in it.", "Not in it: " & CONCATENATEX ( t, InvestmentProjects[Short Name], ", ", InvestmentProjects[ProjectID], ASC ) & "." ) )',
   TXT, C10, "Tooltip (alt text only since round 6): the moves the hovered package leaves out.")
-m("TT Case (text)", '[Selected Scenario] & " case"', TXT, C10, "Tooltip: the scenario in view, top right.")
+m("TT Kicker (text)",
+  TT_ID + 'VAR k = LOOKUPVALUE ( Package[Preset], Package[PackageID], pkg ) '
+  'RETURN IF ( ISBLANK ( pkg ), BLANK (), "PACKAGE" & IF ( k <> "", "  " & k, "" ) & "  ·  " & UPPER ( [Selected Scenario] ) & " CASE" )',
+  TXT, C10, "Tooltip kicker on the night banner (round 7): the package's letter when it has one and the case in view, in the page's eyebrow style.")
 
 # ---- the package tooltip as an evidence card (round 6, second opinion of 10 Nov): the three numeric claims drawn as
 # small SVGs in image visuals, the pattern of the chips above. Conventions (Kerry Kolosko's SVG-in-DAX notes,
@@ -1566,13 +1566,13 @@ SVG_FONT = "font-family='Segoe UI, Arial, sans-serif' font-size='16'"
 NUM = lambda x: f'FORMAT ( {x}, "0.0", "en-US" )'  # noqa: E731
 SVG_OPEN = lambda w, h: f"\"<svg xmlns='http://www.w3.org/2000/svg' width='{w}' height='{h}' viewBox='0 0 {w} {h}'>\""  # noqa: E731
 HX = lambda hexv: hexv.replace("#", "%23")  # noqa: E731  (the SVG colour form of a hex; PCT stays the percent format string)
-TTW = 528  # the card's inner width (560 - 2 x 16)
-TTL = 512  # the moves list inside the Ice tile (8 px in from its edges); its bars run 408..512
+TTW = 496  # the inner width of a tooltip card (560 - 2 x 32), round 7
+TTL = 496  # the moves list, the same width
 
-# the range bar, 488 x 40: one fixed axis for every package (min Low .. max High over all 456, rounded out to $5M), the
-# cloud as a histogram strip of Expected NPVs, A/B/C ticks with their letters (A and B pushed apart when they touch),
-# the hovered package's Low-High band with its Expected dot, the break-even line in Night. The numbers are the text
-# line under it (TT Range (text)), which also names the line.
+# the range bar, 496 x 48: one fixed axis for every package (min Low .. max High over all 456, rounded out to $5M),
+# A/B/C ticks with their letters (A and B pushed apart when they touch), the hovered package's Low-High band with its
+# Expected dot, the break-even line in Night, the Low and High numbers under the band. The round-6 histogram strip of
+# the cloud left in round 7 (Björn: too busy). TT Range (text) is its text twin and names the line.
 RANGE_AXIS = ("VAR dMin = FLOOR ( MINX ( ALL ( Package ), Package[NPV Low] ) / 5000000, 1 ) * 5000000 "
               "VAR dMax = CEILING ( MAXX ( ALL ( Package ), Package[NPV High] ) / 5000000, 1 ) * 5000000 "
               f"VAR k = {TTW - 16} / ( dMax - dMin ) ")
@@ -1585,12 +1585,9 @@ m("TT Range SVG",
   'VAR xA = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "A" ) - dMin ) * k VAR xB = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "B" ) - dMin ) * k '
   'VAR xC = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "C" ) - dMin ) * k '
   "VAR xAOff = IF ( ABS ( xA - xB ) < 18, IF ( xA <= xB, -6, 6 ), 0 ) VAR xBOff = -xAOff VAR xCOff = 0 "
-  # the cloud: 2 px bins of the Expected NPV of all packages, height 2 + count (cap 10), Warm Grey at 35 %
-  'VAR bins = ADDCOLUMNS ( GENERATESERIES ( 0, ' + str((TTW - 16) // 2 - 1) + ', 1 ), "@n", VAR i = [Value] RETURN COUNTROWS ( FILTER ( ALL ( Package ), INT ( ( Package[NPV Expected] - dMin ) * k / 2 ) = i ) ) ) '
-  'VAR strip = CONCATENATEX ( FILTER ( bins, [@n] > 0 ), VAR hh = MIN ( 10, 2 + [@n] ) RETURN "<rect x=\'" & ( 8 + [Value] * 2 ) & "\' y=\'" & ( 24 - hh ) & "\' width=\'2\' height=\'" & hh & "\' fill=\'' + HX(SLATE) + '\' fill-opacity=\'0.35\'/>", "" ) '
   'VAR dotc = IF ( ROUND ( ex / 100000, 0 ) >= 0, "' + HX(ACCENT) + '", "' + HX(BAD) + '" ) '
   "VAR xLo = MAX ( xL, 44 ) VAR xHi = MIN ( xH + 4, " + str(TTW - 88) + " ) "
-  'RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & ' + SVG_OPEN(TTW, 48) + ' & strip '
+  'RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & ' + SVG_OPEN(TTW, 48) + ' '
   '& "<line x1=\'1\' x2=\'1\' y1=\'2\' y2=\'14\' stroke=\'' + HX(INK) + '\' stroke-width=\'1.5\'/><text x=\'6\' y=\'13\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>break-even</text>" '
   '& ' + _tick("xA", "A", HX(ACCENT)) + ' & ' + _tick("xB", "B", HX(INK)) + ' & ' + _tick("xC", "C", HX(INK)) + ' '
   '& "<rect x=\'" & ' + NUM("xL") + ' & "\' y=\'26\' width=\'" & ' + NUM("xH - xL") + ' & "\' height=\'8\' rx=\'4\' fill=\'' + HX(SLATE) + '\' fill-opacity=\'0.45\'/>" '
@@ -1598,61 +1595,41 @@ m("TT Range SVG",
   '& "<circle cx=\'" & ' + NUM("xE") + ' & "\' cy=\'30\' r=\'5\' fill=\'" & dotc & "\' stroke=\'' + HX(SURFACE) + '\' stroke-width=\'2\'/>" '
   '& "<text x=\'" & ' + NUM("xLo") + ' & "\' y=\'46\' text-anchor=\'end\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Low " & ' + signed("lo", 'FORMAT ( ABS ( lo ) / 1000000, "0.0", "en-US" )') + ' & "</text>" '
   '& "<text x=\'" & ' + NUM("xHi") + ' & "\' y=\'46\' text-anchor=\'start\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>High " & ' + signed("hi", 'FORMAT ( ABS ( hi ) / 1000000, "0.0", "en-US" )') + ' & "</text></svg>" )',
-  TXT, C10, "Tooltip: the hovered package's Low-High band and Expected dot on one fixed NPV axis shared by every package, with the cloud of all packages as a histogram strip, "
+  TXT, C10, "Tooltip: the hovered package's Low-High band and Expected dot on one fixed NPV axis shared by every package, "
             "the A/B/C ticks, the break-even line and the Low and High numbers; decorative, TT Range (text) is its text twin (keyboard tooltip, alt text).")
 IMAGE_MEASURES.add("TT Range SVG")
 
-# the moves list, 488 x 216: header row, one row per move (positives first, the sinker last), a totals row; columns
-# Move | Answers | Capex | NPV | a waterfall bar from the running total before the move to the running total after it on
-# one scale per package (Coffee Blue up, Tangerine down, the total from zero in Night, a Dusk zero line).
+# the moves list, 496 x 200 (round 7, Björn: leaner): a header row, one row per move (positives first, the sinker
+# last), a totals row; columns Move | Capex | NPV, the NPV in Burnt Tangerine below zero. The waterfall bars and the
+# Answers column of round 6 left with the move grid: the numbers add up without them.
 TT_RUN = (TT_IDS + shown_parts("[NPV @ 8%]", 10000) +
-          'VAR ends = ADDCOLUMNS ( adj, "@e", VAR sv = [@s] VAR pv = [@p] RETURN SUMX ( FILTER ( adj, [@s] > sv || ( [@s] = sv && [@p] <= pv ) ), [@s] ) ) '
-          "VAR tot = SUMX ( adj, [@s] ) VAR cap = LOOKUPVALUE ( Package[CapexUSD], Package[PackageID], pkg ) "
-          "VAR smin = MIN ( 0, MINX ( ends, [@e] ) ) VAR smax = MAX ( 0, MAXX ( ends, [@e] ) ) VAR kk = 104 / ( smax - smin ) VAR bx0 = 408 + ( 0 - smin ) * kk VAR nrows = COUNTROWS ( adj ) ")
+          "VAR tot = SUMX ( adj, [@s] ) VAR cap = LOOKUPVALUE ( Package[CapexUSD], Package[PackageID], pkg ) VAR nrows = COUNTROWS ( adj ) ")
 _cell = lambda x, anchor, fill, inner, extra="", yv="y": ('"<text x=\'' + str(x) + '\' y=\'" & ( ' + yv + ' + 14 ) & "\' text-anchor=\'' + anchor + '\' ' + SVG_FONT + extra + ' fill=\'' + fill + '\'>" & ' + inner + ' & "</text>"')  # noqa: E731
-_answers = ('LOOKUPVALUE ( InvestmentProjects[Answers Finding], InvestmentProjects[ProjectID], [@p] ) & IF ( LOOKUPVALUE ( InvestmentProjects[GrowthInitiative], InvestmentProjects[ProjectID], [@p] ) = "Yes", " · growth", "" )')
+_npv_fill = lambda expr: "fill='\" & IF ( " + expr + " < 0, \"" + HX(BAD) + "\", \"" + HX(INK) + "\" ) & \"'"  # noqa: E731
 _capex = 'LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], [@p] )'
 m("TT Moves SVG",
   TT_RUN +
-  # one row per move: y from its rank (positives first), the bar from the running start to the running end
-  # 'rows' is a reserved word in DAX (the engine: the syntax for 'rows' is incorrect), hence moveRows
-  'VAR moveRows = CONCATENATEX ( ends, VAR y = 20 * RANKX ( ends, [@s] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.0000001, , DESC ) VAR e1 = [@e] VAR s1 = e1 - [@s] '
-  "VAR xa = 408 + ( MIN ( s1, e1 ) - smin ) * kk VAR wv = MAX ( 1, ABS ( e1 - s1 ) * kk ) "
-  'VAR c = IF ( [@s] >= 0, "' + HX(ACCENT_MARK) + '", "' + HX(SIGNAL_MARK) + '" ) RETURN '
-  + _cell(0, "start", HX(INK), NAME_OF.format("[@p]")) + ' & ' + _cell(164, "start", HX(INK2), _answers) + ' & ' + _cell(320, "end", HX(INK), fmc2(_capex))
-  + ' & ' + _cell(400, "end", 'PLACEHOLDER_NPV_COLOUR', sfm2("[@s]")).replace("fill='PLACEHOLDER_NPV_COLOUR'", "fill='\" & IF ( [@s] < 0, \"" + HX(BAD) + "\", \"" + HX(INK) + "\" ) & \"'")
-  + ' & "<rect x=\'" & ' + NUM("xa") + ' & "\' y=\'" & ( y + 4 ) & "\' width=\'" & ' + NUM("wv") + ' & "\' height=\'11\' rx=\'2\' fill=\'" & c & "\'/>", "" ) '
-  # the totals row under the moves, the total bar from zero (its own VAR names: DAX forbids shadowing the rows' y)
-  "VAR yT = 20 * ( nrows + 1 ) VAR xaT = 408 + ( MIN ( 0, tot ) - smin ) * kk VAR wvT = MAX ( 1, ABS ( tot ) * kk ) "
-  'VAR total = ' + _cell(0, "start", HX(INK), '"Total"', " font-weight='600'", "yT") + ' & ' + _cell(320, "end", HX(INK), fmc2("cap"), " font-weight='600'", "yT")
-  + ' & ' + _cell(400, "end", 'PLACEHOLDER_NPV_COLOUR', sfm2("tot"), " font-weight='600'", "yT").replace("fill='PLACEHOLDER_NPV_COLOUR'", "fill='\" & IF ( tot < 0, \"" + HX(BAD) + "\", \"" + HX(INK) + "\" ) & \"'")
-  + ' & "<rect x=\'" & ' + NUM("xaT") + ' & "\' y=\'" & ( yT + 4 ) & "\' width=\'" & ' + NUM("wvT") + ' & "\' height=\'11\' rx=\'2\' fill=\'' + HX(INK) + '\'/>" '
+  # one row per move: y from its rank (positives first); 'rows' is a reserved word in DAX, hence moveRows
+  'VAR moveRows = CONCATENATEX ( adj, VAR y = 20 * RANKX ( adj, [@s] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.0000001, , DESC ) RETURN '
+  + _cell(0, "start", HX(INK), NAME_OF.format("[@p]")) + ' & ' + _cell(400, "end", HX(INK), fmc2(_capex))
+  + ' & ' + _cell(496, "end", 'PLACEHOLDER_NPV_COLOUR', sfm2("[@s]")).replace("fill='PLACEHOLDER_NPV_COLOUR'", _npv_fill("[@s]")) + ', "" ) '
+  # the totals row under the moves (its own VAR name: DAX forbids shadowing the rows' y)
+  "VAR yT = 20 * ( nrows + 1 ) "
+  'VAR total = ' + _cell(0, "start", HX(INK), '"Total"', " font-weight='600'", "yT") + ' & ' + _cell(400, "end", HX(INK), fmc2("cap"), " font-weight='600'", "yT")
+  + ' & ' + _cell(496, "end", 'PLACEHOLDER_NPV_COLOUR', sfm2("tot"), " font-weight='600'", "yT").replace("fill='PLACEHOLDER_NPV_COLOUR'", _npv_fill("tot")) + ' '
   'RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & ' + SVG_OPEN(TTL, 200) + ' '
-  # the header row and its hairline, the zero line of the bar column
-  '& "<text x=\'0\' y=\'14\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Move</text><text x=\'164\' y=\'14\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Answers</text>" '
-  '& "<text x=\'320\' y=\'14\' text-anchor=\'end\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Capex</text><text x=\'400\' y=\'14\' text-anchor=\'end\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>NPV</text><text x=\'408\' y=\'14\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Adds up</text>" '
+  # the header row and its hairline, the hairline over the totals row
+  '& "<text x=\'0\' y=\'14\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Move</text><text x=\'400\' y=\'14\' text-anchor=\'end\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Capex</text><text x=\'496\' y=\'14\' text-anchor=\'end\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>NPV</text>" '
   '& "<line x1=\'0\' x2=\'' + str(TTL) + '\' y1=\'19.5\' y2=\'19.5\' stroke=\'' + HX(HAIR) + '\'/>" '
-  '& "<line x1=\'" & ' + NUM("bx0") + ' & "\' x2=\'" & ' + NUM("bx0") + ' & "\' y1=\'20\' y2=\'" & ( 20 * ( nrows + 2 ) ) & "\' stroke=\'' + HX(INK2) + '\' stroke-width=\'1\'/>" '
   '& "<line x1=\'0\' x2=\'' + str(TTL) + '\' y1=\'" & ( 20 * ( nrows + 1 ) + 0.5 ) & "\' y2=\'" & ( 20 * ( nrows + 1 ) + 0.5 ) & "\' stroke=\'' + HX(HAIR) + '\'/>" '
   '& moveRows & total & "</svg>" )',
-  TXT, C10, "Tooltip: the moves of the hovered package as a list with capex, NPV and a waterfall bar each (positives first, the sinker last), and a totals row; "
+  TXT, C10, "Tooltip: the moves of the hovered package as a list with capex and NPV each (positives first, the sinker last) and a totals row; "
             "the move NPVs are rounded so they add up to the package. Decorative: TT Moves (text) and Alt TT Moves say the same in words.")
 IMAGE_MEASURES.add("TT Moves SVG")
 m("TT Moves (text)",
   TT_IDS + shown_parts("[NPV @ 8%]", 10000) + 'RETURN IF ( ISBLANK ( pkg ), BLANK (), CONCATENATEX ( adj, ' + NAME_OF.format("[@p]") + ' & " " & ' + sfm2("[@s]") + ', "; ", [@s], DESC ) )',
   TXT, C10, "Tooltip text twin of the moves list: each move with its NPV inside the package, positives first (the keyboard layer's tooltip and the alt text).")
 
-# the move grid, 488 x 88: the ten moves in the selector's fixed order (BuildMove[Sort], disconnected so the tooltip
-# filter never touches it), three columns of four; filled Night chip = in the package, white chip with a Seam hairline
-# = not in it. Positions never move, so packages compare by shape.
-m("TT Move Grid (svg)",
-  TT_IDS + 'VAR chips = CONCATENATEX ( ALL ( BuildMove ), VAR i = BuildMove[Sort] - 1 VAR cx = INT ( i / 5 ) * 268 VAR cy = 1 + MOD ( i, 5 ) * 19 VAR inpkg = BuildMove[ProjectID] IN ids '
-  'RETURN "<rect x=\'" & ( cx + 0.5 ) & "\' y=\'" & ( cy + 0.5 ) & "\' width=\'259\' height=\'18\' rx=\'9\' fill=\'" & IF ( inpkg, "' + HX(INK) + '", "' + HX(SURFACE) + '" ) & "\' stroke=\'" & IF ( inpkg, "' + HX(INK) + '", "' + HX(HAIR) + '" ) & "\'/>"'
-  ' & "<text x=\'" & ( cx + 10 ) & "\' y=\'" & ( cy + 14 ) & "\' ' + SVG_FONT + ' fill=\'" & IF ( inpkg, "' + HX(SURFACE) + '", "' + HX(INK2) + '" ) & "\'>" & BuildMove[Short Name] & "</text>", "", BuildMove[Sort], ASC ) '
-  'RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & ' + SVG_OPEN(TTW, 96) + ' & chips & "</svg>" )',
-  TXT, C10, "Tooltip: the ten moves in a fixed order, the package's moves as filled chips, the others hollow, so packages compare by shape; decorative, Alt TT Moves names both sets.")
-IMAGE_MEASURES.add("TT Move Grid (svg)")
-m("TT Grid Label (text)", TT_ID + 'RETURN IF ( ISBLANK ( pkg ), BLANK (), "The ten moves on offer: filled = in this package" )', TXT, C10, "Tooltip: the caption above the move grid.")
 
 
 # ---- round 6: the findings as a reference on page 2 (chips with a page tooltip each) and hover detail on F3 and F4

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "tt_grid_svg",
+  "name": "z_canvas",
   "position": {
-    "x": 16,
-    "y": 456,
-    "z": 1011,
-    "width": 528,
-    "height": 96,
-    "tabOrder": -1004
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "width": 560,
+    "height": 560,
+    "tabOrder": -1000
   },
   "visual": {
     "visualType": "image",
@@ -18,23 +18,44 @@
             "sourceType": {
               "expr": {
                 "Literal": {
-                  "Value": "'imageUrl'"
+                  "Value": "'image'"
                 }
               }
             },
-            "sourceUrl": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
+            "sourceFile": {
+              "image": {
+                "name": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'canvas-tt-tt-f3-band.jpg'"
                     }
-                  },
-                  "Property": "TT Move Grid (svg)"
+                  }
+                },
+                "url": {
+                  "expr": {
+                    "ResourcePackageItem": {
+                      "PackageName": "RegisteredResources",
+                      "PackageType": 1,
+                      "ItemName": "canvas-tt-tt-f3-band.jpg"
+                    }
+                  }
+                },
+                "scaling": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'Fit'"
+                    }
+                  }
                 }
               }
-            },
-            "fit": {
+            }
+          }
+        }
+      ],
+      "imageScaling": [
+        {
+          "properties": {
+            "imageScalingType": {
               "expr": {
                 "Literal": {
                   "Value": "'Fit'"

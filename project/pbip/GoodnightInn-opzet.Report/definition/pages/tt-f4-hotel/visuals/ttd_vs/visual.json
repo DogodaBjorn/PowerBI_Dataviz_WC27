@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttd_vs",
   "position": {
-    "x": 16,
-    "y": 144,
+    "x": 32,
+    "y": 160,
     "z": 1003,
-    "width": 528,
-    "height": 40,
+    "width": 496,
+    "height": 64,
     "tabOrder": 120
   },
   "visual": {

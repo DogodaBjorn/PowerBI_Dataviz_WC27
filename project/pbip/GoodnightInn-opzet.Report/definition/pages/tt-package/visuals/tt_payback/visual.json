@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tt_payback",
   "position": {
-    "x": 16,
-    "y": 112,
+    "x": 32,
+    "y": 160,
     "z": 1005,
-    "width": 528,
+    "width": 496,
     "height": 24,
     "tabOrder": 140
   },

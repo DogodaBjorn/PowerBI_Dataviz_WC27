@@ -95,3 +95,57 @@
 **Paginaachtergrond (11 november).** De witte/Oat strook boven de banner in Desktop: Desktop schildert de paginaachtergrond over een weergavegebied van 1100 px voor een pagina van 1080, dus de achtergrondKLEUR werd zichtbaar. De rapportpagina's hebben nu de nachtscène zelf als achtergrondbeeld (`canvas-night-page.jpg`: dezelfde scène met 20 px banner erboven, linksboven verankerd op ware grootte, uit `brand_canvas_v3.night(extra_top=20)`), zodat de banner bovenaan begint; het canvas-visual op de pagina blijft de exacte scène van 1920 x 1080, uitgelijnd met de kaarten, in elke host. Niets op het canvas is verschoven; `brand_canvas_v3.py` leest de horizon alleen uit de rapportpagina's.
 
 **Open.** Zie par. 5; de commit op `feedback-ronde-4` na Bjorns ja (rondes 4, 5 en 6 staan ongecommit).
+
+## 8. Ronde 7 (11 november: de tooltips als de pagina in het klein; de pakket-tooltip afgeslankt)
+
+**Wat Bjorn vroeg.** Na de push van rondes 4 tot 6 (commit `ec39cd1`): een tooltip-eigen ontwerp met de midnight-banner
+en een titel in de stijl van de pagina, daaronder de visuals in kaarten met dezelfde pop-out-schaduw, als een miniatuur
+van de pagina in zinnige verhoudingen; voor alle tooltips. En de scatter-tooltip inhoudelijk afslanken: te veel
+informatie, de gemarkeerde blokjes (het zettenraster) ogen rommelig.
+
+**Wat er is gebouwd.**
+- Elke tooltip-pagina heeft nu een eigen nachtscene op eigen maat (`brand_canvas_v3.tooltip`, `canvas-tt-<pagina>.jpg`):
+  de Night-naar-navy band tot een horizon 24 px onder de eerste kaart, het Coffee Blue-licht rechts, de haarlijn op de
+  horizon, daaronder de Oat-pagina met haar zachte gloed; geen hanger (een stempel op dit formaat). De scene staat als
+  `z_canvas` op de pagina en, 20 px hoger, als achtergrondbeeld, zodat de strook die de tooltip-host boven de pagina
+  schildert ook banner is (dezelfde oplossing als voor de rapportpagina's in ronde 6).
+- Banner: de kicker op y 16 in de eyebrow-stijl van de pagina (`F3 · THE FADING WELCOME`, `PACKAGE C · EXPECTED CASE`),
+  de titel op y 40 in wit Segoe UI Semibold. Kaarten: wit, radius 12, de kaartschaduw van de pagina, 16 px marge en
+  16 px binnenruimte, 24 px in de banner hangend. Lay-out v7; het raster van 8 px, de kaartgrenzen en de paginahoogte
+  worden door het lay-outscript gecontroleerd.
+- Pakket-tooltip, afgeslankt (560 x 536): banner (kicker, titel); kaart 1 = NPV, capex, het oordeel over de drie cases,
+  de bereikbalk op de gedeelde as (band Low-High, Expected-punt, break-even, A/B/C-streepjes, de getallen Low en High);
+  kaart 2 = "In this package: n moves" met de lijst Move | Capex | NPV en een totaalregel. Weg: de hanger-chip, het
+  case-label (nu in de kicker), de histogramstrook, de kolom Answers, de watervalbalkjes, het zettenraster met bijschrift.
+  Model: `TT Kicker (text)` nieuw; `TT Chip`, `TT Case (text)`, `TT Mix (text)`, `TT Move Grid (svg)`, `TT Grid Label
+  (text)` weg (438 metingen).
+- Bevindingenpagina's (560 x 448, F4 384): banner, een kaart met de P1-grafiek en de noot. Detailpagina's (560 x 560):
+  banner met de band of het hotel als titel; een kaart met de drie cijfers en die van het merk; een kaart met de
+  tweelijnsgrafiek en de slotregel. De maandas van F4 toont een letter per maand (`Date[Month Letter]`, gesorteerd op
+  maandnummer): op 496 px draaiden de drieletterige namen schuin.
+- `a11y_check.py`: tekst buiten een kaart op een tooltip-pagina wordt tegen de pixels van haar eigen scene getoetst
+  (de banner), zoals op de nachtzone van de pagina.
+
+**Geleerd.** Een cardVisual met tekst van 12 pt heeft 64 px nodig voor twee regels en 88 px voor drie; op 56 en 72 px
+kapt hij af met een beletselteken. De zettenkaart houdt ruimte voor het grootste pakket (8 zetten: kop + 8 rijen +
+totaal = 200 px), dus bij een pakket van 3 zetten blijft de onderste helft leeg; een vaste lay-out kan niet meegroeien.
+Desktops knop "Externe wijzigingen toepassen" herschrijft bij elk gebruik de MODELmap (`cultures/en-US.tmdl`): het model
+is daarna opnieuw uit `sketch_model.py` gegenereerd; de rapportmap bleef van de generator.
+
+**Controles.** validate_tmdl 0, schema_check 185 bestanden 0 fouten, a11y_check 0; renders in
+`project/deliverables/screenshots/2026-11-11-feedbackronde-7/` (P1, P2, de pakket-tooltip op A, C en een wolkpunt, de
+F3-chip, de F3-band, het F4-hotel) met `SELF-REVIEW.md`.
+
+**Achtergrond niet meer dubbel (11 november, Bjorns tweede blik).** "De achtergrond lijkt dubbel; haal de overlay weg."
+Een pagina-achtergrondBEELD op schaal Normal wordt op ware grootte getekend, terwijl de canvas-visual (`z_canvas`) met
+de pagina meeschaalt: op elke zoom behalve 100 % stond de scene twee keer. Het achtergrondbeeld is overal weg (rapport-
+en tooltip-pagina's), de scene is alleen nog de visual, de paginakleur is Night. Wat van de kleur overblijft is de strook
+van 20 px die Desktop boven een pagina houdt (en de tooltip-host boven een tooltip): effen Night boven de donkere
+bovenkant van de banner. `canvas-night-page.jpg` en de `-bg`-tweelingen van de tooltip-scenes zijn verwijderd.
+
+**Screenshots v6.** Op Bjorns verzoek een complete set van het rapport in `project/deliverables/screenshots/screenshots-v6/`:
+P1 met de F3-band- en F4-hotel-hover; P2 in Expected, Low en High, de zoom op A/B/C, de pakket-tooltip op A, B, C en een
+wolkpunt, de vier F-chips, de staten Considered (B en C) en Build your own (leeg, A nagebouwd, over budget), en terug
+naar Recommended.
+
+**Open.** Bjorns to-do's op basis van deze set; Publish to Web, muis- en toetsenbordronde, merge.

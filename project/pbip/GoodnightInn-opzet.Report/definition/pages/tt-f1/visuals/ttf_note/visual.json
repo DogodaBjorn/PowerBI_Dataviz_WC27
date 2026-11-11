@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttf_note",
   "position": {
-    "x": 16,
-    "y": 336,
+    "x": 32,
+    "y": 328,
     "z": 1004,
-    "width": 528,
-    "height": 72,
+    "width": 496,
+    "height": 88,
     "tabOrder": 130
   },
   "visual": {

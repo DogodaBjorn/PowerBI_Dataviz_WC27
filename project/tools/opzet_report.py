@@ -231,6 +231,13 @@ def kicker(page, name, txt):
     return decorative(tb(page, name, txt, runs=runs), 600 + _KICK[0])
 
 
+def night_kicker(page, name, txt):
+    """Round 7: the kicker on a tooltip's night banner, the page's own eyebrow (ZONE_EYEBROW on Night, 9.5:1), out of
+    the tab order; the title after it carries the words."""
+    _KICK[0] += 1
+    return decorative(tb(page, name, txt, font=DISPLAY, size=SPX, colour=ZONE_EYEBROW), 600 + _KICK[0])
+
+
 def title(page, name, measure, alt_measure=None):
     return dyn(page, name, measure, size=TITLE_PT, colour=INK, font=DISPLAY, alt_measure=alt_measure)
 
@@ -369,11 +376,11 @@ def finding_chips():
 
 
 def finding_page_visuals(k, nm):
-    """One finding's tooltip page: the night band with its code and name, the headline, the chart P1 draws (the same
-    builder), the note (F4: the three occupancy figures instead)."""
+    """One finding's tooltip page: on the banner the kicker (code and name) and the headline; in the card the chart
+    P1 draws (the same builder) and the note (F4: the three occupancy figures instead)."""
     pg = f"tt-f{k}"
-    v = [kicker(pg, "ttf_kicker", f"F{k}  ·  {nm.upper()}"),
-         dyn(pg, "ttf_title", f"F{k} Title (text)", size=TITLE_PT, colour=INK, font=DISPLAY, alt_measure=f"Alt F{k} Title (text)")]
+    v = [night_kicker(pg, "ttf_kicker", f"F{k}  ·  {nm.upper()}"),
+         dyn(pg, "ttf_title", f"F{k} Title (text)", size=TITLE_PT, colour=ZONE_TEXT, font=DISPLAY, alt_measure=f"Alt F{k} Title (text)")]
     if k == "1":
         v.append(f1_chart(pg, "ttf_chart"))
     elif k == "2":
@@ -398,8 +405,9 @@ def line_pair(page, slot, cat_table, cat_col, own, brand, own_label, brand_label
 
 
 def detail_page_visuals(which):
-    """The F3 band page and the F4 hotel page: header, three figures, the brand's figures under them, a two-line
-    chart against the brand, one closing line (weakest guest scores / who fills the hotel)."""
+    """The F3 band page and the F4 hotel page: the kicker and the band or hotel on the banner; a card with three
+    figures and the brand's under them; a card with a titled two-line chart against the brand and one closing line
+    (weakest guest scores / who fills the hotel)."""
     if which == TT_F3:
         head, nums, labels_, alt_nums, vs, foot = ("Band Header (text)", ["NPS 2025 (signed)", "Occupancy % 2025", "RevPAR 2025"], ["NPS 2025", "occupancy 2025", "RevPAR 2025"],
                                                   "Alt Band Nums (text)", "Band vs Brand (text)", "Weakest Scores (text)")
@@ -409,10 +417,11 @@ def detail_page_visuals(which):
         head, nums, labels_, alt_nums, vs, foot = ("Hotel Header (text)", ["Occupancy % 2025", "ADR 2025", "RevPAR 2025"], ["occupancy 2025", "ADR 2025", "RevPAR 2025"],
                                                   "Alt Hotel Nums (text)", "Hotel vs Brand (text)", "Segments 2025 (text)")
         ch_title = "Occupancy by month, 2025: this hotel against the whole brand"
-        ch = line_pair(which, "ttd_chart", "Date", "Month", "Occupancy Hotel (line)", "Occupancy Brand (line)", "This hotel", "Goodnight Inn",
-                       [filter_in("Date", "Year", [2025], "flt_2025")], sort=sort_by_column("Date", "Month"), alt_measure="Alt Occupancy Hotel Line (text)", start=0.5, end=1.0)
-    v = [kicker(which, "ttd_kicker", "F3  ·  THE FADING WELCOME" if which == TT_F3 else "F4  ·  WHERE WE ARE FULL"),
-         dyn(which, "ttd_head", head, size=TITLE_PT, colour=INK, font=DISPLAY)]
+        # round 7: month letters on the axis (a 496 px chart rotated the three-letter names)
+        ch = line_pair(which, "ttd_chart", "Date", "Month Letter", "Occupancy Hotel (line)", "Occupancy Brand (line)", "This hotel", "Goodnight Inn",
+                       [filter_in("Date", "Year", [2025], "flt_2025")], sort=sort_by_column("Date", "Month Letter"), alt_measure="Alt Occupancy Hotel Line (text)", start=0.5, end=1.0)
+    v = [night_kicker(which, "ttd_kicker", "F3  ·  THE FADING WELCOME" if which == TT_F3 else "F4  ·  WHERE WE ARE FULL"),
+         dyn(which, "ttd_head", head, size=TITLE_PT, colour=ZONE_TEXT, font=DISPLAY)]
     n = card("ttd_nums", *at(which, "ttd_nums"), nums, DISPLAY, 18, INK, BODY, S, INK2, labels=labels_)
     v.append(bind_alt(n, alt_nums))
     v.append(dyn(which, "ttd_vs", vs))
@@ -423,14 +432,15 @@ def detail_page_visuals(which):
 
 
 def extra_tooltip_pages():
-    """The six round-6 tooltip pages, each with its own base card and night band from the layout, Goodnight Inn as a
-    page filter on the two detail pages (the hovered bar brings the band or the hotel, not the brand)."""
+    """The six round-6 tooltip pages in the round-7 skin (their own night scene, the kicker and title on the banner,
+    the content in cards), Goodnight Inn as a page filter on the two detail pages (the hovered bar brings the band or
+    the hotel, not the brand)."""
     out = []
     for k, nm in FINDINGS:
         pg = f"tt-f{k}"
-        out.append(page(pg, pg, finish(no_card_fill(card_frames(pg) + finding_page_visuals(k, nm))), tooltip=True))
+        out.append(page(pg, pg, finish(no_card_fill([tooltip_canvas(pg)] + card_frames(pg) + finding_page_visuals(k, nm))), tooltip=True))
     for pg in (TT_F3, TT_F4):
-        out.append(page(pg, pg, finish(no_card_fill(card_frames(pg) + detail_page_visuals(pg))), tooltip=True,
+        out.append(page(pg, pg, finish(no_card_fill([tooltip_canvas(pg)] + card_frames(pg) + detail_page_visuals(pg))), tooltip=True,
                         filters=[filter_in("Brands", "Brand", ["Goodnight Inn"], "flt_tt_brand")]))
     return out
 
@@ -784,34 +794,27 @@ TT = "tt-package"
 
 
 def tt_visuals():
-    """A native report-page tooltip, 480 x 488: the brand's state chip, the package's name and the case in view;
-    NPV large (Deep Coffee when it pays back by 2032, Burnt Tangerine when not; the sign carries it too), capex, the
-    payback line, the three cases; then a table of the moves in the package (what each costs and returns) and one
-    muted line with the moves it leaves out. Grain: one Package[PackageID] from the hover layer."""
+    """The package tooltip, round 7 (Björn, 11 Nov: leaner, in the page's own skin). On the night banner the kicker
+    (PACKAGE A · EXPECTED CASE) and the title; a white card with the NPV, the capex, the verdict over the three cases
+    and the range bar on the shared axis; a second card with the moves and their capex and NPV, adding up to the
+    package. The round-6 waterfall bars, Answers column, histogram strip and move grid left: too much for a hover.
+    Grain: one Package[PackageID] from the hover layer. Every SVG has a text twin (TT Range (text), TT Moves (text))."""
     def c(name, measure, size, colour, font=BODY, bold=False, label=None, align="left"):
         x, y, w, h, z, tab = at(TT, name)
         vv = card(name, x, y, w, h, z, tab, [measure], font, size, colour, BODY, S, INK2, labels=[label] if label else None, align=align)
         if bold:
             vv["visual"]["objects"]["value"][0]["properties"]["bold"] = b(True)
         return bind_alt(vv, measure)
-    # Round 6 (second opinion, 10 Nov): the three numeric claims drawn, not only stated. SVG-in-DAX measures inside
-    # native visuals (image, table column); every SVG is decorative and has a text twin (the verdict, TT Range (text),
-    # the NPV column, Alt TT Moves), so nothing is carried by a picture alone.
-    v = [decorative(image_measure(TT, "tt_chip", "TT Chip", None), 1),
-         c("tt_title", "TT Title (text)", TITLE_PT, INK, DISPLAY),
-         c("tt_case", "TT Case (text)", S, INK2, align="right"),
+    v = [decorative(dyn(TT, "tt_kicker", "TT Kicker (text)", size=S, colour=ZONE_EYEBROW, font=DISPLAY), 5),
+         c("tt_title", "TT Title (text)", TITLE_PT, ZONE_TEXT, DISPLAY),
          c("tt_npv", "TT NPV (text)", 20, INK, DISPLAY, True, label="NPV through 2032"),
          c("tt_capex", "TT Capex (text)", 18, INK, DISPLAY, False, label="capex"),
          c("tt_payback", "TT Payback (text)", S, INK, bold=True),  # the verdict over the three cases
          decorative(image_measure(TT, "tt_range_svg", "TT Range SVG", None), 3),  # the range bar on the shared axis, numbers inside
-         c("tt_moves_label", "TT Moves Label (text)", S, INK, DISPLAY)]
-    v[3]["visual"]["objects"]["value"][0]["properties"]["fontColor"] = fv("TT NPV Color")
-    v[5]["visual"]["objects"]["value"][0]["properties"]["fontColor"] = fv("TT Payback Color")
-    # the moves list as one SVG (a tableEx squared its image cells to the column width and ignored the hidden sort
-    # key, render 10 Nov): positives first, the sinker last, capex and NPV rounded to add up, a bar per row, a totals row
-    v.append(decorative(image_measure(TT, "tt_moves_svg", "TT Moves SVG", None), 2))
-    v.append(c("tt_grid_label", "TT Grid Label (text)", S, INK, DISPLAY))
-    v.append(decorative(image_measure(TT, "tt_grid_svg", "TT Move Grid (svg)", None), 4))  # the fixed move grid
+         c("tt_moves_label", "TT Moves Label (text)", S, INK, DISPLAY),
+         decorative(image_measure(TT, "tt_moves_svg", "TT Moves SVG", None), 2)]  # the moves list as one SVG (round 6)
+    v[2]["visual"]["objects"]["value"][0]["properties"]["fontColor"] = fv("TT NPV Color")
+    v[4]["visual"]["objects"]["value"][0]["properties"]["fontColor"] = fv("TT Payback Color")
     return v
 
 
@@ -822,8 +825,7 @@ SHADOW = {"card": (INK, 14, 36, 84), "hero": (INK, 24, 56, 72), "glow": (ACCENT_
 HERO_CARDS = {"kpi", "scatter", "scatter_s"}
 # tiles (round 4): glow = the recommendation (Coffee Blue glow and border); tint = the reading guide (Ice fill, no
 # shadow); outline = the B, C and your-plan cards inside the wide panel (white, Seam hairline, no shadow)
-# night = the tooltip's header band (round 5: the tooltip in the canvas's own skin)
-TILE_KIND = {"glow": (SURFACE, ACCENT_MARK, "glow"), "tint": (TINT, TINT, None), "outline": (SURFACE, HAIR, None), "night": (INK, INK, None)}
+TILE_KIND = {"glow": (SURFACE, ACCENT_MARK, "glow"), "tint": (TINT, TINT, None), "outline": (SURFACE, HAIR, None)}
 
 
 def frame(name, x, y, w, h, z, i, shadow, border=SURFACE, fill=SURFACE, radius=12):
@@ -855,10 +857,24 @@ def card_frames(page_name):
 
 
 CANVAS_FILE = "canvas-night.jpg"
-PAGE_BG_FILE = "canvas-night-page.jpg"  # the same scene 20 px taller, as the report pages' background image (round 6, 11 Nov)
 def night_canvas():
     """The night-glow canvas (brand_canvas_v3.py) as a decorative image visual under everything (z 0)."""
     return decorative(image_file("z_canvas", 0, 0, LAYOUT["canvas"]["w"], LAYOUT["canvas"]["h"], 0, 0, CANVAS_FILE, None), 0)
+
+
+# Round 7 (Björn, 11 Nov): a tooltip is the page in miniature, with elements made for its size: its own night scene
+# (brand_canvas_v3.tooltip, the horizon 24 px under the first card), the kicker and the title on the banner, white cards
+# with the page's shadow below. One scene per tooltip page, on the page as z_canvas.
+TT_PAGES = [p["name"] for p in LAYOUT["pages"] if p.get("tooltip")]
+
+
+def TT_CANVAS(name):
+    return f"canvas-tt-{name}.jpg"
+
+
+def tooltip_canvas(name):
+    cv = PAGES[name]["canvas"]
+    return decorative(image_file("z_canvas", 0, 0, cv["w"], cv["h"], 0, 0, TT_CANVAS(name), None), 0)
 
 
 DATA_VISUALS = {"lineChart", "clusteredColumnChart", "scatterChart", "tableEx", "waterfallChart"}
@@ -907,22 +923,13 @@ def page(name, display, visuals, filters=None, tooltip=False, interactions=None)
     # colour only: furniture (cards, logo) is drawn by visuals so it scales with the content on any viewport
     cv = PAGES[name].get("canvas", LAYOUT["canvas"])
     p = {"$schema": PAGE_SCHEMA, "name": name, "displayName": display, "displayOption": "FitToPage", "height": cv["h"], "width": cv["w"],
-         # Round 6 (Björn, 11 Nov). Report pages: the background colour is Night, not Oat; the night canvas image paints
-         # the page, and the only place the colour itself shows is the strip Desktop's display area keeps above the
-         # page (1100 px for a 1080 px page, painted in the page colour), which now blends with the banner. Tooltip
-         # pages: Oat, their content area, under a banner image and a white card. The wallpaper (outspace) is Night
-         # everywhere, so no host shows Oat around a page.
-         # Tooltip pages (Björn, 11 Nov): a white card, like the dashboard's cards, with a kicker row instead of a banner;
-         # the host's strip above the page is painted in the page colour, so white merges with the card.
-         "objects": {"background": [{"properties": {"color": color(SURFACE if tooltip else INK), "transparency": num(0)}}],
-                     "outspace": [{"properties": {"color": color(SURFACE if tooltip else INK), "transparency": num(0)}}]}}
-    if not tooltip:
-        # the report pages' background is the night scene itself (Björn, 11 Nov: a new background, not a strip): Desktop
-        # paints the page background over its display area, 20 px taller than the page, so the image is the scene with
-        # 20 px of banner added above, anchored top-left at actual size; the on-page canvas visual covers the page
-        # itself in every host, so the two never show a seam
-        p["objects"]["background"][0]["properties"]["image"] = {"image": {"name": text(PAGE_BG_FILE), "scaling": text("Normal"),
-            "url": {"expr": {"ResourcePackageItem": {"PackageName": "RegisteredResources", "PackageType": 1, "ItemName": PAGE_BG_FILE}}}}}
+         # Night colour and wallpaper everywhere, so no host shows Oat around a page (round 6, Björn, 11 Nov). The
+         # scene itself is the z_canvas visual only, which scales with the page: a background IMAGE (round 6/7, at
+         # actual size) showed the scene twice at any zoom but 100 % (Björn, 11 Nov: "the background seems doubled").
+         # What remains of the colour is the 20 px strip Desktop's display area keeps above a page (and the tooltip
+         # host above a tooltip page): plain Night over the banner's dark top.
+         "objects": {"background": [{"properties": {"color": color(INK), "transparency": num(0)}}],
+                     "outspace": [{"properties": {"color": color(INK), "transparency": num(0)}}]}}
     if tooltip:
         # a report-page tooltip: hidden in view mode, bound as a tooltip (page schema 2.1.0: type + pageBinding)
         p.update({"displayOption": "ActualSize", "type": "Tooltip", "visibility": "HiddenInViewMode",
@@ -975,7 +982,7 @@ def interactions(v2):
 def main():
     v1 = finish(no_card_fill([night_canvas()] + card_frames(P1) + brand_row(P1, "") + p1_visuals()))
     v2 = finish(no_card_fill([night_canvas()] + card_frames(P2) + brand_row(P2, "2") + p2_visuals()))
-    vt = finish(no_card_fill(card_frames(TT) + tt_visuals()))
+    vt = finish(no_card_fill([tooltip_canvas(TT)] + card_frames(TT) + tt_visuals()))
     pages = [page(P1, "The Brand Review", v1),
              page(P2, "The Investment Strategy", v2,
                   filters=[filter_in("InvestmentProjects", "Brand", ["Goodnight Inn"], "flt_page_projects"), filter_in("Brands", "Brand", ["Goodnight Inn"], "flt_page_brand")],
@@ -986,8 +993,10 @@ def main():
     # embedded, never a link (Publish to Web): the kit's reversed lockup and the one night-glow canvas both pages share
     shutil.copyfile(KIT / LOCKUP, res / LOCKUP)
     shutil.copyfile(BG / CANVAS_FILE, res / CANVAS_FILE)
-    shutil.copyfile(BG / PAGE_BG_FILE, res / PAGE_BG_FILE)
-    files = [LOCKUP, CANVAS_FILE, PAGE_BG_FILE]
+    files = [LOCKUP, CANVAS_FILE]
+    for pg in TT_PAGES:  # round 7: every tooltip page's own scene
+        shutil.copyfile(BG / TT_CANVAS(pg), res / TT_CANVAS(pg))
+        files.append(TT_CANVAS(pg))
     rj = rep / "definition" / "report.json"
     report = json.loads(rj.read_text(encoding="utf-8"))
     for pk in report["resourcePackages"]:

@@ -3,7 +3,7 @@
   "name": "tt-f4",
   "displayName": "tt-f4",
   "displayOption": "ActualSize",
-  "height": 368,
+  "height": 384,
   "width": 560,
   "objects": {
     "background": [
@@ -14,7 +14,7 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#FFFFFF'"
+                    "Value": "'#12233D'"
                   }
                 }
               }
@@ -38,7 +38,7 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#FFFFFF'"
+                    "Value": "'#12233D'"
                   }
                 }
               }

@@ -1,5 +1,5 @@
 {
-  "_doc": "Slot map, v6 of 2026-11-10 (12-feedbackronde-4, rounds 4 to 6): P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 = the package scatter (layers: cloud, A/B/C, a transparent hover layer for the package tooltip) and a right panel in THREE states: rec (the recommendation A, default), alts (B and C, considered and not recommended) and build (build your own plan). In alts and build the scatter card shrinks (a second, smaller scatter stack hero_s_*) and a comparer card of cumulative net impact spans the bottom. Single source of positions for the PBIR generator (project/tools/opzet_report.py) and the a11y check. Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-wakeup 3.1, night header). 'cards' are furniture (radius 12, white fill) drawn as empty textbox visuals UNDER the content; 'tiles' are inner furniture (kind glow / tint / outline); 'visuals' are Power BI visuals. state: absent = always visible; a list of states = shown only in those states, swapped by display-only bookmarks bm_p2_rec / bm_p2_alts / bm_p2_build. A card may carry shadow: null (the tooltip's base), a tile a radius (0 squares the night header's lower corners). 12 pt (16 px) floor everywhere.",
+  "_doc": "Slot map, v7 of 2026-11-11 (12-feedbackronde-4, rounds 4 to 7): P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 = the package scatter (layers: cloud, A/B/C, a transparent hover layer for the package tooltip) and a right panel in THREE states: rec (the recommendation A, default), alts (B and C, considered and not recommended) and build (build your own plan). In alts and build the scatter card shrinks (a second, smaller scatter stack hero_s_*) and a comparer card of cumulative net impact spans the bottom. Single source of positions for the PBIR generator (project/tools/opzet_report.py) and the a11y check. Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-wakeup 3.1, night header). 'cards' are furniture (radius 12, white fill) drawn as empty textbox visuals UNDER the content; 'tiles' are inner furniture (kind glow / tint / outline); 'visuals' are Power BI visuals. state: absent = always visible; a list of states = shown only in those states, swapped by display-only bookmarks bm_p2_rec / bm_p2_alts / bm_p2_build. A card may carry shadow: null (the tooltip's base), a tile a radius (0 squares the night header's lower corners). 12 pt (16 px) floor everywhere. Round 7: every tooltip page is the page in miniature: its own night scene (canvas-tt-<page>.jpg), the kicker (y 16) and the title (y 40) on the banner, white cards with the page's shadow hanging 24 px into the banner (16 px margins, 16 px padding); the package tooltip holds two cards (return, moves).",
   "canvas": {
     "w": 1920,
     "h": 1080
@@ -1064,52 +1064,48 @@
       "tooltip": true,
       "canvas": {
         "w": 560,
-        "h": 560
+        "h": 536
       },
-      "cards": [],
-      "tiles": [
+      "cards": [
+        {
+          "id": "tt_return",
+          "x": 16,
+          "y": 88,
+          "w": 528,
+          "h": 160
+        },
         {
           "id": "tt_moves",
           "x": 16,
-          "y": 192,
+          "y": 264,
           "w": 528,
-          "h": 232,
-          "kind": "tint"
+          "h": 256
         }
       ],
       "visuals": [
         {
-          "name": "tt_chip",
+          "name": "tt_kicker",
           "x": 16,
           "y": 16,
-          "w": 40,
-          "h": 32,
+          "w": 528,
+          "h": 24,
           "z": 1000,
           "tab": 100
         },
         {
           "name": "tt_title",
-          "x": 64,
-          "y": 16,
-          "w": 352,
+          "x": 16,
+          "y": 40,
+          "w": 528,
           "h": 32,
           "z": 1001,
           "tab": 110
         },
         {
-          "name": "tt_case",
-          "x": 424,
-          "y": 16,
-          "w": 120,
-          "h": 32,
-          "z": 1002,
-          "tab": 115
-        },
-        {
           "name": "tt_npv",
-          "x": 16,
-          "y": 56,
-          "w": 264,
+          "x": 32,
+          "y": 104,
+          "w": 248,
           "h": 56,
           "z": 1003,
           "tab": 120
@@ -1117,65 +1113,47 @@
         {
           "name": "tt_capex",
           "x": 288,
-          "y": 56,
-          "w": 256,
+          "y": 104,
+          "w": 240,
           "h": 56,
           "z": 1004,
           "tab": 130
         },
         {
           "name": "tt_payback",
-          "x": 16,
-          "y": 112,
-          "w": 528,
+          "x": 32,
+          "y": 160,
+          "w": 496,
           "h": 24,
           "z": 1005,
           "tab": 140
         },
         {
           "name": "tt_range_svg",
-          "x": 16,
-          "y": 136,
-          "w": 528,
+          "x": 32,
+          "y": 184,
+          "w": 496,
           "h": 48,
           "z": 1006,
           "tab": 145
         },
         {
           "name": "tt_moves_label",
-          "x": 24,
-          "y": 200,
-          "w": 512,
+          "x": 32,
+          "y": 280,
+          "w": 496,
           "h": 24,
           "z": 1008,
           "tab": 155
         },
         {
           "name": "tt_moves_svg",
-          "x": 24,
-          "y": 224,
-          "w": 512,
+          "x": 32,
+          "y": 304,
+          "w": 496,
           "h": 200,
           "z": 1009,
           "tab": 160
-        },
-        {
-          "name": "tt_grid_label",
-          "x": 16,
-          "y": 432,
-          "w": 528,
-          "h": 24,
-          "z": 1010,
-          "tab": 165
-        },
-        {
-          "name": "tt_grid_svg",
-          "x": 16,
-          "y": 456,
-          "w": 528,
-          "h": 96,
-          "z": 1011,
-          "tab": 170
         }
       ]
     },
@@ -1185,9 +1163,17 @@
       "tooltip": true,
       "canvas": {
         "w": 560,
-        "h": 424
+        "h": 448
       },
-      "cards": [],
+      "cards": [
+        {
+          "id": "tt_find",
+          "x": 16,
+          "y": 112,
+          "w": 528,
+          "h": 320
+        }
+      ],
       "visuals": [
         {
           "name": "ttf_kicker",
@@ -1201,27 +1187,27 @@
         {
           "name": "ttf_title",
           "x": 16,
-          "y": 48,
+          "y": 40,
           "w": 528,
-          "h": 72,
+          "h": 64,
           "z": 1001,
           "tab": 110
         },
         {
           "name": "ttf_chart",
-          "x": 16,
-          "y": 120,
-          "w": 528,
-          "h": 208,
+          "x": 32,
+          "y": 128,
+          "w": 496,
+          "h": 192,
           "z": 1003,
           "tab": 120
         },
         {
           "name": "ttf_note",
-          "x": 16,
-          "y": 336,
-          "w": 528,
-          "h": 72,
+          "x": 32,
+          "y": 328,
+          "w": 496,
+          "h": 88,
           "z": 1004,
           "tab": 130
         }
@@ -1233,9 +1219,17 @@
       "tooltip": true,
       "canvas": {
         "w": 560,
-        "h": 424
+        "h": 448
       },
-      "cards": [],
+      "cards": [
+        {
+          "id": "tt_find",
+          "x": 16,
+          "y": 112,
+          "w": 528,
+          "h": 320
+        }
+      ],
       "visuals": [
         {
           "name": "ttf_kicker",
@@ -1249,27 +1243,27 @@
         {
           "name": "ttf_title",
           "x": 16,
-          "y": 48,
+          "y": 40,
           "w": 528,
-          "h": 72,
+          "h": 64,
           "z": 1001,
           "tab": 110
         },
         {
           "name": "ttf_chart",
-          "x": 16,
-          "y": 120,
-          "w": 528,
-          "h": 208,
+          "x": 32,
+          "y": 128,
+          "w": 496,
+          "h": 192,
           "z": 1003,
           "tab": 120
         },
         {
           "name": "ttf_note",
-          "x": 16,
-          "y": 336,
-          "w": 528,
-          "h": 72,
+          "x": 32,
+          "y": 328,
+          "w": 496,
+          "h": 88,
           "z": 1004,
           "tab": 130
         }
@@ -1281,9 +1275,17 @@
       "tooltip": true,
       "canvas": {
         "w": 560,
-        "h": 424
+        "h": 448
       },
-      "cards": [],
+      "cards": [
+        {
+          "id": "tt_find",
+          "x": 16,
+          "y": 112,
+          "w": 528,
+          "h": 320
+        }
+      ],
       "visuals": [
         {
           "name": "ttf_kicker",
@@ -1297,27 +1299,27 @@
         {
           "name": "ttf_title",
           "x": 16,
-          "y": 48,
+          "y": 40,
           "w": 528,
-          "h": 72,
+          "h": 64,
           "z": 1001,
           "tab": 110
         },
         {
           "name": "ttf_chart",
-          "x": 16,
-          "y": 120,
-          "w": 528,
-          "h": 208,
+          "x": 32,
+          "y": 128,
+          "w": 496,
+          "h": 192,
           "z": 1003,
           "tab": 120
         },
         {
           "name": "ttf_note",
-          "x": 16,
-          "y": 336,
-          "w": 528,
-          "h": 72,
+          "x": 32,
+          "y": 328,
+          "w": 496,
+          "h": 88,
           "z": 1004,
           "tab": 130
         }
@@ -1329,9 +1331,17 @@
       "tooltip": true,
       "canvas": {
         "w": 560,
-        "h": 368
+        "h": 384
       },
-      "cards": [],
+      "cards": [
+        {
+          "id": "tt_find",
+          "x": 16,
+          "y": 112,
+          "w": 528,
+          "h": 256
+        }
+      ],
       "visuals": [
         {
           "name": "ttf_kicker",
@@ -1345,26 +1355,26 @@
         {
           "name": "ttf_title",
           "x": 16,
-          "y": 48,
+          "y": 40,
           "w": 528,
-          "h": 72,
+          "h": 64,
           "z": 1001,
           "tab": 110
         },
         {
           "name": "ttf_types",
-          "x": 16,
+          "x": 32,
           "y": 128,
-          "w": 528,
+          "w": 496,
           "h": 56,
           "z": 1002,
           "tab": 115
         },
         {
           "name": "ttf_chart",
-          "x": 16,
+          "x": 32,
           "y": 192,
-          "w": 528,
+          "w": 496,
           "h": 160,
           "z": 1003,
           "tab": 120
@@ -1377,9 +1387,24 @@
       "tooltip": true,
       "canvas": {
         "w": 560,
-        "h": 472
+        "h": 560
       },
-      "cards": [],
+      "cards": [
+        {
+          "id": "tt_figs",
+          "x": 16,
+          "y": 88,
+          "w": 528,
+          "h": 152
+        },
+        {
+          "id": "tt_trend",
+          "x": 16,
+          "y": 256,
+          "w": 528,
+          "h": 288
+        }
+      ],
       "visuals": [
         {
           "name": "ttd_kicker",
@@ -1393,7 +1418,7 @@
         {
           "name": "ttd_head",
           "x": 16,
-          "y": 48,
+          "y": 40,
           "w": 528,
           "h": 32,
           "z": 1001,
@@ -1401,46 +1426,46 @@
         },
         {
           "name": "ttd_nums",
-          "x": 16,
-          "y": 88,
-          "w": 528,
+          "x": 32,
+          "y": 104,
+          "w": 496,
           "h": 56,
           "z": 1002,
           "tab": 110
         },
         {
           "name": "ttd_vs",
-          "x": 16,
-          "y": 144,
-          "w": 528,
-          "h": 40,
+          "x": 32,
+          "y": 160,
+          "w": 496,
+          "h": 64,
           "z": 1003,
           "tab": 120
         },
         {
           "name": "ttd_chart_title",
-          "x": 16,
-          "y": 192,
-          "w": 528,
+          "x": 32,
+          "y": 272,
+          "w": 496,
           "h": 24,
           "z": 1004,
           "tab": 130
         },
         {
           "name": "ttd_chart",
-          "x": 16,
-          "y": 216,
-          "w": 528,
-          "h": 176,
+          "x": 32,
+          "y": 296,
+          "w": 496,
+          "h": 168,
           "z": 1005,
           "tab": 140
         },
         {
           "name": "ttd_foot",
-          "x": 16,
-          "y": 400,
-          "w": 528,
-          "h": 56,
+          "x": 32,
+          "y": 464,
+          "w": 496,
+          "h": 64,
           "z": 1006,
           "tab": 150
         }
@@ -1452,9 +1477,24 @@
       "tooltip": true,
       "canvas": {
         "w": 560,
-        "h": 472
+        "h": 560
       },
-      "cards": [],
+      "cards": [
+        {
+          "id": "tt_figs",
+          "x": 16,
+          "y": 88,
+          "w": 528,
+          "h": 152
+        },
+        {
+          "id": "tt_trend",
+          "x": 16,
+          "y": 256,
+          "w": 528,
+          "h": 288
+        }
+      ],
       "visuals": [
         {
           "name": "ttd_kicker",
@@ -1468,7 +1508,7 @@
         {
           "name": "ttd_head",
           "x": 16,
-          "y": 48,
+          "y": 40,
           "w": 528,
           "h": 32,
           "z": 1001,
@@ -1476,46 +1516,46 @@
         },
         {
           "name": "ttd_nums",
-          "x": 16,
-          "y": 88,
-          "w": 528,
+          "x": 32,
+          "y": 104,
+          "w": 496,
           "h": 56,
           "z": 1002,
           "tab": 110
         },
         {
           "name": "ttd_vs",
-          "x": 16,
-          "y": 144,
-          "w": 528,
-          "h": 40,
+          "x": 32,
+          "y": 160,
+          "w": 496,
+          "h": 64,
           "z": 1003,
           "tab": 120
         },
         {
           "name": "ttd_chart_title",
-          "x": 16,
-          "y": 192,
-          "w": 528,
+          "x": 32,
+          "y": 272,
+          "w": 496,
           "h": 24,
           "z": 1004,
           "tab": 130
         },
         {
           "name": "ttd_chart",
-          "x": 16,
-          "y": 216,
-          "w": 528,
-          "h": 176,
+          "x": 32,
+          "y": 296,
+          "w": 496,
+          "h": 168,
           "z": 1005,
           "tab": 140
         },
         {
           "name": "ttd_foot",
-          "x": 16,
-          "y": 400,
-          "w": 528,
-          "h": 56,
+          "x": 32,
+          "y": 464,
+          "w": 496,
+          "h": 64,
           "z": 1006,
           "tab": 150
         }

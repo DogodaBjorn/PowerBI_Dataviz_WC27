@@ -3,7 +3,7 @@
   "name": "ttd_head",
   "position": {
     "x": 16,
-    "y": 48,
+    "y": 40,
     "z": 1001,
     "width": 528,
     "height": 32,
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#12233D'"
+                      "Value": "'#F7F5EE'"
                     }
                   }
                 }

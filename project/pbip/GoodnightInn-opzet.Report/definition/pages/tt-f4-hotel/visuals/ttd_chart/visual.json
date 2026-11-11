@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttd_chart",
   "position": {
-    "x": 16,
-    "y": 216,
+    "x": 32,
+    "y": 296,
     "z": 1005,
-    "width": 528,
-    "height": 176,
+    "width": 496,
+    "height": 168,
     "tabOrder": 140
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "Date"
                     }
                   },
-                  "Property": "Month"
+                  "Property": "Month Letter"
                 }
               },
-              "queryRef": "Date.Month",
-              "nativeQueryRef": "Month",
+              "queryRef": "Date.Month Letter",
+              "nativeQueryRef": "Month Letter",
               "active": true
             }
           ]
@@ -77,7 +77,7 @@
                     "Entity": "Date"
                   }
                 },
-                "Property": "Month"
+                "Property": "Month Letter"
               }
             },
             "direction": "Ascending"

@@ -36,7 +36,7 @@ LAYOUT = json.loads((ROOT / "project" / "design-prototypes" / "opzet-layout.json
 CANVAS = ROOT / "project" / "deliverables" / "backgrounds" / "canvas-night.jpg"
 SURFACE = "#FFFFFF"
 # what a tile paints under its visuals (opzet_report.TILE_KIND): glow and outline are white, tint is Ice, night is Night
-TILE_FILL = {"glow": SURFACE, "tint": "#EAF2FB", "outline": SURFACE, "night": "#12233D"}
+TILE_FILL = {"glow": SURFACE, "tint": "#EAF2FB", "outline": SURFACE}
 FLOOR_PT, FLOOR_PX = 12, 16
 FONTS_OK = ("segoe ui", "arial")
 COLOUR_WORDS = re.compile(r"\b(raspberry|plum|lilac|ember|pink|magenta|tangerine|blue|grey|gray|red|green|orange|purple|violet|coffee)\b", re.I)
@@ -140,11 +140,27 @@ except Exception as exc:  # noqa: BLE001
     fail("canvas", f"cannot read {CANVAS.name} ({exc}); install Pillow, the canvas generator needs it too")
 
 
+TT_IMGS = {}
+
+
+def tooltip_extremes(pname, x, y, w, h):
+    """Round 7: a tooltip page has a scene of its own (canvas-tt-<page>.jpg, actual size), so text on its banner is
+    checked against the lightest and darkest pixel under it, like text on the page's night zone."""
+    img = TT_IMGS.get(pname)
+    if img is None:
+        f = CANVAS.parent / f"canvas-tt-{pname}.jpg"
+        img = TT_IMGS[pname] = Image.open(f).convert("RGB") if (IMG is not None and f.exists()) else False
+    return extremes(img, x, y, w, h, 1, 1) if img else None
+
+
 def canvas_extremes(x, y, w, h):
     """The lightest and the darkest pixel under a rectangle of the 1920x1080 canvas (every 2nd pixel)."""
     if IMG is None:
         return None
-    sx, sy = IMG.width / LAYOUT["canvas"]["w"], IMG.height / LAYOUT["canvas"]["h"]
+    return extremes(IMG, x, y, w, h, IMG.width / LAYOUT["canvas"]["w"], IMG.height / LAYOUT["canvas"]["h"])
+
+
+def extremes(IMG, x, y, w, h, sx, sy):
     lo = hi = None
     for yy in range(int(y * sy), int((y + h) * sy), 2):
         for xx in range(int(x * sx), int((x + w) * sx), 2):
@@ -316,9 +332,13 @@ for pname in pages_meta["pageOrder"]:
         # -------- contrast: what the text sits on
         x, y, w, h = pos["x"], pos["y"], pos["width"], pos["height"]
         card = container(pl, x, y, w, h) if pl else None
-        if tooltip or card is not None or vtype == "image":
-            # a tooltip page is Night outside its white panel (round 6); inside a card the surface is white
-            bgs = [SURFACE] if card is not None else (page_bg if tooltip else [])
+        if card is not None:
+            bgs = [SURFACE]
+        elif tooltip:  # round 7: outside its cards a tooltip page shows its own night scene (the banner)
+            ext = tooltip_extremes(pname, x, y, w, h)
+            bgs = ["#%02X%02X%02X" % ext[0], "#%02X%02X%02X" % ext[1]] if ext else page_bg
+        elif vtype == "image":
+            bgs = []
         else:
             ext = canvas_extremes(x, y, w, h)
             bgs = ["#%02X%02X%02X" % ext[0], "#%02X%02X%02X" % ext[1]] if ext else page_bg

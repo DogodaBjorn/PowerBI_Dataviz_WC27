@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "tt_chip",
+  "name": "z_canvas",
   "position": {
-    "x": 16,
-    "y": 16,
-    "z": 1000,
-    "width": 40,
-    "height": 32,
-    "tabOrder": -1001
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "width": 560,
+    "height": 448,
+    "tabOrder": -1000
   },
   "visual": {
     "visualType": "image",
@@ -18,23 +18,44 @@
             "sourceType": {
               "expr": {
                 "Literal": {
-                  "Value": "'imageUrl'"
+                  "Value": "'image'"
                 }
               }
             },
-            "sourceUrl": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
+            "sourceFile": {
+              "image": {
+                "name": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'canvas-tt-tt-f3.jpg'"
                     }
-                  },
-                  "Property": "TT Chip"
+                  }
+                },
+                "url": {
+                  "expr": {
+                    "ResourcePackageItem": {
+                      "PackageName": "RegisteredResources",
+                      "PackageType": 1,
+                      "ItemName": "canvas-tt-tt-f3.jpg"
+                    }
+                  }
+                },
+                "scaling": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'Fit'"
+                    }
+                  }
                 }
               }
-            },
-            "fit": {
+            }
+          }
+        }
+      ],
+      "imageScaling": [
+        {
+          "properties": {
+            "imageScalingType": {
               "expr": {
                 "Literal": {
                   "Value": "'Fit'"

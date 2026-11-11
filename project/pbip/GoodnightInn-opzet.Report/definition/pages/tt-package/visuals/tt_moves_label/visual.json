@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tt_moves_label",
   "position": {
-    "x": 24,
-    "y": 200,
+    "x": 32,
+    "y": 280,
     "z": 1008,
-    "width": 512,
+    "width": 496,
     "height": 24,
     "tabOrder": 155
   },

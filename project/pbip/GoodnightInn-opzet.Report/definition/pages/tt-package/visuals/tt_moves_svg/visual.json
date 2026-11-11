@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tt_moves_svg",
   "position": {
-    "x": 24,
-    "y": 224,
+    "x": 32,
+    "y": 304,
     "z": 1009,
-    "width": 512,
+    "width": 496,
     "height": 200,
     "tabOrder": -1002
   },

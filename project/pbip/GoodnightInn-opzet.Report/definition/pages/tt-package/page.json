@@ -3,7 +3,7 @@
   "name": "tt-package",
   "displayName": "tt-package",
   "displayOption": "ActualSize",
-  "height": 560,
+  "height": 536,
   "width": 560,
   "objects": {
     "background": [
@@ -14,7 +14,7 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#FFFFFF'"
+                    "Value": "'#12233D'"
                   }
                 }
               }
@@ -38,7 +38,7 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#FFFFFF'"
+                    "Value": "'#12233D'"
                   }
                 }
               }

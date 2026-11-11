@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tt_title",
   "position": {
-    "x": 64,
-    "y": 16,
+    "x": 16,
+    "y": 40,
     "z": 1001,
-    "width": 352,
+    "width": 528,
     "height": 32,
     "tabOrder": 110
   },
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#12233D'"
+                      "Value": "'#F7F5EE'"
                     }
                   }
                 }

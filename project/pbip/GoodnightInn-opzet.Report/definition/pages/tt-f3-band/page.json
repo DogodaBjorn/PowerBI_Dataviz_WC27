@@ -3,7 +3,7 @@
   "name": "tt-f3-band",
   "displayName": "tt-f3-band",
   "displayOption": "ActualSize",
-  "height": 472,
+  "height": 560,
   "width": 560,
   "objects": {
     "background": [
@@ -14,7 +14,7 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#FFFFFF'"
+                    "Value": "'#12233D'"
                   }
                 }
               }
@@ -38,7 +38,7 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#FFFFFF'"
+                    "Value": "'#12233D'"
                   }
                 }
               }

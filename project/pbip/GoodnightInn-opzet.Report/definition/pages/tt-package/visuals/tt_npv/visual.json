@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tt_npv",
   "position": {
-    "x": 16,
-    "y": 56,
+    "x": 32,
+    "y": 104,
     "z": 1003,
-    "width": 264,
+    "width": 248,
     "height": 56,
     "tabOrder": 120
   },

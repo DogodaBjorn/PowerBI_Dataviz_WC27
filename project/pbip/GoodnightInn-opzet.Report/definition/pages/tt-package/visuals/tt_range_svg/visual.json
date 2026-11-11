@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tt_range_svg",
   "position": {
-    "x": 16,
-    "y": 136,
+    "x": 32,
+    "y": 184,
     "z": 1006,
-    "width": 528,
+    "width": 496,
     "height": 48,
     "tabOrder": -1003
   },

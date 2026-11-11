@@ -112,8 +112,37 @@ def night(out, extra_top=0, name="canvas-night.jpg"):
     finish(img, os.path.join(out, name))
 
 
+def tooltip(out, name, w, h, horizon, extra_top=0):
+    """Round 7 (Björn, 11 Nov): a tooltip page's own night scene at its own size, the page's design in miniature: the
+    Night-to-navy band down to the horizon with the Coffee Blue light at the right, a hairline on the horizon, the Oat
+    page with its soft glow below; no hanger (it would be a stamp at this size). The same scene 20 px taller
+    (extra_top) is the page's background image, for the strip the tooltip host paints above the page."""
+    hh = h + extra_top
+    y, x = np.mgrid[0:hh, 0:w].astype(np.float32)
+    y = y - extra_top
+    def g(cx, cy, r, strength):
+        d2 = ((x - cx) ** 2 + (y - cy) ** 2) / (r * r)
+        return (np.exp(-2.2 * d2) * strength)[..., None]
+    img = np.empty((hh, w, 3), np.float32); img[:] = rgb("#F3F1EA")
+    img = mix(img, "#F7DFCF", g(w, h, w * 0.9, 0.45))
+    img = mix(img, "#E3EDF8", g(0, horizon, w * 0.8, 0.35))
+    t = (x / w)[..., None]
+    top = rgb("#0F1E36") * (1 - t) + rgb("#163760") * t
+    top = mix(top, "#2589D8", g(w * 0.92, horizon * 0.75, w * 0.36, 0.22))
+    zone = (y < horizon)[..., None]
+    img = np.where(zone, top, img)
+    hz = horizon + extra_top
+    img[hz - 1:hz] = mix(img[hz - 1:hz], "#2589D8", 0.35)
+    finish(img, os.path.join(out, name))
+
+
 if __name__ == "__main__":
     out = sys.argv[1]
     os.makedirs(out, exist_ok=True)
     night(out)
-    night(out, extra_top=20, name="canvas-night-page.jpg")   # the page background (Desktop's display strip)
+    # no 20 px taller twins any more (round 7c): a background image at actual size doubled the scene at any zoom but 100 %
+    if len(sys.argv) > 2:
+        for p in _layout["pages"]:
+            if p.get("tooltip"):  # round 7: the horizon sits 24 px under the top of the first card (the page: 64 px)
+                cv, hz = p["canvas"], min(c["y"] for c in p["cards"]) + 24
+                tooltip(out, f"canvas-tt-{p['name']}.jpg", cv["w"], cv["h"], hz)

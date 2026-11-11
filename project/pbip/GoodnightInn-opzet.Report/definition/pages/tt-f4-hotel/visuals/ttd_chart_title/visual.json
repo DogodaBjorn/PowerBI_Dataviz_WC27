@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttd_chart_title",
   "position": {
-    "x": 16,
-    "y": 192,
+    "x": 32,
+    "y": 272,
     "z": 1004,
-    "width": 528,
+    "width": 496,
     "height": 24,
     "tabOrder": 130
   },
