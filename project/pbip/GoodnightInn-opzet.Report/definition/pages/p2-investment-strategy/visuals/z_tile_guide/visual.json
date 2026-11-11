@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "z_tile_guide",
   "position": {
     "x": 56,
-    "y": 240,
+    "y": 224,
     "z": 151,
+    "height": 112,
     "width": 992,
-    "height": 136,
     "tabOrder": -1551
   },
   "visual": {
@@ -189,8 +189,20 @@
             }
           }
         }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }

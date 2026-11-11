@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "sl_view",
   "position": {
     "x": 688,
-    "y": 192,
+    "y": 176,
     "z": 1013,
-    "width": 360,
     "height": 40,
+    "width": 360,
     "tabOrder": 205
   },
   "visual": {
@@ -601,8 +601,20 @@
             }
           }
         }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "z_footer2",
   "position": {
     "x": 32,
-    "y": 1024,
+    "y": 1032,
     "z": 1090,
+    "height": 48,
     "width": 1856,
-    "height": 56,
     "tabOrder": 9000
   },
   "visual": {
@@ -378,8 +378,20 @@
             }
           }
         }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }

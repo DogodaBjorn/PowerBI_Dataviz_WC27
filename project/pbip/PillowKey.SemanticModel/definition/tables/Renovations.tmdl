@@ -52,7 +52,6 @@ table Renovations
 		summarizeBy: none
 		sourceColumn: CostUSD
 
-
 	partition Renovations = m
 		mode: import
 		queryGroup: Facts
@@ -65,5 +64,5 @@ table Renovations
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

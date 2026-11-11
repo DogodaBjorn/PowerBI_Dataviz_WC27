@@ -46,7 +46,6 @@ table GuestSegments
 		summarizeBy: none
 		sourceColumn: RoomRevenue
 
-
 	partition GuestSegments = m
 		mode: import
 		queryGroup: Facts
@@ -59,5 +58,5 @@ table GuestSegments
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

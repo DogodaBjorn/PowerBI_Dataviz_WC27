@@ -50,3 +50,6 @@ ref table PlanSelector
 ref table ScatterView
 ref table BuildMove
 ref table BuildPoint
+
+ref cultureInfo en-US
+

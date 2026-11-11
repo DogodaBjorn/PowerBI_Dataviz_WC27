@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ttd_chart",
   "position": {
     "x": 32,
     "y": 296,
     "z": 1005,
-    "width": 496,
     "height": 168,
+    "width": 496,
     "tabOrder": 140
   },
   "visual": {
@@ -532,9 +532,21 @@
             }
           }
         }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   },
   "filterConfig": {
     "filters": [

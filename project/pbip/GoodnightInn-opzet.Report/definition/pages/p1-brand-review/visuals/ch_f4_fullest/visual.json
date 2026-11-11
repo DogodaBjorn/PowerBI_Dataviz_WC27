@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ch_f4_fullest",
   "position": {
     "x": 616,
     "y": 880,
     "z": 1053,
-    "width": 1248,
     "height": 128,
+    "width": 1248,
     "tabOrder": 630
   },
   "visual": {
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "Hotels.Hotel Short Name",
-              "nativeQueryRef": "Hotel Short Name"
+              "nativeQueryRef": "Hotel Short Name",
+              "active": true
             }
           ]
         },
@@ -450,8 +451,7 @@
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   },
   "filterConfig": {
     "filters": [

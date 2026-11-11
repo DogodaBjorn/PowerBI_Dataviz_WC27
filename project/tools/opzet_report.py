@@ -70,6 +70,11 @@ TINT = "#EAF2FB"  # Ice, the kit's accent tint (sequential step 1)
 # Text on the Night header zone (plan 10 D3): headline, masthead/subtitle, eyebrow. Contrast on the lightest pixel
 # of the night-glow zone is checked by project/tools/a11y_check.py from backgrounds/zone-samples.json.
 ZONE_TEXT, ZONE_MUTED, ZONE_EYEBROW = "#F7F5EE", "#C9D0DC", "#A9CDF0"
+# Round 9 (Björn, 11 Nov): the tooltip banners are orange (brand_canvas_v3.tooltip, kit waiver of 11 Nov), so a tooltip reads
+# as another surface than the page. Round 9b: the FLASHY Tangerine, Björn's choice; white text on it is 3.4:1, under the
+# floor, so the kicker and the title are Night on it (4.7:1 on the band's darkest pixel; a11y_check reads the pixels).
+TT_KICKER = INK
+TT_TITLE = INK
 # The font stacks Desktop itself writes for Segoe UI: wf_segoe-ui_* are the Power BI service's web fonts, so a
 # browser without Segoe UI (a Mac under Publish-to-Web) still gets it; Arial as the last named fallback (kit 3.1).
 DISPLAY = "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif"
@@ -80,7 +85,9 @@ BODY = "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif"
 FOOTER = "Source: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores weighted by survey responses; 2021 is a depressed base year."
 KIT = ROOT / "design" / "brand-kits" / "goodnight-inn-wakeup" / "assets"
 # The brand row (plan 11): the 3.1 lockup on the Night zone and an eyebrow in the former pay-off slot.
-EYEBROW = {"p1-brand-review": "01  THE BRAND REVIEW", "p2-investment-strategy": "02  THE INVESTMENT STRATEGY"}
+# Round 9 (Björn, 11 Nov): no section numbers (a listed AI tell, design-taste-frontend 9.F); a hotel pun says what the page
+# is and the page name follows as its tagline, the line's one middle dot between them (pun, name).
+EYEBROW = {"p1-brand-review": ("THE WAKE-UP CALL", "THE BRAND REVIEW"), "p2-investment-strategy": ("ROOM TO INVEST", "THE INVESTMENT STRATEGY")}
 LOCKUP = "gi-lockup-reversed@2x.png"
 # Kit type scale (brand.yaml 3.1 scale_pt 30 / 20 / 14 / 12 / 12): textboxes in px, cards and visual objects in pt.
 # Floor 12 pt (16 px at 1920) for notes, axes, tables, slicers and tooltips alike (plan 11). S = small text in pt,
@@ -232,10 +239,10 @@ def kicker(page, name, txt):
 
 
 def night_kicker(page, name, txt):
-    """Round 7: the kicker on a tooltip's night banner, the page's own eyebrow (ZONE_EYEBROW on Night, 9.5:1), out of
-    the tab order; the title after it carries the words."""
+    """Round 7: the kicker on a tooltip's banner, the page's own eyebrow idea, out of the tab order; the title after it
+    carries the words. Round 9: on the orange banner, in TT_KICKER."""
     _KICK[0] += 1
-    return decorative(tb(page, name, txt, font=DISPLAY, size=SPX, colour=ZONE_EYEBROW), 600 + _KICK[0])
+    return decorative(tb(page, name, txt, font=DISPLAY, size=SPX, colour=TT_KICKER), 600 + _KICK[0])
 
 
 def title(page, name, measure, alt_measure=None):
@@ -286,11 +293,16 @@ YEARS = lambda: filter_in("Date", "Year", [2021, 2022, 2023, 2024, 2025], "flt_h
 SERIES_LABELS_RIGHT = [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2), "textSize": num(S), "seriesFontFamily": text(BODY)}}]
 
 
-def f1_chart(page, slot):
+def small_axis_type(small):
+    """Round 9: in a 496 px tooltip chart a numeric year axis skipped 2021, 2023 and 2025; a categorical axis labels every year."""
+    return {"axisType": enum("Categorical")} if small else None
+
+
+def f1_chart(page, slot, small=False):
     ms = ["Trend Margin before GI", "Trend Margin after GI"]
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(ms[0], "Before commissions"), proj_mea(ms[1], "After commissions")]}}
     # 30 % to 50 %: from 25 % an empty band sat between the lowest gridline and the years (REVIEW p4)
-    objs = {"categoryAxis": axis(BODY, S, INK2), "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=0.3, end=0.5, extra={"labelPrecision": integer(0)}),
+    objs = {"categoryAxis": axis(BODY, S, INK2, extra=small_axis_type(small)), "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=0.3, end=0.5, extra={"labelPrecision": integer(0)}),
             # the lines named at their ends in Dusk, as on F2 (pass-3 review: a legend of a grey and a blue dot was colour
             # only, 1.07:1 between them)
             "legend": legend(False),
@@ -299,13 +311,13 @@ def f1_chart(page, slot):
     return chart(page, slot, "lineChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F1 Chart (text)")
 
 
-def f2_chart(page, slot):
+def f2_chart(page, slot, small=False):
     ms = [f"Trend OTA {c}" for c, _ in BRANDS]
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m, nm) for m, (_, nm) in zip(ms, BRANDS)]}}
     # the line ends carry the names, as in the comp: a legend of three identical grey dots could not be decoded (REVIEW m3).
     # The names in Dusk, not in the line's colour: Warm Grey (3.5:1) and Coffee Blue (3.7:1) fail 4.5:1 for 12 pt text
     # (plan 11); the line next to each name still ties them.
-    objs = {"categoryAxis": axis(BODY, S, INK2), "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, extra={"labelPrecision": integer(0)}),
+    objs = {"categoryAxis": axis(BODY, S, INK2, extra=small_axis_type(small)), "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, extra={"labelPrecision": integer(0)}),
             "legend": legend(False),
             "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2), "textSize": num(S), "seriesFontFamily": text(BODY)}}],
             "dataPoint": series_colors({mref(ms[0]): ACCENT_MARK, **{mref(m): SLATE for m in ms[1:]}}),
@@ -344,19 +356,21 @@ def f4_types(page, slot, size=21):
     return bind_alt(c, "Alt F4 Types (text)")
 
 
-def f4_chart(page, slot, tooltip_page=None):
+def f4_chart(page, slot, tooltip_page=None, horizontal=False):
+    """horizontal (round 9): in the 496 px chip tooltip the seven names truncated under columns; as bars they read in full."""
     q = {"Category": {"projections": [proj_col("Hotels", "Hotel Short Name")]}, "Y": {"projections": [proj_mea("Occupancy % 2025", "Occupancy 2025")]}}
     # axis from zero (never truncate a bar axis, CP-066); end 1.3 leaves room for the labels above the 90 % bars (pass 3)
     objs = {"categoryAxis": axis(BODY, S, INK), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, start=0, end=1.3),
             "dataPoint": [{"properties": {"fill": fv("Hotel Bar Color")}, "selector": WILD}], "labels": labels(True, BODY, S, INK, position="OutsideEnd"), "legend": legend(False)}
     # the airport hotels are Coffee Blue and every one of their names ends in "Airport", so colour is not the only carrier
-    return chart(page, slot, "clusteredColumnChart", q, objs, None,
+    return chart(page, slot, "clusteredBarChart" if horizontal else "clusteredColumnChart", q, objs, None,
                  filters=[gi_filter(), topn_filter("Hotels", "Hotel Short Name", 7, "Occupancy % 2025", "flt_top7")], sort=sort_by_measure("Occupancy % 2025"),
                  alt_measure="Alt F4 Chart (text)", tooltip_page=tooltip_page)
 
 
 # ====================================================================== round 6: the findings on P2 and the hover detail pages
 TT_F3, TT_F4 = "tt-f3-band", "tt-f4-hotel"
+TT_YEAR = "tt-year"  # round 9: the one designed tooltip the three cumulative charts share
 FINDINGS = (("1", "The margin"), ("2", "The middleman"), ("3", "The fading welcome"), ("4", "Where we are full"))
 
 
@@ -380,16 +394,16 @@ def finding_page_visuals(k, nm):
     P1 draws (the same builder) and the note (F4: the three occupancy figures instead)."""
     pg = f"tt-f{k}"
     v = [night_kicker(pg, "ttf_kicker", f"F{k}  ·  {nm.upper()}"),
-         dyn(pg, "ttf_title", f"F{k} Title (text)", size=TITLE_PT, colour=ZONE_TEXT, font=DISPLAY, alt_measure=f"Alt F{k} Title (text)")]
+         dyn(pg, "ttf_title", f"F{k} Title (text)", size=TITLE_PT, colour=TT_TITLE, font=DISPLAY, alt_measure=f"Alt F{k} Title (text)")]
     if k == "1":
-        v.append(f1_chart(pg, "ttf_chart"))
+        v.append(f1_chart(pg, "ttf_chart", small=True))
     elif k == "2":
-        v.append(f2_chart(pg, "ttf_chart"))
+        v.append(f2_chart(pg, "ttf_chart", small=True))
     elif k == "3":
         v.append(f3_chart(pg, "ttf_chart"))
     else:
         v.append(f4_types(pg, "ttf_types", size=18))
-        v.append(f4_chart(pg, "ttf_chart"))
+        v.append(f4_chart(pg, "ttf_chart", horizontal=True))
     if k != "4":
         v.append(dyn(pg, "ttf_note", f"F{k} Note (text)", colour=INK))
     return v
@@ -421,7 +435,7 @@ def detail_page_visuals(which):
         ch = line_pair(which, "ttd_chart", "Date", "Month Letter", "Occupancy Hotel (line)", "Occupancy Brand (line)", "This hotel", "Goodnight Inn",
                        [filter_in("Date", "Year", [2025], "flt_2025")], sort=sort_by_column("Date", "Month Letter"), alt_measure="Alt Occupancy Hotel Line (text)", start=0.5, end=1.0)
     v = [night_kicker(which, "ttd_kicker", "F3  ·  THE FADING WELCOME" if which == TT_F3 else "F4  ·  WHERE WE ARE FULL"),
-         dyn(which, "ttd_head", head, size=TITLE_PT, colour=ZONE_TEXT, font=DISPLAY)]
+         dyn(which, "ttd_head", head, size=TITLE_PT, colour=TT_TITLE, font=DISPLAY)]
     n = card("ttd_nums", *at(which, "ttd_nums"), nums, DISPLAY, 18, INK, BODY, S, INK2, labels=labels_)
     v.append(bind_alt(n, alt_nums))
     v.append(dyn(which, "ttd_vs", vs))
@@ -438,11 +452,29 @@ def extra_tooltip_pages():
     out = []
     for k, nm in FINDINGS:
         pg = f"tt-f{k}"
-        out.append(page(pg, pg, finish(no_card_fill(card_frames(pg) + finding_page_visuals(k, nm))), tooltip=True))
+        out.append(page(pg, pg, finish(no_card_fill(scene_visual(pg) + card_frames(pg) + finding_page_visuals(k, nm))), tooltip=True))
     for pg in (TT_F3, TT_F4):
-        out.append(page(pg, pg, finish(no_card_fill(card_frames(pg) + detail_page_visuals(pg))), tooltip=True,
+        out.append(page(pg, pg, finish(no_card_fill(scene_visual(pg) + card_frames(pg) + detail_page_visuals(pg))), tooltip=True,
                         filters=[filter_in("Brands", "Brand", ["Goodnight Inn"], "flt_tt_brand")]))
+    out.append(page(TT_YEAR, TT_YEAR, finish(no_card_fill(scene_visual(TT_YEAR) + card_frames(TT_YEAR) + year_page_visuals())), tooltip=True))
     return out
+
+
+def year_page_visuals():
+    """Round 9: the one designed tooltip for the three cumulative charts (Björn: the default tooltip is off brand; a new
+    page only where it adds something, and a year's values are reachable by hover alone). On the banner the kicker and
+    the year; a card with A in the three cases; a card with A, B, C and the plan being built in the case in view."""
+    pg = TT_YEAR
+    a = card("tty_a_nums", *at(pg, "tty_a_nums"), ["TT Year A Low (text)", "TT Year A Expected (text)", "TT Year A High (text)"], DISPLAY, 18, INK, BODY, S, INK2,
+             labels=["Low case", "Expected case", "High case"])
+    al = card("tty_all_nums", *at(pg, "tty_all_nums"), ["TT Year A (text)", "TT Year B (text)", "TT Year C (text)", "TT Year Plan (text)"], DISPLAY, 18, INK, BODY, S, INK2,
+              labels=["A, recommended", "B", "C", "Your plan"])
+    return [night_kicker(pg, "tty_kicker", "CUMULATIVE NET IMPACT  ·  $M, UNDISCOUNTED"),
+            dyn(pg, "tty_title", "TT Year Title (text)", size=TITLE_PT, colour=TT_TITLE, font=DISPLAY),
+            tb(pg, "tty_a_title", "Package A, our recommendation, in the three cases", font=DISPLAY, size=SPX, colour=INK),
+            bind_alt(a, "Alt TT Year A (text)"),
+            dyn(pg, "tty_all_title", "TT Year All Title (text)", size=S, colour=INK, font=DISPLAY),
+            bind_alt(al, "Alt TT Year All (text)")]
 
 
 # ====================================================================== P2 The Investment Strategy
@@ -549,8 +581,9 @@ def brand_row(page_name, sfx):
     L = pg["logo"]
     out = [image_file("z_logo", L["x"], L["y"], L["w"], L["h"], 1003, L["tab"], LOCKUP, "Goodnight Inn"),
            # ZONE_EYEBROW on Night 9.5:1; at the 12 pt floor instead of the kit's 11 pt eyebrow
-           tb(page_name, f"z_eyebrow{sfx}", EYEBROW[page_name], font=DISPLAY, size=SPX, colour=ZONE_EYEBROW,
-              alt=("Page 1 of 2: the brand review" if sfx == "" else "Page 2 of 2: the investment strategy"))]
+           tb(page_name, f"z_eyebrow{sfx}", "  ·  ".join(EYEBROW[page_name]),
+              runs=[(EYEBROW[page_name][0], DISPLAY, SPX, ZONE_EYEBROW, False), ("  ·  " + EYEBROW[page_name][1], DISPLAY, SPX, ZONE_MUTED, False)],
+              alt=("Page 1 of 2, the wake-up call: the brand review" if sfx == "" else "Page 2 of 2, room to invest: the investment strategy"))]
     return out
 
 
@@ -651,6 +684,8 @@ def waterfall(name, table, column, y_measure, flag_measure, y_start, y_end, alt_
             "labels": labels(True, BODY, S, INK, units=1, position="OutsideEnd"), "legend": legend(False)}
     objs["valueAxis"][0]["properties"]["start"] = mtext(y_start)
     objs["valueAxis"][0]["properties"]["end"] = mtext(y_end)
+    # round 9: a filter cannot blank the build waterfall before a move is picked: Power BI draws the total bar ($0) whatever
+    # the row filter says (render 11 Nov), so the empty state keeps its one bar and the card's title carries the state
     return chart(P2, name, "waterfallChart", q, objs, None, title_measure=title_measure,
                  filters=[filter_measure_gt(flag_measure, 0, f"flt_{name}")], alt_measure=alt_measure)
 
@@ -674,7 +709,7 @@ def cumulative_chart(name, series, colours, widths, dashed, title_measure, alt_m
                                                     "dataLabelHorizontalPosition": enum("left"), "dataLabelVerticalPosition": enum("above")}, "selector": {"id": "1"}}]}
     for m in dotted:
         next(e for e in objs["lineStyles"] if e.get("selector", {}).get("metadata") == mref(m))["properties"]["lineStyle"] = enum("dotted")
-    return chart(P2, name, "lineChart", q, objs, None, title_measure=title_measure, filters=[HORIZON()], alt_measure=alt_measure)
+    return chart(P2, name, "lineChart", q, objs, None, title_measure=title_measure, filters=[HORIZON()], alt_measure=alt_measure, tooltip_page=TT_YEAR)
 
 
 def nums_card(name, measures, labels_, alt_measure, size=21):
@@ -805,8 +840,8 @@ def tt_visuals():
         if bold:
             vv["visual"]["objects"]["value"][0]["properties"]["bold"] = b(True)
         return bind_alt(vv, measure)
-    v = [decorative(dyn(TT, "tt_kicker", "TT Kicker (text)", size=S, colour=ZONE_EYEBROW, font=DISPLAY), 5),
-         c("tt_title", "TT Title (text)", TITLE_PT, ZONE_TEXT, DISPLAY),
+    v = [decorative(dyn(TT, "tt_kicker", "TT Kicker (text)", size=S, colour=TT_KICKER, font=DISPLAY), 5),
+         c("tt_title", "TT Title (text)", TITLE_PT, TT_TITLE, DISPLAY),
          c("tt_npv", "TT NPV (text)", 20, INK, DISPLAY, True, label="NPV through 2032"),
          c("tt_capex", "TT Capex (text)", 18, INK, DISPLAY, False, label="capex"),
          c("tt_payback", "TT Payback (text)", S, INK, bold=True),  # the verdict over the three cases
@@ -858,8 +893,8 @@ def card_frames(page_name):
 
 CANVAS_FILE = "canvas-night.jpg"
 # Round 7 (Björn, 11 Nov): a tooltip is the page in miniature, with elements made for its size: its own night scene
-# (brand_canvas_v3.tooltip, the horizon 24 px under the first card) as the page background, the kicker and the title on
-# the banner, white cards with the page's shadow below.
+# (brand_canvas_v3.tooltip, the horizon 24 px under the first card), the kicker and the title on the banner, white cards
+# with the page's shadow below.
 TT_PAGES = [p["name"] for p in LAYOUT["pages"] if p.get("tooltip")]
 
 
@@ -867,7 +902,26 @@ def TT_CANVAS(name):
     return f"canvas-tt-{name}.jpg"
 
 
-DATA_VISUALS = {"lineChart", "clusteredColumnChart", "scatterChart", "tableEx", "waterfallChart"}
+# Where the scene lives (rounds 6 to 9). A page background image with Fit is fitted into the host's display area; Desktop's
+# is taller than the page, so there the scene drifts up (14 px at 100 %, 38 px at 60 % zoom, more at 45 %; the Service's
+# area is the page itself). Round 9b (Björn, 11 Nov, at his zoom: "no overlay of the top visuals on the banner and the text
+# is too low"): the scene is the LOWEST VISUAL on every page (z 0, out of the tab order), placed in page pixels, so the cards
+# hang into the banner exactly in every host; the page background keeps the same scene with Fit only for the strip Desktop
+# paints above a page. The two coincide on the page (both scale with it), so nothing shows twice.
+SCENE_VISUAL = True
+
+
+def scene_visual(name):
+    """The page's scene as a decorative image visual under everything (z 0): the night-glow canvas on a report page, the
+    page's own orange scene on a tooltip page."""
+    if not SCENE_VISUAL:
+        return []
+    cv = PAGES[name].get("canvas", LAYOUT["canvas"])
+    f = TT_CANVAS(name) if PAGES[name].get("tooltip") else CANVAS_FILE
+    return [decorative(image_file("z_canvas", 0, 0, cv["w"], cv["h"], 0, 0, f, None), 0)]
+
+
+DATA_VISUALS = {"lineChart", "clusteredColumnChart", "clusteredBarChart", "scatterChart", "tableEx", "waterfallChart"}  # round 9: + bars (the F4 chip tooltip)
 
 
 def finish(visuals):
@@ -894,7 +948,16 @@ def finish(visuals):
             gen[0]["properties"]["responsive"] = b(False)
         if v["visual"]["visualType"] in DATA_VISUALS and v["position"]["tabOrder"] >= 0:
             v["visual"]["visualContainerObjects"]["visualHeader"] = [{"properties": {"show": b(True)}}]
+        # (4) round 9 (Björn, 11 Nov): Power BI's own tooltip is off brand, so it is off wherever no report-page tooltip is
+        # bound. The one exception is the keyboard cloud layer (hero_packages, hero_s_packages): its Tooltips well is the
+        # package card's text twin for keyboard users, and keyboard focus is the only way it opens.
+        vcos = v["visual"].setdefault("visualContainerObjects", {})
+        if "visualTooltip" not in vcos and v["name"] not in KEYBOARD_LAYERS:
+            vcos["visualTooltip"] = [{"properties": {"show": b(False)}}]
     return visuals
+
+
+KEYBOARD_LAYERS = {"hero_packages", "hero_s_packages"}
 
 
 def no_card_fill(visuals):
@@ -916,10 +979,9 @@ def page(name, display, visuals, filters=None, tooltip=False, interactions=None)
          # Night colour and wallpaper everywhere, so no host shows Oat around a page (round 6, Björn, 11 Nov).
          "objects": {"background": [{"properties": {"color": color(INK), "transparency": num(0)}}],
                      "outspace": [{"properties": {"color": color(INK), "transparency": num(0)}}]}}
-    # Round 7 (Björn, 11 Nov, "the background seems doubled, remove the overlay"): the scene is the page BACKGROUND, scaled
-    # to the page ('Fit'), and nothing else: the full-page image visual (z_canvas, 7 Nov to round 7) that carried the scene
-    # is gone. One scene per page: the night-glow canvas on the report pages, each tooltip page's own scene on it. Desktop's
-    # 20 px display strip above a page shows the page colour, Night, over the banner's dark top.
+    # The scene as the page background, scaled to the page ('Fit'): the night-glow canvas on the report pages, each
+    # tooltip page's own scene on it. Pixel-exact only where the host's display area is the page (the Service); in
+    # Desktop the lowest visual carries it exactly (SCENE_VISUAL, round 8) and the background fills the strip above.
     bg = TT_CANVAS(name) if tooltip else CANVAS_FILE
     p["objects"]["background"][0]["properties"]["image"] = {"image": {"name": text(bg), "scaling": text("Fit"),
         "url": {"expr": {"ResourcePackageItem": {"PackageName": "RegisteredResources", "PackageType": 1, "ItemName": bg}}}}}
@@ -973,9 +1035,9 @@ def interactions(v2):
 
 
 def main():
-    v1 = finish(no_card_fill(card_frames(P1) + brand_row(P1, "") + p1_visuals()))
-    v2 = finish(no_card_fill(card_frames(P2) + brand_row(P2, "2") + p2_visuals()))
-    vt = finish(no_card_fill(card_frames(TT) + tt_visuals()))
+    v1 = finish(no_card_fill(scene_visual(P1) + card_frames(P1) + brand_row(P1, "") + p1_visuals()))
+    v2 = finish(no_card_fill(scene_visual(P2) + card_frames(P2) + brand_row(P2, "2") + p2_visuals()))
+    vt = finish(no_card_fill(scene_visual(TT) + card_frames(TT) + tt_visuals()))
     pages = [page(P1, "The Brand Review", v1),
              page(P2, "The Investment Strategy", v2,
                   filters=[filter_in("InvestmentProjects", "Brand", ["Goodnight Inn"], "flt_page_projects"), filter_in("Brands", "Brand", ["Goodnight Inn"], "flt_page_brand")],
@@ -992,6 +1054,7 @@ def main():
         files.append(TT_CANVAS(pg))
     rj = rep / "definition" / "report.json"
     report = json.loads(rj.read_text(encoding="utf-8"))
+    report["settings"] = {"useEnhancedTooltips": False}  # round 9: Björn's Desktop setting, kept by the generator
     for pk in report["resourcePackages"]:
         if pk["name"] == "RegisteredResources":
             pk["items"] += [{"name": f, "path": f, "type": "Image"} for f in files]

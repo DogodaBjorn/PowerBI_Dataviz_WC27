@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ch_build_waterfall",
   "position": {
     "x": 1384,
-    "y": 512,
+    "y": 496,
     "z": 1076,
-    "width": 464,
     "height": 120,
+    "width": 464,
     "tabOrder": 623
   },
   "visual": {
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "BuildMove.Short Name",
-              "nativeQueryRef": "Short Name"
+              "nativeQueryRef": "Short Name",
+              "active": true
             }
           ]
         },
@@ -440,9 +441,21 @@
             }
           }
         }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   },
   "filterConfig": {
     "filters": [

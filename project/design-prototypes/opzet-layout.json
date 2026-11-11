@@ -1,5 +1,5 @@
 {
-  "_doc": "Slot map, v7 of 2026-11-11 (12-feedbackronde-4, rounds 4 to 7): P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 = the package scatter (layers: cloud, A/B/C, a transparent hover layer for the package tooltip) and a right panel in THREE states: rec (the recommendation A, default), alts (B and C, considered and not recommended) and build (build your own plan). In alts and build the scatter card shrinks (a second, smaller scatter stack hero_s_*) and a comparer card of cumulative net impact spans the bottom. Single source of positions for the PBIR generator (project/tools/opzet_report.py) and the a11y check. Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-wakeup 3.1, night header). 'cards' are furniture (radius 12, white fill) drawn as empty textbox visuals UNDER the content; 'tiles' are inner furniture (kind glow / tint / outline); 'visuals' are Power BI visuals. state: absent = always visible; a list of states = shown only in those states, swapped by display-only bookmarks bm_p2_rec / bm_p2_alts / bm_p2_build. A card may carry shadow: null (the tooltip's base), a tile a radius (0 squares the night header's lower corners). 12 pt (16 px) floor everywhere. Round 7: every tooltip page is the page in miniature: its own night scene (canvas-tt-<page>.jpg), the kicker (y 16) and the title (y 40) on the banner, white cards with the page's shadow hanging 24 px into the banner (16 px margins, 16 px padding); the package tooltip holds two cards (return, moves).",
+  "_doc": "Slot map, v9 of 2026-11-11 (12-feedbackronde-4, rounds 4 to 9): P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 = the package scatter (layers: cloud, A/B/C, a transparent hover layer for the package tooltip) and a right panel in THREE states: rec (the recommendation A, default), alts (B and C, considered and not recommended) and build (build your own plan). In alts and build the scatter card shrinks (a second, smaller scatter stack hero_s_*) and a comparer card of cumulative net impact spans the bottom. Single source of positions for the PBIR generator (project/tools/opzet_report.py) and the a11y check. Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-wakeup 3.1, night header). 'cards' are furniture (radius 12, white fill) drawn as empty textbox visuals UNDER the content; 'tiles' are inner furniture (kind glow / tint / outline); 'visuals' are Power BI visuals. state: absent = always visible; a list of states = shown only in those states, swapped by display-only bookmarks bm_p2_rec / bm_p2_alts / bm_p2_build. A card may carry shadow: null (the tooltip's base), a tile a radius (0 squares the night header's lower corners). 12 pt (16 px) floor everywhere. Round 7: every tooltip page is the page in miniature: its own night scene (canvas-tt-<page>.jpg), the kicker (y 16) and the title (y 40) on the banner, white cards with the page's shadow hanging 24 px into the banner (16 px margins, 16 px padding); the package tooltip holds two cards (return, moves). Round 8: the titles higher (headline y 80, subtitle y 128), the first card row at y 168 (the horizon at 232, so the top cards hang 64 px into the banner), the gained 16 px spent on air: 24 px vertical gutters on P1, a taller F4 card, the panel's rhythm on P2 with a taller scatter and cumulative chart, the footer at 1032. Round 9 (final): the brand row at y 16/24, headline y 64, subtitle y 112, P2 chips y 56 (Björn's Desktop move, on the grid); the F2 folio table 112 px; the P2 reading guide two lines (tile 112) and the scatter 656 px tall; the finding tooltips' title 72 px; a year tooltip page (tt-year, 560 x 376) for the three cumulative charts. Round 9b: the header rows at Björn's own Desktop positions (logo y 12, eyebrow and masthead y 20, headline y 60, subtitle y 108, P2 chips y 48; a 4 px grid for the header rows only).",
   "canvas": {
     "w": 1920,
     "h": 1080
@@ -12,28 +12,28 @@
         {
           "id": "card_kpi",
           "x": 32,
-          "y": 184,
+          "y": 168,
           "w": 1856,
           "h": 120
         },
         {
           "id": "card_f1",
           "x": 32,
-          "y": 320,
+          "y": 312,
           "w": 608,
           "h": 464
         },
         {
           "id": "card_f2",
           "x": 656,
-          "y": 320,
+          "y": 312,
           "w": 608,
           "h": 464
         },
         {
           "id": "card_f3",
           "x": 1280,
-          "y": 320,
+          "y": 312,
           "w": 608,
           "h": 464
         },
@@ -42,12 +42,12 @@
           "x": 32,
           "y": 800,
           "w": 1856,
-          "h": 216
+          "h": 224
         }
       ],
       "logo": {
         "x": 32,
-        "y": 32,
+        "y": 12,
         "w": 200,
         "h": 40,
         "tab": 10
@@ -56,7 +56,7 @@
         {
           "name": "z_eyebrow",
           "x": 248,
-          "y": 40,
+          "y": 20,
           "w": 448,
           "h": 24,
           "z": 1004,
@@ -65,7 +65,7 @@
         {
           "name": "z_masthead",
           "x": 704,
-          "y": 40,
+          "y": 20,
           "w": 1184,
           "h": 24,
           "z": 1000,
@@ -74,7 +74,7 @@
         {
           "name": "z_headline",
           "x": 32,
-          "y": 88,
+          "y": 60,
           "w": 1856,
           "h": 48,
           "z": 1001,
@@ -83,16 +83,16 @@
         {
           "name": "c_subtitle",
           "x": 32,
-          "y": 136,
+          "y": 108,
           "w": 1856,
-          "h": 32,
+          "h": 24,
           "z": 1002,
           "tab": 110
         },
         {
           "name": "kpi_occ",
           "x": 56,
-          "y": 192,
+          "y": 176,
           "w": 416,
           "h": 96,
           "z": 1010,
@@ -101,7 +101,7 @@
         {
           "name": "kpi_margin",
           "x": 520,
-          "y": 192,
+          "y": 176,
           "w": 416,
           "h": 96,
           "z": 1011,
@@ -110,7 +110,7 @@
         {
           "name": "kpi_ota",
           "x": 984,
-          "y": 192,
+          "y": 176,
           "w": 416,
           "h": 96,
           "z": 1012,
@@ -119,7 +119,7 @@
         {
           "name": "kpi_nps",
           "x": 1448,
-          "y": 192,
+          "y": 176,
           "w": 416,
           "h": 96,
           "z": 1013,
@@ -128,7 +128,7 @@
         {
           "name": "c_f1_kicker",
           "x": 56,
-          "y": 336,
+          "y": 328,
           "w": 560,
           "h": 24,
           "z": 1020,
@@ -137,7 +137,7 @@
         {
           "name": "c_f1_title",
           "x": 56,
-          "y": 360,
+          "y": 352,
           "w": 560,
           "h": 32,
           "z": 1021,
@@ -146,7 +146,7 @@
         {
           "name": "ch_f1_margin",
           "x": 56,
-          "y": 400,
+          "y": 392,
           "w": 560,
           "h": 264,
           "z": 1022,
@@ -155,16 +155,16 @@
         {
           "name": "c_f1_note",
           "x": 56,
-          "y": 672,
+          "y": 664,
           "w": 560,
-          "h": 120,
+          "h": 104,
           "z": 1023,
           "tab": 330
         },
         {
           "name": "c_f2_kicker",
           "x": 680,
-          "y": 336,
+          "y": 328,
           "w": 560,
           "h": 24,
           "z": 1030,
@@ -173,7 +173,7 @@
         {
           "name": "c_f2_title",
           "x": 680,
-          "y": 360,
+          "y": 352,
           "w": 560,
           "h": 32,
           "z": 1031,
@@ -182,34 +182,34 @@
         {
           "name": "ch_f2_ota",
           "x": 680,
-          "y": 400,
+          "y": 392,
           "w": 560,
-          "h": 184,
+          "h": 168,
           "z": 1032,
           "tab": 420
         },
         {
           "name": "tbl_f2_folio",
           "x": 680,
-          "y": 592,
+          "y": 568,
           "w": 560,
-          "h": 96,
+          "h": 112,
           "z": 1033,
           "tab": 430
         },
         {
           "name": "c_f2_note",
           "x": 680,
-          "y": 696,
+          "y": 688,
           "w": 560,
-          "h": 96,
+          "h": 88,
           "z": 1034,
           "tab": 440
         },
         {
           "name": "c_f3_kicker",
           "x": 1304,
-          "y": 336,
+          "y": 328,
           "w": 560,
           "h": 24,
           "z": 1040,
@@ -218,7 +218,7 @@
         {
           "name": "c_f3_title",
           "x": 1304,
-          "y": 360,
+          "y": 352,
           "w": 560,
           "h": 32,
           "z": 1041,
@@ -227,7 +227,7 @@
         {
           "name": "ch_f3_age",
           "x": 1304,
-          "y": 400,
+          "y": 392,
           "w": 560,
           "h": 272,
           "z": 1042,
@@ -236,9 +236,9 @@
         {
           "name": "c_f3_note",
           "x": 1304,
-          "y": 680,
+          "y": 672,
           "w": 560,
-          "h": 112,
+          "h": 96,
           "z": 1043,
           "tab": 530
         },
@@ -281,9 +281,9 @@
         {
           "name": "z_footer",
           "x": 32,
-          "y": 1024,
+          "y": 1032,
           "w": 1856,
-          "h": 56,
+          "h": 48,
           "z": 1090,
           "tab": 9000
         }
@@ -296,9 +296,9 @@
         {
           "id": "card_scatter",
           "x": 32,
-          "y": 184,
+          "y": 168,
           "w": 1040,
-          "h": 832,
+          "h": 848,
           "state": [
             "rec"
           ]
@@ -306,9 +306,9 @@
         {
           "id": "card_panel",
           "x": 1088,
-          "y": 184,
+          "y": 168,
           "w": 800,
-          "h": 832,
+          "h": 848,
           "state": [
             "rec"
           ]
@@ -316,7 +316,7 @@
         {
           "id": "card_scatter_s",
           "x": 32,
-          "y": 184,
+          "y": 168,
           "w": 720,
           "h": 472,
           "state": [
@@ -327,7 +327,7 @@
         {
           "id": "card_panel_w",
           "x": 768,
-          "y": 184,
+          "y": 168,
           "w": 1120,
           "h": 472,
           "state": [
@@ -338,9 +338,9 @@
         {
           "id": "card_compare",
           "x": 32,
-          "y": 672,
+          "y": 664,
           "w": 1856,
-          "h": 344,
+          "h": 352,
           "state": [
             "alts",
             "build"
@@ -349,7 +349,7 @@
       ],
       "logo": {
         "x": 32,
-        "y": 32,
+        "y": 12,
         "w": 200,
         "h": 40,
         "tab": 10
@@ -358,7 +358,7 @@
         {
           "name": "z_eyebrow2",
           "x": 248,
-          "y": 40,
+          "y": 20,
           "w": 448,
           "h": 24,
           "z": 1004,
@@ -367,7 +367,7 @@
         {
           "name": "z_masthead2",
           "x": 704,
-          "y": 40,
+          "y": 20,
           "w": 1184,
           "h": 24,
           "z": 1000,
@@ -376,7 +376,7 @@
         {
           "name": "z_headline2",
           "x": 32,
-          "y": 88,
+          "y": 60,
           "w": 1176,
           "h": 48,
           "z": 1001,
@@ -385,7 +385,7 @@
         {
           "name": "chip_f1",
           "x": 1224,
-          "y": 80,
+          "y": 48,
           "w": 160,
           "h": 56,
           "z": 1005,
@@ -394,7 +394,7 @@
         {
           "name": "chip_f2",
           "x": 1392,
-          "y": 80,
+          "y": 48,
           "w": 160,
           "h": 56,
           "z": 1005,
@@ -403,7 +403,7 @@
         {
           "name": "chip_f3",
           "x": 1560,
-          "y": 80,
+          "y": 48,
           "w": 160,
           "h": 56,
           "z": 1005,
@@ -412,7 +412,7 @@
         {
           "name": "chip_f4",
           "x": 1728,
-          "y": 80,
+          "y": 48,
           "w": 160,
           "h": 56,
           "z": 1005,
@@ -421,16 +421,16 @@
         {
           "name": "c_subtitle2",
           "x": 32,
-          "y": 136,
+          "y": 108,
           "w": 1176,
-          "h": 32,
+          "h": 24,
           "z": 1002,
           "tab": 110
         },
         {
           "name": "c_scatter_title",
           "x": 56,
-          "y": 200,
+          "y": 184,
           "w": 616,
           "h": 32,
           "z": 1010,
@@ -442,7 +442,7 @@
         {
           "name": "sl_view",
           "x": 688,
-          "y": 192,
+          "y": 176,
           "w": 360,
           "h": 40,
           "z": 1013,
@@ -454,7 +454,7 @@
         {
           "name": "c_guide_kicker",
           "x": 72,
-          "y": 248,
+          "y": 232,
           "w": 320,
           "h": 24,
           "z": 1011,
@@ -466,7 +466,7 @@
         {
           "name": "c_guide_legend",
           "x": 400,
-          "y": 248,
+          "y": 232,
           "w": 632,
           "h": 24,
           "z": 1011,
@@ -478,9 +478,9 @@
         {
           "name": "c_guide",
           "x": 72,
-          "y": 272,
+          "y": 256,
           "w": 960,
-          "h": 96,
+          "h": 72,
           "z": 1011,
           "tab": 210,
           "state": [
@@ -490,9 +490,9 @@
         {
           "name": "hero_packages",
           "x": 56,
-          "y": 384,
+          "y": 344,
           "w": 992,
-          "h": 616,
+          "h": 656,
           "z": 1012,
           "tab": 220,
           "state": [
@@ -502,7 +502,7 @@
         {
           "name": "c_scatter_title_s",
           "x": 56,
-          "y": 200,
+          "y": 184,
           "w": 672,
           "h": 32,
           "z": 1010,
@@ -515,7 +515,7 @@
         {
           "name": "hero_s_packages",
           "x": 56,
-          "y": 240,
+          "y": 224,
           "w": 672,
           "h": 408,
           "z": 1012,
@@ -528,7 +528,7 @@
         {
           "name": "c_alts_title",
           "x": 792,
-          "y": 200,
+          "y": 184,
           "w": 304,
           "h": 32,
           "z": 1040,
@@ -540,7 +540,7 @@
         {
           "name": "c_alts_intro",
           "x": 792,
-          "y": 232,
+          "y": 216,
           "w": 304,
           "h": 64,
           "z": 1041,
@@ -552,7 +552,7 @@
         {
           "name": "c_build_title",
           "x": 792,
-          "y": 200,
+          "y": 184,
           "w": 304,
           "h": 32,
           "z": 1070,
@@ -564,7 +564,7 @@
         {
           "name": "c_build_intro",
           "x": 792,
-          "y": 232,
+          "y": 216,
           "w": 304,
           "h": 64,
           "z": 1071,
@@ -576,7 +576,7 @@
         {
           "name": "tab_rec_on",
           "x": 1104,
-          "y": 200,
+          "y": 184,
           "w": 248,
           "h": 40,
           "z": 1015,
@@ -588,7 +588,7 @@
         {
           "name": "tab_rec_off",
           "x": 1104,
-          "y": 200,
+          "y": 184,
           "w": 248,
           "h": 40,
           "z": 1015,
@@ -601,7 +601,7 @@
         {
           "name": "tab_alts_on",
           "x": 1360,
-          "y": 200,
+          "y": 184,
           "w": 248,
           "h": 40,
           "z": 1016,
@@ -613,7 +613,7 @@
         {
           "name": "tab_alts_off",
           "x": 1360,
-          "y": 200,
+          "y": 184,
           "w": 248,
           "h": 40,
           "z": 1016,
@@ -626,7 +626,7 @@
         {
           "name": "tab_build_on",
           "x": 1616,
-          "y": 200,
+          "y": 184,
           "w": 248,
           "h": 40,
           "z": 1017,
@@ -638,7 +638,7 @@
         {
           "name": "tab_build_off",
           "x": 1616,
-          "y": 200,
+          "y": 184,
           "w": 248,
           "h": 40,
           "z": 1017,
@@ -651,7 +651,7 @@
         {
           "name": "lbl_scenario",
           "x": 1112,
-          "y": 264,
+          "y": 248,
           "w": 88,
           "h": 24,
           "z": 1018,
@@ -660,7 +660,7 @@
         {
           "name": "sl_scenario",
           "x": 1200,
-          "y": 256,
+          "y": 240,
           "w": 368,
           "h": 40,
           "z": 1020,
@@ -669,7 +669,7 @@
         {
           "name": "img_rec_chip",
           "x": 1120,
-          "y": 320,
+          "y": 304,
           "w": 40,
           "h": 32,
           "z": 1029,
@@ -681,7 +681,7 @@
         {
           "name": "c_rec_title",
           "x": 1168,
-          "y": 320,
+          "y": 304,
           "w": 688,
           "h": 32,
           "z": 1030,
@@ -693,7 +693,7 @@
         {
           "name": "c_rec_mix",
           "x": 1120,
-          "y": 352,
+          "y": 336,
           "w": 736,
           "h": 24,
           "z": 1031,
@@ -705,7 +705,7 @@
         {
           "name": "c_rec_nums",
           "x": 1120,
-          "y": 384,
+          "y": 368,
           "w": 736,
           "h": 72,
           "z": 1032,
@@ -717,7 +717,7 @@
         {
           "name": "c_rec_note",
           "x": 1120,
-          "y": 464,
+          "y": 448,
           "w": 736,
           "h": 72,
           "z": 1033,
@@ -729,7 +729,7 @@
         {
           "name": "ch_rec_waterfall",
           "x": 1112,
-          "y": 568,
+          "y": 552,
           "w": 752,
           "h": 176,
           "z": 1034,
@@ -741,9 +741,9 @@
         {
           "name": "ch_rec_cumulative",
           "x": 1112,
-          "y": 760,
+          "y": 744,
           "w": 752,
-          "h": 200,
+          "h": 216,
           "z": 1035,
           "tab": 450,
           "state": [
@@ -765,7 +765,7 @@
         {
           "name": "img_b_chip",
           "x": 808,
-          "y": 320,
+          "y": 304,
           "w": 40,
           "h": 32,
           "z": 1042,
@@ -777,7 +777,7 @@
         {
           "name": "c_b_title",
           "x": 856,
-          "y": 320,
+          "y": 304,
           "w": 448,
           "h": 32,
           "z": 1043,
@@ -789,7 +789,7 @@
         {
           "name": "c_b_nums",
           "x": 808,
-          "y": 360,
+          "y": 344,
           "w": 496,
           "h": 56,
           "z": 1045,
@@ -801,7 +801,7 @@
         {
           "name": "c_b_why",
           "x": 808,
-          "y": 424,
+          "y": 408,
           "w": 496,
           "h": 72,
           "z": 1046,
@@ -813,7 +813,7 @@
         {
           "name": "c_b_whynot",
           "x": 808,
-          "y": 504,
+          "y": 488,
           "w": 496,
           "h": 96,
           "z": 1047,
@@ -825,7 +825,7 @@
         {
           "name": "c_b_payback",
           "x": 808,
-          "y": 608,
+          "y": 592,
           "w": 496,
           "h": 24,
           "z": 1048,
@@ -837,7 +837,7 @@
         {
           "name": "img_c_chip",
           "x": 1352,
-          "y": 320,
+          "y": 304,
           "w": 40,
           "h": 32,
           "z": 1050,
@@ -849,7 +849,7 @@
         {
           "name": "c_c_title",
           "x": 1400,
-          "y": 320,
+          "y": 304,
           "w": 448,
           "h": 32,
           "z": 1051,
@@ -861,7 +861,7 @@
         {
           "name": "c_c_nums",
           "x": 1352,
-          "y": 360,
+          "y": 344,
           "w": 496,
           "h": 56,
           "z": 1052,
@@ -873,7 +873,7 @@
         {
           "name": "c_c_why",
           "x": 1352,
-          "y": 424,
+          "y": 408,
           "w": 496,
           "h": 72,
           "z": 1053,
@@ -885,7 +885,7 @@
         {
           "name": "c_c_whynot",
           "x": 1352,
-          "y": 504,
+          "y": 488,
           "w": 496,
           "h": 96,
           "z": 1054,
@@ -897,7 +897,7 @@
         {
           "name": "c_c_payback",
           "x": 1352,
-          "y": 608,
+          "y": 592,
           "w": 496,
           "h": 24,
           "z": 1055,
@@ -909,9 +909,9 @@
         {
           "name": "ch_cmp_alts",
           "x": 56,
-          "y": 688,
+          "y": 680,
           "w": 1808,
-          "h": 312,
+          "h": 320,
           "z": 1060,
           "tab": 580,
           "state": [
@@ -921,7 +921,7 @@
         {
           "name": "dn_build_selector",
           "x": 792,
-          "y": 312,
+          "y": 296,
           "w": 560,
           "h": 328,
           "z": 1072,
@@ -933,7 +933,7 @@
         {
           "name": "c_you_title",
           "x": 1376,
-          "y": 320,
+          "y": 304,
           "w": 480,
           "h": 40,
           "z": 1073,
@@ -945,7 +945,7 @@
         {
           "name": "c_you_nums",
           "x": 1384,
-          "y": 368,
+          "y": 352,
           "w": 464,
           "h": 56,
           "z": 1074,
@@ -957,7 +957,7 @@
         {
           "name": "c_you_rules",
           "x": 1384,
-          "y": 432,
+          "y": 416,
           "w": 464,
           "h": 72,
           "z": 1075,
@@ -969,7 +969,7 @@
         {
           "name": "ch_build_waterfall",
           "x": 1384,
-          "y": 512,
+          "y": 496,
           "w": 464,
           "h": 120,
           "z": 1076,
@@ -981,9 +981,9 @@
         {
           "name": "ch_cmp_build",
           "x": 56,
-          "y": 688,
+          "y": 680,
           "w": 1808,
-          "h": 312,
+          "h": 320,
           "z": 1061,
           "tab": 680,
           "state": [
@@ -993,9 +993,9 @@
         {
           "name": "z_footer2",
           "x": 32,
-          "y": 1024,
+          "y": 1032,
           "w": 1856,
-          "h": 56,
+          "h": 48,
           "z": 1090,
           "tab": 9000
         }
@@ -1004,7 +1004,7 @@
         {
           "id": "rec",
           "x": 1104,
-          "y": 312,
+          "y": 296,
           "w": 768,
           "h": 240,
           "state": [
@@ -1015,9 +1015,9 @@
         {
           "id": "guide",
           "x": 56,
-          "y": 240,
+          "y": 224,
           "w": 992,
-          "h": 136,
+          "h": 112,
           "state": [
             "rec"
           ],
@@ -1026,7 +1026,7 @@
         {
           "id": "b",
           "x": 792,
-          "y": 312,
+          "y": 296,
           "w": 528,
           "h": 328,
           "state": [
@@ -1037,7 +1037,7 @@
         {
           "id": "c",
           "x": 1336,
-          "y": 312,
+          "y": 296,
           "w": 528,
           "h": 328,
           "state": [
@@ -1048,7 +1048,7 @@
         {
           "id": "you",
           "x": 1368,
-          "y": 312,
+          "y": 296,
           "w": 496,
           "h": 328,
           "state": [
@@ -1189,7 +1189,7 @@
           "x": 16,
           "y": 40,
           "w": 528,
-          "h": 64,
+          "h": 72,
           "z": 1001,
           "tab": 110
         },
@@ -1245,7 +1245,7 @@
           "x": 16,
           "y": 40,
           "w": 528,
-          "h": 64,
+          "h": 72,
           "z": 1001,
           "tab": 110
         },
@@ -1301,7 +1301,7 @@
           "x": 16,
           "y": 40,
           "w": 528,
-          "h": 64,
+          "h": 72,
           "z": 1001,
           "tab": 110
         },
@@ -1331,7 +1331,7 @@
       "tooltip": true,
       "canvas": {
         "w": 560,
-        "h": 384
+        "h": 424
       },
       "cards": [
         {
@@ -1339,7 +1339,7 @@
           "x": 16,
           "y": 112,
           "w": 528,
-          "h": 256
+          "h": 296
         }
       ],
       "visuals": [
@@ -1357,7 +1357,7 @@
           "x": 16,
           "y": 40,
           "w": 528,
-          "h": 64,
+          "h": 72,
           "z": 1001,
           "tab": 110
         },
@@ -1375,7 +1375,7 @@
           "x": 32,
           "y": 192,
           "w": 496,
-          "h": 160,
+          "h": 200,
           "z": 1003,
           "tab": 120
         }
@@ -1557,6 +1557,87 @@
           "w": 496,
           "h": 64,
           "z": 1006,
+          "tab": 150
+        }
+      ]
+    },
+    {
+      "name": "tt-year",
+      "displayName": "tt-year",
+      "tooltip": true,
+      "canvas": {
+        "w": 560,
+        "h": 376
+      },
+      "cards": [
+        {
+          "id": "tt_a",
+          "x": 16,
+          "y": 88,
+          "w": 528,
+          "h": 128
+        },
+        {
+          "id": "tt_all",
+          "x": 16,
+          "y": 232,
+          "w": 528,
+          "h": 128
+        }
+      ],
+      "visuals": [
+        {
+          "name": "tty_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 528,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "tty_title",
+          "x": 16,
+          "y": 40,
+          "w": 528,
+          "h": 32,
+          "z": 1001,
+          "tab": 110
+        },
+        {
+          "name": "tty_a_title",
+          "x": 32,
+          "y": 104,
+          "w": 496,
+          "h": 24,
+          "z": 1002,
+          "tab": 120
+        },
+        {
+          "name": "tty_a_nums",
+          "x": 32,
+          "y": 128,
+          "w": 496,
+          "h": 72,
+          "z": 1003,
+          "tab": 130
+        },
+        {
+          "name": "tty_all_title",
+          "x": 32,
+          "y": 248,
+          "w": 496,
+          "h": 24,
+          "z": 1004,
+          "tab": 140
+        },
+        {
+          "name": "tty_all_nums",
+          "x": 32,
+          "y": 272,
+          "w": 496,
+          "h": 72,
+          "z": 1005,
           "tab": 150
         }
       ]

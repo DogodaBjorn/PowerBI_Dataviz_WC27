@@ -112,11 +112,22 @@ def night(out, extra_top=0, name="canvas-night.jpg"):
     finish(img, os.path.join(out, name))
 
 
-def tooltip(out, name, w, h, horizon, extra_top=0):
-    """Round 7 (Björn, 11 Nov): a tooltip page's own night scene at its own size, the page's design in miniature: the
-    Night-to-navy band down to the horizon with the Coffee Blue light at the right, a hairline on the horizon, the Oat
-    page with its soft glow below; no hanger (it would be a stamp at this size). The same scene 20 px taller
-    (extra_top) is the page's background image, for the strip the tooltip host paints above the page."""
+# The tooltip palettes. night: the page's own band (round 7). orange (round 9, Björn, 11 Nov: "the tooltip and the page are
+# distinct by colour"): the band in Burnt Tangerine, darkening to the right so white text keeps its contrast everywhere, the
+# light in Tangerine, the hairline and the faded door card in the kit's signal tint and Tangerine. Kit 3.1 says Tangerine
+# never draws a brand; this is the recorded waiver of 11 Nov 2026 (brand.yaml depth.tooltip_orange, status.yaml).
+PALETTES = {"night": {"left": "#0F1E36", "right": "#163760", "light": "#2589D8", "hair": "#2589D8", "mark": "#E9E5D6", "glow": "#E3EDF8"},
+            # round 9b (Björn): the FLASHY Tangerine, not the burnt one; the text on it is Night, so the band may not go darker
+            # than #E6662F anywhere under the text (Night 4.7:1 there; on #E05A22 itself 4.2:1, under the floor)
+            "orange": {"left": "#E86C36", "right": "#E6662F", "light": "#F0A882", "hair": "#FCE6DB", "mark": "#FCE6DB", "glow": "#F7DFCF"}}
+
+
+def tooltip(out, name, w, h, horizon, extra_top=0, palette="orange"):
+    """Round 7 (Björn, 11 Nov): a tooltip page's own scene at its own size, the page's design in miniature: the band down to
+    the horizon with a light at the right, a hairline on the horizon, the Oat page with its soft glow below. Round 9: the
+    band in the orange palette, and the faded door card at tooltip scale (Björn: the mark, in orange), clipped by the
+    horizon like the page's. extra_top: the same scene that many rows taller (unused since round 7c)."""
+    P = PALETTES[palette]
     hh = h + extra_top
     y, x = np.mgrid[0:hh, 0:w].astype(np.float32)
     y = y - extra_top
@@ -125,14 +136,21 @@ def tooltip(out, name, w, h, horizon, extra_top=0):
         return (np.exp(-2.2 * d2) * strength)[..., None]
     img = np.empty((hh, w, 3), np.float32); img[:] = rgb("#F3F1EA")
     img = mix(img, "#F7DFCF", g(w, h, w * 0.9, 0.45))
-    img = mix(img, "#E3EDF8", g(0, horizon, w * 0.8, 0.35))
+    img = mix(img, P["glow"], g(0, horizon, w * 0.8, 0.35))
     t = (x / w)[..., None]
-    top = rgb("#0F1E36") * (1 - t) + rgb("#163760") * t
-    top = mix(top, "#2589D8", g(w * 0.92, horizon * 0.75, w * 0.36, 0.22))
+    top = rgb(P["left"]) * (1 - t) + rgb(P["right"]) * t
+    top = mix(top, P["light"], g(w * 0.92, horizon * 0.75, w * 0.36, 0.22))
     zone = (y < horizon)[..., None]
     img = np.where(zone, top, img)
+    # the faded door card, top right, at tooltip scale (the page: scale 7.2 at x 1350 of 1920, y -150)
+    k = 7.2 * w / 1920
+    m = hanger_mask(k, 10)
+    canvas = Image.new("L", (w, hh), 0)
+    canvas.paste(m, (round(w * 1350 / 1920), round(-150 * w / 1920) + extra_top))
+    a = (np.asarray(canvas, np.float32) / 255.0 * 0.08)[..., None] * zone
+    img = mix(img, P["mark"], a)
     hz = horizon + extra_top
-    img[hz - 1:hz] = mix(img[hz - 1:hz], "#2589D8", 0.35)
+    img[hz - 1:hz] = mix(img[hz - 1:hz], P["hair"], 0.35)
     finish(img, os.path.join(out, name))
 
 

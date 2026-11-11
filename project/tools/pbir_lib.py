@@ -161,7 +161,7 @@ def vco(title=None, title_font=None, title_size=10, title_color=None, alt=None, 
 
 def visual(name, vtype, x, y, w, h, z, tab, query=None, objects=None, vcos=None, filters=None, sort=None, drill=False):
     for v in (x, y, w, h):
-        assert v % 8 == 0, (name, x, y, w, h)
+        assert v % 4 == 0, (name, x, y, w, h)  # round 9b: the header rows sit on a 4 px grid (Björn's own positions); the rest stays on 8
     vis = {"visualType": vtype}
     if query is not None:
         vis["query"] = {"queryState": query}

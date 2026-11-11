@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "hero_packages_named",
   "position": {
     "x": 56,
-    "y": 384,
+    "y": 344,
     "z": 1014,
+    "height": 656,
     "width": 992,
-    "height": 616,
     "tabOrder": 220
   },
   "visual": {
@@ -28,7 +28,27 @@
               },
               "queryRef": "Package.Preset",
               "nativeQueryRef": "Preset",
+              "active": true,
               "displayName": "Package"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Named Point Size"
+                }
+              },
+              "queryRef": "_Measures.Named Point Size",
+              "nativeQueryRef": "Named Point Size",
+              "displayName": "Marker size"
             }
           ]
         },
@@ -47,6 +67,7 @@
               },
               "queryRef": "_Measures.Package Capex",
               "nativeQueryRef": "Package Capex",
+              "active": true,
               "displayName": "Capex"
             }
           ]
@@ -67,25 +88,6 @@
               "queryRef": "_Measures.Package NPV (sel)",
               "nativeQueryRef": "Package NPV (sel)",
               "displayName": "NPV through 2032"
-            }
-          ]
-        },
-        "Size": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Named Point Size"
-                }
-              },
-              "queryRef": "_Measures.Named Point Size",
-              "nativeQueryRef": "Named Point Size",
-              "displayName": "Marker size"
             }
           ]
         }
@@ -600,9 +602,21 @@
             }
           }
         }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   },
   "filterConfig": {
     "filters": [

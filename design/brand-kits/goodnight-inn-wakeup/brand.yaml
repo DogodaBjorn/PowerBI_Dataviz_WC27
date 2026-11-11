@@ -104,6 +104,7 @@ depth:
     blur: 24
   one_style: "every top-level card on a page carries the same shadow (consistency lock 9); inner tiles (P2 tile_preset_a/b/c) keep the canvas fill and hairline, no shadow"
   zone_hanger: "the faceless hanger in the zone, top right: Oat at 6 %, scale 7.2, tilted 10 degrees counter-clockwise about its hole, clipped by the horizon (plan 10, D2b). Kept on Björn's request of 2026-11-09; waives hard rule 6 (decorative image) and the canvas-guide 'no logos' rule for the header zone only. Text over it: 12.6 / 8.8 / 8.3:1"
+  tooltip_orange: "round 9 (Björn, 11 Nov 2026): the report-page tooltips carry a scene of their own in ORANGE (band in the flashy Tangerine, #E86C36 to #E6662F, a light-orange glow, hairline and faded door card in the signal tint; the kicker and title on it in Night, 4.7:1; brand_canvas_v3.tooltip palette 'orange'), so a tooltip reads as another surface than the page. Waives 'Tangerine never draws a brand' for the tooltip banner only; the page keeps Night, Tangerine stays the signal colour in every chart. Kicker on it in signal_tint, title in zone_text; contrast measured by a11y_check."
   optional_glow: "night-glow variant (Night-to-navy gradient, Coffee Blue glow, stronger hero shadow, plan glow) only with Björn's recorded waiver of hard rule 6 for gradients; see plan 10, item D7"
 
 grid:

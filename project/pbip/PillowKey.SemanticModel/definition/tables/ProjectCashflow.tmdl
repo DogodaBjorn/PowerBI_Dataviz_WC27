@@ -3,78 +3,62 @@ table ProjectCashflow
 	lineageTag: 484bb6df-1ac6-5c99-a4df-787ee78738e8
 
 	column ProjectID
-		dataType: string
 		lineageTag: 585c384e-c9ff-5cbe-b56c-f1932a3a8b2d
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [ProjectID]
 
 	column Scenario
-		dataType: string
 		lineageTag: 4b127c0f-41bb-595d-abc3-834e2524752c
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Scenario]
 
 	column Month
-		dataType: dateTime
 		formatString: Short Date
 		lineageTag: 7c2daf68-31ff-52d7-8db3-5139754ad5d7
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Month]
 
 	column Capex
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: 8bfd55fd-1ef7-5c36-b970-57145b0e0453
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Capex]
 
 	column Disruption
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: e8628c81-1e84-57e6-bdf6-4d1e25540fd4
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Disruption]
 
 	column Benefit
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: a5e3126a-d2b9-57ee-bb92-fa0a9f89c7bd
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Benefit]
 
 	column RevenueBenefit
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: f400941b-1689-53aa-9860-617cd7ca0f7a
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [RevenueBenefit]
 
 	column DiscountFactor
-		dataType: double
 		formatString: 0.0000
 		lineageTag: 58125913-981c-5c1f-afae-7fcaff810e8a
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [DiscountFactor]
 
 	partition ProjectCashflow = calculated
 		mode: import
-		source = ```
+		source =
 				VAR RampY1 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - first year after completion" )
 				VAR RampY2 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - second year after completion" )
 				VAR RampY3 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - third year onwards" )
@@ -133,6 +117,6 @@ table ProjectCashflow
 				        "RevenueBenefit", [@RevenueBenefit],
 				        "DiscountFactor", [@Df]
 				    )
-				```
 
 	annotation PBI_ResultType = Table
+

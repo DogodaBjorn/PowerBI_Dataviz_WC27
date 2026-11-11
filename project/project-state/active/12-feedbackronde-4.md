@@ -152,3 +152,102 @@ wolkpunt, de vier F-chips, de staten Considered (B en C) en Build your own (leeg
 naar Recommended.
 
 **Open.** Bjorns to-do's op basis van deze set; Publish to Web, muis- en toetsenbordronde, merge.
+
+## 9. Ronde 8 (11 november: de banner en de titels; de scene pixelvast; meer lucht)
+
+**Wat Bjorn zag.** "De banner en de plaats van titel en ondertitel kloppen niet." Gemeten in Desktop: een pagina-achtergrondbeeld
+met schaal Fit wordt in het weergavegebied van de host gepast, en dat van Desktop is hoger dan de pagina, dus daar schuift
+de scene omhoog: 14 px op 100 %, 38 px op 60 % zoom (op Bjorns zoom lag de horizon dus boven de KPI-kaart in plaats van
+64 px eronder). In de Service is het gebied de pagina zelf; daar klopte het. Bjorns voorstel erbij: "zet de titels hoger
+en laat de bovenste visuals over het bannerblauw hangen, dan winnen we canvasruimte voor wat meer witruimte overal".
+
+**De scene pixelvast (`opzet_report.py`, `SCENE_VISUAL = True`).** Een visual staat in paginapixels, in elke host. De
+scene is daarom weer de onderste visual (`z_canvas`, z 0, buiten de tabvolgorde), op de rapportpagina's het nachtcanvas,
+op elke tooltip-pagina haar eigen scene. De pagina-achtergrond houdt dezelfde scene met Fit: zo toont de strook die Desktop
+boven een pagina tekent banner in plaats van effen Night (ronde 6), en omdat Fit met de pagina meeschaalt staat er op geen
+enkele zoom een tweede scene (het dubbele beeld van ronde 7 kwam van schaal Normal: ware grootte). Gecontroleerd op ware
+grootte en op 45 % (de volledige Desktop-vensters staan in de set als `00_P1_desktop_45pct_desktop.png` en
+`09_P2_desktop_45pct_desktop.png`). `SCENE_VISUAL = False` geeft alleen de achtergrond (Service-exact, Desktop verschoven).
+
+**Layout v8 (`opzet-layout.json`).** De kop hoger: headline y 80 (was 88), ondertitel y 128 in een slot van 24 (was 136/32),
+de F-chips op P2 y 72 (was 80; 8 px onder de masthead). De eerste kaartrij op y 168 (was 184), de horizon volgt
+(`brand_canvas_v3`: eerste rij + 64 = 232), dus de KPI-kaart en de twee P2-kaarten hangen 64 px in de banner, zoals eerder.
+De gewonnen 16 px gaan naar lucht: op P1 verticale goten van 24 in plaats van 16 (KPI naar F-kaarten, F-kaarten naar F4),
+de F4-kaart 8 px hoger (16 px onder de grafiek), de notities in de F-kaarten eindigen 8 px boven de kaartrand; op P2
+schuift de inhoud van scatter en paneel 16 px omhoog, de scatter en de cumulatieve grafiek worden 16 px hoger, in alts en
+build krijgt de vergelijkingskaart een goot van 24 en een 8 px hogere grafiek. De voet op y 1032 (slot 48, was 1024/56).
+Tooltip-pagina's ongewijzigd (v7).
+
+**Schermafbeeldingen.** `project/deliverables/screenshots/screenshots-v7/`: de v6-set opnieuw op de nieuwe geometrie, met
+dezelfde nummering, plus de twee Desktop-vensters op 45 %. Alle 24 beelden in de pixels nagekeken (banner, titels, kaarten,
+de drie P2-staten, de scenario's, de zoom, de pakket-tooltip op A/B/C/wolk, de vier chips, de F3/F4-hover, A nagebouwd,
+over budget). Desktop-klikcoördinaten voor de set: tabbalk y 204, scenario y 260, zoom y 196, chips y 100, Deneb-rijen
+341,4 + 26,8 i, F3-band (1397, 497).
+
+**Poorten.** validate_tmdl 34 bestanden 0 fouten; schema_check 185 bestanden 0 falend; a11y_check 0 fouten, 0 notities.
+Het modelmapje opnieuw gegenereerd (Desktop schreef bij elke start zijn `cultures/en-US.tmdl`).
+
+**Open.** Bjorns blik op v7 en zijn to-do's; de commit op `feedback-ronde-4` na zijn ja (ronde 8 staat ongecommit);
+Publish to Web, muis- en toetsenbordronde, merge.
+
+## 10. Ronde 9 (11 november: V9, de eindversie)
+
+**Wat Bjorn deed en vroeg.** Hij sloeg het rapport op vanuit Desktop na twee handmatige ingrepen: de `z_canvas`-visual op P1 en P2
+opnieuw verwijderd (het pagina-achtergrondbeeld met Fit "werkt prima", de kleine Desktop-verschuiving aanvaard) en de kopregels
+hoger gezet. Daarbij vier opdrachten: (1) zijn Desktop-wijzigingen in de generator overnemen; (2) een beoordeling met de
+taste-skill, UI/UX Pro en een "hallmark"-skill op AI-tells, plaatsing, witruimte en ontrommelen; (3) oranje tooltip-scenes met
+het vervaagde deurkaartje in oranje, de lay-out verder gelijk; (4) elke standaard-tooltip (off brand) uit, of een ontworpen
+tooltip waar die iets toevoegt. Op de twee vragen: een nieuw tooltip-page alleen waar het waarde heeft (dat is de jaar-tooltip
+op de drie cumulatieve grafieken); de paginanummers in de eyebrow worden een hotelwoordspeling met de paginanaam als tagline.
+
+**Overgenomen uit Desktop (`opzet_report.py`, lay-out v9).** Op de rapportpagina's is het achtergrondbeeld (Fit) de enige drager
+van de scene; de tooltip-pagina's houden hun scene ook als onderste visual (`SCENE_VISUAL_TOOLTIP`), exact onder de tooltip-host.
+De kop op beide pagina's gelijk en op het 8 px-raster: logo y 16, eyebrow en masthead y 24, headline y 64, ondertitel y 112, de
+F-chips op P2 y 56; de eerste kaartrij blijft 168 (horizon 232). `report.json` krijgt `settings.useEnhancedTooltips: false`
+(Bjorns Desktop-instelling). De rest van Desktops herschrijving (z- en tab-hernummering, schema 2.14.0, de build-staat met Low,
+cultures) is verworpen: de generator schrijft de rec-staat met Expected.
+
+**Beoordeling (design-taste-frontend par. 9, ui-ux-pro-max, dataviz-canon, dashboard-audit, humanizer; er bestaat geen
+"hallmark"-skill op deze machine).** Oordeel: goed, een stap van best in class; wat het daar hield waren de teksttells en de
+standaard-tooltips. Gedaan: de sectienummers "01/02" weg, de eyebrow is nu "THE WAKE-UP CALL  ·  THE BRAND REVIEW" en "ROOM TO
+INVEST  ·  THE INVESTMENT STRATEGY" (woordspeling in eyebrow-blauw, naam in gedempt wit; alternatieven voor P2 als Bjorn wil:
+"CHECKING OUT THE OPTIONS", "THE TURNDOWN SERVICE"); de middenpunt gerantsoeneerd tot een per regel (ondertitel P2, band- en
+hotelkoppen, merkregels, zwakste scores, kamernachten, KPI-onderregels, de toetsenbord-tweeling van de bereikbalk); de notities
+F1, F2, F3 en de aanbevelingsnoot als gewone zinnen in plaats van puntkomma-kettingen en een aforisme; "page-1 finding" wordt
+"a finding on The Brand Review page". Plaatsing: de folio-tabel 112 px (geen schuifbalk meer), de leesgids op P2 twee regels
+(tegel 112, de scatter 24 px hoger), de chip-tooltip-titel 72 px (F4 brak af), de F4-chip-tooltip als liggende balken met de
+volledige hotelnamen (200 px, pagina 424), de kleine F1/F2-grafieken met een categorische jaaras (elk jaar een label). Bewust
+gelaten: de drie gelijke F-kaarten (drie bevindingen van gelijk gewicht, F4 breekt het ritme), de samenvallende lijnen in de
+cumulatieve grafiek bij Expected, "Totaal" op de watervallen in Desktop (de kijker-locale in Publish to Web), en de lege
+build-waterval met zijn $0-balk: een filter kan hem niet blanco maken, Power BI tekent de totaalbalk hoe dan ook.
+
+**Oranje tooltip-scenes (`brand_canvas_v3.tooltip`, palet 'orange').** Band Burnt Tangerine naar donkerder rechts, Tangerine-licht
+rechts, hairline en vervaagd deurkaartje (`hanger_mask` op tooltip-schaal, 8 %) in signaaltint en Tangerine; de Oat-pagina met
+haar gloed ongewijzigd; kicker in `TT_KICKER` (#FCE6DB), titel wit. Acht scenes (zeven bestaande maten plus `tt-year`). Waiver
+vastgelegd in `brand.yaml` (`depth.tooltip_orange`) en `status.yaml`: "Tangerine never draws a brand" vervalt voor de
+tooltip-banner alleen. `a11y_check` meet de banner-contrasten: 0 fouten.
+
+**Tooltips per visual.** Power BI's eigen tooltip staat uit op elke visual zonder report-page-tooltip (`finish()` stap 4), met
+een uitzondering: de toetsenbord-wolklaag van de scatter houdt haar Tooltips-well als teksttweeling van de pakketkaart. Nieuw:
+`tt-year` (560 x 376), een pagina voor de drie cumulatieve grafieken: kicker, "To the end of 2030: where every package stands",
+kaart 1 pakket A in Low/Expected/High, kaart 2 A, B, C en "your plan" in de case in beeld ("none yet" zolang niets gekozen is).
+Model: 14 maten erbij (452), `TT Year A (Low/Expected/High)`, de teksten, twee alt-teksten.
+
+**Schermafbeeldingen.** `project/deliverables/screenshots/screenshots-v8/`: 28 beelden, de v7-nummering plus de jaar-tooltip op
+de drie grafieken (18, 31, 42), de KPI-hover die niets toont (04) en de twee Desktop-vensters op 45 %. Alle beelden in de pixels
+nagekeken; het enige Desktop-artefact is het selectiekader rond de scenario-slicer na een klik (bewerkmodus).
+
+**Poorten.** validate_tmdl 34 bestanden 0 fouten; schema_check 193 bestanden 0 falend; a11y_check 0 fouten, 0 notities;
+`build_selector_spec.py` ongewijzigd. Het modelmapje opnieuw gegenereerd, `cultures/` verwijderd.
+
+**Tweede blik (11 november, 's avonds).** Bjorn: de band was de donkere oranje geworden, niet de felle; en "geen overlap van de
+bovenste visuals op de banner, en de tekst staat te laag" (in Desktop op zijn zoom schuift het Fit-achtergrondbeeld omhoog).
+Gedaan: (1) de band in de felle Tangerine (#E86C36 naar #E6662F, lichtoranje gloed, deurkaartje en hairline in de signaaltint);
+witte tekst haalt daarop 3,4:1, dus kicker en titel staan in Night (4,7:1 op de donkerste pixel, a11y_check 0); (2) de scene is
+weer de onderste visual op elke pagina (`SCENE_VISUAL`), pixelvast in elke host, het achtergrondbeeld vult alleen de strook
+boven de pagina (de twee vallen op de pagina samen, dus niets dubbel); (3) de kopregels exact op Bjorns Desktop-posities
+(logo 12, eyebrow en masthead 20, headline 60, ondertitel 108, chips 48; `pbir_lib.visual` staat daarvoor een 4 px-raster toe).
+Set v8 opnieuw opgenomen (28 beelden). Poorten: schema_check 195 bestanden 0 falend, a11y_check 0.
+
+**Open.** Bjorns ja op V9; de commit op `feedback-ronde-4` (rondes 8 en 9 staan ongecommit); Publish to Web met Deneb en de
+tooltips, muis- en toetsenbordronde, merge.

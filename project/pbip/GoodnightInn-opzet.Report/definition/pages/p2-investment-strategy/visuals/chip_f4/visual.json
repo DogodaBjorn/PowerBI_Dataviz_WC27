@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "chip_f4",
   "position": {
     "x": 1728,
-    "y": 80,
+    "y": 48,
     "z": 1005,
-    "width": 160,
     "height": 56,
+    "width": 160,
     "tabOrder": 108
   },
   "visual": {
@@ -477,7 +477,6 @@
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }

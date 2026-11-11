@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "z_eyebrow",
   "position": {
     "x": 248,
-    "y": 40,
+    "y": 20,
     "z": 1004,
-    "width": 448,
     "height": 24,
+    "width": 448,
     "tabOrder": 20
   },
   "visual": {
@@ -19,11 +19,19 @@
               {
                 "textRuns": [
                   {
-                    "value": "01  THE BRAND REVIEW",
+                    "value": "THE WAKE-UP CALL",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
                       "color": "#A9CDF0"
+                    }
+                  },
+                  {
+                    "value": "  ·  THE BRAND REVIEW",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#C9D0DC"
                     }
                   }
                 ],
@@ -153,14 +161,26 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Page 1 of 2: the brand review'"
+                  "Value": "'Page 1 of 2, the wake-up call: the brand review'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }
