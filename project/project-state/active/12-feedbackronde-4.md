@@ -137,11 +137,14 @@ is daarna opnieuw uit `sketch_model.py` gegenereerd; de rapportmap bleef van de 
 F3-chip, de F3-band, het F4-hotel) met `SELF-REVIEW.md`.
 
 **Achtergrond niet meer dubbel (11 november, Bjorns tweede blik).** "De achtergrond lijkt dubbel; haal de overlay weg."
-Een pagina-achtergrondBEELD op schaal Normal wordt op ware grootte getekend, terwijl de canvas-visual (`z_canvas`) met
-de pagina meeschaalt: op elke zoom behalve 100 % stond de scene twee keer. Het achtergrondbeeld is overal weg (rapport-
-en tooltip-pagina's), de scene is alleen nog de visual, de paginakleur is Night. Wat van de kleur overblijft is de strook
-van 20 px die Desktop boven een pagina houdt (en de tooltip-host boven een tooltip): effen Night boven de donkere
-bovenkant van de banner. `canvas-night-page.jpg` en de `-bg`-tweelingen van de tooltip-scenes zijn verwijderd.
+Elke pagina droeg de scene twee keer: als achtergrondbeeld (op ware grootte, dus op elke zoom behalve 100 % niet meer
+gelijk aan de pagina) en als paginavullende beeld-visual `z_canvas` erbovenop. De eerste fix haalde de verkeerde weg
+(het achtergrondbeeld); Bjorn corrigeerde dat. Definitief: de scene is de PAGINA-ACHTERGROND, geschaald naar de pagina
+('Fit'): op de rapportpagina's het nachtcanvas, op elke tooltip-pagina haar eigen scene; de `z_canvas`-visual is overal
+weg. Gecontroleerd in Desktop: de achtergrond schaalt mee bij een kleine viewport en op ware grootte. Eén Desktop-eigen
+effect: Desktop past het beeld in zijn weergavegebied, 20 px hoger dan de pagina, dus in Desktop staat de scene zo'n
+10 tot 15 px hoger dan ontworpen; in de Service en Publish to Web is het gebied de pagina zelf en klopt de uitlijning
+precies. `canvas-night-page.jpg` en de `-bg`-tweelingen van de tooltip-scenes zijn verwijderd.
 
 **Screenshots v6.** Op Bjorns verzoek een complete set van het rapport in `project/deliverables/screenshots/screenshots-v6/`:
 P1 met de F3-band- en F4-hotel-hover; P2 in Expected, Low en High, de zoom op A/B/C, de pakket-tooltip op A, B, C en een

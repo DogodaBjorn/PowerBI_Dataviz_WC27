@@ -438,9 +438,9 @@ def extra_tooltip_pages():
     out = []
     for k, nm in FINDINGS:
         pg = f"tt-f{k}"
-        out.append(page(pg, pg, finish(no_card_fill([tooltip_canvas(pg)] + card_frames(pg) + finding_page_visuals(k, nm))), tooltip=True))
+        out.append(page(pg, pg, finish(no_card_fill(card_frames(pg) + finding_page_visuals(k, nm))), tooltip=True))
     for pg in (TT_F3, TT_F4):
-        out.append(page(pg, pg, finish(no_card_fill([tooltip_canvas(pg)] + card_frames(pg) + detail_page_visuals(pg))), tooltip=True,
+        out.append(page(pg, pg, finish(no_card_fill(card_frames(pg) + detail_page_visuals(pg))), tooltip=True,
                         filters=[filter_in("Brands", "Brand", ["Goodnight Inn"], "flt_tt_brand")]))
     return out
 
@@ -845,8 +845,8 @@ def frame(name, x, y, w, h, z, i, shadow, border=SURFACE, fill=SURFACE, radius=1
 
 
 def card_frames(page_name):
-    """The layout's cards as visuals UNDER the content (z 100+): being visuals, they scale with the content (a
-    page-background PNG did not when Desktop scaled the canvas non-uniformly, 7 Nov). Then the tiles (z 150+)."""
+    """The layout's cards as visuals UNDER the content (z 100+), then the tiles (z 150+). The scene behind them is the
+    page background image ('Fit', round 7); the cards stay visuals so they scale with the content in every host."""
     pg = PAGES[page_name]
     out = [frame(f"z_card_{c['id']}", c["x"], c["y"], c["w"], c["h"], 100 + i, i, c["shadow"] if "shadow" in c else ("hero" if c["id"] in HERO_CARDS else "card"))
            for i, c in enumerate(pg["cards"])]
@@ -857,24 +857,14 @@ def card_frames(page_name):
 
 
 CANVAS_FILE = "canvas-night.jpg"
-def night_canvas():
-    """The night-glow canvas (brand_canvas_v3.py) as a decorative image visual under everything (z 0)."""
-    return decorative(image_file("z_canvas", 0, 0, LAYOUT["canvas"]["w"], LAYOUT["canvas"]["h"], 0, 0, CANVAS_FILE, None), 0)
-
-
 # Round 7 (Björn, 11 Nov): a tooltip is the page in miniature, with elements made for its size: its own night scene
-# (brand_canvas_v3.tooltip, the horizon 24 px under the first card), the kicker and the title on the banner, white cards
-# with the page's shadow below. One scene per tooltip page, on the page as z_canvas.
+# (brand_canvas_v3.tooltip, the horizon 24 px under the first card) as the page background, the kicker and the title on
+# the banner, white cards with the page's shadow below.
 TT_PAGES = [p["name"] for p in LAYOUT["pages"] if p.get("tooltip")]
 
 
 def TT_CANVAS(name):
     return f"canvas-tt-{name}.jpg"
-
-
-def tooltip_canvas(name):
-    cv = PAGES[name]["canvas"]
-    return decorative(image_file("z_canvas", 0, 0, cv["w"], cv["h"], 0, 0, TT_CANVAS(name), None), 0)
 
 
 DATA_VISUALS = {"lineChart", "clusteredColumnChart", "scatterChart", "tableEx", "waterfallChart"}
@@ -923,13 +913,16 @@ def page(name, display, visuals, filters=None, tooltip=False, interactions=None)
     # colour only: furniture (cards, logo) is drawn by visuals so it scales with the content on any viewport
     cv = PAGES[name].get("canvas", LAYOUT["canvas"])
     p = {"$schema": PAGE_SCHEMA, "name": name, "displayName": display, "displayOption": "FitToPage", "height": cv["h"], "width": cv["w"],
-         # Night colour and wallpaper everywhere, so no host shows Oat around a page (round 6, Björn, 11 Nov). The
-         # scene itself is the z_canvas visual only, which scales with the page: a background IMAGE (round 6/7, at
-         # actual size) showed the scene twice at any zoom but 100 % (Björn, 11 Nov: "the background seems doubled").
-         # What remains of the colour is the 20 px strip Desktop's display area keeps above a page (and the tooltip
-         # host above a tooltip page): plain Night over the banner's dark top.
+         # Night colour and wallpaper everywhere, so no host shows Oat around a page (round 6, Björn, 11 Nov).
          "objects": {"background": [{"properties": {"color": color(INK), "transparency": num(0)}}],
                      "outspace": [{"properties": {"color": color(INK), "transparency": num(0)}}]}}
+    # Round 7 (Björn, 11 Nov, "the background seems doubled, remove the overlay"): the scene is the page BACKGROUND, scaled
+    # to the page ('Fit'), and nothing else: the full-page image visual (z_canvas, 7 Nov to round 7) that carried the scene
+    # is gone. One scene per page: the night-glow canvas on the report pages, each tooltip page's own scene on it. Desktop's
+    # 20 px display strip above a page shows the page colour, Night, over the banner's dark top.
+    bg = TT_CANVAS(name) if tooltip else CANVAS_FILE
+    p["objects"]["background"][0]["properties"]["image"] = {"image": {"name": text(bg), "scaling": text("Fit"),
+        "url": {"expr": {"ResourcePackageItem": {"PackageName": "RegisteredResources", "PackageType": 1, "ItemName": bg}}}}}
     if tooltip:
         # a report-page tooltip: hidden in view mode, bound as a tooltip (page schema 2.1.0: type + pageBinding)
         p.update({"displayOption": "ActualSize", "type": "Tooltip", "visibility": "HiddenInViewMode",
@@ -980,9 +973,9 @@ def interactions(v2):
 
 
 def main():
-    v1 = finish(no_card_fill([night_canvas()] + card_frames(P1) + brand_row(P1, "") + p1_visuals()))
-    v2 = finish(no_card_fill([night_canvas()] + card_frames(P2) + brand_row(P2, "2") + p2_visuals()))
-    vt = finish(no_card_fill([tooltip_canvas(TT)] + card_frames(TT) + tt_visuals()))
+    v1 = finish(no_card_fill(card_frames(P1) + brand_row(P1, "") + p1_visuals()))
+    v2 = finish(no_card_fill(card_frames(P2) + brand_row(P2, "2") + p2_visuals()))
+    vt = finish(no_card_fill(card_frames(TT) + tt_visuals()))
     pages = [page(P1, "The Brand Review", v1),
              page(P2, "The Investment Strategy", v2,
                   filters=[filter_in("InvestmentProjects", "Brand", ["Goodnight Inn"], "flt_page_projects"), filter_in("Brands", "Brand", ["Goodnight Inn"], "flt_page_brand")],

@@ -26,6 +26,33 @@
                 "Value": "0D"
               }
             }
+          },
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'canvas-night.jpg'"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "canvas-night.jpg"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -58,11 +85,6 @@
   "visualInteractions": [
     {
       "source": "hero_packages_hover",
-      "target": "z_canvas",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
       "target": "z_card_card_scatter",
       "type": "NoFilter"
     },
@@ -414,11 +436,6 @@
     {
       "source": "hero_packages_hover",
       "target": "z_footer2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "z_canvas",
       "type": "NoFilter"
     },
     {
@@ -778,11 +795,6 @@
     },
     {
       "source": "hero_s_packages_build",
-      "target": "z_canvas",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
       "target": "z_card_card_scatter",
       "type": "NoFilter"
     },
@@ -1134,11 +1146,6 @@
     {
       "source": "hero_s_packages_build",
       "target": "z_footer2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "z_canvas",
       "type": "NoFilter"
     },
     {

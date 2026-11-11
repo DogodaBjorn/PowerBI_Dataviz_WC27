@@ -73,13 +73,16 @@ from disk, so what is shown is what is on disk.
 - The round-5 and round-6 limitations stand (Deneb selector keyboard, empty build waterfall total, small-scatter letters
   under the dots, nl-NL in Desktop, chip labels at 12 pt in a 160 px pill).
 
-## Addendum (11 Nov, Björn's second look): the background image is gone
+## Addendum (11 Nov, Björn's second look): the scene is the page background, the overlay visual is gone
 
-"The background seems doubled, remove the overlay." A page background image at Normal scaling is drawn at actual size
-while the canvas visual scales with the page, so at any zoom but 100 % (Björn's Desktop stood at 33 %) the scene showed
-twice. The background image left every page (report and tooltip); the scene is the `z_canvas` visual only, the page colour
-is Night, so Desktop's 20 px strip above a page and the tooltip host's strip above a tooltip show plain Night over the
-banner's dark top. The complete set after this change is `project/deliverables/screenshots/screenshots-v6/` (20 shots:
-both pages, the F3/F4 hovers, the three scenarios, the zoom, the package tooltip on A, B, C and a cloud dot, the four
-chips, the Considered and Build-your-own states). The shots in this folder predate the change; the only visible
-difference is that strip.
+"The background seems doubled, remove the overlay." Two scenes were on every page: the page background image (at actual
+size, so at any zoom but 100 % it no longer matched the page) and the full-page image visual `z_canvas` on top of it. My
+first fix removed the wrong one (the background); Björn corrected that. Final: the scene is the page BACKGROUND, scaled
+to the page ('Fit'), on the report pages the night-glow canvas and on each tooltip page its own scene; the `z_canvas`
+visual is gone from every page (P1 40 visuals, P2 72). Verified in Desktop: the background scales with the page at a
+small viewport (1300 x 900) and at full size. One Desktop-only effect: Desktop fits the image into its display area,
+which is 20 px taller than the page, so in Desktop the scene sits about 10 to 15 px higher than designed (horizon at
+~234 instead of 248 at full size; more at smaller zoom). In the Service and Publish to Web the area is the page itself
+and the scene aligns exactly. The complete set is `project/deliverables/screenshots/screenshots-v6/` (20 shots: both
+pages, the F3/F4 hovers, the three scenarios, the zoom, the package tooltip on A, B, C and a cloud dot, the four chips,
+the Considered and Build-your-own states), taken with the `z_canvas` build, whose rendering equals the Service's.
