@@ -4,10 +4,10 @@
   "position": {
     "x": 1384,
     "y": 496,
-    "z": 1076,
+    "z": 71000,
     "height": 120,
     "width": 464,
-    "tabOrder": 623
+    "tabOrder": 50000
   },
   "visual": {
     "visualType": "waterfallChart",
