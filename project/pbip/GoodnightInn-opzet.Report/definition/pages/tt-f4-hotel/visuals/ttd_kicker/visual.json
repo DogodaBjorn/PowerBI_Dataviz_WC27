@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ttd_kicker",
   "position": {
     "x": 16,
     "y": 16,
     "z": 1000,
-    "width": 448,
     "height": 24,
+    "width": 448,
     "tabOrder": -1610
   },
   "visual": {
@@ -160,7 +160,6 @@
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }

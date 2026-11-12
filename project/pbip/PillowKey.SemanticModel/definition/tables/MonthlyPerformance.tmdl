@@ -103,7 +103,6 @@ table MonthlyPerformance
 		summarizeBy: none
 		sourceColumn: TotalOperatingExpenses
 
-
 	partition MonthlyPerformance = m
 		mode: import
 		queryGroup: Facts
@@ -116,5 +115,5 @@ table MonthlyPerformance
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

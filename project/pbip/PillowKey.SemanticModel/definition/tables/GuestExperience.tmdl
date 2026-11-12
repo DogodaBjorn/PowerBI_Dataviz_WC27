@@ -68,7 +68,6 @@ table GuestExperience
 		summarizeBy: none
 		sourceColumn: NetPromoterScore
 
-
 	partition GuestExperience = m
 		mode: import
 		queryGroup: Facts
@@ -81,5 +80,5 @@ table GuestExperience
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

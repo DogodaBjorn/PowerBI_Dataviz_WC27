@@ -101,48 +101,40 @@ table InvestmentProjects
 
 	/// Short label for the plan builder and the departures board (Goodnight Inn projects only).
 	column 'Short Name' = SWITCH(InvestmentProjects[ProjectID], "GI-01", "Booking app", "GI-02", "Kiosks at 20 desks", "GI-03", "Energy programme", "GI-04", "Toronto +40 rooms", "GI-05", "Gatwick +40 rooms", "GI-06", "Kingston +40 rooms", "GI-07", "Refresh 10 oldest", "GI-08", "Boston new hotel", "GI-09", "Breakfast upgrade", "GI-10", "Revenue management", InvestmentProjects[ProjectName])
-		dataType: string
 		lineageTag: 81538601-0b07-5e7d-8737-df951bf1d8ff
 		summarizeBy: none
-		isDataTypeInferred
+
 	/// The recommended plan grouping from the mission (hypothesis A); the plan builder lets the Board overrule it.
 	column Move = SWITCH(InvestmentProjects[ProjectID], "GI-01", "Buy the guest back", "GI-10", "Buy the guest back", "GI-02", "Buy the guest back", "GI-07", "Fix the welcome", "GI-05", "Build where we are full", "GI-04", "Build where we are full", IF(InvestmentProjects[Brand] = "Goodnight Inn", "Not funded", "Other brand"))
-		dataType: string
 		lineageTag: 76ec3059-2b73-55c9-990a-20605d4d70f1
 		summarizeBy: none
-		isDataTypeInferred
+
 	column 'Move Sort' = SWITCH(InvestmentProjects[Move], "Buy the guest back", 1, "Fix the welcome", 2, "Build where we are full", 3, "Not funded", 4, 9)
-		dataType: int64
 		formatString: 0
 		lineageTag: 1c3aa4d5-7ae1-5cb4-b848-626e92a4c165
 		summarizeBy: none
-		isDataTypeInferred
+
 	/// Yes for the six projects of the recommended plan.
 	column 'In Recommended Plan' = IF(InvestmentProjects[Move] IN {"Buy the guest back", "Fix the welcome", "Build where we are full"}, "Yes", "No")
-		dataType: string
 		lineageTag: baf902d2-c45a-5828-88cc-45267257da2c
 		summarizeBy: none
-		isDataTypeInferred
+
 	/// Earliest start, or the month the prerequisite (DependsOn) goes live if that is later: GI-02 kiosks start when the GI-01 app is live.
 	column 'Planned Start' = VAR dep = InvestmentProjects[DependsOn] VAR own = InvestmentProjects[EarliestStart] RETURN IF ( dep = "", own, MAX ( own, EDATE ( LOOKUPVALUE ( InvestmentProjects[EarliestStart], InvestmentProjects[ProjectID], dep ), LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], dep ) ) ) )
-		dataType: dateTime
 		formatString: Short Date
 		lineageTag: a7272cc5-f01c-5f35-983c-6178c01093d7
 		summarizeBy: none
-		isDataTypeInferred
+
 	/// Planned start plus duration: the month the project goes live.
 	column 'Completion Date' = EDATE(InvestmentProjects[Planned Start], InvestmentProjects[DurationMonths])
-		dataType: dateTime
 		formatString: Short Date
 		lineageTag: 71192867-f11b-5bad-9ab5-3ee230af5912
 		summarizeBy: none
-		isDataTypeInferred
+
 	/// The Brand Review finding (F1 to F4 on page 1) the initiative answers; Goodnight Inn projects only (opzet 2026-11-06).
 	column 'Answers Finding' = SWITCH(InvestmentProjects[ProjectID], "GI-01", "F2", "GI-02", "F3", "GI-03", "F1", "GI-04", "F4", "GI-05", "F4", "GI-06", "F4", "GI-07", "F3", "GI-08", "F4", "GI-09", "F3", "GI-10", "F1")
-		dataType: string
 		lineageTag: 8e9d65ba-97d8-539a-b76d-606ffd64d7a9
 		summarizeBy: none
-		isDataTypeInferred
 
 	partition InvestmentProjects = m
 		mode: import
@@ -156,5 +148,5 @@ table InvestmentProjects
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

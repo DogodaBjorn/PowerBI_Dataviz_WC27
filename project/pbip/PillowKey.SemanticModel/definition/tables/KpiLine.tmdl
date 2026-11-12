@@ -3,85 +3,66 @@ table KpiLine
 	lineageTag: 63b22b4f-d659-5387-8a5b-635e09a3a4aa
 
 	column Sort
-		dataType: int64
 		formatString: 0
 		lineageTag: 827dcdd0-f08c-531a-855d-36d9cdbc66ec
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Sort]
 
 	column Key
-		dataType: string
 		lineageTag: d2269b92-019d-5035-9a64-cee19f7baae5
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Key]
 
 	column Finding
-		dataType: string
 		lineageTag: 2d7c5771-691b-515d-a0c8-9fe290d2b400
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Finding]
 
 	column Measure
-		dataType: string
-		sortByColumn: Sort
 		lineageTag: 1de202aa-61e3-50fa-89c7-8e780a2e9f81
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Measure]
+		sortByColumn: Sort
 
 	column Direction
-		dataType: int64
 		formatString: 0
 		lineageTag: 96ebb35e-a019-5a98-bd72-7331f1135daa
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Direction]
 
 	column Format
-		dataType: string
 		lineageTag: d56a73dd-d73a-5bab-9167-01c2dc826049
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Format]
 
 	column DeltaScale
-		dataType: int64
 		formatString: 0
 		lineageTag: 1141dd98-6d93-59f0-a691-7042c0c36d27
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [DeltaScale]
 
 	column DeltaUnit
-		dataType: string
 		lineageTag: 1bd1d846-632e-56e4-88bd-7805bf2869ad
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [DeltaUnit]
 
 	column DeltaFormat
-		dataType: string
 		lineageTag: ae489c9e-c225-59d5-90c1-1ce68850ba14
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [DeltaFormat]
 
 	partition KpiLine = calculated
 		mode: import
-		source = ```
-				DATATABLE ( "Sort", INTEGER, "Key", STRING, "Finding", STRING, "Measure", STRING, "Direction", INTEGER, "Format", STRING, "DeltaScale", INTEGER, "DeltaUnit", STRING, "DeltaFormat", STRING, { { 1, "occ", "F1 · Full, margin slipping", "Occupancy", 1, "0.0%", 100, "pt", "0.0" }, { 2, "adr", "", "Average daily rate (segment)", 0, "$#,0", 1, "$", "0" }, { 3, "revpar", "", "RevPAR (segment)", 0, "$#,0", 1, "$", "0" }, { 4, "gop", "", "GOP margin before commissions", 1, "0.0%", 100, "pt", "0.0" }, { 5, "gopa", "", "GOP margin after commissions", 1, "0.0%", 100, "pt", "0.0" }, { 6, "ota", "F2 · Booked with us?", "OTA share of room revenue", -1, "0.0%", 100, "pt", "0.0" }, { 7, "direct", "", "Direct share (web, app, phone)", 1, "0.0%", 100, "pt", "0.0" }, { 8, "dist", "", "Distribution cost, % of room revenue", -1, "0.0%", 100, "pt", "0.0" }, { 9, "comfort", "F3 · A good night?", "Room comfort score (0 to 10)", 1, "0.00", 1, "", "0.00" }, { 10, "roomcond", "", "Room-condition complaints per 1,000", -1, "0.00", 1, "", "0.00" }, { 11, "compl", "", "All complaints per 1,000 room nights", -1, "0.0", 1, "", "0.0" }, { 12, "value", "F3 · A fair price?", "Value for money score (0 to 10)", 1, "0.00", 1, "", "0.00" }, { 13, "nps", "", "Net promoter score (guest-quality signal)", 1, "+0.0;−0.0;0.0", 1, "", "0.0" } } )
-				```
+		source = DATATABLE ( "Sort", INTEGER, "Key", STRING, "Finding", STRING, "Measure", STRING, "Direction", INTEGER, "Format", STRING, "DeltaScale", INTEGER, "DeltaUnit", STRING, "DeltaFormat", STRING, { { 1, "occ", "F1 · Full, margin slipping", "Occupancy", 1, "0.0%", 100, "pt", "0.0" }, { 2, "adr", "", "Average daily rate (segment)", 0, "$#,0", 1, "$", "0" }, { 3, "revpar", "", "RevPAR (segment)", 0, "$#,0", 1, "$", "0" }, { 4, "gop", "", "GOP margin before commissions", 1, "0.0%", 100, "pt", "0.0" }, { 5, "gopa", "", "GOP margin after commissions", 1, "0.0%", 100, "pt", "0.0" }, { 6, "ota", "F2 · Booked with us?", "OTA share of room revenue", -1, "0.0%", 100, "pt", "0.0" }, { 7, "direct", "", "Direct share (web, app, phone)", 1, "0.0%", 100, "pt", "0.0" }, { 8, "dist", "", "Distribution cost, % of room revenue", -1, "0.0%", 100, "pt", "0.0" }, { 9, "comfort", "F3 · A good night?", "Room comfort score (0 to 10)", 1, "0.00", 1, "", "0.00" }, { 10, "roomcond", "", "Room-condition complaints per 1,000", -1, "0.00", 1, "", "0.00" }, { 11, "compl", "", "All complaints per 1,000 room nights", -1, "0.0", 1, "", "0.0" }, { 12, "value", "F3 · A fair price?", "Value for money score (0 to 10)", 1, "0.00", 1, "", "0.00" }, { 13, "nps", "", "Net promoter score (guest-quality signal)", 1, "+0.0;−0.0;0.0", 1, "", "0.0" } } )
 
 	annotation PBI_ResultType = Table
+

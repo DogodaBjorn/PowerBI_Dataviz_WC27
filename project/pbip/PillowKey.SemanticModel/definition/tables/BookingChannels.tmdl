@@ -53,7 +53,6 @@ table BookingChannels
 		summarizeBy: none
 		sourceColumn: DistributionCost
 
-
 	partition BookingChannels = m
 		mode: import
 		queryGroup: Facts
@@ -66,5 +65,5 @@ table BookingChannels
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

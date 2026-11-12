@@ -89,7 +89,6 @@ table InvestmentScenarios
 		summarizeBy: none
 		sourceColumn: AnnualOperatingProfitImpactUSD
 
-
 	partition InvestmentScenarios = m
 		mode: import
 		queryGroup: Facts
@@ -102,5 +101,5 @@ table InvestmentScenarios
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

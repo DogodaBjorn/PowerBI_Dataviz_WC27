@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "tt_range_svg",
   "position": {
     "x": 32,
     "y": 224,
     "z": 1006,
-    "width": 416,
     "height": 48,
+    "width": 416,
     "tabOrder": -1003
   },
   "visual": {
@@ -171,7 +171,6 @@
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }

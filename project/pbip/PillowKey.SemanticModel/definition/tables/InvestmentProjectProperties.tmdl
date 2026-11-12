@@ -16,7 +16,6 @@ table InvestmentProjectProperties
 		summarizeBy: none
 		sourceColumn: HotelID
 
-
 	partition InvestmentProjectProperties = m
 		mode: import
 		queryGroup: Facts
@@ -29,5 +28,5 @@ table InvestmentProjectProperties
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

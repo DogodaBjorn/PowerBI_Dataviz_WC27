@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ttd_foot",
   "position": {
     "x": 32,
     "y": 376,
     "z": 1006,
-    "width": 416,
     "height": 64,
+    "width": 416,
     "tabOrder": 150
   },
   "visual": {
@@ -392,7 +392,6 @@
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }
