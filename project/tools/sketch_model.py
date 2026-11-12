@@ -1765,7 +1765,7 @@ RETURN
         Proj,
         "ProjectID", InvestmentProjects[ProjectID],
         "Short Name", InvestmentProjects[Short Name],
-        "Waterfall Label", SWITCH ( InvestmentProjects[ProjectID], "GI-01", "Booking app", "GI-02", "Kiosks", "GI-03", "Energy", "GI-04", "Toronto +40", "GI-05", "Gatwick +40", "GI-06", "Kingston +40", "GI-07", "Refresh 10", "GI-08", "Boston hotel", "GI-09", "Breakfast", "GI-10", "Revenue mgmt", InvestmentProjects[Short Name] ),
+        "Waterfall Label", SWITCH ( InvestmentProjects[ProjectID], "GI-01", "App", "GI-02", "Kiosks", "GI-03", "Energy", "GI-04", "Toronto +40", "GI-05", "Gatwick +40", "GI-06", "Kingston +40", "GI-07", "Refresh 10", "GI-08", "Boston", "GI-09", "Breakfast", "GI-10", "Rev. mgmt", InvestmentProjects[Short Name] ),
         "Sort", VAR p = InvestmentProjects[ProjectID]
             RETURN RANKX (
                 Proj,

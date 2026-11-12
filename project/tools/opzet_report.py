@@ -711,6 +711,9 @@ def waterfall(name, table, column, y_measure, flag_measure, y_start, y_end, alt_
     signed label (plan 11); the ends come from the model so the labels always have room. Plan 10 D6: an increase in
     Coffee Blue, a decrease in Tangerine (a signal), the total in Night."""
     q = {"Category": {"projections": [proj_col(table, column)]}, "Y": {"projections": [proj_mea(y_measure, "NPV through 2032")]}}
+    # verification 17 follow-up (12 Nov): with 8 to 10 bars Desktop rotates the labels and clips them at about 75 px;
+    # categoryAxis.maxMarginFactor (reportThemeSchema 2.143) made it worse at 40 (measured), so the axis stays at its
+    # default and the Waterfall Label column keeps every name within that width (widest: "Kingston +40")
     objs = {"categoryAxis": axis(BODY, S, INK2, gridlines=None), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, units=1),
             "sentimentColors": [{"properties": {"increaseFill": color(ACCENT_MARK), "decreaseFill": color(SIGNAL_MARK), "totalFill": color(INK), "otherFill": color(SLATE)}}],
             "labels": labels(True, BODY, S, INK, units=1, position="OutsideEnd"), "legend": legend(False)}

@@ -127,3 +127,33 @@ doet Bjorn handmatig na publicatie.
   (ongewijzigd, van vóór deze ronde); Microsofts validator 1 fout + 25 waarschuwingen (ongewijzigd, bekend).
 - **Desktop** aan het eind gesloten via CloseMainWindow en "Niet opslaan" (UI Automation); geen PBIDesktop-proces
   meer. De projectmap is nooit in Desktop geopend in deze ronde.
+
+## Screenshotronde 2 en de watervalnamen bij 8 tot 10 balken (12 nov, avond)
+
+Bjorn vroeg om extra screenshots in de PR zodat zijn controle-agent de wijzigingen kan nalopen. Bij het renderen van
+een plan met acht zetten bleek de fix van de middag onvolledig: vanaf vijf balken kantelt Desktop de aslabels en knipt
+ze op circa 75 px af ("Bookin...", "Revenue mg..."), en het eerste label wordt eerder afgeknipt omdat het links buiten
+de visual uitsteekt ("Booki..." zelfs bij "Booking").
+
+- **Oplossing gemeten in de kopie:** `categoryAxis.maxMarginFactor` (themaschema 2.143, waterfallChart) op 40 maakte
+  het krapper, niet ruimer; teruggedraaid, de as blijft op standaard. De namen zijn op de gemeten breedte gekozen:
+  eerste balk (altijd GI-01, sorteervolgorde 1) "App", GI-10 "Rev. mgmt", GI-08 "Boston"; breedste blijvende naam
+  "Kingston +40". Alleen `sketch_model.py` (BUILD_MOVE) en de generatorcommentaar in `opzet_report.py` zijn gewijzigd;
+  echte diff: BuildMove.tmdl 1 regel.
+- **Renders 01 tot 08 allemaal opnieuw** vanaf de gecommitte boom, venster 1920 x 1080, zodat de set één formaat heeft
+  (2940 px breed). Nieuw: 07 (acht zetten, $46.45M, binnen budget) en 08 (alle tien, $100.7M, alarm). In 05, 07 en 08
+  staat elk label voluit. Bekend en geaccepteerd: bij acht of meer balken raakt het eerste datalabel ("+$3,4M") zijn
+  balk (automatische plaatsing van Power BI in een visual van 160 px hoog); in 08 valt de plan-stip buiten de capex-as
+  van de scatter ($62M) en wordt dus niet getekend.
+- **Desktop-landmijnen van deze ronde:** (1) een modelwijziging (kolomwaarden) komt niet mee met `powerbi-desktop
+  reload`; de kopie moet zonder `.pbi`-cache opnieuw geopend worden, waarna Desktop om "Nu vernieuwen" vraagt (data van
+  de blob, circa 20 s); (2) de "Niet opslaan"-knop weigerde eenmaal via UI Automation ("Toegangstoets is al
+  geregistreerd") en muisklikken bereikten het venster niet; de wegwerpkopie is toen met Stop-Process gestopt (geen
+  projectrisico, de projectmap stond niet open); (3) de pid uit de bridge-JSON is Int64 en moet naar `[int]` voor
+  UI Automation.
+- **Desktop-save om 16:33, niet door mij.** Tussen een schone `git status` en de start van deze ronde waren 221
+  bestanden onder project/pbip gewijzigd met het save-patroon (cultures/, bookmark-versie 1.0, z-hernummering,
+  tabOrder, ontbrekende regeleinden); de inhoud (Waterfall Label, lay-out) was intact. Geparkeerd in
+  `git stash` ("Desktop-save 2026-11-12 16:33"), boom terug naar HEAD. Daarna schijnbaar 221 gewijzigde bestanden na
+  regeneratie: dat was alleen stat-ruis van `core.autocrlf` (`git diff --stat` 5 bestanden; werkelijke commit klein).
+- **Poorten:** validate_tmdl 0 fouten; schema_check 0; a11y_check 0; pbir_detect 4 onbewaakt (ongewijzigd).

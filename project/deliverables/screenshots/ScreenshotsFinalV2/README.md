@@ -1,10 +1,10 @@
 # ScreenshotsFinalV2 — GoodnightInn-opzet, FinalV2 (12 Nov 2026)
 
 Renders of `project/pbip/GoodnightInn-opzet.pbip` after the FinalV2 build (plan 15: M1, M2, S1 to S6, N1 to N6) and the
-two fixes from verification 17 (short bar labels in the build waterfall; renders 05 and 06 remade after real clicks),
-captured through the Desktop Bridge at scale 2 and cropped to the page. Page 1 and 2 are 1920 x 1080 logical px
-(here 2494 px wide; 05 and 06 are 2940 px wide, captured in a 1920 px window); the tooltip pages are 480 px wide
-(here 1440 px, k = 3.0).
+fixes from verification 17 (short bar labels in the build waterfall, proven up to all ten moves; renders 05 to 08 after
+real clicks), captured through the Desktop Bridge at scale 2 and cropped to the page. The page renders 01 to 08 were
+all remade on 12 Nov (evening) from the committed tree, in a 1920 x 1080 Desktop window: 1920 x 1080 logical px, here
+2940 px wide. The tooltip pages (10 to 18, unchanged since the morning set) are 480 px wide (here 1440 px, k = 3.0).
 
 ## Desktop set
 
@@ -14,8 +14,10 @@ captured through the Desktop Bridge at scale 2 and cropped to the page. Page 1 a
 | 02_p2-investment-strategy_recommended-A.png | Page 2, bookmark "Recommended: A", scenario Expected, all packages | M2 (the four F-chips in the footer row, the hanger free in the banner), S2 (short label "NPV range, $M") |
 | 03_p2-investment-strategy_considered-B-C.png | Page 2, bookmark "Considered: B and C" | S4 (comparer title "B ends within $1M of A by 2032; C never breaks even") |
 | 04_p2-investment-strategy_build-your-own-empty.png | Page 2, bookmark "Build your own", nothing picked | S2 (short label, the muted note "Pick moves on the left; your plan appears here." as the waterfall's title) |
-| 05_p2-investment-strategy_build-your-own-filled.png | The same state after three real clicks in the selector (Booking app, Revenue management, Toronto +40 rooms) | the working click chain: three ticked rows, the selector footer "Picked: 3 moves, $13.2M of $60.0M", the plan tile "Your plan: 3 moves, live by May 2028", the rules line "Within the rules", the waterfall with its own title; verification 17: the bars read "Booking app", "Revenue mgmt", "Toronto +40", no ellipsis; N1 (selector capex at one decimal) |
-| 06_p2-investment-strategy_build-your-own-over-budget.png | The same state after three real clicks over the budget (Energy programme, Boston new hotel, Refresh 10 oldest: $69.25M) | the budget alarm from a click: three ticked rows, the selector footer in Tangerine "Over budget by $9.25M: $69.25M picked, the cap is $60.0M", the Tangerine band "Over the $60.0M budget by $9.25M", "Not yet within the rules: over the budget."; the bars "Energy", "Boston hotel", "Refresh 10" |
+| 05_p2-investment-strategy_build-your-own-filled.png | The same state after three real clicks in the selector (Booking app, Revenue management, Toronto +40 rooms) | the working click chain: three ticked rows, the selector footer "Picked: 3 moves, $13.2M of $60.0M", the plan tile "Your plan: 3 moves, live by May 2028", the rules line "Within the rules", the waterfall with its own title and the bars "App", "Rev. mgmt", "Toronto +40" (verification 17: no ellipsis); the plan dot in Tangerine on the scatter; N1 (selector capex at one decimal) |
+| 06_p2-investment-strategy_build-your-own-over-budget.png | The same state after three real clicks over the budget (Energy programme, Boston new hotel, Refresh 10 oldest: $69.25M) | the budget alarm from a click: three ticked rows, the selector footer in Tangerine "Over budget by $9.25M: $69.25M picked, the cap is $60.0M", the Tangerine band "Over the $60.0M budget by $9.25M", "Not yet within the rules: over the budget."; the bars "Energy", "Boston", "Refresh 10" |
+| 07_p2-investment-strategy_build-your-own-eight-moves.png | Eight real clicks, the first eight rows ($46.45M, within budget) | the waterfall with eight bars and the total: Desktop rotates the labels and every one reads in full ("App", "Rev. mgmt", "Kiosks", "Breakfast", "Gatwick +40", "Toronto +40", "Kingston +40", "Energy", "Totaal"); "Your plan: 8 moves, live by Jul 2028", "Within the rules: 8 moves, 6 growth, $46.45M of $60.0M"; the comparison chart's title "yours ends behind A by $21.5M in 2032 and is not cash positive by 2032" |
+| 08_p2-investment-strategy_build-your-own-all-ten.png | All ten rows clicked ($100.7M, over the budget by $40.7M) | the worst case for the axis: ten bars plus the total, all labels in full; the alarm band "Over the $60.0M budget by $40.7M", footer "Over budget by $40.7M: $100.7M picked, the cap is $60.0M"; the plan dot is beyond the scatter's capex axis ($62M) and so not drawn, as designed |
 | 10_tt-f1.png … 13_tt-f4.png | The four finding tooltips (hover a finding card on page 1 or a chip on page 2) | N5 (chart and note centred in the card, F1 to F3) |
 | 14_tt-f3-band.png | Band tooltip, rendered for "10 years or more" | S3 (Goodnight Inn line in Coffee Blue, the band in Night), N2 (brand line "RevPAR $84.80" on the KPI's decimals) |
 | 15_tt-f4-hotel.png | Hotel tooltip, rendered for Toronto Pearson Airport | S3, N2 ("ADR $106.82, RevPAR $84.80"), N6 (room-nights line gone, the page 64 px shorter), the value axis 60 to 100 % back |
@@ -25,20 +27,24 @@ captured through the Desktop Bridge at scale 2 and cropped to the page. Page 1 a
 
 ## How the renders were made
 
-- **05 and 06 are real clicks.** The copy was opened in Desktop in the "Build your own" state with nothing picked and
+- **05 to 08 are real clicks.** The copy was opened in Desktop in the "Build your own" state with nothing picked and
   no filter of any kind; each row was then clicked by posting the mouse messages (move, button down, button up) to
   the report view, the same path a mouse takes. The Deneb selector did the rest: the ticks, its footer, the plan tile,
-  the rules line, the waterfall and the chart below all follow the clicks. Nothing in 05 or 06 comes from a filter.
-  Between 05 and 06 the copy was reloaded, so 06 starts from an empty plan as well.
+  the rules line, the waterfall and the chart below all follow the clicks. Nothing in 05 to 08 comes from a filter.
+  Between two renders the copy was reloaded, so every one starts from an empty plan.
 - **03, 04 and 14 to 18 come from a throwaway copy** of the project with the bookmark's visibility applied (03, 04)
   or a temporary page filter for the hovered context (14 to 18: package A or C, band "10 years or more", hotel
   Toronto Pearson Airport, year 2030). The committed project has no such filters. In the report the tooltips follow
   the hovered data point, and the report setting `useScaledTooltips` scales them with the canvas (tooltip pages are
   480 px wide against a 1920 px page).
-- **Build waterfall labels (verification 17).** The bars carry the new column `BuildMove[Waterfall Label]` (at most
-  12 characters: "Revenue mgmt", "Boston hotel", "Kingston +40", ...); the selector and the tooltips keep the full
-  Short Name. With three bars the labels wrap to two lines at most and none ends in an ellipsis (05, 06). With more
-  bars picked the axis has less room per bar; the names were chosen so that the longest fits two lines of 10 pt.
+- **Build waterfall labels (verification 17).** The bars carry the column `BuildMove[Waterfall Label]`; the selector,
+  the tooltips and the A waterfall keep the full Short Name. Up to about four bars the labels sit horizontally and wrap;
+  from five bars on Desktop rotates them and clips at about 75 px of text, and the first label is clipped earlier
+  because it runs out of the visual's left edge. The names were measured against that: "App" for the first bar (always
+  Booking app, sort order 1), "Rev. mgmt", "Boston", and the widest kept name "Kingston +40". Renders 05 (three
+  bars), 07 (eight) and 08 (ten) show every label in full. The axis property `maxMarginFactor` was tried at 40 and
+  made it worse, so the axis stays at its default. Known and accepted: with eight or more bars the first data label
+  ("+$3,4M") touches its bar; that is Power BI's automatic label placement in a 160 px high visual.
 - **"Totaal"** under the last bar (04 to 06) is Desktop's nl-NL label for the waterfall's total; in an en-US browser
   it reads "Total" (M3, accepted).
 
