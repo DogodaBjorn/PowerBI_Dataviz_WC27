@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttf_chart",
   "position": {
     "x": 32,
-    "y": 144,
+    "y": 152,
     "z": 1003,
-    "height": 144,
     "width": 416,
+    "height": 144,
     "tabOrder": 120
   },
   "visual": {
@@ -28,7 +28,6 @@
               },
               "queryRef": "Hotels.Renovation Age Label",
               "nativeQueryRef": "Renovation Age Label",
-              "active": true,
               "displayName": "Years since the last renovation"
             }
           ]
@@ -294,6 +293,13 @@
                 }
               }
             },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
             "style": {
               "expr": {
                 "Literal": {
@@ -479,7 +485,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "filterConfig": {
     "filters": [

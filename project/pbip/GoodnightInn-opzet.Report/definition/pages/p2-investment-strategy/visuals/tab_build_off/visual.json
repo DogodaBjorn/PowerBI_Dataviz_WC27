@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tab_build_off",
   "position": {
     "x": 1616,
     "y": 184,
     "z": 37000,
-    "height": 40,
     "width": 248,
+    "height": 40,
     "tabOrder": 26000
   },
   "visual": {
@@ -430,6 +430,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

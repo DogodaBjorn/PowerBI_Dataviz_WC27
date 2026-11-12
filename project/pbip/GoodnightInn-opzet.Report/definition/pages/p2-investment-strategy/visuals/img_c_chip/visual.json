@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "img_c_chip",
   "position": {
     "x": 1352,
     "y": 304,
     "z": 57000,
-    "height": 32,
     "width": 40,
+    "height": 32,
     "tabOrder": -7001
   },
   "visual": {
@@ -171,7 +171,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

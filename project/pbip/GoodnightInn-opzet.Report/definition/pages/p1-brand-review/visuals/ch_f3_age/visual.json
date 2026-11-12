@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_f3_age",
   "position": {
     "x": 1304,
     "y": 392,
     "z": 34000,
-    "height": 272,
     "width": 560,
+    "height": 272,
     "tabOrder": 520
   },
   "visual": {
@@ -28,7 +28,6 @@
               },
               "queryRef": "Hotels.Renovation Age Label",
               "nativeQueryRef": "Renovation Age Label",
-              "active": true,
               "displayName": "Years since the last renovation"
             }
           ]
@@ -294,6 +293,13 @@
                 }
               }
             },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
             "style": {
               "expr": {
                 "Literal": {
@@ -493,7 +499,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "filterConfig": {
     "filters": [

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "hero_s_packages_build",
   "position": {
     "x": 56,
     "y": 224,
     "z": 30000,
-    "height": 408,
     "width": 672,
+    "height": 408,
     "tabOrder": -5001
   },
   "visual": {
@@ -28,27 +28,7 @@
               },
               "queryRef": "BuildPoint.Label",
               "nativeQueryRef": "Label",
-              "active": true,
               "displayName": "Your plan"
-            }
-          ]
-        },
-        "Size": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Build Point Size"
-                }
-              },
-              "queryRef": "_Measures.Build Point Size",
-              "nativeQueryRef": "Build Point Size",
-              "displayName": "Marker size"
             }
           ]
         },
@@ -67,7 +47,6 @@
               },
               "queryRef": "_Measures.Build Capex",
               "nativeQueryRef": "Build Capex",
-              "active": true,
               "displayName": "Capex"
             }
           ]
@@ -88,6 +67,25 @@
               "queryRef": "_Measures.Build NPV (sel)",
               "nativeQueryRef": "Build NPV (sel)",
               "displayName": "NPV through 2032"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Build Point Size"
+                }
+              },
+              "queryRef": "_Measures.Build Point Size",
+              "nativeQueryRef": "Build Point Size",
+              "displayName": "Marker size"
             }
           ]
         }
@@ -561,7 +559,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

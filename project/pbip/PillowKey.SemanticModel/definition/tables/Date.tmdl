@@ -5,11 +5,11 @@ table Date
 
 	column Date
 		dataType: dateTime
-		isKey
 		formatString: Short Date
 		lineageTag: 946a7c46-32ac-5741-8c78-2199e3989449
 		summarizeBy: none
 		sourceColumn: Date
+		isKey
 
 		annotation UnderlyingDateTimeDataType = Date
 
@@ -54,8 +54,10 @@ table Date
 
 	/// First letter of the month name, for narrow month axes (the F4 hotel tooltip).
 	column 'Month Letter' = LEFT ( 'Date'[Month], 1 )
+		dataType: string
 		lineageTag: e939e055-925a-56cc-9dcd-96ed41b31cbc
 		summarizeBy: none
+		isDataTypeInferred
 		sortByColumn: MonthNumber
 
 	partition Date = m
@@ -70,5 +72,5 @@ table Date
 				in
 				    Typed
 
-	annotation PBI_ResultType = Table
 
+	annotation PBI_ResultType = Table

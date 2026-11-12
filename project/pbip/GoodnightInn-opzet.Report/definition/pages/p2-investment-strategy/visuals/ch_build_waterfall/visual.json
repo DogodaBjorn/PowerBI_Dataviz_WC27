@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_build_waterfall",
   "position": {
     "x": 1384,
-    "y": 496,
+    "y": 456,
     "z": 71000,
-    "height": 120,
     "width": 464,
+    "height": 160,
     "tabOrder": 50000
   },
   "visual": {
@@ -27,8 +27,7 @@
                 }
               },
               "queryRef": "BuildMove.Short Name",
-              "nativeQueryRef": "Short Name",
-              "active": true
+              "nativeQueryRef": "Short Name"
             }
           ]
         },
@@ -318,6 +317,50 @@
             "show": {
               "expr": {
                 "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Build WF Note (text)"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4B5466'"
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
                   "Value": "false"
                 }
               }
@@ -455,7 +498,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "filterConfig": {
     "filters": [

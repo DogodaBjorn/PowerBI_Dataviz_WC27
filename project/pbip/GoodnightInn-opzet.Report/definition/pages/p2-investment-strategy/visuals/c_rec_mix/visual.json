@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_rec_mix",
   "position": {
     "x": 1120,
     "y": 336,
     "z": 43000,
-    "height": 24,
     "width": 736,
+    "height": 24,
     "tabOrder": 29000
   },
   "visual": {
@@ -392,6 +392,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

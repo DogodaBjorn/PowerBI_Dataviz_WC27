@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_c_payback",
   "position": {
     "x": 1352,
     "y": 592,
     "z": 62000,
-    "height": 24,
     "width": 496,
+    "height": 24,
     "tabOrder": 44000
   },
   "visual": {
@@ -392,7 +392,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

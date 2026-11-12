@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_card_card_scatter_s",
   "position": {
     "x": 32,
     "y": 168,
     "z": 3000,
-    "height": 472,
     "width": 720,
+    "height": 472,
     "tabOrder": -12001
   },
   "visual": {
@@ -263,7 +263,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

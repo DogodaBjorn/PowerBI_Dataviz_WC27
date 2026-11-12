@@ -16,6 +16,7 @@ table Scenario
 		summarizeBy: none
 		sourceColumn: ScenarioOrder
 
+
 	partition Scenario = m
 		mode: import
 		queryGroup: Dimensions
@@ -28,5 +29,5 @@ table Scenario
 				in
 				    Typed
 
-	annotation PBI_ResultType = Table
 
+	annotation PBI_ResultType = Table

@@ -154,3 +154,21 @@ Desktop                : model refreshed headlessly (project/tools/refresh_deskt
                          renders in project/deliverables/screenshots/2026-11-11-feedbackronde-10/
 report.json            : settings.useScaledTooltips = true (tooltips scale with the canvas zoom), useEnhancedTooltips = false
 ```
+
+```
+2026-11-12, FinalV2 (plan 15: M1 range bar, M2 hanger + chips, S1-S6, N1-N6; docs 14-16)
+validate_tmdl --strict : 34 file(s), 0 error(s), 0 warning(s) [strict]
+a11y_check             : 0 failure(s), 0 note(s) over GoodnightInn-opzet.Report
+schema_check           : 182 files, 0 failing
+pbir_detect opzet      : 9 finding(s) across 1 report(s) — 4 unwaived, 5 waived -> FAIL (was 8 unwaived: the chip colours are gone; left: the P1/P2 header
+                         positions on the 4 px grid and #EAF2FB on the guide tile and inside the Deneb spec, all from before this round)
+MS validate (opzet)    : failed errors 1 warnings 25 (the one error is the pre-existing categoryLabels.backgroundColor shape on the A/B/C scatter layer)
+parity (phase 0)       : generator output = commit 1361f71 on every position; Björn's z-order and tab order carried in opzet-layering.json
+                         (112 visuals), applied last by opzet_report.layered(); Desktop artefacts (schema 2.14, key order, cultures/, Deneb runtime
+                         objects, dropped dataType lines) not adopted
+model                  : 454 measures (+ Build WF Note (text)); TT Range SVG rewritten with collision rules, 416 x 72
+scene                  : canvas-night.jpg regenerated with the hanger 94 px lower (hole y 66-210, under the masthead, above the horizon); no overlay
+Desktop                : project window (P1, P2 rec, tt-f1..f4) + a throwaway copy with preview filters / bookmark visibility / build filters
+                         (never in the project); renders in project/deliverables/screenshots/ScreenshotsFinalV2/ with README (Desktop set 01-18
+                         complete; Publish-to-Web set 20-28 NOT rendered: publishing is Björn's action, no service link yet)
+```

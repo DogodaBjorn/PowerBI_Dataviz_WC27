@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_f2_kicker",
   "position": {
     "x": 680,
     "y": 328,
     "z": 27000,
-    "height": 24,
     "width": 560,
+    "height": 24,
     "tabOrder": -15001
   },
   "visual": {
@@ -168,6 +168,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

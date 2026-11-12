@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_footer2",
   "position": {
     "x": 32,
     "y": 1032,
     "z": 72000,
+    "width": 1152,
     "height": 48,
-    "width": 1856,
     "tabOrder": 52000
   },
   "visual": {
@@ -392,6 +392,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tt_moves_svg",
   "position": {
     "x": 32,
-    "y": 328,
+    "y": 344,
     "z": 1009,
-    "height": 184,
     "width": 416,
+    "height": 184,
     "tabOrder": -1002
   },
   "visual": {
@@ -171,6 +171,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

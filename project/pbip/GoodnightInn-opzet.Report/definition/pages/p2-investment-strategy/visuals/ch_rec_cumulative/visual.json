@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_rec_cumulative",
   "position": {
     "x": 1112,
     "y": 744,
     "z": 47000,
-    "height": 216,
     "width": 752,
+    "height": 216,
     "tabOrder": 33000
   },
   "visual": {
@@ -802,7 +802,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "filterConfig": {
     "filters": [

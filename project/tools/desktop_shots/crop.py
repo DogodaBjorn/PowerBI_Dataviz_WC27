@@ -1,8 +1,9 @@
 """Crop the report page out of a Desktop Bridge capture, anchored on the white card frames.
 
-Both pages draw their card frames from logical x 32 to 1888 and y 184 to 1016 (opzet-layout.json), so the white
-extent gives the page scale k and origin. Writes the native-resolution page and a 1920 x 1080 version.
-usage: python crop.py <raw.png> <out-native.png> <out-1920.png>
+Both pages draw their card frames from logical x 32 to 1888 and y 168 down (opzet-layout.json; P1 to 1024, P2 to 1016),
+so the white extent gives the page scale k (from the width) and the origin (from the top). Writes the native-resolution page and a 1920 x 1080 version.
+usage: python crop.py <raw.png> <out-native.png> <out-1920.png> [frame-top]
+frame-top: the logical y where the white of the top card frame starts (169 on both pages since round 9; FinalV2 measured).
 """
 import json
 import sys
@@ -11,6 +12,7 @@ import numpy as np
 from PIL import Image
 
 raw, out_native, out_1920 = sys.argv[1:4]
+FRAME_TOP = int(sys.argv[4]) if len(sys.argv) > 4 else 169
 im = Image.open(raw).convert("RGB")
 a = np.asarray(im).astype(np.int16)
 H, W, _ = a.shape
@@ -22,10 +24,10 @@ rows = np.where(w2.sum(axis=1) > 0.3 * xmax)[0]
 T, B = int(rows.min()), int(rows.max())
 cols = np.where(w2[T:B + 1].sum(axis=0) > 0.5 * (B - T))[0]
 L, R = int(cols.min()), int(cols.max())
-# white starts just inside the 1 px hairline border of each frame: logical 33 .. 1887, 185 .. 1015
+# white starts just inside the 1 px hairline border of each frame: logical 33 .. 1887, 169 .. (P1 1023, P2 1015)
 k = (R - L + 1) / 1854
-kv = (B - T + 1) / 830
-ox, oy = L - 33 * k, T - 185 * k
+kv = (B - T + 1) / 854  # P1; informational only
+ox, oy = L - 33 * k, T - FRAME_TOP * k
 box = (round(ox), round(oy), round(ox + 1920 * k), round(oy + 1080 * k))
 crop = im.crop(box)
 crop.save(out_native)

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_masthead2",
   "position": {
     "x": 704,
     "y": 20,
     "z": 11000,
-    "height": 24,
     "width": 1184,
+    "height": 24,
     "tabOrder": 2000
   },
   "visual": {
@@ -392,6 +392,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

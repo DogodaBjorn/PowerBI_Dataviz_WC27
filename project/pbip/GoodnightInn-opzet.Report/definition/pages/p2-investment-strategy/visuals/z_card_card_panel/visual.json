@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_card_card_panel",
   "position": {
     "x": 1088,
     "y": 168,
     "z": 2000,
-    "height": 848,
     "width": 800,
+    "height": 848,
     "tabOrder": -11001
   },
   "visual": {
@@ -19,9 +19,15 @@
               {
                 "textRuns": [
                   {
-                    "value": ""
+                    "value": "",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#4B5466"
+                    }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "left"
               }
             ]
           }
@@ -257,6 +263,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

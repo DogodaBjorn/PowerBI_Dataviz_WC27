@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_f2_note",
   "position": {
     "x": 680,
     "y": 688,
     "z": 31000,
-    "height": 88,
     "width": 560,
+    "height": 88,
     "tabOrder": 440
   },
   "visual": {
@@ -392,6 +392,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

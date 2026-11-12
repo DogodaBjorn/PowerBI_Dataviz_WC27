@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_guide",
   "position": {
     "x": 72,
     "y": 256,
     "z": 22000,
-    "height": 72,
     "width": 960,
+    "height": 72,
     "tabOrder": 12000
   },
   "visual": {
@@ -392,6 +392,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

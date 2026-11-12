@@ -99,6 +99,18 @@ BRANDS = [("GI", "Goodnight Inn"), ("PS", "P&K Select"), ("MO", "Maison d'Or"), 
 WILD = {"data": [{"dataViewWildcard": {"matchingOption": 1}}]}
 
 SLOT = {p["name"]: {v["name"]: v for v in p["visuals"]} for p in LAYOUT["pages"]}
+# FinalV2 phase 0 (plan 15 S6): Björn's layering pass in Desktop (11 Nov, saved 12 Nov as commit 1361f71) renumbered the
+# z-order and tab order of every visual on P1 and P2; that file carries them, the generator applies them last, so a
+# rebuild reproduces his save. A visual missing there keeps the generator's values.
+LAYERING = json.loads((ROOT / "project" / "design-prototypes" / "opzet-layering.json").read_text(encoding="utf-8"))
+
+
+def layered(page_name, visuals):
+    for v in visuals:
+        o = LAYERING.get(page_name, {}).get(v["name"])
+        if o:
+            v["position"]["z"], v["position"]["tabOrder"] = o["z"], o["tabOrder"]
+    return visuals
 PAGES = {p["name"]: p for p in LAYOUT["pages"]}
 
 
@@ -192,11 +204,12 @@ def page_tooltip(section):
     return [{"properties": {"show": b(True), "type": enum("Canvas"), "section": text(section)}}]
 
 
-def chart(page, name, vtype, query, objects, alt, title=None, title_measure=None, filters=None, sort=None, alt_measure=None, tooltip_page=None):
-    vcos = vco(title=title or ("x" if title_measure else None), title_font=DISPLAY, title_size=TITLE_PT, title_color=INK, alt=alt, padding=0)
+def chart(page, name, vtype, query, objects, alt, title=None, title_measure=None, filters=None, sort=None, alt_measure=None, tooltip_page=None, muted=False):
+    # muted (FinalV2, plan 15 S2): a quiet 12 pt Dusk line instead of the bold title, for the build waterfall's waiting note
+    vcos = vco(title=title or ("x" if title_measure else None), title_font=BODY if muted else DISPLAY, title_size=S if muted else TITLE_PT, title_color=INK2 if muted else INK, alt=alt, padding=0)
     if title_measure:
         vcos["title"][0]["properties"]["text"] = mtext(title_measure)
-        vcos["title"][0]["properties"]["bold"] = b(True)
+        vcos["title"][0]["properties"]["bold"] = b(not muted)
     if tooltip_page:  # round 6: the F3 and F4 charts open a detail page on hover
         vcos["visualTooltip"] = page_tooltip(tooltip_page)
     v = visual(name, vtype, *at(page, name), query=query, objects=objects, vcos=vcos, filters=filters, sort=sort)
@@ -315,17 +328,20 @@ def f1_chart(page, slot, small=False):
 def f2_chart(page, slot, small=False):
     ms = [f"Trend OTA {c}" for c, _ in BRANDS]
     names = [nm for _, nm in BRANDS]
-    if small:  # round 10: in the chip tooltip the three sister brands are one line; four names fit neither a legend nor the line ends at 416 px
-        ms, names = [ms[0], "Trend OTA Sisters"], [names[0], "The other three brands"]
+    # round 10: in the chip tooltip the three sister brands are one line (four names fit neither a legend nor the line ends at
+    # 416 px). FinalV2 (plan 15 S1, the decided fallback): on P1 as well. With the legend on top the four names fit, but the
+    # three sisters share one Warm Grey (kit D6), so three identical grey dots could not tell the lines apart (REVIEW m3, the
+    # reason the line ends once carried the names); one line "The other three brands" is the same chart as the tooltip's.
+    ms, names = [ms[0], "Trend OTA Sisters"], [names[0], "The other three brands"]
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m, nm) for m, nm in zip(ms, names)]}}
     # the line ends carry the names, as in the comp: a legend of three identical grey dots could not be decoded (REVIEW m3).
     # The names in Dusk, not in the line's colour: Warm Grey (3.5:1) and Coffee Blue (3.7:1) fail 4.5:1 for 12 pt text
     # (plan 11); the line next to each name still ties them.
     objs = {"categoryAxis": axis(BODY, S, INK2, extra=small_axis_type(small)), "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, extra={"labelPrecision": integer(0)}),
-            # round 10: in the 416 px tooltip chart the four line-end names collided (one was dropped) and a legend on top truncated
-            # two names; there the legend stands at the right, one name under the other
-            "legend": legend(True, BODY, S, INK2, "Top") if small else legend(False),
-            "seriesLabels": [{"properties": {"show": b(not small), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2), "textSize": num(S), "seriesFontFamily": text(BODY)}}],
+            # FinalV2 (plan 15 S1): on P1 too the legend sits on top and the line ends carry no names: at the line ends Maison d'Or
+            # collided with P&K Select and one line went nameless (review 12 Nov); the tooltip chart had the same cure in round 10
+            "legend": legend(True, BODY, S, INK2, "Top"),
+            "seriesLabels": [{"properties": {"show": b(False)}}],
             "dataPoint": series_colors({mref(ms[0]): ACCENT_MARK, **{mref(m): SLATE for m in ms[1:]}}),
             "lineStyles": line_styles({mref(ms[0]): 3, **{mref(m): 1.5 for m in ms[1:]}})}
     return chart(page, slot, "lineChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F2 Chart (text)")
@@ -349,7 +365,8 @@ def f3_chart(page, slot, tooltip_page=None):
     objs = {"categoryAxis": axis(BODY, S, INK), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False),
             "dataPoint": [{"properties": {"fill": fv("Age Band Color")}, "selector": WILD}], "labels": labels(True, BODY, 12, INK), "legend": legend(False),
             # the zero line the bars hang from (REVIEW m4); same object shape as the scatter's, which Desktop rendered
-            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "style": enum("solid"), "position": enum("front"),
+            # FinalV2 (plan 15 N4): 2 px, a line and not a bar (Björn, 7 Nov: thin, in Dusk); the width key as on the scatter's line
+            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(2), "style": enum("solid"), "position": enum("front"),
                                                     "dataLabelShow": b(False)}, "selector": {"id": "1"}}]}
     return chart(page, slot, "clusteredColumnChart", q, objs, None,
                  filters=[gi_filter(), filter_in("Hotels", "Renovation Age Sort", [1, 2, 3], "flt_dated")], sort=sort_by_column("Hotels", "Renovation Age Label"),
@@ -381,15 +398,19 @@ FINDINGS = (("1", "The margin"), ("2", "The middleman"), ("3", "The fading welco
 
 
 def finding_chips():
-    """Four chips in the night banner of P2 (Björn, 10 Nov: where the faded brand mark sits): the code and the name on
+    """Four chips in the footer row of P2 (FinalV2, plan 15 M2: in the banner they hid the hanger; a reference, not a
+    heading): the code and the name on
     two lines, a hairline pill, and a report-page tooltip with the finding's headline, chart and note, so a reader who
     meets 'F3' in the panel never has to go back to page 1. The alt text is the finding's headline sentence."""
     out = []
     for k, nm in FINDINGS:
-        v = card(f"chip_f{k}", *at(P2, f"chip_f{k}"), [f"Finding Chip F{k} (text)"], DISPLAY, TITLE_PT, ZONE_EYEBROW, BODY, S, ZONE_TEXT, labels=[nm], align="center")
+        # on the light footer row the pill takes the white cards' kicker colours (FinalV2 M2b: the night-zone tokens of the
+        # banner failed 4.5:1 on the cream canvas, a11y_check): the code in Burnt Tangerine, the name in Dusk, a Warm Grey hairline
+        v = card(f"chip_f{k}", *at(P2, f"chip_f{k}"), [f"Finding Chip F{k} (text)"], DISPLAY, TITLE_PT, BAD, BODY, S, INK2, labels=[nm], align="center")
         vc = v["visual"]["visualContainerObjects"]
-        vc["border"] = [{"properties": {"show": b(True), "color": color(ZONE_MUTED), "radius": num(12), "width": num(1)}}]
-        vc["padding"] = [{"properties": {"top": num(4), "bottom": num(4), "left": num(4), "right": num(4)}}]
+        vc["border"] = [{"properties": {"show": b(True), "color": color(SLATE), "radius": num(12), "width": num(1)}}]
+        # 48 px pill (footer row): no top/bottom padding, the 14 pt code and the 12 pt name need the full height (render 12 Nov)
+        vc["padding"] = [{"properties": {"top": num(0), "bottom": num(0), "left": num(4), "right": num(4)}}]
         vc["visualTooltip"] = page_tooltip(f"tt-f{k}")
         out.append(bind_alt(v, f"Alt F{k} Title (text)"))
     return out
@@ -416,12 +437,15 @@ def finding_page_visuals(k, nm):
 
 
 def line_pair(page, slot, cat_table, cat_col, own, brand, own_label, brand_label, filters, sort=None, alt_measure=None, start=None, end=None, categorical=True):
-    """A two-line chart: the hovered band or hotel in Night, the brand in Warm Grey, the names at the line ends."""
+    """A two-line chart: the hovered band or hotel in Night (the focus), the brand in Coffee Blue (FinalV2, plan 15 S3: the
+    one colour Goodnight Inn has everywhere, kit D6), the names in a legend on top."""
     q = {"Category": {"projections": [proj_col(cat_table, cat_col, active=True)]}, "Y": {"projections": [proj_mea(own, own_label), proj_mea(brand, brand_label)]}}
-    objs = {"categoryAxis": axis(BODY, S, INK2, extra={"axisType": enum("Categorical")} if categorical else None),  # round 10: every year labelled at 416 px "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=start, end=end, extra={"labelPrecision": integer(0)}),
+    objs = {"categoryAxis": axis(BODY, S, INK2, extra={"axisType": enum("Categorical")} if categorical else None),  # round 10: every year labelled at 416 px
+            # FinalV2: the value axis is back (in round 10 it had slipped into the comment above and the chart fell to defaults)
+            "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=start, end=end, extra={"labelPrecision": integer(0)}),
             # round 10: the legend on top (the line-end names left a 12-month axis with a scrollbar at 416 px)
             "legend": legend(True, BODY, S, INK2, "Top"), "seriesLabels": [{"properties": {"show": b(False)}}],
-            "dataPoint": series_colors({mref(own): INK, mref(brand): SLATE}), "lineStyles": line_styles({mref(own): 2.5, mref(brand): 1.5})}
+            "dataPoint": series_colors({mref(own): INK, mref(brand): ACCENT_MARK}), "lineStyles": line_styles({mref(own): 2.5, mref(brand): 1.5})}
     return chart(page, slot, "lineChart", q, objs, None, filters=filters, sort=sort, alt_measure=alt_measure)
 
 
@@ -436,7 +460,7 @@ def detail_page_visuals(which):
         ch = line_pair(which, "ttd_chart", "Date", "Year", "NPS Band (line)", "NPS Brand (line)", "This band", "Goodnight Inn", [YEARS()], alt_measure="Alt NPS Band Line (text)")
     else:
         head, nums, labels_, alt_nums, vs, foot = ("Hotel Header (text)", ["Occupancy % 2025", "ADR 2025", "RevPAR 2025"], ["occupancy 2025", "ADR 2025", "RevPAR 2025"],
-                                                  "Alt Hotel Nums (text)", "Hotel vs Brand (text)", "Segments 2025 (text)")
+                                                  "Alt Hotel Nums (text)", "Hotel vs Brand (text)", None)  # FinalV2 N6: no room-nights line (answers no decision)
         ch_title = "Occupancy by month 2025, this hotel against the brand"
         # round 7: month letters on the axis (a 496 px chart rotated the three-letter names)
         ch = line_pair(which, "ttd_chart", "Date", "Month Letter", "Occupancy Hotel (line)", "Occupancy Brand (line)", "This hotel", "Goodnight Inn",
@@ -448,7 +472,8 @@ def detail_page_visuals(which):
     v.append(dyn(which, "ttd_vs", vs))
     v.append(tb(which, "ttd_chart_title", ch_title, font=DISPLAY, size=SPX, colour=INK, alt=ch_title))
     v.append(ch)
-    v.append(dyn(which, "ttd_foot", foot, colour=INK))
+    if foot:
+        v.append(dyn(which, "ttd_foot", foot, colour=INK))
     return v
 
 
@@ -681,7 +706,7 @@ def scatter_stack(slot, deco_base, build_layer=False):
     return v
 
 
-def waterfall(name, table, column, y_measure, flag_measure, y_start, y_end, alt_measure, title_measure=None):
+def waterfall(name, table, column, y_measure, flag_measure, y_start, y_end, alt_measure, title_measure=None, muted=False):
     """Where the NPV comes from: one bar per initiative, the total last. No value axis: every bar carries its own
     signed label (plan 11); the ends come from the model so the labels always have room. Plan 10 D6: an increase in
     Coffee Blue, a decrease in Tangerine (a signal), the total in Night."""
@@ -693,7 +718,7 @@ def waterfall(name, table, column, y_measure, flag_measure, y_start, y_end, alt_
     objs["valueAxis"][0]["properties"]["end"] = mtext(y_end)
     # round 9: a filter cannot blank the build waterfall before a move is picked: Power BI draws the total bar ($0) whatever
     # the row filter says (render 11 Nov), so the empty state keeps its one bar and the card's title carries the state
-    return chart(P2, name, "waterfallChart", q, objs, None, title_measure=title_measure,
+    return chart(P2, name, "waterfallChart", q, objs, None, title_measure=title_measure, muted=muted,
                  filters=[filter_measure_gt(flag_measure, 0, f"flt_{name}")], alt_measure=alt_measure)
 
 
@@ -789,7 +814,7 @@ def p2_visuals():
     v.append(tb(P2, "c_rec_title", "Our recommendation: package A", font=DISPLAY, size=20, colour=INK))
     v.append(dyn(P2, "c_rec_mix", "Rec Mix (text)", size=S, colour=INK))
     v.append(nums_card("c_rec_nums", ["Rec Capex (text)", "Rec NPV (text)", "Rec Range (text)", "Rec Run-rate (text)"],
-                       ["capex", "NPV through 2032", "NPV, Low to High, $M", "profit a year by 2032"], "Alt Rec Nums (text)"))
+                       ["capex", "NPV through 2032", "NPV range, $M", "profit a year by 2032"], "Alt Rec Nums (text)"))
     v.append(dyn(P2, "c_rec_note", "Rec Note (text)", colour=INK))
     v.append(waterfall("ch_rec_waterfall", "InvestmentProjects", "Short Name", "Focus Project NPV (shown)", "Focus Project Flag", "Waterfall Y Start", "Waterfall Y End",
                        "Alt Waterfall (text)", title_measure="Waterfall Title (text)"))
@@ -806,7 +831,7 @@ def p2_visuals():
         lk = k.lower()
         v.append(decorative(image_measure(P2, f"img_{lk}_chip", "Chip Plain", None), chip_deco))
         v.append(dyn(P2, f"c_{lk}_title", f"Pkg Label {k} (text)", size=TITLE_PT, colour=INK, font=DISPLAY))
-        v.append(nums_card(f"c_{lk}_nums", [f"Preset {k} Capex (text)", f"Preset {k} NPV (text)", f"Preset {k} Range (text)"], ["capex", "NPV through 2032", "NPV, Low to High, $M"],
+        v.append(nums_card(f"c_{lk}_nums", [f"Preset {k} Capex (text)", f"Preset {k} NPV (text)", f"Preset {k} Range (text)"], ["capex", "NPV through 2032", "NPV range, $M"],
                            f"Alt {k} Nums (text)", size=18))
         v.append(dyn(P2, f"c_{lk}_why", f"Alt {k} Why (text)", colour=INK))
         v.append(dyn(P2, f"c_{lk}_whynot", f"Alt {k} WhyNot (text)", colour=INK))
@@ -822,9 +847,11 @@ def p2_visuals():
     # white 18 pt text (WCAG large text, 4.2:1), and the sentence names the overshoot
     v.append(dyn(P2, "c_you_title", "Build Title (text)", size=18, colour=INK, font=DISPLAY, colour_measure="Build Title Ink", fill_measure="Build Title Fill"))
     # 16 pt, not 18: three columns in 464 px, and an over-budget plan prints two two-digit negatives in the range (render 10 Nov)
-    v.append(nums_card("c_you_nums", ["Build Capex (text)", "Build NPV (text)", "Build Range (text)"], ["capex", "NPV through 2032", "NPV, Low to High, $M"], "Alt You Nums (text)", size=16))
+    v.append(nums_card("c_you_nums", ["Build Capex (text)", "Build NPV (text)", "Build Range (text)"], ["capex", "NPV through 2032", "NPV range, $M"], "Alt You Nums (text)", size=16))
     v.append(dyn(P2, "c_you_rules", "Build Valid (text)", colour_measure="Build Valid Color"))
-    v.append(waterfall("ch_build_waterfall", "BuildMove", "Short Name", "Build Project NPV (shown)", "Build Row Flag", "Build WF Y Start", "Build WF Y End", "Alt Build Waterfall (text)"))
+    # FinalV2 (plan 15 S2): the $0 rest bar of the empty state reads as a waiting place, not a fault: a muted note as the tile's title
+    v.append(waterfall("ch_build_waterfall", "BuildMove", "Short Name", "Build Project NPV (shown)", "Build Row Flag", "Build WF Y Start", "Build WF Y End", "Alt Build Waterfall (text)",
+                       title_measure="Build WF Note (text)", muted=True))
     v.append(cumulative_chart("ch_cmp_build", [("Preset A Cumulative Net (sel)", "A, our recommendation"), ("Build Cumulative Net (sel)", "Your plan")],
                               [ACCENT_MARK, SIGNAL_MARK], [3, 3], dashed=(), title_measure="Cmp Build Title (text)", alt_measure="Alt Cmp Build (text)"))
     v.append(dyn(P2, "z_footer2", "Footer P2 (text)"))
@@ -1044,8 +1071,8 @@ def interactions(v2):
 
 
 def main():
-    v1 = finish(no_card_fill(scene_visual(P1) + card_frames(P1) + brand_row(P1, "") + p1_visuals()))
-    v2 = finish(no_card_fill(scene_visual(P2) + card_frames(P2) + brand_row(P2, "2") + p2_visuals()))
+    v1 = finish(layered(P1, no_card_fill(scene_visual(P1) + card_frames(P1) + brand_row(P1, "") + p1_visuals())))
+    v2 = finish(layered(P2, no_card_fill(scene_visual(P2) + card_frames(P2) + brand_row(P2, "2") + p2_visuals())))
     vt = finish(no_card_fill(scene_visual(TT) + card_frames(TT) + tt_visuals()))
     pages = [page(P1, "The Brand Review", v1),
              page(P2, "The Investment Strategy", v2,

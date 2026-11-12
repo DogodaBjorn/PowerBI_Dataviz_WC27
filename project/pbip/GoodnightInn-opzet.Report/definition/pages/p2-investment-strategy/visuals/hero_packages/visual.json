@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "hero_packages",
   "position": {
     "x": 56,
     "y": 344,
     "z": 25000,
-    "height": 656,
     "width": 992,
+    "height": 656,
     "tabOrder": 14000
   },
   "visual": {
@@ -27,8 +27,45 @@
                 }
               },
               "queryRef": "Package.PackageID",
-              "nativeQueryRef": "PackageID",
-              "active": true
+              "nativeQueryRef": "PackageID"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Package Capex"
+                }
+              },
+              "queryRef": "_Measures.Package Capex",
+              "nativeQueryRef": "Package Capex",
+              "displayName": "Capex"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Package NPV (sel)"
+                }
+              },
+              "queryRef": "_Measures.Package NPV (sel)",
+              "nativeQueryRef": "Package NPV (sel)",
+              "displayName": "NPV through 2032"
             }
           ]
         },
@@ -93,45 +130,6 @@
               "queryRef": "_Measures.TT Not Included (text)",
               "nativeQueryRef": "TT Not Included (text)",
               "displayName": "Not in it"
-            }
-          ]
-        },
-        "X": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Package Capex"
-                }
-              },
-              "queryRef": "_Measures.Package Capex",
-              "nativeQueryRef": "Package Capex",
-              "active": true,
-              "displayName": "Capex"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Package NPV (sel)"
-                }
-              },
-              "queryRef": "_Measures.Package NPV (sel)",
-              "nativeQueryRef": "Package NPV (sel)",
-              "displayName": "NPV through 2032"
             }
           ]
         }
@@ -755,7 +753,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "filterConfig": {
     "filters": [

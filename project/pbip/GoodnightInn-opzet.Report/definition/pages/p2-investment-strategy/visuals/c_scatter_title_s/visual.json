@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_scatter_title_s",
   "position": {
     "x": 56,
     "y": 184,
     "z": 21000,
-    "height": 32,
     "width": 672,
+    "height": 32,
     "tabOrder": 10000
   },
   "visual": {
@@ -392,7 +392,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "chip_f2",
   "position": {
-    "x": 1392,
-    "y": 48,
+    "x": 1384,
+    "y": 1024,
     "z": 17000,
-    "height": 56,
     "width": 160,
-    "tabOrder": 5000
+    "height": 48,
+    "tabOrder": 52020
   },
   "visual": {
     "visualType": "cardVisual",
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#A9CDF0'"
+                      "Value": "'#A63F0E'"
                     }
                   }
                 }
@@ -230,7 +230,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F7F5EE'"
+                      "Value": "'#4B5466'"
                     }
                   }
                 }
@@ -336,7 +336,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#C9D0DC'"
+                      "Value": "'#8E897D'"
                     }
                   }
                 }
@@ -404,14 +404,14 @@
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "4D"
+                  "Value": "0D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "4D"
+                  "Value": "0D"
                 }
               }
             },
@@ -477,6 +477,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

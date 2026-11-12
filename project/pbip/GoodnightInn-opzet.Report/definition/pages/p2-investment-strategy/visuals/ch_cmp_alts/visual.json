@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_cmp_alts",
   "position": {
     "x": 56,
     "y": 680,
     "z": 63000,
-    "height": 320,
     "width": 1808,
+    "height": 320,
     "tabOrder": 45000
   },
   "visual": {
@@ -748,7 +748,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "filterConfig": {
     "filters": [
