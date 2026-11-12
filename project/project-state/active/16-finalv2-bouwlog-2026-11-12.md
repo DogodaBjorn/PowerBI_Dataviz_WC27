@@ -191,3 +191,46 @@ definities), gebouwd in de generatoren.
 - **Poorten:** validate_tmdl 0 fouten; schema_check 0; a11y_check 0 (incl. SVG-tekstvloer, alt-lengte, leesvolgorde
   met de chip na de bronregel); pbir_detect 4 onbewaakt (ongewijzigd). Model: 458 measures (+4). Desktop: wegwerpkopie
   zonder `.pbi`-cache geopend, "Nu vernieuwen" via UI Automation, aan het eind gesloten zonder opslaan.
+
+## Koplijn in plaats van chips, en de woordenreview (12 nov, laat)
+
+Bjorn op de render van de vorige ronde: de voetregel is weer vol terwijl de kop leeg voelt; de tagline rechtsboven
+zegt niets; de tooltipkop "$M, undiscounted" voegt niets toe; en elke tekst op de pagina moet een functie hebben of
+weg (AI-tells, bloat).
+
+- **Koplijn** (`header_line()` in opzet_report.py, in het slot van de masthead, rechts uitgelijnd op de Night-band):
+  P1 `ⓘ hover for more · Definitions`; P2 `ⓘ hover for more · Revisit the facts F1 F2 F3 F4 · Definitions`. De
+  hover-woorden (`hover_word()`: cardVisual in zone_eyebrow, geen pil) dragen de tooltips tt-f1 tot tt-f4 en
+  tt-glossary en de alt-teksten van de vindingen en de woordenlijst; de woorden en de punten staan buiten de
+  tabvolgorde. De mastheads ("2021 TO 2025 · FOR THE BOARD ..." en "2027 TO 2032 · GOODNIGHT INN BUDGET ...") zijn
+  weg; de measures Masthead P2 (text) / Alt Masthead P2 blijven ongebruikt in het model. De voetregel is weer alleen de
+  bronregel (P1 1856 px, P2 1152 px). De hint-SVG is 136 px breed in de gedempte zone-inkt (#C9D0DC). Waiver
+  zone-text-header-line in pbir-detect-waivers.yaml voor #A9CDF0 op hdr_*.
+- **Woordenreview, doorgevoerd** (alles anders bleef omdat het werk doet):
+  - Uncertainty: "Read with care: in the Low case no package pays back by 2032, and A ends at ..." → "Low case: no
+    package pays back by 2032; A ends at ...".
+  - B waarom: "Considered because it swaps the X for the Y: a guest-score effect ..." → "Considered: it swaps the X for
+    the Y, a guest-score effect ...". B waarom niet: "Not picked purely on the capex-to-NPV mix: $2.25M more capex for
+    an NPV $0.6M lower, so A is simply the better deal." → "Not picked: $2.25M more capex than A for $0.6M less NPV."
+  - C titel: "C · Why not renovate? For comparison" → "C · Why not renovate?". C waarom: "Considered as a strategic
+    investment: the refresh ... is the move that targets NPS head-on (F3)." → "Considered: the refresh ... is the one
+    move aimed at NPS (F3)." C waarom niet: "Not the financial risk to take now: NPV ..." → "Not picked: NPV ...";
+    "One to revisit once A has broken even, or if NPS drops below 0 and growth is at risk." → "Revisit once A has
+    broken even, or if NPS falls below 0."
+  - Alts-intro: "Both were weighed against A; the chart below compares all three over time." → "Both weighed against
+    A; the chart below compares all three."
+  - Bouw-comparer leeg: "Pick moves on the right to compare your plan with A (Expected case)" → "Your plan against A,
+    $M (Expected case)" (de ene instructie staat in het watervalslot: "Pick moves on the left; your plan appears
+    here."; "on the right" klopte bovendien niet).
+  - Legenda cumulatieve grafiek: "This case" → "Case in view".
+  - Jaartooltip: kop "CUMULATIVE NET IMPACT · $M, UNDISCOUNTED" → "CUMULATIVE NET IMPACT, $M"; titel "To the end of
+    2030: where the four options stand" → "At the end of 2030"; kaarttitel "Package A, our recommendation, in the
+    three cases" → "A in the three cases".
+  - Definitiepagina: kop "DEFINITIONS · THE SHORT WORDS ON THESE PAGES" → "DEFINITIONS"; titel "What the terms mean"
+    → "The terms on these pages"; het chiplabel "the terms explained" is weg.
+- **Bewust gelaten:** "Our reading:" in F2 (gelabelde interpretatie, plan 09 R5); "An association, not proof of cause."
+  in F3 (het voorbehoud is de functie); de eyebrow-puns (ronde 9, Bjorn); "HOW TO READ THIS CHART" met de leesgids;
+  "Hover a dot for its moves" in de gids (de instructie op de plek zelf); de bouw-intro (concreet: wat volgt de klik).
+- **Renders:** 01 tot 04, 18 en 19 opnieuw; 05 tot 08 van de ronde ervoor (voetregel en kop verschillen).
+- **Poorten:** validate_tmdl 0; schema_check 0; a11y_check 0; pbir_detect 4 onbewaakt (ongewijzigd, met de nieuwe
+  waiver). Desktop: kopie zonder cache heropend, "Nu vernieuwen", aan het eind gesloten zonder opslaan.

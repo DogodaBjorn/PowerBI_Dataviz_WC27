@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "What the terms mean",
+                    "value": "The terms on these pages",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "19px",
@@ -153,7 +153,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'What the terms mean'"
+                  "Value": "'The terms on these pages'"
                 }
               }
             }

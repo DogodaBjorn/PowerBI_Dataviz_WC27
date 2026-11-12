@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "chip_f1",
+  "name": "hdr_def",
   "position": {
-    "x": 1224,
-    "y": 1024,
-    "z": 16000,
-    "width": 160,
-    "height": 48,
-    "tabOrder": 52010
+    "x": 1792,
+    "y": 20,
+    "z": 6102,
+    "width": 96,
+    "height": 24,
+    "tabOrder": 40
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Finding Chip F1 (text)"
+                  "Property": "Definitions Chip (text)"
                 }
               },
-              "queryRef": "_Measures.Finding Chip F1 (text)",
-              "nativeQueryRef": "Finding Chip F1 (text)"
+              "queryRef": "_Measures.Definitions Chip (text)",
+              "nativeQueryRef": "Definitions Chip (text)"
             }
           ]
         }
@@ -54,7 +54,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14D"
+                  "Value": "12D"
                 }
               }
             },
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#A63F0E'"
+                      "Value": "'#A9CDF0'"
                     }
                   }
                 }
@@ -72,7 +72,7 @@
             "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "'right'"
                 }
               }
             },
@@ -207,53 +207,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#4B5466'"
-                    }
-                  }
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'belowValue'"
-                }
-              }
-            },
-            "horizontalAlignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'center'"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'The margin'"
+                  "Value": "false"
                 }
               }
             }
@@ -327,32 +281,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#8E897D'"
-                    }
-                  }
-                }
-              }
-            },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
-            "width": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
+                  "Value": "false"
                 }
               }
             }
@@ -418,14 +347,14 @@
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "4D"
+                  "Value": "0D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "4D"
+                  "Value": "0D"
                 }
               }
             }
@@ -452,7 +381,7 @@
             "section": {
               "expr": {
                 "Literal": {
-                  "Value": "'tt-f1'"
+                  "Value": "'tt-glossary'"
                 }
               }
             }
@@ -470,7 +399,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Alt F1 Title (text)"
+                  "Property": "Alt Definitions (text)"
                 }
               }
             }

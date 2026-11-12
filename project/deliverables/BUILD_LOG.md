@@ -201,3 +201,16 @@ report                 : badge (16 px Tangerine ring-i) at the top right of ever
 renders                : ScreenshotsFinalV2 01-04 remade, 19_tt-glossary new; 05-08 from the round before (footer row and badges differ)
 Desktop                : throwaway copy reopened without its .pbi cache (model change), "Nu vernieuwen" via UI Automation, closed without saving
 ```
+
+```
+2026-11-12, late: header line instead of footer chips; copy review (every word works or goes)
+validate_tmdl --strict : 34 file(s), 0 error(s), 0 warning(s) [strict]
+a11y_check             : 0 failure(s), 0 note(s) over GoodnightInn-opzet.Report
+schema_check           : 0 failing
+pbir_detect opzet      : 14 finding(s) — 4 unwaived, 10 waived -> FAIL (unchanged set; new waiver zone-text-header-line for hdr_*)
+report                 : the masthead's slot holds the header line (hint, on P2 'Revisit the facts' F1-F4, Definitions) as hover words in
+                         zone_eyebrow; the footer is the source line again; reworded: Uncertainty, B/C why and why not, C label, alts intro,
+                         build comparer's empty title, legend 'Case in view', year tooltip kicker/title/card title, glossary kicker/title
+renders                : ScreenshotsFinalV2 01-04, 18, 19 remade; 05-08 from the round before (header and footer differ)
+Desktop                : throwaway copy reopened without its .pbi cache, "Nu vernieuwen" via UI Automation, closed without saving
+```

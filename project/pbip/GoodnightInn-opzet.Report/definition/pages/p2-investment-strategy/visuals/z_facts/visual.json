@@ -1,46 +1,35 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "bdg_f1",
+  "name": "z_facts",
   "position": {
-    "x": 1364,
-    "y": 1032,
-    "z": 15100,
-    "width": 16,
-    "height": 16,
-    "tabOrder": -1701
+    "x": 1448,
+    "y": 20,
+    "z": 11102,
+    "width": 152,
+    "height": 24,
+    "tabOrder": -1685
   },
   "visual": {
-    "visualType": "image",
+    "visualType": "textbox",
     "objects": {
-      "image": [
+      "general": [
         {
           "properties": {
-            "sourceType": {
-              "expr": {
-                "Literal": {
-                  "Value": "'imageUrl'"
-                }
-              }
-            },
-            "sourceUrl": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Revisit the facts",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#C9D0DC"
                     }
-                  },
-                  "Property": "Info Badge SVG"
-                }
+                  }
+                ],
+                "horizontalTextAlignment": "right"
               }
-            },
-            "fit": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Fit'"
-                }
-              }
-            }
+            ]
           }
         }
       ]

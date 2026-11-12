@@ -92,7 +92,7 @@
               },
               "queryRef": "_Measures.Focus Cumulative Net (sel)",
               "nativeQueryRef": "Focus Cumulative Net (sel)",
-              "displayName": "This case"
+              "displayName": "Case in view"
             }
           ]
         }

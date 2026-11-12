@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Package A, our recommendation, in the three cases",
+                    "value": "A in the three cases",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -153,7 +153,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Package A, our recommendation, in the three cases'"
+                  "Value": "'A in the three cases'"
                 }
               }
             }

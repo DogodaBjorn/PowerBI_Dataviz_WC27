@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_hint",
   "position": {
-    "x": 1560,
-    "y": 1044,
-    "z": 40500,
-    "width": 152,
+    "x": 1624,
+    "y": 20,
+    "z": 6100,
+    "width": 136,
     "height": 24,
     "tabOrder": -1691
   },

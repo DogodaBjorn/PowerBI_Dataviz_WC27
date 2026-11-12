@@ -7,15 +7,17 @@ all remade on 12 Nov (evening) from the committed tree, in a 1920 x 1080 Desktop
 2940 px wide. The tooltip pages (10 to 18, unchanged since the morning set) are 480 px wide (here 1440 px, k = 3.0).
 Later that evening, on Björn's go: the hover signifier (a 16 px Tangerine ring-i at the top right of every visual that
 opens a page tooltip), the footer-row hint "hover for more" and the Definitions chip with its tooltip page tt-glossary.
-Renders 01 to 04 were remade for that round and 19 is new; 05 to 08 are from the round before and differ only in the
-footer row (five chips, the hint) and the badges.
+Late that evening (Björn: the footer was cluttered, the masthead said nothing) the hint, the finding references and
+Definitions moved into the masthead's slot as a header line, the footer became the source line again, and every
+sentence on the pages was reviewed (bouwlog 16). Renders 01 to 04, 18 and 19 are from that last round; 05 to 08 are
+from the morning's click round and differ in the header line, the footer row and the badges. Those last-round page renders are 2819 px wide (the Desktop session had its Data pane open, so the page scaled to k = 1.47); 18 and 19 are about 2.07 times the page.
 
 ## Desktop set
 
 | File | What it shows | Evidence for |
 |---|---|---|
-| 01_p1-brand-review.png | Page 1, The Brand Review, as it opens | M2 (masthead clear of the hanger's hole), S1 (F2 legend on top, Goodnight Inn against the other three brands as one line), S5 (F1 title "fell 2.8 points since 2023"), N4 (2 px zero line under F3); the badge on the F3 and F4 cards (the two with hover detail) and nowhere else, the footer row with the hint and the Definitions chip |
-| 02_p2-investment-strategy_recommended-A.png | Page 2, bookmark "Recommended: A", scenario Expected, all packages | M2 (the hanger free in the banner), S2 (short label "NPV range, $M"); the badge on the scatter card (right of the zoom toggle) and on the cumulative chart, the footer row: source line, hint, five chips each with its badge |
+| 01_p1-brand-review.png | Page 1, The Brand Review, as it opens | M2 (masthead clear of the hanger's hole), S1 (F2 legend on top, Goodnight Inn against the other three brands as one line), S5 (F1 title "fell 2.8 points since 2023"), N4 (2 px zero line under F3); the badge on the F3 and F4 cards (the two with hover detail) and nowhere else; the header line "hover for more · Definitions" in the masthead's slot, the footer the source line only |
+| 02_p2-investment-strategy_recommended-A.png | Page 2, bookmark "Recommended: A", scenario Expected, all packages | M2 (the hanger free in the banner), S2 (short label "NPV range, $M"); the badge on the scatter card (right of the zoom toggle) and on the cumulative chart; the header line "hover for more · Revisit the facts F1 F2 F3 F4 · Definitions"; the legend "Case in view"; the Low-case line without its preamble |
 | 03_p2-investment-strategy_considered-B-C.png | Page 2, bookmark "Considered: B and C" | S4 (comparer title "B ends within $1M of A by 2032; C never breaks even"); the badge on the small scatter card and on the comparer |
 | 04_p2-investment-strategy_build-your-own-empty.png | Page 2, bookmark "Build your own", nothing picked | S2 (short label, the muted note "Pick moves on the left; your plan appears here." as the waterfall's title); the badge on the small scatter card and on the comparer, none on the selector or the plan tile (no tooltip there) |
 | 05_p2-investment-strategy_build-your-own-filled.png | The same state after three real clicks in the selector (Booking app, Revenue management, Toronto +40 rooms) | the working click chain: three ticked rows, the selector footer "Picked: 3 moves, $13.2M of $60.0M", the plan tile "Your plan: 3 moves, live by May 2028", the rules line "Within the rules", the waterfall with its own title and the bars "App", "Rev. mgmt", "Toronto +40" (verification 17: no ellipsis); the plan dot in Tangerine on the scatter; N1 (selector capex at one decimal) |
@@ -27,8 +29,8 @@ footer row (five chips, the hint) and the badges.
 | 15_tt-f4-hotel.png | Hotel tooltip, rendered for Toronto Pearson Airport | S3, N2 ("ADR $106.82, RevPAR $84.80"), N6 (room-nights line gone, the page 64 px shorter), the value axis 60 to 100 % back |
 | 16_tt-package-A.png | Package tooltip on package A, Expected | M1: A above the band, B under it with its own tick, C clear, the Low and High numbers on their own row |
 | 17_tt-package-C.png | Package tooltip on package C, Expected | M1 on C: the band left of break-even, A and B clear at the right |
-| 18_tt-year.png | Year tooltip, rendered for 2030 | N3 (title "To the end of 2030: where the four options stand") |
-| 19_tt-glossary.png | The definitions tooltip (hover the Definitions chip in the footer row of either page); 480 x 544, here 988 px wide (k = 2.06, a Desktop capture at a 1920 window) | the nine one-line definitions (NPV, capex, run-rate, pays back / break-even, Low / Expected / High, NPS, ADR, RevPAR, OTA) in the orange tooltip skin; needs no hovered context, so it comes straight from the copy |
+| 18_tt-year.png | Year tooltip, rendered for 2030 | N3 and the copy review: kicker "CUMULATIVE NET IMPACT, $M", title "At the end of 2030", card title "A in the three cases" |
+| 19_tt-glossary.png | The definitions tooltip (hover the word Definitions in the header line of either page); 480 x 544, here 988 px wide (k = 2.06, a Desktop capture at a 1920 window) | the nine one-line definitions (NPV, capex, run-rate, pays back / break-even, Low / Expected / High, NPS, ADR, RevPAR, OTA) in the orange tooltip skin; needs no hovered context, so it comes straight from the copy |
 
 ## How the renders were made
 
@@ -54,9 +56,9 @@ footer row (five chips, the hint) and the badges.
   so the page says it: `Info Badge SVG`, a 16 px Tangerine ring-i drawn without text (the same under Publish to Web and
   on a Mac), at the top right of every visual that opens a page tooltip and nowhere else; under a chip it sits below
   the chip, so the chip keeps the hover. The hint in the footer row (`Info Hint SVG`, "hover for more", 16 px) names it
-  once per page. The Definitions chip is the same pill as F1 to F4; its alt text carries the glossary in one breath for
-  keyboard and screen-reader users (hover itself is not keyboard-reachable). Measured: a 152 px chip clipped "The
-  fading welcome", so the five chips are 160 px and the source line 864 px.
+  once per page, in the header line. The hover words F1 to F4 and Definitions in that line are cardVisuals in the
+  eyebrow's light blue (no pill); their alt text carries the finding's headline or the glossary in one breath for
+  keyboard and screen-reader users (hover itself is not keyboard-reachable).
 - **"Totaal"** under the last bar (04 to 06) is Desktop's nl-NL label for the waterfall's total; in an en-US browser
   it reads "Total" (M3, accepted).
 
