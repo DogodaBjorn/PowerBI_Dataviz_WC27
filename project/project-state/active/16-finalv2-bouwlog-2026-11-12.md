@@ -157,3 +157,37 @@ de visual uitsteekt ("Booki..." zelfs bij "Booking").
   `git stash` ("Desktop-save 2026-11-12 16:33"), boom terug naar HEAD. Daarna schijnbaar 221 gewijzigde bestanden na
   regeneratie: dat was alleen stat-ruis van `core.autocrlf` (`git diff --stat` 5 bestanden; werkelijke commit klein).
 - **Poorten:** validate_tmdl 0 fouten; schema_check 0; a11y_check 0; pbir_detect 4 onbewaakt (ongewijzigd).
+
+## Hover-signifier en definitiepagina (12 nov, avond, op Bjorns akkoord)
+
+Bjorn: de hovers zitten op essentiele plekken maar niets laat zien dat ze er zijn; en een definitielijst voor de
+afkortingen. Akkoord gegeven op het voorstel (een kleine i-in-cirkel in oranje, een verborgen tooltippagina met de
+definities), gebouwd in de generatoren.
+
+- **Signifier:** `Info Badge SVG` (sketch_model.py, C14): een ring met een i in Tangerine, 16 px, als SVG-image-measure
+  zonder tekst (rendert overal gelijk, ook onder Publish to Web). Geplaatst (`badge()` in opzet_report.py) rechtsboven
+  op elk visual dat een paginatooltip opent en nergens anders: P1 de kaarten F3 en F4; P2 de scatterkaart (groot en
+  klein), de drie cumulatieve grafieken en de vijf chips. Bij een chip ligt de badge ONDER de chip (de kaart is
+  transparant), zodat de chip de hover houdt. Decoratief, buiten de tabvolgorde.
+- **Hint:** `Info Hint SVG`, in de voetregelrij van beide pagina's, rechts uitgelijnd tegen de Definitions-chip: de
+  badge en "hover for more" (16 px, de vloer). Legt het teken één keer per pagina uit.
+- **Definitions-chip** (`chip_def` / `chip_def2`, `pill()` in de generator, dezelfde pil als F1-F4): "Definitions" in
+  Burnt Tangerine, "the terms explained" eronder; tooltip = de nieuwe verborgen pagina `tt-glossary` (480 x 544, eigen
+  oranje scene via brand_canvas_v3.py; de oudere scenes bleven byte-gelijk omdat de pagina achteraan staat). Alt-tekst
+  `Alt Definitions (text)`: de woordenlijst in één adem (245 tekens, onder Desktops limiet van 250), zodat een
+  toetsenbord- of screenreadergebruiker de termen ook krijgt.
+- **Woordenlijst** (`GLOSSARY` in opzet_report.py, negen regels, één textbox): NPV, capex, run-rate, pays back /
+  break-even, Low / Expected / High, NPS, ADR, RevPAR, OTA. In de woorden van het rapport zelf; alleen jaartallen, geen
+  getypte cijfers (rente en budget blijven in het model en op de pagina's).
+- **Lay-out** (opzet-layout.json): P2 voetregelrij = bronregel 864 px, hint 136 px, vijf chips van 160 px (152 px
+  knipte "The fading welcome" af, gemeten); de zoomtoggle 16 px naar links (672) en de scattertitel 600 px zodat de badge
+  op 1040 vrij staat. P1: bronregel 1504 px, hint 152 px, chip 160 px. Nieuwe slots dragen z en tab op de schaal van
+  opzet-layering.json (dat bestand kent ze niet; `layered()` laat ze staan).
+- **Renders:** 01 tot 04 opnieuw (de voetregelrij en de badges), 19_tt-glossary nieuw. 05 tot 08 zijn van de ronde
+  ervoor en verschillen alleen in de voetregelrij en de badges (README zegt het). Een tooltip zwevend boven de chip
+  staat niet in de set: een geposte muisbeweging opent hem niet in de bridge-capture.
+- **Toetsenbord:** hover is niet met het toetsenbord bereikbaar; de alt-tekst van de chip vangt dat op. Een
+  bookmarkpaneel met knop blijft de optie als de toetsenbordronde in de service erom vraagt (plan 15, fase 5).
+- **Poorten:** validate_tmdl 0 fouten; schema_check 0; a11y_check 0 (incl. SVG-tekstvloer, alt-lengte, leesvolgorde
+  met de chip na de bronregel); pbir_detect 4 onbewaakt (ongewijzigd). Model: 458 measures (+4). Desktop: wegwerpkopie
+  zonder `.pbi`-cache geopend, "Nu vernieuwen" via UI Automation, aan het eind gesloten zonder opslaan.

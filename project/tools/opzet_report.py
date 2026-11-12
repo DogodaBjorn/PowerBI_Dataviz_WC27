@@ -299,6 +299,8 @@ def p1_visuals():
     v.append(f4_types(P1, "c_f4_types"))
     v.append(f4_chart(P1, "ch_f4_fullest", tooltip_page=TT_F4))
     v.append(tb(P1, "z_footer", FOOTER, alt="Source: Pillow & Key Group dataset. Guest scores weighted by survey responses; 2021 is a depressed base year."))
+    # 12 Nov evening: the hover signifier on the two cards with hover detail, the hint and the Definitions chip in the footer row
+    v += [badge(P1, "bdg_f3", 3), badge(P1, "bdg_f4", 4)] + footer_extras(P1, "", 1)
     return v
 
 
@@ -394,6 +396,7 @@ def f4_chart(page, slot, tooltip_page=None, horizontal=False):
 # ====================================================================== round 6: the findings on P2 and the hover detail pages
 TT_F3, TT_F4 = "tt-f3-band", "tt-f4-hotel"
 TT_YEAR = "tt-year"  # round 9: the one designed tooltip the three cumulative charts share
+TT_GLOSS = "tt-glossary"  # 12 Nov evening (Björn): the definitions page behind the Definitions chip in the footer row of both pages
 FINDINGS = (("1", "The margin"), ("2", "The middleman"), ("3", "The fading welcome"), ("4", "Where we are full"))
 
 
@@ -404,15 +407,9 @@ def finding_chips():
     meets 'F3' in the panel never has to go back to page 1. The alt text is the finding's headline sentence."""
     out = []
     for k, nm in FINDINGS:
-        # on the light footer row the pill takes the white cards' kicker colours (FinalV2 M2b: the night-zone tokens of the
-        # banner failed 4.5:1 on the cream canvas, a11y_check): the code in Burnt Tangerine, the name in Dusk, a Warm Grey hairline
-        v = card(f"chip_f{k}", *at(P2, f"chip_f{k}"), [f"Finding Chip F{k} (text)"], DISPLAY, TITLE_PT, BAD, BODY, S, INK2, labels=[nm], align="center")
-        vc = v["visual"]["visualContainerObjects"]
-        vc["border"] = [{"properties": {"show": b(True), "color": color(SLATE), "radius": num(12), "width": num(1)}}]
-        # 48 px pill (footer row): no top/bottom padding, the 14 pt code and the 12 pt name need the full height (render 12 Nov)
-        vc["padding"] = [{"properties": {"top": num(0), "bottom": num(0), "left": num(4), "right": num(4)}}]
-        vc["visualTooltip"] = page_tooltip(f"tt-f{k}")
-        out.append(bind_alt(v, f"Alt F{k} Title (text)"))
+        # on the light footer row the pill takes the white cards' kicker colours: the code in Burnt Tangerine, the name in Dusk
+        out.append(pill(P2, f"chip_f{k}", f"Finding Chip F{k} (text)", nm, f"tt-f{k}", f"Alt F{k} Title (text)"))
+        out.append(badge(P2, f"bdg_f{k}", int(k)))
     return out
 
 
@@ -489,7 +486,32 @@ def extra_tooltip_pages():
         out.append(page(pg, pg, finish(no_card_fill(scene_visual(pg) + card_frames(pg) + detail_page_visuals(pg))), tooltip=True,
                         filters=[filter_in("Brands", "Brand", ["Goodnight Inn"], "flt_tt_brand")]))
     out.append(page(TT_YEAR, TT_YEAR, finish(no_card_fill(scene_visual(TT_YEAR) + card_frames(TT_YEAR) + year_page_visuals())), tooltip=True))
+    out.append(page(TT_GLOSS, TT_GLOSS, finish(no_card_fill(scene_visual(TT_GLOSS) + card_frames(TT_GLOSS) + glossary_page_visuals())), tooltip=True))
     return out
+
+
+# 12 Nov evening (Björn): the definitions behind the Definitions chip. The short words of both pages, one line each, in the
+# report's own words (the subtitle of P2 already defines NPV in situ; this is the place to look them all up). Years only, no
+# typed figures: the rate and the budget live in the model and on the pages.
+GLOSSARY = (("NPV", "net present value: benefits minus capex and disruption through 2032, in 2025 dollars at the organisers' rate."),
+            ("Capex", "the one-off investment a move takes; the brand's budget caps what a plan may spend."),
+            ("Run-rate", "the operating profit a move adds in a full year once it is live, measured in 2032."),
+            ("Pays back, break-even", "the first year the cumulative net impact, undiscounted, is above zero."),
+            ("Low, Expected, High", "the organisers' three cases for every move; every number on page 2 follows the case in view."),
+            ("NPS", "net promoter score: promoters minus detractors among surveyed guests, weighted by responses."),
+            ("ADR", "average daily rate: room revenue per room night sold."),
+            ("RevPAR", "revenue per available room: room revenue per room night available, sold or not."),
+            ("OTA, online agencies", "booking sites that take a commission on every room night they bring."))
+
+
+def glossary_page_visuals():
+    pg = TT_GLOSS
+    x, y, w, h, z, tab = at(pg, "ttg_list")
+    paras = [[(term, DISPLAY, SPX, INK, False), ("  " + what, BODY, SPX, INK2, False)] for term, what in GLOSSARY]
+    lst = textbox("ttg_list", x, y, w, h, z, tab, paras, alt="The definitions of the short words on these pages, one line each")
+    return [night_kicker(pg, "ttg_kicker", "DEFINITIONS  ·  THE SHORT WORDS ON THESE PAGES"),
+            tb(pg, "ttg_title", "What the terms mean", font=DISPLAY, size=19, colour=INK),
+            lst]
 
 
 def year_page_visuals():
@@ -604,6 +626,33 @@ def image_measure(page, name, measure, alt):
     x, y, w, h, z, tab = at(page, name)
     objs = {"image": [{"properties": {"sourceType": text("imageUrl"), "sourceUrl": mtext(measure), "fit": text("Fit")}}]}
     return visual(name, "image", x, y, w, h, z, tab, objects=objs, vcos=vco(alt=alt, padding=0))
+
+
+def badge(page, name, i):
+    """The hover signifier (12 Nov evening, Björn; a signifier in Don Norman's sense, CREDITS.md): Power BI never changes the
+    cursor over a visual that opens a report-page tooltip, so a 16 px Tangerine ring-i (Info Badge SVG) sits at the top right
+    of every such visual, and nowhere else, so the mark keeps its meaning; the footer-row hint (Info Hint SVG) names it once.
+    Decorative. Under a chip it sits BELOW the chip (its card is transparent), so the chip, not the badge, takes the hover."""
+    return decorative(image_measure(page, name, "Info Badge SVG", None), 700 + i)
+
+
+def pill(page, name, measure, label, tooltip_page, alt_measure):
+    """A chip in the footer row: the code or word in Burnt Tangerine, the name under it in Dusk, a Warm Grey hairline pill,
+    and a report-page tooltip. FinalV2 M2b: the night-zone tokens of the banner failed 4.5:1 on the cream canvas."""
+    v = card(name, *at(page, name), [measure], DISPLAY, TITLE_PT, BAD, BODY, S, INK2, labels=[label], align="center")
+    vc = v["visual"]["visualContainerObjects"]
+    vc["border"] = [{"properties": {"show": b(True), "color": color(SLATE), "radius": num(12), "width": num(1)}}]
+    # 48 px pill (footer row): no top/bottom padding, the 14 pt code and the 12 pt name need the full height (render 12 Nov)
+    vc["padding"] = [{"properties": {"top": num(0), "bottom": num(0), "left": num(4), "right": num(4)}}]
+    vc["visualTooltip"] = page_tooltip(tooltip_page)
+    return bind_alt(v, alt_measure)
+
+
+def footer_extras(page, sfx, i):
+    """The footer row's hint and Definitions chip (both pages): the hint explains the badge once, the chip opens the glossary."""
+    return [decorative(image_measure(page, f"z_hint{sfx}", "Info Hint SVG", None), 690 + i),
+            pill(page, f"chip_def{sfx}", "Definitions Chip (text)", "the terms explained", TT_GLOSS, "Alt Definitions (text)"),
+            badge(page, f"bdg_def{sfx}", 10 + i)]
 
 
 def brand_row(page_name, sfx):
@@ -859,6 +908,9 @@ def p2_visuals():
     v.append(cumulative_chart("ch_cmp_build", [("Preset A Cumulative Net (sel)", "A, our recommendation"), ("Build Cumulative Net (sel)", "Your plan")],
                               [ACCENT_MARK, SIGNAL_MARK], [3, 3], dashed=(), title_measure="Cmp Build Title (text)", alt_measure="Alt Cmp Build (text)"))
     v.append(dyn(P2, "z_footer2", "Footer P2 (text)"))
+    # 12 Nov evening: the hover signifier on every hover target (the scatter's dots, the three year charts), the footer row's extras
+    v += [badge(P2, "bdg_scatter", 20), badge(P2, "bdg_scatter_s", 21), badge(P2, "bdg_rec_cum", 22), badge(P2, "bdg_cmp_alts", 23), badge(P2, "bdg_cmp_build", 24)]
+    v += footer_extras(P2, "2", 2)
     return v
 
 

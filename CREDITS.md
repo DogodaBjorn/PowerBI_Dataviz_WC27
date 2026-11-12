@@ -46,6 +46,7 @@ adopt a new idea into it, add its source here in the same change
 | **Alan Smith** (*How Charts Work*, FT Publishing 2022; via the BookCompiler canon CP-051 to CP-072) | Relationship-first chart choice beyond the familiar forms, scale and map honesty, writing the chart (finding titles, metadata subtitles, annotation). | .claude/skills/chart-grounding |
 | **IBCS** (Rolf Hichert et al.) | Notation consistency and variance-visualization rigor. | source register, table-studio |
 | **Nielsen Norman Group** | Evidence-based dashboard usability. | source register |
+| **Don Norman** (*The Design of Everyday Things*, revised 2013) | Signifiers: a visible mark that says where an action is possible. The hover badge of 12 Nov 2026 (a Tangerine ring-i on every visual that opens a page tooltip, named once by the footer hint) is that idea in our words. | `sketch_model.py` (`Info Badge SVG`, `Info Hint SVG`), `opzet_report.py` (`badge()`) |
 | **W3C** ([WCAG 2.2](https://www.w3.org/TR/WCAG22/)) | The accessibility criteria our contrast script and audit implement. | a11y-studio, check_contrast.py |
 
 ## The dashboard canon (dataviz-canon skill)

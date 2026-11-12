@@ -187,3 +187,17 @@ Desktop                : throwaway copy only, build state, no filters; rows clic
                          only selects the visual container in edit mode); 05 = rows GI-01/GI-10/GI-04, 06 = GI-07/GI-08/GI-03 after a reload;
                          the project was not opened; Desktop closed without saving at the end
 ```
+
+```
+2026-11-12, hover signifier and definitions tooltip (Björn's go on the UX suggestion)
+validate_tmdl --strict : 34 file(s), 0 error(s), 0 warning(s) [strict]
+a11y_check             : 0 failure(s), 0 note(s) over GoodnightInn-opzet.Report
+schema_check           : 0 failing
+pbir_detect opzet      : 9 finding(s) — 4 unwaived, 5 waived -> FAIL (unchanged, all from before FinalV2)
+model                  : + Info Badge SVG, Info Hint SVG (image measures), Definitions Chip (text), Alt Definitions (text); 458 measures
+report                 : badge (16 px Tangerine ring-i) at the top right of every visual with a page tooltip (P1 F3/F4 cards; P2 scatter
+                         cards, three year charts, five chips); footer-row hint "hover for more"; Definitions chip on both pages with the
+                         new hidden tooltip page tt-glossary (480 x 544, nine one-line definitions); P2 chips 160 px, sl_view at x 672
+renders                : ScreenshotsFinalV2 01-04 remade, 19_tt-glossary new; 05-08 from the round before (footer row and badges differ)
+Desktop                : throwaway copy reopened without its .pbi cache (model change), "Nu vernieuwen" via UI Automation, closed without saving
+```

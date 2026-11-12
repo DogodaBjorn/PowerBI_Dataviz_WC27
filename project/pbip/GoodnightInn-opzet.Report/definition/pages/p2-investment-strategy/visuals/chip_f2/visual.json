@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "chip_f2",
   "position": {
-    "x": 1384,
+    "x": 1392,
     "y": 1024,
     "z": 17000,
     "width": 160,

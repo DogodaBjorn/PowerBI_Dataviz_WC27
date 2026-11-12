@@ -1,5 +1,5 @@
 {
-  "_doc": "Slot map, v9 of 2026-11-11 (12-feedbackronde-4, rounds 4 to 9): P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 = the package scatter (layers: cloud, A/B/C, a transparent hover layer for the package tooltip) and a right panel in THREE states: rec (the recommendation A, default), alts (B and C, considered and not recommended) and build (build your own plan). In alts and build the scatter card shrinks (a second, smaller scatter stack hero_s_*) and a comparer card of cumulative net impact spans the bottom. Single source of positions for the PBIR generator (project/tools/opzet_report.py) and the a11y check. Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-wakeup 3.1, night header). 'cards' are furniture (radius 12, white fill) drawn as empty textbox visuals UNDER the content; 'tiles' are inner furniture (kind glow / tint / outline); 'visuals' are Power BI visuals. state: absent = always visible; a list of states = shown only in those states, swapped by display-only bookmarks bm_p2_rec / bm_p2_alts / bm_p2_build. A card may carry shadow: null (the tooltip's base), a tile a radius (0 squares the night header's lower corners). 12 pt (16 px) floor everywhere. Round 7: every tooltip page is the page in miniature: its own night scene (canvas-tt-<page>.jpg), the kicker (y 16) and the title (y 40) on the banner, white cards with the page's shadow hanging 24 px into the banner (16 px margins, 16 px padding); the package tooltip holds two cards (return, moves). Round 8: the titles higher (headline y 80, subtitle y 128), the first card row at y 168 (the horizon at 232, so the top cards hang 64 px into the banner), the gained 16 px spent on air: 24 px vertical gutters on P1, a taller F4 card, the panel's rhythm on P2 with a taller scatter and cumulative chart, the footer at 1032. Round 9 (final): the brand row at y 16/24, headline y 64, subtitle y 112, P2 chips y 56 (Björn's Desktop move, on the grid); the F2 folio table 112 px; the P2 reading guide two lines (tile 112) and the scatter 656 px tall; the finding tooltips' title 72 px; a year tooltip page (tt-year, 560 x 376) for the three cumulative charts. Round 9b: the header rows at Björn's own Desktop positions (logo y 12, eyebrow and masthead y 20, headline y 60, subtitle y 108, P2 chips y 48; a 4 px grid for the header rows only).",
+  "_doc": "Slot map, v9 of 2026-11-11 (12-feedbackronde-4, rounds 4 to 9): P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 = the package scatter (layers: cloud, A/B/C, a transparent hover layer for the package tooltip) and a right panel in THREE states: rec (the recommendation A, default), alts (B and C, considered and not recommended) and build (build your own plan). In alts and build the scatter card shrinks (a second, smaller scatter stack hero_s_*) and a comparer card of cumulative net impact spans the bottom. Single source of positions for the PBIR generator (project/tools/opzet_report.py) and the a11y check. Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-wakeup 3.1, night header). 'cards' are furniture (radius 12, white fill) drawn as empty textbox visuals UNDER the content; 'tiles' are inner furniture (kind glow / tint / outline); 'visuals' are Power BI visuals. state: absent = always visible; a list of states = shown only in those states, swapped by display-only bookmarks bm_p2_rec / bm_p2_alts / bm_p2_build. A card may carry shadow: null (the tooltip's base), a tile a radius (0 squares the night header's lower corners). 12 pt (16 px) floor everywhere. Round 7: every tooltip page is the page in miniature: its own night scene (canvas-tt-<page>.jpg), the kicker (y 16) and the title (y 40) on the banner, white cards with the page's shadow hanging 24 px into the banner (16 px margins, 16 px padding); the package tooltip holds two cards (return, moves). Round 8: the titles higher (headline y 80, subtitle y 128), the first card row at y 168 (the horizon at 232, so the top cards hang 64 px into the banner), the gained 16 px spent on air: 24 px vertical gutters on P1, a taller F4 card, the panel's rhythm on P2 with a taller scatter and cumulative chart, the footer at 1032. Round 9 (final): the brand row at y 16/24, headline y 64, subtitle y 112, P2 chips y 56 (Björn's Desktop move, on the grid); the F2 folio table 112 px; the P2 reading guide two lines (tile 112) and the scatter 656 px tall; the finding tooltips' title 72 px; a year tooltip page (tt-year, 560 x 376) for the three cumulative charts. Round 9b: the header rows at Björn's own Desktop positions (logo y 12, eyebrow and masthead y 20, headline y 60, subtitle y 108, P2 chips y 48; a 4 px grid for the header rows only). FinalV2 follow-up (12 Nov, evening, Björn): a hover signifier (bdg_*, a 16 px Tangerine ring-i at the top right of every visual that opens a page tooltip, nowhere else), a hint in the footer row (z_hint*: the badge and 'hover for more') and a Definitions chip (chip_def*; five chips of 160 px on P2) whose tooltip page tt-glossary (480 x 544) lists the short words of both pages. Z and tab of the new slots are on the layering file's scale, since that file does not know them.",
   "canvas": {
     "w": 1920,
     "h": 1080
@@ -216,6 +216,15 @@
           "tab": 500
         },
         {
+          "name": "bdg_f3",
+          "x": 1856,
+          "y": 332,
+          "w": 16,
+          "h": 16,
+          "z": 32500,
+          "tab": 8992
+        },
+        {
           "name": "c_f3_title",
           "x": 1304,
           "y": 352,
@@ -252,6 +261,15 @@
           "tab": 600
         },
         {
+          "name": "bdg_f4",
+          "x": 1856,
+          "y": 836,
+          "w": 16,
+          "h": 16,
+          "z": 36500,
+          "tab": 8993
+        },
+        {
           "name": "c_f4_title",
           "x": 56,
           "y": 856,
@@ -282,10 +300,37 @@
           "name": "z_footer",
           "x": 32,
           "y": 1032,
-          "w": 1856,
+          "w": 1504,
           "h": 48,
           "z": 1090,
           "tab": 9000
+        },
+        {
+          "name": "z_hint",
+          "x": 1560,
+          "y": 1044,
+          "w": 152,
+          "h": 24,
+          "z": 40500,
+          "tab": 8990
+        },
+        {
+          "name": "chip_def",
+          "x": 1720,
+          "y": 1024,
+          "w": 160,
+          "h": 48,
+          "z": 41000,
+          "tab": 9100
+        },
+        {
+          "name": "bdg_def",
+          "x": 1860,
+          "y": 1032,
+          "w": 16,
+          "h": 16,
+          "z": 40900,
+          "tab": 8991
         }
       ]
     },
@@ -384,7 +429,7 @@
         },
         {
           "name": "chip_f1",
-          "x": 1216,
+          "x": 1224,
           "y": 1024,
           "w": 160,
           "h": 48,
@@ -392,8 +437,17 @@
           "tab": 9010
         },
         {
+          "name": "bdg_f1",
+          "x": 1364,
+          "y": 1032,
+          "w": 16,
+          "h": 16,
+          "z": 15100,
+          "tab": 8992
+        },
+        {
           "name": "chip_f2",
-          "x": 1384,
+          "x": 1392,
           "y": 1024,
           "w": 160,
           "h": 48,
@@ -401,8 +455,17 @@
           "tab": 9020
         },
         {
+          "name": "bdg_f2",
+          "x": 1532,
+          "y": 1032,
+          "w": 16,
+          "h": 16,
+          "z": 15200,
+          "tab": 8993
+        },
+        {
           "name": "chip_f3",
-          "x": 1552,
+          "x": 1560,
           "y": 1024,
           "w": 160,
           "h": 48,
@@ -410,13 +473,31 @@
           "tab": 9030
         },
         {
+          "name": "bdg_f3",
+          "x": 1700,
+          "y": 1032,
+          "w": 16,
+          "h": 16,
+          "z": 15300,
+          "tab": 8994
+        },
+        {
           "name": "chip_f4",
-          "x": 1720,
+          "x": 1728,
           "y": 1024,
           "w": 160,
           "h": 48,
           "z": 1005,
           "tab": 9040
+        },
+        {
+          "name": "bdg_f4",
+          "x": 1868,
+          "y": 1032,
+          "w": 16,
+          "h": 16,
+          "z": 15400,
+          "tab": 8995
         },
         {
           "name": "c_subtitle2",
@@ -431,7 +512,7 @@
           "name": "c_scatter_title",
           "x": 56,
           "y": 184,
-          "w": 616,
+          "w": 600,
           "h": 32,
           "z": 1010,
           "tab": 200,
@@ -440,8 +521,20 @@
           ]
         },
         {
+          "name": "bdg_scatter",
+          "x": 1040,
+          "y": 192,
+          "w": 16,
+          "h": 16,
+          "z": 20500,
+          "tab": 8996,
+          "state": [
+            "rec"
+          ]
+        },
+        {
           "name": "sl_view",
-          "x": 688,
+          "x": 672,
           "y": 176,
           "w": 360,
           "h": 40,
@@ -507,6 +600,19 @@
           "h": 32,
           "z": 1010,
           "tab": 201,
+          "state": [
+            "alts",
+            "build"
+          ]
+        },
+        {
+          "name": "bdg_scatter_s",
+          "x": 720,
+          "y": 192,
+          "w": 16,
+          "h": 16,
+          "z": 21500,
+          "tab": 8997,
           "state": [
             "alts",
             "build"
@@ -751,6 +857,18 @@
           ]
         },
         {
+          "name": "bdg_rec_cum",
+          "x": 1840,
+          "y": 748,
+          "w": 16,
+          "h": 16,
+          "z": 47500,
+          "tab": 8998,
+          "state": [
+            "rec"
+          ]
+        },
+        {
           "name": "c_uncertainty",
           "x": 1112,
           "y": 968,
@@ -919,6 +1037,18 @@
           ]
         },
         {
+          "name": "bdg_cmp_alts",
+          "x": 1840,
+          "y": 684,
+          "w": 16,
+          "h": 16,
+          "z": 63500,
+          "tab": 8999,
+          "state": [
+            "alts"
+          ]
+        },
+        {
           "name": "dn_build_selector",
           "x": 792,
           "y": 296,
@@ -991,13 +1121,52 @@
           ]
         },
         {
+          "name": "bdg_cmp_build",
+          "x": 1840,
+          "y": 684,
+          "w": 16,
+          "h": 16,
+          "z": 64500,
+          "tab": 9001,
+          "state": [
+            "build"
+          ]
+        },
+        {
           "name": "z_footer2",
           "x": 32,
           "y": 1032,
-          "w": 1152,
+          "w": 864,
           "h": 48,
           "z": 1090,
           "tab": 9000
+        },
+        {
+          "name": "z_hint2",
+          "x": 912,
+          "y": 1044,
+          "w": 136,
+          "h": 24,
+          "z": 71000,
+          "tab": 8990
+        },
+        {
+          "name": "chip_def2",
+          "x": 1056,
+          "y": 1024,
+          "w": 160,
+          "h": 48,
+          "z": 15000,
+          "tab": 52005
+        },
+        {
+          "name": "bdg_def2",
+          "x": 1196,
+          "y": 1032,
+          "w": 16,
+          "h": 16,
+          "z": 14000,
+          "tab": 8991
         }
       ],
       "tiles": [
@@ -1608,6 +1777,52 @@
           "h": 56,
           "z": 1005,
           "tab": 150
+        }
+      ]
+    },
+    {
+      "name": "tt-glossary",
+      "tooltip": true,
+      "canvas": {
+        "w": 480,
+        "h": 544
+      },
+      "cards": [
+        {
+          "id": "tt_gloss",
+          "x": 16,
+          "y": 48,
+          "w": 448,
+          "h": 480
+        }
+      ],
+      "visuals": [
+        {
+          "name": "ttg_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 448,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "ttg_title",
+          "x": 32,
+          "y": 56,
+          "w": 416,
+          "h": 32,
+          "z": 1001,
+          "tab": 110
+        },
+        {
+          "name": "ttg_list",
+          "x": 32,
+          "y": 96,
+          "w": 416,
+          "h": 416,
+          "z": 1002,
+          "tab": 120
         }
       ]
     }

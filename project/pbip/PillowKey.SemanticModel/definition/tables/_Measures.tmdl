@@ -2671,6 +2671,32 @@ table _Measures
 		displayFolder: 11 Accessibility
 		lineageTag: f94bb586-30d4-5704-bb84-4f2d9497615c
 
+	/// The hover signifier: a Tangerine ring with an i, 16 px, on every visual that opens a report-page tooltip; decorative, the footer hint names it.
+	measure 'Info Badge SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'>" & "<circle cx='8' cy='8' r='6.75' fill='none' stroke='%23E05A22' stroke-width='1.5'/><circle cx='8' cy='4.9' r='1.15' fill='%23E05A22'/><rect x='7.1' y='7' width='1.8' height='5' rx='0.9' fill='%23E05A22'/></svg>"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		dataCategory: ImageUrl
+		lineageTag: fb645236-1fa1-5a25-aade-1a5a3db1045f
+
+	/// The footer-row hint that explains the badge once per page: the badge and 'hover for more', right-aligned to the Definitions chip; decorative.
+	measure 'Info Hint SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='152' height='24' viewBox='0 0 152 24'>" & "<g transform='translate(25 4)'><circle cx='8' cy='8' r='6.75' fill='none' stroke='%23E05A22' stroke-width='1.5'/><circle cx='8' cy='4.9' r='1.15' fill='%23E05A22'/><rect x='7.1' y='7' width='1.8' height='5' rx='0.9' fill='%23E05A22'/></g><text x='152' y='17' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>hover for more</text></svg>"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		dataCategory: ImageUrl
+		lineageTag: c923e8e7-34a7-5892-9ae1-6739f62b48d5
+
+	/// The Definitions chip in the footer row of both pages (the label is the card's); hovering it opens the definitions tooltip page.
+	measure 'Definitions Chip (text)' = "Definitions"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 0b711f65-aca6-538c-b0dc-82d8dc39b477
+
+	/// The Definitions chip read aloud: the glossary in one breath, so a keyboard or screen-reader user gets the terms the hover shows.
+	measure 'Alt Definitions (text)' = "The short words on these pages. NPV: net present value to 2032. Capex: the investment. Run-rate: profit a year by 2032. NPS: promoters minus detractors. ADR: revenue per room sold. RevPAR: revenue per room available. OTA: an online booking site."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 68655a71-0b3f-52d3-838d-22d4ef8672d3
+
 	/// The reading guide read aloud.
 	measure 'Alt Guide (text)' = "How to read the chart. " & [Guide (text)] & " A is our recommendation; B and C were considered and not recommended."
 		formatString: @

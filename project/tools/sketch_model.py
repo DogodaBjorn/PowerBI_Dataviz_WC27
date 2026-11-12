@@ -1731,6 +1731,28 @@ alt_m("Hotel Nums", '"This hotel in 2025: occupancy " & FORMAT ( [Occupancy % 20
 alt_m("Occupancy Hotel Line", f'"Occupancy by month in 2025, this hotel against the whole brand: the hotel averages " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", the brand " & FORMAT ( CALCULATE ( [Occupancy % 2025], {BRAND_ALL} ), "0.0%" ) & "."',
       "The F4 hotel tooltip's line chart read aloud.")
 
+# ---- FinalV2 follow-up (12 Nov, evening; Björn): the hover signifier and the definitions tooltip. Power BI never changes the
+# cursor over a visual that opens a report-page tooltip, so the page itself says where a hover pays: one small ring-i badge in
+# Tangerine (a signifier in Don Norman's sense, CREDITS.md) at the same spot on every hover target and nowhere else, a hint in
+# the footer row that names it once ('hover for more'), and a Definitions chip in that row whose tooltip page (tt-glossary)
+# lists the short words of both pages. The badge is drawn without text, so it renders the same under Publish to Web; the
+# hint's words are at the 16 px floor. Its alt text carries the glossary in one breath (Desktop's 250-character limit).
+_BADGE = ("<circle cx='8' cy='8' r='6.75' fill='none' stroke='" + HX(SIGNAL_MARK) + "' stroke-width='1.5'/>"
+          "<circle cx='8' cy='4.9' r='1.15' fill='" + HX(SIGNAL_MARK) + "'/>"
+          "<rect x='7.1' y='7' width='1.8' height='5' rx='0.9' fill='" + HX(SIGNAL_MARK) + "'/>")
+m("Info Badge SVG", '"data:image/svg+xml;utf8," & ' + SVG_OPEN(16, 16) + ' & "' + _BADGE + '</svg>"', TXT, C14,
+  "The hover signifier: a Tangerine ring with an i, 16 px, on every visual that opens a report-page tooltip; decorative, the footer hint names it.")
+IMAGE_MEASURES.add("Info Badge SVG")
+m("Info Hint SVG",
+  '"data:image/svg+xml;utf8," & ' + SVG_OPEN(152, 24) + " & \"<g transform='translate(25 4)'>" + _BADGE + "</g><text x='152' y='17' text-anchor='end' " + SVG_FONT
+  + " fill='" + HX(INK2) + "'>hover for more</text></svg>\"", TXT, C14,
+  "The footer-row hint that explains the badge once per page: the badge and 'hover for more', right-aligned to the Definitions chip; decorative.")
+IMAGE_MEASURES.add("Info Hint SVG")
+m("Definitions Chip (text)", '"Definitions"', TXT, C14, "The Definitions chip in the footer row of both pages (the label is the card's); hovering it opens the definitions tooltip page.")
+alt_m("Definitions",
+      '"The short words on these pages. NPV: net present value to 2032. Capex: the investment. Run-rate: profit a year by 2032. NPS: promoters minus detractors. ADR: revenue per room sold. RevPAR: revenue per room available. OTA: an online booking site."',
+      "The Definitions chip read aloud: the glossary in one breath, so a keyboard or screen-reader user gets the terms the hover shows.")
+
 # ---- alt texts of the new visuals (plan 11 practice: the message with live values, from the model)
 alt_m("Guide", '"How to read the chart. " & [Guide (text)] & " A is our recommendation; B and C were considered and not recommended."', "The reading guide read aloud.")
 alt_m("TT Moves", TT_ID + 'RETURN IF ( ISBLANK ( pkg ), BLANK (), "The moves in the hovered package with their net present value: " & [TT Moves (text)] & ". " & [TT Not Included (text)] )',
