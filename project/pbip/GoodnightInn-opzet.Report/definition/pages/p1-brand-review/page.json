@@ -14,7 +14,7 @@
               "color": {
                 "expr": {
                   "Literal": {
-                    "Value": "'#F5F3F0'"
+                    "Value": "'#12233D'"
                   }
                 }
               }
@@ -32,16 +32,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'bg-p1-brand-review.png'"
-                  }
-                }
-              },
-              "url": {
-                "expr": {
-                  "ResourcePackageItem": {
-                    "PackageName": "RegisteredResources",
-                    "PackageType": 1,
-                    "ItemName": "bg-p1-brand-review.png"
+                    "Value": "'canvas-night.jpg'"
                   }
                 }
               },
@@ -51,6 +42,39 @@
                     "Value": "'Fit'"
                   }
                 }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "canvas-night.jpg"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#12233D'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
               }
             }
           }

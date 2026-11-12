@@ -1,0 +1,76 @@
+[
+ {
+  "op": "metrics",
+  "w": 1802,
+  "h": 1250,
+  "dsf": 1
+ },
+ {
+  "op": "wait",
+  "ms": 2000
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "tab",
+  "js": "(() => { const e = [...document.querySelectorAll('.textLabel')].find(x => x.textContent.trim() === 'The Investment Strategy'); const r = e.getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2]; })()"
+ },
+ {
+  "op": "wait",
+  "ms": 5000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\W1366a_P2_landing_A_Expected.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' plan A Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\W1366b_P2_plan_A_Expected.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p1 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "tab",
+  "js": "(() => { const e = [...document.querySelectorAll('.textLabel')].find(x => x.textContent.trim() === 'The Brand Review'); const r = e.getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2]; })()"
+ },
+ {
+  "op": "wait",
+  "ms": 5000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\W1366c_P1_brand-review.png"
+ }
+]

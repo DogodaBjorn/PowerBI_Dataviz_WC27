@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "z_masthead",
   "position": {
-    "x": 192,
-    "y": 40,
-    "z": 1000,
-    "width": 1696,
+    "x": 704,
+    "y": 20,
+    "z": 6000,
     "height": 24,
-    "tabOrder": 9100
+    "width": 1184,
+    "tabOrder": 30
   },
   "visual": {
     "visualType": "textbox",
@@ -19,11 +19,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "THE BRAND REVIEW  ·  2021 TO 2025  ·  FOR THE BOARD OF PILLOW & KEY GROUP",
+                    "value": "2021 TO 2025  ·  FOR THE BOARD OF PILLOW & KEY GROUP",
                     "textStyle": {
-                      "fontFamily": "Verdana",
-                      "fontSize": "13px",
-                      "color": "#5B5163"
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#C9D0DC"
                     }
                   }
                 ],
@@ -146,8 +146,33 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2021 to 2025, for the Board of Pillow & Key Group'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }

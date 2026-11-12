@@ -6,6 +6,8 @@
 
 **Relatie met bestaande plannen:** dit is geen vervanging van `07-fixgids-review-v2.md` en `08-verbeterplan-ronde-3.md`. Waar een punt overlapt (R3 hier vs. F2/K1/V1 daar), staat dat erbij. Volgorde van implementatie blijft die van 08 paragraaf 4, met deze punten als toevoeging aan de copy- en framingstap.
 
+**Rebuild-pakket (toegevoegd 2026-11-09).** Dit plan is deel A (inhoud) van één rebuild-pakket; deel B (vorm: merkkit 3.1, kleur, typografie, night header) is `10-design-rebuild.md`. Beide raken dezelfde generators en worden samen gebouwd, in de gezamenlijke volgorde van 10 paragraaf 4. De punten R1-R5 hieronder zijn ongewijzigd.
+
 **Geldende randvoorwaarden (ongewijzigd):**
 
 - *Do-not-fabricate:* elk cijfer dat op een canvas landt wordt opnieuw uit het model afgeleid (stage 4/6). Onderzoeksgetallen (bijvoorbeeld de £1,87/£4,11 uit Profit Ability 2) komen nergens als getal op het canvas; ze zijn alleen argument voor de vorm.
@@ -107,4 +109,6 @@
 2. R2 (NPS-copy) en R4 (voetnoot) - zelfde rebuild; puur measures/copy.
 3. R1 na de offline haalbaarheidscheck van de indexlijnen; eventueel trend-slot alleen als het canvas het toelaat (V4).
 4. R5 als zinnetje in dezelfde copy-rebuild.
+Gezamenlijke volgorde met deel B (design rebuild): zie `10-design-rebuild.md` paragraaf 4; die volgorde vervangt deze lijst niet maar vlecht D1-D6 erin.
+
 5. Daarna de vaste cyclus: `schema_check.py`, rebuild, renders op 1920 en 1366, eigen-ogen review (K6), en de Publish-to-Web-gate bij Bjorn (R6/N10 uit 08).

@@ -32,7 +32,6 @@ table GuestComplaints
 		summarizeBy: none
 		sourceColumn: Complaints
 
-
 	partition GuestComplaints = m
 		mode: import
 		queryGroup: Facts
@@ -45,5 +44,5 @@ table GuestComplaints
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

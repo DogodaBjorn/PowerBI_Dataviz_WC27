@@ -47,3 +47,9 @@ ref table KpiLine
 ref table Package
 ref table PackageProject
 ref table PlanSelector
+ref table ScatterView
+ref table BuildMove
+ref table BuildPoint
+
+ref cultureInfo en-US
+

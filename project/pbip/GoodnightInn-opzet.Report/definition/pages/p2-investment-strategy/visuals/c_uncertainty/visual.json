@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "c_uncertainty",
   "position": {
     "x": 1112,
-    "y": 920,
-    "z": 1040,
+    "y": 968,
+    "z": 48000,
+    "height": 32,
     "width": 752,
-    "height": 40,
-    "tabOrder": 440
+    "tabOrder": 34000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -47,14 +47,14 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Verdana'"
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "12D"
                 }
               }
             },
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#5B5163'"
+                      "Value": "'#A63F0E'"
                     }
                   }
                 }
@@ -216,6 +216,29 @@
             "id": "default"
           }
         }
+      ],
+      "fillCustom": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -239,6 +262,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
                 }
               }
             }
@@ -336,15 +366,32 @@
           "properties": {
             "altText": {
               "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Uncertainty (text)"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
                 "Literal": {
-                  "Value": "'Uncertainty'"
+                  "Value": "false"
                 }
               }
             }
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }

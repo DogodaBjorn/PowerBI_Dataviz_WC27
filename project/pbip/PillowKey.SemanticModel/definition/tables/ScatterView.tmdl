@@ -1,0 +1,24 @@
+/// Disconnected toggle for the P2 scatter (Björn 7 Nov): all packages, or a zoom on A, B and C. Drives the axis ends through Scatter X End / Scatter Y Start / Scatter Y End; filters nothing.
+table ScatterView
+	lineageTag: 261b8a21-dbad-516e-8650-253d9986382e
+
+	column View
+		lineageTag: 009efdd2-7328-5877-901e-859797084a8f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [View]
+		sortByColumn: Sort
+
+	column Sort
+		formatString: 0
+		lineageTag: 7ddedb44-3e2b-55ed-b40d-47bc4b954625
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Sort]
+
+	partition ScatterView = calculated
+		mode: import
+		source = DATATABLE ( "View", STRING, "Sort", INTEGER, { { "All packages", 1 }, { "Zoom on A, B, C", 2 } } )
+
+	annotation PBI_ResultType = Table
+

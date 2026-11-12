@@ -100,6 +100,8 @@ The daily driver is `/next` — it reads the state, reports gate status, and rou
 | P2 focus swap (package selector, bookmark states, Deneb/HTML route gates) | skill `fx-focus` + `project/project-state/active/02-focuswissel-methode.md` |
 | Screenshot review v2 op de opzet (fixgids met acceptatiechecks, volgorde tot 18 nov) | `project/project-state/active/07-fixgids-review-v2.md` + `research/log/2026-11-07-screenshot-review-v2.md` |
 | Verbeterplan ronde 3 (Bjorns feedback 7 nov: C-framing, scatter-tooltips, nullijn, canvasruimte, merkherkenning + open punten ronde 2) | `project/project-state/active/08-verbeterplan-ronde-3.md` |
+| Rebuild-pakket 9 nov: deel A inhoud (KPI-onderzoek, R1-R5) + deel B design (merkkit goodnight-inn-wakeup 3.1, night header, D1-D7), gezamenlijke bouwvolgorde | `project/project-state/active/09-research-based-rebuild.md` + `project/project-state/active/10-design-rebuild.md` |
+| Rebuild 09+10 gebouwd op v3 (afstemming plannen tegen main vs. v3-build, besluiten 9 nov: night-glow-waiver, 12 pt, R1 als zin in F1, toegankelijkheidscontrole en a11y_check.py) | `project/project-state/active/11-rebuild-v3-reconciliation.md` |
 | Keep the toolkit first-in-class (research any subject) | skill `scout` + `research/radar.md` |
 
 ## Environment notes

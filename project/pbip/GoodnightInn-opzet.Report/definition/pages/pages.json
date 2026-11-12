@@ -2,7 +2,15 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
   "pageOrder": [
     "p1-brand-review",
-    "p2-investment-strategy"
+    "p2-investment-strategy",
+    "tt-package",
+    "tt-f1",
+    "tt-f2",
+    "tt-f3",
+    "tt-f4",
+    "tt-f3-band",
+    "tt-f4-hotel",
+    "tt-year"
   ],
   "activePageName": "p1-brand-review"
 }

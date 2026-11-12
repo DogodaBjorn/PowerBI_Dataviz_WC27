@@ -8,7 +8,6 @@ table Region
 		summarizeBy: none
 		sourceColumn: Region
 
-
 	partition Region = m
 		mode: import
 		queryGroup: Dimensions
@@ -21,5 +20,5 @@ table Region
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

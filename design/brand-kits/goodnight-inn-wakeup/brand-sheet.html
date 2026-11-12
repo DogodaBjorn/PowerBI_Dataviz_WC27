@@ -1,0 +1,244 @@
+<title>Goodnight Inn Brand Kit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+<style>
+/* Layout: the report's own anatomy as a brand book: Night band, warm page,
+   white cards, the two report pages as the centrepiece.
+   Deliberately single-theme: this sheet documents a fixed brand palette. */
+:root{
+  --canvas:#F3F1EA; --white:#FFFFFF; --night:#12233D; --dusk:#4B5466; --seam:#E3DFD3;
+  --oat:#E9E5D6; --muted:#9AA3B5; --deep:#1763A8; --coffee:#2589D8; --ice:#EAF2FB;
+  --burnt:#A63F0E; --tang:#E05A22; --tint:#FCE6DB; --grey:#8E897D; --chip:#EEEBE2;
+  --f:"Segoe UI","Open Sans",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--canvas);color:var(--night);font-family:var(--f);font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums}
+.band{background:var(--night);color:var(--oat);padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band .in{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;justify-content:space-between}
+.band .meta{color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+main{padding-block:36px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:56px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--deep)}
+h1{margin:6px 0 0;font-size:clamp(34px,6vw,56px);line-height:1.05;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+h2{margin:6px 0 0;font-size:clamp(24px,3.6vw,32px);line-height:1.15;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+p{margin:0;max-width:68ch}
+.lede{font-size:16px;color:var(--dusk);margin-top:12px}
+section{display:grid;gap:18px}
+.card{background:var(--white);border:1px solid var(--seam);border-radius:12px;padding:20px;min-width:0}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.g5{grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.note{font-size:12.5px;color:var(--dusk)}
+code{font-family:var(--f);font-size:11.5px;color:var(--dusk)}
+.chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 10px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.c-b{background:var(--ice);color:var(--deep)} .c-t{background:var(--tint);color:var(--burnt)} .c-n{background:var(--chip);color:var(--dusk)} .c-x{color:var(--dusk);font-weight:400;padding-left:0}
+
+/* hero */
+.hero{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));align-items:end}
+.hero .points{display:grid;gap:10px}
+.pt{display:flex;gap:12px;align-items:baseline;font-size:14px}
+.pt b{color:var(--deep);font-size:11px;letter-spacing:.1em;min-width:22px}
+
+/* pages */
+figure{margin:0;display:grid;gap:10px}
+.shot{border-radius:12px;overflow:hidden;border:1px solid var(--seam);background:var(--white)}
+.shot img{display:block;width:100%;height:auto}
+figcaption{font-size:13px;color:var(--dusk)}
+figcaption b{color:var(--night)}
+
+/* principles */
+.pr{display:grid;gap:8px;align-content:start}
+.pr .n{font-size:11px;font-weight:600;letter-spacing:.12em;color:var(--deep)}
+.pr h3{margin:0;font-size:16px;font-weight:600;line-height:1.3}
+.pr p{font-size:13px;color:var(--dusk)}
+
+/* color */
+.sws{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr))}
+.sw{display:flex;gap:12px;align-items:flex-start;background:var(--white);border:1px solid var(--seam);border-radius:12px;padding:12px}
+.chipc{width:44px;height:44px;border-radius:8px;border:1px solid rgba(18,35,61,.12);flex:none}
+.sw .hex{font-size:12px;color:var(--dusk)} .sw .role{font-size:12.5px}
+.meaning{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.mean{border-radius:12px;padding:18px;display:grid;gap:4px}
+.mean b{font-size:17px}
+.mean span{font-size:13px}
+
+/* type */
+.spec{display:grid;gap:14px}
+.spec .row{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;border-top:1px solid var(--seam);padding-top:12px}
+.spec .lab{font-size:11px;color:var(--dusk);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+@media (max-width:560px){.spec .row{grid-template-columns:1fr;gap:4px}}
+
+/* logo */
+.logo{border-radius:12px;padding:28px;display:grid;gap:14px;align-content:start;min-width:0}
+.logo svg{max-width:100%}
+.logo.dark{background:var(--night)} .logo.dark .note{color:var(--muted)}
+.marks{display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap}
+
+/* components */
+.row-c{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;gap:2px;background:var(--white);border:1px solid var(--seam);border-radius:999px;padding:3px}
+.seg span{padding:6px 16px;border-radius:999px;font-weight:600;font-size:12px;color:var(--dusk)}
+.seg span.on{background:var(--night);color:var(--oat)}
+.plans{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.plan{border:1px solid var(--seam);background:var(--white);border-radius:12px;padding:14px 16px;display:grid;gap:6px;align-content:start}
+.plan.sel{border:2px solid var(--coffee);background:var(--ice)}
+.plan .top{display:flex;justify-content:space-between;align-items:center}
+.plan .t{font-weight:600;font-size:14.5px;line-height:1.25}
+.plan .w{font-size:12px;color:var(--dusk)}
+.plan .v{font-size:30px;font-weight:600;line-height:1}
+.plan .l{font-size:12px;color:var(--dusk)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:13px}
+th{font-size:11px;font-weight:600;color:var(--dusk);text-align:right;padding:0 10px 8px;border-bottom:1px solid var(--night);white-space:nowrap}
+td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--seam);white-space:nowrap}
+th.l,td.l{text-align:left} td.gi,th.gi{background:var(--ice)} th.gi{color:var(--deep)} td.gi{font-weight:600}
+.up{color:var(--deep);font-weight:600} .down{color:var(--burnt);font-weight:600}
+
+/* changes + rules */
+.rules ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:13.5px}
+.rules h3{margin:0 0 8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+footer{font-size:12px;color:var(--dusk);display:grid;gap:6px;border-top:1px solid var(--seam);padding-top:16px}
+</style>
+
+<div class="band"><div class="in"><svg style="height:30px;width:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 504 104" role="img" aria-label="Goodnight Inn">
+<defs><mask id="v3x0-r" maskUnits="userSpaceOnUse" x="0" y="0" width="72" height="104"><rect x="0" y="0" width="72" height="104" fill="white"/><circle cx="32" cy="24" r="10" fill="black"/><rect x="32" y="22.5" width="40" height="3" fill="black"/></mask></defs><rect x="4" y="4" width="56" height="96" rx="14" fill="#2589D8" mask="url(#v3x0-r)"/><path d="M105.38 93.2Q101.6 93.2 98.36 91.94Q95.12 90.68 92.81 88.43Q90.5 86.18 89.48 83.12L97.82 80.18Q98.48 82.46 100.52000000000001 83.78Q102.56 85.1 105.38 85.1Q107.6 85.1 109.22 84.28999999999999Q110.84 83.48 111.71000000000001 81.92Q112.58 80.36 112.58 78.26V75.14Q111.44 76.28 110.0 77.0Q107.36 78.38 103.82 78.38Q99.26 78.38 95.66 76.31Q92.06 74.24 90.02000000000001 70.61Q87.98 66.98 87.98 62.36Q87.98 57.74 90.02000000000001 54.17Q92.06 50.6 95.6 48.56Q99.14 46.52 103.64 46.52Q107.18 46.52 109.82 47.9Q111.68 48.92 113.18 50.66V47.24H121.58V78.26Q121.58 82.58 119.47999999999999 85.97Q117.38 89.36 113.75 91.28Q110.12 93.2 105.38 93.2ZM105.08 70.22Q107.36 70.22 109.03999999999999 69.25999999999999Q110.72 68.3 111.65 66.56Q112.58 64.82 112.58 62.48Q112.58 60.14 111.62 58.370000000000005Q110.66 56.6 108.97999999999999 55.61Q107.3 54.620000000000005 105.08 54.620000000000005Q102.8 54.620000000000005 101.03 55.61Q99.26 56.6 98.27000000000001 58.370000000000005Q97.28 60.14 97.28 62.480000000000004Q97.28 64.76 98.27000000000001 66.5Q99.26 68.24 101.03 69.22999999999999Q102.8 70.22 105.08 70.22Z M143.54 80.72Q138.67999999999998 80.72 134.69 78.5Q130.7 76.28 128.32999999999998 72.41Q125.96 68.54 125.96 63.620000000000005Q125.96 58.64 128.32999999999998 54.8Q130.7 50.96 134.69 48.74Q138.67999999999998 46.52 143.54 46.52Q148.39999999999998 46.52 152.35999999999999 48.74Q156.32 50.96 158.69 54.8Q161.06 58.64 161.06 63.620000000000005Q161.06 68.54 158.69 72.41Q156.32 76.28 152.35999999999999 78.5Q148.39999999999998 80.72 143.54 80.72ZM143.54 72.62Q146.0 72.62 147.82999999999998 71.48Q149.66 70.34 150.70999999999998 68.30000000000001Q151.76 66.26 151.76 63.620000000000005Q151.76 60.980000000000004 150.70999999999998 58.97Q149.66 56.96 147.82999999999998 55.790000000000006Q146.0 54.620000000000005 143.54 54.620000000000005Q141.07999999999998 54.620000000000005 139.21999999999997 55.790000000000006Q137.35999999999999 56.96 136.31 58.97Q135.26 60.980000000000004 135.26 63.620000000000005Q135.26 66.26 136.31 68.30000000000001Q137.35999999999999 70.34 139.21999999999997 71.48Q141.07999999999998 72.62 143.54 72.62Z M181.7 80.72Q176.83999999999997 80.72 172.84999999999997 78.5Q168.85999999999999 76.28 166.48999999999998 72.41Q164.11999999999998 68.54 164.11999999999998 63.620000000000005Q164.11999999999998 58.64 166.48999999999998 54.8Q168.85999999999999 50.96 172.84999999999997 48.74Q176.83999999999997 46.52 181.7 46.52Q186.55999999999997 46.52 190.51999999999998 48.74Q194.48 50.96 196.84999999999997 54.8Q199.21999999999997 58.64 199.21999999999997 63.620000000000005Q199.21999999999997 68.54 196.84999999999997 72.41Q194.48 76.28 190.51999999999998 78.5Q186.55999999999997 80.72 181.7 80.72ZM181.7 72.62Q184.16 72.62 185.99 71.48Q187.82 70.34 188.87 68.30000000000001Q189.92 66.26 189.92 63.620000000000005Q189.92 60.980000000000004 188.87 58.97Q187.82 56.96 185.99 55.790000000000006Q184.16 54.620000000000005 181.7 54.620000000000005Q179.23999999999998 54.620000000000005 177.38 55.790000000000006Q175.51999999999998 56.96 174.46999999999997 58.97Q173.42 60.980000000000004 173.42 63.620000000000005Q173.42 66.26 174.46999999999997 68.30000000000001Q175.51999999999998 70.34 177.38 71.48Q179.23999999999998 72.62 181.7 72.62Z M219.02 80.72Q214.22 80.72 210.44 78.44Q206.66000000000003 76.16 204.47000000000003 72.25999999999999Q202.28 68.36 202.28 63.620000000000005Q202.28 58.82 204.5 54.95Q206.72 51.08 210.5 48.8Q214.28 46.52 218.96 46.52Q222.56 46.52 225.38 47.84Q227.12 48.74 228.38 50.0V34.58H237.38V80.0H228.98000000000002V76.88Q227.48000000000002 78.56 225.26000000000002 79.46Q222.38 80.72 219.02 80.72ZM220.10000000000002 72.62Q222.56 72.62 224.42000000000002 71.48Q226.28 70.34 227.32999999999998 68.30000000000001Q228.38 66.26 228.38 63.620000000000005Q228.38 60.980000000000004 227.32999999999998 58.940000000000005Q226.28 56.900000000000006 224.42000000000002 55.760000000000005Q222.56 54.620000000000005 220.10000000000002 54.620000000000005Q217.64000000000001 54.620000000000005 215.69 55.790000000000006Q213.74 56.96 212.66000000000003 58.97Q211.58 60.980000000000004 211.58 63.620000000000005Q211.58 66.26 212.66000000000003 68.30000000000001Q213.74 70.34 215.69 71.48Q217.64000000000001 72.62 220.10000000000002 72.62Z M243.08 80.0V47.24H251.48V51.2Q252.62 49.1 254.72 47.9Q257.24 46.52 260.66 46.52Q264.38 46.52 267.16999999999996 48.08Q269.96 49.64 271.52 52.43Q273.08 55.22 273.08 58.94V80.0H264.08V60.86Q264.08 58.94 263.33 57.56Q262.58 56.18 261.23 55.400000000000006Q259.88 54.620000000000005 258.08 54.620000000000005Q256.34 54.620000000000005 254.95999999999998 55.400000000000006Q253.58 56.18 252.83 57.56Q252.08 58.94 252.08 60.86V80.0Z M278.12 80.0V47.24H287.12V80.0ZM278.12 44.300000000000004V35.300000000000004H287.12V44.300000000000004Z M308.9 93.2Q305.12 93.2 301.88 91.94Q298.64 90.68 296.33 88.43Q294.02 86.18 293.0 83.12L301.34 80.18Q302.0 82.46 304.03999999999996 83.78Q306.08 85.1 308.9 85.1Q311.12 85.1 312.74 84.28999999999999Q314.35999999999996 83.48 315.22999999999996 81.92Q316.09999999999997 80.36 316.09999999999997 78.26V75.14Q314.96 76.28 313.52 77.0Q310.88 78.38 307.34 78.38Q302.78 78.38 299.17999999999995 76.31Q295.58 74.24 293.53999999999996 70.61Q291.5 66.98 291.5 62.36Q291.5 57.74 293.53999999999996 54.17Q295.58 50.6 299.12 48.56Q302.65999999999997 46.52 307.15999999999997 46.52Q310.7 46.52 313.34 47.9Q315.2 48.92 316.7 50.66V47.24H325.09999999999997V78.26Q325.09999999999997 82.58 323.0 85.97Q320.9 89.36 317.27 91.28Q313.64 93.2 308.9 93.2ZM308.59999999999997 70.22Q310.88 70.22 312.56 69.25999999999999Q314.24 68.3 315.16999999999996 66.56Q316.09999999999997 64.82 316.09999999999997 62.48Q316.09999999999997 60.14 315.14 58.370000000000005Q314.18 56.6 312.5 55.61Q310.82 54.620000000000005 308.59999999999997 54.620000000000005Q306.32 54.620000000000005 304.54999999999995 55.61Q302.78 56.6 301.78999999999996 58.370000000000005Q300.79999999999995 60.14 300.79999999999995 62.480000000000004Q300.79999999999995 64.76 301.78999999999996 66.5Q302.78 68.24 304.54999999999995 69.22999999999999Q306.32 70.22 308.59999999999997 70.22Z M330.8 80.0V34.58H339.8V50.24Q340.82 48.8 342.44 47.9Q344.96 46.52 348.38 46.52Q352.1 46.52 354.89 48.08Q357.68 49.64 359.24 52.43Q360.8 55.22 360.8 58.94V80.0H351.8V60.86Q351.8 58.94 351.05 57.56Q350.3 56.18 348.95000000000005 55.400000000000006Q347.6 54.620000000000005 345.8 54.620000000000005Q344.06 54.620000000000005 342.68 55.400000000000006Q341.3 56.18 340.55 57.56Q339.8 58.94 339.8 60.86V80.0Z M381.61999999999995 80.36Q375.67999999999995 80.36 372.40999999999997 77.15Q369.14 73.94 369.14 68.18V55.04H363.61999999999995V47.24H363.91999999999996Q366.43999999999994 47.24 367.78999999999996 45.980000000000004Q369.14 44.72 369.14 42.2V39.800000000000004H378.14V47.24H385.81999999999994V55.04H378.14V67.58Q378.14 69.26 378.74 70.37Q379.34 71.48 380.59999999999997 72.02000000000001Q381.85999999999996 72.56 383.71999999999997 72.56Q384.14 72.56 384.67999999999995 72.5Q385.21999999999997 72.44 385.81999999999994 72.38V80.0Q384.91999999999996 80.12 383.78 80.24000000000001Q382.64 80.36 381.61999999999995 80.36Z  M400.1 80.0V47.24H409.1V80.0ZM400.1 44.300000000000004V35.300000000000004H409.1V44.300000000000004Z M414.8 80.0V47.24H423.2V51.2Q424.34 49.1 426.44 47.9Q428.96 46.52 432.38 46.52Q436.1 46.52 438.89 48.08Q441.68 49.64 443.24 52.43Q444.8 55.22 444.8 58.94V80.0H435.8V60.86Q435.8 58.94 435.05 57.56Q434.3 56.18 432.95000000000005 55.400000000000006Q431.6 54.620000000000005 429.8 54.620000000000005Q428.06 54.620000000000005 426.68 55.400000000000006Q425.3 56.18 424.55 57.56Q423.8 58.94 423.8 60.86V80.0Z M449.84 80.0V47.24H458.23999999999995V51.2Q459.37999999999994 49.1 461.47999999999996 47.9Q463.99999999999994 46.52 467.41999999999996 46.52Q471.14 46.52 473.92999999999995 48.08Q476.71999999999997 49.64 478.28 52.43Q479.84 55.22 479.84 58.94V80.0H470.84V60.86Q470.84 58.94 470.09 57.56Q469.34 56.18 467.99 55.400000000000006Q466.64 54.620000000000005 464.84 54.620000000000005Q463.09999999999997 54.620000000000005 461.71999999999997 55.400000000000006Q460.34 56.18 459.59 57.56Q458.84 58.94 458.84 60.86V80.0Z" fill="#E9E5D6"/><path d="M489.32 80.0V71.0H498.32V80.0Z" fill="#FF783D"/>
+</svg>
+<span class="meta">Brand kit 3.1 · night header · 9 Nov 2026</span></div></div>
+
+<main><div class="wrap">
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">Goodnight Inn 3.1</div>
+    <h1>Hip, modern, businesslike.</h1>
+    <p class="lede">A brand ready for the Board and an investor deck. Same promise, same door hanger, same analysis; no characters, no posters. A Night header zone with the cards hanging over it gives the page its depth; the numbers carry the rest.</p>
+  </div>
+  <div class="card points">
+    <div class="pt"><b>01</b><span><b style="color:var(--night);font-size:14px;letter-spacing:0">The data is the image.</b> No illustrations or textures.</span></div>
+    <div class="pt"><b>02</b><span><b style="color:var(--night);font-size:14px;letter-spacing:0">Goodnight Inn is always blue,</b> the sisters always grey.</span></div>
+    <div class="pt"><b>03</b><span><b style="color:var(--night);font-size:14px;letter-spacing:0">Tangerine only signals:</b> a cost, a risk, a last of four.</span></div>
+    <div class="pt"><b>04</b><span><b style="color:var(--night);font-size:14px;letter-spacing:0">One argument per page,</b> sized by importance.</span></div>
+  </div>
+</header>
+
+<section>
+  <div><div class="eyebrow">01 · The two pages</div><h2>The report at 1920 × 1080, night header</h2>
+  <p class="lede">The current build restyled, with its analysis unchanged. Figures come from the offline decode of the contest data and are re-derived from the model before they ship. The comps use Open Sans as a stand-in for Segoe UI and show the look, not the final type sizes (the build keeps the 12 pt floor).</p></div>
+  <figure><div class="shot"><img src="comps/p1-brand-review-night.jpg" alt="Comp of page 1, The Brand Review: a Night masthead, the headline Full rooms, fading guests, a four-brand scorecard with Goodnight Inn highlighted in blue, a geography card and three trend charts"></div>
+    <figcaption><b>P1 · The Brand Review.</b> The headline sits on the Night zone; the first card row hangs over it. The scorecard carries the page: Goodnight Inn in an Ice column, rank chips, change since 2023. Geography beside it, three trends below.</figcaption></figure>
+  <figure><div class="shot"><img src="comps/p2-investment-strategy-night.jpg" alt="Comp of page 2, The Investment Strategy: the headline Fix the booking before the building, a scatter of 456 packages with A, B and C marked, three plan cards, a waterfall, a cumulative net chart and the ten initiatives"></div>
+    <figcaption><b>P2 · The Investment Strategy.</b> The package scatter carries the page; A is recommended, B is the alternative, C answers "why not renovate everything?".</figcaption></figure>
+</section>
+
+<section>
+  <div><div class="eyebrow">02 · Depth</div><h2>Depth in the frame, never in the data</h2>
+  <p class="lede">No 3D charts. A flat Night zone, with the faded door hanger top right, runs from the top of the page to the horizon, 128 px below the top of the first card row. The cards start inside it and hang over the edge, with one soft shadow each and no hairline. Zone and shadows are drawn into the page background image, so no visual needs a shadow setting.</p></div>
+  <div class="grid g2">
+    <figure><div class="shot"><img src="comps/opzet-background-p1-night.png" alt="The P1 background on the real slot map: a Night zone to y 312 and white cards with a soft shadow hanging over it"></div><figcaption><b>P1 background</b> on the real slot map: horizon at y 312.</figcaption></figure>
+    <figure><div class="shot"><img src="comps/opzet-background-p2-night.png" alt="The P2 background on the real slot map: a Night zone to y 312 and two tall white cards with a soft shadow hanging over it"></div><figcaption><b>P2 background,</b> same zone, same shadow.</figcaption></figure>
+  </div>
+  <div class="card" style="display:grid;gap:8px">
+    <div class="pt"><b>Zone</b><span>Flat Night #12233D, no gradient. Headline #F7F5EE (14.4:1), masthead and subtitle #C9D0DC (10.2:1).</span></div>
+    <div class="pt"><b>Cards</b><span>White, radius 12, no hairline, one shadow on every card: Night at 10 %, y 8, blur 24.</span></div>
+    <div class="pt"><b>Hanger</b><span>The faceless door hanger, faded to 6 %, tilted and cut off by the horizon, top right in the zone. Kept at your request; text over it stays at 8.3:1 or better.</span></div>
+    <div class="pt"><b>Option</b><span>A gradient and a blue glow in the zone exist as "night-glow", but only with a waiver of the no-gradient rule.</span></div>
+  </div>
+</section>
+
+<section>
+  <div><div class="eyebrow">03 · Color</div><h2>Blue is Goodnight Inn. Tangerine is a signal.</h2></div>
+  <div class="meaning">
+    <div class="mean" style="background:var(--coffee);color:var(--night)"><b>Coffee Blue</b><span>Goodnight Inn, ours, the plan. Deep Coffee for text and ▲.</span></div>
+    <div class="mean" style="background:var(--white);border:1px solid var(--seam)"><b style="color:var(--grey)">Warm Grey</b><span>The three sister brands and all context.</span></div>
+    <div class="mean" style="background:var(--tint);color:var(--burnt)"><b>Tangerine</b><span>Only a signal: a cost, a risk, a last of four. Never a brand.</span></div>
+    <div class="mean" style="background:var(--night);color:var(--oat)"><b>Night</b><span>Text, the masthead band, the package total.</span></div>
+  </div>
+  <div class="sws"><div class="sw"><div class="chipc" style="background:#F3F1EA"></div><div><b>Oat Light</b> <code>canvas</code><div class="hex">#F3F1EA · —</div><div class="role">The page</div></div></div><div class="sw"><div class="chipc" style="background:#FFFFFF"></div><div><b>White</b> <code>surface</code><div class="hex">#FFFFFF · —</div><div class="role">Cards</div></div></div><div class="sw"><div class="chipc" style="background:#12233D"></div><div><b>Night</b> <code>ink · zone</code><div class="hex">#12233D · 13.9 · 15.8</div><div class="role">Text, the header zone, totals</div></div></div><div class="sw"><div class="chipc" style="background:#4B5466"></div><div><b>Dusk</b> <code>ink_secondary</code><div class="hex">#4B5466 · 6.7 · 7.6</div><div class="role">Labels, axes, captions</div></div></div><div class="sw"><div class="chipc" style="background:#E9E5D6"></div><div><b>Oat Cream</b> <code>oat</code><div class="hex">#E9E5D6 · 12.5 on Night</div><div class="role">Neutral fills</div></div></div><div class="sw"><div class="chipc" style="background:#1763A8"></div><div><b>Deep Coffee</b> <code>accent</code><div class="hex">#1763A8 · 5.5 · 6.2</div><div class="role">Blue text, the recommendation, ▲</div></div></div><div class="sw"><div class="chipc" style="background:#2589D8"></div><div><b>Coffee Blue</b> <code>accent_mark</code><div class="hex">#2589D8 · 3.3 · 3.7</div><div class="role">Goodnight Inn, always</div></div></div><div class="sw"><div class="chipc" style="background:#EAF2FB"></div><div><b>Ice</b> <code>accent_tint</code><div class="hex">#EAF2FB · ink 13.9</div><div class="role">Goodnight Inn column, selected card</div></div></div><div class="sw"><div class="chipc" style="background:#A63F0E"></div><div><b>Burnt Tangerine</b> <code>signal</code><div class="hex">#A63F0E · 5.6 · 6.3</div><div class="role">Signal text, ▼</div></div></div><div class="sw"><div class="chipc" style="background:#E05A22"></div><div><b>Tangerine</b> <code>signal_mark</code><div class="hex">#E05A22 · 3.3 · 3.7</div><div class="role">Signal marks: a cost, the Low case</div></div></div><div class="sw"><div class="chipc" style="background:#8E897D"></div><div><b>Warm Grey</b> <code>neutral_data</code><div class="hex">#8E897D · 3.1 · 3.5</div><div class="role">Sister brands, context</div></div></div><div class="sw"><div class="chipc" style="background:#F7F5EE"></div><div><b>Zone text</b> <code>zone_text</code><div class="hex">#F7F5EE · 14.4 on Night</div><div class="role">Headline on the zone</div></div></div></div>
+  <p class="note">Contrast is shown on the page and on cards. <code>check_contrast.py --kit</code>: 10 of 10 pass. Blue against tangerine stays far apart for every color-vision type, and is never shown without ▲, ▼ or a word.</p>
+</section>
+
+<section>
+  <div><div class="eyebrow">04 · Type</div><h2>Segoe UI, set with care</h2></div>
+  <div class="card spec">
+    <div class="row"><span class="lab">Headline 30 pt</span><span style="font-size:clamp(26px,4vw,40px);font-weight:600;letter-spacing:-.01em;line-height:1.1">Full rooms, fading guests.</span></div>
+    <div class="row"><span class="lab">Hero figure</span><span style="font-size:clamp(28px,4vw,40px);font-weight:600;color:var(--deep);line-height:1">+$3.3M <span style="font-size:13px;color:var(--dusk);font-weight:400">NPV through 2032, Expected</span></span></div>
+    <div class="row"><span class="lab">Card title 14 pt</span><span style="font-size:15px;font-weight:600">The airports are the fullest: 82.0% occupancy, against 77.5% on the highway</span></div>
+    <div class="row"><span class="lab">Body 12 pt</span><span style="font-size:13px">Goodnight Inn fills the most rooms of the four brands and keeps the widest margin before commissions.</span></div>
+    <div class="row"><span class="lab">Eyebrow</span><span class="eyebrow">01 &nbsp;The brand review</span></div>
+  </div>
+  <p class="note">Nothing below 12 pt in the report (plan 08, R4). Segoe UI is Power BI's default and ships with Windows only. Whether a Mac judge sees it under Publish-to-Web is unverified: test before stage 6, with Arial as the fallback. On this phone the page shows Open Sans, its closest open relative.</p>
+</section>
+
+<section>
+  <div><div class="eyebrow">05 · Logo</div><h2>The hanger stays. The face goes.</h2>
+  <p class="lede">A Coffee Blue door hanger as the symbol, and a calm lowercase wordmark whose Tangerine full stop closes it like the promise: "A good night. A fair price."</p></div>
+  <div class="grid g2">
+    <div class="logo card"><svg style="height:64px;width:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 504 104" role="img" aria-label="Goodnight Inn">
+<defs><mask id="v3x2-m" maskUnits="userSpaceOnUse" x="0" y="0" width="72" height="104"><rect x="0" y="0" width="72" height="104" fill="white"/><circle cx="32" cy="24" r="10" fill="black"/><rect x="32" y="22.5" width="40" height="3" fill="black"/></mask></defs><rect x="4" y="4" width="56" height="96" rx="14" fill="#2589D8" mask="url(#v3x2-m)"/><path d="M105.38 93.2Q101.6 93.2 98.36 91.94Q95.12 90.68 92.81 88.43Q90.5 86.18 89.48 83.12L97.82 80.18Q98.48 82.46 100.52000000000001 83.78Q102.56 85.1 105.38 85.1Q107.6 85.1 109.22 84.28999999999999Q110.84 83.48 111.71000000000001 81.92Q112.58 80.36 112.58 78.26V75.14Q111.44 76.28 110.0 77.0Q107.36 78.38 103.82 78.38Q99.26 78.38 95.66 76.31Q92.06 74.24 90.02000000000001 70.61Q87.98 66.98 87.98 62.36Q87.98 57.74 90.02000000000001 54.17Q92.06 50.6 95.6 48.56Q99.14 46.52 103.64 46.52Q107.18 46.52 109.82 47.9Q111.68 48.92 113.18 50.66V47.24H121.58V78.26Q121.58 82.58 119.47999999999999 85.97Q117.38 89.36 113.75 91.28Q110.12 93.2 105.38 93.2ZM105.08 70.22Q107.36 70.22 109.03999999999999 69.25999999999999Q110.72 68.3 111.65 66.56Q112.58 64.82 112.58 62.48Q112.58 60.14 111.62 58.370000000000005Q110.66 56.6 108.97999999999999 55.61Q107.3 54.620000000000005 105.08 54.620000000000005Q102.8 54.620000000000005 101.03 55.61Q99.26 56.6 98.27000000000001 58.370000000000005Q97.28 60.14 97.28 62.480000000000004Q97.28 64.76 98.27000000000001 66.5Q99.26 68.24 101.03 69.22999999999999Q102.8 70.22 105.08 70.22Z M143.54 80.72Q138.67999999999998 80.72 134.69 78.5Q130.7 76.28 128.32999999999998 72.41Q125.96 68.54 125.96 63.620000000000005Q125.96 58.64 128.32999999999998 54.8Q130.7 50.96 134.69 48.74Q138.67999999999998 46.52 143.54 46.52Q148.39999999999998 46.52 152.35999999999999 48.74Q156.32 50.96 158.69 54.8Q161.06 58.64 161.06 63.620000000000005Q161.06 68.54 158.69 72.41Q156.32 76.28 152.35999999999999 78.5Q148.39999999999998 80.72 143.54 80.72ZM143.54 72.62Q146.0 72.62 147.82999999999998 71.48Q149.66 70.34 150.70999999999998 68.30000000000001Q151.76 66.26 151.76 63.620000000000005Q151.76 60.980000000000004 150.70999999999998 58.97Q149.66 56.96 147.82999999999998 55.790000000000006Q146.0 54.620000000000005 143.54 54.620000000000005Q141.07999999999998 54.620000000000005 139.21999999999997 55.790000000000006Q137.35999999999999 56.96 136.31 58.97Q135.26 60.980000000000004 135.26 63.620000000000005Q135.26 66.26 136.31 68.30000000000001Q137.35999999999999 70.34 139.21999999999997 71.48Q141.07999999999998 72.62 143.54 72.62Z M181.7 80.72Q176.83999999999997 80.72 172.84999999999997 78.5Q168.85999999999999 76.28 166.48999999999998 72.41Q164.11999999999998 68.54 164.11999999999998 63.620000000000005Q164.11999999999998 58.64 166.48999999999998 54.8Q168.85999999999999 50.96 172.84999999999997 48.74Q176.83999999999997 46.52 181.7 46.52Q186.55999999999997 46.52 190.51999999999998 48.74Q194.48 50.96 196.84999999999997 54.8Q199.21999999999997 58.64 199.21999999999997 63.620000000000005Q199.21999999999997 68.54 196.84999999999997 72.41Q194.48 76.28 190.51999999999998 78.5Q186.55999999999997 80.72 181.7 80.72ZM181.7 72.62Q184.16 72.62 185.99 71.48Q187.82 70.34 188.87 68.30000000000001Q189.92 66.26 189.92 63.620000000000005Q189.92 60.980000000000004 188.87 58.97Q187.82 56.96 185.99 55.790000000000006Q184.16 54.620000000000005 181.7 54.620000000000005Q179.23999999999998 54.620000000000005 177.38 55.790000000000006Q175.51999999999998 56.96 174.46999999999997 58.97Q173.42 60.980000000000004 173.42 63.620000000000005Q173.42 66.26 174.46999999999997 68.30000000000001Q175.51999999999998 70.34 177.38 71.48Q179.23999999999998 72.62 181.7 72.62Z M219.02 80.72Q214.22 80.72 210.44 78.44Q206.66000000000003 76.16 204.47000000000003 72.25999999999999Q202.28 68.36 202.28 63.620000000000005Q202.28 58.82 204.5 54.95Q206.72 51.08 210.5 48.8Q214.28 46.52 218.96 46.52Q222.56 46.52 225.38 47.84Q227.12 48.74 228.38 50.0V34.58H237.38V80.0H228.98000000000002V76.88Q227.48000000000002 78.56 225.26000000000002 79.46Q222.38 80.72 219.02 80.72ZM220.10000000000002 72.62Q222.56 72.62 224.42000000000002 71.48Q226.28 70.34 227.32999999999998 68.30000000000001Q228.38 66.26 228.38 63.620000000000005Q228.38 60.980000000000004 227.32999999999998 58.940000000000005Q226.28 56.900000000000006 224.42000000000002 55.760000000000005Q222.56 54.620000000000005 220.10000000000002 54.620000000000005Q217.64000000000001 54.620000000000005 215.69 55.790000000000006Q213.74 56.96 212.66000000000003 58.97Q211.58 60.980000000000004 211.58 63.620000000000005Q211.58 66.26 212.66000000000003 68.30000000000001Q213.74 70.34 215.69 71.48Q217.64000000000001 72.62 220.10000000000002 72.62Z M243.08 80.0V47.24H251.48V51.2Q252.62 49.1 254.72 47.9Q257.24 46.52 260.66 46.52Q264.38 46.52 267.16999999999996 48.08Q269.96 49.64 271.52 52.43Q273.08 55.22 273.08 58.94V80.0H264.08V60.86Q264.08 58.94 263.33 57.56Q262.58 56.18 261.23 55.400000000000006Q259.88 54.620000000000005 258.08 54.620000000000005Q256.34 54.620000000000005 254.95999999999998 55.400000000000006Q253.58 56.18 252.83 57.56Q252.08 58.94 252.08 60.86V80.0Z M278.12 80.0V47.24H287.12V80.0ZM278.12 44.300000000000004V35.300000000000004H287.12V44.300000000000004Z M308.9 93.2Q305.12 93.2 301.88 91.94Q298.64 90.68 296.33 88.43Q294.02 86.18 293.0 83.12L301.34 80.18Q302.0 82.46 304.03999999999996 83.78Q306.08 85.1 308.9 85.1Q311.12 85.1 312.74 84.28999999999999Q314.35999999999996 83.48 315.22999999999996 81.92Q316.09999999999997 80.36 316.09999999999997 78.26V75.14Q314.96 76.28 313.52 77.0Q310.88 78.38 307.34 78.38Q302.78 78.38 299.17999999999995 76.31Q295.58 74.24 293.53999999999996 70.61Q291.5 66.98 291.5 62.36Q291.5 57.74 293.53999999999996 54.17Q295.58 50.6 299.12 48.56Q302.65999999999997 46.52 307.15999999999997 46.52Q310.7 46.52 313.34 47.9Q315.2 48.92 316.7 50.66V47.24H325.09999999999997V78.26Q325.09999999999997 82.58 323.0 85.97Q320.9 89.36 317.27 91.28Q313.64 93.2 308.9 93.2ZM308.59999999999997 70.22Q310.88 70.22 312.56 69.25999999999999Q314.24 68.3 315.16999999999996 66.56Q316.09999999999997 64.82 316.09999999999997 62.48Q316.09999999999997 60.14 315.14 58.370000000000005Q314.18 56.6 312.5 55.61Q310.82 54.620000000000005 308.59999999999997 54.620000000000005Q306.32 54.620000000000005 304.54999999999995 55.61Q302.78 56.6 301.78999999999996 58.370000000000005Q300.79999999999995 60.14 300.79999999999995 62.480000000000004Q300.79999999999995 64.76 301.78999999999996 66.5Q302.78 68.24 304.54999999999995 69.22999999999999Q306.32 70.22 308.59999999999997 70.22Z M330.8 80.0V34.58H339.8V50.24Q340.82 48.8 342.44 47.9Q344.96 46.52 348.38 46.52Q352.1 46.52 354.89 48.08Q357.68 49.64 359.24 52.43Q360.8 55.22 360.8 58.94V80.0H351.8V60.86Q351.8 58.94 351.05 57.56Q350.3 56.18 348.95000000000005 55.400000000000006Q347.6 54.620000000000005 345.8 54.620000000000005Q344.06 54.620000000000005 342.68 55.400000000000006Q341.3 56.18 340.55 57.56Q339.8 58.94 339.8 60.86V80.0Z M381.61999999999995 80.36Q375.67999999999995 80.36 372.40999999999997 77.15Q369.14 73.94 369.14 68.18V55.04H363.61999999999995V47.24H363.91999999999996Q366.43999999999994 47.24 367.78999999999996 45.980000000000004Q369.14 44.72 369.14 42.2V39.800000000000004H378.14V47.24H385.81999999999994V55.04H378.14V67.58Q378.14 69.26 378.74 70.37Q379.34 71.48 380.59999999999997 72.02000000000001Q381.85999999999996 72.56 383.71999999999997 72.56Q384.14 72.56 384.67999999999995 72.5Q385.21999999999997 72.44 385.81999999999994 72.38V80.0Q384.91999999999996 80.12 383.78 80.24000000000001Q382.64 80.36 381.61999999999995 80.36Z  M400.1 80.0V47.24H409.1V80.0ZM400.1 44.300000000000004V35.300000000000004H409.1V44.300000000000004Z M414.8 80.0V47.24H423.2V51.2Q424.34 49.1 426.44 47.9Q428.96 46.52 432.38 46.52Q436.1 46.52 438.89 48.08Q441.68 49.64 443.24 52.43Q444.8 55.22 444.8 58.94V80.0H435.8V60.86Q435.8 58.94 435.05 57.56Q434.3 56.18 432.95000000000005 55.400000000000006Q431.6 54.620000000000005 429.8 54.620000000000005Q428.06 54.620000000000005 426.68 55.400000000000006Q425.3 56.18 424.55 57.56Q423.8 58.94 423.8 60.86V80.0Z M449.84 80.0V47.24H458.23999999999995V51.2Q459.37999999999994 49.1 461.47999999999996 47.9Q463.99999999999994 46.52 467.41999999999996 46.52Q471.14 46.52 473.92999999999995 48.08Q476.71999999999997 49.64 478.28 52.43Q479.84 55.22 479.84 58.94V80.0H470.84V60.86Q470.84 58.94 470.09 57.56Q469.34 56.18 467.99 55.400000000000006Q466.64 54.620000000000005 464.84 54.620000000000005Q463.09999999999997 54.620000000000005 461.71999999999997 55.400000000000006Q460.34 56.18 459.59 57.56Q458.84 58.94 458.84 60.86V80.0Z" fill="#12233D"/><path d="M489.32 80.0V71.0H498.32V80.0Z" fill="#E05A22"/>
+</svg>
+<div class="note">On light: decks, documents</div></div>
+    <div class="logo dark"><svg style="height:64px;width:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 504 104" role="img" aria-label="Goodnight Inn">
+<defs><mask id="v3x1-r" maskUnits="userSpaceOnUse" x="0" y="0" width="72" height="104"><rect x="0" y="0" width="72" height="104" fill="white"/><circle cx="32" cy="24" r="10" fill="black"/><rect x="32" y="22.5" width="40" height="3" fill="black"/></mask></defs><rect x="4" y="4" width="56" height="96" rx="14" fill="#2589D8" mask="url(#v3x1-r)"/><path d="M105.38 93.2Q101.6 93.2 98.36 91.94Q95.12 90.68 92.81 88.43Q90.5 86.18 89.48 83.12L97.82 80.18Q98.48 82.46 100.52000000000001 83.78Q102.56 85.1 105.38 85.1Q107.6 85.1 109.22 84.28999999999999Q110.84 83.48 111.71000000000001 81.92Q112.58 80.36 112.58 78.26V75.14Q111.44 76.28 110.0 77.0Q107.36 78.38 103.82 78.38Q99.26 78.38 95.66 76.31Q92.06 74.24 90.02000000000001 70.61Q87.98 66.98 87.98 62.36Q87.98 57.74 90.02000000000001 54.17Q92.06 50.6 95.6 48.56Q99.14 46.52 103.64 46.52Q107.18 46.52 109.82 47.9Q111.68 48.92 113.18 50.66V47.24H121.58V78.26Q121.58 82.58 119.47999999999999 85.97Q117.38 89.36 113.75 91.28Q110.12 93.2 105.38 93.2ZM105.08 70.22Q107.36 70.22 109.03999999999999 69.25999999999999Q110.72 68.3 111.65 66.56Q112.58 64.82 112.58 62.48Q112.58 60.14 111.62 58.370000000000005Q110.66 56.6 108.97999999999999 55.61Q107.3 54.620000000000005 105.08 54.620000000000005Q102.8 54.620000000000005 101.03 55.61Q99.26 56.6 98.27000000000001 58.370000000000005Q97.28 60.14 97.28 62.480000000000004Q97.28 64.76 98.27000000000001 66.5Q99.26 68.24 101.03 69.22999999999999Q102.8 70.22 105.08 70.22Z M143.54 80.72Q138.67999999999998 80.72 134.69 78.5Q130.7 76.28 128.32999999999998 72.41Q125.96 68.54 125.96 63.620000000000005Q125.96 58.64 128.32999999999998 54.8Q130.7 50.96 134.69 48.74Q138.67999999999998 46.52 143.54 46.52Q148.39999999999998 46.52 152.35999999999999 48.74Q156.32 50.96 158.69 54.8Q161.06 58.64 161.06 63.620000000000005Q161.06 68.54 158.69 72.41Q156.32 76.28 152.35999999999999 78.5Q148.39999999999998 80.72 143.54 80.72ZM143.54 72.62Q146.0 72.62 147.82999999999998 71.48Q149.66 70.34 150.70999999999998 68.30000000000001Q151.76 66.26 151.76 63.620000000000005Q151.76 60.980000000000004 150.70999999999998 58.97Q149.66 56.96 147.82999999999998 55.790000000000006Q146.0 54.620000000000005 143.54 54.620000000000005Q141.07999999999998 54.620000000000005 139.21999999999997 55.790000000000006Q137.35999999999999 56.96 136.31 58.97Q135.26 60.980000000000004 135.26 63.620000000000005Q135.26 66.26 136.31 68.30000000000001Q137.35999999999999 70.34 139.21999999999997 71.48Q141.07999999999998 72.62 143.54 72.62Z M181.7 80.72Q176.83999999999997 80.72 172.84999999999997 78.5Q168.85999999999999 76.28 166.48999999999998 72.41Q164.11999999999998 68.54 164.11999999999998 63.620000000000005Q164.11999999999998 58.64 166.48999999999998 54.8Q168.85999999999999 50.96 172.84999999999997 48.74Q176.83999999999997 46.52 181.7 46.52Q186.55999999999997 46.52 190.51999999999998 48.74Q194.48 50.96 196.84999999999997 54.8Q199.21999999999997 58.64 199.21999999999997 63.620000000000005Q199.21999999999997 68.54 196.84999999999997 72.41Q194.48 76.28 190.51999999999998 78.5Q186.55999999999997 80.72 181.7 80.72ZM181.7 72.62Q184.16 72.62 185.99 71.48Q187.82 70.34 188.87 68.30000000000001Q189.92 66.26 189.92 63.620000000000005Q189.92 60.980000000000004 188.87 58.97Q187.82 56.96 185.99 55.790000000000006Q184.16 54.620000000000005 181.7 54.620000000000005Q179.23999999999998 54.620000000000005 177.38 55.790000000000006Q175.51999999999998 56.96 174.46999999999997 58.97Q173.42 60.980000000000004 173.42 63.620000000000005Q173.42 66.26 174.46999999999997 68.30000000000001Q175.51999999999998 70.34 177.38 71.48Q179.23999999999998 72.62 181.7 72.62Z M219.02 80.72Q214.22 80.72 210.44 78.44Q206.66000000000003 76.16 204.47000000000003 72.25999999999999Q202.28 68.36 202.28 63.620000000000005Q202.28 58.82 204.5 54.95Q206.72 51.08 210.5 48.8Q214.28 46.52 218.96 46.52Q222.56 46.52 225.38 47.84Q227.12 48.74 228.38 50.0V34.58H237.38V80.0H228.98000000000002V76.88Q227.48000000000002 78.56 225.26000000000002 79.46Q222.38 80.72 219.02 80.72ZM220.10000000000002 72.62Q222.56 72.62 224.42000000000002 71.48Q226.28 70.34 227.32999999999998 68.30000000000001Q228.38 66.26 228.38 63.620000000000005Q228.38 60.980000000000004 227.32999999999998 58.940000000000005Q226.28 56.900000000000006 224.42000000000002 55.760000000000005Q222.56 54.620000000000005 220.10000000000002 54.620000000000005Q217.64000000000001 54.620000000000005 215.69 55.790000000000006Q213.74 56.96 212.66000000000003 58.97Q211.58 60.980000000000004 211.58 63.620000000000005Q211.58 66.26 212.66000000000003 68.30000000000001Q213.74 70.34 215.69 71.48Q217.64000000000001 72.62 220.10000000000002 72.62Z M243.08 80.0V47.24H251.48V51.2Q252.62 49.1 254.72 47.9Q257.24 46.52 260.66 46.52Q264.38 46.52 267.16999999999996 48.08Q269.96 49.64 271.52 52.43Q273.08 55.22 273.08 58.94V80.0H264.08V60.86Q264.08 58.94 263.33 57.56Q262.58 56.18 261.23 55.400000000000006Q259.88 54.620000000000005 258.08 54.620000000000005Q256.34 54.620000000000005 254.95999999999998 55.400000000000006Q253.58 56.18 252.83 57.56Q252.08 58.94 252.08 60.86V80.0Z M278.12 80.0V47.24H287.12V80.0ZM278.12 44.300000000000004V35.300000000000004H287.12V44.300000000000004Z M308.9 93.2Q305.12 93.2 301.88 91.94Q298.64 90.68 296.33 88.43Q294.02 86.18 293.0 83.12L301.34 80.18Q302.0 82.46 304.03999999999996 83.78Q306.08 85.1 308.9 85.1Q311.12 85.1 312.74 84.28999999999999Q314.35999999999996 83.48 315.22999999999996 81.92Q316.09999999999997 80.36 316.09999999999997 78.26V75.14Q314.96 76.28 313.52 77.0Q310.88 78.38 307.34 78.38Q302.78 78.38 299.17999999999995 76.31Q295.58 74.24 293.53999999999996 70.61Q291.5 66.98 291.5 62.36Q291.5 57.74 293.53999999999996 54.17Q295.58 50.6 299.12 48.56Q302.65999999999997 46.52 307.15999999999997 46.52Q310.7 46.52 313.34 47.9Q315.2 48.92 316.7 50.66V47.24H325.09999999999997V78.26Q325.09999999999997 82.58 323.0 85.97Q320.9 89.36 317.27 91.28Q313.64 93.2 308.9 93.2ZM308.59999999999997 70.22Q310.88 70.22 312.56 69.25999999999999Q314.24 68.3 315.16999999999996 66.56Q316.09999999999997 64.82 316.09999999999997 62.48Q316.09999999999997 60.14 315.14 58.370000000000005Q314.18 56.6 312.5 55.61Q310.82 54.620000000000005 308.59999999999997 54.620000000000005Q306.32 54.620000000000005 304.54999999999995 55.61Q302.78 56.6 301.78999999999996 58.370000000000005Q300.79999999999995 60.14 300.79999999999995 62.480000000000004Q300.79999999999995 64.76 301.78999999999996 66.5Q302.78 68.24 304.54999999999995 69.22999999999999Q306.32 70.22 308.59999999999997 70.22Z M330.8 80.0V34.58H339.8V50.24Q340.82 48.8 342.44 47.9Q344.96 46.52 348.38 46.52Q352.1 46.52 354.89 48.08Q357.68 49.64 359.24 52.43Q360.8 55.22 360.8 58.94V80.0H351.8V60.86Q351.8 58.94 351.05 57.56Q350.3 56.18 348.95000000000005 55.400000000000006Q347.6 54.620000000000005 345.8 54.620000000000005Q344.06 54.620000000000005 342.68 55.400000000000006Q341.3 56.18 340.55 57.56Q339.8 58.94 339.8 60.86V80.0Z M381.61999999999995 80.36Q375.67999999999995 80.36 372.40999999999997 77.15Q369.14 73.94 369.14 68.18V55.04H363.61999999999995V47.24H363.91999999999996Q366.43999999999994 47.24 367.78999999999996 45.980000000000004Q369.14 44.72 369.14 42.2V39.800000000000004H378.14V47.24H385.81999999999994V55.04H378.14V67.58Q378.14 69.26 378.74 70.37Q379.34 71.48 380.59999999999997 72.02000000000001Q381.85999999999996 72.56 383.71999999999997 72.56Q384.14 72.56 384.67999999999995 72.5Q385.21999999999997 72.44 385.81999999999994 72.38V80.0Q384.91999999999996 80.12 383.78 80.24000000000001Q382.64 80.36 381.61999999999995 80.36Z  M400.1 80.0V47.24H409.1V80.0ZM400.1 44.300000000000004V35.300000000000004H409.1V44.300000000000004Z M414.8 80.0V47.24H423.2V51.2Q424.34 49.1 426.44 47.9Q428.96 46.52 432.38 46.52Q436.1 46.52 438.89 48.08Q441.68 49.64 443.24 52.43Q444.8 55.22 444.8 58.94V80.0H435.8V60.86Q435.8 58.94 435.05 57.56Q434.3 56.18 432.95000000000005 55.400000000000006Q431.6 54.620000000000005 429.8 54.620000000000005Q428.06 54.620000000000005 426.68 55.400000000000006Q425.3 56.18 424.55 57.56Q423.8 58.94 423.8 60.86V80.0Z M449.84 80.0V47.24H458.23999999999995V51.2Q459.37999999999994 49.1 461.47999999999996 47.9Q463.99999999999994 46.52 467.41999999999996 46.52Q471.14 46.52 473.92999999999995 48.08Q476.71999999999997 49.64 478.28 52.43Q479.84 55.22 479.84 58.94V80.0H470.84V60.86Q470.84 58.94 470.09 57.56Q469.34 56.18 467.99 55.400000000000006Q466.64 54.620000000000005 464.84 54.620000000000005Q463.09999999999997 54.620000000000005 461.71999999999997 55.400000000000006Q460.34 56.18 459.59 57.56Q458.84 58.94 458.84 60.86V80.0Z" fill="#E9E5D6"/><path d="M489.32 80.0V71.0H498.32V80.0Z" fill="#FF783D"/>
+</svg>
+<div class="note">On the Night band: the report masthead</div></div>
+  </div>
+  <div class="card marks"><svg style="height:96px;width:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 104" role="img" aria-label="Goodnight Inn">
+<defs><mask id="v3x3-m" maskUnits="userSpaceOnUse" x="0" y="0" width="72" height="104"><rect x="0" y="0" width="72" height="104" fill="white"/><circle cx="32" cy="24" r="10" fill="black"/><rect x="32" y="22.5" width="40" height="3" fill="black"/></mask></defs><rect x="4" y="4" width="56" height="96" rx="14" fill="#2589D8" mask="url(#v3x3-m)"/>
+</svg>
+<svg style="height:96px;width:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 104" role="img" aria-label="Goodnight Inn">
+<defs><mask id="v3x4-n" maskUnits="userSpaceOnUse" x="0" y="0" width="72" height="104"><rect x="0" y="0" width="72" height="104" fill="white"/><circle cx="32" cy="24" r="10" fill="black"/><rect x="32" y="22.5" width="40" height="3" fill="black"/></mask></defs><rect x="4" y="4" width="56" height="96" rx="14" fill="#12233D" mask="url(#v3x4-n)"/>
+</svg>
+<div class="note" style="max-width:40ch">The mark alone for the gallery icon, favicon and deck footer. Wordmark outlined from Plus Jakarta Sans ExtraBold; no font dependency.</div></div>
+</section>
+
+<section>
+  <div><div class="eyebrow">06 · Components</div><h2>Small parts, one system</h2></div>
+  <div class="card" style="display:grid;gap:14px">
+    <div class="row-c"><span class="chip c-b">▲ Best of 4</span><span class="chip c-n">2nd of 4</span><span class="chip c-t">▼ Last of 4</span><span class="chip c-b">Funded</span><span class="chip c-x">Not funded</span><span class="chip c-t">Risk</span></div>
+    <div class="row-c"><span class="seg"><span>Low</span><span class="on">Expected</span><span>High</span></span><span class="note">Scenario switch: the active option in Night</span></div>
+  </div>
+  <div class="plans">
+    <div class="plan sel"><div class="top"><b>A</b><span class="chip c-b">Recommended</span></div><div class="t">Booking first</div><div class="w">Booking app, revenue management, check-in kiosks</div><div class="v" style="color:var(--deep)">+$3.3M</div><div class="l">NPV 2032 · $9.4M · pays back 2031</div></div>
+    <div class="plan"><div class="top"><b>B</b><span class="chip c-n">Alternative</span></div><div class="t">Balanced</div><div class="w">Booking app, revenue management, breakfast upgrade</div><div class="v" style="color:var(--deep)">+$2.7M</div><div class="l">NPV 2032 · $11.65M · all 50 hotels</div></div>
+    <div class="plan"><div class="top"><b>C</b><span class="chip c-t">Comparator</span></div><div class="t">Why not renovate everything?</div><div class="w">Booking app, revenue management, refresh of the 10 oldest</div><div class="v" style="color:var(--burnt)">−$23.4M</div><div class="l">NPV 2032 · $36.9M · negative to 2032</div></div>
+  </div>
+  <div class="card tablewrap">
+    <table>
+      <thead><tr><th class="l">Measure</th><th class="gi">Goodnight Inn</th><th>P&amp;K Select</th><th>Maison d'Or</th><th>Pebble &amp; Pine</th><th>Rank</th><th>Since 2023</th></tr></thead>
+      <tbody>
+        <tr><td class="l">Occupancy</td><td class="gi">79.4%</td><td>71.8%</td><td>72.9%</td><td>64.7%</td><td><span class="chip c-b">▲ Best of 4</span></td><td class="up">▲ +1.0 pt</td></tr>
+        <tr><td class="l">GOP margin after commissions</td><td class="gi">33.7%</td><td>34.7%</td><td>32.9%</td><td>28.2%</td><td><span class="chip c-n">2nd of 4</span></td><td class="down">▼ −2.7 pt</td></tr>
+        <tr><td class="l">Room comfort score (0 to 10)</td><td class="gi">7.17</td><td>7.50</td><td>8.11</td><td>7.71</td><td><span class="chip c-t">▼ Last of 4</span></td><td class="down">▼ −0.15</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div><div class="eyebrow">07 · From 2.0 to 3.1</div><h2>What stayed, what went</h2></div>
+  <div class="grid g2 rules">
+    <div class="card"><h3 style="color:var(--deep)">Kept</h3><ul>
+      <li>The palette from your reference, with measured ink and mark weights.</li>
+      <li>One meaning per color, now stricter: blue is Goodnight Inn.</li>
+      <li>The door hanger as the symbol, and the numbered findings F1 to F4.</li>
+      <li>The analysis of the current build, figure for figure.</li>
+    </ul></div>
+    <div class="card"><h3 style="color:var(--burnt)">Parked</h3><ul>
+      <li>Hank the mascot, his badge and his voice: guest-facing only.</li>
+      <li>Riso offset, paper grain and the AI illustrations.</li>
+      <li>The poster wordmark with the script "Inn" and Arial Black capitals.</li>
+      <li>The door-hanger headlines, replaced by plain declaratives.</li>
+    </ul></div>
+  </div>
+</section>
+
+<footer>
+  <div>Goodnight Inn is a fictional brand from the PillowKey contest dataset (Power BI Dataviz World Champs 2027). Marks and layouts are original work.</div>
+  <div>Kit files: <code>design/brand-kits/goodnight-inn-wakeup/</code> · brand.yaml 3.1, brand-guide.md, assets/, comps/ · build plan project/project-state/active/10-design-rebuild.md · generators in <code>project/tools/</code></div>
+</footer>
+
+</div></main>

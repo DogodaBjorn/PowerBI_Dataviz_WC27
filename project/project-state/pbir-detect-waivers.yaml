@@ -23,3 +23,23 @@
 #       date: 2026-08-04
 
 waivers:
+  zone-text-headline:
+    rule: theme-color-drift
+    path: "pages/*/visuals/z_headline*/visual.json"
+    reason: "Kit goodnight-inn-wakeup 3.1 tokens zone_text #F7F5EE, zone_text_muted #C9D0DC and zone_eyebrow #A9CDF0: text on the Night header zone (plan 10 D3, plan 11). A Power BI theme has no slot for them; contrast is checked on the canvas pixels by project/tools/a11y_check.py."
+    date: 2026-11-09
+  zone-text-masthead:
+    rule: theme-color-drift
+    path: "pages/*/visuals/z_masthead*/visual.json"
+    reason: "Kit goodnight-inn-wakeup 3.1 tokens zone_text #F7F5EE, zone_text_muted #C9D0DC and zone_eyebrow #A9CDF0: text on the Night header zone (plan 10 D3, plan 11). A Power BI theme has no slot for them; contrast is checked on the canvas pixels by project/tools/a11y_check.py."
+    date: 2026-11-09
+  zone-text-subtitle:
+    rule: theme-color-drift
+    path: "pages/*/visuals/c_subtitle*/visual.json"
+    reason: "Kit goodnight-inn-wakeup 3.1 tokens zone_text #F7F5EE, zone_text_muted #C9D0DC and zone_eyebrow #A9CDF0: text on the Night header zone (plan 10 D3, plan 11). A Power BI theme has no slot for them; contrast is checked on the canvas pixels by project/tools/a11y_check.py."
+    date: 2026-11-09
+  zone-text-eyebrow:
+    rule: theme-color-drift
+    path: "pages/*/visuals/z_eyebrow*/visual.json"
+    reason: "Kit goodnight-inn-wakeup 3.1 tokens zone_text #F7F5EE, zone_text_muted #C9D0DC and zone_eyebrow #A9CDF0: text on the Night header zone (plan 10 D3, plan 11). A Power BI theme has no slot for them; contrast is checked on the canvas pixels by project/tools/a11y_check.py."
+    date: 2026-11-09

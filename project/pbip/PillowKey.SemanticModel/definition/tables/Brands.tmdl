@@ -34,7 +34,6 @@ table Brands
 		summarizeBy: none
 		sourceColumn: InvestmentBudgetUSD
 
-
 	partition Brands = m
 		mode: import
 		queryGroup: Dimensions
@@ -47,5 +46,5 @@ table Brands
 				in
 				    Typed
 
-
 	annotation PBI_ResultType = Table
+

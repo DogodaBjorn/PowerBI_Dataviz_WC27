@@ -4,7 +4,7 @@ client_alias: fabric-contest
 language: en
 template_version: 0.4.0
 created: 2026-11-05
-brand_kit: goodnight-inn-hanger   # chosen by Björn 2026-11-06 over goodnight-inn (option 1); see project-state/active/00-brand-decision.md
+brand_kit: goodnight-inn-wakeup   # 3.1 night header, chosen by Björn 2026-11-09 (00-brand-decision.md addendum, plans 10 and 11); was goodnight-inn-hanger (2026-11-06)
 modules:
   - brand-kit-studio
   - nav-studio
@@ -16,3 +16,4 @@ modules:
   - px-prototype
   - deneb-studio
   - custom-visual-studio
+  - imagery-studio   # enabled 2026-11-07 for the masthead vignettes (08-verbeterplan V5, Björn: brand content via Gemini)

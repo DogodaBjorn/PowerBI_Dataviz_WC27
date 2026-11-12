@@ -295,3 +295,30 @@ is een brandkit-keuze (REVIEW p1, bevestigd als intentie).
 
 Inschatting uit de review: een dag of twee werk, ruim binnen de deadline van
 18 november 2026 23:59 PT.
+
+## 8. Status na batch 2 (7 november, Claude Code)
+
+Uitgevoerd in de generators (`sketch_model.py`, `opzet_report.py`, `opzet-layout.json`), gerenderd in Desktop
+en vastgelegd in `project/deliverables/screenshots/2026-11-07-desktop-batch2/`. De eigen review per punt, met het
+screenshot dat het laat zien: `SELF-REVIEW.md` in die map. Een onafhankelijke review van batch 2 (K6) moet nog.
+
+| Punt | Status | Kort |
+|---|---|---|
+| K1 | gedaan | A, B en C zijn vaste pakketten (`Package[Preset]`, regels op Expected); `04-p2-build-method.md` bijgewerkt |
+| F1 | gedaan | B in Low heeft een pakket (01+09+10, -$6,9M); Plan Risk bewaakt tegen een leeg pakket |
+| F2 | gedaan | "Fund one package of three moves"; kiosk-zin; nieuwe not-funded-reden; ondertitel buiten Expected; `06` bijgewerkt |
+| F3 | gedaan | C is overal 01+07+10, Low -$34,8M |
+| F4 | gedaan | capex tot op $10K, delen afgerond tot ze optellen (largest remainder), folio en KPI-delta uit getoonde waarden; afwegingen in SELF-REVIEW N1 |
+| F5 | deels | kaarten, KPI's en tabellen zijn DAX-tekst; grafieklabels en "Totaal" volgen de locale; P2W-test beslist (N2) |
+| F6 | gedaan | hover- en press-states op beide knoppen, themakleuren |
+| F7 | gedaan | "... pays the middleman, and its welcome is fading." |
+| R1 | gedaan | lichte wolk, A/B/C bovenop met letters (twee lagen, N3), x-as tot $62M, geen hangende selectie |
+| R2 | gedaan | jaren, nullijn, gelabelde lijnen, scenario in beeld in framboos |
+| R3 | gedaan | namen in plaats van codes; dropdown alleen A/B/C; Included / Excluded onder B en C |
+| R4 | open | minimum nog 10 pt |
+| R5 | gedaan | regelregel op de landing en een Type-kolom |
+| R6 | open | P2W-test door Björn; visual-header-iconen stonden al uit (`pbir_lib.vco`), de iconen op de screenshots zijn Desktop-bewerkmodus |
+| S1, S10 | open | tegels nog standaard; de twee vragen (welke 20 hotels, waarvoor $50,6M) niet beantwoord |
+| S3, S11 | deels | zie SELF-REVIEW |
+| S2, S4-S9 | gedaan | zie SELF-REVIEW |
+| Nieuw | gedaan | schakelaar "All packages / Zoom on A, B, C" op de scatter (Björn, 7 nov), native, standaard alles |

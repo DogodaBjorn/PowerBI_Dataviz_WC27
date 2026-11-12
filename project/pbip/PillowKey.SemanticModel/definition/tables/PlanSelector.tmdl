@@ -1,52 +1,38 @@
-/// Disconnected package selector (no relationships, by design): the three shortlist rules A / B / C, then every valid package. The slicer on Label is single-select; DAX reads Key.
+/// Disconnected package selector (no relationships, by design): the three named packages A, B and C (Package[Preset]). The slicer on Label is single-select; DAX reads Key.
 table PlanSelector
 	lineageTag: f406f644-e976-5b4e-9e67-459c5452eae8
 
 	column Key
-		dataType: string
 		lineageTag: 805d065f-c570-51c6-ac4b-5ce0542bed48
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Key]
 
 	column Label
-		dataType: string
-		sortByColumn: Sort
 		lineageTag: 033f80bc-9e47-565b-9103-fe515e438f31
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Label]
+		sortByColumn: Sort
 
 	column Sort
-		dataType: int64
 		formatString: 0
 		lineageTag: 3fdccaaf-cbb8-5398-a162-3bdd042880b4
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Sort]
 
 	partition PlanSelector = calculated
 		mode: import
-		source = ```
-				UNION (
-				    DATATABLE (
-				        "Key", STRING, "Label", STRING, "Sort", INTEGER,
-				        {
-				            { "A", "A · Highest NPV through 2032", 1 },
-				            { "B", "B · Most hotels with a guest-score effect, NPV at least zero", 2 },
-				            { "C", "C · Highest NPV with the refresh of the ten oldest hotels", 3 }
-				        }
-				    ),
-				    SELECTCOLUMNS (
-				        ALLNOBLANKROW ( Package ),
-				        "Key", Package[PackageID],
-				        "Label", "Package " & Package[PackageID] & "  ($" & FORMAT ( Package[CapexUSD] / 1000000, "0.0" ) & "M)",
-				        "Sort", 100 + RANKX ( ALLNOBLANKROW ( Package ), Package[NPV Expected], , DESC )
-				    )
+		source =
+				DATATABLE (
+				    "Key", STRING, "Label", STRING, "Sort", INTEGER,
+				    {
+				        { "A", "A · Our recommendation", 1 },
+				        { "B", "B · Breakfast instead of kiosks", 2 },
+				        { "C", "C · Why not renovate? For comparison", 3 }
+				    }
 				)
-				```
 
 	annotation PBI_ResultType = Table
+

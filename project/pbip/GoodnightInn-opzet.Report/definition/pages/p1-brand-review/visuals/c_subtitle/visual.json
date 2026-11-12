@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "c_subtitle",
   "position": {
     "x": 32,
-    "y": 136,
-    "z": 1002,
+    "y": 108,
+    "z": 8000,
+    "height": 24,
     "width": 1856,
-    "height": 32,
     "tabOrder": 110
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Subtitle P1 (text)"
+                  "Property": "Subtitle P1 Briefing (text)"
                 }
               },
-              "queryRef": "_Measures.Subtitle P1 (text)",
-              "nativeQueryRef": "Subtitle P1 (text)"
+              "queryRef": "_Measures.Subtitle P1 Briefing (text)",
+              "nativeQueryRef": "Subtitle P1 Briefing (text)"
             }
           ]
         }
@@ -47,14 +47,14 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Verdana'"
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "12D"
                 }
               }
             },
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#5B5163'"
+                      "Value": "'#C9D0DC'"
                     }
                   }
                 }
@@ -216,6 +216,29 @@
             "id": "default"
           }
         }
+      ],
+      "fillCustom": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -239,6 +262,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
                 }
               }
             }
@@ -336,15 +366,32 @@
           "properties": {
             "altText": {
               "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Subtitle P1 Briefing (text)"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
                 "Literal": {
-                  "Value": "'Subtitle P1'"
+                  "Value": "false"
                 }
               }
             }
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": false
+    }
   }
 }

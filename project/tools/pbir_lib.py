@@ -161,7 +161,7 @@ def vco(title=None, title_font=None, title_size=10, title_color=None, alt=None, 
 
 def visual(name, vtype, x, y, w, h, z, tab, query=None, objects=None, vcos=None, filters=None, sort=None, drill=False):
     for v in (x, y, w, h):
-        assert v % 8 == 0, (name, x, y, w, h)
+        assert v % 4 == 0, (name, x, y, w, h)  # round 9b: the header rows sit on a 4 px grid (Björn's own positions); the rest stays on 8
     vis = {"visualType": vtype}
     if query is not None:
         vis["query"] = {"queryState": query}
@@ -290,12 +290,19 @@ def line_styles(mapping, default_width=2, dashed=(), markers=False):
     return out
 
 
-def table_objects(font, size, ink, bg_odd, bg_even, header_bg, header_ink, hairline, row_padding=2, header_size=None, extra_values=None, column_formatting=None, totals=False):
+def table_objects(font, size, ink, bg_odd, bg_even, header_bg, header_ink, hairline, row_padding=2, header_size=None, extra_values=None, column_formatting=None, totals=False,
+                  image_height=None, image_width=None, total_font_color=None):
+    """image_height / image_width (round 6): the pixel size of ImageUrl columns (SVG-in-DAX bars)."""
+    values = {"fontFamily": text(font), "fontSize": num(size), "fontColorPrimary": color(ink), "fontColorSecondary": color(ink), "backColorPrimary": color(bg_odd), "backColorSecondary": color(bg_even), "outlineStyle": enum("None")}
+    if image_height is not None:
+        values["imageHeight"] = num(image_height)
+    if image_width is not None:
+        values["imageWidth"] = num(image_width)
     objects = {
         "columnHeaders": [{"properties": {"fontFamily": text(font), "fontSize": num(header_size or size), "fontColor": color(header_ink), "backColor": color(header_bg), "outlineStyle": enum("None"), "autoSizeColumnWidth": b(True), "columnAdjustment": enum("growToFit"), "bold": b(False)}}],
-        "values": [{"properties": {"fontFamily": text(font), "fontSize": num(size), "fontColorPrimary": color(ink), "fontColorSecondary": color(ink), "backColorPrimary": color(bg_odd), "backColorSecondary": color(bg_even), "outlineStyle": enum("None")}}] + (extra_values or []),
+        "values": [{"properties": values}] + (extra_values or []),
         "grid": [{"properties": {"gridVertical": b(False), "gridHorizontal": b(True), "gridHorizontalColor": color(hairline), "gridHorizontalWeight": num(1), "rowPadding": num(row_padding), "outlineStyle": enum("None")}}],
-        "total": [{"properties": {"totals": b(totals)}}],
+        "total": [{"properties": {"totals": b(totals), **({"fontFamily": text(font), "fontSize": num(size), "fontColor": color(total_font_color), "backColor": color(bg_odd), "outlineStyle": enum("None")} if totals else {})}}],
     }
     if column_formatting:
         objects["columnFormatting"] = column_formatting

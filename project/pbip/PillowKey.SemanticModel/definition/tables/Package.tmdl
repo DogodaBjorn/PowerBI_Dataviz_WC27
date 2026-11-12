@@ -3,132 +3,116 @@ table Package
 	lineageTag: cd5b91dc-0744-5f9d-bbac-861604a21213
 
 	column PackageID
-		dataType: string
 		lineageTag: 535b8a06-c1af-5c8d-8009-8ab4879406e8
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [PackageID]
+		sortByColumn: 'Draw Rank'
 
 	column Mask
-		dataType: int64
 		formatString: 0
 		lineageTag: 615441c3-3177-5c78-9f87-ac3d16dab699
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Mask]
 
 	column Projects
-		dataType: int64
 		formatString: 0
 		lineageTag: bf4c2d20-fc8b-5883-b9c0-6ec3d616dc93
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Projects]
 
 	column Growth
-		dataType: int64
 		formatString: 0
 		lineageTag: fe0c586a-d803-5cf5-884b-d1e32bb30bd2
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [Growth]
 
 	column CapexUSD
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: 8aa117a6-e7b4-51bb-ba48-ea1e6ccb4a55
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [CapexUSD]
 
 	column ContainsRefresh
-		dataType: string
 		lineageTag: f5c5b788-2523-5a66-ba0b-f528d7213720
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [ContainsRefresh]
 
 	column RoomsAdded
-		dataType: int64
 		formatString: #,0
 		lineageTag: a285f82e-f8f7-547e-a34a-c80081ca48c0
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [RoomsAdded]
 
 	column HotelsRated
-		dataType: int64
 		formatString: #,0
 		lineageTag: 12ba08ae-9543-5b77-9395-783150a089b5
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [HotelsRated]
 
 	column 'NPV Low'
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: a3d34d99-020b-5051-99d5-5948ec7962cc
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [NPV Low]
 
 	column 'NPV Expected'
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: 579db6ab-3104-5ccc-a247-60aaee3d63d4
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [NPV Expected]
 
 	column 'NPV High'
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: 842d1ba2-b33f-5755-b600-9bbed95d95bc
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [NPV High]
 
 	column 'RunRate Low'
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: b92d74c9-0257-542d-b521-944090782016
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [RunRate Low]
 
 	column 'RunRate Expected'
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: ef719aa3-b914-5414-9c26-c029d79c6c06
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [RunRate Expected]
 
 	column 'RunRate High'
-		dataType: double
 		formatString: \$#,0;(\$#,0)
 		lineageTag: 3f637c8e-abec-5203-b7d2-a1eb9ef95c7e
 		summarizeBy: none
 		isNameInferred
-		isDataTypeInferred
 		sourceColumn: [RunRate High]
+
+	/// A, B or C for the three named packages (rules on the Expected case, fixed across scenarios); blank for the rest.
+	column Preset = VAR me = Package[Mask] VAR t = ALLNOBLANKROW ( Package[Mask], Package[NPV Expected], Package[HotelsRated], Package[ContainsRefresh] ) VAR a = MAXX ( TOPN ( 1, t, Package[NPV Expected], DESC ), Package[Mask] ) VAR b = MAXX ( TOPN ( 1, FILTER ( t, Package[NPV Expected] >= 0 ), Package[HotelsRated], DESC, Package[NPV Expected], DESC ), Package[Mask] ) VAR c = MAXX ( TOPN ( 1, FILTER ( t, Package[ContainsRefresh] = "Yes" ), Package[NPV Expected], DESC ), Package[Mask] ) RETURN SWITCH ( me, a, "A", b, "B", c, "C", "" )
+		lineageTag: 14edf4a5-789b-5caf-83a3-e33adf4c6495
+		summarizeBy: none
+
+	/// Sort order of PackageID, which is the scatter's drawing order: every other package first (by mask), then B, C and A on top.
+	column 'Draw Rank' = IF ( Package[Preset] = "", Package[Mask], 2000 + SWITCH ( Package[Preset], "B", 1, "C", 2, "A", 3 ) )
+		formatString: 0
+		lineageTag: a2c072f8-eb30-5d0e-ada1-4c2c191df437
+		summarizeBy: none
 
 	partition Package = calculated
 		mode: import
-		source = ```
+		source =
 				VAR LastYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" )
 				VAR Budget = LOOKUPVALUE ( Brands[InvestmentBudgetUSD], Brands[Brand], "Goodnight Inn" )
 				VAR CF =
@@ -188,6 +172,6 @@ table Package
 				        "NPV Low", [@NpvL], "NPV Expected", [@NpvE], "NPV High", [@NpvH],
 				        "RunRate Low", [@RrL], "RunRate Expected", [@RrE], "RunRate High", [@RrH]
 				    )
-				```
 
 	annotation PBI_ResultType = Table
+

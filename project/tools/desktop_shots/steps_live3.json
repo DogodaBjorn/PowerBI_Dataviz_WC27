@@ -1,0 +1,339 @@
+[
+ {
+  "op": "metrics",
+  "w": 2356,
+  "h": 1400,
+  "dsf": 1
+ },
+ {
+  "op": "wait",
+  "ms": 2000
+ },
+ {
+  "op": "tab",
+  "js": "(() => { const e = [...document.querySelectorAll('.textLabel')].find(x => x.textContent.trim() === 'The Investment Strategy'); const r = e.getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2]; })()"
+ },
+ {
+  "op": "wait",
+  "ms": 5000
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "phover",
+  "lx": 1400,
+  "ly": 1020,
+  "from": 0
+ },
+ {
+  "op": "wait",
+  "ms": 600
+ },
+ {
+  "op": "phover",
+  "lx": 209,
+  "ly": 378
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L1a_hover-A.png"
+ },
+ {
+  "op": "phover",
+  "lx": 1400,
+  "ly": 1020,
+  "from": 0
+ },
+ {
+  "op": "wait",
+  "ms": 600
+ },
+ {
+  "op": "phover",
+  "lx": 244,
+  "ly": 384
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L1b_hover-B.png"
+ },
+ {
+  "op": "phover",
+  "lx": 1400,
+  "ly": 1020,
+  "from": 0
+ },
+ {
+  "op": "wait",
+  "ms": 600
+ },
+ {
+  "op": "phover",
+  "lx": 637,
+  "ly": 624
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L1c_hover-C.png"
+ },
+ {
+  "op": "phover",
+  "lx": 1400,
+  "ly": 1020,
+  "from": 0
+ },
+ {
+  "op": "wait",
+  "ms": 600
+ },
+ {
+  "op": "phover",
+  "lx": 552,
+  "ly": 492
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L1d_hover-cloud-dot.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 980,
+  "ctrl": true
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L2a_ctrl-click-Open-the-plan.png"
+ },
+ {
+  "op": "phover",
+  "lx": 1488,
+  "ly": 980
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L2b_mouse-on-Back.png"
+ },
+ {
+  "op": "phover",
+  "lx": 1300,
+  "ly": 928
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L2c_mouse-on-risk-line.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 980,
+  "ctrl": true
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L2d_ctrl-click-Back.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pclick",
+  "lx": 1420,
+  "ly": 244
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L3a_clicked-High.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1170,
+  "ly": 244
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L3b_clicked-Low.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pclick",
+  "lx": 1680,
+  "ly": 244,
+  "nosettle": true
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L4a_dropdown-open.png"
+ },
+ {
+  "op": "tab",
+  "js": "(() => { const e = [...document.querySelectorAll('span,div')].filter(x => x.childElementCount === 0 && x.textContent.trim() === 'C \u00b7 Why not renovate? For comparison').pop(); const r = e.getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2]; })()",
+  "nosettle": true
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L4b_picked-C.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 980,
+  "ctrl": true
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L4c_C_ctrl-click-Open-the-plan.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 15788 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pclick",
+  "lx": 958,
+  "ly": 212
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L5a_clicked-Zoom.png"
+ },
+ {
+  "op": "phover",
+  "lx": 1400,
+  "ly": 1020,
+  "from": 0
+ },
+ {
+  "op": "wait",
+  "ms": 600
+ },
+ {
+  "op": "pclick",
+  "lx": 778,
+  "ly": 212
+ },
+ {
+  "op": "wait",
+  "ms": 2500
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review3\\L5b_clicked-All.png"
+ }
+]

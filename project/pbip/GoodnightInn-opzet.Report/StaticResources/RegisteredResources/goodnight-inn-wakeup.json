@@ -1,0 +1,224 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.159.json",
+  "name": "goodnight-inn-wakeup.json",
+  "dataColors": [
+    "#2589D8",
+    "#8E897D",
+    "#E05A22",
+    "#C9C4B7"
+  ],
+  "accent": "#1763A8",
+  "good": "#1763A8",
+  "neutral": "#8E897D",
+  "bad": "#A63F0E",
+  "minimum": "#A63F0E",
+  "center": "#EEEBE2",
+  "maximum": "#1763A8",
+  "null": "#C9C4B7",
+  "background": "#FFFFFF",
+  "secondaryBackground": "#F3F1EA",
+  "backgroundLight": "#FFFFFF",
+  "backgroundNeutral": "#E3DFD3",
+  "foreground": "#12233D",
+  "foregroundNeutralSecondary": "#4B5466",
+  "firstLevelElements": "#12233D",
+  "secondLevelElements": "#4B5466",
+  "thirdLevelElements": "#E3DFD3",
+  "fourthLevelElements": "#8E897D",
+  "tableAccent": "#1763A8",
+  "shapeStroke": "#E3DFD3",
+  "disabledText": "#8E897D",
+  "hyperlink": "#1763A8",
+  "visitedHyperlink": "#1763A8",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 28,
+      "color": "#12233D"
+    },
+    "largeTitle": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 20,
+      "color": "#12233D"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 14,
+      "color": "#12233D"
+    },
+    "header": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#12233D"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#12233D"
+    },
+    "semiboldLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#12233D"
+    },
+    "boldLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#12233D"
+    },
+    "largeLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 14,
+      "color": "#12233D"
+    },
+    "smallLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#12233D"
+    },
+    "lightLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#4B5466"
+    },
+    "largeLightLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 14,
+      "color": "#4B5466"
+    },
+    "smallLightLabel": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#4B5466"
+    },
+    "dataTitle": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#4B5466"
+    },
+    "smallDataLabel": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#12233D"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#E3DFD3"
+              }
+            },
+            "radius": 12,
+            "width": 1
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontFamily": "Segoe UI Semibold",
+            "fontSize": 14,
+            "fontColor": {
+              "solid": {
+                "color": "#12233D"
+              }
+            },
+            "bold": true
+          }
+        ],
+        "subTitle": [
+          {
+            "fontFamily": "Segoe UI",
+            "fontSize": 12,
+            "fontColor": {
+              "solid": {
+                "color": "#4B5466"
+              }
+            }
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": true,
+            "foreground": {
+              "solid": {
+                "color": "#4B5466"
+              }
+            },
+            "background": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "visualTooltip": [
+          {
+            "fontFamily": "Segoe UI",
+            "fontSize": 12,
+            "background": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "titleFontColor": {
+              "solid": {
+                "color": "#4B5466"
+              }
+            },
+            "valueFontColor": {
+              "solid": {
+                "color": "#12233D"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F3F1EA"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F3F1EA"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

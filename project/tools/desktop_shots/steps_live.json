@@ -1,0 +1,327 @@
+[
+ {
+  "op": "metrics",
+  "w": 2356,
+  "h": 1400,
+  "dsf": 1
+ },
+ {
+  "op": "wait",
+  "ms": 2000
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 34028 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L1a_live_landing_A_before-click.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 988,
+  "ctrl": true,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L1b_live_after-ctrl-click-Open-the-plan.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 988,
+  "ctrl": true,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L1c_live_after-ctrl-click-Back.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 34028 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pclick",
+  "lx": 1407,
+  "ly": 244,
+  "ctrl": false,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L2a_live_clicked-High-tile.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 988,
+  "ctrl": true,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L2b_live_High_after-Open-the-plan.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 988,
+  "ctrl": true,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L2c_live_High_after-Back.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 34028 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pclick",
+  "lx": 1680,
+  "ly": 238,
+  "ctrl": false,
+  "nosettle": true
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L3a_live_dropdown-open.png"
+ },
+ {
+  "op": "tab",
+  "js": "(() => { const e = [...document.querySelectorAll('.slicerText, .slicerItemContainer, span, div')].filter(x => x.children.length === 0 && x.textContent.trim().startsWith('C \u00b7 Refresh')).map(x => x.getBoundingClientRect()).filter(r => r.width > 0 && r.height > 0).pop(); return [e.x + Math.min(e.width / 2, 60), e.y + e.height / 2]; })()"
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L3b_live_picked-C-in-dropdown.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 988,
+  "ctrl": true,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L3c_live_C_after-Open-the-plan.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 988,
+  "ctrl": true,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L3d_live_C_after-Back.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 34028 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pclick",
+  "lx": 270,
+  "ly": 434,
+  "ctrl": false,
+  "nosettle": true
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L4a_live_clicked-scatter-point-A.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 988,
+  "ctrl": true,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L4b_live_after-Open-the-plan-with-point-selected.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 1488,
+  "ly": 988,
+  "ctrl": true,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L4c_live_after-Back.png"
+ },
+ {
+  "op": "sh",
+  "cmd": "& 'C:\\Users\\TRAINE~1\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\venv\\Scripts\\python.exe' -I 'C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\make_variant.py' shortlist A Expected p2 all | Out-Null; powerbi-desktop reload --pid 34028 --wait-seconds 180"
+ },
+ {
+  "op": "wait",
+  "ms": 12000
+ },
+ {
+  "op": "pclick",
+  "lx": 970,
+  "ly": 216,
+  "ctrl": false,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L5a_live_clicked-Zoom-on-A-B-C.png"
+ },
+ {
+  "op": "pclick",
+  "lx": 814,
+  "ly": 216,
+  "ctrl": false,
+  "nosettle": false
+ },
+ {
+  "op": "wait",
+  "ms": 6000
+ },
+ {
+  "op": "pagebox"
+ },
+ {
+  "op": "pshot",
+  "scale": 1,
+  "out": "C:\\Users\\TrainerBjorn\\AppData\\Local\\Temp\\claude\\c836afdd204b78b7\\52e24e6a-d9ba-4cc6-bc1f-7bdcf2915666\\scratchpad\\shots\\review2\\L5b_live_clicked-All-packages.png"
+ }
+]
