@@ -285,32 +285,7 @@
     },
     {
       "source": "hero_packages_hover",
-      "target": "z_pill_gi01",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "chip_gi01",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "z_pill_gi02",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "chip_gi02",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "z_pill_gi10",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "chip_gi10",
+      "target": "c_rec_mix",
       "type": "NoFilter"
     },
     {
@@ -461,6 +436,31 @@
     {
       "source": "hero_packages_hover",
       "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "z_pill_facts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_f4",
       "type": "NoFilter"
     },
     {
@@ -675,32 +675,7 @@
     },
     {
       "source": "hero_s_packages_hover",
-      "target": "z_pill_gi01",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "chip_gi01",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "z_pill_gi02",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "chip_gi02",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "z_pill_gi10",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "chip_gi10",
+      "target": "c_rec_mix",
       "type": "NoFilter"
     },
     {
@@ -851,6 +826,31 @@
     {
       "source": "hero_s_packages_hover",
       "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_pill_facts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_f4",
       "type": "NoFilter"
     },
     {
@@ -1065,32 +1065,7 @@
     },
     {
       "source": "hero_s_packages_build",
-      "target": "z_pill_gi01",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "chip_gi01",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "z_pill_gi02",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "chip_gi02",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "z_pill_gi10",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "chip_gi10",
+      "target": "c_rec_mix",
       "type": "NoFilter"
     },
     {
@@ -1241,6 +1216,31 @@
     {
       "source": "hero_s_packages_build",
       "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_pill_facts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_f4",
       "type": "NoFilter"
     },
     {
@@ -1460,32 +1460,7 @@
     },
     {
       "source": "dn_build_selector",
-      "target": "z_pill_gi01",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "chip_gi01",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "z_pill_gi02",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "chip_gi02",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "z_pill_gi10",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "chip_gi10",
+      "target": "c_rec_mix",
       "type": "NoFilter"
     },
     {
@@ -1631,6 +1606,31 @@
     {
       "source": "dn_build_selector",
       "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_pill_facts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_f4",
       "type": "NoFilter"
     },
     {

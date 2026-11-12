@@ -234,3 +234,19 @@ renders                : NONE in Desktop yet. Composite preview on the FinalV2 r
 manual steps owed      : Desktop renders 01-04; hover each chip (Definitions x2, three moves) and check the tooltip opens over
                          the whole pill and the name sits centred in its 28 px pill
 ```
+
+```
+2026-11-12, night, round 2: 'Revisit the facts' as one pill in P2's footer row (doc 18 §3; Björn: the move chips were too busy, F4 must stay)
+validate_tmdl --strict : 34 file(s), 0 error(s), 0 warning(s) [strict]
+a11y_check             : 0 failure(s), 0 note(s) over GoodnightInn-opzet.Report
+schema_check           : 198 files, 0 failing
+validate_json          : 315 file(s) checked, 0 with errors
+pbir_detect opzet      : 8 finding(s) — 4 unwaived, 4 waived -> FAIL (unchanged set)
+model                  : - Move Chip GI-01/GI-02/GI-10 SVG, (text), Alt (text); + Facts Bar SVG, Facts Chip F1-F4 (text); Footer P2 (text)
+                         slimmer (source and rounding; rate and horizon are in the subtitle); Rec Note (text) back to 4e535aa; 462 measures
+report                 : move chips out, c_rec_mix back; P2 footer row = source line (w 824) | z_pill_facts (856 px: disc, label, F1-F4
+                         codes) under chip_f1..4 (finding names, tooltips tt-f1..4, z/tab from the layering file) | chip_def2 (tab 52050)
+generators             : idempotent (second run into a scratch folder identical to project/pbip)
+renders                : NONE in Desktop yet; preview composites updated
+manual steps owed      : Desktop renders 01-04; hover the four zones of 'Revisit the facts' and both Definitions chips
+```

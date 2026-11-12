@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "chip_gi10",
+  "name": "chip_f2",
   "position": {
-    "x": 1552,
-    "y": 336,
-    "z": 43600,
-    "width": 256,
+    "x": 1172,
+    "y": 1044,
+    "z": 17000,
+    "width": 156,
     "height": 28,
-    "tabOrder": 29020
+    "tabOrder": 52020
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Move Chip GI-10 (text)"
+                  "Property": "Facts Chip F2 (text)"
                 }
               },
-              "queryRef": "_Measures.Move Chip GI-10 (text)",
-              "nativeQueryRef": "Move Chip GI-10 (text)"
+              "queryRef": "_Measures.Facts Chip F2 (text)",
+              "nativeQueryRef": "Facts Chip F2 (text)"
             }
           ]
         }
@@ -347,14 +347,14 @@
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "32D"
+                  "Value": "26D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "44D"
+                  "Value": "0D"
                 }
               }
             }
@@ -381,7 +381,7 @@
             "section": {
               "expr": {
                 "Literal": {
-                  "Value": "'tt-f1'"
+                  "Value": "'tt-f2'"
                 }
               }
             }
@@ -399,7 +399,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Alt Move Chip GI-10 (text)"
+                  "Property": "Alt F2 Title (text)"
                 }
               }
             }

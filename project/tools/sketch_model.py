@@ -1278,11 +1278,12 @@ m("Alt Masthead P2 (text)", f'"2027 to 2032, Goodnight Inn budget " & ' + fmc(BU
 m("Masthead P2 (text)", f'"2027 TO 2032  ·  GOODNIGHT INN BUDGET " & ' + fmc(BUDGET_GI), TXT, C9,
   "Page-2 masthead line on the night zone: the horizon and the brand budget, read from Brands (was typed into the report generator).")
 m("Footer P2 (text)",
-  f'VAR rate = {FP.format("Discount rate")} VAR h = {FP.format("Impact horizon")} '
   # one line at 12 pt: a card shows one line in the 56 px the footer has (renders 9 Nov); R4 kept in short form
   # feedback round 4: shorter still; the three cases are named on the scenario toggle
-  'RETURN "Source: Pillow & Key Group dataset and finance parameters (" & FORMAT ( rate, "0%" ) & " discount rate, horizon " & h & "); parts are rounded to add up."',
-  TXT, C9, "Page-2 source line with the valuation parameters (REVIEW p7).")
+  # 12 Nov, night (Björn): slimmer again, to make room for 'Revisit the facts'; the discount rate and the horizon left
+  # because the subtitle, which every state shows, states both from the same parameters
+  '"Source: Pillow & Key Group dataset. Parts are rounded to add up."',
+  TXT, C9, "Page-2 source line: the source and the rounding (the valuation parameters are in the subtitle; REVIEW p7, 12 Nov night).")
 # the P2 panel's numbers as text, so a card never mixes a visual-formatted number with DAX text (REVIEW M7)
 m("Rec Capex (text)", "VAR a = [Recommended Package] RETURN " + fmc("CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a )"), TXT, C9, "Capex of A as text.")
 m("Rec NPV (text)", sfm("[Rec NPV (sel)]"), TXT, C9, "NPV through 2032 of A, selected scenario, as text.")
@@ -1409,12 +1410,13 @@ CUM32 = lambda k: f"CALCULATE ( [Preset {k} Cumulative Net (sel)], REMOVEFILTERS
 # ---- the recommendation in one sentence (Rec Answers, Rec Held and Rec Rules leave the canvas; their alt texts stay)
 m("Rec Note (text)",
   REC_IDS + f"VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR budget = {BUDGET_GI} "
+  'VAR fs = CONCATENATEX ( aIds, LOOKUPVALUE ( InvestmentProjects[Answers Finding], InvestmentProjects[ProjectID], [@p] ), ", ", [@p], ASC ) '
   'VAR k = COUNTROWS ( aIds ) VAR word = SWITCH ( k, 2, "both", 3, "all three", 4, "all four", "all " & k ) '
   'VAR live = FORMAT ( CALCULATE ( MAX ( InvestmentProjects[Completion Date] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] IN aIds ), "mmm yyyy" ) '
   'VAR others = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" && NOT ( InvestmentProjects[ProjectID] IN aIds ) ), "@p", InvestmentProjects[ProjectID] ) '
   'VAR hiPos = COUNTROWS ( FILTER ( others, VAR p = [@p] RETURN ROUND ( CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, Scenario[Scenario] = "High" ) / 100000, 0 ) >= 0 ) ) + 0 '
-  'RETURN "Each move answers a finding on The Brand Review page: hover a move to see it. The other " & ' + fmc("budget - cap") + ' & " waits until " & word & " are live in " & live & IF ( hiPos = 0, ", because no further move pays back by 2032.", "." )',
-  TXT, C13, "The recommendation's one supporting sentence: the moves answer page-1 findings (their chips above carry the codes, 12 Nov, night), the budget held back and until when, and why nothing else is funded now.")
+  'RETURN "Each move answers a finding on The Brand Review page (" & fs & "). The other " & ' + fmc("budget - cap") + ' & " waits until " & word & " are live in " & live & IF ( hiPos = 0, ", because no further move pays back by 2032.", "." )',
+  TXT, C13, "The recommendation's one supporting sentence: which findings the moves answer, the budget held back and until when, and why nothing else is funded now.")
 m("Guide (text)",
   'VAR n = COUNTROWS ( ALLNOBLANKROW ( Package ) ) VAR k = CALCULATE ( COUNTROWS ( InvestmentProjects ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ) '
   f'VAR budget = {BUDGET_GI} '
@@ -1773,19 +1775,26 @@ m("Definitions Pill SVG", _svg(144, _pill(144)), TXT, C14,
   "The ground of the Definitions chip in the footer row (144 x 28 px): the pill and the disc; the word is the card on top, which takes the hover.")
 IMAGE_MEASURES.add("Definitions Pill SVG")
 m("Definitions Chip (text)", '"Definitions"', TXT, C14, "The word Definitions on the chip at the right of the footer row of both pages; hovering it opens the definitions tooltip page.")
-# The three moves of A as chips in the recommendation tile (replacing the Rec Mix line and 'Revisit the facts F1 F2 F3 F4' in
-# the header): each move carries the code of the page-1 finding it answers (InvestmentProjects[Answers Finding]) and opens that
-# finding's tooltip page. ID, finding, width: the same mapping as the calculated column, the widths as in opzet-layout.json.
-# Widths from Arial Bold metrics (the Mac fallback; Segoe UI Semibold is narrower): 32 px disc and gap, the name, 44 px for
-# the code and the end, so "Revenue management" (170 px in Arial Bold) never reaches F1 and never wraps.
-MOVE_CHIPS = (("GI-01", "F2", 184), ("GI-02", "F3", 232), ("GI-10", "F1", 256))
-for pid, fk, tw in MOVE_CHIPS:
-    m(f"Move Chip {pid} SVG", _svg(tw, _pill(tw) + _tag_text(tw - 12, fk, BAD, "end")), TXT, C14,
-      f"The ground of the {pid} chip in the recommendation tile ({tw} x {TAG_H} px): the pill, the disc and the finding code {fk} in Burnt Tangerine; the move's name is the card on top.")
-    IMAGE_MEASURES.add(f"Move Chip {pid} SVG")
-    m(f"Move Chip {pid} (text)", NAME_OF.format(f'"{pid}"'), TXT, C14, f"The {pid} chip's words: the move's short name; hovering it opens finding {fk}'s tooltip page.")
-    alt_m(f"Move Chip {pid}", f'[Move Chip {pid} (text)] & ", a move of package A, answers " & [Alt {fk} Title (text)]',
-          f"The {pid} chip read aloud: the move and the page-1 finding it answers, with the finding's title.")
+# 'Revisit the facts' (Björn, 12 Nov, night, on the preview: the three move chips in the recommendation tile were too busy,
+# and F4 must stay reachable from page 2): ONE pill in P2's footer row, the disc once, the label, and the four findings as
+# hover zones inside it: the code in Burnt Tangerine (as on the P1 kickers) drawn here, the name a transparent card on top
+# per zone, which takes the hover and opens tt-f1 to tt-f4. Zone = (finding, x in the pill, width); the code sits at the
+# zone's x, the name 26 px further (the card's left padding); widths from Arial Bold metrics with at least 10 px to spare,
+# a Warm Grey dot in each 16 px gap. The pill's width and the zones are the slots in opzet-layout.json (z_pill_facts, chip_f1..4).
+FINDING_NAMES = (("1", "The margin"), ("2", "The middleman"), ("3", "The fading welcome"), ("4", "Where we are full"))
+FACTS_W = 856
+FACTS_ZONES = (("1", 160, 124), ("2", 300, 156), ("3", 472, 192), ("4", 680, 168))
+_facts = _pill(FACTS_W) + "<text x='32' y='19.5' " + SVG_FONT + " fill='" + HX(INK2) + "'>Revisit the facts</text>"
+for j, (k, x, zw) in enumerate(FACTS_ZONES):
+    _facts += _tag_text(x, f"F{k}", BAD)
+    if j < len(FACTS_ZONES) - 1:
+        _facts += "<circle cx='" + str(x + zw + 8) + "' cy='14' r='1.75' fill='" + HX(SLATE) + "'/>"
+m("Facts Bar SVG", _svg(FACTS_W, _facts), TXT, C14,
+  f"The 'Revisit the facts' pill in P2's footer row ({FACTS_W} x {TAG_H} px): the disc, the label and the codes F1 to F4; the finding names are cards on top, one per zone, which open the finding's tooltip page.")
+IMAGE_MEASURES.add("Facts Bar SVG")
+for k, nm in FINDING_NAMES:
+    m(f"Facts Chip F{k} (text)", f'"{nm}"', TXT, C14, f"The name of finding F{k} in the 'Revisit the facts' pill on page 2; hovering it opens tt-f{k}.")
+
 alt_m("Definitions",
       '"The short words on these pages. NPV: net present value to 2032. Capex: the investment. Run-rate: profit a year by 2032. NPS: promoters minus detractors. ADR: revenue per room sold. RevPAR: revenue per room available. OTA: an online booking site."',
       "The Definitions chip read aloud: the glossary in one breath, so a keyboard or screen-reader user gets the terms the hover shows.")

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "z_pill_gi10",
+  "name": "z_pill_facts",
   "position": {
-    "x": 1552,
-    "y": 336,
-    "z": 43500,
-    "width": 256,
+    "x": 872,
+    "y": 1044,
+    "z": 15500,
+    "width": 856,
     "height": 28,
-    "tabOrder": -1772
+    "tabOrder": -1770
   },
   "visual": {
     "visualType": "image",
@@ -30,7 +30,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Move Chip GI-10 SVG"
+                  "Property": "Facts Bar SVG"
                 }
               }
             },

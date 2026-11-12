@@ -626,30 +626,31 @@ def hover_tag(page, name, key, i):
     return decorative(image_measure(page, name, f"Hover Tag {key} SVG", None), 700 + i)
 
 
-def hover_chip(page, name, svg_measure, text_measure, tooltip_page, alt_measure, i, pad_right=12):
-    """A chip that is itself a hover target (12 Nov, night): the pill and the disc as an SVG underneath (z_pill_<x>, decorative),
-    the words as a transparent cardVisual on top (chip_<x>, same rect), which takes the hover, opens the report-page
-    tooltip and carries the alt text. The words are real text (the service's Segoe UI web font under Publish to Web), set
-    32 px in, past the disc; pad_right keeps them clear of a finding code drawn at the pill's right end."""
-    bg = decorative(image_measure(page, "z_pill_" + name.split("_", 1)[1], svg_measure, None), 760 + i)
+def chip_card(page, name, text_measure, tooltip_page, alt_measure, pad_left=32, pad_right=12):
+    """The words of a hover chip (12 Nov, night): a transparent cardVisual on top of its pill, which takes the hover, opens
+    the report-page tooltip and carries the alt text. The words are real text (the service's Segoe UI web font under Publish
+    to Web), pad_left past the disc or the code drawn in the pill underneath."""
     v = card(name, *at(page, name), [text_measure], DISPLAY, S, INK, align="left")
     vc = v["visual"]["visualContainerObjects"]
-    vc["padding"] = [{"properties": {"top": num(4), "bottom": num(0), "left": num(32), "right": num(pad_right)}}]
+    vc["padding"] = [{"properties": {"top": num(4), "bottom": num(0), "left": num(pad_left), "right": num(pad_right)}}]
     vc["visualTooltip"] = page_tooltip(tooltip_page)
-    return [bg, bind_alt(v, alt_measure)]
+    return bind_alt(v, alt_measure)
 
 
-# the three moves of A as chips in the recommendation tile, each opening the page-1 finding it answers (12 Nov, night; replaces the
-# Rec Mix line and 'Revisit the facts F1 F2 F3 F4' in the header). Mirrors InvestmentProjects[Answers Finding] and
-# MOVE_CHIPS in sketch_model.py: (ProjectID, finding); A is the fixed recommendation (Recommended Package), so the chips are static.
-MOVE_CHIPS = (("GI-01", "2"), ("GI-02", "3"), ("GI-10", "1"))
+def hover_chip(page, name, svg_measure, text_measure, tooltip_page, alt_measure, i):
+    """A chip that is itself a hover target: the pill and the disc as an SVG underneath (z_pill_<x>, decorative), the
+    words as chip_card() on the same rect (chip_<x>)."""
+    bg = decorative(image_measure(page, "z_pill_" + name.split("_", 1)[1], svg_measure, None), 760 + i)
+    return [bg, chip_card(page, name, text_measure, tooltip_page, alt_measure)]
 
 
-def move_chips():
-    out = []
-    for j, (pid, fk) in enumerate(MOVE_CHIPS):
-        sid = pid.replace("-", "").lower()
-        out += hover_chip(P2, f"chip_{sid}", f"Move Chip {pid} SVG", f"Move Chip {pid} (text)", f"tt-f{fk}", f"Alt Move Chip {pid} (text)", 10 + j, pad_right=44)
+def facts_bar():
+    """'Revisit the facts' in P2's footer row (12 Nov, night; Björn on the preview: the move chips in the recommendation tile
+    were too busy, and F4 must stay reachable from page 2): one pill (Facts Bar SVG: the disc once, the label, the codes F1 to
+    F4 in Burnt Tangerine) under four transparent cards, one per finding, each showing the finding's name 26 px past its code
+    and opening that finding's tooltip page. Visible in every state of P2. Alt text: the finding and its title."""
+    out = [decorative(image_measure(P2, "z_pill_facts", "Facts Bar SVG", None), 770)]
+    out += [chip_card(P2, f"chip_f{k}", f"Facts Chip F{k} (text)", f"tt-f{k}", f"Alt F{k} Title (text)", pad_left=26, pad_right=0) for k, _ in FINDINGS]
     return out
 
 
@@ -866,8 +867,7 @@ def p2_visuals():
     # ---- rec: the recommendation tile (one supporting sentence), where the NPV comes from, the cumulative chart
     v.append(decorative(image_measure(P2, "img_rec_chip", "Chip Funded", None), 5))
     v.append(tb(P2, "c_rec_title", "Our recommendation: package A", font=DISPLAY, size=20, colour=INK))
-    # 12 Nov, night: the three moves as chips, each opening the page-1 finding it answers (was the Rec Mix line)
-    v += move_chips()
+    v.append(dyn(P2, "c_rec_mix", "Rec Mix (text)", size=S, colour=INK))
     v.append(nums_card("c_rec_nums", ["Rec Capex (text)", "Rec NPV (text)", "Rec Range (text)", "Rec Run-rate (text)"],
                        ["capex", "NPV through 2032", "NPV range, $M", "profit a year by 2032"], "Alt Rec Nums (text)"))
     v.append(dyn(P2, "c_rec_note", "Rec Note (text)", colour=INK))
@@ -912,10 +912,10 @@ def p2_visuals():
                               [ACCENT_MARK, SIGNAL_MARK], [3, 3], dashed=(), title_measure="Cmp Build Title (text)", alt_measure="Alt Cmp Build (text)"))
     v.append(dyn(P2, "z_footer2", "Footer P2 (text)"))
     # 12 Nov, night: a hover tag on every hover target (the scatter's dots in the reading guide and the small card's title row, the
-    # three year charts in their legend or title row), the Definitions chip at the footer row's end
+    # three year charts in their legend or title row); in the footer row 'Revisit the facts' and the Definitions chip
     v += [hover_tag(P2, "tag_scatter", "Dot", 20), hover_tag(P2, "tag_scatter_s", "Dot", 21), hover_tag(P2, "tag_rec_cum", "Year", 22),
           hover_tag(P2, "tag_cmp_alts", "Year", 23), hover_tag(P2, "tag_cmp_build", "Year", 24)]
-    v += definitions_chip(P2, "2", 2)
+    v += facts_bar() + definitions_chip(P2, "2", 2)
     return v
 
 

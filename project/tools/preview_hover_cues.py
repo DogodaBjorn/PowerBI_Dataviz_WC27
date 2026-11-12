@@ -1,7 +1,7 @@
 """Preview of the hover-cue redesign of 12 Nov (night; doc 18), composited on the FinalV2 Desktop renders. NOT a Desktop
 render: the header line and the badges are erased (the Night zone from backgrounds/canvas-night.jpg, cards in white), the pills
 are drawn at their opzet-layout.json slots in Liberation Sans Bold (Arial metrics, the Mac fallback; Segoe UI Semibold is
-narrower), and the new rec-tile sentence is set in Liberation Sans. Needs Pillow (like a11y_check.py and brand_canvas_v3.py).
+narrower), and P2's slimmer source line is set in Liberation Sans. Needs Pillow (like a11y_check.py and brand_canvas_v3.py).
 usage (repo root):  python project/tools/preview_hover_cues.py . project/deliverables/screenshots/Preview-hover-cues-2026-11-12"""
 import json
 import sys
@@ -119,22 +119,56 @@ move_text_down(a, 32, 1036, 1300, 1056, 12)
 a.slot_pill(P1, "chip_def", "Definitions")
 a.save("preview_p1_brand-review.png")
 
+FACTS = (("1", "The margin", 160), ("2", "The middleman", 300), ("3", "The fading welcome", 472), ("4", "Where we are full", 680))
+
+
+def clear_band(shot, x0, y0, x1, y1):
+    """Erase text on a smooth ground: each column interpolated between the rows just above and below."""
+    s = shot.s
+    X0, Y0, X1, Y1 = round(x0 * s), round(y0 * s), round(x1 * s), round(y1 * s)
+    px = shot.im.load()
+    for x in range(X0, X1):
+        ta, tb = px[x, Y0 - 1], px[x, Y1]
+        for y in range(Y0, Y1):
+            f = (y - Y0 + 1) / (Y1 - Y0 + 1)
+            px[x, y] = tuple(round(ta[i] + (tb[i] - ta[i]) * f) for i in range(3))
+
+
+def p2_footer(shot):
+    """P2's footer row: the slimmer source line, 'Revisit the facts' (one pill, four findings), Definitions."""
+    clear_band(shot, 28, 1046, 1000, 1072)
+    shot.text(32, 1064, "Source: Pillow & Key Group dataset. Parts are rounded to add up.", colour=(75, 84, 102))
+    v = SLOT[P2]["z_pill_facts"]
+    k = shot.s * 4
+    X, Y, W = v["x"], v["y"], v["w"]
+    t = Image.new("RGBA", (round(W * k), round(28 * k)), (0, 0, 0, 0))
+    d = ImageDraw.Draw(t)
+    d.rounded_rectangle((0, 0, W * k - 1, 28 * k - 1), radius=14 * k, fill=TINT)
+    d.ellipse((4 * k, 4 * k, 24 * k, 24 * k), fill=TANG)
+    d.ellipse(((14 - 1.6) * k, (9.4 - 1.6) * k, (14 + 1.6) * k, (9.4 + 1.6) * k), fill=WHITE)
+    d.rounded_rectangle((12.8 * k, 12.2 * k, 15.2 * k, 19.6 * k), radius=1.2 * k, fill=WHITE)
+    d.text((32 * k, 19.5 * k), "Revisit the facts", font=font(16 * k, bold=False), fill=(75, 84, 102), anchor="ls")
+    for j, (code, name, x) in enumerate(FACTS):
+        d.text((x * k, 19.5 * k), "F" + code, font=font(16 * k), fill=BURNT, anchor="ls")
+        d.text(((x + 26) * k, 19.5 * k), name, font=font(16 * k), fill=INK, anchor="ls")
+        if j < 3:
+            cw = SLOT[P2]["chip_f" + code]["w"]
+            cx = x + cw + 8
+            d.ellipse(((cx - 1.75) * k, (14 - 1.75) * k, (cx + 1.75) * k, (14 + 1.75) * k), fill=(142, 137, 125))
+    t = t.resize((round(W * shot.s), round(28 * shot.s)), Image.LANCZOS)
+    shot.im.paste(t, (round(X * shot.s), round(Y * shot.s)), t)
+    shot.slot_pill(P2, "chip_def2", "Definitions")
+
+
 # ---- P2, rec
 b = Shot("02_p2-investment-strategy_recommended-A.png")
 b.erase_bg(1250, 12, 660, 40)                      # hint, 'Revisit the facts', F1-F4, Definitions
 b.fill(1034, 186, 30, 28, WHITE)                    # bdg_scatter
 b.fill(1834, 742, 28, 28, WHITE)                    # bdg_rec_cum
-b.fill(672, 293, 172, 26, ICE)                      # 'Hover a dot for its moves.' leaves the guide
+b.fill(650, 293, 194, 26, ICE)                      # 'Hover a dot for its moves.' leaves the guide
 b.slot_pill(P2, "tag_scatter", "Hover a dot")
-b.fill(1116, 334, 600, 32, WHITE)                   # the Rec Mix line
-for sid, code in (("gi01", "F2"), ("gi02", "F3"), ("gi10", "F1")):
-    name = {"gi01": "Booking app", "gi02": "Kiosks at 20 desks", "gi10": "Revenue management"}[sid]
-    b.slot_pill(P2, f"chip_{sid}", name, code)
-b.fill(1116, 460, 744, 56, WHITE)                   # the note, new first sentence
-b.text(1120, 482, "Each move answers a finding on The Brand Review page: hover a move to see it. The other $50.6M waits "
-       "until all three are live in Apr 2028, because no further move pays back by 2032.", width=736, lead=21.5)
 b.slot_pill(P2, "tag_rec_cum", "Hover a year")
-b.slot_pill(P2, "chip_def2", "Definitions")
+p2_footer(b)
 b.save("preview_p2_recommended-A.png")
 
 # ---- P2, alts
@@ -144,6 +178,6 @@ c.fill(714, 186, 28, 28, WHITE)                     # bdg_scatter_s
 c.fill(1834, 678, 28, 28, WHITE)                    # bdg_cmp_alts
 c.slot_pill(P2, "tag_scatter_s", "Hover a dot")
 c.slot_pill(P2, "tag_cmp_alts", "Hover a year")
-c.slot_pill(P2, "chip_def2", "Definitions")
+p2_footer(c)
 c.save("preview_p2_considered-B-C.png")
 print("written", OUT)

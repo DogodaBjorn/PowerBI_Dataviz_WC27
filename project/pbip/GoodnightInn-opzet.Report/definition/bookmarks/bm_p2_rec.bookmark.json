@@ -40,12 +40,7 @@
       "tab_build_off",
       "img_rec_chip",
       "c_rec_title",
-      "z_pill_gi01",
-      "chip_gi01",
-      "z_pill_gi02",
-      "chip_gi02",
-      "z_pill_gi10",
-      "chip_gi10",
+      "c_rec_mix",
       "c_rec_nums",
       "c_rec_note",
       "ch_rec_waterfall",
@@ -314,32 +309,7 @@
               "visualType": "textbox"
             }
           },
-          "z_pill_gi01": {
-            "singleVisual": {
-              "visualType": "image"
-            }
-          },
-          "chip_gi01": {
-            "singleVisual": {
-              "visualType": "cardVisual"
-            }
-          },
-          "z_pill_gi02": {
-            "singleVisual": {
-              "visualType": "image"
-            }
-          },
-          "chip_gi02": {
-            "singleVisual": {
-              "visualType": "cardVisual"
-            }
-          },
-          "z_pill_gi10": {
-            "singleVisual": {
-              "visualType": "image"
-            }
-          },
-          "chip_gi10": {
+          "c_rec_mix": {
             "singleVisual": {
               "visualType": "cardVisual"
             }

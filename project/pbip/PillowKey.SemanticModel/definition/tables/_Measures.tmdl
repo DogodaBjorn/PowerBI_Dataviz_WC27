@@ -1907,8 +1907,8 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: 49b1e1f7-9070-5d20-bf50-5b8e542eef08
 
-	/// Page-2 source line with the valuation parameters (REVIEW p7).
-	measure 'Footer P2 (text)' = VAR rate = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ) VAR h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Source: Pillow & Key Group dataset and finance parameters (" & FORMAT ( rate, "0%" ) & " discount rate, horizon " & h & "); parts are rounded to add up."
+	/// Page-2 source line: the source and the rounding (the valuation parameters are in the subtitle; REVIEW p7, 12 Nov night).
+	measure 'Footer P2 (text)' = "Source: Pillow & Key Group dataset. Parts are rounded to add up."
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 8ac5c564-37f8-574e-8b35-36e5c61646be
@@ -2069,8 +2069,8 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: e7902a0e-f6b2-5eaf-93f1-c47db8b0250c
 
-	/// The recommendation's one supporting sentence: the moves answer page-1 findings (their chips above carry the codes, 12 Nov, night), the budget held back and until when, and why nothing else is funded now.
-	measure 'Rec Note (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR k = COUNTROWS ( aIds ) VAR word = SWITCH ( k, 2, "both", 3, "all three", 4, "all four", "all " & k ) VAR live = FORMAT ( CALCULATE ( MAX ( InvestmentProjects[Completion Date] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] IN aIds ), "mmm yyyy" ) VAR others = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" && NOT ( InvestmentProjects[ProjectID] IN aIds ) ), "@p", InvestmentProjects[ProjectID] ) VAR hiPos = COUNTROWS ( FILTER ( others, VAR p = [@p] RETURN ROUND ( CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, Scenario[Scenario] = "High" ) / 100000, 0 ) >= 0 ) ) + 0 RETURN "Each move answers a finding on The Brand Review page: hover a move to see it. The other " & FORMAT ( ( budget - cap ) / 1000000, "$#,0.0#" ) & "M" & " waits until " & word & " are live in " & live & IF ( hiPos = 0, ", because no further move pays back by 2032.", "." )
+	/// The recommendation's one supporting sentence: which findings the moves answer, the budget held back and until when, and why nothing else is funded now.
+	measure 'Rec Note (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR fs = CONCATENATEX ( aIds, LOOKUPVALUE ( InvestmentProjects[Answers Finding], InvestmentProjects[ProjectID], [@p] ), ", ", [@p], ASC ) VAR k = COUNTROWS ( aIds ) VAR word = SWITCH ( k, 2, "both", 3, "all three", 4, "all four", "all " & k ) VAR live = FORMAT ( CALCULATE ( MAX ( InvestmentProjects[Completion Date] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] IN aIds ), "mmm yyyy" ) VAR others = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" && NOT ( InvestmentProjects[ProjectID] IN aIds ) ), "@p", InvestmentProjects[ProjectID] ) VAR hiPos = COUNTROWS ( FILTER ( others, VAR p = [@p] RETURN ROUND ( CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, Scenario[Scenario] = "High" ) / 100000, 0 ) >= 0 ) ) + 0 RETURN "Each move answers a finding on The Brand Review page (" & fs & "). The other " & FORMAT ( ( budget - cap ) / 1000000, "$#,0.0#" ) & "M" & " waits until " & word & " are live in " & live & IF ( hiPos = 0, ", because no further move pays back by 2032.", "." )
 		formatString: @
 		displayFolder: 13 Round 4 copy
 		lineageTag: 3373962e-cc0c-5194-a70b-2849e5321d0f
@@ -2688,62 +2688,36 @@ table _Measures
 		displayFolder: 14 Findings reference and hover detail
 		lineageTag: 0b711f65-aca6-538c-b0dc-82d8dc39b477
 
-	/// The ground of the GI-01 chip in the recommendation tile (184 x 28 px): the pill, the disc and the finding code F2 in Burnt Tangerine; the move's name is the card on top.
-	measure 'Move Chip GI-01 SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='184' height='28' viewBox='0 0 184 28'>" & "<rect width='184' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/><text x='172' y='19.5' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F2</text></svg>"
+	/// The 'Revisit the facts' pill in P2's footer row (856 x 28 px): the disc, the label and the codes F1 to F4; the finding names are cards on top, one per zone, which open the finding's tooltip page.
+	measure 'Facts Bar SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='856' height='28' viewBox='0 0 856 28'>" & "<rect width='856' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/><text x='32' y='19.5' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Revisit the facts</text><text x='160' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F1</text><circle cx='292' cy='14' r='1.75' fill='%238E897D'/><text x='300' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F2</text><circle cx='464' cy='14' r='1.75' fill='%238E897D'/><text x='472' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F3</text><circle cx='672' cy='14' r='1.75' fill='%238E897D'/><text x='680' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F4</text></svg>"
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
 		dataCategory: ImageUrl
-		lineageTag: b01143cf-dda0-5c0f-98a7-a4cd71679e04
+		lineageTag: 4a6cf517-75a1-55d7-bd30-7310e98a9af5
 
-	/// The GI-01 chip's words: the move's short name; hovering it opens finding F2's tooltip page.
-	measure 'Move Chip GI-01 (text)' = LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], "GI-01" )
+	/// The name of finding F1 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f1.
+	measure 'Facts Chip F1 (text)' = "The margin"
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
-		lineageTag: e7628e58-0bc1-5040-ae79-b124ce9244ad
+		lineageTag: c7475a9f-d590-5521-9a50-516a195cfa12
 
-	/// The GI-01 chip read aloud: the move and the page-1 finding it answers, with the finding's title.
-	measure 'Alt Move Chip GI-01 (text)' = [Move Chip GI-01 (text)] & ", a move of package A, answers " & [Alt F2 Title (text)]
-		formatString: @
-		displayFolder: 11 Accessibility
-		lineageTag: 62b73e31-340f-577c-83db-85117caed336
-
-	/// The ground of the GI-02 chip in the recommendation tile (232 x 28 px): the pill, the disc and the finding code F3 in Burnt Tangerine; the move's name is the card on top.
-	measure 'Move Chip GI-02 SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='232' height='28' viewBox='0 0 232 28'>" & "<rect width='232' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/><text x='220' y='19.5' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F3</text></svg>"
+	/// The name of finding F2 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f2.
+	measure 'Facts Chip F2 (text)' = "The middleman"
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
-		dataCategory: ImageUrl
-		lineageTag: 7425bfda-976a-5294-9a70-929c4c5ead79
+		lineageTag: f90aae4a-bb0c-51c2-83b3-29d4b162c838
 
-	/// The GI-02 chip's words: the move's short name; hovering it opens finding F3's tooltip page.
-	measure 'Move Chip GI-02 (text)' = LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], "GI-02" )
+	/// The name of finding F3 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f3.
+	measure 'Facts Chip F3 (text)' = "The fading welcome"
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
-		lineageTag: f21e6bf1-4754-5bd6-9b70-142eb2571d23
+		lineageTag: 160cc565-6903-5e65-82da-08cd002169d8
 
-	/// The GI-02 chip read aloud: the move and the page-1 finding it answers, with the finding's title.
-	measure 'Alt Move Chip GI-02 (text)' = [Move Chip GI-02 (text)] & ", a move of package A, answers " & [Alt F3 Title (text)]
-		formatString: @
-		displayFolder: 11 Accessibility
-		lineageTag: becd5bba-d5d4-5bfd-8316-7e2841f9b18f
-
-	/// The ground of the GI-10 chip in the recommendation tile (256 x 28 px): the pill, the disc and the finding code F1 in Burnt Tangerine; the move's name is the card on top.
-	measure 'Move Chip GI-10 SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='256' height='28' viewBox='0 0 256 28'>" & "<rect width='256' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/><text x='244' y='19.5' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F1</text></svg>"
+	/// The name of finding F4 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f4.
+	measure 'Facts Chip F4 (text)' = "Where we are full"
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
-		dataCategory: ImageUrl
-		lineageTag: 51446a17-64c9-53b0-9211-080b8caedfc9
-
-	/// The GI-10 chip's words: the move's short name; hovering it opens finding F1's tooltip page.
-	measure 'Move Chip GI-10 (text)' = LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], "GI-10" )
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: e2aecbb0-cc68-556c-a2ad-de3adb6bc0f5
-
-	/// The GI-10 chip read aloud: the move and the page-1 finding it answers, with the finding's title.
-	measure 'Alt Move Chip GI-10 (text)' = [Move Chip GI-10 (text)] & ", a move of package A, answers " & [Alt F1 Title (text)]
-		formatString: @
-		displayFolder: 11 Accessibility
-		lineageTag: fe8922e8-36ce-54dc-8405-298eb4283eb9
+		lineageTag: 72b907ed-ab4c-5731-b355-a418d713c408
 
 	/// The Definitions chip read aloud: the glossary in one breath, so a keyboard or screen-reader user gets the terms the hover shows.
 	measure 'Alt Definitions (text)' = "The short words on these pages. NPV: net present value to 2032. Capex: the investment. Run-rate: profit a year by 2032. NPS: promoters minus detractors. ADR: revenue per room sold. RevPAR: revenue per room available. OTA: an online booking site."
