@@ -1765,6 +1765,7 @@ RETURN
         Proj,
         "ProjectID", InvestmentProjects[ProjectID],
         "Short Name", InvestmentProjects[Short Name],
+        "Waterfall Label", SWITCH ( InvestmentProjects[ProjectID], "GI-01", "Booking app", "GI-02", "Kiosks", "GI-03", "Energy", "GI-04", "Toronto +40", "GI-05", "Gatwick +40", "GI-06", "Kingston +40", "GI-07", "Refresh 10", "GI-08", "Boston hotel", "GI-09", "Breakfast", "GI-10", "Revenue mgmt", InvestmentProjects[Short Name] ),
         "Sort", VAR p = InvestmentProjects[ProjectID]
             RETURN RANKX (
                 Proj,
@@ -2019,8 +2020,11 @@ def main():
     # selector's cross-filter reaches only the Build measures (TREATAS onto InvestmentProjects) and never A's visuals.
     bm = calc_table(
         "BuildMove", "Disconnected copy of the ten Goodnight Inn moves for the build-your-own plan (P2, build state). The Deneb selector cross-filters this table; the Build measures carry the selection onto InvestmentProjects with TREATAS. Sort: by Expected NPV, high to low.",
-        [("ProjectID", "string", None), ("Short Name", "string", None), ("Sort", "int64", "0"), ("Growth", "string", None), ("Answers", "string", None)], BUILD_MOVE)
+        [("ProjectID", "string", None), ("Short Name", "string", None), ("Waterfall Label", "string", None), ("Sort", "int64", "0"), ("Growth", "string", None), ("Answers", "string", None)], BUILD_MOVE)
     assert "\tcolumn 'Short Name'\n\t\tdataType: string\n" in bm
+    # verification 17 (12 Nov): the build waterfall labels its bars with a shorter name (12 characters at most) so no bar
+    # ends in an ellipsis; the selector and the tooltips keep the full Short Name. Both columns sort by the NPV rank.
+    bm = bm.replace("\tcolumn 'Waterfall Label'\n\t\tdataType: string\n", "\tcolumn 'Waterfall Label'\n\t\tdataType: string\n\t\tsortByColumn: Sort\n")
     w(d / "tables" / "BuildMove.tmdl", bm.replace("\tcolumn 'Short Name'\n\t\tdataType: string\n", "\tcolumn 'Short Name'\n\t\tdataType: string\n\t\tsortByColumn: Sort\n"))
     w(d / "tables" / "BuildPoint.tmdl", helper_table(
         "BuildPoint", "One row, 'Your plan': the category of the scatter layer that marks the plan being built (its X and Y are the Build Capex and Build NPV measures).",

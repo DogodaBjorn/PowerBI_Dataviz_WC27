@@ -99,3 +99,31 @@ over twee schermen gaf een pagina van 530 px). `crop.py`: kaders beginnen op y 1
   tt-package en tt-f4-hotel terug (lay-out en canvasbeelden; die pagina's waren alleen in de kopie herladen) plus
   Desktop-artefacten. Teruggezet naar `c8d13c6` via `git stash` ("Desktop-save 2026-11-12"); niets verloren. Regel
   voortaan: de agent sluit zijn eigen Desktop-vensters zonder opslaan aan het eind van de ronde.
+
+## Restpunten uit verificatie 17 (12 nov, middag)
+
+Bron: [doc 17](17-verificatie-finalv2-2026-11-12.md), "Wat nu nog moet" 1 en de README-opdracht. De P2W-poort (punt 2)
+doet Bjorn handmatig na publicatie.
+
+- **Watervalnaam leesbaar.** `BuildMove` kreeg een kolom `Waterfall Label` (SWITCH op ProjectID, hoogstens 12 tekens:
+  Booking app, Revenue mgmt, Kiosks, Breakfast, Gatwick +40, Toronto +40, Kingston +40, Energy, Boston hotel,
+  Refresh 10; `sortByColumn: Sort` zoals Short Name). Alleen `ch_build_waterfall` gebruikt die kolom; selector,
+  tooltips en de A-waterval houden de volledige Short Name. Generator `sketch_model.py` (BUILD_MOVE + kolomlijst) en
+  `opzet_report.py` (regel 853). Echte diff: BuildMove.tmdl +10 regels, ch_build_waterfall/visual.json 3 regels.
+  Render 05: "Booking app / Revenue mgmt / Toronto +40", twee regels, geen ellips; 06: "Energy / Boston hotel /
+  Refresh 10".
+- **Echte klikrenders 05 en 06.** Wegwerpkopie in de build-stand zonder enig filter (`copyprep.py build A -`), venster
+  1920 x 1080 op het hoofdscherm. `mouse_event`-klikken bereikten Deneb niet (Desktop selecteert dan alleen de visual-
+  container, render 12 nov); `PostMessage` van WM_MOUSEMOVE/LBUTTONDOWN/LBUTTONUP naar de `Chrome_RenderWidgetHostHWND`
+  van de rapportweergave wel (scratch-script `click_post.ps1`; rijcoördinaten: pagina-oorsprong op scherm (47,5; 182,5),
+  0,765 schermpx per logische px, rijen 26,8 px hoog onder een kop van 32). Rij 1/2/6 (GI-01, GI-10, GI-04) → 05:
+  drie vinkjes, voetregel "Picked: 3 moves, $13.2M of $60.0M", tegel "Your plan: 3 moves, live by May 2028". Herladen,
+  rij 10/9/8 (GI-07, GI-08, GI-03) → 06: voetregel in Tangerine "Over budget by $9.25M: $69.25M picked, the cap is
+  $60.0M", alarmband. Geen visual-filters meer in 05/06; de README zegt dat. Rijvolgorde uit het model (DAX via de
+  modeling-MCP op poort 49158): GI-01, GI-10, GI-02, GI-09, GI-05, GI-04, GI-06, GI-03, GI-08, GI-07.
+- **README** herschreven: werkwijze per render, de watervalkolom, "Totaal" (nl-NL), en een paragraaf over wat alleen de
+  gepubliceerde versie kan tonen (20-28, toetsenbordronde, tooltip zwevend op zijn plaats, 1366 px in de browser).
+- **Poorten:** validate_tmdl 34 bestanden 0 fouten; schema_check 0 falend; a11y_check 0; pbir_detect 4 onbewaakt
+  (ongewijzigd, van vóór deze ronde); Microsofts validator 1 fout + 25 waarschuwingen (ongewijzigd, bekend).
+- **Desktop** aan het eind gesloten via CloseMainWindow en "Niet opslaan" (UI Automation); geen PBIDesktop-proces
+  meer. De projectmap is nooit in Desktop geopend in deze ronde.

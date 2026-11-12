@@ -102,7 +102,7 @@ The daily driver is `/next` — it reads the state, reports gate status, and rou
 | Verbeterplan ronde 3 (Bjorns feedback 7 nov: C-framing, scatter-tooltips, nullijn, canvasruimte, merkherkenning + open punten ronde 2) | `project/project-state/active/08-verbeterplan-ronde-3.md` |
 | Rebuild-pakket 9 nov: deel A inhoud (KPI-onderzoek, R1-R5) + deel B design (merkkit goodnight-inn-wakeup 3.1, night header, D1-D7), gezamenlijke bouwvolgorde | `project/project-state/active/09-research-based-rebuild.md` + `project/project-state/active/10-design-rebuild.md` |
 | Rebuild 09+10 gebouwd op v3 (afstemming plannen tegen main vs. v3-build, besluiten 9 nov: night-glow-waiver, 12 pt, R1 als zin in F1, toegankelijkheidscontrole en a11y_check.py) | `project/project-state/active/11-rebuild-v3-reconciliation.md` |
-| FinalV1 → FinalV2 (12 nov): review doc 14, bouwplan doc 15 (M1-M5, S1-S6, N1-N6), bouwlog doc 16 (wat gebouwd, afwijkingen, P2W-poort open) | `project/project-state/active/14-review-finalv2-2026-11-12.md`, `15-bouwplan-finalv2-2026-11-12.md`, `16-finalv2-bouwlog-2026-11-12.md`; renders `project/deliverables/screenshots/ScreenshotsFinalV2/` |
+| FinalV1 → FinalV2 (12 nov): review doc 14, bouwplan doc 15 (M1-M5, S1-S6, N1-N6), bouwlog doc 16 (wat gebouwd, afwijkingen, restpunten van verificatie 17 gedaan: watervalnamen, echte klikrenders), verificatie doc 17 (controle-agent, P2W-poort open) | `project/project-state/active/14-review-finalv2-2026-11-12.md`, `15-bouwplan-finalv2-2026-11-12.md`, `16-finalv2-bouwlog-2026-11-12.md`, `17-verificatie-finalv2-2026-11-12.md`; renders `project/deliverables/screenshots/ScreenshotsFinalV2/` |
 | Keep the toolkit first-in-class (research any subject) | skill `scout` + `research/radar.md` |
 
 ## Environment notes

@@ -850,7 +850,8 @@ def p2_visuals():
     v.append(nums_card("c_you_nums", ["Build Capex (text)", "Build NPV (text)", "Build Range (text)"], ["capex", "NPV through 2032", "NPV range, $M"], "Alt You Nums (text)", size=16))
     v.append(dyn(P2, "c_you_rules", "Build Valid (text)", colour_measure="Build Valid Color"))
     # FinalV2 (plan 15 S2): the $0 rest bar of the empty state reads as a waiting place, not a fault: a muted note as the tile's title
-    v.append(waterfall("ch_build_waterfall", "BuildMove", "Short Name", "Build Project NPV (shown)", "Build Row Flag", "Build WF Y Start", "Build WF Y End", "Alt Build Waterfall (text)",
+    # verification 17 (12 Nov): the bars carry BuildMove[Waterfall Label], 12 characters at most, so none ends in an ellipsis
+    v.append(waterfall("ch_build_waterfall", "BuildMove", "Waterfall Label", "Build Project NPV (shown)", "Build Row Flag", "Build WF Y Start", "Build WF Y End", "Alt Build Waterfall (text)",
                        title_measure="Build WF Note (text)", muted=True))
     v.append(cumulative_chart("ch_cmp_build", [("Preset A Cumulative Net (sel)", "A, our recommendation"), ("Build Cumulative Net (sel)", "Your plan")],
                               [ACCENT_MARK, SIGNAL_MARK], [3, 3], dashed=(), title_measure="Cmp Build Title (text)", alt_measure="Alt Cmp Build (text)"))

@@ -19,6 +19,15 @@ table BuildMove
 		isDataTypeInferred
 		sourceColumn: [Short Name]
 
+	column 'Waterfall Label'
+		dataType: string
+		sortByColumn: Sort
+		lineageTag: 301b0b4a-4f78-5e18-a7fe-6bfa4073dadd
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Waterfall Label]
+
 	column Sort
 		dataType: int64
 		formatString: 0
@@ -53,6 +62,7 @@ table BuildMove
 				        Proj,
 				        "ProjectID", InvestmentProjects[ProjectID],
 				        "Short Name", InvestmentProjects[Short Name],
+				        "Waterfall Label", SWITCH ( InvestmentProjects[ProjectID], "GI-01", "Booking app", "GI-02", "Kiosks", "GI-03", "Energy", "GI-04", "Toronto +40", "GI-05", "Gatwick +40", "GI-06", "Kingston +40", "GI-07", "Refresh 10", "GI-08", "Boston hotel", "GI-09", "Breakfast", "GI-10", "Revenue mgmt", InvestmentProjects[Short Name] ),
 				        "Sort", VAR p = InvestmentProjects[ProjectID]
 				            RETURN RANKX (
 				                Proj,

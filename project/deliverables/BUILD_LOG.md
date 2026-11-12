@@ -172,3 +172,17 @@ Desktop                : project window (P1, P2 rec, tt-f1..f4) + a throwaway co
                          (never in the project); renders in project/deliverables/screenshots/ScreenshotsFinalV2/ with README (Desktop set 01-18
                          complete; Publish-to-Web set 20-28 NOT rendered: publishing is Björn's action, no service link yet)
 ```
+
+```
+2026-11-12, verification 17 follow-up (short build-waterfall labels; renders 05/06 remade after real clicks)
+validate_tmdl --strict : 34 file(s), 0 error(s), 0 warning(s) [strict]
+a11y_check             : 0 failure(s), 0 note(s) over GoodnightInn-opzet.Report
+schema_check           : ch_build_waterfall/visual.json 0 failing (the only changed report file)
+pbir_detect opzet      : 9 finding(s) — 4 unwaived, 5 waived -> FAIL (unchanged, all from before FinalV2)
+MS validate (opzet)    : failed errors 1 warnings 25 (unchanged: the pre-existing categoryLabels.backgroundColor shape on the A/B/C scatter layer)
+model                  : BuildMove + column Waterfall Label (SWITCH on ProjectID, 12 characters at most, sortByColumn Sort); ch_build_waterfall
+                         groups by it; selector, tooltips and the A waterfall keep Short Name
+Desktop                : throwaway copy only, build state, no filters; rows clicked by posting mouse messages to the report view (mouse_event
+                         only selects the visual container in edit mode); 05 = rows GI-01/GI-10/GI-04, 06 = GI-07/GI-08/GI-03 after a reload;
+                         the project was not opened; Desktop closed without saving at the end
+```
