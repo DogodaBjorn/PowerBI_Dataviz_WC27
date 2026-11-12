@@ -40,7 +40,12 @@
       "tab_build_off",
       "img_rec_chip",
       "c_rec_title",
-      "c_rec_mix",
+      "z_pill_gi01",
+      "chip_gi01",
+      "z_pill_gi02",
+      "chip_gi02",
+      "z_pill_gi10",
+      "chip_gi10",
       "c_rec_nums",
       "c_rec_note",
       "ch_rec_waterfall",
@@ -65,11 +70,11 @@
       "c_you_rules",
       "ch_build_waterfall",
       "ch_cmp_build",
-      "bdg_scatter",
-      "bdg_scatter_s",
-      "bdg_rec_cum",
-      "bdg_cmp_alts",
-      "bdg_cmp_build"
+      "tag_scatter",
+      "tag_scatter_s",
+      "tag_rec_cum",
+      "tag_cmp_alts",
+      "tag_cmp_build"
     ],
     "suppressActiveSection": true,
     "suppressData": true
@@ -309,7 +314,32 @@
               "visualType": "textbox"
             }
           },
-          "c_rec_mix": {
+          "z_pill_gi01": {
+            "singleVisual": {
+              "visualType": "image"
+            }
+          },
+          "chip_gi01": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "z_pill_gi02": {
+            "singleVisual": {
+              "visualType": "image"
+            }
+          },
+          "chip_gi02": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "z_pill_gi10": {
+            "singleVisual": {
+              "visualType": "image"
+            }
+          },
+          "chip_gi10": {
             "singleVisual": {
               "visualType": "cardVisual"
             }
@@ -491,12 +521,12 @@
               }
             }
           },
-          "bdg_scatter": {
+          "tag_scatter": {
             "singleVisual": {
               "visualType": "image"
             }
           },
-          "bdg_scatter_s": {
+          "tag_scatter_s": {
             "singleVisual": {
               "visualType": "image",
               "display": {
@@ -504,12 +534,12 @@
               }
             }
           },
-          "bdg_rec_cum": {
+          "tag_rec_cum": {
             "singleVisual": {
               "visualType": "image"
             }
           },
-          "bdg_cmp_alts": {
+          "tag_cmp_alts": {
             "singleVisual": {
               "visualType": "image",
               "display": {
@@ -517,7 +547,7 @@
               }
             }
           },
-          "bdg_cmp_build": {
+          "tag_cmp_build": {
             "singleVisual": {
               "visualType": "image",
               "display": {

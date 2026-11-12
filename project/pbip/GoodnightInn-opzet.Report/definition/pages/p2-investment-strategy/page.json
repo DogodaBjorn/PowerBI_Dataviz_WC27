@@ -150,51 +150,6 @@
     },
     {
       "source": "hero_packages_hover",
-      "target": "z_hint2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "z_dot2a",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "z_facts",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "hdr_f1",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "hdr_f2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "hdr_f3",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "hdr_f4",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "z_dot2b",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
-      "target": "hdr_def2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_packages_hover",
       "target": "c_subtitle2",
       "type": "NoFilter"
     },
@@ -330,7 +285,32 @@
     },
     {
       "source": "hero_packages_hover",
-      "target": "c_rec_mix",
+      "target": "z_pill_gi01",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_gi01",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "z_pill_gi02",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_gi02",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "z_pill_gi10",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_gi10",
       "type": "NoFilter"
     },
     {
@@ -460,27 +440,37 @@
     },
     {
       "source": "hero_packages_hover",
-      "target": "bdg_scatter",
+      "target": "tag_scatter",
       "type": "NoFilter"
     },
     {
       "source": "hero_packages_hover",
-      "target": "bdg_scatter_s",
+      "target": "tag_scatter_s",
       "type": "NoFilter"
     },
     {
       "source": "hero_packages_hover",
-      "target": "bdg_rec_cum",
+      "target": "tag_rec_cum",
       "type": "NoFilter"
     },
     {
       "source": "hero_packages_hover",
-      "target": "bdg_cmp_alts",
+      "target": "tag_cmp_alts",
       "type": "NoFilter"
     },
     {
       "source": "hero_packages_hover",
-      "target": "bdg_cmp_build",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "z_pill_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_packages_hover",
+      "target": "chip_def2",
       "type": "NoFilter"
     },
     {
@@ -546,51 +536,6 @@
     {
       "source": "hero_s_packages_hover",
       "target": "z_headline2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "z_hint2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "z_dot2a",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "z_facts",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "hdr_f1",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "hdr_f2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "hdr_f3",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "hdr_f4",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "z_dot2b",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "hdr_def2",
       "type": "NoFilter"
     },
     {
@@ -730,7 +675,32 @@
     },
     {
       "source": "hero_s_packages_hover",
-      "target": "c_rec_mix",
+      "target": "z_pill_gi01",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_gi01",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_pill_gi02",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_gi02",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_pill_gi10",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_gi10",
       "type": "NoFilter"
     },
     {
@@ -860,27 +830,37 @@
     },
     {
       "source": "hero_s_packages_hover",
-      "target": "bdg_scatter",
+      "target": "tag_scatter",
       "type": "NoFilter"
     },
     {
       "source": "hero_s_packages_hover",
-      "target": "bdg_scatter_s",
+      "target": "tag_scatter_s",
       "type": "NoFilter"
     },
     {
       "source": "hero_s_packages_hover",
-      "target": "bdg_rec_cum",
+      "target": "tag_rec_cum",
       "type": "NoFilter"
     },
     {
       "source": "hero_s_packages_hover",
-      "target": "bdg_cmp_alts",
+      "target": "tag_cmp_alts",
       "type": "NoFilter"
     },
     {
       "source": "hero_s_packages_hover",
-      "target": "bdg_cmp_build",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "z_pill_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "chip_def2",
       "type": "NoFilter"
     },
     {
@@ -946,51 +926,6 @@
     {
       "source": "hero_s_packages_build",
       "target": "z_headline2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "z_hint2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "z_dot2a",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "z_facts",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "hdr_f1",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "hdr_f2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "hdr_f3",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "hdr_f4",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "z_dot2b",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "hdr_def2",
       "type": "NoFilter"
     },
     {
@@ -1130,7 +1065,32 @@
     },
     {
       "source": "hero_s_packages_build",
-      "target": "c_rec_mix",
+      "target": "z_pill_gi01",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_gi01",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_pill_gi02",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_gi02",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_pill_gi10",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_gi10",
       "type": "NoFilter"
     },
     {
@@ -1260,27 +1220,37 @@
     },
     {
       "source": "hero_s_packages_build",
-      "target": "bdg_scatter",
+      "target": "tag_scatter",
       "type": "NoFilter"
     },
     {
       "source": "hero_s_packages_build",
-      "target": "bdg_scatter_s",
+      "target": "tag_scatter_s",
       "type": "NoFilter"
     },
     {
       "source": "hero_s_packages_build",
-      "target": "bdg_rec_cum",
+      "target": "tag_rec_cum",
       "type": "NoFilter"
     },
     {
       "source": "hero_s_packages_build",
-      "target": "bdg_cmp_alts",
+      "target": "tag_cmp_alts",
       "type": "NoFilter"
     },
     {
       "source": "hero_s_packages_build",
-      "target": "bdg_cmp_build",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "z_pill_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "chip_def2",
       "type": "NoFilter"
     },
     {
@@ -1346,51 +1316,6 @@
     {
       "source": "dn_build_selector",
       "target": "z_headline2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "z_hint2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "z_dot2a",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "z_facts",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "hdr_f1",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "hdr_f2",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "hdr_f3",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "hdr_f4",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "z_dot2b",
-      "type": "NoFilter"
-    },
-    {
-      "source": "dn_build_selector",
-      "target": "hdr_def2",
       "type": "NoFilter"
     },
     {
@@ -1535,7 +1460,32 @@
     },
     {
       "source": "dn_build_selector",
-      "target": "c_rec_mix",
+      "target": "z_pill_gi01",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_gi01",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_pill_gi02",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_gi02",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_pill_gi10",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_gi10",
       "type": "NoFilter"
     },
     {
@@ -1660,27 +1610,37 @@
     },
     {
       "source": "dn_build_selector",
-      "target": "bdg_scatter",
+      "target": "tag_scatter",
       "type": "NoFilter"
     },
     {
       "source": "dn_build_selector",
-      "target": "bdg_scatter_s",
+      "target": "tag_scatter_s",
       "type": "NoFilter"
     },
     {
       "source": "dn_build_selector",
-      "target": "bdg_rec_cum",
+      "target": "tag_rec_cum",
       "type": "NoFilter"
     },
     {
       "source": "dn_build_selector",
-      "target": "bdg_cmp_alts",
+      "target": "tag_cmp_alts",
       "type": "NoFilter"
     },
     {
       "source": "dn_build_selector",
-      "target": "bdg_cmp_build",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "z_pill_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "dn_build_selector",
+      "target": "chip_def2",
       "type": "NoFilter"
     }
   ],
