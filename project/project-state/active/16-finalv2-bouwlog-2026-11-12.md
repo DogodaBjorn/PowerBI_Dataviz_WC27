@@ -95,4 +95,7 @@ over twee schermen gaf een pagina van 530 px). `crop.py`: kaders beginnen op y 1
 
 - Publish-to-Web-poort (fase 5) en de renders 20-28; de inzendnotities (nl-NL-notatie, Deneb-toetsenbord).
 - Bjorns blik op FinalV2; de tweede PR naar `main`.
-- Beide Desktop-vensters staan open (project en kopie); sluiten zonder opslaan.
+- Desktop-vensters: Bjorn sloot beide met Opslaan (12 nov, na de merge). De project-save schreef een oudere stand van
+  tt-package en tt-f4-hotel terug (lay-out en canvasbeelden; die pagina's waren alleen in de kopie herladen) plus
+  Desktop-artefacten. Teruggezet naar `c8d13c6` via `git stash` ("Desktop-save 2026-11-12"); niets verloren. Regel
+  voortaan: de agent sluit zijn eigen Desktop-vensters zonder opslaan aan het eind van de ronde.
