@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_card_card_compare",
   "position": {
     "x": 32,
     "y": 664,
     "z": 5000,
-    "height": 352,
     "width": 1856,
+    "height": 352,
     "tabOrder": -14001
   },
   "visual": {
@@ -263,7 +263,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

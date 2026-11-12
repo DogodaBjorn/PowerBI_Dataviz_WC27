@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_b_why",
   "position": {
     "x": 808,
     "y": 408,
     "z": 54000,
-    "height": 72,
     "width": 496,
+    "height": 72,
     "tabOrder": 37000
   },
   "visual": {
@@ -392,7 +392,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

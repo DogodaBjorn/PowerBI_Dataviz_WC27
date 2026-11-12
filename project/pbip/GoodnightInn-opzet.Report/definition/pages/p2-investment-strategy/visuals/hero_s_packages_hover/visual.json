@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "hero_s_packages_hover",
   "position": {
     "x": 56,
     "y": 224,
     "z": 34000,
-    "height": 408,
     "width": 672,
+    "height": 408,
     "tabOrder": -4001
   },
   "visual": {
@@ -27,8 +27,7 @@
                 }
               },
               "queryRef": "Package.PackageID",
-              "nativeQueryRef": "PackageID",
-              "active": true
+              "nativeQueryRef": "PackageID"
             }
           ]
         },
@@ -47,7 +46,6 @@
               },
               "queryRef": "_Measures.Package Capex",
               "nativeQueryRef": "Package Capex",
-              "active": true,
               "displayName": "Capex"
             }
           ]
@@ -580,7 +578,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

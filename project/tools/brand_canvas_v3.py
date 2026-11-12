@@ -104,7 +104,10 @@ def night(out, extra_top=0, name="canvas-night.jpg"):
     # the faceless hanger, tilted 10 degrees, cropped by the horizon
     m = hanger_mask(7.2, 10)
     canvas = Image.new("L", (W, h), 0)
-    canvas.paste(m, (1350, -150 + extra_top))
+    # FinalV2 (plan 15 M2, Björn 12 Nov): 94 px lower (the plan said about 50; measured, the hole is 144 px tall and sat at
+    # y 1-87): the hole now spans y 66-210, under the masthead line (y 20-44) even with Desktop's 15 px upward drift of a Fit
+    # background, and 22 px above the horizon (232); the whole scene is regenerated, never an image overlay in the report
+    canvas.paste(m, (1350, -56 + extra_top))
     a = (np.asarray(canvas, np.float32) / 255.0 * 0.06)[..., None] * zone
     img = mix(img, "#E9E5D6", a)
     hz = HORIZON + extra_top

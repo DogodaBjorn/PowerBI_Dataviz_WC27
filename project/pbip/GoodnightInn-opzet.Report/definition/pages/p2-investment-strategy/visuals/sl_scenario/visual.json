@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "sl_scenario",
   "position": {
     "x": 1200,
     "y": 240,
     "z": 40000,
-    "height": 40,
     "width": 368,
+    "height": 40,
     "tabOrder": 27000
   },
   "visual": {
@@ -615,6 +615,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

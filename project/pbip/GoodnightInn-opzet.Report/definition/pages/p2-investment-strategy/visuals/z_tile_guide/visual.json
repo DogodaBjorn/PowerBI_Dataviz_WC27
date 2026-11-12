@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_tile_guide",
   "position": {
     "x": 56,
     "y": 224,
     "z": 7000,
-    "height": 112,
     "width": 992,
+    "height": 112,
     "tabOrder": -16001
   },
   "visual": {
@@ -203,6 +203,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

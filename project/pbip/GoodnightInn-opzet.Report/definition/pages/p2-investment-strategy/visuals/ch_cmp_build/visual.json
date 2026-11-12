@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_cmp_build",
   "position": {
     "x": 56,
     "y": 680,
     "z": 64000,
-    "height": 320,
     "width": 1808,
+    "height": 320,
     "tabOrder": 51000
   },
   "visual": {
@@ -694,7 +694,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "filterConfig": {
     "filters": [

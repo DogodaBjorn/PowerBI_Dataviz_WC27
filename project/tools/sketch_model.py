@@ -1094,8 +1094,10 @@ def adr_chg_sisters(agg):
 m("Trend Margin before GI", f"CALCULATE ( [GOP Margin %], {gi} )", PCT, C8, "Goodnight Inn GOP margin before commissions on the trend axis.")
 m("F1 Title (text)",
   "VAR a = " + gi_at("GOP Margin after Distribution %", 2023) + " VAR z = " + gi_at("GOP Margin after Distribution %", 2025) + " "
-  'RETURN "After commissions, the margin " & IF ( z < a, "fell", "rose" ) & " from " & FORMAT ( a, "0.0%" ) & " to " & FORMAT ( z, "0.0%" )',
-  TXT, C8, "F1 title: Goodnight Inn margin after commissions, 2023 to 2025.")
+  # FinalV2 (plan 15 S5): the fall is a 2023-2025 story while the chart starts in 2021, so the title says since when, like the KPI line
+  # the change from the two shown (rounded) values, like the KPI line: 36.5 to 33.7 is 2.8 points, the unrounded values give 2.7 (REVIEW M8)
+  'RETURN "After commissions, the margin " & IF ( z < a, "fell", "rose" ) & " " & FORMAT ( ABS ( ROUND ( z, 3 ) - ROUND ( a, 3 ) ) * 100, "0.0" ) & " points since 2023"',
+  TXT, C8, "F1 title: Goodnight Inn margin after commissions, the change in points since 2023.")
 m("F1 Note (text)",
   rank_words("GOP Margin %", 2025, 1) + "VAR pa = ROUND ( " + adr_chg('"Goodnight Inn"') + ", 3 ) VAR plo = ROUND ( " + adr_chg_sisters("MINX") + ", 3 ) VAR phi = ROUND ( " + adr_chg_sisters("MAXX") + ", 3 ) VAR g0 = ( " + gi_at("GOP Margin %", 2021) + " - " + gi_at("GOP Margin after Distribution %", 2021) + " ) * 100 "
   "VAR g1 = ( gn - " + gi_at("GOP Margin after Distribution %", 2025) + " ) * 100 "
@@ -1490,7 +1492,7 @@ for k in "ABC":
     m(f"TT Year {k} (text)", sfm(f"[Preset {k} Cumulative Net (sel)]"), TXT, C9, f"Year tooltip: package {k}'s cumulative net impact to the end of the hovered year, case in view, as text.")
 m("TT Year Plan (text)", 'IF ( [Build Count] = 0, "none yet", ' + sfm("[Build Cumulative Net (sel)]") + " )", TXT, C9,
   "Year tooltip: the plan being built, cumulative net impact to the end of the hovered year, case in view; 'none yet' before a move is picked.")
-m("TT Year Title (text)", "VAR y = MAX ( 'Date'[Year] ) RETURN \"To the end of \" & y & \": where every package stands\"", TXT, C9, "Year tooltip title: the hovered year.")
+m("TT Year Title (text)", "VAR y = MAX ( 'Date'[Year] ) RETURN \"To the end of \" & y & \": where the four options stand\"", TXT, C9, "Year tooltip title: the hovered year.")
 m("TT Year All Title (text)", 'VAR s = [Selected Scenario] RETURN "A, B, C and your plan in the " & s & " case"', TXT, C9, "Year tooltip, second card's title: the case in view.")
 alt_m("TT Year A", 'VAR y = MAX ( \'Date\'[Year] ) RETURN "Package A, cumulative net impact to the end of " & y & ": Low " & [TT Year A Low (text)] & ", Expected " & [TT Year A Expected (text)] & ", High " & [TT Year A High (text)] & "."',
       "The year tooltip's first card read aloud.")
@@ -1506,7 +1508,7 @@ for k in "BC":
     m(f"Preset {k} WF Y Start", pids(k) + shown_parts("[NPV @ 8%]") + "RETURN SUMX ( adj, IF ( [@s] < 0, [@s], 0 ) ) * 1.3 - 500000", "0", C9, f"Value axis start of package {k}'s waterfall.")
 m("Cmp Alts Title (text)",
   f"VAR s = [Selected Scenario] VAR a32 = {CUM32('A')} VAR b32 = {CUM32('B')} VAR pbC = [Preset C Payback Year] "
-  'RETURN "Cumulative net impact against A, $M (" & s & " case): B " & IF ( ROUND ( ( a32 - b32 ) / 100000, 0 ) = 0, "ends level with A by 2032", IF ( a32 > b32, "trails A by ", "leads A by " ) & ' + fm("ABS ( a32 - b32 )")
+  'RETURN "Cumulative net impact against A, $M (" & s & " case): B " & IF ( ROUND ( ( a32 - b32 ) / 100000, 0 ) = 0, "ends within $1M of A by 2032", IF ( a32 > b32, "trails A by ", "leads A by " ) & ' + fm("ABS ( a32 - b32 )")
   + ' & " by 2032" ) & "; C " & IF ( ISBLANK ( pbC ), "never breaks even", "breaks even in " & pbC )',
   TXT, C13, "Title of the comparer in the alts state: B against A by 2032 and whether C breaks even, scenario in view.")
 
@@ -1524,6 +1526,10 @@ for scn in ("Low", "High"):
     m(f"Build NPV {scn}", BIDS + f'RETURN IF ( n = 0, BLANK (), CALCULATE ( [NPV @ 8%], {BTREAT}, Scenario[Scenario] = "{scn}" ) )', SUSDM, C12, f"NPV of the plan being built, {scn} scenario.")
 m("Build Live (text)", BIDS + "RETURN IF ( n = 0, BLANK (), FORMAT ( CALCULATE ( MAX ( InvestmentProjects[Completion Date] ), " + BTREAT + ' ), "mmm yyyy" ) )', TXT, C12, "Month the last move of the plan being built goes live.")
 BOVER = BIDS + f"VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = {BUDGET_GI} VAR over = n > 0 && cap > budget "
+# FinalV2 (plan 15 S2): the build waterfall's muted title: a waiting note while nothing is picked (the $0 rest bar then reads
+# as a waiting place, not a fault), the rec waterfall's wording once moves are in
+m("Build WF Note (text)", BOVER + 'RETURN IF ( n = 0, "Pick moves on the left; your plan appears here.", "Where your NPV comes from, $M through 2032 (" & [Selected Scenario] & ")" )',
+  TXT, C12, "Build waterfall title: the waiting note of the empty state, else where the plan's NPV comes from, scenario in view.")
 m("Build Title (text)", BOVER + 'RETURN IF ( n = 0, "Nothing picked yet", IF ( over, "Over the " & ' + fmc("budget") + ' & " budget by " & ' + fmc("cap - budget") + ', '
   '"Your plan: " & n & IF ( n = 1, " move", " moves" ) & ", live by " & [Build Live (text)] ) )', TXT, C12,
   "Title of the your-plan tile; its empty state asks for a first move; over the budget it becomes the alarm (round 5, Björn: a big alarm when the selection passes the budget).")
@@ -1552,8 +1558,8 @@ m("Build Payback Year",
 m("Build Row Flag", BIDS + "VAR me = SELECTEDVALUE ( BuildMove[ProjectID] ) RETURN IF ( me IN ids, 1, 0 )", "0", C12, "1 for a move in the plan being built (visual filter of its waterfall).")
 m("Build Project NPV (shown)", BIDS + shown_parts("[NPV @ 8%]") + "VAR me = SELECTEDVALUE ( BuildMove[ProjectID] ) RETURN IF ( n = 0, BLANK (), SUMX ( FILTER ( adj, [@p] = me ), [@s] ) )", SUSDM, C12,
   "Waterfall of the plan being built: each move's NPV, rounded to $0.1M so the bars add up to the shown total.")
-m("Build WF Y End", BIDS + shown_parts("[NPV @ 8%]") + "RETURN IF ( n = 0, 1000000, SUMX ( adj, IF ( [@s] > 0, [@s], 0 ) ) * 1.3 + 500000 )", "0", C12, "Value axis end of the build waterfall.")
-m("Build WF Y Start", BIDS + shown_parts("[NPV @ 8%]") + "RETURN IF ( n = 0, -1000000, SUMX ( adj, IF ( [@s] < 0, [@s], 0 ) ) * 1.3 - 500000 )", "0", C12, "Value axis start of the build waterfall.")
+m("Build WF Y End", BIDS + shown_parts("[NPV @ 8%]") + "RETURN IF ( n = 0, 1000000, SUMX ( adj, IF ( [@s] > 0, [@s], 0 ) ) * 1.6 + 1000000 )", "0", C12, "Value axis end of the build waterfall (FinalV2: 1.6 and $1M headroom, the 160 px chart carries a title row and the labels sit outside the bars).")
+m("Build WF Y Start", BIDS + shown_parts("[NPV @ 8%]") + "RETURN IF ( n = 0, -1000000, SUMX ( adj, IF ( [@s] < 0, [@s], 0 ) ) * 1.6 - 1000000 )", "0", C12, "Value axis start of the build waterfall (FinalV2: 1.6 and $1M headroom).")
 m("Build Point Size", "IF ( ISBLANK ( [Build NPV (sel)] ), BLANK (), 7 )", "0", C12, "Marker size of the your-plan dot on the small scatter; blank (no dot) while nothing is picked.")
 m("Cmp Build Title (text)",
   BIDS + f"VAR s = [Selected Scenario] VAR a32 = {CUM32('A')} VAR y32 = CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR pb = [Build Payback Year] "
@@ -1562,7 +1568,8 @@ m("Cmp Build Title (text)",
   TXT, C12, "Title of the comparer in the build state: your plan against A by 2032 and its payback, scenario in view.")
 # the selector's dataset: one row per BuildMove, never filtered by its own selection
 MOVE_P = "VAR p = SELECTEDVALUE ( BuildMove[ProjectID] ) "
-m("Move Capex (text)", MOVE_P + "RETURN IF ( ISBLANK ( p ), BLANK (), " + fmc("LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], p )") + " )", TXT, C12, "Selector row: capex of the move.")
+# FinalV2 (plan 15 N1): one decimal in the selector ($4.25M prints $4.3M), one format down the column; fmc stays where parts must add up
+m("Move Capex (text)", MOVE_P + 'RETURN IF ( ISBLANK ( p ), BLANK (), FORMAT ( LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], p ) / 1000000, "$#,0.0" ) & "M" )', TXT, C12, "Selector row: capex of the move, one decimal.")
 m("Move NPV (num)", MOVE_P + "RETURN IF ( ISBLANK ( p ), BLANK (), CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) )", SUSDM, C12, "Selector row: NPV through 2032 of the move alone, scenario in view.")
 m("Move NPV (text)", "VAR v = [Move NPV (num)] RETURN IF ( ISBLANK ( v ), BLANK (), " + sfm("v") + " )", TXT, C12, "Selector row: the move's NPV as text.")
 m("Move Answers (text)", MOVE_P + 'RETURN IF ( ISBLANK ( p ), BLANK (), LOOKUPVALUE ( InvestmentProjects[Answers Finding], InvestmentProjects[ProjectID], p ) & IF ( LOOKUPVALUE ( InvestmentProjects[GrowthInitiative], InvestmentProjects[ProjectID], p ) = "Yes", " · growth", "" ) )',
@@ -1597,34 +1604,50 @@ HX = lambda hexv: hexv.replace("#", "%23")  # noqa: E731  (the SVG colour form o
 TTW = 416  # the inner width of a tooltip card (480 - 2 x 32), round 10
 TTL = 416  # the moves list, the same width
 
-# the range bar, 416 x 48 (round 10): one fixed axis for every package (min Low .. max High over all 456, rounded out to $5M),
-# A/B/C ticks with their letters (A and B pushed apart when they touch), the hovered package's Low-High band with its
-# Expected dot, the break-even line in Night, the Low and High numbers under the band. The round-6 histogram strip of
-# the cloud left in round 7 (Björn: too busy). TT Range (text) is its text twin and names the line.
+# the range bar, 416 x 72 (FinalV2, plan 15 M1; round 10: 416 wide): one fixed axis for every package (min Low .. max High
+# over all 456, rounded out to $5M), the A/B/C ticks with their letters, the hovered package's Low-High band with its Expected
+# dot, the break-even line in Night, the Low and High numbers under everything. Collision rules (review 12 Nov, M1: on A the
+# letters A and B, their ticks and "High +12.7" were one clump):
+#   1. the Low and High labels have a row of their own (baseline 66, 5 px under B's letter) under the ticks, the band, the dot, so
+#      nothing can stand on them; Low ends at the band start, High begins at the band end and swaps to the right
+#      edge when it does not fit; neither is ever clamped under a tick (the round-10 clamp did exactly that);
+#   2. letters stand 24 px apart or not side by side: A and B within 24 px puts A above the band and B under it, each with
+#      its own tick: A's from its letter down to the band's top edge, B's from the band's bottom edge down to its letter
+#      (baseline 50, clear of the labels' row), so the two ticks never overlap even 2 px apart;
+#   3. C is drawn only 24 px or more from the break-even tick and from A and B.
+# TT Range (text) is its text twin and names the line.
+RANGE_H = 72
 RANGE_AXIS = ("VAR dMin = FLOOR ( MINX ( ALL ( Package ), Package[NPV Low] ) / 5000000, 1 ) * 5000000 "
               "VAR dMax = CEILING ( MAXX ( ALL ( Package ), Package[NPV High] ) / 5000000, 1 ) * 5000000 "
               f"VAR k = {TTW - 16} / ( dMax - dMin ) ")
-_tick = lambda xv, letter, col: ('"<line x1=\'" & ' + NUM(xv) + ' & "\' x2=\'" & ' + NUM(xv) + ' & "\' y1=\'14\' y2=\'36\' stroke=\'' + col + '\' stroke-width=\'2\'/>'  # noqa: E731
-                                 '<text x=\'" & ' + NUM(f"{xv} + {xv}Off") + ' & "\' y=\'13\' text-anchor=\'middle\' ' + SVG_FONT + ' font-weight=\'600\' fill=\'' + col + '\'>' + letter + '</text>"')
+_tick_up = lambda xv, letter, col: ('"<line x1=\'" & ' + NUM(xv) + ' & "\' x2=\'" & ' + NUM(xv) + ' & "\' y1=\'15\' y2=\'26\' stroke=\'' + col + '\' stroke-width=\'2\'/>'  # noqa: E731
+                                    '<text x=\'" & ' + NUM(xv) + ' & "\' y=\'13\' text-anchor=\'middle\' ' + SVG_FONT + ' font-weight=\'600\' fill=\'' + col + '\'>' + letter + '</text>"')
+_tick_down = lambda xv, letter, col: ('"<line x1=\'" & ' + NUM(xv) + ' & "\' x2=\'" & ' + NUM(xv) + ' & "\' y1=\'34\' y2=\'38\' stroke=\'' + col + '\' stroke-width=\'2\'/>'  # noqa: E731
+                                      '<text x=\'" & ' + NUM(xv) + ' & "\' y=\'50\' text-anchor=\'middle\' ' + SVG_FONT + ' font-weight=\'600\' fill=\'' + col + '\'>' + letter + '</text>"')
 m("TT Range SVG",
   TT_ID + RANGE_AXIS +
   "VAR lo = LOOKUPVALUE ( Package[NPV Low], Package[PackageID], pkg ) VAR ex = LOOKUPVALUE ( Package[NPV Expected], Package[PackageID], pkg ) VAR hi = LOOKUPVALUE ( Package[NPV High], Package[PackageID], pkg ) "
   "VAR x0 = 8 + ( 0 - dMin ) * k VAR xL = 8 + ( lo - dMin ) * k VAR xE = 8 + ( ex - dMin ) * k VAR xH = 8 + ( hi - dMin ) * k "
   'VAR xA = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "A" ) - dMin ) * k VAR xB = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "B" ) - dMin ) * k '
   'VAR xC = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "C" ) - dMin ) * k '
-  "VAR xAOff = IF ( ABS ( xA - xB ) < 18, IF ( xA <= xB, -6, 6 ), 0 ) VAR xBOff = -xAOff VAR xCOff = 0 "
+  "VAR bDown = ABS ( xA - xB ) < 24 "
+  "VAR cShown = ABS ( xC - x0 ) >= 24 && ABS ( xC - xA ) >= 24 && ABS ( xC - xB ) >= 24 "
   'VAR dotc = IF ( ROUND ( ex / 100000, 0 ) >= 0, "' + HX(ACCENT) + '", "' + HX(BAD) + '" ) '
-  "VAR xLo = MAX ( xL, 44 ) VAR xHi = MIN ( xH + 4, " + str(TTW - 88) + " ) "
-  'RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & ' + SVG_OPEN(TTW, 48) + ' '
+  # the labels: Low ends at the band start (or starts at the left edge when the band starts within 80 px of it); High
+  # starts 4 px after the band end, or ends at the right edge when 88 px do not remain
+  'VAR lowAnchor = IF ( xL < 80, "start", "end" ) VAR xLo = IF ( xL < 80, 0, xL ) '
+  'VAR highAnchor = IF ( xH + 88 > ' + str(TTW) + ', "end", "start" ) VAR xHi = IF ( xH + 88 > ' + str(TTW) + ', ' + str(TTW) + ', xH + 4 ) '
+  'RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & ' + SVG_OPEN(TTW, RANGE_H) + ' '
   '& "<line x1=\'1\' x2=\'1\' y1=\'2\' y2=\'14\' stroke=\'' + HX(INK) + '\' stroke-width=\'1.5\'/><text x=\'6\' y=\'13\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>break-even</text>" '
-  '& ' + _tick("xA", "A", HX(ACCENT)) + ' & ' + _tick("xB", "B", HX(INK)) + ' & ' + _tick("xC", "C", HX(INK)) + ' '
+  '& ' + _tick_up("xA", "A", HX(ACCENT)) + ' & IF ( bDown, ' + _tick_down("xB", "B", HX(INK)) + ', ' + _tick_up("xB", "B", HX(INK)) + ' ) & IF ( cShown, ' + _tick_up("xC", "C", HX(INK)) + ', "" ) '
   '& "<rect x=\'" & ' + NUM("xL") + ' & "\' y=\'26\' width=\'" & ' + NUM("xH - xL") + ' & "\' height=\'8\' rx=\'4\' fill=\'' + HX(SLATE) + '\' fill-opacity=\'0.45\'/>" '
-  '& "<line x1=\'" & ' + NUM("x0") + ' & "\' x2=\'" & ' + NUM("x0") + ' & "\' y1=\'13\' y2=\'37\' stroke=\'' + HX(INK) + '\' stroke-width=\'1.5\'/>" '
+  '& "<line x1=\'" & ' + NUM("x0") + ' & "\' x2=\'" & ' + NUM("x0") + ' & "\' y1=\'15\' y2=\'37\' stroke=\'' + HX(INK) + '\' stroke-width=\'1.5\'/>" '
   '& "<circle cx=\'" & ' + NUM("xE") + ' & "\' cy=\'30\' r=\'5\' fill=\'" & dotc & "\' stroke=\'' + HX(SURFACE) + '\' stroke-width=\'2\'/>" '
-  '& "<text x=\'" & ' + NUM("xLo") + ' & "\' y=\'46\' text-anchor=\'end\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Low " & ' + signed("lo", 'FORMAT ( ABS ( lo ) / 1000000, "0.0", "en-US" )') + ' & "</text>" '
-  '& "<text x=\'" & ' + NUM("xHi") + ' & "\' y=\'46\' text-anchor=\'start\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>High " & ' + signed("hi", 'FORMAT ( ABS ( hi ) / 1000000, "0.0", "en-US" )') + ' & "</text></svg>" )',
+  '& "<text x=\'" & ' + NUM("xLo") + ' & "\' y=\'66\' text-anchor=\'" & lowAnchor & "\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>Low " & ' + signed("lo", 'FORMAT ( ABS ( lo ) / 1000000, "0.0", "en-US" )') + ' & "</text>" '
+  '& "<text x=\'" & ' + NUM("xHi") + ' & "\' y=\'66\' text-anchor=\'" & highAnchor & "\' ' + SVG_FONT + ' fill=\'' + HX(INK2) + '\'>High " & ' + signed("hi", 'FORMAT ( ABS ( hi ) / 1000000, "0.0", "en-US" )') + ' & "</text></svg>" )',
   TXT, C10, "Tooltip: the hovered package's Low-High band and Expected dot on one fixed NPV axis shared by every package, "
-            "the A/B/C ticks, the break-even line and the Low and High numbers; decorative, TT Range (text) is its text twin (keyboard tooltip, alt text).")
+            "the A/B/C ticks (B under the band when it stands within 24 px of A; C only when clear of break-even, A and B), the break-even line and the Low and High "
+            "numbers on their own row; decorative, TT Range (text) is its text twin (keyboard tooltip, alt text).")
 IMAGE_MEASURES.add("TT Range SVG")
 
 # the moves list, 376 x 180 (round 10: 440 px tooltips, row pitch 18; round 7, Björn: leaner): a header row, one row per move (positives first, the sinker
@@ -1674,7 +1697,7 @@ m("Band Header (text)",
   TXT, C14, "Header of the F3 band tooltip: the band, its hotels and rooms.")
 m("Band vs Brand (text)",
   f'"Goodnight Inn, all hotels, 2025: NPS " & ' + signed(f"CALCULATE ( [NPS (weighted) 2025], {BRAND_ALL} )", f'FORMAT ( ABS ( CALCULATE ( [NPS (weighted) 2025], {BRAND_ALL} ) ), "0.0" )')
-  + f' & ", occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], {BRAND_ALL} ), "0.0%" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], {BRAND_ALL} ), "$#,0" )',
+  + f' & ", occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], {BRAND_ALL} ), "0.0%" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], {BRAND_ALL} ), "$#,0.00" )',  # FinalV2 N2: the KPI's decimals
   TXT, C14, "F3 band tooltip: the brand's own 2025 figures under the band's three, the same formatters.")
 m("NPS Band (line)", "[NPS (weighted)]", "+0.0;-0.0;0.0", C14, "F3 band tooltip, line: the band's response-weighted NPS by year.")
 m("NPS Brand (line)", f"CALCULATE ( [NPS (weighted)], {BRAND_ALL} )", "+0.0;-0.0;0.0", C14, "F3 band tooltip, line: Goodnight Inn's response-weighted NPS by year, every hotel.")
@@ -1694,7 +1717,7 @@ m("Hotel Header (text)",
   'VAR h = SELECTEDVALUE ( Hotels[Hotel Short Name] ) RETURN IF ( ISBLANK ( h ), BLANK (), h & ", " & LOWER ( SELECTEDVALUE ( Hotels[LocationType] ) ) & ", " & FORMAT ( SUM ( Hotels[Rooms] ), "#,0" ) & " rooms" )',
   TXT, C14, "Header of the F4 hotel tooltip: the hotel, its location type and rooms.")
 m("Hotel vs Brand (text)",
-  f'"Goodnight Inn, all hotels, 2025: occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], {BRAND_ALL} ), "0.0%" ) & ", ADR " & FORMAT ( CALCULATE ( [ADR 2025], {BRAND_ALL} ), "$#,0" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], {BRAND_ALL} ), "$#,0" )',
+  f'"Goodnight Inn, all hotels, 2025: occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], {BRAND_ALL} ), "0.0%" ) & ", ADR " & FORMAT ( CALCULATE ( [ADR 2025], {BRAND_ALL} ), "$#,0.00" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], {BRAND_ALL} ), "$#,0.00" )',  # FinalV2 N2
   TXT, C14, "F4 hotel tooltip: the brand's own 2025 figures under the hotel's three.")
 m("Occupancy Hotel (line)", "[Occupancy %]", PCT, C14, "F4 hotel tooltip, line: the hotel's occupancy by month.")
 m("Occupancy Brand (line)", f"CALCULATE ( [Occupancy %], {BRAND_ALL} )", PCT, C14, "F4 hotel tooltip, line: Goodnight Inn's occupancy by month, every hotel.")

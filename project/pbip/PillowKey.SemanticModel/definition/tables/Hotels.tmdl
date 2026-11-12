@@ -83,35 +83,42 @@ table Hotels
 
 	/// Hotel name without the brand prefix, for dense walls and tables.
 	column 'Hotel Short Name' = TRIM(SUBSTITUTE(Hotels[HotelName], Hotels[Brand] & " ", ""))
+		dataType: string
 		lineageTag: 89acea06-0df5-550e-ab00-d8598f64a77e
 		summarizeBy: none
-
+		isDataTypeInferred
 	/// Years between the last refresh (or opening, for the never-renovated) and 2025.
 	column 'Years Since Refresh' = 2025 - YEAR(COALESCE(Hotels[LastRenovationDate], Hotels[OpeningDate]))
+		dataType: int64
 		formatString: 0
 		lineageTag: e72eceb0-c667-5af9-9988-6c04fba584b0
 		summarizeBy: none
-
+		isDataTypeInferred
 	/// Refresh-age cohort used by the fading-welcome panel.
 	column 'Refresh Age Band' = SWITCH(TRUE(), Hotels[Years Since Refresh] <= 5, "0 to 5 y", Hotels[Years Since Refresh] <= 9, "6 to 9 y", "10 y or more")
+		dataType: string
 		lineageTag: 1f5b2902-5c2e-50e8-ab66-ce19dc1d258b
 		summarizeBy: none
-
+		isDataTypeInferred
 	/// Yes when the hotel is in the organisers' GI-07 room-refresh list.
 	column 'Is Refresh Candidate' = IF(CALCULATE(COUNTROWS(InvestmentProjectProperties), InvestmentProjectProperties[ProjectID] = "GI-07") > 0, "Yes", "No")
+		dataType: string
 		lineageTag: c1d8c222-8840-5c65-861c-67a953a29bb2
 		summarizeBy: none
-
+		isDataTypeInferred
 	/// 1, 2 or 3 for 5 years or less, 6 to 9 and 10 or more years since the last renovation (2025); blank when never renovated.
 	column 'Renovation Age Sort' = VAR y = 2025 - YEAR ( Hotels[LastRenovationDate] ) RETURN IF ( ISBLANK ( Hotels[LastRenovationDate] ), BLANK (), SWITCH ( TRUE (), y <= 5, 1, y <= 9, 2, 3 ) )
+		dataType: int64
 		formatString: 0
 		lineageTag: b7d349c6-4bfe-5243-b980-0543a84fa6bb
 		summarizeBy: none
-
+		isDataTypeInferred
 	/// Axis label of the fading-welcome chart: the age band and how many of the brand's hotels sit in it.
 	column 'Renovation Age Label' = VAR s = Hotels[Renovation Age Sort] VAR br = Hotels[Brand] VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Hotels[HotelID], Hotels[Brand], Hotels[Renovation Age Sort] ), Hotels[Brand] = br && Hotels[Renovation Age Sort] = s ) ) RETURN IF ( ISBLANK ( s ) || n = 0, BLANK (), SWITCH ( s, 1, "5 years or less", 2, "6 to 9 years", "10 years or more" ) )
+		dataType: string
 		lineageTag: 13dee0f0-1d4b-522c-b8dc-0866d6fe65dc
 		summarizeBy: none
+		isDataTypeInferred
 		sortByColumn: 'Renovation Age Sort'
 
 	partition Hotels = m
@@ -126,5 +133,5 @@ table Hotels
 				in
 				    Typed
 
-	annotation PBI_ResultType = Table
 
+	annotation PBI_ResultType = Table

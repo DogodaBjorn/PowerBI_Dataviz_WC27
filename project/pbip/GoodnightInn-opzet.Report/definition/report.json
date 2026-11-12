@@ -42,9 +42,6 @@
       }
     ]
   },
-  "publicCustomVisuals": [
-    "deneb7E15AEF80B9E4D4F8E12924291ECE89A"
-  ],
   "resourcePackages": [
     {
       "name": "SharedResources",
@@ -62,8 +59,23 @@
       "type": "RegisteredResources",
       "items": [
         {
+          "name": "goodnight-inn-wakeup.json",
+          "path": "goodnight-inn-wakeup.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "gi-lockup-reversed@2x.png",
+          "path": "gi-lockup-reversed@2x.png",
+          "type": "Image"
+        },
+        {
           "name": "canvas-night.jpg",
           "path": "canvas-night.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "canvas-tt-tt-package.jpg",
+          "path": "canvas-tt-tt-package.jpg",
           "type": "Image"
         },
         {
@@ -77,18 +89,8 @@
           "type": "Image"
         },
         {
-          "name": "canvas-tt-tt-f3-band.jpg",
-          "path": "canvas-tt-tt-f3-band.jpg",
-          "type": "Image"
-        },
-        {
           "name": "canvas-tt-tt-f3.jpg",
           "path": "canvas-tt-tt-f3.jpg",
-          "type": "Image"
-        },
-        {
-          "name": "canvas-tt-tt-f4-hotel.jpg",
-          "path": "canvas-tt-tt-f4-hotel.jpg",
           "type": "Image"
         },
         {
@@ -97,24 +99,19 @@
           "type": "Image"
         },
         {
-          "name": "canvas-tt-tt-package.jpg",
-          "path": "canvas-tt-tt-package.jpg",
+          "name": "canvas-tt-tt-f3-band.jpg",
+          "path": "canvas-tt-tt-f3-band.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "canvas-tt-tt-f4-hotel.jpg",
+          "path": "canvas-tt-tt-f4-hotel.jpg",
           "type": "Image"
         },
         {
           "name": "canvas-tt-tt-year.jpg",
           "path": "canvas-tt-tt-year.jpg",
           "type": "Image"
-        },
-        {
-          "name": "gi-lockup-reversed@2x.png",
-          "path": "gi-lockup-reversed@2x.png",
-          "type": "Image"
-        },
-        {
-          "name": "goodnight-inn-wakeup.json",
-          "path": "goodnight-inn-wakeup.json",
-          "type": "CustomTheme"
         }
       ]
     }
@@ -122,5 +119,8 @@
   "settings": {
     "useEnhancedTooltips": false,
     "useScaledTooltips": true
-  }
+  },
+  "publicCustomVisuals": [
+    "deneb7E15AEF80B9E4D4F8E12924291ECE89A"
+  ]
 }

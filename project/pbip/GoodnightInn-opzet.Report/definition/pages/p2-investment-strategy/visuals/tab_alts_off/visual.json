@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tab_alts_off",
   "position": {
     "x": 1360,
     "y": 184,
     "z": 35000,
-    "height": 40,
     "width": 248,
+    "height": 40,
     "tabOrder": 24000
   },
   "visual": {
@@ -430,6 +430,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

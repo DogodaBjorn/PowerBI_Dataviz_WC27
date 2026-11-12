@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_c_nums",
   "position": {
     "x": 1352,
     "y": 344,
     "z": 59000,
-    "height": 56,
     "width": 496,
+    "height": 56,
     "tabOrder": 41000
   },
   "visual": {
@@ -316,7 +316,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'NPV, Low to High, $M'"
+                  "Value": "'NPV range, $M'"
                 }
               }
             }
@@ -501,7 +501,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

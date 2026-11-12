@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_card_tt_all",
   "position": {
     "x": 16,
     "y": 208,
     "z": 101,
-    "height": 96,
     "width": 448,
+    "height": 96,
     "tabOrder": -1501
   },
   "visual": {
@@ -263,6 +263,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

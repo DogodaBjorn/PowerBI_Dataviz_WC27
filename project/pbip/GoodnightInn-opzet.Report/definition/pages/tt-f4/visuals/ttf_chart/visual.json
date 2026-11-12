@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ttf_chart",
   "position": {
     "x": 32,
     "y": 208,
     "z": 1003,
-    "height": 184,
     "width": 416,
+    "height": 184,
     "tabOrder": 120
   },
   "visual": {
@@ -27,8 +27,7 @@
                 }
               },
               "queryRef": "Hotels.Hotel Short Name",
-              "nativeQueryRef": "Hotel Short Name",
-              "active": true
+              "nativeQueryRef": "Hotel Short Name"
             }
           ]
         },
@@ -437,7 +436,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "filterConfig": {
     "filters": [

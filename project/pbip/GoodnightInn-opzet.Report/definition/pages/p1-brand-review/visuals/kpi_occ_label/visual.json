@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "kpi_occ_label",
   "position": {
     "x": 56,
     "y": 176,
     "z": 13000,
-    "height": 24,
     "width": 416,
+    "height": 24,
     "tabOrder": -1001
   },
   "visual": {
@@ -160,6 +160,7 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   }
 }

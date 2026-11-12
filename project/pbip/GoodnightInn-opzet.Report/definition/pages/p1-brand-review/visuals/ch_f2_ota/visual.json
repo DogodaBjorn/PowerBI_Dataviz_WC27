@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_f2_ota",
   "position": {
     "x": 680,
     "y": 392,
     "z": 29000,
-    "height": 168,
     "width": 560,
+    "height": 168,
     "tabOrder": 420
   },
   "visual": {
@@ -57,42 +57,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Trend OTA PS"
+                  "Property": "Trend OTA Sisters"
                 }
               },
-              "queryRef": "_Measures.Trend OTA PS",
-              "nativeQueryRef": "Trend OTA PS",
-              "displayName": "P&K Select"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Trend OTA MO"
-                }
-              },
-              "queryRef": "_Measures.Trend OTA MO",
-              "nativeQueryRef": "Trend OTA MO",
-              "displayName": "Maison d'Or"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Trend OTA PP"
-                }
-              },
-              "queryRef": "_Measures.Trend OTA PP",
-              "nativeQueryRef": "Trend OTA PP",
-              "displayName": "Pebble & Pine"
+              "queryRef": "_Measures.Trend OTA Sisters",
+              "nativeQueryRef": "Trend OTA Sisters",
+              "displayName": "The other three brands"
             }
           ]
         }
@@ -234,6 +204,45 @@
             "show": {
               "expr": {
                 "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4B5466'"
+                    }
+                  }
+                }
+              }
+            },
+            "showTitle": {
+              "expr": {
+                "Literal": {
                   "Value": "false"
                 }
               }
@@ -247,46 +256,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "seriesPosition": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Right'"
-                }
-              }
-            },
-            "seriesMatchColor": {
-              "expr": {
-                "Literal": {
                   "Value": "false"
-                }
-              }
-            },
-            "seriesColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#4B5466'"
-                    }
-                  }
-                }
-              }
-            },
-            "textSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
-            "seriesFontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             }
@@ -327,43 +297,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Trend OTA PS"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#8E897D'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Trend OTA MO"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#8E897D'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Trend OTA PP"
+            "metadata": "_Measures.Trend OTA Sisters"
           }
         }
       ],
@@ -418,35 +352,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Trend OTA PS"
-          }
-        },
-        {
-          "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "1.5D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Trend OTA MO"
-          }
-        },
-        {
-          "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "1.5D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Trend OTA PP"
+            "metadata": "_Measures.Trend OTA Sisters"
           }
         }
       ],
@@ -608,7 +514,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "filterConfig": {
     "filters": [

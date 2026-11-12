@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "z_tile_c",
   "position": {
     "x": 1336,
     "y": 296,
     "z": 9000,
-    "height": 328,
     "width": 528,
+    "height": 328,
     "tabOrder": -18001
   },
   "visual": {
@@ -203,7 +203,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_build_intro",
   "position": {
     "x": 792,
     "y": 216,
     "z": 66000,
-    "height": 64,
     "width": 304,
+    "height": 64,
     "tabOrder": 20000
   },
   "visual": {
@@ -173,7 +173,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": false
   },
   "isHidden": true
 }

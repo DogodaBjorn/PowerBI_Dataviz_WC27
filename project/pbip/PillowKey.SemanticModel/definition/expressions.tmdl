@@ -6,4 +6,3 @@ expression DataFile = "https://datavizcontests.blob.core.windows.net/worldchamps
 	annotation PBI_ResultType = Text
 
 	annotation PBI_NavigationStepName = Navigation
-

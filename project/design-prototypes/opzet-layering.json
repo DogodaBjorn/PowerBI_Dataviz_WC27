@@ -1,0 +1,455 @@
+{
+  "_note": "Björn's layering pass in Power BI Desktop, 11 Nov 2026 (commit e63aa76, saved 12 Nov as 1361f71): the z-order and tab order of every visual on P1 and P2. opzet_report.py applies these over the generated values (FinalV2, plan 15 phase 0 / S6); visuals absent here keep the generator's values.",
+  "p1-brand-review": {
+    "c_f1_kicker": {
+      "z": 23000,
+      "tabOrder": -14001
+    },
+    "c_f1_note": {
+      "z": 26000,
+      "tabOrder": 330
+    },
+    "c_f1_title": {
+      "z": 24000,
+      "tabOrder": 310
+    },
+    "c_f2_kicker": {
+      "z": 27000,
+      "tabOrder": -15001
+    },
+    "c_f2_note": {
+      "z": 31000,
+      "tabOrder": 440
+    },
+    "c_f2_title": {
+      "z": 28000,
+      "tabOrder": 410
+    },
+    "c_f3_kicker": {
+      "z": 32000,
+      "tabOrder": -16001
+    },
+    "c_f3_note": {
+      "z": 35000,
+      "tabOrder": 530
+    },
+    "c_f3_title": {
+      "z": 33000,
+      "tabOrder": 510
+    },
+    "c_f4_kicker": {
+      "z": 36000,
+      "tabOrder": -17001
+    },
+    "c_f4_title": {
+      "z": 37000,
+      "tabOrder": 610
+    },
+    "c_f4_types": {
+      "z": 38000,
+      "tabOrder": 620
+    },
+    "c_subtitle": {
+      "z": 8000,
+      "tabOrder": 110
+    },
+    "ch_f1_margin": {
+      "z": 25000,
+      "tabOrder": 320
+    },
+    "ch_f2_ota": {
+      "z": 29000,
+      "tabOrder": 420
+    },
+    "ch_f3_age": {
+      "z": 34000,
+      "tabOrder": 520
+    },
+    "ch_f4_fullest": {
+      "z": 39000,
+      "tabOrder": 630
+    },
+    "kpi_margin": {
+      "z": 14000,
+      "tabOrder": 211
+    },
+    "kpi_margin_ctx": {
+      "z": 15000,
+      "tabOrder": -6001
+    },
+    "kpi_margin_label": {
+      "z": 16000,
+      "tabOrder": -2001
+    },
+    "kpi_nps": {
+      "z": 20000,
+      "tabOrder": 231
+    },
+    "kpi_nps_ctx": {
+      "z": 21000,
+      "tabOrder": -8001
+    },
+    "kpi_nps_label": {
+      "z": 22000,
+      "tabOrder": -4001
+    },
+    "kpi_occ": {
+      "z": 11000,
+      "tabOrder": 201
+    },
+    "kpi_occ_ctx": {
+      "z": 12000,
+      "tabOrder": -5001
+    },
+    "kpi_occ_label": {
+      "z": 13000,
+      "tabOrder": -1001
+    },
+    "kpi_ota": {
+      "z": 17000,
+      "tabOrder": 221
+    },
+    "kpi_ota_ctx": {
+      "z": 18000,
+      "tabOrder": -7001
+    },
+    "kpi_ota_label": {
+      "z": 19000,
+      "tabOrder": -3001
+    },
+    "tbl_f2_folio": {
+      "z": 30000,
+      "tabOrder": 430
+    },
+    "z_card_card_f1": {
+      "z": 2000,
+      "tabOrder": -10001
+    },
+    "z_card_card_f2": {
+      "z": 3000,
+      "tabOrder": -11001
+    },
+    "z_card_card_f3": {
+      "z": 4000,
+      "tabOrder": -12001
+    },
+    "z_card_card_f4": {
+      "z": 5000,
+      "tabOrder": -13001
+    },
+    "z_card_card_kpi": {
+      "z": 1000,
+      "tabOrder": -9001
+    },
+    "z_eyebrow": {
+      "z": 10000,
+      "tabOrder": 20
+    },
+    "z_footer": {
+      "z": 40000,
+      "tabOrder": 9000
+    },
+    "z_headline": {
+      "z": 7000,
+      "tabOrder": 100
+    },
+    "z_logo": {
+      "z": 9000,
+      "tabOrder": 10
+    },
+    "z_masthead": {
+      "z": 6000,
+      "tabOrder": 30
+    }
+  },
+  "p2-investment-strategy": {
+    "c_alts_intro": {
+      "z": 50000,
+      "tabOrder": 18000
+    },
+    "c_alts_title": {
+      "z": 49000,
+      "tabOrder": 17000
+    },
+    "c_b_nums": {
+      "z": 53000,
+      "tabOrder": 36000
+    },
+    "c_b_payback": {
+      "z": 56000,
+      "tabOrder": 39000
+    },
+    "c_b_title": {
+      "z": 52000,
+      "tabOrder": 35000
+    },
+    "c_b_why": {
+      "z": 54000,
+      "tabOrder": 37000
+    },
+    "c_b_whynot": {
+      "z": 55000,
+      "tabOrder": 38000
+    },
+    "c_build_intro": {
+      "z": 66000,
+      "tabOrder": 20000
+    },
+    "c_build_title": {
+      "z": 65000,
+      "tabOrder": 19000
+    },
+    "c_c_nums": {
+      "z": 59000,
+      "tabOrder": 41000
+    },
+    "c_c_payback": {
+      "z": 62000,
+      "tabOrder": 44000
+    },
+    "c_c_title": {
+      "z": 58000,
+      "tabOrder": 40000
+    },
+    "c_c_why": {
+      "z": 60000,
+      "tabOrder": 42000
+    },
+    "c_c_whynot": {
+      "z": 61000,
+      "tabOrder": 43000
+    },
+    "c_guide": {
+      "z": 22000,
+      "tabOrder": 12000
+    },
+    "c_guide_kicker": {
+      "z": 23000,
+      "tabOrder": -8001
+    },
+    "c_guide_legend": {
+      "z": 24000,
+      "tabOrder": -9001
+    },
+    "c_rec_mix": {
+      "z": 43000,
+      "tabOrder": 29000
+    },
+    "c_rec_note": {
+      "z": 45000,
+      "tabOrder": 31000
+    },
+    "c_rec_nums": {
+      "z": 44000,
+      "tabOrder": 30000
+    },
+    "c_rec_title": {
+      "z": 42000,
+      "tabOrder": 28000
+    },
+    "c_scatter_title": {
+      "z": 20000,
+      "tabOrder": 9000
+    },
+    "c_scatter_title_s": {
+      "z": 21000,
+      "tabOrder": 10000
+    },
+    "c_subtitle2": {
+      "z": 13000,
+      "tabOrder": 8000
+    },
+    "c_uncertainty": {
+      "z": 48000,
+      "tabOrder": 34000
+    },
+    "c_you_nums": {
+      "z": 69000,
+      "tabOrder": 48000
+    },
+    "c_you_rules": {
+      "z": 70000,
+      "tabOrder": 49000
+    },
+    "c_you_title": {
+      "z": 68000,
+      "tabOrder": 47000
+    },
+    "ch_build_waterfall": {
+      "z": 71000,
+      "tabOrder": 50000
+    },
+    "ch_cmp_alts": {
+      "z": 63000,
+      "tabOrder": 45000
+    },
+    "ch_cmp_build": {
+      "z": 64000,
+      "tabOrder": 51000
+    },
+    "ch_rec_cumulative": {
+      "z": 47000,
+      "tabOrder": 33000
+    },
+    "ch_rec_waterfall": {
+      "z": 46000,
+      "tabOrder": 32000
+    },
+    "chip_f1": {
+      "z": 16000,
+      "tabOrder": 52010
+    },
+    "chip_f2": {
+      "z": 17000,
+      "tabOrder": 52020
+    },
+    "chip_f3": {
+      "z": 18000,
+      "tabOrder": 52030
+    },
+    "chip_f4": {
+      "z": 19000,
+      "tabOrder": 52040
+    },
+    "dn_build_selector": {
+      "z": 67000,
+      "tabOrder": 46000
+    },
+    "hero_packages": {
+      "z": 25000,
+      "tabOrder": 14000
+    },
+    "hero_packages_hover": {
+      "z": 33000,
+      "tabOrder": -1001
+    },
+    "hero_packages_named": {
+      "z": 28000,
+      "tabOrder": 13000
+    },
+    "hero_s_packages": {
+      "z": 26000,
+      "tabOrder": 16000
+    },
+    "hero_s_packages_build": {
+      "z": 30000,
+      "tabOrder": -5001
+    },
+    "hero_s_packages_hover": {
+      "z": 34000,
+      "tabOrder": -4001
+    },
+    "hero_s_packages_named": {
+      "z": 29000,
+      "tabOrder": 15000
+    },
+    "img_b_chip": {
+      "z": 51000,
+      "tabOrder": -6001
+    },
+    "img_c_chip": {
+      "z": 57000,
+      "tabOrder": -7001
+    },
+    "img_rec_chip": {
+      "z": 41000,
+      "tabOrder": -3001
+    },
+    "lbl_scenario": {
+      "z": 39000,
+      "tabOrder": -2001
+    },
+    "sl_scenario": {
+      "z": 40000,
+      "tabOrder": 27000
+    },
+    "sl_view": {
+      "z": 27000,
+      "tabOrder": 11000
+    },
+    "tab_alts_off": {
+      "z": 35000,
+      "tabOrder": 24000
+    },
+    "tab_alts_on": {
+      "z": 36000,
+      "tabOrder": 23000
+    },
+    "tab_build_off": {
+      "z": 37000,
+      "tabOrder": 26000
+    },
+    "tab_build_on": {
+      "z": 38000,
+      "tabOrder": 25000
+    },
+    "tab_rec_off": {
+      "z": 31000,
+      "tabOrder": 22000
+    },
+    "tab_rec_on": {
+      "z": 32000,
+      "tabOrder": 21000
+    },
+    "z_card_card_compare": {
+      "z": 5000,
+      "tabOrder": -14001
+    },
+    "z_card_card_panel": {
+      "z": 2000,
+      "tabOrder": -11001
+    },
+    "z_card_card_panel_w": {
+      "z": 4000,
+      "tabOrder": -13001
+    },
+    "z_card_card_scatter": {
+      "z": 1000,
+      "tabOrder": -10001
+    },
+    "z_card_card_scatter_s": {
+      "z": 3000,
+      "tabOrder": -12001
+    },
+    "z_eyebrow2": {
+      "z": 15000,
+      "tabOrder": 1000
+    },
+    "z_footer2": {
+      "z": 72000,
+      "tabOrder": 52000
+    },
+    "z_headline2": {
+      "z": 12000,
+      "tabOrder": 3000
+    },
+    "z_logo": {
+      "z": 14000,
+      "tabOrder": 0
+    },
+    "z_masthead2": {
+      "z": 11000,
+      "tabOrder": 2000
+    },
+    "z_tile_b": {
+      "z": 8000,
+      "tabOrder": -17001
+    },
+    "z_tile_c": {
+      "z": 9000,
+      "tabOrder": -18001
+    },
+    "z_tile_guide": {
+      "z": 7000,
+      "tabOrder": -16001
+    },
+    "z_tile_rec": {
+      "z": 6000,
+      "tabOrder": -15001
+    },
+    "z_tile_you": {
+      "z": 10000,
+      "tabOrder": -19001
+    }
+  }
+}
