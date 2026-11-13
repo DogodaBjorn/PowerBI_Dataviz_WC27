@@ -1,0 +1,10 @@
+Build step 2 of 12 · The two big spikes: hero table and native selector
+Goodnight Inn, Power BI Dataviz World Champs 2027 · submission 17 Nov 2026
+Execute this step now; do not wait for a date or a schedule.
+
+1. Git: git fetch origin; git checkout rebuild-finalv3; git pull
+2. Read CLAUDE.md, then project/project-state/active/23-build-workplan-finalv3-2026-11-13.md: section 1 (rules, binding),
+   the progress table, the log of step 1, and "Step 2". Read only the sources step 2 lists.
+3. If step 1 is not done in the progress table, stop and tell me.
+4. Do step 2 only. Stop when its "Done when" holds, or at a blocker you cannot solve within the rules.
+5. Close-out per rule 12: log, progress row, commit, push, five-line report.
