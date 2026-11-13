@@ -1,0 +1,54 @@
+/// Decision data, not source data (docs 20 D2 / D4, 13 Nov 2026): one row per Goodnight Inn move with the Brand Review finding it answers, its status (A, 2028 gate, not now) and its tranche (1 = package A, 2 = the airport extensions, 3 = the refresh, blank = not in the plan). Finding and the gate tranches are set in sketch_model.py; status A and tranche 1 are read from Package[Preset]. Disconnected: measures read it with LOOKUPVALUE and TREATAS.
+table MoveDecision
+	lineageTag: 9c3ad3b8-77eb-5141-85e6-1531bbd5c10a
+
+	column ProjectID
+		dataType: string
+		lineageTag: 5f1f5935-39a7-5f4b-87e7-eb6009567c56
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [ProjectID]
+
+	column Finding
+		dataType: string
+		lineageTag: ba5c4311-475e-56bf-ac7b-719a3ea384a9
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Finding]
+
+	column Status
+		dataType: string
+		lineageTag: 824a4b11-46f6-5954-b9e0-f28436c1434a
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Status]
+
+	column Tranche
+		dataType: int64
+		formatString: 0
+		lineageTag: 44c1c2b1-0f25-5aa6-b62d-99b990937137
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Tranche]
+
+	partition MoveDecision = calculated
+		mode: import
+		source = ```
+				VAR a = LOOKUPVALUE ( Package[PackageID], Package[Preset], "A" )
+				VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] )
+				VAR typed = DATATABLE ( "xPid", STRING, "xFinding", STRING, "xGate", INTEGER, { { "GI-01", "F2", 0 }, { "GI-02", "F4", 0 }, { "GI-03", "F1", 0 }, { "GI-04", "F4", 2 }, { "GI-05", "F4", 2 }, { "GI-06", "F4", 0 }, { "GI-07", "F3", 3 }, { "GI-08", "F4", 0 }, { "GI-09", "F3", 0 }, { "GI-10", "F1", 0 } } )
+				RETURN
+				    SELECTCOLUMNS (
+				        typed,
+				        "ProjectID", [xPid],
+				        "Finding", [xFinding],
+				        "Status", SWITCH ( TRUE (), [xPid] IN aIds, "A", [xGate] > 0, "2028 gate", "not now" ),
+				        "Tranche", SWITCH ( TRUE (), [xPid] IN aIds, 1, [xGate] > 0, [xGate], BLANK () )
+				    )
+				```
+
+	annotation PBI_ResultType = Table

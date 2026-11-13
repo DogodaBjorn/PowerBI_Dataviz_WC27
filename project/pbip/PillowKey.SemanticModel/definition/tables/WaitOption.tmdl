@@ -1,0 +1,37 @@
+/// The three options that wait (What waits, and why): package B and tranches 2 and 3. Disconnected row source of the What-waits table: its measures switch on Key.
+table WaitOption
+	lineageTag: 7af52c5f-1b1e-51df-ad0f-607f5a088584
+
+	column Key
+		dataType: string
+		lineageTag: fd03f0fd-a068-53c8-8e74-b3f83129f552
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Key]
+
+	column Title
+		dataType: string
+		sortByColumn: Sort
+		lineageTag: 6fe3fcca-cd0e-5bc6-bd9a-f206d947c552
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Title]
+
+	column Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 38a3f411-b75a-5007-ad7d-f35383134f8b
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Sort]
+
+	partition WaitOption = calculated
+		mode: import
+		source = ```
+				DATATABLE ( "Key", STRING, "Title", STRING, "Sort", INTEGER, { { "B", "B · Breakfast instead of kiosks", 1 }, { "T2", "Tranche 2 · Airport extensions, +80 rooms", 2 }, { "T3", "Tranche 3 · The refresh of the 10 oldest hotels (in package C)", 3 } } )
+				```
+
+	annotation PBI_ResultType = Table

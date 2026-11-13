@@ -9,6 +9,7 @@ ProjectCashflow and HotelOutlook calculated tables (rules read from FinanceParam
 FinanceAssumptions), four small helper tables and the _Measures table.
 Every number is re-derived in the model; nothing is typed in from the mission.
 """
+import json
 import os
 import uuid
 from pathlib import Path
@@ -159,6 +160,30 @@ def shipped_table(name, cols):
     return "\n".join(out) + "\n"
 
 
+# ---- decision data of the FinalV3 rebuild (docs 20 D2 / D4, 21 section 10.1): typed here ONCE, as decisions, not as
+# source data. MOVE_FINDING: the Brand Review finding each Goodnight Inn move answers (D4: the kiosks answer F4, the
+# queues at the 20 fullest desks; revenue management stays under F1). MOVE_GATE: the tranche of a move that waits for
+# the 2028 gate (2 = the airport extensions, 3 = the refresh). Tranche 1 is not typed: it is package A, read from
+# Package[Preset] in the MoveDecision table. MOVE_NAMES: the full names of R-P2-3 (the short ones stay in Short Name).
+MOVE_NAMES = {"GI-01": "Booking app & member rates", "GI-10": "Revenue management", "GI-02": "Kiosks at the 20 busiest hotels",
+              "GI-09": "Breakfast upgrade", "GI-05": "Gatwick +40 rooms", "GI-03": "Energy programme", "GI-04": "Toronto +40 rooms",
+              "GI-06": "Kingston +40 rooms", "GI-08": "Boston new hotel", "GI-07": "Refresh, 10 oldest hotels"}
+MOVE_FINDING = {"GI-01": "F2", "GI-02": "F4", "GI-03": "F1", "GI-04": "F4", "GI-05": "F4", "GI-06": "F4", "GI-07": "F3", "GI-08": "F4", "GI-09": "F3", "GI-10": "F1"}
+MOVE_GATE = {"GI-04": 2, "GI-05": 2, "GI-07": 3}
+FINDINGS = [("F2", "The middleman", 1), ("F1", "The margin", 2), ("F4", "Where we are full", 3), ("F3", "The fading welcome", 4)]  # code, name, ledger order (R-P2-5)
+WAIT_OPTIONS = [("B", "B · Breakfast instead of kiosks", 1), ("T2", "Tranche 2 · Airport extensions, +80 rooms", 2),
+                ("T3", "Tranche 3 · The refresh of the 10 oldest hotels (in package C)", 3)]  # key, title, sort (R-W-2)
+
+
+def _switch_pid(mapping, default):
+    return "SWITCH ( InvestmentProjects[ProjectID], " + ", ".join(f'"{k}", "{v}"' for k, v in sorted(mapping.items())) + f", {default} )"
+
+
+# "a year on cost" of one project in the Expected case, from source columns only (no measure, no context transition:
+# a calculated column that reads a measure would depend on every column of its table)
+_YIELD_EXP = ('DIVIDE ( SUMX ( FILTER ( InvestmentScenarios, InvestmentScenarios[ProjectID] = {p} && InvestmentScenarios[Scenario] = "Expected" ), '
+              "InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), {c} )")
+
 EXTRA_COLUMNS = {
     "Date": "".join([
         # round 7: the F4 hotel tooltip's month axis at 496 px: one letter per month (J F M A M J J A S O N D), sorted by month
@@ -209,9 +234,21 @@ EXTRA_COLUMNS = {
                  doc="Earliest start, or the month the prerequisite (DependsOn) goes live if that is later: GI-02 kiosks start when the GI-01 app is live."),
         calc_col("InvestmentProjects", "Completion Date", "EDATE(InvestmentProjects[Planned Start], InvestmentProjects[DurationMonths])", "dateTime", "Short Date",
                  doc="Planned start plus duration: the month the project goes live."),
-        calc_col("InvestmentProjects", "Answers Finding",
-                 'SWITCH(InvestmentProjects[ProjectID], "GI-01", "F2", "GI-02", "F3", "GI-03", "F1", "GI-04", "F4", "GI-05", "F4", "GI-06", "F4", "GI-07", "F3", "GI-08", "F4", "GI-09", "F3", "GI-10", "F1")',
-                 "string", doc="The Brand Review finding (F1 to F4 on page 1) the initiative answers; Goodnight Inn projects only (opzet 2026-11-06)."),
+        calc_col("InvestmentProjects", "Answers Finding", _switch_pid(MOVE_FINDING, "BLANK ()"),
+                 "string", doc="Decision data, not source data: the Brand Review finding (F1 to F4 on page 1) the initiative answers; Goodnight Inn projects only. "
+                               "One mapping with MoveDecision[Finding] (doc 20 D4, 13 Nov: the kiosks answer F4)."),
+        # FinalV3 (doc 21 section 10.1): one naming source for the hero table. Sorted by Hero Sort, so a table on Move
+        # Name lists the moves by their Expected "a year on cost" in every scenario, with no sort set in the visual.
+        calc_col("InvestmentProjects", "Hero Sort",
+                 "VAR myp = InvestmentProjects[ProjectID] VAR myc = InvestmentProjects[CapexUSD] VAR myb = InvestmentProjects[Brand] "
+                 'VAR gi = FILTER ( ALL ( InvestmentProjects[ProjectID], InvestmentProjects[CapexUSD], InvestmentProjects[Brand] ), InvestmentProjects[Brand] = "Goodnight Inn" ) '
+                 "VAR me = " + _YIELD_EXP.format(p="myp", c="myc") + " "
+                 'RETURN IF ( myb = "Goodnight Inn", COUNTROWS ( FILTER ( gi, VAR p = InvestmentProjects[ProjectID] VAR c = InvestmentProjects[CapexUSD] RETURN '
+                 + _YIELD_EXP.format(p="p", c="c") + " > me ) ) + 1, 99 )",
+                 "int64", "0", doc="Rank of the move by its Expected 'a year on cost' (profit a year by 2032 over capex) within Goodnight Inn, 1 = highest; fixed at refresh, so the hero table's order never follows the scenario. 99 for other brands."),
+        calc_col("InvestmentProjects", "Move Name", _switch_pid(MOVE_NAMES, "InvestmentProjects[ProjectName]"),
+                 "string", doc="The move's full name as the Investment Strategy page says it (R-P2-3); the organisers' project name for other brands. Sorted by Hero Sort.",
+                 extra=("sortByColumn: 'Hero Sort'",)),
     ]),
 }
 
@@ -351,10 +388,26 @@ def calc_table(name, doc, columns, dax):
 MEASURES = []  # (name, dax, format, folder, doc)
 
 
-def m(name, dax, fmt, folder, doc):
+FMT_DEFS = {}  # measure name -> DAX of its dynamic format string (formatStringDefinition), doc 21 P-1
+
+
+def m(name, dax, fmt, folder, doc, fmt_def=None):
     # Desktop refuses the whole project on a duplicate ("TMDL objects cannot be merged", 7 Nov); the validators did not
     assert all(x[0] != name for x in MEASURES), f"duplicate measure name: {name}"
     MEASURES.append((name, dax, fmt, folder, doc))
+    if fmt_def:
+        FMT_DEFS[name] = fmt_def
+
+
+def label_safe(name, value_expr, text_expr, fmt, folder, doc):
+    """P-1 (doc 21): a number for a native data label. The measure keeps its numeric value for the bar or the line;
+    its dynamic format string returns the finished text as a quoted literal, so Power BI prints that text and applies
+    no locale (a nl-NL Desktop printed "+6,8"). Spike S-1 (13 Nov): the literal goes in all three sections (positive;
+    negative; zero), or a negative value gets a second minus ("−−4.9"). Use only where the value axis is hidden or
+    where another series comes first: an axis would repeat the literal on every tick. `fmt` is the static format string
+    the measure keeps beside the dynamic one (Desktop does the same when a format is switched to Dynamic)."""
+    m(name, value_expr, fmt, folder, doc,
+      fmt_def=f'VAR __t = {text_expr} RETURN """" & __t & """;""" & __t & """;""" & __t & """"')
 
 
 def yr(measure, y):
@@ -600,15 +653,36 @@ MINUS = 'UNICHAR ( 8722 )'
 
 # DAX FORMAT() does not scale by the trailing ",," of USDM1 / SUSDM (it printed "$4,806,360.8M" in Desktop, 7 Nov);
 # those strings work only as a measure's formatString. Text measures divide explicitly instead.
+# The one formatter set of the rebuild (doc 21 P-1, R-G1; the comp's mUSD / fm / sfm / pct1 in rebuild-comp-v10.html):
+# money is "$" + one decimal + "M"; two decimals only for a non-zero amount that one decimal would show as 0.0
+# ("+$0.03M", the kiosks' NPV in the High case). FORMAT gets "en-US", so no session locale reaches the text.
+WJ = "UNICHAR ( 8288 )"
+_MUSD = ('VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) '
+         'VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" ')
+
+
 def fm(x):
-    return f'FORMAT ( ( {x} ) / 1000000, "$#,0.0" ) & "M"'
+    """Money, unsigned: "$9.4M"; a negative amount gets a true minus and the word joiner."""
+    return f'( VAR __v = ( {x} ) / 1000000 {_MUSD}RETURN IF ( __v < 0 && __r2 > 0, {MINUS} & {WJ}, "" ) & __m )'
 
 
 def sfm(x):
+    """Money, signed: "+$3.3M", "−$0.6M", "$0.0M"."""
     # sign from the shown (rounded) value, and no sign at zero: "+$0.0M" labelled an invisible bar (REVIEW m6)
     # a word joiner after the sign: wrapped copy broke "−" / "$0.6M" over two lines (render 7 Nov); U+2060 is a
     # default-ignorable character, so it draws nothing in Desktop's and the browser's text engines
-    return (f'( VAR __t = ROUND ( ( {x} ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, {MINUS}, "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )')
+    return f'( VAR __v = ( {x} ) / 1000000 {_MUSD}RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, {MINUS}, "+" ) & {WJ} & __m ) )'
+
+
+def pct1(x):
+    """A share with one decimal and a true minus: "47.0%", "−2.6%". FORMAT rounds the unrounded value (20.55 prints
+    20.6, as Power BI's own format strings do)."""
+    return f'( VAR __p = ( {x} ) * 100 RETURN IF ( ROUND ( __p, 1 ) < 0, {MINUS}, "" ) & FORMAT ( ABS ( __p ), "0.0", "en-US" ) & "%" )'
+
+
+def pt1(x):
+    """A signed number with one decimal, for points and scores: "+6.8", "−4.9", "0.0". The caller adds the unit."""
+    return f'( VAR __q = ( {x} ) RETURN IF ( ROUND ( __q, 1 ) = 0, "0.0", IF ( __q < 0, {MINUS}, "+" ) & FORMAT ( ABS ( __q ), "0.0", "en-US" ) ) )'
 
 
 def fmc2(x):
@@ -1826,6 +1900,227 @@ alt_m("Cmp Build",
       '"Cumulative net impact 2027 to 2032, " & s & " case, by 2032: your plan " & ' + sfm("y32") + ' & ", A " & ' + sfm("a32") + ' & "." )',
       "The build comparer read aloud.")
 
+# ================================================================ FinalV3 storytelling rebuild: model foundations
+# Build step 3 of doc 23 (docs 20, 21 section 10, 22 section 3; 13 Nov 2026). Number measures only: the text measures
+# that read them are step 4, the visuals steps 5 to 9. Every value is re-derived here and asserted against
+# analysis/output/storytelling_checks.txt by project/tools/number_checks.py (E9, E10, E11 in Low, Expected, High).
+C15 = "15 Storytelling rebuild"
+HORIZON = FP.format("Impact horizon")
+
+# ---- "a year on cost" (metric contract M-101): what a move adds to operating profit a year by 2032 over its capex.
+# A derived ratio next to NPV, not a valuation: no discounting, no ramp, no disruption. Every Goodnight Inn move is
+# live for 34 months or more in January 2032, so the organisers' annual impact is also the profit booked in 2032.
+m("A Year on Cost", "DIVIDE ( [2032 Run-rate], SUM ( InvestmentProjects[CapexUSD] ) )", PCT, C15,
+  "A year on cost: the annual operating-profit impact by 2032 of the moves in context over their capex, scenario in view. A derived ratio, not a valuation (no discounting, no ramp-up, no disruption).")
+m("Package A Year on Cost (sel)", "DIVIDE ( [Package Run-rate (sel)], [Package Capex] )", PCT, C15,
+  "A year on cost of the package(s) in context: 2032 run-rate over capex, scenario in view.")
+m("Rec A Year on Cost (sel)", rec("[Package A Year on Cost (sel)]"), PCT, C15, "A year on cost of the recommendation (package A), scenario in view.")
+m("Rec NPV Low", rec("SUM ( Package[NPV Low] )"), SUSDM, C15, "NPV through 2032 of the recommendation in the Low case, whatever the toggle says (the worst-case line).")
+m("Rec Run-rate Low", rec("SUM ( Package[RunRate Low] )"), SUSDM, C15, "Profit a year by 2032 of the recommendation in the Low case, whatever the toggle says (the worst-case line).")
+m("Build Run-rate (sel)", BIDS + f"RETURN IF ( n = 0, BLANK (), CALCULATE ( [2032 Run-rate], {BTREAT} ) )", SUSDM, C15,
+  "Profit a year by 2032 of the plan being built, scenario in view; blank while nothing is picked.")
+m("Build A Year on Cost (sel)", "DIVIDE ( [Build Run-rate (sel)], [Build Capex] )", PCT, C15, "A year on cost of the plan being built, scenario in view; blank while nothing is picked.")
+m("Move Run-rate (num)", MOVE_P + "RETURN IF ( ISBLANK ( p ), BLANK (), CALCULATE ( [2032 Run-rate], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) )", SUSDM, C15,
+  "Selector row (BuildMove): profit a year by 2032 of the move alone, scenario in view.")
+
+# ---- status (doc 21 P-6): one source, the MoveDecision table. The word is step 4's text measure; this is the mark colour.
+MOVE_ST = "LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) )"
+m("Move Status Color", f'VAR st = {MOVE_ST} RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( st, "A", "{ACCENT_MARK}", "2028 gate", "{INK}", "{SLATE}" ) )', TXT, C15,
+  "Mark colour of a move by its decision status (MoveDecision): Coffee Blue for package A, Night for the 2028 gate, Warm Grey for not now. A mark colour (3.5:1 at the lightest): the status word carries the state.")
+
+# ---- the hero table's bar cells (doc 21 P-4, spike S-2 of 13 Nov). Geometry and domains come from the build spec the
+# comp exported; opzet_report.py places lbl_hero_8 / lbl_hero_0 with hero_ref_x() from the same constants.
+_HERO = json.loads((ROOT / "project" / "design-prototypes" / "rebuild-v10-spec.json").read_text(encoding="utf-8"))["construction"]["tables"]["tbl_hero"]
+HERO_SPEC_COLS = list(_HERO["cols"])              # the comp's widths: the bar geometry stays on these
+HERO_COLS = [280, 104, 96, 196, 64, 184, 74]      # as built (S-2): an image column is the image + 11 px, "−$27.3M" needs 74
+HERO_X, HERO_ROW_H = 56, _HERO["row_h"]
+HERO_INSET, HERO_BAR_Y, HERO_BAR_H = _HERO["bar_cell"]["inset_px"], _HERO["bar_cell"]["bar_y"], _HERO["bar_cell"]["bar_h"]
+HERO_IMG_PAD = 7                                   # Desktop draws an image 7 px into its cell (measured in S-2, not a setting)
+HERO_IMG_W = HERO_SPEC_COLS[5] - HERO_IMG_PAD      # grid.imageWidth is one value per table: the narrow bar column minus the padding
+HERO_YDOM, HERO_YREF = tuple(float(v) for v in _HERO["yield_domain"]), float(_HERO["yield_ref"])
+HERO_NDOM, HERO_NREF = tuple(float(v) for v in _HERO["npv_domain_usd"]), float(_HERO["npv_ref"])
+
+
+def bar_x(v, dom, w):
+    """The comp's barX(): the x of a value inside a bar cell of width w."""
+    return HERO_INSET + (v - dom[0]) / (dom[1] - dom[0]) * (w - 2 * HERO_INSET)
+
+
+def hero_ref_x():
+    """Page x of the two reference lines of tbl_hero (8 % and NPV 0), for the labels above the table."""
+    return (HERO_X + sum(HERO_COLS[:3]) + bar_x(HERO_YREF, HERO_YDOM, HERO_SPEC_COLS[3]),
+            HERO_X + sum(HERO_COLS[:5]) + bar_x(HERO_NREF, HERO_NDOM, HERO_SPEC_COLS[5]))
+
+
+def bar_cell(name, value_expr, dom, ref, fill_expr, w, doc):
+    """P-4: a measure that returns an SVG data URI with one bar from zero and one full-height reference line.
+    Fixed pixel width and a fixed domain, so the reference line has the same x in every row and every scenario and
+    reads as one line down the table (row padding 0, image height = row height). The value is not in the SVG: it sits
+    in its own text column. Numbers go through FORMAT ( x, "0.0", "en-US" ), '#' is written as %23 (Kerry Kolosko's
+    SVG-in-DAX conventions, CREDITS.md). Every x is the comp's cell x minus the 7 px Desktop pads an image with."""
+    span, inner = dom[1] - dom[0], w - 2 * HERO_INSET
+    x0 = bar_x(max(dom[0], min(dom[1], 0.0)), dom, w) - HERO_IMG_PAD
+    xr = bar_x(ref, dom, w) - HERO_IMG_PAD
+    f = 'FORMAT ( {0}, "0.0", "en-US" )'
+    m(name,
+      f"VAR v = {value_expr} "
+      f"VAR c = MIN ( MAX ( v, {dom[0]!r} ), {dom[1]!r} ) "
+      f"VAR xv = {float(HERO_INSET - HERO_IMG_PAD)!r} + ( c - ( {dom[0]!r} ) ) / {span!r} * {inner} "
+      f"VAR x0 = {x0!r} "
+      f'VAR fill = SUBSTITUTE ( {fill_expr}, "#", "%23" ) '
+      "RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) || ISBLANK ( v ), BLANK (), "
+      f"\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='{HERO_IMG_W}' height='{HERO_ROW_H}' viewBox='0 0 {HERO_IMG_W} {HERO_ROW_H}'>"
+      f"<rect x='\" & {f.format('MIN ( x0, xv )')} & \"' y='{HERO_BAR_Y}' width='\" & {f.format('ABS ( xv - x0 )')} & \"' height='{HERO_BAR_H}' fill='\" & fill & \"'/>"
+      f"<rect x='{xr - 0.5:.2f}' y='0' width='1' height='{HERO_ROW_H}' fill='%2312233D' shape-rendering='crispEdges'/></svg>\" )",
+      TXT, C15, doc)
+    IMAGE_MEASURES.add(name)
+
+
+bar_cell("Hero Yield Bar SVG", "[A Year on Cost]", HERO_YDOM, HERO_YREF, "[Move Status Color]", HERO_SPEC_COLS[3],
+         "Hero table, bar cell of 'a year on cost' for the move in the row (scenario in view): a bar from 0 in the move's status colour and the 8 % line (our cost of money). "
+         "Fixed domain -10 % to 90 %. Decorative: the value stands in the column beside it.")
+bar_cell("Hero NPV Bar SVG", "[NPV @ 8%]", HERO_NDOM, HERO_NREF, "[Move Status Color]", HERO_SPEC_COLS[5],
+         "Hero table, bar cell of the NPV through 2032 for the move in the row (scenario in view): a bar from 0 in the move's status colour and the zero line (pays back by 2032 to its right). "
+         "Fixed domain -$32M to +$12M. Decorative: the value stands in the column beside it.")
+# the domains re-derived from the data (P-4: minimum and maximum over the ten moves and the three scenarios, rounded
+# outward: to 10 points for the yield, to $4M for the NPV, as the comp does). number_checks.py asserts they equal
+# the constants the bar cells are drawn with, so a data change that leaves the domain cannot pass unseen.
+_GI_X_SCN = ('VAR t = CROSSJOIN ( CALCULATETABLE ( VALUES ( InvestmentProjects[ProjectID] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ), ALLNOBLANKROW ( Scenario[Scenario] ) ) '
+             'VAR v = ADDCOLUMNS ( t, "@v", VAR p = InvestmentProjects[ProjectID] VAR s = Scenario[Scenario] RETURN CALCULATE ( {0}, REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, REMOVEFILTERS ( Scenario ), Scenario[Scenario] = s ) ) ')
+m("Hero Yield Domain Min", _GI_X_SCN.format("[A Year on Cost]") + "RETURN INT ( MIN ( MINX ( v, [@v] ), 0 ) * 10 ) / 10", PCT, C15,
+  "Hero table: the lowest 'a year on cost' of the ten moves over the three scenarios, rounded down to 10 points (never above 0). Guards the fixed domain of the bar cells.")
+m("Hero Yield Domain Max", _GI_X_SCN.format("[A Year on Cost]") + "RETURN - INT ( - MAXX ( v, [@v] ) * 10 ) / 10", PCT, C15,
+  "Hero table: the highest 'a year on cost' of the ten moves over the three scenarios, rounded up to 10 points. Guards the fixed domain of the bar cells.")
+m("Hero NPV Domain Min", _GI_X_SCN.format("[NPV @ 8%]") + "RETURN INT ( MINX ( v, [@v] ) / 4000000 ) * 4000000", USDM1, C15,
+  "Hero table: the lowest NPV of the ten moves over the three scenarios, rounded down to $4M. Guards the fixed domain of the bar cells.")
+m("Hero NPV Domain Max", _GI_X_SCN.format("[NPV @ 8%]") + "RETURN - INT ( - MAXX ( v, [@v] ) / 4000000 ) * 4000000", USDM1, C15,
+  "Hero table: the highest NPV of the ten moves over the three scenarios, rounded up to $4M. Guards the fixed domain of the bar cells.")
+
+
+# ---- the $60M plan in tranches (R-P2-7): sums over MoveDecision[Tranche]; the budget from Brands. Capex does not
+# follow the scenario, the run-rates do. Tranche 2 and 3 show no NPV (doc 20).
+def tranche(k):
+    return f'VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Tranche] = {k} ), "@p", MoveDecision[ProjectID] ) '
+
+
+TTREAT = "REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] )"
+for k, what in ((1, "package A, funded now"), (2, "the airport extensions, decided at the 2028 gate"), (3, "the refresh, decided at the 2028 gate")):
+    m(f"Tranche {k} Capex", tranche(k) + f"RETURN CALCULATE ( SUM ( InvestmentProjects[CapexUSD] ), {TTREAT} )", USDM1, C15, f"Capex of tranche {k} ({what}); a segment of the plan bar.")
+    m(f"Tranche {k} Run-rate", tranche(k) + f"RETURN CALCULATE ( [2032 Run-rate], {TTREAT} )", SUSDM, C15, f"Profit a year once live of tranche {k} ({what}), scenario in view.")
+    m(f"Tranche {k} Year on Cost", f"DIVIDE ( [Tranche {k} Run-rate], [Tranche {k} Capex] )", PCT, C15, f"A year on cost of tranche {k} ({what}), scenario in view.")
+m("Not Needed Capex", f"{BUDGET_GI} - [Tranche 1 Capex] - [Tranche 2 Capex] - [Tranche 3 Capex]", USDM1, C15,
+  "The part of the Goodnight Inn budget no tranche asks for; the last segment of the plan bar (the four segments add up to the budget by construction).")
+
+
+# ---- the 2032 ledger (R-P2-5, metric contracts M-102 and M-103): the 2025 brand plus package A at full yearly
+# effect, in 2025 dollars. Port of analysis/50_storytelling_checks.py section 6 (E11).
+def a_sum(col):
+    return f"CALCULATE ( SUM ( InvestmentScenarios[{col}] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( aIds, InvestmentProjects[ProjectID] ), InvestmentScenarios[Scenario] = s )"
+
+
+m("Dist Cost % 2025 GI", gi_at("Distribution Cost % of Room Revenue", 2025), PCT, C15, "Goodnight Inn distribution cost as a share of room revenue, 2025 (the ledger's F2 start).")
+m("Dist Cost % 2032 with A (sel)", REC_IDS + "VAR s = [Selected Scenario] RETURN [Dist Cost % 2025 GI] + " + a_sum("DistributionCostChangePts"), PCT, C15,
+  "Ledger F2: the 2025 distribution cost share of room revenue plus the organisers' change in points for the moves of package A, scenario in view. 2025 brand, A at full effect; not a forecast of 2032.")
+m("Margin after 2032 with A (sel)",
+  REC_IDS + "VAR s = [Selected Scenario] VAR tot = " + gi_at("Total Revenue", 2025) + " VAR after = " + gi_at("GOP after Distribution", 2025) + " "
+  "RETURN DIVIDE ( after + " + a_sum("AnnualOperatingProfitImpactUSD") + ", tot + " + a_sum("AnnualRevenueImpactUSD") + " )", PCT, C15,
+  "Ledger F1: operating margin after commissions of the 2025 brand with package A's full yearly profit and revenue impact added, scenario in view. In 2025 dollars; not a forecast of 2032.")
+m("Dist Cost Rise Undone % (sel)",
+  "VAR d21 = " + gi_at("Distribution Cost % of Room Revenue", 2021) + " VAR d25 = [Dist Cost % 2025 GI] RETURN DIVIDE ( d25 - [Dist Cost % 2032 with A (sel)], d25 - d21 )", "0%", C15,
+  "Ledger F2 status: the share of the 2021 to 2025 rise in distribution cost (points of room revenue) that package A undoes, scenario in view.")
+m("Margin Fall Recovered % (sel)",
+  "VAR m23 = " + gi_at("GOP Margin after Distribution %", 2023) + " VAR m25 = [KPI Margin after GI] RETURN DIVIDE ( [Margin after 2032 with A (sel)] - m25, m23 - m25 )", "0%", C15,
+  "Ledger F1 status: the share of the 2023 to 2025 fall in the margin after commissions that package A recovers, scenario in view.")
+# "the app" = the move of package A that answers F2 (the middleman), read from MoveDecision
+APP_IDS = 'VAR appIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Status] = "A" && MoveDecision[Finding] = "F2" ), "@p", MoveDecision[ProjectID] ) '
+APP_T = "REMOVEFILTERS ( InvestmentProjects ), TREATAS ( appIds, InvestmentProjects[ProjectID] )"
+m("App Commission Saving (sel)",
+  APP_IDS + "VAR s = [Selected Scenario] VAR rr = " + gi_at("Channel Room Revenue", 2025) + f" RETURN - CALCULATE ( SUM ( InvestmentScenarios[DistributionCostChangePts] ), {APP_T}, InvestmentScenarios[Scenario] = s ) * rr", USDM1, C15,
+  "What the booking app saves in commissions a year: its change in distribution cost (points of room revenue, scenario in view) on 2025 room revenue. Also what every year without it leaves with the agencies.")
+m("App NPV (sel)", APP_IDS + f"RETURN CALCULATE ( [NPV @ 8%], {APP_T} )", SUSDM, C15, "NPV through 2032 of the booking app alone (the move of A that answers F2), scenario in view.")
+m("App Run-rate (sel)", APP_IDS + f"RETURN CALCULATE ( [2032 Run-rate], {APP_T} )", SUSDM, C15, "Profit a year by 2032 of the booking app alone, scenario in view.")
+
+# ---- cumulative charts (doc 21 P-5 as amended by doc 22 section 3): one data label per line, on the last year,
+# carrying the name and the value ("A +$6.8M"). Each line gets an end series: the value on the horizon year only,
+# label-safe (P-1). In the chart the end series come AFTER the line series, so the value axis keeps a line's format.
+_YEND = f"VAR __y = MAX ( 'Date'[Year] ) VAR __h = {HORIZON} RETURN IF ( __y = __h, {{0}} )"
+for scn in ("Low", "Expected", "High"):
+    m(f"A Cumulative Line ({scn})", f'IF ( [Selected Scenario] = "{scn}", BLANK (), [TT Year A ({scn})] )', SUSDM, C15,
+      f"Capital plan chart: package A's cumulative net impact in the {scn} case; blank when {scn} is the case in view (the emphasised line draws it).")
+    label_safe(f"A Cumulative End {scn} (label-safe)", _YEND.format(f"[A Cumulative Line ({scn})]"), f'"{scn} " & ' + sfm(f"[A Cumulative Line ({scn})]"), SUSDM, C15,
+               f"Capital plan chart, end label of the {scn} line: its value on the horizon year only, printed as '{scn}' and the amount.")
+label_safe("A Cumulative End Sel (label-safe)", _YEND.format("[Preset A Cumulative Net (sel)]"), '[Selected Scenario] & " " & ' + sfm("[Preset A Cumulative Net (sel)]"), SUSDM, C15,
+           "Capital plan chart, end label of the emphasised line (the case in view): its value on the horizon year only, printed as the case name and the amount.")
+for k in "ABC":
+    label_safe(f"Preset {k} Cumulative End (label-safe)", _YEND.format(f"[Preset {k} Cumulative Net (sel)]"), f'"{k} " & ' + sfm(f"[Preset {k} Cumulative Net (sel)]"), SUSDM, C15,
+               f"Comparison chart, end label of package {k}: its cumulative net impact on the horizon year only, printed as '{k}' and the amount, scenario in view.")
+label_safe("A Cumulative End Name (label-safe)", _YEND.format("[Preset A Cumulative Net (sel)]"), '"A"', SUSDM, C15,
+           "Build comparison chart, end label of package A: the value on the horizon year only, printed as 'A' (the title carries the amounts; You equals A when the state opens).")
+label_safe("Build Cumulative End Name (label-safe)", _YEND.format("[Build Cumulative Net (sel)]"), '"You"', SUSDM, C15,
+           "Build comparison chart, end label of the plan being built: the value on the horizon year only, printed as 'You'; blank while nothing is picked.")
+
+# ---- label-safe twins for bars (P-1)
+label_safe("NPS 2025 (label-safe)", "[NPS (weighted) 2025]", pt1("[NPS (weighted) 2025]"), SIGNED1, C15,
+           "F3 bars: response-weighted NPS 2025 with its label as finished text ('+6.8', a true minus), so no session locale prints a decimal comma.")
+m("Build Bar NPV", BIDS + "VAR me = SELECTEDVALUE ( BuildMove[ProjectID] ) RETURN IF ( n > 0 && me IN ids, CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = me ) )", SUSDM, C15,
+  "Build bar chart (BuildMove): the NPV through 2032 of a picked move alone, scenario in view; blank for a move that is not picked, so the chart lists the plan only.")
+label_safe("Build Bar NPV (label-safe)", "[Build Bar NPV]", sfm("[Build Bar NPV]"), SUSDM, C15, "Build bar chart: the picked move's NPV with its label as finished text ('+$3.4M', '−$0.6M').")
+m("Build Bar Color", f'VAR v = [Build Bar NPV] RETURN IF ( ISBLANK ( v ), BLANK (), IF ( ROUND ( v / 1000000, 2 ) < 0, "{SIGNAL_MARK}", "{INK}" ) )', TXT, C15,
+  "Build bar chart: Night for a move that adds NPV (Night is 'your plan'), Tangerine for one that costs NPV; the signed label carries it too (R-G3).")
+
+# ---- page 1 numbers (doc 21 sections 4.2 to 4.5, doc 22 section 3)
+m("Trend Commission Take GI", "[Trend Margin before GI] - [Trend Margin after GI]", PCT, C15,
+  "F1 stacked area, the band on top of the margin after commissions: what the booking channels take, in points of revenue (margin before minus margin after commissions).")
+_ENDS = ("VAR __y = SELECTEDVALUE ( 'Date'[Year] ) VAR __y0 = YEAR ( CALCULATE ( MIN ( MonthlyPerformance[Month] ), REMOVEFILTERS () ) ) "
+         "VAR __y1 = YEAR ( CALCULATE ( MAX ( MonthlyPerformance[Month] ), REMOVEFILTERS () ) ) ")
+m("Trend OTA GI (ends)", _ENDS + "RETURN IF ( __y = __y0 || __y = __y1, [Trend OTA GI] )", "0%", C15,
+  "F2 chart, end labels of the Goodnight Inn line: the OTA share in the first and the last year of the data only. Whole percent, so it needs no label-safe twin.")
+m("Trend OTA Sisters (end)", _ENDS + "RETURN IF ( __y = __y1, [Trend OTA Sisters] )", "0%", C15,
+  "F2 chart, end label of the sister brands' line: the OTA share in the last year of the data only. Whole percent.")
+_F4_ROW = 'SWITCH ( SELECTEDVALUE ( Hotels[LocationType] ), "Airport", 3, "City", 2, "Highway", 1 )'
+_F4_OCC = "VAR hid = Hotels[HotelID] RETURN CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), Hotels[HotelID] = hid )"
+m("F4 Row Y",
+  f"VAR base = {_F4_ROW} VAR me = SELECTEDVALUE ( Hotels[HotelID] ) VAR t = SELECTEDVALUE ( Hotels[LocationType] ) VAR br = SELECTEDVALUE ( Hotels[Brand] ) "
+  "RETURN IF ( ISBLANK ( me ), base, "
+  # the hotel's row: every hotel of its brand and location type with its 2025 occupancy
+  f'VAR rw = ADDCOLUMNS ( CALCULATETABLE ( VALUES ( Hotels[HotelID] ), REMOVEFILTERS ( Hotels ), Hotels[LocationType] = t, Hotels[Brand] = br ), "@o", {_F4_OCC} ) '
+  # near: another hotel of the row sits within one point of occupancy
+  "VAR near = FILTER ( rw, VAR o = [@o] VAR hid = Hotels[HotelID] RETURN COUNTROWS ( FILTER ( rw, Hotels[HotelID] <> hid && ABS ( [@o] - o ) < 0.01 ) ) > 0 ) "
+  "VAR myo = MAXX ( FILTER ( rw, Hotels[HotelID] = me ), [@o] ) "
+  "VAR k = COUNTROWS ( FILTER ( near, [@o] >= myo ) ) "
+  "RETURN base + IF ( COUNTROWS ( FILTER ( near, Hotels[HotelID] = me ) ) > 0, IF ( MOD ( k, 2 ) = 1, -0.3, 0.3 ), 0 ) )",
+  "0.0", C15,
+  "F4 dot plot, the hotel's row: Airport 3, City 2, Highway 1. A hotel within one point of occupancy of another in its row steps 0.3 off the row, alternately below and above "
+  "in order of 2025 occupancy (Gatwick below, Montréal above), so close dots stay apart. For a location type (the average markers) the row itself. A layout value, not a metric.")
+m("F4 Dot Color",
+  "VAR me = SELECTEDVALUE ( Hotels[HotelID] ) VAR br = SELECTEDVALUE ( Hotels[Brand] ) "
+  f'VAR t7 = TOPN ( 7, ADDCOLUMNS ( CALCULATETABLE ( VALUES ( Hotels[HotelID] ), REMOVEFILTERS ( Hotels ), Hotels[Brand] = br ), "@o", {_F4_OCC} ), [@o], DESC ) '
+  f'RETURN IF ( ISBLANK ( me ), BLANK (), IF ( COUNTROWS ( FILTER ( t7, Hotels[HotelID] = me ) ) > 0, "{INK}", "{SLATE}" ) )', TXT, C15,
+  "F4 dot plot: Night for the seven fullest hotels of the brand in 2025, Warm Grey for the rest (R-G3: no blue on page 1's marks). The seven are named beside their dots.")
+m("F4 Type Avg", "[Occupancy % 2025]", PCT, C15, "F4 dot plot, the average markers: 2025 occupancy of the location type in context (rooms sold over rooms available, not an average of hotel percentages).")
+m("Months Topped 90% (last 24)",
+  "VAR d1 = CALCULATE ( MAX ( MonthlyPerformance[Month] ), REMOVEFILTERS () ) VAR d0 = EDATE ( d1, -23 ) "
+  "VAR mths = CALCULATETABLE ( VALUES ( MonthlyPerformance[Month] ), REMOVEFILTERS ( 'Date' ), MonthlyPerformance[Month] >= d0 ) "
+  "RETURN COUNTROWS ( FILTER ( mths, CALCULATE ( DIVIDE ( SUM ( MonthlyPerformance[RoomsSold] ), SUM ( MonthlyPerformance[RoomsAvailable] ) ), REMOVEFILTERS ( 'Date' ) ) >= 0.9 ) ) + 0", "0", C15,
+  "Months, of the last 24 in the data, in which the hotels in context sold 90 percent or more of their available room nights ('topped 90%': the month's occupancy at or above 90%).")
+
+# MoveDecision: decision data (D2, D4), not source data. Finding and the gate tranche are typed above (MOVE_FINDING,
+# MOVE_GATE); status "A" and tranche 1 are read from Package[Preset], so the table follows package A.
+MOVE_DECISION = (
+    'VAR a = LOOKUPVALUE ( Package[PackageID], Package[Preset], "A" )\n'
+    'VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] )\n'
+    'VAR typed = DATATABLE ( "xPid", STRING, "xFinding", STRING, "xGate", INTEGER, { '
+    + ", ".join(f'{{ "{p}", "{f}", {MOVE_GATE.get(p, 0)} }}' for p, f in sorted(MOVE_FINDING.items())) + " } )\n"
+    "RETURN\n"
+    "    SELECTCOLUMNS (\n"
+    "        typed,\n"
+    '        "ProjectID", [xPid],\n'
+    '        "Finding", [xFinding],\n'
+    '        "Status", SWITCH ( TRUE (), [xPid] IN aIds, "A", [xGate] > 0, "2028 gate", "not now" ),\n'
+    '        "Tranche", SWITCH ( TRUE (), [xPid] IN aIds, 1, [xGate] > 0, [xGate], BLANK () )\n'
+    "    )\n"
+)
+
 BUILD_MOVE = r"""
 VAR Proj = FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" )
 RETURN
@@ -1987,6 +2282,13 @@ def measures_table():
             out.append("\t\tdataCategory: ImageUrl")
         out.append(f"\t\tlineageTag: {tag('measure.' + name)}")
         out.append("")
+        if name in FMT_DEFS:
+            # TMDL: formatStringDefinition is a child object, so it comes AFTER the measure's own properties, in a
+            # backtick block (spike S-1, 13 Nov: right after the expression Desktop refuses the project, "Invalid indentation")
+            out.append("\t\tformatStringDefinition = ```")
+            out.append(f"\t\t\t\t{FMT_DEFS[name]}")
+            out.append("\t\t\t\t```")
+            out.append("")
     out.append("\tcolumn Placeholder")
     out.append("\t\tdataType: string")
     out.append("\t\tisHidden")
@@ -2016,6 +2318,15 @@ def helper_table(name, doc, rows, cols):
     return text
 
 
+def sort_by(text, *pairs):
+    """Adds sortByColumn to string columns of a generated table: pairs of (column, sort column as TMDL writes it)."""
+    for col, by in pairs:
+        head = f"\tcolumn {q(col)}\n\t\tdataType: string\n"
+        assert head in text, col
+        text = text.replace(head, head + f"\t\tsortByColumn: {by}\n")
+    return text
+
+
 def main():
     global MODEL
     import sys
@@ -2035,7 +2346,7 @@ def main():
       f"\tlineageTag: {tag('expr.DataFile')}\n\n"
       "\tannotation PBI_ResultType = Text\n\n"
       "\tannotation PBI_NavigationStepName = Navigation\n")
-    tables = list(SHIPPED) + ["_Measures", "ProjectCashflow", "HotelOutlook", "Timeline", "PlanYear", "BridgeStep", "FolioLine", "KpiLine", "Package", "PackageProject", "PlanSelector", "ScatterView", "BuildMove", "BuildPoint"]
+    tables = list(SHIPPED) + ["_Measures", "ProjectCashflow", "HotelOutlook", "Timeline", "PlanYear", "BridgeStep", "FolioLine", "KpiLine", "Package", "PackageProject", "PlanSelector", "ScatterView", "BuildMove", "BuildPoint", "MoveDecision", "Finding", "WaitOption"]
     model = ["model Model", "\tculture: en-US", "\tdefaultPowerBIDataSourceVersion: powerBI_V3", "\tsourceQueryCulture: en-US", "\tdataAccessOptions", "\t\tlegacyRedirects", "\t\treturnErrorValuesAsNull", "",
              "queryGroup Facts", "", "\tannotation PBI_QueryGroupOrder = 0", "", "queryGroup Dimensions", "", "\tannotation PBI_QueryGroupOrder = 1", "",
              "annotation __PBI_TimeIntelligenceEnabled = 0", "",
@@ -2097,6 +2408,22 @@ def main():
     w(d / "tables" / "BuildPoint.tmdl", helper_table(
         "BuildPoint", "One row, 'Your plan': the category of the scatter layer that marks the plan being built (its X and Y are the Build Capex and Build NPV measures).",
         [("Your plan",)], [("Label", "STRING", "string")]))
+    # FinalV3 (doc 21 section 10.1): the decision table and the two row sources of the ledger and the What-waits table
+    w(d / "tables" / "MoveDecision.tmdl", calc_table(
+        "MoveDecision",
+        "Decision data, not source data (docs 20 D2 / D4, 13 Nov 2026): one row per Goodnight Inn move with the Brand Review finding it answers, its status (A, 2028 gate, not now) and its tranche "
+        "(1 = package A, 2 = the airport extensions, 3 = the refresh, blank = not in the plan). Finding and the gate tranches are set in sketch_model.py; status A and tranche 1 are read from Package[Preset]. "
+        "Disconnected: measures read it with LOOKUPVALUE and TREATAS.",
+        [("ProjectID", "string", None), ("Finding", "string", None), ("Status", "string", None), ("Tranche", "int64", "0")], MOVE_DECISION))
+    w(d / "tables" / "Finding.tmdl", sort_by(helper_table(
+        "Finding", "The four findings of The Brand Review page, in the order of the 2032 ledger (F2, F1, F4, F3). Disconnected row source of the ledger table: its measures switch on Code.",
+        [(c, n, f"{c} {n}", s) for c, n, s in FINDINGS],
+        [("Code", "STRING", "string"), ("Name", "STRING", "string"), ("Label", "STRING", "string"), ("Ledger Sort", "INTEGER", "int64")]),
+        ("Label", "'Ledger Sort'"), ("Code", "'Ledger Sort'")))
+    w(d / "tables" / "WaitOption.tmdl", sort_by(helper_table(
+        "WaitOption", "The three options that wait (What waits, and why): package B and tranches 2 and 3. Disconnected row source of the What-waits table: its measures switch on Key.",
+        WAIT_OPTIONS,
+        [("Key", "STRING", "string"), ("Title", "STRING", "string"), ("Sort", "INTEGER", "int64")]), ("Title", "Sort")))
     w(d / "tables" / "ScatterView.tmdl", calc_table(
         "ScatterView", "Disconnected toggle for the P2 scatter (Björn 7 Nov): all packages, or a zoom on A, B and C. Drives the axis ends through Scatter X End / Scatter Y Start / Scatter Y End; filters nothing.",
         [("View", "string", None), ("Sort", "int64", "0")],

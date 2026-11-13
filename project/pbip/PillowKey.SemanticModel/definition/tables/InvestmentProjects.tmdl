@@ -137,12 +137,26 @@ table InvestmentProjects
 		lineageTag: 71192867-f11b-5bad-9ab5-3ee230af5912
 		summarizeBy: none
 		isDataTypeInferred
-	/// The Brand Review finding (F1 to F4 on page 1) the initiative answers; Goodnight Inn projects only (opzet 2026-11-06).
-	column 'Answers Finding' = SWITCH(InvestmentProjects[ProjectID], "GI-01", "F2", "GI-02", "F3", "GI-03", "F1", "GI-04", "F4", "GI-05", "F4", "GI-06", "F4", "GI-07", "F3", "GI-08", "F4", "GI-09", "F3", "GI-10", "F1")
+	/// Decision data, not source data: the Brand Review finding (F1 to F4 on page 1) the initiative answers; Goodnight Inn projects only. One mapping with MoveDecision[Finding] (doc 20 D4, 13 Nov: the kiosks answer F4).
+	column 'Answers Finding' = SWITCH ( InvestmentProjects[ProjectID], "GI-01", "F2", "GI-02", "F4", "GI-03", "F1", "GI-04", "F4", "GI-05", "F4", "GI-06", "F4", "GI-07", "F3", "GI-08", "F4", "GI-09", "F3", "GI-10", "F1", BLANK () )
 		dataType: string
 		lineageTag: 8e9d65ba-97d8-539a-b76d-606ffd64d7a9
 		summarizeBy: none
 		isDataTypeInferred
+	/// Rank of the move by its Expected 'a year on cost' (profit a year by 2032 over capex) within Goodnight Inn, 1 = highest; fixed at refresh, so the hero table's order never follows the scenario. 99 for other brands.
+	column 'Hero Sort' = VAR myp = InvestmentProjects[ProjectID] VAR myc = InvestmentProjects[CapexUSD] VAR myb = InvestmentProjects[Brand] VAR gi = FILTER ( ALL ( InvestmentProjects[ProjectID], InvestmentProjects[CapexUSD], InvestmentProjects[Brand] ), InvestmentProjects[Brand] = "Goodnight Inn" ) VAR me = DIVIDE ( SUMX ( FILTER ( InvestmentScenarios, InvestmentScenarios[ProjectID] = myp && InvestmentScenarios[Scenario] = "Expected" ), InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), myc ) RETURN IF ( myb = "Goodnight Inn", COUNTROWS ( FILTER ( gi, VAR p = InvestmentProjects[ProjectID] VAR c = InvestmentProjects[CapexUSD] RETURN DIVIDE ( SUMX ( FILTER ( InvestmentScenarios, InvestmentScenarios[ProjectID] = p && InvestmentScenarios[Scenario] = "Expected" ), InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), c ) > me ) ) + 1, 99 )
+		dataType: int64
+		formatString: 0
+		lineageTag: bbb8ef07-8fc5-5ed2-a1ab-27e301c04883
+		summarizeBy: none
+		isDataTypeInferred
+	/// The move's full name as the Investment Strategy page says it (R-P2-3); the organisers' project name for other brands. Sorted by Hero Sort.
+	column 'Move Name' = SWITCH ( InvestmentProjects[ProjectID], "GI-01", "Booking app & member rates", "GI-02", "Kiosks at the 20 busiest hotels", "GI-03", "Energy programme", "GI-04", "Toronto +40 rooms", "GI-05", "Gatwick +40 rooms", "GI-06", "Kingston +40 rooms", "GI-07", "Refresh, 10 oldest hotels", "GI-08", "Boston new hotel", "GI-09", "Breakfast upgrade", "GI-10", "Revenue management", InvestmentProjects[ProjectName] )
+		dataType: string
+		lineageTag: ebf7bfad-b5bc-5742-b8be-b577fcd36004
+		summarizeBy: none
+		isDataTypeInferred
+		sortByColumn: 'Hero Sort'
 
 	partition InvestmentProjects = m
 		mode: import

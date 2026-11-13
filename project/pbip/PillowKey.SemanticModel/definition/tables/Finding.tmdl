@@ -1,0 +1,46 @@
+/// The four findings of The Brand Review page, in the order of the 2032 ledger (F2, F1, F4, F3). Disconnected row source of the ledger table: its measures switch on Code.
+table Finding
+	lineageTag: dfe04e4a-87cb-5513-b7b8-78afbcd3e027
+
+	column Code
+		dataType: string
+		sortByColumn: 'Ledger Sort'
+		lineageTag: 7db9fd8f-826c-540f-a703-f90de3eee4c3
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Code]
+
+	column Name
+		dataType: string
+		lineageTag: 405d4bd8-5789-5539-bd0a-56da10003739
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Name]
+
+	column Label
+		dataType: string
+		sortByColumn: 'Ledger Sort'
+		lineageTag: a68c845d-19fb-52cf-ac85-06055cbf2b47
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Label]
+
+	column 'Ledger Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5aa83395-e2a4-51f5-9b35-fb7fba3fb7e8
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Ledger Sort]
+
+	partition Finding = calculated
+		mode: import
+		source = ```
+				DATATABLE ( "Code", STRING, "Name", STRING, "Label", STRING, "Ledger Sort", INTEGER, { { "F2", "The middleman", "F2 The middleman", 1 }, { "F1", "The margin", "F1 The margin", 2 }, { "F4", "Where we are full", "F4 Where we are full", 3 }, { "F3", "The fading welcome", "F3 The fading welcome", 4 } } )
+				```
+
+	annotation PBI_ResultType = Table

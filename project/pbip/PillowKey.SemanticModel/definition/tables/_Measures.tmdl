@@ -1252,13 +1252,13 @@ table _Measures
 		lineageTag: b9e20df9-7ca2-591d-bca9-99047ee25492
 
 	/// Plan table npv as text: inside the package rounded to add up to the package total, outside it as is.
-	measure 'Initiative NPV (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) VAR me = SELECTEDVALUE ( InvestmentProjects[ProjectID] ) VAR v = IF ( me IN ids, MAXX ( FILTER ( adj, [@p] = me ), [@s] ), [NPV @ 8%] ) RETURN IF ( ISBLANK ( me ), BLANK (), ( VAR __t = ROUND ( ( v ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) )
+	measure 'Initiative NPV (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) VAR me = SELECTEDVALUE ( InvestmentProjects[ProjectID] ) VAR v = IF ( me IN ids, MAXX ( FILTER ( adj, [@p] = me ), [@s] ), [NPV @ 8%] ) RETURN IF ( ISBLANK ( me ), BLANK (), ( VAR __v = ( v ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 62090f1f-02fc-5ec4-b541-85e6ba3e69c1
 
 	/// Plan table run-rate as text: inside the package rounded to add up to the package total, outside it as is.
-	measure 'Initiative Run-rate (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [2032 Run-rate], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) VAR me = SELECTEDVALUE ( InvestmentProjects[ProjectID] ) VAR v = IF ( me IN ids, MAXX ( FILTER ( adj, [@p] = me ), [@s] ), [2032 Run-rate] ) RETURN IF ( ISBLANK ( me ), BLANK (), ( VAR __t = ROUND ( ( v ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) )
+	measure 'Initiative Run-rate (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [2032 Run-rate], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) VAR me = SELECTEDVALUE ( InvestmentProjects[ProjectID] ) VAR v = IF ( me IN ids, MAXX ( FILTER ( adj, [@p] = me ), [@s] ), [2032 Run-rate] ) RETURN IF ( ISBLANK ( me ), BLANK (), ( VAR __v = ( v ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 0796c1bc-fd16-5420-a096-c7dacbf66c65
@@ -1548,13 +1548,13 @@ table _Measures
 		lineageTag: 5ef22c33-8a86-5aaa-98b0-3dabd5dbe9b9
 
 	/// Plan state: the risks of the package in focus in one sentence; blank when there is no package.
-	measure 'Plan Risk (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR s = [Selected Scenario] VAR ren = "GI-07" IN ids VAR pb = [Focus Payback Year] VAR lo = [Focus NPV Low] VAR oos = LOOKUPVALUE ( InvestmentProjects[RoomsOutOfServicePct], InvestmentProjects[ProjectID], "GI-07" ) VAR dur = LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], "GI-07" ) RETURN IF ( ISBLANK ( f ), BLANK (), "Risks: " & IF ( ren, FORMAT ( oos, "0%" ) & " of " & FORMAT ( [Focus Rooms Refreshed], "#,0" ) & " rooms out of service for " & dur & " months; ", "" ) & IF ( ISBLANK ( lo ) || s = "Low", "", "in the Low case NPV falls to " & ( VAR __t = ROUND ( ( lo ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "; " ) & IF ( ISBLANK ( pb ), "in this case it does not pay back by 2032.", "in this case the cumulative net turns positive in " & pb & "." ) & IF ( "GI-02" IN ids, " Kiosks wait for the app: they start when it goes live.", "" ) )
+	measure 'Plan Risk (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR s = [Selected Scenario] VAR ren = "GI-07" IN ids VAR pb = [Focus Payback Year] VAR lo = [Focus NPV Low] VAR oos = LOOKUPVALUE ( InvestmentProjects[RoomsOutOfServicePct], InvestmentProjects[ProjectID], "GI-07" ) VAR dur = LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], "GI-07" ) RETURN IF ( ISBLANK ( f ), BLANK (), "Risks: " & IF ( ren, FORMAT ( oos, "0%" ) & " of " & FORMAT ( [Focus Rooms Refreshed], "#,0" ) & " rooms out of service for " & dur & " months; ", "" ) & IF ( ISBLANK ( lo ) || s = "Low", "", "in the Low case NPV falls to " & ( VAR __v = ( lo ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "; " ) & IF ( ISBLANK ( pb ), "in this case it does not pay back by 2032.", "in this case the cumulative net turns positive in " & pb & "." ) & IF ( "GI-02" IN ids, " Kiosks wait for the app: they start when it goes live.", "" ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 2fbfa611-f119-586b-b0f0-72e54f2a0a63
 
 	/// One line under the dropdown, so changing the focus shows on the landing (REVIEW m2).
-	measure 'Focus Line (text)' = VAR f = [Focus Package] VAR s = [Selected Scenario] RETURN IF ( ISBLANK ( f ), BLANK (), "In focus: " & SELECTEDVALUE ( PlanSelector[Label], "A · Our recommendation" ) & "  ·  " & FORMAT ( ( [Focus Capex] ) / 1000000, "$#,0.0#" ) & "M" & "  ·  NPV " & ( VAR __t = ROUND ( ( [Focus NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & " (" & s & ")" )
+	measure 'Focus Line (text)' = VAR f = [Focus Package] VAR s = [Selected Scenario] RETURN IF ( ISBLANK ( f ), BLANK (), "In focus: " & SELECTEDVALUE ( PlanSelector[Label], "A · Our recommendation" ) & "  ·  " & FORMAT ( ( [Focus Capex] ) / 1000000, "$#,0.0#" ) & "M" & "  ·  NPV " & ( VAR __v = ( [Focus NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & " (" & s & ")" )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 249c0e60-bf6e-5312-b23b-89880137a6a0
@@ -1566,7 +1566,7 @@ table _Measures
 		lineageTag: d82ee645-1458-54b3-bd48-6019ff0fa4c6
 
 	/// What the package changes in the hotels, without zero tiles (REVIEW p9, 07-fixgids S6); under C first why it is shown.
-	measure 'Plan Ops (text)' = VAR ra = [Focus Rooms Added] VAR rr = [Focus Rooms Refreshed] VAR hr = [Focus Hotels Rated] VAR parts = FILTER ( { ( 1, IF ( ra > 0, FORMAT ( ra, "#,0" ) & " rooms added" ) ), ( 2, IF ( rr > 0, FORMAT ( rr, "#,0" ) & " rooms refreshed" ) ), ( 3, IF ( hr > 0, "a guest-score effect in " & hr & " hotels" ) ) }, NOT ISBLANK ( [Value2] ) ) VAR f = [Focus Package] VAR lo = CALCULATE ( SUM ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) VAR ex = CALCULATE ( SUM ( Package[NPV Expected] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) VAR hi = CALCULATE ( SUM ( Package[NPV High] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) VAR why = IF ( [Focus Key] = "C" && ROUND ( lo / 100000, 0 ) < 0 && ROUND ( ex / 100000, 0 ) < 0 && ROUND ( hi / 100000, 0 ) < 0, "Shown to answer 'why not renovate?': it stays below zero through 2032 in every case, High included (" & ( VAR __t = ROUND ( ( hi ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "). ", "" ) RETURN IF ( COUNTROWS ( parts ) = 0 && why = "", BLANK (), why & IF ( COUNTROWS ( parts ) = 0, "", "In the hotels: " & CONCATENATEX ( parts, [Value2], ", ", [Value1], ASC ) & "." ) )
+	measure 'Plan Ops (text)' = VAR ra = [Focus Rooms Added] VAR rr = [Focus Rooms Refreshed] VAR hr = [Focus Hotels Rated] VAR parts = FILTER ( { ( 1, IF ( ra > 0, FORMAT ( ra, "#,0" ) & " rooms added" ) ), ( 2, IF ( rr > 0, FORMAT ( rr, "#,0" ) & " rooms refreshed" ) ), ( 3, IF ( hr > 0, "a guest-score effect in " & hr & " hotels" ) ) }, NOT ISBLANK ( [Value2] ) ) VAR f = [Focus Package] VAR lo = CALCULATE ( SUM ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) VAR ex = CALCULATE ( SUM ( Package[NPV Expected] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) VAR hi = CALCULATE ( SUM ( Package[NPV High] ), REMOVEFILTERS ( Package ), Package[PackageID] = f ) VAR why = IF ( [Focus Key] = "C" && ROUND ( lo / 100000, 0 ) < 0 && ROUND ( ex / 100000, 0 ) < 0 && ROUND ( hi / 100000, 0 ) < 0, "Shown to answer 'why not renovate?': it stays below zero through 2032 in every case, High included (" & ( VAR __v = ( hi ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "). ", "" ) RETURN IF ( COUNTROWS ( parts ) = 0 && why = "", BLANK (), why & IF ( COUNTROWS ( parts ) = 0, "", "In the hotels: " & CONCATENATEX ( parts, [Value2], ", ", [Value1], ASC ) & "." ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: dce3caa8-cd07-5ca4-a438-30e370158044
@@ -1602,7 +1602,7 @@ table _Measures
 		lineageTag: 77c2c17e-dadd-5a4f-a53b-46d4dbc469ad
 
 	/// Standing uncertainty line under the recommendation: the Low case, counted from Package.
-	measure 'Uncertainty (text)' = VAR a = [Recommended Package] VAR k = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Package ), Package[NPV Low] >= 0 ) ) + 0 VAR lo = CALCULATE ( SUM ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) RETURN "Low case: " & IF ( k = 0, "no package pays back by 2032", k & " packages pay back by 2032" ) & "; A ends at " & ( VAR __t = ROUND ( ( lo ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "."
+	measure 'Uncertainty (text)' = VAR a = [Recommended Package] VAR k = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Package ), Package[NPV Low] >= 0 ) ) + 0 VAR lo = CALCULATE ( SUM ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) RETURN "Low case: " & IF ( k = 0, "no package pays back by 2032", k & " packages pay back by 2032" ) & "; A ends at " & ( VAR __v = ( lo ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "."
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: b1c5ebaa-c24c-59b5-bdd8-103c51d2b19d
@@ -1752,7 +1752,7 @@ table _Measures
 		lineageTag: 556bd95e-bb6e-5cb3-ac07-e41e6d19728f
 
 	/// F2 note under the folio: the rate gap between channels (said only when within 5 percent), the 2021-mix counterfactual, and the reach-over-loyalty reading, labelled as interpretation (plan 09 R5).
-	measure 'F2 Note (text)' = VAR o = CALCULATE ( [Channel Room Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) / CALCULATE ( [Channel Room Nights], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) VAR d = CALCULATE ( [Channel Room Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) / CALCULATE ( [Channel Room Nights], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) VAR x = CALCULATE ( [Distribution Cost above 2021 Mix 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) VAR nh = CALCULATE ( COUNTROWS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) VAR gn = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR better = COUNTROWS ( FILTER ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN 1 * CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) > 1 * gn ) ) VAR r = better + 1 VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR words = SWITCH ( TRUE (), r = 1, "best of " & n, r = n, "last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) RETURN "At the 2021 channel mix, 2025 commissions would be " & FORMAT ( ( x ) / 1000000, "$#,0.0" ) & "M" & " lower. Our reading: " & IF ( r = 1, "the fullest brand of the four", "a brand with " & nh & " hotels" ) & " grows by reach and direct rebooking, not by loyalty schemes."
+	measure 'F2 Note (text)' = VAR o = CALCULATE ( [Channel Room Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) / CALCULATE ( [Channel Room Nights], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Online Travel Agencies" ) VAR d = CALCULATE ( [Channel Room Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) / CALCULATE ( [Channel Room Nights], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, BookingChannels[Channel] = "Direct Website & App" ) VAR x = CALCULATE ( [Distribution Cost above 2021 Mix 2025], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) VAR nh = CALCULATE ( COUNTROWS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) VAR gn = CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR better = COUNTROWS ( FILTER ( FILTER ( ALLNOBLANKROW ( Brands[Brand] ), Brands[Brand] <> "Goodnight Inn" ), VAR b = Brands[Brand] RETURN 1 * CALCULATE ( [Occupancy %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = b, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) > 1 * gn ) ) VAR r = better + 1 VAR n = COUNTROWS ( ALLNOBLANKROW ( Brands[Brand] ) ) VAR words = SWITCH ( TRUE (), r = 1, "best of " & n, r = n, "last of " & n, r = 2, "2nd of " & n, "3rd of " & n ) RETURN "At the 2021 channel mix, 2025 commissions would be " & ( VAR __v = ( x ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & " lower. Our reading: " & IF ( r = 1, "the fullest brand of the four", "a brand with " & nh & " hotels" ) & " grows by reach and direct rebooking, not by loyalty schemes."
 		formatString: @
 		displayFolder: 08 Brand comparison
 		lineageTag: 4a63674e-4605-5afd-b76e-8aa3d1771daf
@@ -1854,13 +1854,13 @@ table _Measures
 		lineageTag: 276c6e3c-39d0-58e9-b974-75af201ad967
 
 	/// Which page-1 finding each move of A answers, where the weakest move goes, and why it stays although it does not pay back on its own.
-	measure 'Rec Answers (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR npvs = ADDCOLUMNS ( aIds, "@e", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, Scenario[Scenario] = "Expected" ), "@n", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR wp = MAXX ( TOPN ( 1, npvs, [@e], ASC ), [@p] ) VAR we = MAXX ( FILTER ( npvs, [@p] = wp ), [@e] ) VAR wn = MAXX ( FILTER ( npvs, [@p] = wp ), [@n] ) VAR wf = LOOKUPVALUE ( InvestmentProjects[Answers Finding], InvestmentProjects[ProjectID], wp ) VAR wc = LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], wp ) VAR cheapest = wc <= MINX ( FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" && InvestmentProjects[Answers Finding] = wf ), InvestmentProjects[CapexUSD] ) VAR hs = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = wp ), "@h", InvestmentProjectProperties[HotelID] ) VAR nh = COUNTROWS ( hs ) VAR occ = ADDCOLUMNS ( FILTER ( ALLNOBLANKROW ( Hotels ), Hotels[Brand] = "Goodnight Inn" ), "@o", CALCULATE ( [Occupancy % 2025] ) ) VAR fullest = COUNTROWS ( FILTER ( TOPN ( nh, occ, [@o], DESC ), Hotels[HotelID] IN hs ) ) = nh VAR ht = ADDCOLUMNS ( hs, "@t", LOOKUPVALUE ( Hotels[LocationType], Hotels[HotelID], [@h] ) ) VAR tt = GROUPBY ( ht, [@t], "@n", COUNTX ( CURRENTGROUP (), 1 ) ) VAR dest = IF ( nh > 1, " go to the " & nh & IF ( fullest, " fullest hotels", " hotels" ) & " (" & CONCATENATEX ( tt, [@n] & " " & LOWER ( [@t] ), ", ", [@n], DESC ) & ")", "" ) VAR wname = SUBSTITUTE ( LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], wp ) ), " at " & nh & " desks", "" ) VAR neg = ROUND ( we / 100000, 0 ) < 0 && ROUND ( wn / 100000, 0 ) < 0 RETURN "Each move answers a Brand Review finding: " & CONCATENATEX ( aIds, LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ) & " " & LOOKUPVALUE ( InvestmentProjects[Answers Finding], InvestmentProjects[ProjectID], [@p] ), ", ", [@p], ASC ) & ". " & IF ( dest <> "" || neg, "The " & wname & dest & IF ( neg, IF ( dest <> "", "; on their own they", " on their own" ) & " return " & ( VAR __t = ROUND ( ( wn ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & " by 2032" & IF ( cheapest, ", but they are the cheapest answer to " & wf, "" ), "" ) & ".", "" )
+	measure 'Rec Answers (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR npvs = ADDCOLUMNS ( aIds, "@e", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, Scenario[Scenario] = "Expected" ), "@n", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR wp = MAXX ( TOPN ( 1, npvs, [@e], ASC ), [@p] ) VAR we = MAXX ( FILTER ( npvs, [@p] = wp ), [@e] ) VAR wn = MAXX ( FILTER ( npvs, [@p] = wp ), [@n] ) VAR wf = LOOKUPVALUE ( InvestmentProjects[Answers Finding], InvestmentProjects[ProjectID], wp ) VAR wc = LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], wp ) VAR cheapest = wc <= MINX ( FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" && InvestmentProjects[Answers Finding] = wf ), InvestmentProjects[CapexUSD] ) VAR hs = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = wp ), "@h", InvestmentProjectProperties[HotelID] ) VAR nh = COUNTROWS ( hs ) VAR occ = ADDCOLUMNS ( FILTER ( ALLNOBLANKROW ( Hotels ), Hotels[Brand] = "Goodnight Inn" ), "@o", CALCULATE ( [Occupancy % 2025] ) ) VAR fullest = COUNTROWS ( FILTER ( TOPN ( nh, occ, [@o], DESC ), Hotels[HotelID] IN hs ) ) = nh VAR ht = ADDCOLUMNS ( hs, "@t", LOOKUPVALUE ( Hotels[LocationType], Hotels[HotelID], [@h] ) ) VAR tt = GROUPBY ( ht, [@t], "@n", COUNTX ( CURRENTGROUP (), 1 ) ) VAR dest = IF ( nh > 1, " go to the " & nh & IF ( fullest, " fullest hotels", " hotels" ) & " (" & CONCATENATEX ( tt, [@n] & " " & LOWER ( [@t] ), ", ", [@n], DESC ) & ")", "" ) VAR wname = SUBSTITUTE ( LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], wp ) ), " at " & nh & " desks", "" ) VAR neg = ROUND ( we / 100000, 0 ) < 0 && ROUND ( wn / 100000, 0 ) < 0 RETURN "Each move answers a Brand Review finding: " & CONCATENATEX ( aIds, LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ) & " " & LOOKUPVALUE ( InvestmentProjects[Answers Finding], InvestmentProjects[ProjectID], [@p] ), ", ", [@p], ASC ) & ". " & IF ( dest <> "" || neg, "The " & wname & dest & IF ( neg, IF ( dest <> "", "; on their own they", " on their own" ) & " return " & ( VAR __v = ( wn ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & " by 2032" & IF ( cheapest, ", but they are the cheapest answer to " & wf, "" ), "" ) & ".", "" )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 3d7a2d59-6b3d-5162-98e1-3cf1853474a7
 
 	/// The budget held back: until when, why nothing else is funded now, and the marginal test: the best package with all of A and more lowers the NPV (plan 09 R3).
-	measure 'Rec Held (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR k = COUNTROWS ( aIds ) VAR word = SWITCH ( k, 2, "both", 3, "all three", 4, "all four", 5, "all five", "all " & k ) VAR live = FORMAT ( CALCULATE ( MAX ( InvestmentProjects[Completion Date] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] IN aIds ), "mmm yyyy" ) VAR others = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" && NOT ( InvestmentProjects[ProjectID] IN aIds ) ), "@p", InvestmentProjects[ProjectID] ) VAR hiPos = COUNTROWS ( FILTER ( others, VAR p = [@p] RETURN ROUND ( CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, Scenario[Scenario] = "High" ) / 100000, 0 ) >= 0 ) ) + 0 VAR s = [Selected Scenario] VAR nA = COUNTROWS ( aIds ) VAR sup = FILTER ( ALLNOBLANKROW ( Package ), Package[Projects] > nA && COUNTROWS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = Package[PackageID] && PackageProject[ProjectID] IN aIds ) ) = nA ) VAR t = ADDCOLUMNS ( sup, "@v", SWITCH ( s, "Low", Package[NPV Low], "High", Package[NPV High], Package[NPV Expected] ) ) VAR best = TOPN ( 1, t, [@v], DESC, Package[CapexUSD], ASC ) VAR bid = MAXX ( best, Package[PackageID] ) VAR bv = MAXX ( best, [@v] ) VAR bc = MAXX ( best, Package[CapexUSD] ) VAR av = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR added = CONCATENATEX ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = bid && NOT ( PackageProject[ProjectID] IN aIds ) ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], PackageProject[ProjectID] ) ), " and ", PackageProject[ProjectID], ASC ) VAR margin = IF ( NOT ISBLANK ( bid ) && ROUND ( ( bv - av ) / 100000, 0 ) < 0, " The best way to spend more, A plus the " & added & ", costs " & FORMAT ( ( bc - cap ) / 1000000, "$#,0.0#" ) & "M" & " more and lowers the NPV by " & FORMAT ( ( av - bv ) / 1000000, "$#,0.0" ) & "M" & ".", "" ) RETURN "The other " & FORMAT ( ( budget - cap ) / 1000000, "$#,0.0#" ) & "M" & " is held back, to be decided again once " & word & " moves are live, by " & live & ": " & IF ( hiPos = 0, "no other initiative pays back by 2032, even in the High case.", hiPos & " other initiatives pay back by 2032 only in the High case." ) & margin
+	measure 'Rec Held (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR cap = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR k = COUNTROWS ( aIds ) VAR word = SWITCH ( k, 2, "both", 3, "all three", 4, "all four", 5, "all five", "all " & k ) VAR live = FORMAT ( CALCULATE ( MAX ( InvestmentProjects[Completion Date] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] IN aIds ), "mmm yyyy" ) VAR others = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" && NOT ( InvestmentProjects[ProjectID] IN aIds ) ), "@p", InvestmentProjects[ProjectID] ) VAR hiPos = COUNTROWS ( FILTER ( others, VAR p = [@p] RETURN ROUND ( CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, Scenario[Scenario] = "High" ) / 100000, 0 ) >= 0 ) ) + 0 VAR s = [Selected Scenario] VAR nA = COUNTROWS ( aIds ) VAR sup = FILTER ( ALLNOBLANKROW ( Package ), Package[Projects] > nA && COUNTROWS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = Package[PackageID] && PackageProject[ProjectID] IN aIds ) ) = nA ) VAR t = ADDCOLUMNS ( sup, "@v", SWITCH ( s, "Low", Package[NPV Low], "High", Package[NPV High], Package[NPV Expected] ) ) VAR best = TOPN ( 1, t, [@v], DESC, Package[CapexUSD], ASC ) VAR bid = MAXX ( best, Package[PackageID] ) VAR bv = MAXX ( best, [@v] ) VAR bc = MAXX ( best, Package[CapexUSD] ) VAR av = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR added = CONCATENATEX ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = bid && NOT ( PackageProject[ProjectID] IN aIds ) ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], PackageProject[ProjectID] ) ), " and ", PackageProject[ProjectID], ASC ) VAR margin = IF ( NOT ISBLANK ( bid ) && ROUND ( ( bv - av ) / 100000, 0 ) < 0, " The best way to spend more, A plus the " & added & ", costs " & FORMAT ( ( bc - cap ) / 1000000, "$#,0.0#" ) & "M" & " more and lowers the NPV by " & ( VAR __v = ( av - bv ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & ".", "" ) RETURN "The other " & FORMAT ( ( budget - cap ) / 1000000, "$#,0.0#" ) & "M" & " is held back, to be decided again once " & word & " moves are live, by " & live & ": " & IF ( hiPos = 0, "no other initiative pays back by 2032, even in the High case.", hiPos & " other initiatives pay back by 2032 only in the High case." ) & margin
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 8d07c1d9-75b0-52ec-9f08-3f0b2d7bb3cf
@@ -1878,13 +1878,13 @@ table _Measures
 		lineageTag: fdde1c1c-b230-5954-8801-4288f3ba71ae
 
 	/// Alternative B against the recommendation, selected scenario (B is fixed: 07-fixgids K1).
-	measure 'Alt B (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR x = [Preset B Package] VAR xIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = x ), "@p", PackageProject[ProjectID] ) VAR added = CONCATENATEX ( FILTER ( xIds, NOT ( [@p] IN aIds ) ), SUBSTITUTE ( LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), "refresh 10 oldest", "refresh of the 10 oldest hotels" ), " and ", [@p], ASC ) VAR dropped = CONCATENATEX ( FILTER ( aIds, NOT ( [@p] IN xIds ) ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), " and ", [@p], ASC ) VAR capA = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR capX = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR npvA = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR npvX = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR rA = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR rX = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) RETURN IF ( ISBLANK ( x ), BLANK (), "B · " & "" & IF ( dropped = "", "A plus the " & added, "The " & added & " instead of the " & dropped ) & ": " & FORMAT ( ( capX ) / 1000000, "$#,0.0#" ) & "M" & ", NPV " & ( VAR __t = ROUND ( ( npvX ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ". " & ( IF ( rX > rA, "A guest-score effect in " & rX & " hotels instead of " & rA & ", for " & FORMAT ( ( capX - capA ) / 1000000, "$#,0.0#" ) & "M" & " more and a " & IF ( npvX < npvA, "lower", "higher" ) & " NPV.", "" ) ) )
+	measure 'Alt B (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR x = [Preset B Package] VAR xIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = x ), "@p", PackageProject[ProjectID] ) VAR added = CONCATENATEX ( FILTER ( xIds, NOT ( [@p] IN aIds ) ), SUBSTITUTE ( LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), "refresh 10 oldest", "refresh of the 10 oldest hotels" ), " and ", [@p], ASC ) VAR dropped = CONCATENATEX ( FILTER ( aIds, NOT ( [@p] IN xIds ) ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), " and ", [@p], ASC ) VAR capA = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR capX = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR npvA = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR npvX = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR rA = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR rX = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) RETURN IF ( ISBLANK ( x ), BLANK (), "B · " & "" & IF ( dropped = "", "A plus the " & added, "The " & added & " instead of the " & dropped ) & ": " & FORMAT ( ( capX ) / 1000000, "$#,0.0#" ) & "M" & ", NPV " & ( VAR __v = ( npvX ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". " & ( IF ( rX > rA, "A guest-score effect in " & rX & " hotels instead of " & rA & ", for " & FORMAT ( ( capX - capA ) / 1000000, "$#,0.0#" ) & "M" & " more and a " & IF ( npvX < npvA, "lower", "higher" ) & " NPV.", "" ) ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 4c581561-ac98-50c2-b461-486462c885cb
 
 	/// C against the recommendation, selected scenario: the answer to 'why not renovate?'; 'pays back by 2032' means NPV through 2032 at least zero, as on the scatter.
-	measure 'Alt C (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR x = [Preset C Package] VAR xIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = x ), "@p", PackageProject[ProjectID] ) VAR added = CONCATENATEX ( FILTER ( xIds, NOT ( [@p] IN aIds ) ), SUBSTITUTE ( LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), "refresh 10 oldest", "refresh of the 10 oldest hotels" ), " and ", [@p], ASC ) VAR dropped = CONCATENATEX ( FILTER ( aIds, NOT ( [@p] IN xIds ) ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), " and ", [@p], ASC ) VAR capA = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR capX = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR npvA = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR npvX = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR rA = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR rX = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) RETURN IF ( ISBLANK ( x ), BLANK (), "C · " & "Why not renovate? " & IF ( dropped = "", "A plus the " & added, "The " & added & " instead of the " & dropped ) & ": " & FORMAT ( ( capX ) / 1000000, "$#,0.0#" ) & "M" & ", NPV " & ( VAR __t = ROUND ( ( npvX ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ". " & ( VAR hiX = CALCULATE ( SUM ( Package[NPV High] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR allNeg = ROUND ( CALCULATE ( MAX ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) / 100000, 0 ) < 0 && ROUND ( CALCULATE ( MAX ( Package[NPV Expected] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) / 100000, 0 ) < 0 && ROUND ( hiX / 100000, 0 ) < 0 RETURN "It answers F3 most directly, " & IF ( allNeg, "but it stays below zero through 2032 in every case (High " & ( VAR __t = ROUND ( ( hiX ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ").", IF ( ROUND ( npvX / 100000, 0 ) < 0, "but it does not pay back by 2032 in this case.", "and it pays back by 2032." ) ) ) )
+	measure 'Alt C (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR x = [Preset C Package] VAR xIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = x ), "@p", PackageProject[ProjectID] ) VAR added = CONCATENATEX ( FILTER ( xIds, NOT ( [@p] IN aIds ) ), SUBSTITUTE ( LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), "refresh 10 oldest", "refresh of the 10 oldest hotels" ), " and ", [@p], ASC ) VAR dropped = CONCATENATEX ( FILTER ( aIds, NOT ( [@p] IN xIds ) ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), " and ", [@p], ASC ) VAR capA = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR capX = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR npvA = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR npvX = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR rA = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR rX = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) RETURN IF ( ISBLANK ( x ), BLANK (), "C · " & "Why not renovate? " & IF ( dropped = "", "A plus the " & added, "The " & added & " instead of the " & dropped ) & ": " & FORMAT ( ( capX ) / 1000000, "$#,0.0#" ) & "M" & ", NPV " & ( VAR __v = ( npvX ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". " & ( VAR hiX = CALCULATE ( SUM ( Package[NPV High] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR allNeg = ROUND ( CALCULATE ( MAX ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) / 100000, 0 ) < 0 && ROUND ( CALCULATE ( MAX ( Package[NPV Expected] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) / 100000, 0 ) < 0 && ROUND ( hiX / 100000, 0 ) < 0 RETURN "It answers F3 most directly, " & IF ( allNeg, "but it stays below zero through 2032 in every case (High " & ( VAR __v = ( hiX ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ").", IF ( ROUND ( npvX / 100000, 0 ) < 0, "but it does not pay back by 2032 in this case.", "and it pays back by 2032." ) ) ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 4da4c946-bb87-5819-94c5-70a3d16f8e16
@@ -1920,13 +1920,13 @@ table _Measures
 		lineageTag: 6bcdd1ca-7963-5bdb-8a7a-c37bfcae080f
 
 	/// NPV through 2032 of A, selected scenario, as text.
-	measure 'Rec NPV (text)' = ( VAR __t = ROUND ( ( [Rec NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+	measure 'Rec NPV (text)' = ( VAR __v = ( [Rec NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: b565144e-f5a5-56aa-bbc4-5e7e1de9b2fd
 
 	/// Profit a year by 2032 of A, selected scenario, as text.
-	measure 'Rec Run-rate (text)' = ( VAR __t = ROUND ( ( [Rec Run-rate (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+	measure 'Rec Run-rate (text)' = ( VAR __v = ( [Rec Run-rate (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 3500573b-d4b3-5cde-a1d7-c3fc51261e27
@@ -2016,7 +2016,7 @@ table _Measures
 		lineageTag: 13b95952-84ae-5020-9ac3-e2658b097f9d
 
 	/// The A/B/C layer of the scatter read aloud: how many packages pay back, then A, B and C with capex and net present value in the case in view.
-	measure 'Alt Scatter (text)' = [Scatter Title (text)] & " (" & [Selected Scenario] & " case). A, our recommendation: capex " & FORMAT ( ( [Preset A Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", net present value " & ( VAR __t = ROUND ( ( [Preset A NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ". B, the alternative: " & FORMAT ( ( [Preset B Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", " & ( VAR __t = ROUND ( ( [Preset B NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ". C, the answer to why not renovate: " & FORMAT ( ( [Preset C Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", " & ( VAR __t = ROUND ( ( [Preset C NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "."
+	measure 'Alt Scatter (text)' = [Scatter Title (text)] & " (" & [Selected Scenario] & " case). A, our recommendation: capex " & FORMAT ( ( [Preset A Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", net present value " & ( VAR __v = ( [Preset A NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". B, the alternative: " & FORMAT ( ( [Preset B Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", " & ( VAR __v = ( [Preset B NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". C, the answer to why not renovate: " & FORMAT ( ( [Preset C Capex] ) / 1000000, "$#,0.0#" ) & "M" & ", " & ( VAR __v = ( [Preset C NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 1c782b3e-b1ad-510b-9d6d-433e8ad14a8e
@@ -2034,7 +2034,7 @@ table _Measures
 		lineageTag: 977bdced-42ac-58aa-b9a6-55b5c6db9576
 
 	/// The plan waterfall read aloud, in the chart's order (by name): each initiative's shown NPV and the package total.
-	measure 'Alt Waterfall (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( ISBLANK ( f ), BLANK (), "Where the net present value of package " & [Focus Key] & " comes from, " & [Selected Scenario] & " case: " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __t = ROUND ( ( [@s] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ), ", ", LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ASC ) & "; together " & ( VAR __t = ROUND ( ( SUMX ( adj, [@s] ) ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "." )
+	measure 'Alt Waterfall (text)' = VAR f = [Focus Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( ISBLANK ( f ), BLANK (), "Where the net present value of package " & [Focus Key] & " comes from, " & [Selected Scenario] & " case: " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __v = ( [@s] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), ", ", LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ASC ) & "; together " & ( VAR __v = ( SUMX ( adj, [@s] ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "." )
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: f9e32720-9549-5bab-8b5a-94d236b200e1
@@ -2046,7 +2046,7 @@ table _Measures
 		lineageTag: df87fef2-6ede-5087-b775-018bf68e57fe
 
 	/// The cumulative chart read aloud: payback year in the case in view and the 2032 end points of the three cases.
-	measure 'Alt Cumulative (text)' = VAR pb = [Focus Payback Year] VAR s = [Selected Scenario] VAR lo = CALCULATE ( [Focus Cumulative Net (Low)], 'Date'[Year] = 2032 ) VAR ex = CALCULATE ( [Focus Cumulative Net (Expected)], 'Date'[Year] = 2032 ) VAR hi = CALCULATE ( [Focus Cumulative Net (High)], 'Date'[Year] = 2032 ) RETURN IF ( ISBLANK ( [Focus Package] ), BLANK (), "Package " & [Focus Key] & ", cumulative net impact 2027 to 2032: " & IF ( ISBLANK ( pb ), "not positive by 2032 in the " & s & " case", "positive from " & pb & " in the " & s & " case" ) & ". By 2032: Low " & ( VAR __t = ROUND ( ( lo ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ", Expected " & ( VAR __t = ROUND ( ( ex ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ", High " & ( VAR __t = ROUND ( ( hi ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "." )
+	measure 'Alt Cumulative (text)' = VAR pb = [Focus Payback Year] VAR s = [Selected Scenario] VAR lo = CALCULATE ( [Focus Cumulative Net (Low)], 'Date'[Year] = 2032 ) VAR ex = CALCULATE ( [Focus Cumulative Net (Expected)], 'Date'[Year] = 2032 ) VAR hi = CALCULATE ( [Focus Cumulative Net (High)], 'Date'[Year] = 2032 ) RETURN IF ( ISBLANK ( [Focus Package] ), BLANK (), "Package " & [Focus Key] & ", cumulative net impact 2027 to 2032: " & IF ( ISBLANK ( pb ), "not positive by 2032 in the " & s & " case", "positive from " & pb & " in the " & s & " case" ) & ". By 2032: Low " & ( VAR __v = ( lo ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", Expected " & ( VAR __v = ( ex ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", High " & ( VAR __v = ( hi ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "." )
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 747baf92-06ce-55ab-8eca-191e2c5e532b
@@ -2100,7 +2100,7 @@ table _Measures
 		lineageTag: 1b01d0d8-1256-5fd4-a85f-cd212ce38eb4
 
 	/// C, why it was not picked (round 5, Björn): not the financial risk to take now, below zero in every case (guarded); revisit at break-even or if NPS turns negative.
-	measure 'Alt C WhyNot (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR x = [Preset C Package] VAR xIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = x ), "@p", PackageProject[ProjectID] ) VAR added = CONCATENATEX ( FILTER ( xIds, NOT ( [@p] IN aIds ) ), SUBSTITUTE ( LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), "refresh 10 oldest", "refresh of the 10 oldest hotels" ), " and ", [@p], ASC ) VAR dropped = CONCATENATEX ( FILTER ( aIds, NOT ( [@p] IN xIds ) ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), " and ", [@p], ASC ) VAR capA = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR capX = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR npvA = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR npvX = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR rA = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR rX = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR hiX = CALCULATE ( SUM ( Package[NPV High] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR allNeg = ROUND ( CALCULATE ( MAX ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) / 100000, 0 ) < 0 && ROUND ( CALCULATE ( MAX ( Package[NPV Expected] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) / 100000, 0 ) < 0 && ROUND ( hiX / 100000, 0 ) < 0 RETURN IF ( ISBLANK ( x ), BLANK (), "Not picked: NPV " & ( VAR __t = ROUND ( ( npvX ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & IF ( allNeg, ", below zero in every case, even High (" & ( VAR __t = ROUND ( ( hiX ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ").", IF ( ROUND ( npvX / 100000, 0 ) < 0, ", not paying back by 2032 in this case.", ", though it pays back by 2032 in this case." ) ) & " Revisit once A has broken even, or if NPS falls below 0." )
+	measure 'Alt C WhyNot (text)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR x = [Preset C Package] VAR xIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = x ), "@p", PackageProject[ProjectID] ) VAR added = CONCATENATEX ( FILTER ( xIds, NOT ( [@p] IN aIds ) ), SUBSTITUTE ( LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), "refresh 10 oldest", "refresh of the 10 oldest hotels" ), " and ", [@p], ASC ) VAR dropped = CONCATENATEX ( FILTER ( aIds, NOT ( [@p] IN xIds ) ), LOWER ( LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) ), " and ", [@p], ASC ) VAR capA = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR capX = CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR npvA = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR npvX = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR rA = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) VAR rX = CALCULATE ( SUM ( Package[HotelsRated] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR hiX = CALCULATE ( SUM ( Package[NPV High] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) VAR allNeg = ROUND ( CALCULATE ( MAX ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) / 100000, 0 ) < 0 && ROUND ( CALCULATE ( MAX ( Package[NPV Expected] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) / 100000, 0 ) < 0 && ROUND ( hiX / 100000, 0 ) < 0 RETURN IF ( ISBLANK ( x ), BLANK (), "Not picked: NPV " & ( VAR __v = ( npvX ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & IF ( allNeg, ", below zero in every case, even High (" & ( VAR __v = ( hiX ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ").", IF ( ROUND ( npvX / 100000, 0 ) < 0, ", not paying back by 2032 in this case.", ", though it pays back by 2032 in this case." ) ) & " Revisit once A has broken even, or if NPS falls below 0." )
 		formatString: @
 		displayFolder: 13 Round 4 copy
 		lineageTag: 118b1172-a804-588f-8f04-1c6903e41478
@@ -2136,7 +2136,7 @@ table _Measures
 		lineageTag: cc5cbc4d-82c1-5f31-8cab-b9d8de3e96e1
 
 	/// NPV through 2032 of package A, scenario in view, as text.
-	measure 'Preset A NPV (text)' = VAR f = [Preset A Package] RETURN IF ( ISBLANK ( f ), BLANK (), ( VAR __t = ROUND ( ( [Preset A NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) )
+	measure 'Preset A NPV (text)' = VAR f = [Preset A Package] RETURN IF ( ISBLANK ( f ), BLANK (), ( VAR __v = ( [Preset A NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 76ed2344-8b40-571b-a596-92f9a47a4c9f
@@ -2160,7 +2160,7 @@ table _Measures
 		lineageTag: 840ef3e1-733e-5cfd-8e8c-47428df2028c
 
 	/// NPV through 2032 of package B, scenario in view, as text.
-	measure 'Preset B NPV (text)' = VAR f = [Preset B Package] RETURN IF ( ISBLANK ( f ), BLANK (), ( VAR __t = ROUND ( ( [Preset B NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) )
+	measure 'Preset B NPV (text)' = VAR f = [Preset B Package] RETURN IF ( ISBLANK ( f ), BLANK (), ( VAR __v = ( [Preset B NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: b8d6debc-1bb0-53f0-8b07-1b16d6409723
@@ -2184,7 +2184,7 @@ table _Measures
 		lineageTag: f8a30957-26f3-56c4-b116-4036cbbf4686
 
 	/// NPV through 2032 of package C, scenario in view, as text.
-	measure 'Preset C NPV (text)' = VAR f = [Preset C Package] RETURN IF ( ISBLANK ( f ), BLANK (), ( VAR __t = ROUND ( ( [Preset C NPV (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) )
+	measure 'Preset C NPV (text)' = VAR f = [Preset C Package] RETURN IF ( ISBLANK ( f ), BLANK (), ( VAR __v = ( [Preset C NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: bedff3a5-ab9b-59e9-a20d-fa5f4fbbe9f2
@@ -2196,7 +2196,7 @@ table _Measures
 		lineageTag: 63d8b4f8-8c30-56e2-98af-4f1dc4df5b8c
 
 	/// Year tooltip: package A's cumulative net impact in the Low case, as text.
-	measure 'TT Year A Low (text)' = ( VAR __t = ROUND ( ( [TT Year A (Low)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+	measure 'TT Year A Low (text)' = ( VAR __v = ( [TT Year A (Low)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 70f69259-447c-58bc-a48b-e694c2f9f5cc
@@ -2208,7 +2208,7 @@ table _Measures
 		lineageTag: 6ed57d5e-f696-5894-9dea-76b0a1f001ea
 
 	/// Year tooltip: package A's cumulative net impact in the Expected case, as text.
-	measure 'TT Year A Expected (text)' = ( VAR __t = ROUND ( ( [TT Year A (Expected)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+	measure 'TT Year A Expected (text)' = ( VAR __v = ( [TT Year A (Expected)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: ebe9036d-b302-5d10-a747-5a80467c47fc
@@ -2220,31 +2220,31 @@ table _Measures
 		lineageTag: 4851eba7-1224-51df-9ed2-32e49bc4822e
 
 	/// Year tooltip: package A's cumulative net impact in the High case, as text.
-	measure 'TT Year A High (text)' = ( VAR __t = ROUND ( ( [TT Year A (High)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+	measure 'TT Year A High (text)' = ( VAR __v = ( [TT Year A (High)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 68ad3359-61aa-523f-a20d-7a53509c23e2
 
 	/// Year tooltip: package A's cumulative net impact to the end of the hovered year, case in view, as text.
-	measure 'TT Year A (text)' = ( VAR __t = ROUND ( ( [Preset A Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+	measure 'TT Year A (text)' = ( VAR __v = ( [Preset A Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 5f871a24-c64b-5792-94ee-03e1eba8ec8e
 
 	/// Year tooltip: package B's cumulative net impact to the end of the hovered year, case in view, as text.
-	measure 'TT Year B (text)' = ( VAR __t = ROUND ( ( [Preset B Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+	measure 'TT Year B (text)' = ( VAR __v = ( [Preset B Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 7f1bbde5-e93b-5fe7-b3e5-ea9d434f1fb0
 
 	/// Year tooltip: package C's cumulative net impact to the end of the hovered year, case in view, as text.
-	measure 'TT Year C (text)' = ( VAR __t = ROUND ( ( [Preset C Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+	measure 'TT Year C (text)' = ( VAR __v = ( [Preset C Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: a32ce970-47ee-5ff8-9012-c3f9c732ee0e
 
 	/// Year tooltip: the plan being built, cumulative net impact to the end of the hovered year, case in view; 'none yet' before a move is picked.
-	measure 'TT Year Plan (text)' = IF ( [Build Count] = 0, "none yet", ( VAR __t = ROUND ( ( [Build Cumulative Net (sel)] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) )
+	measure 'TT Year Plan (text)' = IF ( [Build Count] = 0, "none yet", ( VAR __v = ( [Build Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: e9753595-65c1-5856-adf5-9a5dcd4e313d
@@ -2334,7 +2334,7 @@ table _Measures
 		lineageTag: 851028d9-2631-5ef6-bead-5ba6e03d0340
 
 	/// Title of the comparer in the alts state: B against A by 2032 and whether C breaks even, scenario in view.
-	measure 'Cmp Alts Title (text)' = VAR s = [Selected Scenario] VAR a32 = CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR b32 = CALCULATE ( [Preset B Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR pbC = [Preset C Payback Year] RETURN "Cumulative net impact against A, $M (" & s & " case): B " & IF ( ROUND ( ( a32 - b32 ) / 100000, 0 ) = 0, "ends within $1M of A by 2032", IF ( a32 > b32, "trails A by ", "leads A by " ) & FORMAT ( ( ABS ( a32 - b32 ) ) / 1000000, "$#,0.0" ) & "M" & " by 2032" ) & "; C " & IF ( ISBLANK ( pbC ), "never breaks even", "breaks even in " & pbC )
+	measure 'Cmp Alts Title (text)' = VAR s = [Selected Scenario] VAR a32 = CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR b32 = CALCULATE ( [Preset B Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR pbC = [Preset C Payback Year] RETURN "Cumulative net impact against A, $M (" & s & " case): B " & IF ( ROUND ( ( a32 - b32 ) / 100000, 0 ) = 0, "ends within $1M of A by 2032", IF ( a32 > b32, "trails A by ", "leads A by " ) & ( VAR __v = ( ABS ( a32 - b32 ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & " by 2032" ) & "; C " & IF ( ISBLANK ( pbC ), "never breaks even", "breaks even in " & pbC )
 		formatString: @
 		displayFolder: 13 Round 4 copy
 		lineageTag: dcc92f7c-7694-5eb4-aedb-c576027f0de8
@@ -2412,7 +2412,7 @@ table _Measures
 		lineageTag: 6468fcdd-4359-5177-bd72-0d2ecbee7690
 
 	/// NPV of the plan being built as text.
-	measure 'Build NPV (text)' = ( VAR __t = ROUND ( ( COALESCE ( [Build NPV (sel)], 0 ) ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) )
+	measure 'Build NPV (text)' = ( VAR __v = ( COALESCE ( [Build NPV (sel)], 0 ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
 		formatString: @
 		displayFolder: 12 Build your own
 		lineageTag: d3d8db17-4d6f-574d-9e4e-08ccc9503ac9
@@ -2478,7 +2478,7 @@ table _Measures
 		lineageTag: 2aa90beb-af0f-5132-8f51-a1067e728066
 
 	/// Title of the comparer in the build state: your plan against A by 2032 and its payback, scenario in view.
-	measure 'Cmp Build Title (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR s = [Selected Scenario] VAR a32 = CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR y32 = CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR pb = [Build Payback Year] RETURN IF ( n = 0, "Your plan against A, $M (" & s & " case)", "Your plan against A, $M (" & s & " case): yours ends " & IF ( ROUND ( ( y32 - a32 ) / 100000, 0 ) = 0, "level with A", IF ( y32 > a32, "ahead of A by ", "behind A by " ) & FORMAT ( ( ABS ( y32 - a32 ) ) / 1000000, "$#,0.0" ) & "M" ) & " in 2032" & IF ( ISBLANK ( pb ), " and is not cash positive by 2032", ", cash positive from " & pb ) )
+	measure 'Cmp Build Title (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR s = [Selected Scenario] VAR a32 = CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR y32 = CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR pb = [Build Payback Year] RETURN IF ( n = 0, "Your plan against A, $M (" & s & " case)", "Your plan against A, $M (" & s & " case): yours ends " & IF ( ROUND ( ( y32 - a32 ) / 100000, 0 ) = 0, "level with A", IF ( y32 > a32, "ahead of A by ", "behind A by " ) & ( VAR __v = ( ABS ( y32 - a32 ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) ) & " in 2032" & IF ( ISBLANK ( pb ), " and is not cash positive by 2032", ", cash positive from " & pb ) )
 		formatString: @
 		displayFolder: 12 Build your own
 		lineageTag: 09d9c527-b652-50c1-86ce-d837555d7549
@@ -2496,7 +2496,7 @@ table _Measures
 		lineageTag: 85d6b9d4-cac6-5a99-8a2a-d835a586c182
 
 	/// Selector row: the move's NPV as text.
-	measure 'Move NPV (text)' = VAR v = [Move NPV (num)] RETURN IF ( ISBLANK ( v ), BLANK (), ( VAR __t = ROUND ( ( v ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) )
+	measure 'Move NPV (text)' = VAR v = [Move NPV (num)] RETURN IF ( ISBLANK ( v ), BLANK (), ( VAR __v = ( v ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 12 Build your own
 		lineageTag: a0246ca6-5fe0-5a41-84c6-a3284b821188
@@ -2744,7 +2744,7 @@ table _Measures
 		lineageTag: 0b5a79ae-5404-5b50-82be-33b9690416a0
 
 	/// Package B's waterfall read aloud.
-	measure 'Alt B Waterfall (text)' = VAR f = [Preset B Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( ISBLANK ( f ), BLANK (), "Where the net present value of package B comes from, " & [Selected Scenario] & " case: " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __t = ROUND ( ( [@s] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ), ", ", LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ASC ) & "; together " & ( VAR __t = ROUND ( ( SUMX ( adj, [@s] ) ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "." )
+	measure 'Alt B Waterfall (text)' = VAR f = [Preset B Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( ISBLANK ( f ), BLANK (), "Where the net present value of package B comes from, " & [Selected Scenario] & " case: " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __v = ( [@s] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), ", ", LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ASC ) & "; together " & ( VAR __v = ( SUMX ( adj, [@s] ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "." )
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 798edd93-0335-5323-bdde-4c2461497de5
@@ -2756,13 +2756,13 @@ table _Measures
 		lineageTag: 765357c3-fb2d-50a9-be3e-09408405947d
 
 	/// Package C's waterfall read aloud.
-	measure 'Alt C Waterfall (text)' = VAR f = [Preset C Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( ISBLANK ( f ), BLANK (), "Where the net present value of package C comes from, " & [Selected Scenario] & " case: " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __t = ROUND ( ( [@s] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ), ", ", LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ASC ) & "; together " & ( VAR __t = ROUND ( ( SUMX ( adj, [@s] ) ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "." )
+	measure 'Alt C Waterfall (text)' = VAR f = [Preset C Package] VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = f ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( ISBLANK ( f ), BLANK (), "Where the net present value of package C comes from, " & [Selected Scenario] & " case: " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __v = ( [@s] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), ", ", LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ASC ) & "; together " & ( VAR __v = ( SUMX ( adj, [@s] ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "." )
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 980b9240-2976-5e97-90f1-82cde0ca56c9
 
 	/// The alts comparer read aloud: the three 2032 end points.
-	measure 'Alt Cmp Alts (text)' = VAR s = [Selected Scenario] VAR a32 = CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR b32 = CALCULATE ( [Preset B Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR c32 = CALCULATE ( [Preset C Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) RETURN "Cumulative net impact 2027 to 2032 against A, " & s & " case, by 2032: A " & ( VAR __t = ROUND ( ( a32 ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ", B " & ( VAR __t = ROUND ( ( b32 ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ", C " & ( VAR __t = ROUND ( ( c32 ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "."
+	measure 'Alt Cmp Alts (text)' = VAR s = [Selected Scenario] VAR a32 = CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR b32 = CALCULATE ( [Preset B Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR c32 = CALCULATE ( [Preset C Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) RETURN "Cumulative net impact 2027 to 2032 against A, " & s & " case, by 2032: A " & ( VAR __v = ( a32 ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", B " & ( VAR __v = ( b32 ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", C " & ( VAR __v = ( c32 ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 56305f76-52d9-520c-adb2-7f2221673409
@@ -2774,16 +2774,398 @@ table _Measures
 		lineageTag: 2a6a0768-3a95-58cf-9c31-ea296ccf4cda
 
 	/// The build waterfall read aloud.
-	measure 'Alt Build Waterfall (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( n = 0, "No moves picked yet.", "Where the net present value of your plan comes from, " & [Selected Scenario] & " case: " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __t = ROUND ( ( [@s] ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ), ", ", LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ASC ) & "; together " & ( VAR __t = ROUND ( ( SUMX ( adj, [@s] ) ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "." )
+	measure 'Alt Build Waterfall (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( n = 0, "No moves picked yet.", "Where the net present value of your plan comes from, " & [Selected Scenario] & " case: " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __v = ( [@s] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), ", ", LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ASC ) & "; together " & ( VAR __v = ( SUMX ( adj, [@s] ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "." )
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: fd7305ce-b3f1-5ad7-9719-92535813fa4b
 
 	/// The build comparer read aloud.
-	measure 'Alt Cmp Build (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR s = [Selected Scenario] VAR a32 = CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR y32 = CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) RETURN IF ( n = 0, "Cumulative net impact of A 2027 to 2032, " & s & " case, ends at " & ( VAR __t = ROUND ( ( a32 ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "; pick moves to add your plan.", "Cumulative net impact 2027 to 2032, " & s & " case, by 2032: your plan " & ( VAR __t = ROUND ( ( y32 ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & ", A " & ( VAR __t = ROUND ( ( a32 ) / 100000, 0 ) / 10 RETURN IF ( __t = 0, "$0.0M", IF ( __t < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & FORMAT ( ABS ( __t ), "$#,0.0" ) & "M" ) ) & "." )
+	measure 'Alt Cmp Build (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR s = [Selected Scenario] VAR a32 = CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR y32 = CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) RETURN IF ( n = 0, "Cumulative net impact of A 2027 to 2032, " & s & " case, ends at " & ( VAR __v = ( a32 ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "; pick moves to add your plan.", "Cumulative net impact 2027 to 2032, " & s & " case, by 2032: your plan " & ( VAR __v = ( y32 ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", A " & ( VAR __v = ( a32 ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "." )
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 059d365b-3752-553d-8900-9a2d063f4e0e
+
+	/// A year on cost: the annual operating-profit impact by 2032 of the moves in context over their capex, scenario in view. A derived ratio, not a valuation (no discounting, no ramp-up, no disruption).
+	measure 'A Year on Cost' = DIVIDE ( [2032 Run-rate], SUM ( InvestmentProjects[CapexUSD] ) )
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: f8b85be7-81db-5f2f-bfa6-022c3480525f
+
+	/// A year on cost of the package(s) in context: 2032 run-rate over capex, scenario in view.
+	measure 'Package A Year on Cost (sel)' = DIVIDE ( [Package Run-rate (sel)], [Package Capex] )
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 7da727ac-7189-5cf9-a25a-4f3c216e0a96
+
+	/// A year on cost of the recommendation (package A), scenario in view.
+	measure 'Rec A Year on Cost (sel)' = VAR a = [Recommended Package] RETURN CALCULATE ( [Package A Year on Cost (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = a )
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 4367b6fa-822a-5401-ae46-7c660db1e660
+
+	/// NPV through 2032 of the recommendation in the Low case, whatever the toggle says (the worst-case line).
+	measure 'Rec NPV Low' = VAR a = [Recommended Package] RETURN CALCULATE ( SUM ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = a )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: d3a6946b-42ed-5201-b6ef-747eecbc9523
+
+	/// Profit a year by 2032 of the recommendation in the Low case, whatever the toggle says (the worst-case line).
+	measure 'Rec Run-rate Low' = VAR a = [Recommended Package] RETURN CALCULATE ( SUM ( Package[RunRate Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = a )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: f732fc14-eb89-5490-9e18-2481fa853a10
+
+	/// Profit a year by 2032 of the plan being built, scenario in view; blank while nothing is picked.
+	measure 'Build Run-rate (sel)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN IF ( n = 0, BLANK (), CALCULATE ( [2032 Run-rate], REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] ) ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: bb637438-f737-5875-b7de-65fe788b654f
+
+	/// A year on cost of the plan being built, scenario in view; blank while nothing is picked.
+	measure 'Build A Year on Cost (sel)' = DIVIDE ( [Build Run-rate (sel)], [Build Capex] )
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 481db454-6907-5420-8836-882564496c32
+
+	/// Selector row (BuildMove): profit a year by 2032 of the move alone, scenario in view.
+	measure 'Move Run-rate (num)' = VAR p = SELECTEDVALUE ( BuildMove[ProjectID] ) RETURN IF ( ISBLANK ( p ), BLANK (), CALCULATE ( [2032 Run-rate], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e42f9d6e-9b04-5238-8f15-9515076ba125
+
+	/// Mark colour of a move by its decision status (MoveDecision): Coffee Blue for package A, Night for the 2028 gate, Warm Grey for not now. A mark colour (3.5:1 at the lightest): the status word carries the state.
+	measure 'Move Status Color' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( st, "A", "#2589D8", "2028 gate", "#12233D", "#8E897D" ) )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 89662495-368d-5a7a-a5db-d8073d45c822
+
+	/// Hero table, bar cell of 'a year on cost' for the move in the row (scenario in view): a bar from 0 in the move's status colour and the 8 % line (our cost of money). Fixed domain -10 % to 90 %. Decorative: the value stands in the column beside it.
+	measure 'Hero Yield Bar SVG' = VAR v = [A Year on Cost] VAR c = MIN ( MAX ( v, -0.1 ), 0.9 ) VAR xv = -3.0 + ( c - ( -0.1 ) ) / 1.0 * 188 VAR x0 = 15.8 VAR fill = SUBSTITUTE ( [Move Status Color], "#", "%23" ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) || ISBLANK ( v ), BLANK (), "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='173' height='34' viewBox='0 0 173 34'><rect x='" & FORMAT ( MIN ( x0, xv ), "0.0", "en-US" ) & "' y='8' width='" & FORMAT ( ABS ( xv - x0 ), "0.0", "en-US" ) & "' height='18' fill='" & fill & "'/><rect x='30.34' y='0' width='1' height='34' fill='%2312233D' shape-rendering='crispEdges'/></svg>" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		dataCategory: ImageUrl
+		lineageTag: f249eec3-edc6-5b60-94d4-e7ff202368b1
+
+	/// Hero table, bar cell of the NPV through 2032 for the move in the row (scenario in view): a bar from 0 in the move's status colour and the zero line (pays back by 2032 to its right). Fixed domain -$32M to +$12M. Decorative: the value stands in the column beside it.
+	measure 'Hero NPV Bar SVG' = VAR v = [NPV @ 8%] VAR c = MIN ( MAX ( v, -32000000.0 ), 12000000.0 ) VAR xv = -3.0 + ( c - ( -32000000.0 ) ) / 44000000.0 * 172 VAR x0 = 122.0909090909091 VAR fill = SUBSTITUTE ( [Move Status Color], "#", "%23" ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) || ISBLANK ( v ), BLANK (), "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='173' height='34' viewBox='0 0 173 34'><rect x='" & FORMAT ( MIN ( x0, xv ), "0.0", "en-US" ) & "' y='8' width='" & FORMAT ( ABS ( xv - x0 ), "0.0", "en-US" ) & "' height='18' fill='" & fill & "'/><rect x='121.59' y='0' width='1' height='34' fill='%2312233D' shape-rendering='crispEdges'/></svg>" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		dataCategory: ImageUrl
+		lineageTag: 7461fb07-bd4e-5113-8920-80090fafab9b
+
+	/// Hero table: the lowest 'a year on cost' of the ten moves over the three scenarios, rounded down to 10 points (never above 0). Guards the fixed domain of the bar cells.
+	measure 'Hero Yield Domain Min' = VAR t = CROSSJOIN ( CALCULATETABLE ( VALUES ( InvestmentProjects[ProjectID] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ), ALLNOBLANKROW ( Scenario[Scenario] ) ) VAR v = ADDCOLUMNS ( t, "@v", VAR p = InvestmentProjects[ProjectID] VAR s = Scenario[Scenario] RETURN CALCULATE ( [A Year on Cost], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, REMOVEFILTERS ( Scenario ), Scenario[Scenario] = s ) ) RETURN INT ( MIN ( MINX ( v, [@v] ), 0 ) * 10 ) / 10
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 3fca2b73-c3fe-5e8e-a2ce-e9e5bb5b988d
+
+	/// Hero table: the highest 'a year on cost' of the ten moves over the three scenarios, rounded up to 10 points. Guards the fixed domain of the bar cells.
+	measure 'Hero Yield Domain Max' = VAR t = CROSSJOIN ( CALCULATETABLE ( VALUES ( InvestmentProjects[ProjectID] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ), ALLNOBLANKROW ( Scenario[Scenario] ) ) VAR v = ADDCOLUMNS ( t, "@v", VAR p = InvestmentProjects[ProjectID] VAR s = Scenario[Scenario] RETURN CALCULATE ( [A Year on Cost], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, REMOVEFILTERS ( Scenario ), Scenario[Scenario] = s ) ) RETURN - INT ( - MAXX ( v, [@v] ) * 10 ) / 10
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: b8c45ffb-1ac4-51c9-84f2-32a166d27d56
+
+	/// Hero table: the lowest NPV of the ten moves over the three scenarios, rounded down to $4M. Guards the fixed domain of the bar cells.
+	measure 'Hero NPV Domain Min' = VAR t = CROSSJOIN ( CALCULATETABLE ( VALUES ( InvestmentProjects[ProjectID] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ), ALLNOBLANKROW ( Scenario[Scenario] ) ) VAR v = ADDCOLUMNS ( t, "@v", VAR p = InvestmentProjects[ProjectID] VAR s = Scenario[Scenario] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, REMOVEFILTERS ( Scenario ), Scenario[Scenario] = s ) ) RETURN INT ( MINX ( v, [@v] ) / 4000000 ) * 4000000
+		formatString: \$#,0,,.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: ab97b6a3-233d-5ab0-9154-2366a9d67ca2
+
+	/// Hero table: the highest NPV of the ten moves over the three scenarios, rounded up to $4M. Guards the fixed domain of the bar cells.
+	measure 'Hero NPV Domain Max' = VAR t = CROSSJOIN ( CALCULATETABLE ( VALUES ( InvestmentProjects[ProjectID] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ), ALLNOBLANKROW ( Scenario[Scenario] ) ) VAR v = ADDCOLUMNS ( t, "@v", VAR p = InvestmentProjects[ProjectID] VAR s = Scenario[Scenario] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p, REMOVEFILTERS ( Scenario ), Scenario[Scenario] = s ) ) RETURN - INT ( - MAXX ( v, [@v] ) / 4000000 ) * 4000000
+		formatString: \$#,0,,.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: da1ac2cf-a9b9-5afb-923a-7e3c4ff65ead
+
+	/// Capex of tranche 1 (package A, funded now); a segment of the plan bar.
+	measure 'Tranche 1 Capex' = VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Tranche] = 1 ), "@p", MoveDecision[ProjectID] ) RETURN CALCULATE ( SUM ( InvestmentProjects[CapexUSD] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] ) )
+		formatString: \$#,0,,.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 8341e038-37b6-5c53-b9c1-1501cd321515
+
+	/// Profit a year once live of tranche 1 (package A, funded now), scenario in view.
+	measure 'Tranche 1 Run-rate' = VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Tranche] = 1 ), "@p", MoveDecision[ProjectID] ) RETURN CALCULATE ( [2032 Run-rate], REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 46228b3e-1665-5544-82fa-df62468c8d32
+
+	/// A year on cost of tranche 1 (package A, funded now), scenario in view.
+	measure 'Tranche 1 Year on Cost' = DIVIDE ( [Tranche 1 Run-rate], [Tranche 1 Capex] )
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 21dd9b0d-cfa1-5c38-94f0-7ad6201f0abb
+
+	/// Capex of tranche 2 (the airport extensions, decided at the 2028 gate); a segment of the plan bar.
+	measure 'Tranche 2 Capex' = VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Tranche] = 2 ), "@p", MoveDecision[ProjectID] ) RETURN CALCULATE ( SUM ( InvestmentProjects[CapexUSD] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] ) )
+		formatString: \$#,0,,.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: fd012a28-1416-5d64-93c5-bffcb55fdc24
+
+	/// Profit a year once live of tranche 2 (the airport extensions, decided at the 2028 gate), scenario in view.
+	measure 'Tranche 2 Run-rate' = VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Tranche] = 2 ), "@p", MoveDecision[ProjectID] ) RETURN CALCULATE ( [2032 Run-rate], REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e7053bfd-3004-5612-9a56-a0f1d8653d97
+
+	/// A year on cost of tranche 2 (the airport extensions, decided at the 2028 gate), scenario in view.
+	measure 'Tranche 2 Year on Cost' = DIVIDE ( [Tranche 2 Run-rate], [Tranche 2 Capex] )
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 1c35e2b2-a3ae-54d1-b79a-492b330eb1ff
+
+	/// Capex of tranche 3 (the refresh, decided at the 2028 gate); a segment of the plan bar.
+	measure 'Tranche 3 Capex' = VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Tranche] = 3 ), "@p", MoveDecision[ProjectID] ) RETURN CALCULATE ( SUM ( InvestmentProjects[CapexUSD] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] ) )
+		formatString: \$#,0,,.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e4d07ab2-bd69-554f-a41e-151b99a26b96
+
+	/// Profit a year once live of tranche 3 (the refresh, decided at the 2028 gate), scenario in view.
+	measure 'Tranche 3 Run-rate' = VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Tranche] = 3 ), "@p", MoveDecision[ProjectID] ) RETURN CALCULATE ( [2032 Run-rate], REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: b7121f10-9072-5062-9443-51407f1bb50f
+
+	/// A year on cost of tranche 3 (the refresh, decided at the 2028 gate), scenario in view.
+	measure 'Tranche 3 Year on Cost' = DIVIDE ( [Tranche 3 Run-rate], [Tranche 3 Capex] )
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 00f4c9a4-9565-5b70-9fa0-a79771c8e5f2
+
+	/// The part of the Goodnight Inn budget no tranche asks for; the last segment of the plan bar (the four segments add up to the budget by construction).
+	measure 'Not Needed Capex' = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) - [Tranche 1 Capex] - [Tranche 2 Capex] - [Tranche 3 Capex]
+		formatString: \$#,0,,.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: d1cb8915-932f-5c17-abd9-c1a47fdd8062
+
+	/// Goodnight Inn distribution cost as a share of room revenue, 2025 (the ledger's F2 start).
+	measure 'Dist Cost % 2025 GI' = CALCULATE ( [Distribution Cost % of Room Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 )
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e4beb3e1-22fa-5b88-8ccd-2faaaa4f7fee
+
+	/// Ledger F2: the 2025 distribution cost share of room revenue plus the organisers' change in points for the moves of package A, scenario in view. 2025 brand, A at full effect; not a forecast of 2032.
+	measure 'Dist Cost % 2032 with A (sel)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR s = [Selected Scenario] RETURN [Dist Cost % 2025 GI] + CALCULATE ( SUM ( InvestmentScenarios[DistributionCostChangePts] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( aIds, InvestmentProjects[ProjectID] ), InvestmentScenarios[Scenario] = s )
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e4ac6146-04ee-5e85-b862-f4ec220a65d7
+
+	/// Ledger F1: operating margin after commissions of the 2025 brand with package A's full yearly profit and revenue impact added, scenario in view. In 2025 dollars; not a forecast of 2032.
+	measure 'Margin after 2032 with A (sel)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR s = [Selected Scenario] VAR tot = CALCULATE ( [Total Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR after = CALCULATE ( [GOP after Distribution], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) RETURN DIVIDE ( after + CALCULATE ( SUM ( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( aIds, InvestmentProjects[ProjectID] ), InvestmentScenarios[Scenario] = s ), tot + CALCULATE ( SUM ( InvestmentScenarios[AnnualRevenueImpactUSD] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( aIds, InvestmentProjects[ProjectID] ), InvestmentScenarios[Scenario] = s ) )
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 78a53f86-1a35-56dd-9770-d4bd19a108d3
+
+	/// Ledger F2 status: the share of the 2021 to 2025 rise in distribution cost (points of room revenue) that package A undoes, scenario in view.
+	measure 'Dist Cost Rise Undone % (sel)' = VAR d21 = CALCULATE ( [Distribution Cost % of Room Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021 ) VAR d25 = [Dist Cost % 2025 GI] RETURN DIVIDE ( d25 - [Dist Cost % 2032 with A (sel)], d25 - d21 )
+		formatString: 0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: b8ac6276-1c70-58da-acee-a5e473a265f9
+
+	/// Ledger F1 status: the share of the 2023 to 2025 fall in the margin after commissions that package A recovers, scenario in view.
+	measure 'Margin Fall Recovered % (sel)' = VAR m23 = CALCULATE ( [GOP Margin after Distribution %], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2023 ) VAR m25 = [KPI Margin after GI] RETURN DIVIDE ( [Margin after 2032 with A (sel)] - m25, m23 - m25 )
+		formatString: 0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e7f73313-18fe-5f26-8e76-7475f63f4c50
+
+	/// What the booking app saves in commissions a year: its change in distribution cost (points of room revenue, scenario in view) on 2025 room revenue. Also what every year without it leaves with the agencies.
+	measure 'App Commission Saving (sel)' = VAR appIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Status] = "A" && MoveDecision[Finding] = "F2" ), "@p", MoveDecision[ProjectID] ) VAR s = [Selected Scenario] VAR rr = CALCULATE ( [Channel Room Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) RETURN - CALCULATE ( SUM ( InvestmentScenarios[DistributionCostChangePts] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( appIds, InvestmentProjects[ProjectID] ), InvestmentScenarios[Scenario] = s ) * rr
+		formatString: \$#,0,,.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 845720ab-573a-58ac-b14c-a95c8f27e7f1
+
+	/// NPV through 2032 of the booking app alone (the move of A that answers F2), scenario in view.
+	measure 'App NPV (sel)' = VAR appIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Status] = "A" && MoveDecision[Finding] = "F2" ), "@p", MoveDecision[ProjectID] ) RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), TREATAS ( appIds, InvestmentProjects[ProjectID] ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e01070e9-d7fc-5965-a2cc-fa141c227a1b
+
+	/// Profit a year by 2032 of the booking app alone, scenario in view.
+	measure 'App Run-rate (sel)' = VAR appIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Status] = "A" && MoveDecision[Finding] = "F2" ), "@p", MoveDecision[ProjectID] ) RETURN CALCULATE ( [2032 Run-rate], REMOVEFILTERS ( InvestmentProjects ), TREATAS ( appIds, InvestmentProjects[ProjectID] ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 8f231a16-004c-5961-9a74-ce1a30905940
+
+	/// Capital plan chart: package A's cumulative net impact in the Low case; blank when Low is the case in view (the emphasised line draws it).
+	measure 'A Cumulative Line (Low)' = IF ( [Selected Scenario] = "Low", BLANK (), [TT Year A (Low)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 38ce4fc2-e908-5a0f-b9de-2d7d24de29e0
+
+	/// Capital plan chart, end label of the Low line: its value on the horizon year only, printed as 'Low' and the amount.
+	measure 'A Cumulative End Low (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [A Cumulative Line (Low)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 1ca6a89b-8255-51b2-bd4b-3cb903c74ba1
+
+		formatStringDefinition = ```
+				VAR __t = "Low " & ( VAR __v = ( [A Cumulative Line (Low)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Capital plan chart: package A's cumulative net impact in the Expected case; blank when Expected is the case in view (the emphasised line draws it).
+	measure 'A Cumulative Line (Expected)' = IF ( [Selected Scenario] = "Expected", BLANK (), [TT Year A (Expected)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e7ad6fe0-deae-599b-8e7b-f3b983255638
+
+	/// Capital plan chart, end label of the Expected line: its value on the horizon year only, printed as 'Expected' and the amount.
+	measure 'A Cumulative End Expected (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [A Cumulative Line (Expected)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 69ee3127-8064-5d0e-9f62-260e454447f7
+
+		formatStringDefinition = ```
+				VAR __t = "Expected " & ( VAR __v = ( [A Cumulative Line (Expected)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Capital plan chart: package A's cumulative net impact in the High case; blank when High is the case in view (the emphasised line draws it).
+	measure 'A Cumulative Line (High)' = IF ( [Selected Scenario] = "High", BLANK (), [TT Year A (High)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: c4590e9d-fc4c-580a-a703-234395bfa73f
+
+	/// Capital plan chart, end label of the High line: its value on the horizon year only, printed as 'High' and the amount.
+	measure 'A Cumulative End High (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [A Cumulative Line (High)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 37a1c993-eb7c-522b-9931-41ebcd48f631
+
+		formatStringDefinition = ```
+				VAR __t = "High " & ( VAR __v = ( [A Cumulative Line (High)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Capital plan chart, end label of the emphasised line (the case in view): its value on the horizon year only, printed as the case name and the amount.
+	measure 'A Cumulative End Sel (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset A Cumulative Net (sel)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: c3dccace-25f1-52c9-950f-f521f82797e1
+
+		formatStringDefinition = ```
+				VAR __t = [Selected Scenario] & " " & ( VAR __v = ( [Preset A Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Comparison chart, end label of package A: its cumulative net impact on the horizon year only, printed as 'A' and the amount, scenario in view.
+	measure 'Preset A Cumulative End (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset A Cumulative Net (sel)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: dc1619e0-91e8-546f-a2c6-f071c8e365ed
+
+		formatStringDefinition = ```
+				VAR __t = "A " & ( VAR __v = ( [Preset A Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Comparison chart, end label of package B: its cumulative net impact on the horizon year only, printed as 'B' and the amount, scenario in view.
+	measure 'Preset B Cumulative End (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset B Cumulative Net (sel)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 0c432ab8-16ea-5644-9285-8de61c4dda5b
+
+		formatStringDefinition = ```
+				VAR __t = "B " & ( VAR __v = ( [Preset B Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Comparison chart, end label of package C: its cumulative net impact on the horizon year only, printed as 'C' and the amount, scenario in view.
+	measure 'Preset C Cumulative End (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset C Cumulative Net (sel)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: db8b4dc9-1f5b-502f-90d8-90d5e5ac6a2f
+
+		formatStringDefinition = ```
+				VAR __t = "C " & ( VAR __v = ( [Preset C Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Build comparison chart, end label of package A: the value on the horizon year only, printed as 'A' (the title carries the amounts; You equals A when the state opens).
+	measure 'A Cumulative End Name (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset A Cumulative Net (sel)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 13d3a535-b03e-5761-8143-a2e2066276eb
+
+		formatStringDefinition = ```
+				VAR __t = "A" RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Build comparison chart, end label of the plan being built: the value on the horizon year only, printed as 'You'; blank while nothing is picked.
+	measure 'Build Cumulative End Name (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Build Cumulative Net (sel)] )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 5f8ae6d3-d3fa-587b-a65f-1b04c04ae5a6
+
+		formatStringDefinition = ```
+				VAR __t = "You" RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// F3 bars: response-weighted NPS 2025 with its label as finished text ('+6.8', a true minus), so no session locale prints a decimal comma.
+	measure 'NPS 2025 (label-safe)' = [NPS (weighted) 2025]
+		formatString: +0.0;−0.0;0.0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: d6dee643-6c63-52ae-b181-d807054cb277
+
+		formatStringDefinition = ```
+				VAR __t = ( VAR __q = ( [NPS (weighted) 2025] ) RETURN IF ( ROUND ( __q, 1 ) = 0, "0.0", IF ( __q < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( __q ), "0.0", "en-US" ) ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Build bar chart (BuildMove): the NPV through 2032 of a picked move alone, scenario in view; blank for a move that is not picked, so the chart lists the plan only.
+	measure 'Build Bar NPV' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR me = SELECTEDVALUE ( BuildMove[ProjectID] ) RETURN IF ( n > 0 && me IN ids, CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = me ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 8a83f685-d73a-5b44-b51c-5ab7d4d448f3
+
+	/// Build bar chart: the picked move's NPV with its label as finished text ('+$3.4M', '−$0.6M').
+	measure 'Build Bar NPV (label-safe)' = [Build Bar NPV]
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 106e2b5d-f778-5109-b4e7-7ac45b9b6116
+
+		formatStringDefinition = ```
+				VAR __t = ( VAR __v = ( [Build Bar NPV] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Build bar chart: Night for a move that adds NPV (Night is 'your plan'), Tangerine for one that costs NPV; the signed label carries it too (R-G3).
+	measure 'Build Bar Color' = VAR v = [Build Bar NPV] RETURN IF ( ISBLANK ( v ), BLANK (), IF ( ROUND ( v / 1000000, 2 ) < 0, "#E05A22", "#12233D" ) )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 8c5cc901-0e8c-53be-8ce9-1dcc1bb4c219
+
+	/// F1 stacked area, the band on top of the margin after commissions: what the booking channels take, in points of revenue (margin before minus margin after commissions).
+	measure 'Trend Commission Take GI' = [Trend Margin before GI] - [Trend Margin after GI]
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: c09d8765-3c7f-5290-be4b-26db5a9fcf3f
+
+	/// F2 chart, end labels of the Goodnight Inn line: the OTA share in the first and the last year of the data only. Whole percent, so it needs no label-safe twin.
+	measure 'Trend OTA GI (ends)' = VAR __y = SELECTEDVALUE ( 'Date'[Year] ) VAR __y0 = YEAR ( CALCULATE ( MIN ( MonthlyPerformance[Month] ), REMOVEFILTERS () ) ) VAR __y1 = YEAR ( CALCULATE ( MAX ( MonthlyPerformance[Month] ), REMOVEFILTERS () ) ) RETURN IF ( __y = __y0 || __y = __y1, [Trend OTA GI] )
+		formatString: 0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 56380a9b-c61b-5359-8785-81247eaf25cd
+
+	/// F2 chart, end label of the sister brands' line: the OTA share in the last year of the data only. Whole percent.
+	measure 'Trend OTA Sisters (end)' = VAR __y = SELECTEDVALUE ( 'Date'[Year] ) VAR __y0 = YEAR ( CALCULATE ( MIN ( MonthlyPerformance[Month] ), REMOVEFILTERS () ) ) VAR __y1 = YEAR ( CALCULATE ( MAX ( MonthlyPerformance[Month] ), REMOVEFILTERS () ) ) RETURN IF ( __y = __y1, [Trend OTA Sisters] )
+		formatString: 0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 6e56b466-14b9-5fb3-b637-f22e02aed46b
+
+	/// F4 dot plot, the hotel's row: Airport 3, City 2, Highway 1. A hotel within one point of occupancy of another in its row steps 0.3 off the row, alternately below and above in order of 2025 occupancy (Gatwick below, Montréal above), so close dots stay apart. For a location type (the average markers) the row itself. A layout value, not a metric.
+	measure 'F4 Row Y' = VAR base = SWITCH ( SELECTEDVALUE ( Hotels[LocationType] ), "Airport", 3, "City", 2, "Highway", 1 ) VAR me = SELECTEDVALUE ( Hotels[HotelID] ) VAR t = SELECTEDVALUE ( Hotels[LocationType] ) VAR br = SELECTEDVALUE ( Hotels[Brand] ) RETURN IF ( ISBLANK ( me ), base, VAR rw = ADDCOLUMNS ( CALCULATETABLE ( VALUES ( Hotels[HotelID] ), REMOVEFILTERS ( Hotels ), Hotels[LocationType] = t, Hotels[Brand] = br ), "@o", VAR hid = Hotels[HotelID] RETURN CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), Hotels[HotelID] = hid ) ) VAR near = FILTER ( rw, VAR o = [@o] VAR hid = Hotels[HotelID] RETURN COUNTROWS ( FILTER ( rw, Hotels[HotelID] <> hid && ABS ( [@o] - o ) < 0.01 ) ) > 0 ) VAR myo = MAXX ( FILTER ( rw, Hotels[HotelID] = me ), [@o] ) VAR k = COUNTROWS ( FILTER ( near, [@o] >= myo ) ) RETURN base + IF ( COUNTROWS ( FILTER ( near, Hotels[HotelID] = me ) ) > 0, IF ( MOD ( k, 2 ) = 1, -0.3, 0.3 ), 0 ) )
+		formatString: 0.0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 943df758-9e97-5d65-88ee-599f1e8a17d3
+
+	/// F4 dot plot: Night for the seven fullest hotels of the brand in 2025, Warm Grey for the rest (R-G3: no blue on page 1's marks). The seven are named beside their dots.
+	measure 'F4 Dot Color' = VAR me = SELECTEDVALUE ( Hotels[HotelID] ) VAR br = SELECTEDVALUE ( Hotels[Brand] ) VAR t7 = TOPN ( 7, ADDCOLUMNS ( CALCULATETABLE ( VALUES ( Hotels[HotelID] ), REMOVEFILTERS ( Hotels ), Hotels[Brand] = br ), "@o", VAR hid = Hotels[HotelID] RETURN CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), Hotels[HotelID] = hid ) ), [@o], DESC ) RETURN IF ( ISBLANK ( me ), BLANK (), IF ( COUNTROWS ( FILTER ( t7, Hotels[HotelID] = me ) ) > 0, "#12233D", "#8E897D" ) )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: c67f418d-da2a-5885-824a-18f287ff91a0
+
+	/// F4 dot plot, the average markers: 2025 occupancy of the location type in context (rooms sold over rooms available, not an average of hotel percentages).
+	measure 'F4 Type Avg' = [Occupancy % 2025]
+		formatString: 0.0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 954f17f1-5a63-5b94-86f0-94c7b247f82f
+
+	/// Months, of the last 24 in the data, in which the hotels in context sold 90 percent or more of their available room nights ('topped 90%': the month's occupancy at or above 90%).
+	measure 'Months Topped 90% (last 24)' = VAR d1 = CALCULATE ( MAX ( MonthlyPerformance[Month] ), REMOVEFILTERS () ) VAR d0 = EDATE ( d1, -23 ) VAR mths = CALCULATETABLE ( VALUES ( MonthlyPerformance[Month] ), REMOVEFILTERS ( 'Date' ), MonthlyPerformance[Month] >= d0 ) RETURN COUNTROWS ( FILTER ( mths, CALCULATE ( DIVIDE ( SUM ( MonthlyPerformance[RoomsSold] ), SUM ( MonthlyPerformance[RoomsAvailable] ) ), REMOVEFILTERS ( 'Date' ) ) >= 0.9 ) ) + 0
+		formatString: 0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e363be7a-ef25-51e1-8c4c-0f5f2096ce95
 
 	column Placeholder
 		dataType: string
