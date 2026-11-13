@@ -21,7 +21,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 1 | Branch and the five small spikes | done | 13 Nov | 3bbc28e | S-1, S-5, S-6, S-8 pass; S-7 pass in a table cell, fallback for a card (`c_rec_lines` as two cards). Bjorn was not needed in Desktop |
 | 2 | The two big spikes: hero table and native selector | done | 13 Nov | f7f3afc | S-2 and S-3 pass natively, no fallback. Both tables need a few pixels the comp did not plan (wider value columns, 2 px of slack, `tbl_moves` 11 px higher); see the log. Bjorn was not needed in Desktop |
 | 3 | Model foundations and the number checks | done | 13 Nov | c404091 | 56 number measures, 3 tables, 2 columns; 763 checks, all pass in Low, Expected and High, 1 known difference (open question 1). New: a measure cannot carry a static and a dynamic format string; open question 3 (hero caption). Bjorn was not needed in Desktop |
-| 4 | Text measures and `build_checks.py` | todo | | | |
+| 4 | Text measures and `build_checks.py` | done | 13 Nov | see log | Every measure-backed slot of the spec in Low, Expected, High and the empty Build state: 127 equal, 2 known (open question 1, 20.5/20.6 %), 0 different. Checks 1, 3, 4 pass; check 2 is strict on the new copy and open on the old visuals until step 11. Bjorn was not needed in Desktop |
 | 5 | Page 1 | todo | | | |
 | 6 | Page 2 frame and the decision card | todo | | | |
 | 7 | Hero table and capital plan; the cut line | todo | | | |
@@ -359,7 +359,71 @@ passes once the old visuals are gone, step 11).
 
 **Prompt:** `project/build-steps/step-04.txt` (say: "Read project/build-steps/step-04.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Fri 13 Nov 2026, one session, done):**
+
+*Built* (in `sketch_model.py`, block "FinalV3 storytelling rebuild: text measures"; 562 measures, was 518; the report
+generator writes the same report as before):
+
+- **Text measures for every measure-backed slot**, with their scenario branches, in folder 15. P1: subtitle, F1 note
+  (the 2.8-point fall split into commissions 1.0 and running costs 1.8, with the staff share; N-2), F2 note (from the
+  folio's shown amounts), `F3 Count (text)`, F3 note (spend per hotel since 2018, last start year), F4 title and note
+  (hotel with the most months topped 90 %, the next two, the extension outside them). P2 frame: headline (follows the
+  scenario), subtitle, footer, all from `FinanceParameters`. Recommended: `Hero Title (text)` (moves that pass both
+  tests, then the first move in hero order that passes only the first), `Move Yield / Status / Run-rate (text)`,
+  `Rec A Year on Cost (text)`, `Rec Line 1 / 2 (text)` (Low branch of doc 22 §6) and `Rec Lines (text)`, the four
+  ledger columns (status words from the shares of step 3), `Capital Plan Title (text)`, `Plan T1…T4 L1…L3 (text)`
+  plus the joined `Plan T# (text)`, `Gate Rule (text)`, `Gate Rule Short (text)`, `Milestones (text)`. What waits:
+  `Proof Title (text)`, `Proof Subtitle (text)`, `Wait Numbers / Why / WhyNot / When (text)` (Tranche 3 High branch,
+  doc 22 §6), `Tranche 3 NPV`, `Cmp Alts Title (text)`. Build: `Build Picked`, `Build Run-rate`, `Build A Year on
+  Cost (text)`; `Build Valid (text)` carries the R-B-2 empty-state sentence; `Build Range (text)` through `sfm`.
+- **One slot map of the text:** `TEXT_SLOTS` (slot → measure, card lines with their static labels, table rows and
+  columns) and `TEXT_STATIC` (the slots typed in `opzet_report.py`, with the step that builds them). Steps 5 to 9 bind
+  from it.
+- **R-G1:** `fmc`, `fmc2` and `sfm2` removed; every caller prints through `fm` / `sfm` (also the old tooltip and alt
+  measures). New `FORMAT` calls carry `"en-US"`.
+- **R-P2-10:** the old release rule in `Alt C WhyNot (text)` ("Revisit once A has broken even…") is gone; `Gate Rule
+  (text)` is the only rule.
+- **Smaller:** `Hotels[Copy Name]` (the city, Gatwick for London Gatwick; label data `HOTEL_COPY_NAMES`); `MOVE_P` reads
+  the hero row (`InvestmentProjects`) or the selector row (`BuildMove`), so one set of row measures serves both tables;
+  `Move Answers (text)` reads `MoveDecision[Finding]` (10.3); `TT Payback Color` defined (the broken binding of
+  `tt-package`, found by check 1); `Staff Cost`, `Staff Cost % of Revenue`.
+- **Tools:** `tools/build_checks.py` (checks 1 to 5; `--static` runs 1 to 4 without Desktop, `--dump <dir>` keeps the
+  DAX and the result). `run_dax.ps1` now stops on an error raised while reading a row; before, it returned an empty
+  table (that hid a broken measure here).
+
+*Verified.*
+
+| What | Result | Proof |
+|---|---|---|
+| Check 5, text against the spec | **127 ok, 2 known, 0 failed** over 11 views (P1; Recommended, What waits, Build in Low, Expected, High; Build with nothing picked). Every slot of the spec is mapped, typed in the report (`TEXT_STATIC`) or a chart's labels (`number_checks.py`). The 2 known: "20.6%" where the spec says "20.5%" (hero title and hero row, Expected; open question 1) | `analysis/output/build_checks.txt` |
+| Check 1, bound fields exist | pass (it failed on `TT Payback Color` until that measure was defined) | same file |
+| Check 3, no two-decimal $M | pass over 274 text measures (fm's own branch under $0.05M and the folio's cents are the named exceptions) | same file |
+| Check 4, one release rule | pass: only `Gate Rule (text)` says "releases"; no other measure or report string says release, revisit or broken even | same file |
+| Check 2, R-G2 | strict on the rebuilt copy: pass (DAX literals of the mapped measures and every printed value). Old report and old measures: 17 measures, 4 report strings, listed as open; they go with their visuals (steps 5 to 9) and the prune (step 11) | same file |
+| Step 3 still holds | `number_checks.py`: 763 checks, 762 ok, 1 known, 0 failed | `analysis/output/number_checks.txt` |
+| Generators and validators | `validate_tmdl --strict` 0 errors, the 11 expected label-safe warnings; `schema_check` 197 files, 0 failing; `a11y_check` 0; `validate_json` 0; the report generator writes an identical report | repeatable |
+| The current report opens | both pages render on the new model in the throwaway copy (small renders, the session's screen was narrow again) | `deliverables/screenshots/Step4-text-2026-11-13/` |
+
+*Found on the way (binding for the next steps).*
+
+1. **`all` is a reserved word too** (after `after` and `typed` in step 3): `VAR all = …` fails as "SYNTAXERROR", and only
+   when the row is read.
+2. **The spec takes differences from shown values.** B against A ("$0.6M less", High "$0.1M less") is the gap between
+   the two rounded NPVs, not the rounded gap ($0.5M / $0.2M). `Wait WhyNot (text)` does the same now.
+3. **One row measure, two tables.** `Move … (text)` evaluate on `InvestmentProjects` (hero) and on `BuildMove`
+   (selector); the hero needs the page filter Brand = Goodnight Inn and the selector must stay unfiltered by the slicer.
+
+*Deviations from the comp.* None; nothing was built in the report. Visible now in today's report (old slots): the new
+P1 notes, the P2 headline and subtitle, and one-decimal money in the old tooltip and plan texts.
+
+*Open items for later steps.*
+- **Open question 1** (20.5 or 20.6 %) still open; `build_checks.py` lists it as KNOWN. When Bjorn decides, correct
+  the spec (or the formatter) and drop the KNOWN entries in both check scripts.
+- **Step 5 to 9:** bind from `TEXT_SLOTS`. Multi-line cards are one callout per line (`Plan T# L#`, `Rec Line 1/2`,
+  the four numbers with their static labels). The folio table needs its Brand filter; `tbl_moves` reads all ten rows.
+- **Static slots** (`TEXT_STATIC`) are checked by the report steps against the spec (rule 7), including
+  `c_hero_caption` (open question 3, step 7).
+- **Step 11:** the prune must keep the measures `TEXT_SLOTS` names; check 2 then has to pass on everything.
 
 ### Step 5 · Page 1 (about 2 h)
 

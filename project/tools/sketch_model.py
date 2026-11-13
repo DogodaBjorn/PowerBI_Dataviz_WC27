@@ -2173,8 +2173,8 @@ m("F2 Note (text)",
   '& "At the 2021 channel mix, 2025 commissions would be " & ' + fm("ABS ( x )") + ' & IF ( x >= 0, " lower.", " higher." )',
   TXT, C15, "F2 note (R-P1-4): what booking direct changes for one room night (from the folio's shown amounts), the bridge to member rates, and the 2021-mix counterfactual.")
 m("F3 Count (text)",
-  f"VAR all = CALCULATE ( COUNTROWS ( Hotels ), {gi} ) VAR dated = CALCULATE ( COUNTROWS ( Hotels ), {gi}, NOT ISBLANK ( Hotels[Renovation Age Sort] ) ) VAR u = all - dated "
-  'RETURN dated & " of " & all & " hotels" & IF ( u = 0, ".", "; " & u & IF ( u = 1, " has", " have" ) & " no renovation date." )',
+  f"VAR nAll = CALCULATE ( COUNTROWS ( Hotels ), {gi} ) VAR dated = CALCULATE ( COUNTROWS ( Hotels ), {gi}, NOT ISBLANK ( Hotels[Renovation Age Sort] ) ) VAR u = nAll - dated "
+  'RETURN dated & " of " & nAll & " hotels" & IF ( u = 0, ".", "; " & u & IF ( u = 1, " has", " have" ) & " no renovation date." )',
   TXT, C15, "F3 count line (R-P1-5): how many hotels the three age bands hold, counted from the model (hotels with and without a renovation date).")
 _SPEND = "CALCULATE ( [Renovation Spend per Hotel since 2018], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = {}, REMOVEFILTERS ( 'Date' ) )"
 m("F3 Note (text)",
@@ -2356,7 +2356,7 @@ m("Wait Why (text)",
   TXT, C15, "What waits, 'Why it's on the table' (R-W-2): B's wider guest-score reach, the airports' months above 90 %, and the hotels renovated last against the rest of the brand (NPS 2021 to 2025).")
 m("Wait WhyNot (text)",
   _WK + _BV + _KIOSK + tranche_t(2)
-  + "VAR dc = capB - capA VAR dn = npvA - npvB VAR nNeg = COUNTROWS ( FILTER ( th, ROUND ( [@v] / 100000, 0 ) < 0 ) ) "
+  + "VAR dc = capB - capA VAR dn = ( ROUND ( npvA / 100000, 0 ) - ROUND ( npvB / 100000, 0 ) ) * 100000 VAR nNeg = COUNTROWS ( FILTER ( th, ROUND ( [@v] / 100000, 0 ) < 0 ) ) "
   + f"VAR t3y = [Tranche 3 Year on Cost] VAR rate = {RATE} "
   "RETURN SWITCH ( k, "
   '"B", ' + fm("ABS ( dc )") + ' & IF ( dc >= 0, " more", " less" ) & " than A for " & ' + fm("ABS ( dn )") + ' & IF ( dn >= 0, " less", " more" ) & " through " & ' + HORIZON

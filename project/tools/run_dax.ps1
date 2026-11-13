@@ -35,7 +35,8 @@ foreach ($q in $parts) {
     try { $rd = $cmd.ExecuteReader() }
     catch { "QUERY FAILED: " + $_.Exception.InnerException.Message; "  in: " + $q.Substring(0, [Math]::Min(300, $q.Length)); $con.Close(); exit 1 }
     $rows = New-Object System.Collections.ArrayList
-    while ($rd.Read()) {
+    # an error in a measure surfaces on Read, not on ExecuteReader: without this the table came back empty (step 4)
+    while ($(try { $rd.Read() } catch { "QUERY FAILED: " + $_.Exception.InnerException.Message; "  in: " + $q.Substring(0, [Math]::Min(300, $q.Length)); $con.Close(); exit 1 })) {
         $row = [ordered]@{}
         for ($c = 0; $c -lt $rd.FieldCount; $c++) {
             $v = $rd.GetValue($c)

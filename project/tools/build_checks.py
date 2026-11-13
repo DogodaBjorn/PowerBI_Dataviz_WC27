@@ -210,6 +210,9 @@ if not STATIC:
                 plan.append((view, k, "table", len(queries) - 1))
     with tempfile.TemporaryDirectory() as td:
         qf, rf = Path(td) / "q.dax", Path(td) / "r.json"
+        if arg("--dump"):
+            qf, rf = Path(arg("--dump")) / "build_checks.dax", Path(arg("--dump")) / "build_checks.json"
+            rf.unlink(missing_ok=True)
         qf.write_text("\n".join(queries) + "\n", encoding="utf-8")
         run = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(HERE / "run_dax.ps1"), "-Port", str(PORT), "-Query", str(qf), "-Out", str(rf)],
                              capture_output=True, text=True, encoding="utf-8", errors="replace")
