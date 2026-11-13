@@ -19,7 +19,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | Step | Title | Status | Date | Commit | Note |
 |---|---|---|---|---|---|
 | 1 | Branch and the five small spikes | done | 13 Nov | 3bbc28e | S-1, S-5, S-6, S-8 pass; S-7 pass in a table cell, fallback for a card (`c_rec_lines` as two cards). Bjorn was not needed in Desktop |
-| 2 | The two big spikes: hero table and native selector | done | 13 Nov | COMMIT_STEP2 | S-2 and S-3 pass natively, no fallback. Both tables need a few pixels the comp did not plan (wider value columns, 2 px of slack, `tbl_moves` 11 px higher); see the log. Bjorn was not needed in Desktop |
+| 2 | The two big spikes: hero table and native selector | done | 13 Nov | f7f3afc | S-2 and S-3 pass natively, no fallback. Both tables need a few pixels the comp did not plan (wider value columns, 2 px of slack, `tbl_moves` 11 px higher); see the log. Bjorn was not needed in Desktop |
 | 3 | Model foundations and the number checks | todo | | | |
 | 4 | Text measures and `build_checks.py` | todo | | | |
 | 5 | Page 1 | todo | | | |
