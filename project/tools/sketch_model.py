@@ -399,14 +399,16 @@ def m(name, dax, fmt, folder, doc, fmt_def=None):
         FMT_DEFS[name] = fmt_def
 
 
-def label_safe(name, value_expr, text_expr, fmt, folder, doc):
+def label_safe(name, value_expr, text_expr, folder, doc):
     """P-1 (doc 21): a number for a native data label. The measure keeps its numeric value for the bar or the line;
     its dynamic format string returns the finished text as a quoted literal, so Power BI prints that text and applies
     no locale (a nl-NL Desktop printed "+6,8"). Spike S-1 (13 Nov): the literal goes in all three sections (positive;
     negative; zero), or a negative value gets a second minus ("−−4.9"). Use only where the value axis is hidden or
-    where another series comes first: an axis would repeat the literal on every tick. `fmt` is the static format string
-    the measure keeps beside the dynamic one (Desktop does the same when a format is switched to Dynamic)."""
-    m(name, value_expr, fmt, folder, doc,
+    where another series comes first: an axis would repeat the literal on every tick. The measure carries NO static
+    formatString: the engine refuses a measure that has both ("zowel de eigenschap FormatString als de eigenschap
+    FormatStringDefinition", 13 Nov), so scripts/validate_tmdl.py --strict reports one "no formatString" warning per
+    label-safe measure; those warnings are expected."""
+    m(name, value_expr, None, folder, doc,
       fmt_def=f'VAR __t = {text_expr} RETURN """" & __t & """;""" & __t & """;""" & __t & """"')
 
 
@@ -2022,8 +2024,8 @@ m("Dist Cost % 2025 GI", gi_at("Distribution Cost % of Room Revenue", 2025), PCT
 m("Dist Cost % 2032 with A (sel)", REC_IDS + "VAR s = [Selected Scenario] RETURN [Dist Cost % 2025 GI] + " + a_sum("DistributionCostChangePts"), PCT, C15,
   "Ledger F2: the 2025 distribution cost share of room revenue plus the organisers' change in points for the moves of package A, scenario in view. 2025 brand, A at full effect; not a forecast of 2032.")
 m("Margin after 2032 with A (sel)",
-  REC_IDS + "VAR s = [Selected Scenario] VAR tot = " + gi_at("Total Revenue", 2025) + " VAR after = " + gi_at("GOP after Distribution", 2025) + " "
-  "RETURN DIVIDE ( after + " + a_sum("AnnualOperatingProfitImpactUSD") + ", tot + " + a_sum("AnnualRevenueImpactUSD") + " )", PCT, C15,
+  REC_IDS + "VAR s = [Selected Scenario] VAR tot = " + gi_at("Total Revenue", 2025) + " VAR gopa = " + gi_at("GOP after Distribution", 2025) + " "
+  "RETURN DIVIDE ( gopa + " + a_sum("AnnualOperatingProfitImpactUSD") + ", tot + " + a_sum("AnnualRevenueImpactUSD") + " )", PCT, C15,
   "Ledger F1: operating margin after commissions of the 2025 brand with package A's full yearly profit and revenue impact added, scenario in view. In 2025 dollars; not a forecast of 2032.")
 m("Dist Cost Rise Undone % (sel)",
   "VAR d21 = " + gi_at("Distribution Cost % of Room Revenue", 2021) + " VAR d25 = [Dist Cost % 2025 GI] RETURN DIVIDE ( d25 - [Dist Cost % 2032 with A (sel)], d25 - d21 )", "0%", C15,
@@ -2047,24 +2049,24 @@ _YEND = f"VAR __y = MAX ( 'Date'[Year] ) VAR __h = {HORIZON} RETURN IF ( __y = _
 for scn in ("Low", "Expected", "High"):
     m(f"A Cumulative Line ({scn})", f'IF ( [Selected Scenario] = "{scn}", BLANK (), [TT Year A ({scn})] )', SUSDM, C15,
       f"Capital plan chart: package A's cumulative net impact in the {scn} case; blank when {scn} is the case in view (the emphasised line draws it).")
-    label_safe(f"A Cumulative End {scn} (label-safe)", _YEND.format(f"[A Cumulative Line ({scn})]"), f'"{scn} " & ' + sfm(f"[A Cumulative Line ({scn})]"), SUSDM, C15,
+    label_safe(f"A Cumulative End {scn} (label-safe)", _YEND.format(f"[A Cumulative Line ({scn})]"), f'"{scn} " & ' + sfm(f"[A Cumulative Line ({scn})]"), C15,
                f"Capital plan chart, end label of the {scn} line: its value on the horizon year only, printed as '{scn}' and the amount.")
-label_safe("A Cumulative End Sel (label-safe)", _YEND.format("[Preset A Cumulative Net (sel)]"), '[Selected Scenario] & " " & ' + sfm("[Preset A Cumulative Net (sel)]"), SUSDM, C15,
+label_safe("A Cumulative End Sel (label-safe)", _YEND.format("[Preset A Cumulative Net (sel)]"), '[Selected Scenario] & " " & ' + sfm("[Preset A Cumulative Net (sel)]"), C15,
            "Capital plan chart, end label of the emphasised line (the case in view): its value on the horizon year only, printed as the case name and the amount.")
 for k in "ABC":
-    label_safe(f"Preset {k} Cumulative End (label-safe)", _YEND.format(f"[Preset {k} Cumulative Net (sel)]"), f'"{k} " & ' + sfm(f"[Preset {k} Cumulative Net (sel)]"), SUSDM, C15,
+    label_safe(f"Preset {k} Cumulative End (label-safe)", _YEND.format(f"[Preset {k} Cumulative Net (sel)]"), f'"{k} " & ' + sfm(f"[Preset {k} Cumulative Net (sel)]"), C15,
                f"Comparison chart, end label of package {k}: its cumulative net impact on the horizon year only, printed as '{k}' and the amount, scenario in view.")
-label_safe("A Cumulative End Name (label-safe)", _YEND.format("[Preset A Cumulative Net (sel)]"), '"A"', SUSDM, C15,
+label_safe("A Cumulative End Name (label-safe)", _YEND.format("[Preset A Cumulative Net (sel)]"), '"A"', C15,
            "Build comparison chart, end label of package A: the value on the horizon year only, printed as 'A' (the title carries the amounts; You equals A when the state opens).")
-label_safe("Build Cumulative End Name (label-safe)", _YEND.format("[Build Cumulative Net (sel)]"), '"You"', SUSDM, C15,
+label_safe("Build Cumulative End Name (label-safe)", _YEND.format("[Build Cumulative Net (sel)]"), '"You"', C15,
            "Build comparison chart, end label of the plan being built: the value on the horizon year only, printed as 'You'; blank while nothing is picked.")
 
 # ---- label-safe twins for bars (P-1)
-label_safe("NPS 2025 (label-safe)", "[NPS (weighted) 2025]", pt1("[NPS (weighted) 2025]"), SIGNED1, C15,
+label_safe("NPS 2025 (label-safe)", "[NPS (weighted) 2025]", pt1("[NPS (weighted) 2025]"), C15,
            "F3 bars: response-weighted NPS 2025 with its label as finished text ('+6.8', a true minus), so no session locale prints a decimal comma.")
 m("Build Bar NPV", BIDS + "VAR me = SELECTEDVALUE ( BuildMove[ProjectID] ) RETURN IF ( n > 0 && me IN ids, CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = me ) )", SUSDM, C15,
   "Build bar chart (BuildMove): the NPV through 2032 of a picked move alone, scenario in view; blank for a move that is not picked, so the chart lists the plan only.")
-label_safe("Build Bar NPV (label-safe)", "[Build Bar NPV]", sfm("[Build Bar NPV]"), SUSDM, C15, "Build bar chart: the picked move's NPV with its label as finished text ('+$3.4M', '−$0.6M').")
+label_safe("Build Bar NPV (label-safe)", "[Build Bar NPV]", sfm("[Build Bar NPV]"), C15, "Build bar chart: the picked move's NPV with its label as finished text ('+$3.4M', '−$0.6M').")
 m("Build Bar Color", f'VAR v = [Build Bar NPV] RETURN IF ( ISBLANK ( v ), BLANK (), IF ( ROUND ( v / 1000000, 2 ) < 0, "{SIGNAL_MARK}", "{INK}" ) )', TXT, C15,
   "Build bar chart: Night for a move that adds NPV (Night is 'your plan'), Tangerine for one that costs NPV; the signed label carries it too (R-G3).")
 
@@ -2109,11 +2111,11 @@ m("Months Topped 90% (last 24)",
 MOVE_DECISION = (
     'VAR a = LOOKUPVALUE ( Package[PackageID], Package[Preset], "A" )\n'
     'VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] )\n'
-    'VAR typed = DATATABLE ( "xPid", STRING, "xFinding", STRING, "xGate", INTEGER, { '
+    'VAR decided = DATATABLE ( "xPid", STRING, "xFinding", STRING, "xGate", INTEGER, { '
     + ", ".join(f'{{ "{p}", "{f}", {MOVE_GATE.get(p, 0)} }}' for p, f in sorted(MOVE_FINDING.items())) + " } )\n"
     "RETURN\n"
     "    SELECTCOLUMNS (\n"
-    "        typed,\n"
+    "        decided,\n"
     '        "ProjectID", [xPid],\n'
     '        "Finding", [xFinding],\n'
     '        "Status", SWITCH ( TRUE (), [xPid] IN aIds, "A", [xGate] > 0, "2028 gate", "not now" ),\n'
@@ -2276,7 +2278,8 @@ def measures_table():
     for name, dax, fmt, folder, doc in MEASURES:
         out.append(f"\t/// {doc}")
         out.append(f"\tmeasure {q(name)} = {dax}")
-        out.append(f"\t\tformatString: {fmt}")
+        if name not in FMT_DEFS:  # never both: the engine refuses a measure with a static and a dynamic format string
+            out.append(f"\t\tformatString: {fmt}")
         out.append(f"\t\tdisplayFolder: {folder}")
         if name in IMAGE_MEASURES:
             out.append("\t\tdataCategory: ImageUrl")

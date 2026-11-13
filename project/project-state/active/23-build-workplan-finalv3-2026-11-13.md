@@ -20,7 +20,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 |---|---|---|---|---|---|
 | 1 | Branch and the five small spikes | done | 13 Nov | 3bbc28e | S-1, S-5, S-6, S-8 pass; S-7 pass in a table cell, fallback for a card (`c_rec_lines` as two cards). Bjorn was not needed in Desktop |
 | 2 | The two big spikes: hero table and native selector | done | 13 Nov | f7f3afc | S-2 and S-3 pass natively, no fallback. Both tables need a few pixels the comp did not plan (wider value columns, 2 px of slack, `tbl_moves` 11 px higher); see the log. Bjorn was not needed in Desktop |
-| 3 | Model foundations and the number checks | todo | | | |
+| 3 | Model foundations and the number checks | done | 13 Nov | COMMIT3 | 56 number measures, 3 tables, 2 columns; 763 checks, all pass in Low, Expected and High, 1 known difference (open question 1). New: a measure cannot carry a static and a dynamic format string; open question 3 (hero caption). Bjorn was not needed in Desktop |
 | 4 | Text measures and `build_checks.py` | todo | | | |
 | 5 | Page 1 | todo | | | |
 | 6 | Page 2 frame and the decision card | todo | | | |
@@ -260,7 +260,82 @@ with no broken binding.
 
 **Prompt:** `project/build-steps/step-03.txt` (say: "Read project/build-steps/step-03.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Fri 13 Nov 2026, one session, done):**
+
+*Built* (all in `sketch_model.py`; the model regenerated: 33 tables and 518 measures, was 30 and 462; the report
+generator was run and writes the same report as before):
+
+- **Tables and columns (10.1).** `MoveDecision` (ProjectID, Finding, Status, Tranche): a calculated table without a
+  relationship. Finding and the two gate tranches are typed once in the generator as decision data (`MOVE_FINDING`,
+  `MOVE_GATE`); status "A" and tranche 1 are read from `Package[Preset]`. `Finding` (Code, Name, Label, Ledger Sort) and
+  `WaitOption` (Key, Title, Sort) as row sources. `InvestmentProjects[Move Name]`, sorted by `[Hero Sort]`.
+  `[Answers Finding]` now reads the same mapping as `MoveDecision`, so the kiosks answer F4 (D4) everywhere.
+  `Hotels[F4 Dot Label]` was not built (doc 22).
+- **Formatters (P-1).** `fm` and `sfm` follow the comp's rule: one decimal, two decimals only where one would print 0.0
+  ("+$0.03M"), `en-US` in every FORMAT, the word joiner after the sign. New: `pct1`, `pt1`, `label_safe()`. `m()` takes
+  `fmt_def=` and writes `formatStringDefinition`. 36 existing text measures changed their expression through `fm` and
+  `sfm`; what they print is the same, except a non-zero amount under $0.05M.
+- **56 measures in folder `15 Storytelling rebuild`:** a year on cost (move, package, A, build, tranches), `Rec NPV Low`,
+  `Rec Run-rate Low`, `Build Run-rate (sel)`, `Move Run-rate (num)`, `Move Status Color`; the hero bar cells
+  (`Hero Yield Bar SVG`, `Hero NPV Bar SVG`, through `bar_cell()` with the S-2 geometry) and four domain measures; tranche
+  capex, run-rate and yield, `Not Needed Capex`; the ledger (`Dist Cost % 2032 with A (sel)`,
+  `Margin after 2032 with A (sel)`, the two status shares, `App Commission Saving / NPV / Run-rate (sel)`); the
+  cumulative lines of A per case and nine end-label series; label-safe twins for F3 and the build bars, `Build Bar Color`;
+  page 1: `Trend Commission Take GI`, `Trend OTA GI (ends)`, `Trend OTA Sisters (end)`, `F4 Row Y`, `F4 Dot Color`,
+  `F4 Type Avg`, `Months Topped 90% (last 24)`.
+- **Metric contracts** (invariant 4) in `project-state/active/metric-contracts/`: M-101 a year on cost, M-102 distribution
+  cost 2032 with A, M-103 margin after commissions 2032 with A.
+- **Tools:** `tools/number_checks.py` (the assertions, with `run_dax.ps1`), `tools/engine_probe.ps1` (asks Desktop's
+  engine why it refuses a model, and lists every object with an error), `tools/desktop_shots/throwaway_copy.py`.
+
+*Verified.*
+
+| What | Result | Proof |
+|---|---|---|
+| The model validates | `validate_tmdl --strict`: 0 errors, 11 warnings, all "no formatString" on the eleven label-safe measures (expected, see below). `engine_probe.ps1`: Desktop's engine accepts the model, 0 objects with an error. The copy opens and refreshes in 7 s | repeatable with the two commands |
+| Every assertion equals `storytelling_checks.txt` | `number_checks.py`: **763 checks, 762 ok, 1 known difference, 0 failed**, in Low, Expected and High. Against the workbook, re-derived with pandas to nine digits: E9 (a year on cost and profit a year of the ten moves; package A 11.1 / 37.5 / 66.0 %; tranche 2 11.7 / 13.8 / 14.8 %; tranche 3 4.5 / 7.9 / 11.5 %), E11 (distribution cost 11.3 % to 10.7 / 10.1 / 9.5 %; margin 33.7 % to 34.1 / 35.1 / 36.1 %; the app saves $1.2M / $2.4M / $3.6M a year), E5 (17, 14, 13 and 0 months), the F4 row of all 50 hotels by the comp's rule, the seven Night dots. Against the spec's `text` block, as the model's formatters print it: E10 (A: $9.4M, NPV −$5.5M / +$3.3M / +$12.7M, +$1.0M / +$3.5M / +$6.2M a year), the hero table (order, status, yield and NPV, 30 rows), the plan segments (9.4 + 12.4 + 29.5 + 8.7 = 60.0), the end labels of the three cumulative charts, the selector table (120 cells), the build bars, the F2 and F3 labels | `project/analysis/output/number_checks.txt` |
+| The hero domains hold | the model's own minimum and maximum over ten moves and three scenarios, rounded outward, equal −10 % to 90 % and −$32M to +$12M; all 60 bar cells are well-formed SVGs with the reference line at its constant x. `hero_ref_x()` returns 573.84 and 925.09, the x values of step 2 | same file |
+| The current report still opens, no broken binding | both pages render complete on the new model in the throwaway copy; `a11y_check.py` 0 failures; `schema_check.py` 198 files, 0 failing; `validate_json` 0 errors; `opzet_report.py` writes an identical report | `deliverables/screenshots/Step3-model-2026-11-13/`, 01 and 02 |
+| A label-safe label from the generator | the F3 chart of the copy, bound to `NPS 2025 (label-safe)`, prints "−4.9" with a point in the nl-NL Desktop; the F4 bars beside it still print "87,4%" | same folder, 03 |
+
+The renders are small: this session's screen was 540 px wide, so the page was captured at about 1000 px. Enough to see
+that every visual draws; not a pixel reference.
+
+*Found on the way (binding for the next steps).*
+
+1. **A measure cannot carry `formatString` and `formatStringDefinition` together.** Desktop refuses the whole project
+   ("Er zijn problemen gevonden"; the dialog's text cannot be read by script). The engine's own message: "zowel de
+   eigenschap FormatString als de eigenschap FormatStringDefinition ... wordt niet ondersteund". So a label-safe
+   measure has no static format string, and `validate_tmdl --strict` gives one warning for each: expected, not a
+   defect. The validator is a framework file and was left alone (a template item for doc 21 section 15).
+2. **`after` and `typed` are reserved words in DAX.** A measure and a calculated table failed on them as variable
+   names. TMDL parses them, Desktop's engine does not. `engine_probe.ps1` shows this in seconds: run it before an open.
+3. **The cumulative end series must come after the line series** in a chart whose value axis shows: the axis takes
+   the first series' format, and a label-safe series would print its literal on every tick (P-1).
+4. **A Desktop that refused a project keeps running as "Naamloos".** Its engine is the one the probe can use.
+
+*Deviations from the comp.* None; nothing was built in the report. One change shows in today's report: the kiosks'
+answer reads F4 instead of F3 (plan table, selector, the recommendation's note "F2, F4, F1"). That is D4, through the
+shared mapping.
+
+*Open items for later steps.*
+- **Step 4:** the text measures can read every number from folder 15. `Move Answers (text)` must read
+  `MoveDecision[Finding]` (10.3); `fmc`, `fmc2` and `sfm2` are still used by old measures and go there. The ledger's
+  status words switch on `Dist Cost Rise Undone % (sel)` (0.25 / 0.50 / 0.75) and `Margin Fall Recovered % (sel)`
+  (0.14 / 0.50 / 0.87). `number_checks.py` with `run_dax.ps1` is the base for the fifth check of `build_checks.py`.
+- **Step 4, open question 1** (20.5 or 20.6 %) is still open; the model prints 20.6 %.
+- **Step 5:** `F4 Row Y` returns the row for a location type and the stepped row for a hotel, so both layers bind one
+  measure. `F4 Dot Color` reads the hotel's brand, so it needs no page filter of its own.
+- **Steps 7 to 9:** the end series are `A Cumulative End Low / Expected / High / Sel (label-safe)`,
+  `Preset A / B / C Cumulative End (label-safe)`, `A Cumulative End Name (label-safe)` and
+  `Build Cumulative End Name (label-safe)`. The thin lines are `A Cumulative Line (Low / Expected / High)`, blank for the
+  case in view. The plan bar binds `Tranche 1 / 2 / 3 Capex` and `Not Needed Capex`.
+- **Step 7, open question 3:** the hero caption's second sentence (see "Open questions").
+- **Step 11:** the prune must keep a measure that only a dynamic format string reads.
+- **Work method:** `throwaway_copy.py` leaves the caches out; after the open, `refresh_desktop_model.ps1` loads the data
+  in seconds, without a click. The modelling MCP writes the `.bim` the probe needs (ConnectFolder, then
+  ExportToBimFile). The throwaway windows were ended with `Stop-Process` (throwaway only). A heredoc in the Bash tool
+  eats backslashes and trips over quotes: edit Python and Markdown with the Edit tool.
 
 ### Step 4 · Text measures and `build_checks.py` (about 2 h)
 
@@ -479,3 +554,9 @@ A session that meets a question only Bjorn can answer adds it here and sets its 
 2. **The pixel changes of step 2** (hero table 8 px wider with its last two columns at 184 and 74; `tbl_moves` at
    y 237 with columns 74 and 118). Recommended: accept them as technical corrections and put them into
    `opzet-layout-v10.json` and `rebuild-v10-spec.json` in steps 7 and 9. Bjorn confirms, or names what must stay.
+3. **The hero caption's second sentence (from step 3, needed in step 7; no step is blocked by it).** The approved
+   caption reads "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still
+   ramping up in 2032." In the data no move on the page is still ramping up in 2032. At its earliest start every move
+   is live for 34 months or more by January 2032, and the extensions and the refresh started at the mid-2028 gate would
+   be in their third year too (live by November 2029). Only a Boston hotel started that late would not be.
+   Recommended: drop the second sentence; the first is exact as it stands. Bjorn decides.

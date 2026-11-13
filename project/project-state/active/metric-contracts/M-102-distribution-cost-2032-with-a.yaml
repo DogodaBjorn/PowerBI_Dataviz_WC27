@@ -1,0 +1,44 @@
+# Metric contract (invariant 4), filled at build step 3 of doc 23 on 2026-11-13.
+# Source of the definition: doc 20 (E11, R-P2-5), doc 21 section 10.2, analysis/50_storytelling_checks.py section 6.
+
+contract: metric
+metric_id: "M-102"
+name: "Distribution cost, % of room revenue: 2032 with A"
+date: "2026-11-13"
+
+definition:
+  plain_language: >
+    What Goodnight Inn would pay the booking channels per dollar of room revenue if package A worked at full
+    effect on the 2025 business.
+  formula_in_words: >
+    Goodnight Inn's 2025 distribution cost divided by its 2025 room revenue (both from BookingChannels), plus the
+    organisers' change in distribution cost in points of room revenue for the moves of package A in the scenario
+    in view (InvestmentScenarios[DistributionCostChangePts], summed over A; only the booking app carries one).
+  grain: "The brand, one scenario. One value per scenario; it does not move with dates or hotels."
+  filters: "Goodnight Inn; calendar 2025 as the base; package A (Package[Preset] = A); scenario from the toggle."
+  unit: "percentage"
+  direction_is_good: "down"
+
+edge_cases:
+  - >
+    Scenario logic, labelled as such (invariant 5): the 2025 brand plus A at full yearly effect, in 2025 dollars.
+    It is not a forecast of 2032: no market growth, no price or cost inflation, no channel drift after 2025. The
+    ledger's caption says this on the canvas.
+  - "If package A changed (a data refresh that moves the Expected NPV maximum), the value follows Package[Preset]."
+  - "2025 value 11.28 %; with A: Low 10.68 %, Expected 10.08 %, High 9.48 % (E11)."
+
+targets:
+  exists: true
+  source: >
+    The 2028 gate of the plan: distribution cost has fallen at least 0.6 points (the app's Low case). A decision
+    rule set in doc 20 (R-P2-7), not a forecast; the comparison base on the ledger is the 2021 value (8.89 %).
+
+owner: "Bjorn (analyst and author of the entry)"
+synonyms: "commission rate; the middleman's take; distribution cost share. Not 'Distribution cost % of total revenue' (10.6 %, the F1 band)."
+conflicts_checked: true         # room-revenue base, as [Distribution Cost % of Room Revenue]; the F1 chart uses the total-revenue base
+
+implementation:
+  measure_name: "Dist Cost % 2032 with A (sel); base: Dist Cost % 2025 GI; status share: Dist Cost Rise Undone % (sel)"
+  display_folder: "15 Storytelling rebuild"
+  format_string: "0.0%"
+  verified: "project/tools/number_checks.py against the workbook (E11) and the build spec, Low / Expected / High, 13 Nov 2026"

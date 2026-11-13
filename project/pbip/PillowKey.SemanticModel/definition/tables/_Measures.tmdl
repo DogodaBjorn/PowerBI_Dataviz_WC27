@@ -2950,7 +2950,7 @@ table _Measures
 		lineageTag: e4ac6146-04ee-5e85-b862-f4ec220a65d7
 
 	/// Ledger F1: operating margin after commissions of the 2025 brand with package A's full yearly profit and revenue impact added, scenario in view. In 2025 dollars; not a forecast of 2032.
-	measure 'Margin after 2032 with A (sel)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR s = [Selected Scenario] VAR tot = CALCULATE ( [Total Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR after = CALCULATE ( [GOP after Distribution], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) RETURN DIVIDE ( after + CALCULATE ( SUM ( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( aIds, InvestmentProjects[ProjectID] ), InvestmentScenarios[Scenario] = s ), tot + CALCULATE ( SUM ( InvestmentScenarios[AnnualRevenueImpactUSD] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( aIds, InvestmentProjects[ProjectID] ), InvestmentScenarios[Scenario] = s ) )
+	measure 'Margin after 2032 with A (sel)' = VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR s = [Selected Scenario] VAR tot = CALCULATE ( [Total Revenue], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) VAR gopa = CALCULATE ( [GOP after Distribution], REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn", REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) RETURN DIVIDE ( gopa + CALCULATE ( SUM ( InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( aIds, InvestmentProjects[ProjectID] ), InvestmentScenarios[Scenario] = s ), tot + CALCULATE ( SUM ( InvestmentScenarios[AnnualRevenueImpactUSD] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( aIds, InvestmentProjects[ProjectID] ), InvestmentScenarios[Scenario] = s ) )
 		formatString: 0.0%
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 78a53f86-1a35-56dd-9770-d4bd19a108d3
@@ -2993,7 +2993,6 @@ table _Measures
 
 	/// Capital plan chart, end label of the Low line: its value on the horizon year only, printed as 'Low' and the amount.
 	measure 'A Cumulative End Low (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [A Cumulative Line (Low)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 1ca6a89b-8255-51b2-bd4b-3cb903c74ba1
 
@@ -3009,7 +3008,6 @@ table _Measures
 
 	/// Capital plan chart, end label of the Expected line: its value on the horizon year only, printed as 'Expected' and the amount.
 	measure 'A Cumulative End Expected (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [A Cumulative Line (Expected)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 69ee3127-8064-5d0e-9f62-260e454447f7
 
@@ -3025,7 +3023,6 @@ table _Measures
 
 	/// Capital plan chart, end label of the High line: its value on the horizon year only, printed as 'High' and the amount.
 	measure 'A Cumulative End High (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [A Cumulative Line (High)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 37a1c993-eb7c-522b-9931-41ebcd48f631
 
@@ -3035,7 +3032,6 @@ table _Measures
 
 	/// Capital plan chart, end label of the emphasised line (the case in view): its value on the horizon year only, printed as the case name and the amount.
 	measure 'A Cumulative End Sel (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset A Cumulative Net (sel)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: c3dccace-25f1-52c9-950f-f521f82797e1
 
@@ -3045,7 +3041,6 @@ table _Measures
 
 	/// Comparison chart, end label of package A: its cumulative net impact on the horizon year only, printed as 'A' and the amount, scenario in view.
 	measure 'Preset A Cumulative End (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset A Cumulative Net (sel)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: dc1619e0-91e8-546f-a2c6-f071c8e365ed
 
@@ -3055,7 +3050,6 @@ table _Measures
 
 	/// Comparison chart, end label of package B: its cumulative net impact on the horizon year only, printed as 'B' and the amount, scenario in view.
 	measure 'Preset B Cumulative End (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset B Cumulative Net (sel)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 0c432ab8-16ea-5644-9285-8de61c4dda5b
 
@@ -3065,7 +3059,6 @@ table _Measures
 
 	/// Comparison chart, end label of package C: its cumulative net impact on the horizon year only, printed as 'C' and the amount, scenario in view.
 	measure 'Preset C Cumulative End (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset C Cumulative Net (sel)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: db8b4dc9-1f5b-502f-90d8-90d5e5ac6a2f
 
@@ -3075,7 +3068,6 @@ table _Measures
 
 	/// Build comparison chart, end label of package A: the value on the horizon year only, printed as 'A' (the title carries the amounts; You equals A when the state opens).
 	measure 'A Cumulative End Name (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset A Cumulative Net (sel)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 13d3a535-b03e-5761-8143-a2e2066276eb
 
@@ -3085,7 +3077,6 @@ table _Measures
 
 	/// Build comparison chart, end label of the plan being built: the value on the horizon year only, printed as 'You'; blank while nothing is picked.
 	measure 'Build Cumulative End Name (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Build Cumulative Net (sel)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 5f8ae6d3-d3fa-587b-a65f-1b04c04ae5a6
 
@@ -3095,7 +3086,6 @@ table _Measures
 
 	/// F3 bars: response-weighted NPS 2025 with its label as finished text ('+6.8', a true minus), so no session locale prints a decimal comma.
 	measure 'NPS 2025 (label-safe)' = [NPS (weighted) 2025]
-		formatString: +0.0;−0.0;0.0
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: d6dee643-6c63-52ae-b181-d807054cb277
 
@@ -3111,7 +3101,6 @@ table _Measures
 
 	/// Build bar chart: the picked move's NPV with its label as finished text ('+$3.4M', '−$0.6M').
 	measure 'Build Bar NPV (label-safe)' = [Build Bar NPV]
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 106e2b5d-f778-5109-b4e7-7ac45b9b6116
 

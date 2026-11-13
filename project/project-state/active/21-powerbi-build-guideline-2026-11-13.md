@@ -177,8 +177,13 @@ measure 'NPS 2025 (label-safe)' = [NPS 2025 (signed)]
 - In `sketch_model.py`: give `m()` an optional `fmt_def=` argument that writes `formatStringDefinition`, and a
   helper `label_safe(name, value_expr, text_expr, …)`. The text expression is one of the existing formatters
   (`fm`, `sfm`, a new `pct1`, `pt1`), so labels and tiles print the same characters.
+- **Corrected by build step 3 (13 Nov, doc 23):** a label-safe measure carries **no** static `formatString`. With
+  both properties Desktop refuses the whole project; the engine says the combination is not supported. So
+  `validate_tmdl --strict` warns once per label-safe measure ("no formatString"): expected. Built as `label_safe()`
+  and `m(..., fmt_def=)`; eleven measures use it.
 - Use only on visuals whose value axis is hidden (the axis would repeat one literal on every tick). That is
-  already the house rule: "no value axis, every bar carries its label".
+  already the house rule: "no value axis, every bar carries its label". Where the axis shows (the cumulative
+  charts), the label-safe end series come after the line series, so the axis takes a line's format.
 - Needed on: F3 bars, the capital-plan bar segments, the Build bar chart, the line-end labels (P-5).
 - **S-1:** render F3 with this measure in the nl-NL Desktop. Pass = "+6.8", "−4.9" with points. Fallback: data
   labels off and three text cards over the bars.
@@ -726,6 +731,15 @@ saves, close every window yourself without saving, renders through the throwaway
 
 Tier order inside each step follows doc 20: T1 before T2 before T3. If a day slips, drop T3 first
 (R-P1-9, R-P2-11, R-W-4, R-TT-3/4, the submission prune), never the gate.
+
+### Results of the model step (13 Nov, build step 3 of doc 23)
+
+Section 10.1 and the number measures of 10.2 are in `sketch_model.py` (folder `15 Storytelling rebuild`, 56 measures;
+`MoveDecision`, `Finding`, `WaitOption`; `Move Name`, `Hero Sort`). The assertions of step 3 in the table above run as
+`python project/tools/number_checks.py --port <AS port>`: 763 checks against the workbook and the spec's `text` block
+in Low, Expected and High, all pass; the one known difference is 20.5 against 20.6 % for the kiosks. Details, the
+names of the end-label series and what the next steps must know: doc 23, step 3 log. Section 10.3 (the text
+measures) and `build_checks.py` are build step 4.
 
 ### Results of the two big spikes (13 Nov, build step 2 of doc 23)
 

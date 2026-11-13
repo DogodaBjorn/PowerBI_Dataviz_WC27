@@ -1,0 +1,50 @@
+# Metric contract (invariant 4), filled at build step 3 of doc 23 on 2026-11-13.
+# Source of the definition: doc 20 (E9, D1, R-P2-3), doc 21 section 10.2.
+
+contract: metric
+metric_id: "M-101"
+name: "A year on cost"
+date: "2026-11-13"
+
+definition:
+  plain_language: "What a move adds to operating profit a year by 2032, as a share of what it costs."
+  formula_in_words: >
+    The organisers' annual operating-profit impact of the moves in context, in the scenario in view
+    (InvestmentScenarios[AnnualOperatingProfitImpactUSD], summed), divided by their capex
+    (InvestmentProjects[CapexUSD], summed). For a package or a tranche: the sum of the impacts over the sum of
+    the capex, never an average of the moves' ratios.
+  grain: "One move, or any set of moves (package A, a tranche, the plan being built), in one scenario."
+  filters: "Goodnight Inn moves only. Scenario from the Low / Expected / High toggle; Expected when nothing is chosen."
+  unit: "percentage"
+  direction_is_good: "up"
+
+edge_cases:
+  - "No moves in context, or capex zero: blank (DIVIDE), never 0 %."
+  - "It can be negative: Kingston +40 rooms in the Low case (-2.6 %), where the organisers' profit impact is below zero."
+  - >
+    It is a derived ratio shown next to NPV, not a valuation: no discounting, no ramp-up, no revenue lost during
+    works. A move can earn above the 8 % cost of money a year and still not pay back by 2032 (the kiosks in the
+    Expected case). The page says so in the hero title and its caption.
+  - >
+    'By 2032' holds for every move at its earliest start: each is live for 34 months or more in January 2032, so the
+    full annual impact is also the profit booked in 2032 (third year onwards = 100 %, FinanceParameters). The same
+    holds for the extensions and the refresh if they start at the mid-2028 gate (live by Nov 2029, in their third
+    year in 2032). Only the Boston hotel started that late (live Sep 2030) would still be ramping up in 2032.
+    The hero caption's second sentence says otherwise: doc 23, open question 3.
+  - "Exactly 20.55 % for the kiosks (Expected): Power BI prints 20.6 %, the approved copy says 20.5 % (doc 23, open question 1)."
+
+targets:
+  exists: true
+  source: >
+    The reference line at 8 % is the organisers' discount rate (FinanceParameters, 'Discount rate'), named
+    'our cost of money' on the page. A comparison line, not a pass mark: the pass test is NPV through 2032.
+
+owner: "Bjorn (analyst and author of the entry)"
+synonyms: "yield on cost; profit a year by 2032 over capex; run-rate over capex. On the canvas only 'a year on cost' (R-G2)."
+conflicts_checked: true         # not the same as 'Run-rate % of 2025 GOP' (run-rate over 2025 profit) nor as NPV
+
+implementation:
+  measure_name: "A Year on Cost; Package A Year on Cost (sel); Rec A Year on Cost (sel); Build A Year on Cost (sel); Tranche 1/2/3 Year on Cost"
+  display_folder: "15 Storytelling rebuild"
+  format_string: "0.0%"
+  verified: "project/tools/number_checks.py against the workbook (E9) and the build spec, Low / Expected / High, 13 Nov 2026"

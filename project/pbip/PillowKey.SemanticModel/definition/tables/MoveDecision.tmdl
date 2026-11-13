@@ -40,10 +40,10 @@ table MoveDecision
 		source = ```
 				VAR a = LOOKUPVALUE ( Package[PackageID], Package[Preset], "A" )
 				VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] )
-				VAR typed = DATATABLE ( "xPid", STRING, "xFinding", STRING, "xGate", INTEGER, { { "GI-01", "F2", 0 }, { "GI-02", "F4", 0 }, { "GI-03", "F1", 0 }, { "GI-04", "F4", 2 }, { "GI-05", "F4", 2 }, { "GI-06", "F4", 0 }, { "GI-07", "F3", 3 }, { "GI-08", "F4", 0 }, { "GI-09", "F3", 0 }, { "GI-10", "F1", 0 } } )
+				VAR decided = DATATABLE ( "xPid", STRING, "xFinding", STRING, "xGate", INTEGER, { { "GI-01", "F2", 0 }, { "GI-02", "F4", 0 }, { "GI-03", "F1", 0 }, { "GI-04", "F4", 2 }, { "GI-05", "F4", 2 }, { "GI-06", "F4", 0 }, { "GI-07", "F3", 3 }, { "GI-08", "F4", 0 }, { "GI-09", "F3", 0 }, { "GI-10", "F1", 0 } } )
 				RETURN
 				    SELECTCOLUMNS (
-				        typed,
+				        decided,
 				        "ProjectID", [xPid],
 				        "Finding", [xFinding],
 				        "Status", SWITCH ( TRUE (), [xPid] IN aIds, "A", [xGate] > 0, "2028 gate", "not now" ),

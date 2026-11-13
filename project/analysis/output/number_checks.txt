@@ -1,0 +1,54 @@
+number_checks: 763 checks, 762 ok, 1 known difference(s), 0 failed
+
+  ok    workbook: a year on cost per move (E9): 30 ok
+  ok    workbook: profit a year per move: 30 ok
+  ok    workbook: selector row run-rate: 30 ok
+  ok    workbook: Hero Sort order: 1 ok
+  ok    workbook: package A, tranches and the 2032 ledger (E9, E11): 66 ok
+  ok    workbook: plan segments add up to the budget: 3 ok
+  ok    workbook: Build state with package A picked: 12 ok
+  ok    model: Build with A picked equals the recommendation: 3 ok
+  ok    hero domain equals the spec constants: 12 ok
+  ok    workbook: hero yield domain covers the data: 1 ok
+  ok    workbook: F4 Row Y per hotel (the comp's rule): 50 ok
+  ok    workbook: F4 Dot Color (Night = the seven fullest): 50 ok
+  ok    workbook: months at or above 90 % in the last 24 (E5): 50 ok
+  ok    workbook: F4 has 50 hotels: 1 ok
+  ok    workbook: F4 row and average per location type: 6 ok
+  ok    workbook: commission take per year (F1 band): 5 ok
+  ok    workbook: OTA end labels (F2): 10 ok
+  ok    spec: hero table row order: 3 ok
+  ok    hero yield: 29 ok, 1 known
+  ok    spec: hero NPV through 2032 (E10): 30 ok
+  ok    spec: hero status: 30 ok
+  ok    spec: hero answers start with the MoveDecision finding: 30 ok
+  ok    spec: recommendation numbers (E10): 12 ok
+  ok    spec: worst case line (Low, always): 6 ok
+  ok    spec: the app carries it: 6 ok
+  ok    spec: ledger (E11): 12 ok
+  ok    spec: plan segments: 24 ok
+  ok    spec: capital plan end labels: 3 ok
+  ok    model: the case in view has no thin line: 3 ok
+  ok    spec: comparison end labels (A, B, C): 3 ok
+  ok    spec: build comparison end labels: 3 ok
+  ok    model: end series are blank before the horizon year: 3 ok
+  ok    model: a dynamic format string repeats its literal in three sections: 3 ok
+  ok    spec: selector table: 120 ok
+  ok    spec: build bars, names and labels in NPV order: 3 ok
+  ok    model: build bar colours (Night adds, Tangerine costs): 3 ok
+  ok    spec: your-plan numbers: 6 ok
+  ok    model: nothing picked: 1 ok
+  ok    spec: F3 bar labels: 1 ok
+  ok    spec: F2 end labels: 1 ok
+  ok    spec: F4 row averages: 3 ok
+  ok    doc 20 E5: months at or above 90 %: 4 ok
+  ok    model: hero bar cell is a well-formed SVG with the reference line at its constant x: 60 ok
+
+KNOWN (not failures)
+  hero yield ('GI-02', 'Expected'): expected '20.5%', model '20.6%'  [open question 1 of doc 23 (20.55 % exactly)]
+
+Values (model, as its formatters print them):
+  Low      A: capex $9.4M, NPV −$5.5M, a year +$1.0M, a year on cost 11.1% | ledger: distribution cost 11.3% -> 10.7%, margin after commissions 33.7% -> 34.1%, app saves $1.2M a year | tranche 2 11.7%, tranche 3 4.5% | rise undone 0.251, fall recovered 0.145
+  Expected A: capex $9.4M, NPV +$3.3M, a year +$3.5M, a year on cost 37.5% | ledger: distribution cost 11.3% -> 10.1%, margin after commissions 33.7% -> 35.1%, app saves $2.4M a year | tranche 2 13.8%, tranche 3 7.9% | rise undone 0.501, fall recovered 0.499
+  High     A: capex $9.4M, NPV +$12.7M, a year +$6.2M, a year on cost 66.0% | ledger: distribution cost 11.3% -> 9.5%, margin after commissions 33.7% -> 36.1%, app saves $3.6M a year | tranche 2 14.8%, tranche 3 11.5% | rise undone 0.752, fall recovered 0.869
+  a year on cost per move, Low / Expected / High: GI-01 12.1% / 47.0% / 82.1%; GI-10 9.8% / 32.0% / 61.7%; GI-02 10.3% / 20.6% / 30.9%; GI-09 9.9% / 19.8% / 26.4%; GI-05 13.3% / 15.8% / 16.9%; GI-03 7.9% / 11.8% / 15.8%; GI-04 9.9% / 11.5% / 12.3%; GI-06 −2.6% / 8.2% / 8.9%; GI-08 6.6% / 8.1% / 9.0%; GI-07 4.5% / 7.9% / 11.5%

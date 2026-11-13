@@ -250,3 +250,20 @@ generators             : idempotent (second run into a scratch folder identical 
 renders                : NONE in Desktop yet; preview composites updated
 manual steps owed      : Desktop renders 01-04; hover the four zones of 'Revisit the facts' and both Definitions chips
 ```
+
+```
+2026-11-13, build step 3 of doc 23: model foundations and the number checks (FinalV3 rebuild, branch rebuild-finalv3)
+validate_tmdl --strict : 37 file(s), 0 error(s), 11 warning(s): the eleven label-safe measures have no formatString by design
+                         (the engine refuses formatString together with formatStringDefinition)
+engine_probe.ps1       : Desktop's engine accepts the model, 0 objects with an error
+number_checks.py       : 763 checks, 762 ok, 1 known difference (20.5 / 20.6 % for the kiosks, open question 1), 0 failed
+a11y_check             : 0 failure(s), 0 note(s) over GoodnightInn-opzet.Report
+schema_check           : 198 files, 0 failing
+validate_json          : 322 file(s) checked, 0 with errors
+model                  : + tables MoveDecision (decision data), Finding, WaitOption; + InvestmentProjects[Move Name], [Hero Sort];
+                         [Answers Finding] from the same mapping as MoveDecision (kiosks F4, D4); fm / sfm to the P-1 rule,
+                         + pct1, pt1, label_safe(); + 56 measures in '15 Storytelling rebuild'; 518 measures (was 462)
+report                 : unchanged (opzet_report.py writes an identical report)
+renders                : throwaway copy, both pages and the F3 label-safe label: screenshots/Step3-model-2026-11-13
+manual steps owed      : none
+```
