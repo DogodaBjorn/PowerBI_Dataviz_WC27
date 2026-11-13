@@ -403,6 +403,11 @@ moved('p2', 'c_you_nums', [1384, 304, 464, 72], 'four callouts in 464 px: "NPV t
 moved('p2', 'c_you_range', [1384, 384, 464, 24], 'follows c_you_nums down 16 px');
 moved('p2', 'c_you_rules', [1384, 408, 464, 48], 'follows c_you_nums down 16 px, and 8 px taller: the R-B-2 sentence of the empty state takes two lines (43 px)');
 moved('p2', 'ch_build_bars', [1384, 464, 464, 168], 'follows c_you_rules down 24 px; still ends at 632 inside the tile');
+// v10 round 2 (13 Nov, Bjorn: fix the overlap and clutter): the decision card gives the ledger 32 px more
+moved('p2', 'c_rec_head', [1160, 184, 704, 48], 'two paragraphs need 48 px (20 px head + one 12 pt line); frees 8 px for the ledger');
+moved('p2', 'c_rec_nums', [1112, 240, 752, 64], 'follows c_rec_head up 8 px');
+moved('p2', 'c_rec_lines', [1112, 312, 752, 48], 'its two lines need 43 px; 72 left 29 px empty');
+moved('p2', 'tbl_ledger', [1112, 368, 752, 240], 'the ledger needs 227 px with the v10 columns and copy (header 28, rows 45 / 45 / 64 / 45); still ends at 608');
 
 
 /* ===================================================================== copy helpers */
@@ -423,8 +428,8 @@ const rect = (x, y, w, h, fill, extra = '') => `<rect x="${x.toFixed(1)}" y="${y
 const _cv = document.createElement('canvas').getContext('2d');
 const textW = (str, px = 16, wt = 400) => { _cv.font = `${wt} ${px}px ${getComputedStyle(document.body).getPropertyValue('--font')}`; return _cv.measureText(str).width; };
 const mTick = t => (t < 0 ? MINUS : t > 0 ? '+' : '') + '$' + Math.abs(t) + 'M';
-function niceTicks(min, max) {            // a native auto axis, always with a tick below zero (P-5)
-  min = Math.min(min, 0); max = Math.max(max, 0);
+function niceTicks(min, max, head = 0) {  // a native auto axis, always with a tick below zero (P-5); head = room above the top line
+  min = Math.min(min, 0); max = Math.max(max, 0); max += (max - min) * head;
   const span = (max - min) || 1, raw = span / 5, mag = 10 ** Math.floor(Math.log10(raw));
   const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => span / s <= 6);
   let lo = Math.floor(min / step) * step; const hi = Math.ceil(max / step) * step;
@@ -527,9 +532,10 @@ R.ch_f2_ota = () => {
   TREND.forEach((y, i) => (s += tx(X(i), y1 + 15, y, {a:'middle'})));
   return s + '</svg>';
 };
+const FOLIO_COLS = [216, 172, 172];
 R.tbl_f2_folio = () => {
   const f = FOLIO, row = (l, a, b, last) => `<tr style="height:28px"><td>${l}</td><td class="r">${a}</td><td class="r">${b}</td></tr>`;
-  return `<table class="pbi rules"><colgroup><col style="width:216px"><col style="width:172px"><col style="width:172px"></colgroup>
+  return `<table class="pbi rules"><colgroup>${FOLIO_COLS.map(w => `<col style="width:${w}px">`).join('')}</colgroup>
     <tr style="height:28px"><th>One room night, 2025</th><th class="r">Via an online agency</th><th class="r">Direct, web and app</th></tr>
     ${row('The guest pays', usd2(f.o.pay), usd2(f.d.pay))}${row('Commission and fees', usd2(-f.o.fee), usd2(-f.d.fee))}${row('Goodnight Inn keeps', usd2(f.o.keep), usd2(f.d.keep))}</table>`;
 };
@@ -582,24 +588,82 @@ R.ch_f4_avg = () => {
   F4ROWS.forEach(([t, r]) => { const x = F4.X(DATA.location[t].occ), y = F4.Y(r); s += `<path d="M${x} ${y - 7} L${x + 7} ${y} L${x} ${y + 7} L${x - 7} ${y} Z" fill="${C.dusk}"/>`; });
   return s + '</svg>';
 };
-R.ch_f4_dots = () => {
-  let s = svgOpen(F4.w, F4.h);
+let F4_FIRST_SIGN = 1;   // which of two close neighbours goes up; chosen by placeF4Labels (doc 21 leaves it open)
+function f4Points(first = F4_FIRST_SIGN) {
   const pts = [];
   F4ROWS.forEach(([t, r]) => {
     const row = DATA.hotels.filter(h => h.type === t).sort((a, b) => b.occ - a.occ);
-    let sign = 1;
+    let sign = first;
     row.forEach((h, i) => {          // F4 Row Y: +-0.3 where the neighbour in the row is within one point
       const near = (i > 0 && row[i - 1].occ - h.occ < 0.01) || (i < row.length - 1 && h.occ - row[i + 1].occ < 0.01);
       const off = near ? (sign = -sign, 0.3 * sign) : 0;
       pts.push({h, x:F4.X(h.occ), y:F4.Y(r + off)});
     });
   });
+  return pts;
+}
+R.ch_f4_dots = () => {
+  let s = svgOpen(F4.w, F4.h);
+  const pts = f4Points();
   pts.sort((a, b) => TOP7.has(a.h.id) - TOP7.has(b.h.id));
   pts.forEach(p => (s += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="5" fill="${TOP7.has(p.h.id) ? C.night : C.grey}"/>`));
-  pts.filter(p => TOP7.has(p.h.id) || p.h.id === KINGSTON.id)
-     .forEach(p => (s += tx(p.x, p.y - 17, shortHotel(p.h.name), {a:'middle', fill:C.night, cls:'lbl'})));
   return s + '</svg>';
 };
+// v10: the eight names as fixed text boxes beside their dots (S-4 in the comp: native category labels above the dots
+// collided and the airport row's names left the visual). P1 does not follow the scenario, so the dots never move and the
+// boxes can be static slots. Names as the copy says them: Toronto, Gatwick, Montréal; the rest without "Airport". Two
+// labelled hotels within one point in the same row share one label ("Gatwick, Montréal").
+const F4_COPY_NAME = {'Toronto Pearson Airport':'Toronto', 'London Gatwick Airport':'Gatwick', 'Montréal-Trudeau Airport':'Montréal'};
+const f4Name = h => F4_COPY_NAME[h.name] || shortHotel(h.name);
+const F4_ISSUES = [];
+function placeF4Labels() {
+  // Search for a placement with no name on another name, on a dot or a row marker, or outside the plot; small backtracking
+  // over 12 candidate spots per name, for both ways of splitting the close neighbours.
+  const page = PAGE.p1, base = SLOTS[page].ch_f4_dots, th = 21;
+  const box = (x, y, w, h) => ({x, y, w, h});
+  const hit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+  let bestRun = null;
+  for (const first of [1, -1]) {
+    const pts = f4Points(first);
+    const obstacles = pts.map(p => box(p.x - 6, p.y - 6, 12, 12));
+    F4ROWS.forEach(([t, r]) => { const x = F4.X(DATA.location[t].occ), y = F4.Y(r); obstacles.push(box(x - 8, y - 8, 16, 16)); });
+    obstacles.push(box(F4.X(0.9) + 3, F4.plotH - 21, 40, 22));               // the constant line's "90%"
+    // labelled hotels; two in one row within one point share one label (Gatwick 90.4% and Montréal 90.2% sit 4 px apart)
+    const lab = pts.filter(p => TOP7.has(p.h.id) || p.h.id === KINGSTON.id).sort((a, b) => b.h.occ - a.h.occ);
+    const groups = [];
+    for (const p of lab) {
+      const g = groups.find(g => g[0].h.type === p.h.type && Math.abs(g[g.length - 1].h.occ - p.h.occ) < 0.01);
+      g ? g.push(p) : groups.push([p]);
+    }
+    const items = groups.map(g => {
+      const name = g.map(p => f4Name(p.h)).join(', '), tw = Math.ceil(textW(name));
+      const xs = g.map(p => p.x), ys = g.map(p => p.y), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys), ym = (y0 + y1) / 2, xm = (x0 + x1) / 2;
+      const c = [];
+      for (const dy of [0, -8, 8]) { c.push(['right', x1 + 9, ym - th / 2 + dy]); c.push(['left', x0 - 9 - tw, ym - th / 2 + dy]); }
+      for (const dx of [0, -tw / 3, tw / 3]) { c.push(['below', xm - tw / 2 + dx, y1 + 8]); c.push(['above', xm - tw / 2 + dx, y0 - 8 - th]); }
+      const ok = c.map(([pos, x, y]) => ({pos, b:box(x, y, tw, th)}))
+        .filter(o => o.b.x >= 0 && o.b.y >= 0 && o.b.x + o.b.w <= F4.w && o.b.y + o.b.h <= F4.plotH && !obstacles.some(ob => hit(o.b, ob)));
+      return {g, name, tw, ok};
+    });
+    const pick = [];
+    const solve = i => {
+      if (i === items.length) return true;
+      for (const o of items[i].ok) if (!pick.some(q => hit(q.b, o.b))) { pick.push(o); if (solve(i + 1)) return true; pick.pop(); }
+      return false;
+    };
+    if (solve(0)) { bestRun = {first, items, pick:pick.slice()}; break; }
+  }
+  F4_ISSUES.length = 0;
+  if (!bestRun) { F4_ISSUES.push('no placement of the eight names without an overlap'); return; }
+  F4_FIRST_SIGN = bestRun.first;
+  bestRun.items.forEach((it, i) => {
+    const o = bestRun.pick[i], name = it.name;
+    const key = 'lbl_f4_' + name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]+/g, '_').replace(/^_|_$/g, '');
+    SLOTS[page][key] = {x:Math.round(base.x + o.b.x), y:Math.round(base.y + o.b.y - 1.5), w:it.tw + 4, h:24, deco:1, computedX:true, place:o.pos};
+    if (!ORDER[page].includes(key)) ORDER[page].splice(ORDER[page].indexOf('ch_f4_dots') + 1, 0, key);
+    R[key] = () => T(esc(name), 'f16 night');
+  });
+}
 R.z_footer = () => T('Source: Pillow &amp; Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores weighted by survey responses; 2021 is a depressed base year.', 'f16 dusk');
 R.btn_next = () => `<button type="button" class="btn sm light-pri" data-act="page:p2"><span class="c">Next: what we fund, and why →</span></button>`;
 R.chip_def = R.chip_def2 = () => T('<span class="i">ⓘ</span> Definitions');
@@ -667,14 +731,16 @@ function ledgerRows(s) {
   return [
     ['F2 The middleman', 'distribution cost, % of room revenue', 'booking app with member rates', d25.toFixed(1) + '%', d32.toFixed(1) + '%', `${fracWord((d25 - d32) / (d25 - d21))} the rise since 2021 undone`],
     ['F1 The margin', 'operating margin after commissions', 'app + revenue management + kiosks', m25.toFixed(1) + '%', m32.toFixed(1) + '%', `${fracWord((m32 - m25) / (m23 - m25))} the fall since 2023 recovered`],
-    ['F4 Where we are full', `self check-in at the ${k.hotels} busiest hotels · rooms added`, `kiosks live ${mon(k.live)}; guest score ${sgn(sat)}${Math.abs(sat).toFixed(2)} there (dataset units)`, `0 of ${k.hotels} · 0`, `${k.hotels} of ${k.hotels} · 0`, 'rooms decided at the 2028 gate'],
-    ['F3 The fading welcome', `refresh of the ${P['GI-07'].hotels} oldest hotels`, `why: it earns ${pct1(T3.yld[s])} a year on cost, ${cmpWord(T3.yld[s])} our ${pct0(E.discount)} cost of money`, 'not started', 'not started', 'deferred to the 2028 gate']
+    // v10: F4's measure was "self check-in at the 20 busiest hotels · rooms added" (the "of 20" sits in the values)
+    ['F4 Where we are full', 'self check-in hotels · rooms added', `kiosks live ${mon(k.live)}; guest score ${sgn(sat)}${Math.abs(sat).toFixed(2)} there (dataset units)`, `0 of ${k.hotels} · 0`, `${k.hotels} of ${k.hotels} · 0`, 'rooms decided at the 2028 gate'],
+    ['F3 The fading welcome', `refresh of the ${P['GI-07'].hotels} oldest hotels`, 'why: see What waits, and why', 'not started', 'not started', 'deferred to the 2028 gate']   // doc 20: "why: R-W-2"
   ];
 }
 const cmpWord = y => (y >= E.discount ? 'above' : E.discount - y < 0.01 ? 'just under' : 'under');
+const LEDGER_COLS = [112, 280, 88, 96, 176];   // doc 21: 176, 248, 72, 96, 160
 R.tbl_ledger = () => {
   const rows = ledgerRows(ST.scen).map(r => `<tr style="height:45px"><td>${esc(r[0])}</td><td class="dusk">${esc(r[1])}<br>${esc(r[2])}</td><td>${esc(r[3])}</td><td>${esc(r[4])}</td><td>${esc(r[5])}</td></tr>`).join('');
-  return `<table class="pbi rules ledger"><colgroup>${[176, 248, 72, 96, 160].map(w => `<col style="width:${w}px">`).join('')}</colgroup>
+  return `<table class="pbi rules ledger"><colgroup>${LEDGER_COLS.map(w => `<col style="width:${w}px">`).join('')}</colgroup>
     <tr style="height:28px"><th>Finding</th><th>What we track</th><th>2025</th><th>2032 with A</th><th>Status</th></tr>${rows}</table>`;
 };
 R.c_ledger_caption = () => T("2025 brand plus A's full yearly effect, in 2025 dollars.", 'f16 dusk');
@@ -686,9 +752,9 @@ R.c_plan_t2 = () => { const s = ST.scen; return T(`Tranche 2 · Gatwick and Toro
 R.c_plan_t3 = () => { const s = ST.scen; return T(`Tranche 3 · the refresh<br>${fm(T3.capex)} · 2028 gate<br>${sfm(T3.rr[s])} a year once live · ${pct1(T3.yld[s])} a year on cost`, 'f16 night'); };
 R.c_plan_t4 = () => T(`Not needed · ${fm(T4CAP)}`, 'f16 night');
 R.ch_plan_bar = () => {
-  const w = 1808, h = 32, segs = [[A.capex, C.blue, C.night], [T2.capex, C.night, C.white], [T3.capex, C.night60, C.white], [T4CAP, C.grey, C.night]];
-  let s = svgOpen(w, h), x = 0;
-  for (const [v, f, ink] of segs) { const sw = v / BUDGET * w; s += rect(x, 0, sw, h, f); s += tx(x + sw / 2, h / 2, fm(v), {a:'middle', fill:ink, cls:'lbl'}); x += sw; }
+  const w = 1808, h = 32, segs = [[A.capex, C.blue], [T2.capex, C.night], [T3.capex, C.night60], [T4CAP, C.grey]];
+  let s = svgOpen(w, h), x = 0;   // v10: data labels off; the amounts sit in c_plan_t1..t4 directly above each segment
+  for (const [v, f] of segs) { const sw = v / BUDGET * w; s += rect(x, 0, sw, h, f); x += sw; }
   return s + '</svg>';
 };
 R.c_plan_gate = () => {
@@ -697,15 +763,20 @@ R.c_plan_gate = () => {
 };
 function cumSVG(o) {
   // o: w, h, series [{vals, color, width, dash, label, labelColor, bold}], ticks {lo,hi,ticks}, gate (bool)
-  const w = o.w, h = o.h, x0 = 72, x1 = w - (o.padR || 170), y0 = o.padT || 14, y1 = h - 28;
-  const X = yr => x0 + (yr - 2027) / 5 * (x1 - x0), Y = v => y1 - (v - o.ticks.lo) / (o.ticks.hi - o.ticks.lo) * (y1 - y0);
+  const w = o.w, h = o.h, x0 = 72, x1 = w - 8, y0 = o.padT || 14, y1 = h - 28, xMax = o.xMax || 2032.6;
+  const X = yr => x0 + (yr - 2027) / (xMax - 2027) * (x1 - x0), Y = v => y1 - (v - o.ticks.lo) / (o.ticks.hi - o.ticks.lo) * (y1 - y0);
   let s = svgOpen(w, h);
-  for (const t of o.ticks.ticks) { if (t !== 0) s += ln(x0, Y(t), x1, Y(t), C.hair); s += tx(x0 - 8, Y(t), mTick(t), {a:'end'}); }
-  s += ln(x0, Y(0), x1, Y(0), C.dusk);
+  for (const t of o.ticks.ticks) { if (t !== 0) s += ln(x0, Y(t), X(2032), Y(t), C.hair); s += tx(x0 - 8, Y(t), mTick(t), {a:'end'}); }
+  s += ln(x0, Y(0), X(2032), Y(0), C.dusk);
   s += tx(x0 + 6, Y(0) - 12, 'Cash positive above this line', {cls:'lbl', fill:C.dusk});
   if (o.gate) { const gx = X(2028.5); s += ln(gx, y0, gx, y1, C.night, 1, '5 4'); s += tx(gx + 6, y0 + 8, 'The 2028 gate', {cls:'lbl', fill:C.night}); }
   for (const sr of o.series) s += path(sr.vals.map((v, i) => [X(2027 + i), Y(v / 1e6)]), sr.color, sr.width, sr.dash || '');
-  for (const sr of o.series) if (sr.label) s += tx(x1 + 10, Y(sr.vals[5] / 1e6), sr.label, {cls:'lbl', fill:sr.labelColor || C.dusk, w:sr.bold ? 600 : 400});
+  for (const sr of o.series) if (sr.label) {     // P-5 in one label: name and value from the label-safe format string, position per series
+    const lx = X(2032), ly = Y(sr.vals[5] / 1e6), pos = sr.pos || 'right', wt = sr.bold ? 600 : 400, tw = textW(sr.label, 16, wt);
+    const cx = pos === 'right' ? lx + 8 + tw / 2 : lx, cy = pos === 'above' ? ly - 15 : pos === 'below' ? ly + 15 : ly;
+    s += rect(cx - tw / 2 - 3, cy - 11, tw + 6, 22, '#FFFFFF');
+    s += tx(cx, cy, sr.label, {a:'middle', cls:'lbl', fill:sr.labelColor || C.dusk, w:wt});
+  }
   for (let yr = 2027; yr <= 2032; yr++) s += tx(X(yr), y1 + 16, String(yr), {a:'middle'});
   return s + '</svg>';
 }
@@ -715,7 +786,7 @@ R.ch_plan_cum = () => {
       ? {vals:A.cum[c], color:C.blue, width:3, label:endLab(c, A.cum[c][5]), labelColor:C.blueT, bold:true}
       : {vals:A.cum[c], color:C.grey, width:1.5, dash:c === 'Low' ? '6 4' : c === 'High' ? '1.5 3' : '', label:endLab(c, A.cum[c][5])});   // Low dashed, High dotted (6.3); Expected thin solid when not in view
   ser.sort((a, b) => (a.color === C.blue) - (b.color === C.blue));
-  return cumSVG({w:1072, h:148, series:ser, ticks:{lo:-10, hi:20, ticks:[-10, 0, 10, 20]}, gate:true, padT:18, padR:160});
+  return cumSVG({w:1072, h:148, series:ser, ticks:{lo:-10, hi:20, ticks:[-10, 0, 10, 20]}, gate:true, padT:18, xMax:2032.8});
 };
 R.c_plan_milestones = () => {
   const s = ST.scen, pb = A.pb[s];
@@ -790,11 +861,11 @@ function chartWithTitle(title, draw) {
 }
 R.ch_cmp_alts = () => {
   const s = ST.scen;
-  const ser = [{vals:PC.cum[s], color:C.grey, width:2, dash:'7 5', label:endLab('C', PC.cum[s][5])},
-               {vals:B.cum[s], color:C.night, width:2, label:endLab('B', B.cum[s][5])},
-               {vals:A.cum[s], color:C.blue, width:3, label:endLab('A', A.cum[s][5]), labelColor:C.blueT, bold:true}];
+  const ser = [{vals:PC.cum[s], color:C.grey, width:2, dash:'7 5', label:endLab('C', PC.cum[s][5]), pos:'below'},
+               {vals:B.cum[s], color:C.night, width:2, label:endLab('B', B.cum[s][5]), pos:'below'},
+               {vals:A.cum[s], color:C.blue, width:3, label:endLab('A', A.cum[s][5]), labelColor:C.blueT, bold:true, pos:'above'}];
   const all = ser.flatMap(x => x.vals.map(v => v / 1e6));
-  return chartWithTitle(cmpAltsTitle(s), (w, h) => cumSVG({w, h, series:ser, ticks:niceTicks(Math.min(...all), Math.max(...all))}));
+  return chartWithTitle(cmpAltsTitle(s), (w, h) => cumSVG({w, h, series:ser, ticks:niceTicks(Math.min(...all), Math.max(...all), 0.08)}));
 };
 
 /* ===================================================================== P2 Build your own (8) */
@@ -864,10 +935,10 @@ function cmpBuildTitle(s) {
   return `Your plan against A, $M (${s} case): yours ends ${lvl} in 2032${b.pb[s] ? ', cash positive from ' + b.pb[s] : ' and is not cash positive by 2032'}`;
 }
 R.ch_cmp_build = () => {
-  const s = ST.scen, ser = [{vals:A.cum[s], color:C.blue, width:3, label:'A', labelColor:C.blueT, bold:true}];
-  if (ST.picked.size) { const b = buildPlan(); ser.push({vals:b.cum[s], color:b.capex > BUDGET ? C.tang : C.night, width:3, label:'You', labelColor:C.night, bold:true}); }
+  const s = ST.scen, ser = [{vals:A.cum[s], color:C.blue, width:3, label:'A', labelColor:C.blueT, bold:true, pos:'above'}];
+  if (ST.picked.size) { const b = buildPlan(); ser.unshift({vals:b.cum[s], color:b.capex > BUDGET ? C.tang : C.night, width:3, label:'You', labelColor:C.night, bold:true, pos:'below'}); }
   const all = ser.flatMap(x => x.vals.map(v => v / 1e6));
-  return chartWithTitle(cmpBuildTitle(s), (w, h) => cumSVG({w, h, series:ser, ticks:niceTicks(Math.min(...all), Math.max(...all))}));
+  return chartWithTitle(cmpBuildTitle(s), (w, h) => cumSVG({w, h, series:ser, ticks:niceTicks(Math.min(...all), Math.max(...all), 0.08)}));
 };
 
 /* ===================================================================== render */
@@ -932,6 +1003,7 @@ function check() {
     }
     el.querySelectorAll('svg.chart').forEach(svg => labels(svg, name, out));
   });
+  if (ST.page === 'p1' && F4_ISSUES.length) out.push({name:'lbl_f4_*', kind:'red', note:F4_ISSUES.join('; ')});
   return out;
 }
 function fmtOver(dx, dy, c) {
@@ -1038,6 +1110,8 @@ function slotMap() {
       'state: absent = always visible; a list = shown only in those states (bm_p2_rec / bm_p2_alts / bm_p2_build). ' +
       'z and tab: v9 values where the name existed; new slots carry proposed values in reading order (negative tab = decorative); opzet-layering.json decides (doc 21 11.2). ' +
       'hero_s_packages is the rect of the whole small stack (_named, _build, _hover derive from it); ch_f4_avg and ch_f4_dots share one rect. lbl_hero_8 and lbl_hero_0: x computed from the hero column widths and bar domains (P-4). ' +
+      'New in v10: lbl_f4_* (P1), seven text boxes with the names of the seven fullest hotels and Kingston beside their dots, replacing the scatter category labels of doc 21 4.5 (they collided in the comp); Gatwick and Montreal share one label. ' +
+      'Table column widths, chart axis ends, label positions and the exact text per view: rebuild-v10-spec.json; rules and reasons: project-state/active/22-rebuild-comp-v10-handoff-2026-11-13.md. ' +
       `Changed against doc 21: ${changes || 'none'}. ` +
       'Tooltip pages: carried over from v9 unchanged, except tt-f1 to tt-f4, deleted (N-4); the tt-package changes of doc 21 section 9 are the builder\'s.',
     canvas: {w:1920, h:1080},
@@ -1052,6 +1126,67 @@ document.getElementById('bCopy').addEventListener('click', () => {
     navigator.clipboard.writeText(json).then(() => { panel.hidden = true; toast.textContent = 'Slot map copied (' + Math.round(json.length / 1024) + ' KB).'; }, fallback);
   } catch (e) { fallback(); }
 });
+
+/* ===================================================================== build spec (exported to rebuild-v10-spec.json) */
+function buildSpec() {
+  const slot = n => { const s = SLOTS[PAGE.p1][n] || SLOTS[PAGE.p2][n]; return [s.x, s.y, s.w, s.h]; };
+  return {
+    text_metrics: {font:'Segoe UI 400 and Segoe UI Semibold 600', line_height:'1.33 x font size: 12 pt (16 px) = 21.3 px, 14 pt = 24.9 px, 20 px = 26.6 px, 28 pt = 49.6 px',
+      lines_to_height:{'1':24, '2':48, '3':64, '4':88}, overflow_rule:'a text slot is too small when its lines need more than 2 px beyond its height'},
+    formatters:{money:'$ + one decimal + M; two decimals only when one decimal would show 0.0 (+$0.03M)', sign:'+ or U+2212, then U+2060 WORD JOINER, then $ (Chrome and Power BI otherwise break the line after the minus)', percent:'one decimal + %', points:'pt'},
+    tables:{
+      tbl_hero:{cols:HERO_COLS, header_h:32, row_h:34, row_padding:0, grid:'one hairline (Dusk) under the header, nothing else', word_wrap:false,
+        columns:['Move (Move Name, Night)', 'Answers (Dusk)', 'Status (A #1763A8, 2028 gate Night, not now Dusk)', 'A year on cost bar (SVG 196 x 34)', 'value (right)', 'NPV through 2032 bar (SVG 180 x 34)', 'value (right; negative Burnt Tangerine)'],
+        bar_cell:{inset_px:BAR_INSET, bar_y:8, bar_h:18, fill:'Move Status Color: A #2589D8, 2028 gate #12233D, not now #8E897D', ref_line:'1 px #12233D, full height'},
+        yield_domain:YDOM, yield_ref:E.discount, npv_domain_usd:NDOM, npv_ref:0,
+        ref_label_x:{lbl_hero_8:slot('lbl_hero_8')[0], lbl_hero_0:slot('lbl_hero_0')[0] + slot('lbl_hero_0')[2]}},
+      tbl_ledger:{cols:LEDGER_COLS, header_h:28, row_min_h:45, word_wrap:true, line_breaks:'UNICHAR(10) between measure and moves', rows_need_px:[45, 45, 64, 45], total_px:227},
+      tbl_waits:{cols:WAITS_COLS, header_h:32, word_wrap:true, cell_padding_v:6, grid:'hairline between rows'},
+      tbl_moves:{cols:MOVES_COLS, header_h:32, row_h:32, aligns_with:'sl_moves rows (32 px each, from y 280)'},
+      tbl_f2_folio:{cols:FOLIO_COLS, header_h:28, row_h:28}
+    },
+    charts:{
+      ch_plan_cum:{y:[-10, 20], ticks:[-10, 0, 10, 20], x:[2027, 2032], x_axis_end:2032.8, gate_line:2028.5,
+        end_labels:'one data label on 2032 per line, text "Low −$4.6M" from the label-safe format string, position Right, white background; selected case #1763A8 semibold'},
+      ch_cmp_alts:{y:'auto, one tick below zero, 8% headroom above the top line', x_axis_end:2032.6,
+        end_labels:{A:'Above', B:'Below', C:'Below'}, label_text:'"A +$6.8M" from the label-safe format string', label_background:'white', legend:false, series_labels:false},
+      ch_cmp_build:{y:'auto, as ch_cmp_alts', x_axis_end:2032.6, end_labels:{A:'Above', You:'Below'}, label_text:'"A", "You"'},
+      ch_plan_bar:{segments:['Tranche 1 #2589D8', 'Tranche 2 #12233D', 'Tranche 3 #717B8B (Night at 60%)', 'Not needed #8E897D'], data_labels:false,
+        why:'the amounts sit in c_plan_t1..t4 above each segment; in-bar labels repeated them and two failed 4.5:1'},
+      ch_f4:{x:[F4.dom[0], F4.dom[1]], x_ticks:'60% to 95% by 5', constant_line:0.9, y:[0.5, 3.5], rows:{Airport:3, City:2, Highway:1},
+        close_neighbours:'F4 Row Y: hotels within one point of a neighbour in the same row alternate ' + (F4_FIRST_SIGN > 0 ? '-0.3, +0.3, -0.3' : '+0.3, -0.3, +0.3') + ' ... in order of 2025 occupancy (so Gatwick sits 0.3 below the Airport row and Montreal 0.3 above)',
+        category_labels:false, names:'seven text boxes lbl_f4_* (static: P1 does not follow the scenario)',
+        name_slots:Object.fromEntries(ORDER[PAGE.p1].filter(n => n.startsWith('lbl_f4_')).map(n => [n, {rect:slot(n), text:R[n]().replace(/<[^>]+>/g, '').replace(/&amp;/g, '&'), side:SLOTS[PAGE.p1][n].place}]))},
+      ch_build_bars:{orientation:'horizontal', sort:'NPV descending', fill:'positive #12233D, negative #E05A22', value_axis:false, category_axis:'auto width', labels:'P-1 label-safe, outside end'},
+      hero_s_packages:{x:[5, 62], x_ticks:'$10M to $60M by 10', y:[-60, 20], y_ticks:'by 10', band:'0 to +20, #EAF2FB, "Pays back by 2032"', discs:'A #2589D8, B and C #12233D, r 11, white letter',
+        you:'Night marker r 6 (Tangerine over budget) drawn under the discs; "You" label above it on white'}
+    }
+  };
+}
+window.__spec = buildSpec;
+window.__texts = function () {
+  const keep = {page:ST.page, state:ST.state, scen:ST.scen, slots:ST.slots, picked:new Set(ST.picked)};
+  ST.slots = false;
+  const clean = t => t.replace(/⁠/g, '').replace(/[ \t]+\n/g, '\n').trim();
+  const grab = () => {
+    const o = {};
+    stage.querySelectorAll('.s').forEach(el => {
+      const n = el.dataset.name, s = SLOTS[PAGE[ST.page]][n];
+      if (s.kind) return;
+      const t = el.querySelector(':scope > table');
+      if (t) o[n] = [...t.rows].map(r => [...r.cells].map(c => clean(c.innerText)));
+      else if (el.querySelector('svg.chart')) { const l = [...el.querySelectorAll('svg text.lbl')].map(x => clean(x.textContent)); const ti = el.querySelector('.ctitle'); if (ti || l.length) o[n] = ti ? {title:clean(ti.innerText), labels:l} : {labels:l}; }
+      else { const tx = clean(el.innerText); if (tx) o[n] = tx; }
+    });
+    return o;
+  };
+  const out = {};
+  ST.page = 'p1'; render(); out['P1'] = grab();
+  for (const st of ['rec', 'alts', 'build']) for (const sc of SCEN) { ST.page = 'p2'; ST.state = st; ST.scen = sc; render(); out[`P2 ${st} ${sc}`] = grab(); }
+  ST.picked = new Set(); ST.state = 'build'; ST.scen = 'Expected'; render(); out['P2 build Expected, nothing picked'] = grab();
+  Object.assign(ST, keep); render();
+  return out;
+};
 
 /* ===================================================================== the full check: 4 screens x 3 scenarios */
 function audit() {
@@ -1083,8 +1218,10 @@ function audit() {
 /* ===================================================================== boot */
 route();
 scale();
+placeF4Labels();
 const ready = document.fonts && document.fonts.load ? Promise.all([document.fonts.load('16px "GI Text"'), document.fonts.load('600 16px "GI Text"')]).catch(() => null) : Promise.resolve();
 ready.then(() => (document.fonts ? document.fonts.ready : null)).then(() => {
+  placeF4Labels();
   window.__audit = audit();
   render();
   scale();

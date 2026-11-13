@@ -1,0 +1,1533 @@
+{
+ "_doc": "Slot map v10 of 2026-11-13, copied from project/design-prototypes/rebuild-comp-v10.html (the comp of doc 21 section 12). Slots and names of doc 21 sections 4 to 8; same shape as v9. Cards: P1 ids unchanged, P2 ids hero, decision (rec), scatter_s, panel_w (alts, build) and bottom (all states, never a bookmark target); tile you (outline, build). state: absent = always visible; a list = shown only in those states (bm_p2_rec / bm_p2_alts / bm_p2_build). z and tab: v9 values where the name existed; new slots carry proposed values in reading order (negative tab = decorative); opzet-layering.json decides (doc 21 11.2). hero_s_packages is the rect of the whole small stack (_named, _build, _hover derive from it); ch_f4_avg and ch_f4_dots share one rect. lbl_hero_8 and lbl_hero_0: x computed from the hero column widths and bar domains (P-4). New in v10: lbl_f4_* (P1), seven text boxes with the names of the seven fullest hotels and Kingston beside their dots, replacing the scatter category labels of doc 21 4.5 (they collided in the comp); Gatwick and Montreal share one label. Table column widths, chart axis ends, label positions and the exact text per view: rebuild-v10-spec.json; rules and reasons: project-state/active/22-rebuild-comp-v10-handoff-2026-11-13.md. Changed against doc 21: lbl_hero_8 574,220,176,20 -> 574,216,176,24 (12 pt needs a 21 px line; 20 px clipped it. Up 4 px, still clear of the hero title (184 to 216)); lbl_hero_0 757,220,168,20 -> 757,216,168,24 (same as lbl_hero_8); c_ledger_caption 1112,616,440,24 -> 1112,616,408,24 (gives 32 px to the invitation button; the caption needs 368 px); btn_build_invite 1560,612,304,28 -> 1528,612,336,28 (the label wraps in 304 px (needs about 310 with the button padding)); c_plan_t1 56,724,275,60 -> 56,720,275,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_plan_t2 339,724,366,60 -> 339,720,366,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_plan_t3 713,724,881,60 -> 713,720,881,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_plan_t4 1602,724,262,60 -> 1602,720,262,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_you_nums 1384,304,464,56 -> 1384,304,464,72 (four callouts in 464 px: \"NPV through 2032\" wraps to two lines, so the card needs 72); c_you_range 1384,368,464,24 -> 1384,384,464,24 (follows c_you_nums down 16 px); c_you_rules 1384,392,464,40 -> 1384,408,464,48 (follows c_you_nums down 16 px, and 8 px taller: the R-B-2 sentence of the empty state takes two lines (43 px)); ch_build_bars 1384,440,464,192 -> 1384,464,464,168 (follows c_you_rules down 24 px; still ends at 632 inside the tile); c_rec_head 1160,184,704,56 -> 1160,184,704,48 (two paragraphs need 48 px (20 px head + one 12 pt line); frees 8 px for the ledger); c_rec_nums 1112,248,752,64 -> 1112,240,752,64 (follows c_rec_head up 8 px); c_rec_lines 1112,320,752,72 -> 1112,312,752,48 (its two lines need 43 px; 72 left 29 px empty); tbl_ledger 1112,400,752,208 -> 1112,368,752,240 (the ledger needs 227 px with the v10 columns and copy (header 28, rows 45 / 45 / 64 / 45); still ends at 608). Tooltip pages: carried over from v9 unchanged, except tt-f1 to tt-f4, deleted (N-4); the tt-package changes of doc 21 section 9 are the builder's.",
+ "canvas": {
+  "w": 1920,
+  "h": 1080
+ },
+ "pages": [
+  {
+   "name": "p1-brand-review",
+   "displayName": "The Brand Review",
+   "cards": [
+    {
+     "id": "card_kpi",
+     "x": 32,
+     "y": 168,
+     "w": 1856,
+     "h": 120
+    },
+    {
+     "id": "card_f1",
+     "x": 32,
+     "y": 312,
+     "w": 608,
+     "h": 464
+    },
+    {
+     "id": "card_f2",
+     "x": 656,
+     "y": 312,
+     "w": 608,
+     "h": 464
+    },
+    {
+     "id": "card_f3",
+     "x": 1280,
+     "y": 312,
+     "w": 608,
+     "h": 464
+    },
+    {
+     "id": "card_f4",
+     "x": 32,
+     "y": 800,
+     "w": 1856,
+     "h": 224
+    }
+   ],
+   "logo": {
+    "x": 32,
+    "y": 12,
+    "w": 200,
+    "h": 40,
+    "tab": 10
+   },
+   "visuals": [
+    {
+     "name": "z_eyebrow",
+     "x": 248,
+     "y": 20,
+     "w": 640,
+     "h": 24,
+     "z": 1004,
+     "tab": 20
+    },
+    {
+     "name": "z_headline",
+     "x": 32,
+     "y": 60,
+     "w": 1856,
+     "h": 48,
+     "z": 1001,
+     "tab": 100
+    },
+    {
+     "name": "c_subtitle",
+     "x": 32,
+     "y": 108,
+     "w": 1856,
+     "h": 24,
+     "z": 1002,
+     "tab": 110
+    },
+    {
+     "name": "kpi_occ",
+     "x": 56,
+     "y": 176,
+     "w": 416,
+     "h": 96,
+     "z": 1010,
+     "tab": 200
+    },
+    {
+     "name": "kpi_margin",
+     "x": 520,
+     "y": 176,
+     "w": 416,
+     "h": 96,
+     "z": 1011,
+     "tab": 210
+    },
+    {
+     "name": "kpi_ota",
+     "x": 984,
+     "y": 176,
+     "w": 416,
+     "h": 96,
+     "z": 1012,
+     "tab": 220
+    },
+    {
+     "name": "kpi_nps",
+     "x": 1448,
+     "y": 176,
+     "w": 416,
+     "h": 96,
+     "z": 1013,
+     "tab": 230
+    },
+    {
+     "name": "c_f1_kicker",
+     "x": 56,
+     "y": 328,
+     "w": 560,
+     "h": 24,
+     "z": 1020,
+     "tab": 300
+    },
+    {
+     "name": "c_f1_title",
+     "x": 56,
+     "y": 352,
+     "w": 560,
+     "h": 32,
+     "z": 1021,
+     "tab": 310
+    },
+    {
+     "name": "ch_f1_margin",
+     "x": 56,
+     "y": 392,
+     "w": 560,
+     "h": 248,
+     "z": 1022,
+     "tab": 320
+    },
+    {
+     "name": "c_f1_note",
+     "x": 56,
+     "y": 648,
+     "w": 560,
+     "h": 72,
+     "z": 1023,
+     "tab": 330
+    },
+    {
+     "name": "lnk_f1",
+     "x": 56,
+     "y": 728,
+     "w": 560,
+     "h": 24,
+     "z": 1012,
+     "tab": 220
+    },
+    {
+     "name": "c_f2_kicker",
+     "x": 680,
+     "y": 328,
+     "w": 560,
+     "h": 24,
+     "z": 1030,
+     "tab": 400
+    },
+    {
+     "name": "c_f2_title",
+     "x": 680,
+     "y": 352,
+     "w": 560,
+     "h": 32,
+     "z": 1031,
+     "tab": 410
+    },
+    {
+     "name": "ch_f2_ota",
+     "x": 680,
+     "y": 392,
+     "w": 560,
+     "h": 144,
+     "z": 1032,
+     "tab": 420
+    },
+    {
+     "name": "tbl_f2_folio",
+     "x": 680,
+     "y": 544,
+     "w": 560,
+     "h": 112,
+     "z": 1033,
+     "tab": 430
+    },
+    {
+     "name": "c_f2_note",
+     "x": 680,
+     "y": 664,
+     "w": 560,
+     "h": 72,
+     "z": 1034,
+     "tab": 440
+    },
+    {
+     "name": "lnk_f2",
+     "x": 680,
+     "y": 736,
+     "w": 560,
+     "h": 24,
+     "z": 1018,
+     "tab": 280
+    },
+    {
+     "name": "c_f3_kicker",
+     "x": 1304,
+     "y": 328,
+     "w": 400,
+     "h": 24,
+     "z": 1040,
+     "tab": 500
+    },
+    {
+     "name": "tag_f3",
+     "x": 1720,
+     "y": 324,
+     "w": 144,
+     "h": 28,
+     "z": 32500,
+     "tab": 8992
+    },
+    {
+     "name": "c_f3_title",
+     "x": 1304,
+     "y": 352,
+     "w": 560,
+     "h": 32,
+     "z": 1041,
+     "tab": 510
+    },
+    {
+     "name": "ch_f3_age",
+     "x": 1304,
+     "y": 392,
+     "w": 560,
+     "h": 216,
+     "z": 1042,
+     "tab": 520
+    },
+    {
+     "name": "c_f3_count",
+     "x": 1304,
+     "y": 608,
+     "w": 560,
+     "h": 24,
+     "z": 1023,
+     "tab": 330
+    },
+    {
+     "name": "c_f3_note",
+     "x": 1304,
+     "y": 640,
+     "w": 560,
+     "h": 96,
+     "z": 1043,
+     "tab": 530
+    },
+    {
+     "name": "lnk_f3",
+     "x": 1304,
+     "y": 736,
+     "w": 560,
+     "h": 24,
+     "z": 1025,
+     "tab": 350
+    },
+    {
+     "name": "c_f4_kicker",
+     "x": 56,
+     "y": 816,
+     "w": 560,
+     "h": 24,
+     "z": 1050,
+     "tab": 600
+    },
+    {
+     "name": "tag_f4",
+     "x": 1704,
+     "y": 812,
+     "w": 160,
+     "h": 28,
+     "z": 36500,
+     "tab": 8993
+    },
+    {
+     "name": "c_f4_title",
+     "x": 56,
+     "y": 840,
+     "w": 1640,
+     "h": 32,
+     "z": 1051,
+     "tab": 610
+    },
+    {
+     "name": "c_f4_note",
+     "x": 56,
+     "y": 880,
+     "w": 416,
+     "h": 48,
+     "z": 1029,
+     "tab": 390
+    },
+    {
+     "name": "lnk_f4",
+     "x": 56,
+     "y": 936,
+     "w": 416,
+     "h": 48,
+     "z": 1030,
+     "tab": 400
+    },
+    {
+     "name": "c_f4_rows",
+     "x": 496,
+     "y": 872,
+     "w": 160,
+     "h": 120,
+     "z": 1031,
+     "tab": 410
+    },
+    {
+     "name": "ch_f4_avg",
+     "x": 656,
+     "y": 872,
+     "w": 1208,
+     "h": 144,
+     "z": 1032,
+     "tab": -1032
+    },
+    {
+     "name": "ch_f4_dots",
+     "x": 656,
+     "y": 872,
+     "w": 1208,
+     "h": 144,
+     "z": 1033,
+     "tab": 430
+    },
+    {
+     "name": "lbl_f4_kingston",
+     "x": 722,
+     "y": 968,
+     "w": 67,
+     "h": 24,
+     "z": 1034,
+     "tab": -1034
+    },
+    {
+     "name": "lbl_f4_orlando",
+     "x": 1485,
+     "y": 899,
+     "w": 62,
+     "h": 24,
+     "z": 1035,
+     "tab": -1035
+    },
+    {
+     "name": "lbl_f4_kuala_lumpur",
+     "x": 1448,
+     "y": 920,
+     "w": 102,
+     "h": 24,
+     "z": 1036,
+     "tab": -1036
+    },
+    {
+     "name": "lbl_f4_kansas_city",
+     "x": 1596,
+     "y": 960,
+     "w": 84,
+     "h": 24,
+     "z": 1037,
+     "tab": -1037
+    },
+    {
+     "name": "lbl_f4_phoenix",
+     "x": 1558,
+     "y": 880,
+     "w": 61,
+     "h": 24,
+     "z": 1038,
+     "tab": -1038
+    },
+    {
+     "name": "lbl_f4_gatwick_montreal",
+     "x": 1620,
+     "y": 911,
+     "w": 132,
+     "h": 24,
+     "z": 1039,
+     "tab": -1039
+    },
+    {
+     "name": "lbl_f4_toronto",
+     "x": 1745,
+     "y": 880,
+     "w": 61,
+     "h": 24,
+     "z": 1040,
+     "tab": -1040
+    },
+    {
+     "name": "z_footer",
+     "x": 32,
+     "y": 1044,
+     "w": 1320,
+     "h": 28,
+     "z": 1090,
+     "tab": 9000
+    },
+    {
+     "name": "btn_next",
+     "x": 1376,
+     "y": 1044,
+     "w": 352,
+     "h": 28,
+     "z": 1042,
+     "tab": 520
+    },
+    {
+     "name": "chip_def",
+     "x": 1744,
+     "y": 1044,
+     "w": 144,
+     "h": 28,
+     "z": 40600,
+     "tab": 9010
+    }
+   ]
+  },
+  {
+   "name": "p2-investment-strategy",
+   "displayName": "The Investment Strategy",
+   "cards": [
+    {
+     "id": "hero",
+     "x": 32,
+     "y": 168,
+     "w": 1040,
+     "h": 488,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "id": "decision",
+     "x": 1088,
+     "y": 168,
+     "w": 800,
+     "h": 488,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "id": "scatter_s",
+     "x": 32,
+     "y": 168,
+     "w": 720,
+     "h": 488,
+     "state": [
+      "alts",
+      "build"
+     ]
+    },
+    {
+     "id": "panel_w",
+     "x": 768,
+     "y": 168,
+     "w": 1120,
+     "h": 488,
+     "state": [
+      "alts",
+      "build"
+     ]
+    },
+    {
+     "id": "bottom",
+     "x": 32,
+     "y": 672,
+     "w": 1856,
+     "h": 344
+    }
+   ],
+   "logo": {
+    "x": 32,
+    "y": 12,
+    "w": 200,
+    "h": 40,
+    "tab": 10
+   },
+   "visuals": [
+    {
+     "name": "z_eyebrow2",
+     "x": 248,
+     "y": 20,
+     "w": 480,
+     "h": 24,
+     "z": 1004,
+     "tab": 20
+    },
+    {
+     "name": "btn_back",
+     "x": 744,
+     "y": 16,
+     "w": 184,
+     "h": 28,
+     "z": 1002,
+     "tab": 120
+    },
+    {
+     "name": "z_headline2",
+     "x": 32,
+     "y": 60,
+     "w": 1160,
+     "h": 48,
+     "z": 1001,
+     "tab": 100
+    },
+    {
+     "name": "c_subtitle2",
+     "x": 32,
+     "y": 108,
+     "w": 1160,
+     "h": 48,
+     "z": 1002,
+     "tab": 110
+    },
+    {
+     "name": "tab_rec_on",
+     "x": 1224,
+     "y": 60,
+     "w": 216,
+     "h": 40,
+     "z": 1015,
+     "tab": 290,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "tab_rec_off",
+     "x": 1224,
+     "y": 60,
+     "w": 216,
+     "h": 40,
+     "z": 1015,
+     "tab": 291,
+     "state": [
+      "alts",
+      "build"
+     ]
+    },
+    {
+     "name": "tab_alts_on",
+     "x": 1448,
+     "y": 60,
+     "w": 216,
+     "h": 40,
+     "z": 1016,
+     "tab": 292,
+     "state": [
+      "alts"
+     ]
+    },
+    {
+     "name": "tab_alts_off",
+     "x": 1448,
+     "y": 60,
+     "w": 216,
+     "h": 40,
+     "z": 1016,
+     "tab": 293,
+     "state": [
+      "rec",
+      "build"
+     ]
+    },
+    {
+     "name": "tab_build_on",
+     "x": 1672,
+     "y": 60,
+     "w": 216,
+     "h": 40,
+     "z": 1017,
+     "tab": 294,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "tab_build_off",
+     "x": 1672,
+     "y": 60,
+     "w": 216,
+     "h": 40,
+     "z": 1017,
+     "tab": 295,
+     "state": [
+      "rec",
+      "alts"
+     ]
+    },
+    {
+     "name": "lbl_scenario",
+     "x": 1512,
+     "y": 112,
+     "w": 80,
+     "h": 32,
+     "z": 1018,
+     "tab": 299
+    },
+    {
+     "name": "sl_scenario",
+     "x": 1600,
+     "y": 112,
+     "w": 288,
+     "h": 32,
+     "z": 1020,
+     "tab": 300
+    },
+    {
+     "name": "c_hero_title",
+     "x": 56,
+     "y": 184,
+     "w": 992,
+     "h": 32,
+     "z": 1013,
+     "tab": 230,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "lbl_hero_8",
+     "x": 574,
+     "y": 216,
+     "w": 176,
+     "h": 24,
+     "z": 1014,
+     "tab": -1014,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "lbl_hero_0",
+     "x": 757,
+     "y": 216,
+     "w": 168,
+     "h": 24,
+     "z": 1015,
+     "tab": -1015,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "tbl_hero",
+     "x": 56,
+     "y": 240,
+     "w": 992,
+     "h": 372,
+     "z": 1016,
+     "tab": 260,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_hero_caption",
+     "x": 56,
+     "y": 616,
+     "w": 992,
+     "h": 24,
+     "z": 1017,
+     "tab": 270,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "img_rec_chip",
+     "x": 1112,
+     "y": 184,
+     "w": 40,
+     "h": 32,
+     "z": 1029,
+     "tab": 395,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_rec_head",
+     "x": 1160,
+     "y": 184,
+     "w": 704,
+     "h": 48,
+     "z": 1019,
+     "tab": 290,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_rec_nums",
+     "x": 1112,
+     "y": 240,
+     "w": 752,
+     "h": 64,
+     "z": 1032,
+     "tab": 420,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_rec_lines",
+     "x": 1112,
+     "y": 312,
+     "w": 752,
+     "h": 48,
+     "z": 1021,
+     "tab": 310,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "tbl_ledger",
+     "x": 1112,
+     "y": 368,
+     "w": 752,
+     "h": 240,
+     "z": 1022,
+     "tab": 320,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_ledger_caption",
+     "x": 1112,
+     "y": 616,
+     "w": 408,
+     "h": 24,
+     "z": 1023,
+     "tab": 330,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "btn_build_invite",
+     "x": 1528,
+     "y": 612,
+     "w": 336,
+     "h": 28,
+     "z": 1024,
+     "tab": 340,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_plan_title",
+     "x": 56,
+     "y": 688,
+     "w": 1600,
+     "h": 32,
+     "z": 1025,
+     "tab": 350,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "tag_plan_cum",
+     "x": 1712,
+     "y": 692,
+     "w": 152,
+     "h": 28,
+     "z": 1026,
+     "tab": -1026,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_plan_t1",
+     "x": 56,
+     "y": 720,
+     "w": 275,
+     "h": 64,
+     "z": 1027,
+     "tab": 370,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_plan_t2",
+     "x": 339,
+     "y": 720,
+     "w": 366,
+     "h": 64,
+     "z": 1028,
+     "tab": 380,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_plan_t3",
+     "x": 713,
+     "y": 720,
+     "w": 881,
+     "h": 64,
+     "z": 1029,
+     "tab": 390,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_plan_t4",
+     "x": 1602,
+     "y": 720,
+     "w": 262,
+     "h": 64,
+     "z": 1030,
+     "tab": 400,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "ch_plan_bar",
+     "x": 56,
+     "y": 788,
+     "w": 1808,
+     "h": 32,
+     "z": 1031,
+     "tab": 410,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_plan_gate",
+     "x": 56,
+     "y": 836,
+     "w": 704,
+     "h": 128,
+     "z": 1032,
+     "tab": 420,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "ch_plan_cum",
+     "x": 792,
+     "y": 828,
+     "w": 1072,
+     "h": 148,
+     "z": 1033,
+     "tab": 430,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_plan_milestones",
+     "x": 792,
+     "y": 976,
+     "w": 1072,
+     "h": 24,
+     "z": 1034,
+     "tab": 440,
+     "state": [
+      "rec"
+     ]
+    },
+    {
+     "name": "c_scatter_title_s",
+     "x": 56,
+     "y": 184,
+     "w": 520,
+     "h": 56,
+     "z": 1010,
+     "tab": 201,
+     "state": [
+      "alts",
+      "build"
+     ]
+    },
+    {
+     "name": "tag_scatter_s",
+     "x": 584,
+     "y": 188,
+     "w": 144,
+     "h": 28,
+     "z": 21500,
+     "tab": 8997,
+     "state": [
+      "alts",
+      "build"
+     ]
+    },
+    {
+     "name": "c_scatter_sub",
+     "x": 56,
+     "y": 240,
+     "w": 672,
+     "h": 24,
+     "z": 1037,
+     "tab": 470,
+     "state": [
+      "alts",
+      "build"
+     ]
+    },
+    {
+     "name": "hero_s_packages",
+     "x": 56,
+     "y": 272,
+     "w": 672,
+     "h": 368,
+     "z": 1012,
+     "tab": 222,
+     "state": [
+      "alts",
+      "build"
+     ]
+    },
+    {
+     "name": "c_waits_head",
+     "x": 792,
+     "y": 184,
+     "w": 1072,
+     "h": 56,
+     "z": 1039,
+     "tab": 490,
+     "state": [
+      "alts"
+     ]
+    },
+    {
+     "name": "tbl_waits",
+     "x": 792,
+     "y": 248,
+     "w": 1072,
+     "h": 392,
+     "z": 1040,
+     "tab": 500,
+     "state": [
+      "alts"
+     ]
+    },
+    {
+     "name": "ch_cmp_alts",
+     "x": 56,
+     "y": 688,
+     "w": 1808,
+     "h": 312,
+     "z": 1060,
+     "tab": 580,
+     "state": [
+      "alts"
+     ]
+    },
+    {
+     "name": "tag_cmp_alts",
+     "x": 1712,
+     "y": 692,
+     "w": 152,
+     "h": 28,
+     "z": 63500,
+     "tab": 8999,
+     "state": [
+      "alts"
+     ]
+    },
+    {
+     "name": "c_build_head",
+     "x": 792,
+     "y": 184,
+     "w": 1072,
+     "h": 56,
+     "z": 1043,
+     "tab": 530,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "sl_moves",
+     "x": 792,
+     "y": 280,
+     "w": 216,
+     "h": 320,
+     "z": 1044,
+     "tab": 540,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "tbl_moves",
+     "x": 1008,
+     "y": 248,
+     "w": 344,
+     "h": 352,
+     "z": 1045,
+     "tab": 550,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "c_sel_footer",
+     "x": 792,
+     "y": 608,
+     "w": 560,
+     "h": 24,
+     "z": 1046,
+     "tab": 560,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "c_you_title",
+     "x": 1384,
+     "y": 256,
+     "w": 464,
+     "h": 40,
+     "z": 1073,
+     "tab": 620,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "c_you_nums",
+     "x": 1384,
+     "y": 304,
+     "w": 464,
+     "h": 72,
+     "z": 1074,
+     "tab": 621,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "c_you_range",
+     "x": 1384,
+     "y": 384,
+     "w": 464,
+     "h": 24,
+     "z": 1049,
+     "tab": 590,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "c_you_rules",
+     "x": 1384,
+     "y": 408,
+     "w": 464,
+     "h": 48,
+     "z": 1075,
+     "tab": 622,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "ch_build_bars",
+     "x": 1384,
+     "y": 464,
+     "w": 464,
+     "h": 168,
+     "z": 1051,
+     "tab": 610,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "ch_cmp_build",
+     "x": 56,
+     "y": 688,
+     "w": 1808,
+     "h": 312,
+     "z": 1061,
+     "tab": 680,
+     "state": [
+      "build"
+     ]
+    },
+    {
+     "name": "z_footer2",
+     "x": 32,
+     "y": 1044,
+     "w": 1696,
+     "h": 28,
+     "z": 1090,
+     "tab": 9000
+    },
+    {
+     "name": "chip_def2",
+     "x": 1744,
+     "y": 1044,
+     "w": 144,
+     "h": 28,
+     "z": 72600,
+     "tab": 52050
+    }
+   ],
+   "tiles": [
+    {
+     "id": "you",
+     "x": 1368,
+     "y": 248,
+     "w": 496,
+     "h": 392,
+     "state": [
+      "build"
+     ],
+     "kind": "outline"
+    }
+   ]
+  },
+  {
+   "name": "tt-package",
+   "tooltip": true,
+   "canvas": {
+    "w": 480,
+    "h": 552
+   },
+   "cards": [
+    {
+     "id": "tt_return",
+     "x": 16,
+     "y": 48,
+     "w": 448,
+     "h": 256
+    },
+    {
+     "id": "tt_moves",
+     "x": 16,
+     "y": 312,
+     "w": 448,
+     "h": 224
+    }
+   ],
+   "visuals": [
+    {
+     "name": "tt_kicker",
+     "x": 16,
+     "y": 16,
+     "w": 448,
+     "h": 24,
+     "z": 1000,
+     "tab": 100
+    },
+    {
+     "name": "tt_title",
+     "x": 32,
+     "y": 56,
+     "w": 416,
+     "h": 32,
+     "z": 1001,
+     "tab": 110
+    },
+    {
+     "name": "tt_npv",
+     "x": 32,
+     "y": 96,
+     "w": 224,
+     "h": 56,
+     "z": 1003,
+     "tab": 120
+    },
+    {
+     "name": "tt_capex",
+     "x": 264,
+     "y": 96,
+     "w": 184,
+     "h": 56,
+     "z": 1004,
+     "tab": 130
+    },
+    {
+     "name": "tt_payback",
+     "x": 32,
+     "y": 160,
+     "w": 416,
+     "h": 64,
+     "z": 1005,
+     "tab": 140
+    },
+    {
+     "name": "tt_range_svg",
+     "x": 32,
+     "y": 224,
+     "w": 416,
+     "h": 72,
+     "z": 1006,
+     "tab": 145
+    },
+    {
+     "name": "tt_moves_label",
+     "x": 32,
+     "y": 320,
+     "w": 416,
+     "h": 24,
+     "z": 1008,
+     "tab": 155
+    },
+    {
+     "name": "tt_moves_svg",
+     "x": 32,
+     "y": 344,
+     "w": 416,
+     "h": 184,
+     "z": 1009,
+     "tab": 160
+    }
+   ]
+  },
+  {
+   "name": "tt-f3-band",
+   "tooltip": true,
+   "canvas": {
+    "w": 480,
+    "h": 464
+   },
+   "cards": [
+    {
+     "id": "tt_figs",
+     "x": 16,
+     "y": 48,
+     "w": 448,
+     "h": 400
+    }
+   ],
+   "visuals": [
+    {
+     "name": "ttd_kicker",
+     "x": 16,
+     "y": 16,
+     "w": 448,
+     "h": 24,
+     "z": 1000,
+     "tab": 100
+    },
+    {
+     "name": "ttd_head",
+     "x": 32,
+     "y": 56,
+     "w": 416,
+     "h": 32,
+     "z": 1001,
+     "tab": 105
+    },
+    {
+     "name": "ttd_nums",
+     "x": 32,
+     "y": 96,
+     "w": 416,
+     "h": 56,
+     "z": 1002,
+     "tab": 110
+    },
+    {
+     "name": "ttd_vs",
+     "x": 32,
+     "y": 160,
+     "w": 416,
+     "h": 64,
+     "z": 1003,
+     "tab": 120
+    },
+    {
+     "name": "ttd_chart_title",
+     "x": 32,
+     "y": 232,
+     "w": 416,
+     "h": 24,
+     "z": 1004,
+     "tab": 130
+    },
+    {
+     "name": "ttd_chart",
+     "x": 32,
+     "y": 256,
+     "w": 416,
+     "h": 112,
+     "z": 1005,
+     "tab": 140
+    },
+    {
+     "name": "ttd_foot",
+     "x": 32,
+     "y": 376,
+     "w": 416,
+     "h": 64,
+     "z": 1006,
+     "tab": 150
+    }
+   ]
+  },
+  {
+   "name": "tt-f4-hotel",
+   "tooltip": true,
+   "canvas": {
+    "w": 480,
+    "h": 400
+   },
+   "cards": [
+    {
+     "id": "tt_figs",
+     "x": 16,
+     "y": 48,
+     "w": 448,
+     "h": 336
+    }
+   ],
+   "visuals": [
+    {
+     "name": "ttd_kicker",
+     "x": 16,
+     "y": 16,
+     "w": 448,
+     "h": 24,
+     "z": 1000,
+     "tab": 100
+    },
+    {
+     "name": "ttd_head",
+     "x": 32,
+     "y": 56,
+     "w": 416,
+     "h": 32,
+     "z": 1001,
+     "tab": 105
+    },
+    {
+     "name": "ttd_nums",
+     "x": 32,
+     "y": 96,
+     "w": 416,
+     "h": 56,
+     "z": 1002,
+     "tab": 110
+    },
+    {
+     "name": "ttd_vs",
+     "x": 32,
+     "y": 160,
+     "w": 416,
+     "h": 64,
+     "z": 1003,
+     "tab": 120
+    },
+    {
+     "name": "ttd_chart_title",
+     "x": 32,
+     "y": 232,
+     "w": 416,
+     "h": 24,
+     "z": 1004,
+     "tab": 130
+    },
+    {
+     "name": "ttd_chart",
+     "x": 32,
+     "y": 256,
+     "w": 416,
+     "h": 112,
+     "z": 1005,
+     "tab": 140
+    }
+   ]
+  },
+  {
+   "name": "tt-year",
+   "tooltip": true,
+   "canvas": {
+    "w": 480,
+    "h": 320
+   },
+   "cards": [
+    {
+     "id": "tt_a",
+     "x": 16,
+     "y": 48,
+     "w": 448,
+     "h": 144
+    },
+    {
+     "id": "tt_all",
+     "x": 16,
+     "y": 208,
+     "w": 448,
+     "h": 96
+    }
+   ],
+   "visuals": [
+    {
+     "name": "tty_kicker",
+     "x": 16,
+     "y": 16,
+     "w": 448,
+     "h": 24,
+     "z": 1000,
+     "tab": 100
+    },
+    {
+     "name": "tty_title",
+     "x": 32,
+     "y": 56,
+     "w": 416,
+     "h": 40,
+     "z": 1001,
+     "tab": 110
+    },
+    {
+     "name": "tty_a_title",
+     "x": 32,
+     "y": 104,
+     "w": 416,
+     "h": 24,
+     "z": 1002,
+     "tab": 120
+    },
+    {
+     "name": "tty_a_nums",
+     "x": 32,
+     "y": 128,
+     "w": 416,
+     "h": 56,
+     "z": 1003,
+     "tab": 130
+    },
+    {
+     "name": "tty_all_title",
+     "x": 32,
+     "y": 216,
+     "w": 416,
+     "h": 24,
+     "z": 1004,
+     "tab": 140
+    },
+    {
+     "name": "tty_all_nums",
+     "x": 32,
+     "y": 240,
+     "w": 416,
+     "h": 56,
+     "z": 1005,
+     "tab": 150
+    }
+   ]
+  },
+  {
+   "name": "tt-glossary",
+   "tooltip": true,
+   "canvas": {
+    "w": 480,
+    "h": 544
+   },
+   "cards": [
+    {
+     "id": "tt_gloss",
+     "x": 16,
+     "y": 48,
+     "w": 448,
+     "h": 480
+    }
+   ],
+   "visuals": [
+    {
+     "name": "ttg_kicker",
+     "x": 16,
+     "y": 16,
+     "w": 448,
+     "h": 24,
+     "z": 1000,
+     "tab": 100
+    },
+    {
+     "name": "ttg_title",
+     "x": 32,
+     "y": 56,
+     "w": 416,
+     "h": 32,
+     "z": 1001,
+     "tab": 110
+    },
+    {
+     "name": "ttg_list",
+     "x": 32,
+     "y": 96,
+     "w": 416,
+     "h": 416,
+     "z": 1002,
+     "tab": 120
+    }
+   ]
+  }
+ ]
+}
