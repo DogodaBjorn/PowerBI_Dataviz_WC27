@@ -3,6 +3,8 @@
 **For:** the build session (`pbir-operator`, through the generators), doc 21 section 13 steps 2 to 8.
 **Status:** Bjorn approved the comp on 13 Nov ("looks great") and asked for the remaining overlap and clutter to be fixed
 and handed over as files the build can use. This document records those fixes and the rules behind them.
+**v10.1 (same day):** the four open questions of v10 are closed (section 6). The comp, `opzet-layout-v10.json` and
+`rebuild-v10-spec.json` carry the closures.
 **Inputs:** `20-requirements-storytelling-2026-11-13.md` (content), `21-powerbi-build-guideline-2026-11-13.md`
 (construction). Where this document and doc 21 differ, this document is newer: every difference is listed in
 sections 2 to 4, with the reason.
@@ -65,6 +67,7 @@ Rules learned from the v10 check:
 | `c_you_rules` | 1384, 392, 464, 40 | 1384, 408, 464, 48 | The empty-state sentence (R-B-2) takes two lines |
 | `ch_build_bars` | 1384, 440, 464, 192 | 1384, 464, 464, 168 | Follows; ends at 632 inside the tile |
 | `lbl_f4_*` (7, new) | – | see the spec, `charts.ch_f4.name_slots` | Section 3 |
+| `tag_cmp_build` (back, v10.1) | not in section 8 | 1712, 692, 152, 28, state build (v9's place, z and tab) | Section 6, question 4 |
 
 Doc 21's `c_plan_t*` x and w follow the capex shares and stay as they were. The K-3 row split (168 to 656, 672 to
 1016) is untouched. Every slot a person placed is on the 8 px grid; the data-placed ones (hero reference labels, F4
@@ -78,7 +81,7 @@ names, plan labels) are not.
 | `tbl_waits` columns | 176 / 208 / 216 / 256 / 216 | **168 / 224 / 216 / 256 / 208** | In High "The numbers" wrapped two cells and the table ran 20 px over |
 | `tbl_moves` columns | not given | 92 / 64 / 72 / 116 | Header "A year by 2032" needs 116 on one line, so the rows stay aligned with the slicer |
 | Hero "A year on cost" domain | 0 to 50 % (6.1) | **−10 % to 90 %** | P-4's own rule (min and max over three scenarios, rounded outward): the app reaches 82.1 % in High, Kingston −2.6 % in Low. NPV domain −32 to +12 $M as doc 21 |
-| F4 names (4.5) | Scatter category labels from `Hotels[F4 Dot Label]`, zero-width spaces for the rest | **Seven text boxes `lbl_f4_*`** beside their dots, 12 pt Night, decorative, out of the tab order. Category labels off; `F4 Dot Label` is not needed | With native labels above the dots, Toronto, Gatwick, Montréal and Phoenix overlapped and the airport row's names left the visual (S-4 failed in the comp). P1 does not follow the scenario, so the dots never move and static boxes are safe. The placement avoids all 50 dots, so no box covers a dot's tooltip |
+| F4 names (4.5) | Scatter category labels from `Hotels[F4 Dot Label]`, zero-width spaces for the rest | **Seven text boxes `lbl_f4_*`** beside their dots, 12 pt Night, white fill, no border, decorative, out of the tab order. Category labels off; `F4 Dot Label` is not needed | With native labels above the dots, Toronto, Gatwick, Montréal and Phoenix overlapped and the airport row's names left the visual (S-4 failed in the comp). P1 does not follow the scenario, so the dots never move and static boxes are safe. The placement avoids all 50 dots, so no box covers a dot's tooltip |
 | F4 close neighbours | ±0.3, sign open | Alternate −0.3, +0.3 … in occupancy order: Gatwick 0.3 below the Airport row, Montréal 0.3 above | Needed for a placement where nothing overlaps |
 | Cumulative charts, end labels (P-5) | Series label for the name + a hidden series with a data label for the value | **One data label on the 2032 point per line**: the name and value come from the label-safe format string ("A +$6.8M"), white label background, legend and series labels off. Position per series: `ch_cmp_alts` A **Above**, B and C **Below**; `ch_cmp_build` A Above, You Below; `ch_plan_cum` **Right** for all three. X axis end 2032.6 (comparisons) or 2032.8 (plan) | A and B end close together in every scenario (Expected +$6.8M both; within $1.2M in Low), and You equals A when Build opens. Fixed Above/Below cannot collide; the axis end keeps the labels inside the plot |
 | Comparison charts, value axis | auto | auto, with one tick below zero and 8 % headroom above the top line | In High, A's label above its line otherwise leaves the visual |
@@ -96,10 +99,12 @@ names, plan labels) are not.
 | F4 names | Short name without "Airport" | **Toronto, Gatwick, Montréal** as the title and note say them; Phoenix, Orlando, Kansas City, Kuala Lumpur, Kingston; Gatwick and Montréal share one label "Gatwick, Montréal" (4 px apart at this scale) | Fewer, shorter words in a crowded corner; the same names as the copy |
 | P2 headline | "$3.5M a year by 2032" | Follows the scenario: $1.0M / $3.5M / $6.2M | Every scenario-dependent number follows the slicer, as the subtitle's case word does |
 | Empty Build state | R-B-2 sentence, place not given | In `c_you_rules` (the `Build Valid (text)` measure at n = 0); "Nothing picked yet" only in the title | One sentence, one place |
+| Recommendation, line 2, **Low only** (v10.1) | "The app carries it: −$2.8M of the −$5.5M." (doc 20's grammar on Low numbers) | "The app carries it: **+$0.6M of that +$1.0M**. Every year without it leaves about $1.2M with the agencies." Expected and High keep doc 20's NPV wording | Section 6, question 1 |
+| Tranche 3, "Why not now", **High only** (v10.1) | "It earns 11.5% a year on cost, above our 8% cost of money." | "It earns 11.5% a year on cost **but does not pay back by 2032 (−$24.1M)**." Low and Expected keep doc 20's wording; the second sentence is unchanged everywhere | Section 6, question 2 |
 
 Copy variants for Low and High, written in doc 20's grammar, are in the spec's `text` block (hero title, ledger status
-words, scatter subtitle, comparison titles, tranche numbers, B's and Tranche 2's "Why not now"). Two read badly in their
-scenario: see the open questions.
+words, scatter subtitle, comparison titles, tranche numbers, B's and Tranche 2's "Why not now"). The two that read badly
+in v10 were rewritten in v10.1 (the last two rows above).
 
 ## 5 · Build checklist (doc 21 section 13)
 
@@ -117,15 +122,31 @@ scenario: see the open questions.
   comp does not, or any label that meets another, goes back to the comp first (rule 2), not into the report.
 - **Step 8:** `build_checks.py` can read the spec's `text` block as its vocabulary list.
 
+## 6 · The four questions of v10, closed (v10.1, 13 Nov)
+
+Bjorn asked to fix them. Each closure keeps doc 20's Expected copy and changes only the branch that was wrong.
+
+1. **Recommendation line 2 in Low.** In Low, A loses $5.5M through 2032, so "the app carries it: −$2.8M of the −$5.5M"
+   says the app carries the loss. On the yearly figure the app is the larger part in every case: 58 % in Low, 67 %
+   Expected, 66 % High. **Rule:** when A does not pay back by 2032 in the case in view (only Low), line 2 weighs the app
+   on the yearly figure line 1 has just given: "The app carries it: +$0.6M of that +$1.0M." ("that" points at line 1's
+   "+$1.0M a year by 2032"; the line fits in 719 of 752 px.) Expected and High are unchanged. One branch in `Rec Lines (text)`.
+2. **Tranche 3 in High.** The refresh earns 4.5 % / 7.9 % / 11.5 % a year on cost, so "under our 8 % cost of money"
+   is false in High. What holds in every case is that it does not pay back by 2032 (−$30.5M / −$27.3M / −$24.1M), the
+   same reason Tranche 2's row gives. **Rule:** at or above 8 % (only High) the first sentence becomes "It earns 11.5% a
+   year on cost but does not pay back by 2032 (−$24.1M)." Low reads "under", Expected "just under", as doc 20. One branch
+   in `Wait WhyNot (text)`; the What-waits table still fits in High.
+3. **F4, Gatwick and Montréal on one label.** Kept. Both are named next to their dots, no name wraps, and R-P1-7's other
+   checks hold (5 of the 7 Night dots in the Airport row, Kingston far left). Separate labels are impossible at this axis:
+   the two dots are 0.13 points (4 px) apart, the upper one sits 8 px under the plot's top, Toronto's dot is 54 px to its
+   right and Phoenix's 57 px to its left, so neither name fits on any side. The tooltip separates them (90.4 % and 90.2 %).
+   The only other route is more height for the Airport row (axis end 4.2), which breaks the alignment with `c_f4_rows`.
+4. **`tag_cmp_build`.** Back, at v9's place (1712, 692, 152, 28, build only; v9's z and tab). Doc 21 section 9 keeps
+   `tt-year` with "your plan in Night", which only the Build comparison shows, so that chart opens a tooltip; doc 18 and
+   P-7 give every tooltip target its hover tag. Its omission from section 8 reads as an oversight.
+
+The comp now also checks that no hover tag, F4 name box or hero reference label sits on another visual's chart text.
+
 ## Open questions
 
-- **Line 2 of the recommendation in Low** reads "The app carries it: −$2.8M of the −$5.5M." The grammar holds, the
-  sense does not. Options: a Low variant ("The app is half of it: …") or keep line 2 at the Expected case in every
-  scenario, like line 1 stays at Low.
-- **Tranche 3, "Why not now", in High** becomes "It earns 11.5% a year on cost, above our 8% cost of money", so the
-  first half of the argument falls away in High. Options: keep (honest), or a High variant that leans on "the data does
-  not price the cost of waiting".
-- **F4:** R-P1-7 asks for the seven fullest "labelled by short name". v10 labels all seven, with Gatwick and Montréal on
-  one shared label. Confirm that this counts.
-- **`tag_cmp_build`** ("Hover a year" on the Build comparison chart) was in v9 and is not in doc 21 section 8, so v10
-  leaves it out, although `tt-year` stays bound to that chart. Keep it out, or add it back at 1712, 692?
+None. Doc 20's copy is unchanged except where sections 4 and 6 say so; Bjorn sees those rows once.

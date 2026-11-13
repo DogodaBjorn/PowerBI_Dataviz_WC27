@@ -1,5 +1,5 @@
 {
- "_doc": "Build spec v10 of 2026-11-13, exported from rebuild-comp-v10.html (the approved comp, doc 21 section 12). Positions live in opzet-layout-v10.json; this file holds what a slot map cannot: table column widths and row heights, hero bar domains, chart axis ends and end-label positions, the F4 name boxes, the number formatters, and under 'text' the exact visible strings of every slot in every view (P1; P2 Recommended, What waits and Build in Low, Expected and High; Build with nothing picked). Build views use the opening selection (package A's three moves). Strings are given without the U+2060 word joiner the formatters put between the sign and the $. Table cells are lists of rows; a line break inside a cell is \\n (UNICHAR(10)). Use the strings as DAX assertion targets for the text measures. Reasons and rules: project-state/active/22-rebuild-comp-v10-handoff-2026-11-13.md.",
+ "_doc": "Build spec v10.1 of 2026-11-13 (v10 plus the four closed questions of doc 22), exported from rebuild-comp-v10.html (the approved comp, doc 21 section 12). Positions live in opzet-layout-v10.json; this file holds what a slot map cannot: table column widths and row heights, hero bar domains, chart axis ends and end-label positions, the F4 name boxes, the number formatters, and under 'text' the exact visible strings of every slot in every view (P1; P2 Recommended, What waits and Build in Low, Expected and High; Build with nothing picked). Build views use the opening selection (package A's three moves). Strings are given without the U+2060 word joiner the formatters put between the sign and the $. Table cells are lists of rows; a line break inside a cell is \\n (UNICHAR(10)). Use the strings as DAX assertion targets for the text measures. Reasons and rules: project-state/active/22-rebuild-comp-v10-handoff-2026-11-13.md.",
  "construction": {
   "text_metrics": {
    "font": "Segoe UI 400 and Segoe UI Semibold 600",
@@ -159,7 +159,8 @@
      "A": "Above",
      "You": "Below"
     },
-    "label_text": "\"A\", \"You\""
+    "label_text": "\"A\", \"You\"",
+    "tooltip": "tt-year (hover tag tag_cmp_build)"
    },
    "ch_plan_bar": {
     "segments": [
@@ -189,7 +190,7 @@
     },
     "close_neighbours": "F4 Row Y: hotels within one point of a neighbour in the same row alternate -0.3, +0.3, -0.3 ... in order of 2025 occupancy (so Gatwick sits 0.3 below the Airport row and Montreal 0.3 above)",
     "category_labels": false,
-    "names": "seven text boxes lbl_f4_* (static: P1 does not follow the scenario)",
+    "names": "seven text boxes lbl_f4_* (static: P1 does not follow the scenario), 12 pt Night, white fill, no border, decorative",
     "name_slots": {
      "lbl_f4_kingston": {
       "rect": [
@@ -203,7 +204,7 @@
      },
      "lbl_f4_orlando": {
       "rect": [
-       1485,
+       1483,
        899,
        62,
        24
@@ -213,7 +214,7 @@
      },
      "lbl_f4_kuala_lumpur": {
       "rect": [
-       1448,
+       1444,
        920,
        102,
        24
@@ -223,17 +224,17 @@
      },
      "lbl_f4_kansas_city": {
       "rect": [
-       1596,
-       960,
+       1494,
+       952,
        84,
        24
       ],
       "text": "Kansas City",
-      "side": "right"
+      "side": "left"
      },
      "lbl_f4_phoenix": {
       "rect": [
-       1558,
+       1554,
        880,
        61,
        24
@@ -243,7 +244,7 @@
      },
      "lbl_f4_gatwick_montreal": {
       "rect": [
-       1620,
+       1618,
        911,
        132,
        24
@@ -497,7 +498,7 @@
    "c_hero_caption": "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still ramping up in 2032.",
    "c_rec_head": "Our recommendation: package A\nBooking app with member rates + Revenue management + Kiosks at the 20 busiest hotels",
    "c_rec_nums": "$9.4M\ncapex\n−$5.5M\nNPV through 2032\n+$1.0M\na year by 2032\n11.1%\na year on cost",
-   "c_rec_lines": "Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.\nThe app carries it: −$2.8M of the −$5.5M. Every year without it leaves about $1.2M with the agencies.",
+   "c_rec_lines": "Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.\nThe app carries it: +$0.6M of that +$1.0M. Every year without it leaves about $1.2M with the agencies.",
    "tbl_ledger": [
     [
      "Finding",
@@ -1080,7 +1081,7 @@
      "Tranche 3 · The refresh of the 10 oldest hotels (in package C)",
      "$29.5M capex\n+$3.4M a year once live\n11.5% a year on cost\npackage C (App + RMS + refresh) −$11.4M through 2032",
      "Renovation works here: the seven hotels renovated in 2021 held their NPS near +6 while the rest of the brand fell to +2.7.",
-     "It earns 11.5% a year on cost, above our 8% cost of money. The data does not price the cost of waiting, so this case is understated.",
+     "It earns 11.5% a year on cost but does not pay back by 2032 (−$24.1M). The data does not price the cost of waiting, so this case is understated.",
      "Back at the 2028 gate, with a case that looks beyond 2032."
     ]
    ],
@@ -1209,6 +1210,7 @@
      "A"
     ]
    },
+   "tag_cmp_build": "ⓘ Hover a year",
    "z_footer2": "Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.",
    "chip_def2": "ⓘ Definitions"
   },
@@ -1324,6 +1326,7 @@
      "A"
     ]
    },
+   "tag_cmp_build": "ⓘ Hover a year",
    "z_footer2": "Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.",
    "chip_def2": "ⓘ Definitions"
   },
@@ -1439,6 +1442,7 @@
      "A"
     ]
    },
+   "tag_cmp_build": "ⓘ Hover a year",
    "z_footer2": "Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.",
    "chip_def2": "ⓘ Definitions"
   },
@@ -1540,6 +1544,7 @@
      "A"
     ]
    },
+   "tag_cmp_build": "ⓘ Hover a year",
    "z_footer2": "Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.",
    "chip_def2": "ⓘ Definitions"
   }

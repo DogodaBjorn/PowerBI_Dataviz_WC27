@@ -80,6 +80,7 @@ body{margin:0;color:var(--chrome-ink);font-family:var(--font);font-size:14px;
 .neg{color:var(--burnt)}
 .lnk{font-size:16px;color:var(--night)}
 .tag{background:#fff;border:1px solid var(--hair);border-radius:14px;padding:2px 12px 0}
+.namebox{background:#fff}   /* F4 name boxes: white fill, no border, so a gridline or the 90% line never runs through a name */
 .tag .c{color:var(--night);white-space:normal}.tag .i,.ii{color:var(--tang)}
 /* controls: P-2, one family, two sizes, two surfaces */
 #stage button{font:inherit;margin:0;cursor:pointer;-webkit-appearance:none;appearance:none}
@@ -374,6 +375,7 @@ sl('p2', 'c_you_range', 1384, 368, 464, 24, BUILD);
 sl('p2', 'c_you_rules', 1384, 392, 464, 40, BUILD);
 sl('p2', 'ch_build_bars', 1384, 440, 464, 192, BUILD);
 sl('p2', 'ch_cmp_build', 56, 688, 1808, 312, BUILD);
+sl('p2', 'tag_cmp_build', 1712, 692, 152, 28, BUILD, {deco:1});   // v10.1: back, as in v9 (doc 18); tt-year stays bound to ch_cmp_build
 sl('p2', 'z_footer2', 32, 1044, 1696, 28);
 sl('p2', 'chip_def2', 1744, 1044, 144, 28);
 
@@ -627,7 +629,7 @@ function placeF4Labels() {
     const pts = f4Points(first);
     const obstacles = pts.map(p => box(p.x - 6, p.y - 6, 12, 12));
     F4ROWS.forEach(([t, r]) => { const x = F4.X(DATA.location[t].occ), y = F4.Y(r); obstacles.push(box(x - 8, y - 8, 16, 16)); });
-    obstacles.push(box(F4.X(0.9) + 3, F4.plotH - 21, 40, 22));               // the constant line's "90%"
+    obstacles.push(box(F4.X(0.9) + 3, F4.plotH - 22, textW('90%') + 6, 24));   // the constant line's "90%", as drawn (x + 5, centre plotH - 10)
     // labelled hotels; two in one row within one point share one label (Gatwick 90.4% and Montréal 90.2% sit 4 px apart)
     const lab = pts.filter(p => TOP7.has(p.h.id) || p.h.id === KINGSTON.id).sort((a, b) => b.h.occ - a.h.occ);
     const groups = [];
@@ -636,7 +638,7 @@ function placeF4Labels() {
       g ? g.push(p) : groups.push([p]);
     }
     const items = groups.map(g => {
-      const name = g.map(p => f4Name(p.h)).join(', '), tw = Math.ceil(textW(name));
+      const name = g.map(p => f4Name(p.h)).join(', '), tw = Math.ceil(textW(name)) + 4;   // the text box, not just the ink
       const xs = g.map(p => p.x), ys = g.map(p => p.y), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys), ym = (y0 + y1) / 2, xm = (x0 + x1) / 2;
       const c = [];
       for (const dy of [0, -8, 8]) { c.push(['right', x1 + 9, ym - th / 2 + dy]); c.push(['left', x0 - 9 - tw, ym - th / 2 + dy]); }
@@ -659,7 +661,7 @@ function placeF4Labels() {
   bestRun.items.forEach((it, i) => {
     const o = bestRun.pick[i], name = it.name;
     const key = 'lbl_f4_' + name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]+/g, '_').replace(/^_|_$/g, '');
-    SLOTS[page][key] = {x:Math.round(base.x + o.b.x), y:Math.round(base.y + o.b.y - 1.5), w:it.tw + 4, h:24, deco:1, computedX:true, place:o.pos};
+    SLOTS[page][key] = {x:Math.round(base.x + o.b.x), y:Math.round(base.y + o.b.y - 1.5), w:it.tw, h:24, deco:1, computedX:true, place:o.pos};
     if (!ORDER[page].includes(key)) ORDER[page].splice(ORDER[page].indexOf('ch_f4_dots') + 1, 0, key);
     R[key] = () => T(esc(name), 'f16 night');
   });
@@ -681,7 +683,7 @@ for (const k of Object.keys(TABS)) {
 R.lbl_scenario = () => T('Scenario', 'f16" style="color:var(--m2);padding-top:5px');
 R.sl_scenario = () => `<div class="pills" role="group" aria-label="Scenario">${SCEN.map(s => `<button type="button" class="btn sm ${s === ST.scen ? 'night-on' : 'night-off'}" aria-pressed="${s === ST.scen}" data-act="scen:${s}"><span class="c">${s}</span></button>`).join('')}</div>`;
 R.z_footer2 = () => T(`Source: Pillow &amp; Key Group dataset and finance parameters (${pct0(E.discount)} discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.`, 'f16 dusk');
-R.tag_plan_cum = R.tag_cmp_alts = () => T('<span class="i">ⓘ</span> Hover a year');
+R.tag_plan_cum = R.tag_cmp_alts = R.tag_cmp_build = () => T('<span class="i">ⓘ</span> Hover a year');
 R.tag_scatter_s = () => T('<span class="i">ⓘ</span> Hover a dot');
 
 /* ===================================================================== P2 Recommended (6) */
@@ -718,7 +720,12 @@ function nums(items, size) {
 R.c_rec_nums = () => { const s = ST.scen; return nums([[fm(A.capex), 'capex'], [sfm(A.npv[s]), 'NPV through 2032', A.npv[s] < 0], [sfm(A.rr[s]), 'a year by 2032', A.rr[s] < 0], [pct1(A.yld[s]), 'a year on cost']], 28); };
 R.c_rec_lines = () => {
   const s = ST.scen, app = P['GI-01'];
-  return T(`Worst case (Low): ${sfm(A.npv.Low)} through 2032, and still ${sfm(A.rr.Low)} a year by 2032.<br>The app carries it: ${sfm(app.npv[s])} of the ${sfm(A.npv[s])}. Every year without it leaves about ${fm(E.e11.appSaving[s])} with the agencies.`, 'f16 night');
+  // v10.1: when A does not pay back by 2032 in the case in view (Low), line 2 weighs the app on the yearly figure
+  // line 1 has just given for the worst case; doc 20's Expected wording (and its High variant) are unchanged
+  const carry = A.npv[s] >= 0 ? `${sfm(app.npv[s])} of the ${sfm(A.npv[s])}`
+    : s === 'Low' ? `${sfm(app.runrate[s])} of that ${sfm(A.rr[s])}`          // "that": line 1's "+$1.0M a year by 2032" (Low) right above
+    : `${sfm(app.runrate[s])} of the ${sfm(A.rr[s])} a year by 2032`;
+  return T(`Worst case (Low): ${sfm(A.npv.Low)} through 2032, and still ${sfm(A.rr.Low)} a year by 2032.<br>The app carries it: ${carry}. Every year without it leaves about ${fm(E.e11.appSaving[s])} with the agencies.`, 'f16 night');
 };
 function fracWord(f) {
   for (const [v, w] of [[1 / 4, 'a quarter of'], [1 / 3, 'a third of'], [1 / 2, 'half'], [2 / 3, 'two thirds of'], [3 / 4, 'three quarters of'], [1, 'all of']]) if (Math.abs(f - v) <= 0.04) return w;
@@ -842,7 +849,8 @@ R.tbl_waits = () => {
     [`Tranche 3 · The refresh of the ${P['GI-07'].hotels} oldest hotels (in package C)`,
      lines([`${fm(T3.capex)} capex`, `${sfm(T3.rr[s])} a year once live`, `${pct1(T3.yld[s])} a year on cost`, `package C (App + RMS + refresh) ${sfm(PC.npv[s])} through 2032`]),
      esc(`Renovation works here: the ${E.reno2021.n} hotels renovated in 2021 held their NPS near ${E.reno2021.held} while the rest of the brand fell to ${E.reno2021.rest}.`),
-     esc(`It earns ${pct1(T3.yld[s])} a year on cost, ${cmpWord(T3.yld[s])} our ${pct0(E.discount)} cost of money. The data does not price the cost of waiting, so this case is understated.`),
+     // v10.1: at or above the cost of money (High) the first sentence names what holds in every case: no payback by 2032
+     esc(`${T3.yld[s] >= E.discount ? `It earns ${pct1(T3.yld[s])} a year on cost but does not pay back by 2032 (${sfm(T3.npv[s])}).` : `It earns ${pct1(T3.yld[s])} a year on cost, ${cmpWord(T3.yld[s])} our ${pct0(E.discount)} cost of money.`} The data does not price the cost of waiting, so this case is understated.`),
      esc('Back at the 2028 gate, with a case that looks beyond 2032.')]
   ];
   return `<table class="pbi rules wrap waits"><colgroup>${WAITS_COLS.map(w => `<col style="width:${w}px">`).join('')}</colgroup>
@@ -953,7 +961,7 @@ function render() {
   for (const name of visible(page)) {
     const s = SLOTS[page][name];
     const el = document.createElement('div');
-    el.className = 's' + (s.kind === 'card' ? ' frame' : s.kind === 'tile' ? ' tile' : '') + (/^tag_/.test(name) ? ' tag' : '') + (/^chip_def/.test(name) ? ' chip' : '');
+    el.className = 's' + (s.kind === 'card' ? ' frame' : s.kind === 'tile' ? ' tile' : '') + (/^tag_/.test(name) ? ' tag' : '') + (/^lbl_f4_/.test(name) ? ' namebox' : '') + (/^chip_def/.test(name) ? ' chip' : '');
     el.dataset.name = name;
     Object.assign(el.style, {left:s.x + 'px', top:s.y + 'px', width:s.w + 'px', height:s.h + 'px'});
     const r = R[name] ? R[name]() : '';
@@ -1004,6 +1012,16 @@ function check() {
     el.querySelectorAll('svg.chart').forEach(svg => labels(svg, name, out));
   });
   if (ST.page === 'p1' && F4_ISSUES.length) out.push({name:'lbl_f4_*', kind:'red', note:F4_ISSUES.join('; ')});
+  // floating text (hover tags, F4 name boxes, the hero reference labels) must not sit on another slot's chart text
+  const page = PAGE[ST.page], sr = stage.getBoundingClientRect(), k = sr.width / 1920;
+  const texts = [...stage.querySelectorAll('.s svg text')].map(t => { const r = t.getBoundingClientRect(); return {t, slot:t.closest('.s').dataset.name, x:(r.left - sr.left) / k, y:(r.top - sr.top) / k + 3, w:r.width / k, h:r.height / k - 6}; });
+  for (const el of stage.querySelectorAll('.s')) {
+    const n = el.dataset.name;
+    if (!/^(tag_|lbl_f4_|lbl_hero_)/.test(n)) continue;
+    const s = SLOTS[page][n];
+    const hits = texts.filter(q => q.slot !== n && q.x < s.x + s.w && s.x < q.x + q.w && q.y < s.y + s.h && s.y < q.y + q.h);
+    if (hits.length) { el.classList.add('ovf'); out.push({name:n, kind:'red', note:'sits on ' + hits.map(q => `"${q.t.textContent}" (${q.slot})`).join(', ')}); }
+  }
   return out;
 }
 function fmtOver(dx, dy, c) {
@@ -1150,12 +1168,12 @@ function buildSpec() {
         end_labels:'one data label on 2032 per line, text "Low −$4.6M" from the label-safe format string, position Right, white background; selected case #1763A8 semibold'},
       ch_cmp_alts:{y:'auto, one tick below zero, 8% headroom above the top line', x_axis_end:2032.6,
         end_labels:{A:'Above', B:'Below', C:'Below'}, label_text:'"A +$6.8M" from the label-safe format string', label_background:'white', legend:false, series_labels:false},
-      ch_cmp_build:{y:'auto, as ch_cmp_alts', x_axis_end:2032.6, end_labels:{A:'Above', You:'Below'}, label_text:'"A", "You"'},
+      ch_cmp_build:{y:'auto, as ch_cmp_alts', x_axis_end:2032.6, end_labels:{A:'Above', You:'Below'}, label_text:'"A", "You"', tooltip:'tt-year (hover tag tag_cmp_build)'},
       ch_plan_bar:{segments:['Tranche 1 #2589D8', 'Tranche 2 #12233D', 'Tranche 3 #717B8B (Night at 60%)', 'Not needed #8E897D'], data_labels:false,
         why:'the amounts sit in c_plan_t1..t4 above each segment; in-bar labels repeated them and two failed 4.5:1'},
       ch_f4:{x:[F4.dom[0], F4.dom[1]], x_ticks:'60% to 95% by 5', constant_line:0.9, y:[0.5, 3.5], rows:{Airport:3, City:2, Highway:1},
         close_neighbours:'F4 Row Y: hotels within one point of a neighbour in the same row alternate ' + (F4_FIRST_SIGN > 0 ? '-0.3, +0.3, -0.3' : '+0.3, -0.3, +0.3') + ' ... in order of 2025 occupancy (so Gatwick sits 0.3 below the Airport row and Montreal 0.3 above)',
-        category_labels:false, names:'seven text boxes lbl_f4_* (static: P1 does not follow the scenario)',
+        category_labels:false, names:'seven text boxes lbl_f4_* (static: P1 does not follow the scenario), 12 pt Night, white fill, no border, decorative',
         name_slots:Object.fromEntries(ORDER[PAGE.p1].filter(n => n.startsWith('lbl_f4_')).map(n => [n, {rect:slot(n), text:R[n]().replace(/<[^>]+>/g, '').replace(/&amp;/g, '&'), side:SLOTS[PAGE.p1][n].place}]))},
       ch_build_bars:{orientation:'horizontal', sort:'NPV descending', fill:'positive #12233D, negative #E05A22', value_axis:false, category_axis:'auto width', labels:'P-1 label-safe, outside end'},
       hero_s_packages:{x:[5, 62], x_ticks:'$10M to $60M by 10', y:[-60, 20], y_ticks:'by 10', band:'0 to +20, #EAF2FB, "Pays back by 2032"', discs:'A #2589D8, B and C #12233D, r 11, white letter',
