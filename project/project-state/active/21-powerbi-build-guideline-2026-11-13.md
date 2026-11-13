@@ -732,6 +732,17 @@ saves, close every window yourself without saving, renders through the throwaway
 Tier order inside each step follows doc 20: T1 before T2 before T3. If a day slips, drop T3 first
 (R-P1-9, R-P2-11, R-W-4, R-TT-3/4, the submission prune), never the gate.
 
+### Results of page 1 (13 Nov, build step 5 of doc 23)
+
+- **S-4, pass with a different cure than doc 22 section 5 planned.** In its slot Power BI's F4 plot was 0.7 % wider and
+  12 px shorter than the comp's, so shifting the seven name boxes could not work. Both scatter layers take the rect that
+  puts Power BI's plot on the comp's (655, 863, 1200, 161); the boxes keep the spec's positions. No Deneb.
+- **Three rules for the remaining pages** (details in doc 23, log of step 5): a cardVisual centres its text and hides
+  lines that do not fit (two lines need 60 px, three 88: `note()`); a chart's slot is not its plot (`PLOT_RECT`); and in a
+  narrow Desktop window only the tile render (`tools/desktop_shots/tiles/`) is a pixel reference.
+- **P-2:** the light-surface control states are in the theme (`compile_theme.py`); a button's pill is
+  `rectangleRoundedByPixel` on the `default` selector, not `pill`.
+
 ### Results of the model step (13 Nov, build step 3 of doc 23)
 
 Section 10.1 and the number measures of 10.2 are in `sketch_model.py` (folder `15 Storytelling rebuild`, 56 measures;

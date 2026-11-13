@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_f1_margin",
   "position": {
-    "x": 56,
+    "x": 68,
     "y": 392,
     "z": 25000,
-    "width": 560,
+    "width": 526,
     "height": 248,
     "tabOrder": 320
   },
@@ -115,6 +115,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "axisType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Categorical'"
                 }
               }
             }
@@ -288,6 +295,13 @@
               }
             },
             "enableBackground": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "leaderLines": {
               "expr": {
                 "Literal": {
                   "Value": "false"

@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "THE WAKE-UP CALL",
+                    "value": "1 / 2 · THE WAKE-UP CALL",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -27,7 +27,7 @@
                     }
                   },
                   {
-                    "value": "  ·  THE BRAND REVIEW",
+                    "value": " · THE BRAND REVIEW",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",

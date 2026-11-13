@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_f2_ota",
   "position": {
-    "x": 680,
-    "y": 392,
+    "x": 700,
+    "y": 397,
     "z": 29000,
-    "width": 560,
+    "width": 505,
     "height": 144,
     "tabOrder": 420
   },
@@ -147,6 +147,13 @@
                   "Value": "false"
                 }
               }
+            },
+            "axisType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Categorical'"
+                }
+              }
             }
           }
         }
@@ -203,14 +210,14 @@
             "start": {
               "expr": {
                 "Literal": {
-                  "Value": "0.2D"
+                  "Value": "0.201D"
                 }
               }
             },
             "end": {
               "expr": {
                 "Literal": {
-                  "Value": "0.55D"
+                  "Value": "0.594D"
                 }
               }
             }
@@ -409,6 +416,13 @@
               }
             },
             "enableBackground": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "leaderLines": {
               "expr": {
                 "Literal": {
                   "Value": "false"

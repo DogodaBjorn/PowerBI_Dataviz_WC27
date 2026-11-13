@@ -22,7 +22,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 2 | The two big spikes: hero table and native selector | done | 13 Nov | f7f3afc | S-2 and S-3 pass natively, no fallback. Both tables need a few pixels the comp did not plan (wider value columns, 2 px of slack, `tbl_moves` 11 px higher); see the log. Bjorn was not needed in Desktop |
 | 3 | Model foundations and the number checks | done | 13 Nov | c404091 | 56 number measures, 3 tables, 2 columns; 763 checks, all pass in Low, Expected and High, 1 known difference (open question 1). New: a measure cannot carry a static and a dynamic format string; open question 3 (hero caption). Bjorn was not needed in Desktop |
 | 4 | Text measures and `build_checks.py` | done | 13 Nov | 8849312 | Every measure-backed slot of the spec in Low, Expected, High and the empty Build state: 127 equal, 2 known (open question 1, 20.5/20.6 %), 0 different. Checks 1, 3, 4 pass; check 2 is strict on the new copy and open on the old visuals until step 11. Bjorn was not needed in Desktop |
-| 5 | Page 1 | todo | | | |
+| 5 | Page 1 | done | 13 Nov | HASH5 | P1 on the v10 slot map and on the comp: text rows within 2 px, F3 bars and the F4 plot on the comp's grid, nl-NL prints points only, `a11y_check` 0. Verified with a new tile render (the session window was 540 px wide). Seven small deviations for Bjorn to confirm (open question 4). Bjorn was not needed in Desktop |
 | 6 | Page 2 frame and the decision card | todo | | | |
 | 7 | Hero table and capital plan; the cut line | todo | | | |
 | 8 | What waits, and why | todo | | | |
@@ -448,7 +448,107 @@ on P1.
 
 **Prompt:** `project/build-steps/step-05.txt` (say: "Read project/build-steps/step-05.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Fri 13 Nov 2026, one session, done):**
+
+*Built* (generators only; P1 62 visuals, P2 unchanged apart from renumbered filter names; 564 measures, was 562):
+
+- **Layout switch (rule 9).** `opzet-layout-v10.json` copied over `opzet-layout.json`, the old map kept as
+  `opzet-layout-v9.json`. New `tools/slot_map.py`: the report generator and `a11y_check.py` read P1 and the tooltip pages
+  from the current map, and P2 with its `tt-f1` to `tt-f4` from v9 until step 6 empties `V9_PAGES`. Z and tab order of the
+  new P1 slots are in `opzet-layering.json` (reading order: F4 note, rows, link, dots; footer, button, chip).
+- **Masthead, KPI row, kickers.** Eyebrow "1 / 2 · THE WAKE-UP CALL · THE BRAND REVIEW"; KPI labels with the code run in
+  Night semibold; kicker codes in Night (R-G3), single spaces around the dot.
+- **F1** stacked area as S-5 found it (base series unfilled, band at 70 % transparency), years on a categorical axis so
+  each sits in the middle of its band as in the comp, the grey label background and the leader lines off. Note in three
+  lines, forward link.
+- **F2** without legend and value axis; the two lines named at their ends; the end numbers are two label-only series
+  (`Trend OTA GI (ends)` above, `Trend OTA Sisters (end)` under), without line or marker. Folio with fixed columns and
+  the Dusk rule under the header.
+- **F3** on `NPS 2025 (label-safe)`, the count card, note, link.
+- **F4** note and link at the left; the rows as a Dusk text box plus a semibold value card per row; two scatter layers
+  on one rect (three Dusk diamonds under 50 dots, Night for the seven fullest, Warm Grey for the rest, no category labels,
+  no marker border), X 60 % to 95 % with whole-percent ticks, the 90 % constant line dashed with its label; the seven
+  `lbl_f4_*` boxes on the spec's positions; the hotel tooltip page bound to the dots.
+- **Footer row.** `btn_next`: a Night pill with the S-6 link (`PageNavigation`, `p2-investment-strategy`); the Definitions
+  chip as one card with its own fill, border and radius (P-7); the two hover tags as text boxes (P-7).
+- **Theme (P-2).** `compile_theme.py` writes the light-surface state model for `actionButton` (fill, text, outline with
+  default, hover, selected) and outline and value states for `advancedSlicerVisual`; validated against
+  reportThemeSchema-2.159 (0 errors). No shape in the theme (it would turn P2's tabs into pills).
+- **Model, two text measures:** `Chip Definitions (text)` ("ⓘ Definitions") and `Link F4 (text)` (the F4 link; its "20"
+  is counted from the kiosk move's hotels, because `a11y_check.py` allows no typed number but a year). Both are in
+  `TEXT_SLOTS`, so the text diff covers them.
+- **Tools:** `tools/desktop_shots/tiles/` (see "Found on the way", 1).
+
+*Verified* (Desktop 2.159, Windows culture nl-NL, throwaway copy; renders in
+`project/deliverables/screenshots/Step5-p1-2026-11-13/`).
+
+| What | Result | Proof |
+|---|---|---|
+| P1 against the comp | Text rows, render minus comp, in px: KPI cell +1.5 / −1.0 / +2.0; F1 kicker and title +1.0 / +2.0; F1 note −2.0 / −2.0 / −1.0, link +2.0; F2 note −2.0 / −1.5 / −1.5, link 0; F3 count, note and link −0.5 to −1.0; F4 kicker, title, note, link −1.0 to +1.5; F4 rows −1.0 / +1.0 / 0; footer +1.5; chip +0.5. Every note wraps on the comp's words. F3 bars: centres −1.3 px, width 72.4 against 72. F4 gridlines at x 672.7 to 1840.8 (comp 672 to 1840); the seven names sit beside their dots as in the comp. Outside 2 px: see deviations | render 01, overlay 02 (comp red, render cyan), comp 03 |
+| nl-NL | The session is nl-NL; every number prints with a point (79.4%, +3.3, $109.31, +6.8, −4.9, 82.0%), ticks are whole percentages | render 01 |
+| S-4 | In the slot 656, 872, 1208, 144 Power BI's plot ran x 672.7 to 1848.7 and y 881 to 988 (the comp: 672 to 1840, 872 to 992). The scale differed by 0.7 %, so a shift of the boxes could not fix it. Instead both layers take the rect 655, 863, 1200, 161, which puts Power BI's plot on the comp's; the name boxes keep the spec's positions | `F4_RECT` in `opzet_report.py`; render 01 |
+| Typed text | 23 typed slots (eyebrow, kickers, KPI labels, links, tags, footer, button, seven names) equal the spec letter for letter | script run in the session |
+| `build_checks.py` (with the engine) | check 5: 129 ok, 2 known (20.5 / 20.6 %), 0 failed; checks 1, 3, 4 pass; check 2 strict passes, old copy open until step 11 | `analysis/output/build_checks.txt` |
+| `a11y_check.py` | 0 failures (it failed first on five points, all fixed: see deviations and "Found", 4) | repeatable |
+| Other validators | `schema_check` 217 files, 0 failing; `validate_json` 0; `validate_tmdl --strict` 0 errors, the 11 expected label-safe warnings; Microsoft's validator: the one known P2 error (`hero_s_packages_named`) | repeatable |
+| The button | Desktop lists it as "Paginanavigatie … CTRL+klik hier om volgen" with the spoken name. A posted Ctrl+click did not land (open item) | UI Automation in the session |
+
+*Found on the way (binding for the next steps).*
+
+1. **A full-page capture in a narrow window is not a pixel reference; the tile render is.** The session's screen was
+   540 px wide again. A 1920 px page then comes out at 0.46 capture px per page px, x and y scaled differently (0.4594
+   and 0.4565), the background image off the header, and text inside visuals reading up to 8 px off. A 480 × 270 page
+   in the same window comes out at 1.84. `tiles/mk_tiles.py` cuts a page into 16 tile pages in the throwaway copy
+   (visuals shifted, Desktop clips them at the page edge), `stitch.py` joins the captures, `overlay.py` and `bands.py`
+   compare with the comp. About three minutes a round. Steps 6 to 9 should verify this way (`tiles/README.txt`).
+2. **A cardVisual centres its text in its box and hides lines that do not fit.** 12 pt lines are 21.9 px apart; two
+   lines show from 60 px of height, three from 88 (the comp's 48 and 64 to 72 showed one and two lines with an
+   ellipsis). So a note of n lines gets the height `CARD_H[n]` (64 / 92 / 120) centred on the comp's text block
+   (`note()` in `opzet_report.py`); a one-line 14 pt title in a 32 px slot sits 4.5 px low and is lifted by 5
+   (`title(..., lift=5)`). `layout.alignment` and the callout padding change nothing. Text boxes set their text at the
+   top, as the comp does (first glyph within 1 px).
+3. **A chart's slot is not its plot.** Power BI keeps margins of its own inside a visual. `PLOT_RECT` and `F4_RECT` hold
+   the visual rect that puts the plot where the comp draws it (F1 68, 392, 526, 248; F2 700, 397, 505, 144; F3 1310,
+   392, 560, 221); the slot map keeps the comp's rects. F2's value axis runs 20.1 % to 59.4 % and F3's −8.11 to 10.3 for
+   the same pixels per point as the comp. F3's bar spacing came from six padding variants on a scratch page (inner 54,
+   outer 27: step 187, width 72).
+4. **Shapes.** A button's `shape` needs the `default` selector, and `tileShape` `'pill'` pushes the label out of the
+   middle and clips it: the pill is `'rectangleRoundedByPixel'` with `rectangleRoundedCurve` = half the height. The
+   text box and card helpers take `off_grid=True` for slots the data placed (`pbir_lib.visual`). `seriesLabels.maximumOffset`
+   does not move a series name.
+5. **A native table's header is taller than its rows** (35 px against 23.7 px at row padding 1.2). At the spec's
+   28 + 3 × 28 the folio scrolled; see deviations.
+6. **A new page is unknown to the bridge for a few seconds after `reload`:** retry the capture.
+
+*Deviations from the comp, and why* (open question 4 asks Bjorn to confirm them).
+
+- **Hover tags, the ring-i:** Burnt Tangerine `#A63F0E` instead of Tangerine `#E05A22`. Tangerine on white is 3.7:1 and
+  `a11y_check.py` holds every text run to 4.5:1.
+- **Folio table:** header 35 px and rows 23.7 px instead of 28 and 28; the first row sits 4.5 px lower than in the comp,
+  the others within 1.5 px. Columns 216 / 171 / 171 (2 px of slack, as in step 2).
+- **Line-end names of F1 and F2** start 9 to 10 px left of the comp's: Power BI sets them at the plot's edge with no gap.
+  Lines, numbers and years are on the comp. F1's year labels sit 3 px higher and its axis labels 4 px right.
+- **F3:** the value labels stand 4 px further from their bars; the category names differ by a few px sideways.
+- **F4:** the "90%" label is bold (the constant line's label has no font weight property).
+- **Reading order in F4:** note, rows, link, dots (the comp suggests note, link, rows): `a11y_check.py` reads by rows.
+  `btn_next` comes after the footer line and before the Definitions chip.
+- **`lnk_f4` and `chip_def` are cards on a measure,** not typed text (see "Built").
+
+*Open items for later steps.*
+
+- **Step 6:** empty `V9_PAGES` in `slot_map.py` when P2 moves to v10; `EYEBROW_V10` takes page 2; `nav_button()` builds
+  `btn_back`; `chip_native()` and `hover_tag_text()` are ready for P2; the masthead controls set their own fills (the
+  theme carries the light surface only). The old `Definitions Chip (text)`, `Definitions Pill SVG` and `Hover Tag … SVG`
+  stay until P2 no longer binds them (prune in step 11).
+- **Steps 6 to 9:** use `note()` for every card of more than one line, and verify with the tile render.
+- **Step 10:** alt texts of the P1 charts are the old ones (`Alt F1 Chart`, `Alt F4 Chart`: still true, but written for
+  the old charts); `tt-f4-hotel` now opens from a dot.
+- **Step 11 or 12:** one real Ctrl+click on `btn_next` (and in the browser a plain click). The posted click of step 1
+  did not land here: in the narrow window the button's UI Automation rectangle does not match the scaled button.
+- **Step 12:** look at the header in the published report: this step changed only the eyebrow's words there, and the
+  tile render cannot show the Night zone.
+- **Before the session:** the working tree was clean. The throwaway window was ended with `Stop-Process` (throwaway
+  only); the project was not opened in Desktop.
 
 ### Step 6 · Page 2 frame and the decision card (about 2 h)
 
@@ -624,3 +724,10 @@ A session that meets a question only Bjorn can answer adds it here and sets its 
    is live for 34 months or more by January 2032, and the extensions and the refresh started at the mid-2028 gate would
    be in their third year too (live by November 2029). Only a Boston hotel started that late would not be.
    Recommended: drop the second sentence; the first is exact as it stands. Bjorn decides.
+4. **The deviations of step 5 on page 1 (no step is blocked by them).** Listed in the log of step 5 under "Deviations":
+   the ring-i of the two hover tags in Burnt Tangerine instead of Tangerine (contrast floor); the folio table's header
+   35 px and rows 23.7 px instead of 28 and 28 (a native table's header is taller than its rows); the line-end names of
+   F1 and F2 9 to 10 px left of the comp; the "90%" label of F4 bold; the tab order note, rows, link in F4; the F4 link
+   and the Definitions chip as measures. Recommended: accept them as technical corrections. If the Tangerine ring-i
+   matters more than the check, say so and it gets a recorded waiver in `a11y_check.py`. Bjorn confirms, or names
+   what must change.

@@ -276,7 +276,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "3.36D"
+                  "Value": "1.2D"
                 }
               }
             },

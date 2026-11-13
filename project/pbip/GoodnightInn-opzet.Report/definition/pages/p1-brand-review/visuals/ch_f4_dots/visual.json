@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_f4_dots",
   "position": {
-    "x": 656,
-    "y": 872,
+    "x": 655,
+    "y": 863,
     "z": 39000,
-    "width": 1208,
-    "height": 144,
+    "width": 1200,
+    "height": 161,
     "tabOrder": 650
   },
   "visual": {
@@ -99,13 +99,26 @@
           }
         }
       ],
+      "markers": [
+        {
+          "properties": {
+            "borderShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "bubbles": [
         {
           "properties": {
             "bubbleSize": {
               "expr": {
                 "Literal": {
-                  "Value": "0L"
+                  "Value": "-10L"
                 }
               }
             },

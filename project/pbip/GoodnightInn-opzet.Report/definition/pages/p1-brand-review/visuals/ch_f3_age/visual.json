@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_f3_age",
   "position": {
-    "x": 1304,
+    "x": 1310,
     "y": 392,
     "z": 34000,
     "width": 560,
-    "height": 216,
+    "height": 221,
     "tabOrder": 520
   },
   "visual": {
@@ -120,6 +120,20 @@
                   "Value": "false"
                 }
               }
+            },
+            "innerPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "54L"
+                }
+              }
+            },
+            "outerPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "27L"
+                }
+              }
             }
           }
         }
@@ -170,6 +184,20 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Literal": {
+                  "Value": "-8.11D"
+                }
+              }
+            },
+            "end": {
+              "expr": {
+                "Literal": {
+                  "Value": "10.3D"
                 }
               }
             }

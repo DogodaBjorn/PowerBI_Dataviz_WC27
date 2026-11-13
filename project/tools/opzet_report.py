@@ -90,6 +90,7 @@ KIT = ROOT / "design" / "brand-kits" / "goodnight-inn-wakeup" / "assets"
 # Round 9 (Björn, 11 Nov): no section numbers (a listed AI tell, design-taste-frontend 9.F); a hotel pun says what the page
 # is and the page name follows as its tagline, the line's one middle dot between them (pun, name).
 EYEBROW = {"p1-brand-review": ("THE WAKE-UP CALL", "THE BRAND REVIEW"), "p2-investment-strategy": ("ROOM TO INVEST", "THE INVESTMENT STRATEGY")}
+EYEBROW_V10 = {"p1-brand-review": "1 / 2 · THE WAKE-UP CALL"}  # step 6 adds page 2
 LOCKUP = "gi-lockup-reversed@2x.png"
 # Kit type scale (brand.yaml 3.1 scale_pt 30 / 20 / 14 / 12 / 12): textboxes in px, cards and visual objects in pt.
 # Floor 12 pt (16 px at 1920) for notes, axes, tables, slicers and tooltips alike (plan 11). S = small text in pt,
@@ -263,8 +264,29 @@ def night_kicker(page, name, txt):
     return decorative(tb(page, name, txt, font=DISPLAY, size=SPX, colour=TT_KICKER), 600 + _KICK[0])
 
 
-def title(page, name, measure, alt_measure=None):
-    return dyn(page, name, measure, size=TITLE_PT, colour=INK, font=DISPLAY, alt_measure=alt_measure)
+def title(page, name, measure, alt_measure=None, lift=0):
+    """lift (FinalV3 step 5): a card centres its line in its box; the comp sets it at the top, so a 14 pt title in a 32 px
+    slot sits low: 4.5 px on the stitched page render of step 5. P1 lifts its titles by 5."""
+    v = dyn(page, name, measure, size=TITLE_PT, colour=INK, font=DISPLAY, alt_measure=alt_measure)
+    if lift:
+        v["position"]["y"] -= lift
+    return v
+
+
+# A cardVisual centres its text block in its box, at a 21.9 px pitch for 12 pt, and shows a line only when the box leaves
+# room for it (2 lines from 60 px, 3 from 88; the calibration page of build step 5, 13 Nov). The comp sets the same lines
+# from the top of the slot at 21.3 px. So a note of n lines gets the height CARD_H[n], centred on the comp's text block:
+# every line then lands within 1 px of the comp. The box overlaps its neighbours a little; the card is transparent.
+CARD_H = {1: 24, 2: 64, 3: 92, 4: 120}
+
+
+def note(page, name, measure, lines, colour=INK2):
+    v = dyn(page, name, measure, colour=colour)
+    y = SLOT[page][name]["y"]
+    centre = y + lines * 21.3 / 2 - 0.7  # measured on the stitched page render: the five notes land within 2 px
+    v["position"]["height"] = CARD_H[lines]
+    v["position"]["y"] = round(centre - CARD_H[lines] / 2)
+    return v
 
 
 def p1_visuals():
@@ -286,31 +308,33 @@ def p1_visuals():
 
     k = lambda name, txt: kicker(P1, name, txt, code_colour=INK, sep=" · ")  # noqa: E731  (R-G3: the code in Night)
     # F1 the margin (4.2): the margin after commissions with the commissions band stacked on it
-    v += [k("c_f1_kicker", "F1 · THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)")]
+    v += [k("c_f1_kicker", "F1 · THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)", lift=5)]
     v.append(f1_area(P1, "ch_f1_margin"))
-    v.append(dyn(P1, "c_f1_note", "F1 Note (text)"))
+    v.append(note(P1, "c_f1_note", "F1 Note (text)", 3))
     v.append(link_line(P1, "lnk_f1", "→ Page 2: revenue management and the kiosks."))
 
     # F2 the middleman (4.3): two lines named at their ends, no legend and no value axis; the folio under it
-    v += [k("c_f2_kicker", "F2 · THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)", "Alt F2 Title (text)")]
+    v += [k("c_f2_kicker", "F2 · THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)", "Alt F2 Title (text)", lift=5)]
     v.append(f2_ends(P1, "ch_f2_ota"))
     v.append(f2_folio_v10(P1, "tbl_f2_folio"))
-    v.append(dyn(P1, "c_f2_note", "F2 Note (text)"))
+    v.append(note(P1, "c_f2_note", "F2 Note (text)", 3))
     v.append(link_line(P1, "lnk_f2", "→ Page 2: the booking app with member rates."))
 
     # F3 the fading welcome (4.4): label-safe values over the bars; a bar opens the band's detail
-    v += [k("c_f3_kicker", "F3 · THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)", "Alt F3 Title (text)")]
-    v.append(f3_chart(P1, "ch_f3_age", tooltip_page=TT_F3, measure="NPS 2025 (label-safe)"))
-    v.append(dyn(P1, "c_f3_count", "F3 Count (text)"))
-    v.append(dyn(P1, "c_f3_note", "F3 Note (text)"))
+    v += [k("c_f3_kicker", "F3 · THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)", "Alt F3 Title (text)", lift=5)]
+    v.append(f3_chart(P1, "ch_f3_age", tooltip_page=TT_F3, measure="NPS 2025 (label-safe)", v10=True))
+    cnt = dyn(P1, "c_f3_count", "F3 Count (text)")
+    cnt["position"]["y"] -= 3  # the card centres its line 3 px under the comp's (stitched render)
+    v.append(cnt)
+    v.append(note(P1, "c_f3_note", "F3 Note (text)", 3))
     v.append(link_line(P1, "lnk_f3", "→ Page 2: the refresh waits for the 2028 gate, and why."))
 
     # F4 where we are full (4.5, doc 22 section 3): the note and link at the left, the three location-type rows, the
     # dot plot of the 50 hotels on the average diamonds, the seven names as text boxes
-    v += [k("c_f4_kicker", "F4 · WHERE WE ARE FULL"), title(P1, "c_f4_title", "F4 Title (text)", "Alt F4 Title (text)")]
-    v.append(dyn(P1, "c_f4_note", "F4 Note (text)"))
+    v += [k("c_f4_kicker", "F4 · WHERE WE ARE FULL"), title(P1, "c_f4_title", "F4 Title (text)", "Alt F4 Title (text)", lift=5)]
+    v.append(note(P1, "c_f4_note", "F4 Note (text)", 2))
     # the number of kiosk hotels comes from the model (a11y_check: no typed number but a year), so this link is a card
-    v.append(dyn(P1, "lnk_f4", "Link F4 (text)", colour=INK))
+    v.append(note(P1, "lnk_f4", "Link F4 (text)", 2, colour=INK))
     v += f4_rows(P1, "c_f4_rows")
     v += f4_dot_plot(P1, tooltip_page=TT_F4)
     v += f4_names(P1)
@@ -325,6 +349,18 @@ def p1_visuals():
 
 
 # ---------------------------------------------------------------------- FinalV3 P1 builders (build step 5)
+# A chart's slot is where the comp draws the chart; Power BI lays its plot area out inside the visual with margins of its
+# own (axis labels, series names). PLOT_RECT is the visual rect that puts Power BI's plot where the comp has it, measured on
+# the stitched page render of step 5 (tools/desktop_shots/tiles). The slot map keeps the comp's rects.
+PLOT_RECT = {"ch_f1_margin": (68, 392, 526, 248), "ch_f2_ota": (700, 397, 505, 144), "ch_f3_age": (1310, 392, 560, 221)}
+
+
+def plot_rect(v, rect):
+    v["position"].update({"x": rect[0], "y": rect[1], "width": rect[2], "height": rect[3]})
+    return v
+
+
+
 # the ring-i of the hover tags: Burnt Tangerine, not the comp's Tangerine (#E05A22 is 3.7:1 on white, a11y_check's floor is
 # 4.5:1 for any text run; Burnt Tangerine is 6.2:1, the kit's text cut of the same hue)
 TAG_I = BAD
@@ -340,22 +376,22 @@ def hover_tag_text(page, name, words, i):
     """P-7 hover tag, native: a text box with two runs, the ring-i (U+24D8, S-8 passed) in Tangerine and the words in
     Night, on a white fill with a 1 px Seam border and radius 14. Decorative (an instruction to the mouse; every hover
     target's alt text says what the hover shows)."""
-    v = textbox(name, *at(page, name), [[("ⓘ", BODY, SPX, TAG_I, False), (" " + words, BODY, SPX, INK, False)]], align="center", alt=None)
+    v = textbox(name, *at(page, name), [[("ⓘ", BODY, SPX, TAG_I, False), (" " + words, BODY, SPX, INK, False)]], alt=None)
     vc = v["visual"]["visualContainerObjects"]
     vc["background"] = [{"properties": {"show": b(True), "color": color(SURFACE), "transparency": num(0)}}]
     vc["border"] = [{"properties": {"show": b(True), "color": color(HAIR), "radius": num(14), "width": num(1)}}]
-    vc["padding"] = [{"properties": {"top": num(1), "bottom": num(0), "left": num(8), "right": num(8)}}]
+    vc["padding"] = [{"properties": {"top": num(1), "bottom": num(0), "left": num(12), "right": num(4)}}]
     return decorative(v, 700 + i)
 
 
 def chip_native(page, name, text_measure, tooltip_page, alt_measure):
     """P-7 Definitions chip: one cardVisual with its own container fill, border and radius, the text measure in Night,
     the tooltip page bound to it (the SVG pill under it is gone)."""
-    v = card(name, *at(page, name), [text_measure], BODY, S, INK, align="center")
+    v = card(name, *at(page, name), [text_measure], BODY, S, INK)
     vc = v["visual"]["visualContainerObjects"]
     vc["background"] = [{"properties": {"show": b(True), "color": color(SURFACE), "transparency": num(0)}}]
     vc["border"] = [{"properties": {"show": b(True), "color": color(HAIR), "radius": num(14), "width": num(1)}}]
-    vc["padding"] = [{"properties": {"top": num(2), "bottom": num(0), "left": num(12), "right": num(12)}}]
+    vc["padding"] = [{"properties": {"top": num(0), "bottom": num(3), "left": num(12), "right": num(12)}}]
     vc["visualTooltip"] = page_tooltip(tooltip_page)
     return bind_alt(v, alt_measure)
 
@@ -365,10 +401,14 @@ def nav_button(page, name, label, target, alt):
     Seam fill with Night text (the theme's light-surface hover). The page-navigation link is S-6's shape
     (visualContainerObjects.visualLink: type PageNavigation, navigationSection = the page's folder name)."""
     st = ("hover", "selected")
-    objs = {"shape": [{"properties": {"tileShape": enum("pill")}}],
+    _, _, _, h_, _, _ = at(page, name)
+    # the pill: tileShape rectangleRoundedByPixel with half the height, on the default state. Tried on the scratch page of step 5:
+    # a shape without a selector is ignored, and 'pill' pushes the label under the middle and clips it.
+    objs = {"shape": [{"properties": {"tileShape": enum("rectangleRoundedByPixel"), "rectangleRoundedCurve": integer(h_ // 2)}, "selector": {"id": "default"}}],
             "icon": [{"properties": {"shapeType": text("blank")}, "selector": {"id": "default"}}],
             "text": [{"properties": {"show": b(True)}},
-                     {"properties": {"text": text(label), "fontFamily": text(BODY), "fontSize": num(S), "fontColor": color(SURFACE), "bold": b(False)}, "selector": {"id": "default"}},
+                     {"properties": {"text": text(label), "fontFamily": text(BODY), "fontSize": num(S), "fontColor": color(SURFACE), "bold": b(False),
+                                     "topMargin": integer(0), "bottomMargin": integer(3)}, "selector": {"id": "default"}},
                      *[{"properties": {"text": text(label), "fontColor": color(INK)}, "selector": {"id": s_}} for s_ in st]],
             "fill": [{"properties": {"show": b(True)}},
                      {"properties": {"fillColor": color(INK), "transparency": num(0)}, "selector": {"id": "default"}},
@@ -391,15 +431,16 @@ def f1_area(page, slot):
     ls = line_styles({mref(ms[0]): 3, mref(ms[1]): 2})
     ls[1]["properties"]["areaShow"] = b(False)
     ls[2]["properties"]["areaShow"] = b(True)
-    objs = {"categoryAxis": axis(BODY, S, INK2),
+    # a categorical year axis: each year sits in the middle of its band, as the comp draws it (a scalar axis starts the lines on the plot's edges)
+    objs = {"categoryAxis": axis(BODY, S, INK2, extra={"axisType": enum("Categorical")}),
             "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=0.3, end=0.5, extra={"labelPrecision": integer(0)}),
             "legend": legend(False),
             "labels": [{"properties": {"show": b(False)}}],
             "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2),
-                                             "textSize": num(S), "seriesFontFamily": text(BODY), "enableBackground": b(False)}}],
+                                             "textSize": num(S), "seriesFontFamily": text(BODY), "enableBackground": b(False), "leaderLines": b(False)}}],
             "dataPoint": [{"properties": {"transparency": num(70)}}] + series_colors({mref(ms[0]): ACCENT_MARK, mref(ms[1]): SLATE}),
             "lineStyles": ls}
-    return chart(page, slot, "stackedAreaChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F1 Chart (text)")
+    return plot_rect(chart(page, slot, "stackedAreaChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F1 Chart (text)"), PLOT_RECT[slot])
 
 
 def f2_ends(page, slot):
@@ -414,31 +455,37 @@ def f2_ends(page, slot):
     ls = line_styles({mref(gi): 3, mref(si): 2})
     ls += [{"properties": {"strokeShow": b(False), "showMarker": b(False)}, "selector": {"metadata": mref(m_)}} for m_ in (gi_e, si_e)]
     lab = {"fontFamily": text(BODY), "fontSize": num(S), "color": color(INK2), "labelDisplayUnits": integer(1), "labelPrecision": integer(0), "enableBackground": b(False)}
-    objs = {"categoryAxis": axis(BODY, S, INK2),
-            "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, start=0.2, end=0.55),
+    objs = {"categoryAxis": axis(BODY, S, INK2, extra={"axisType": enum("Categorical")}),
+            # the comp's 20 % to 55 % in 90 px; Power BI's plot is 101 px high in this rect, so the ends that give the same
+            # pixels per point (50 % at page y 431, 33 % at 475)
+            "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, start=0.201, end=0.594),
             "legend": legend(False),
             "labels": [{"properties": {"show": b(True), **lab}},
                        *[{"properties": {"showSeries": b(False)}, "selector": {"metadata": mref(m_)}} for m_ in (gi, si)],
                        {"properties": {"showSeries": b(True), "labelPosition": enum("Above")}, "selector": {"metadata": mref(gi_e)}},
                        {"properties": {"showSeries": b(True), "labelPosition": enum("Under")}, "selector": {"metadata": mref(si_e)}}],
             "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2),
-                                             "textSize": num(S), "seriesFontFamily": text(BODY), "enableBackground": b(False)}},
+                                             "textSize": num(S), "seriesFontFamily": text(BODY), "enableBackground": b(False), "leaderLines": b(False)}},
                              *[{"properties": {"show": b(False)}, "selector": {"metadata": mref(m_)}} for m_ in (gi_e, si_e)]],
             "dataPoint": series_colors({mref(gi): ACCENT_MARK, mref(si): SLATE, mref(gi_e): ACCENT_MARK, mref(si_e): SLATE}),
             "lineStyles": ls}
-    return chart(page, slot, "lineChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F2 Chart (text)")
+    return plot_rect(chart(page, slot, "lineChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F2 Chart (text)"), PLOT_RECT[slot])
 
 
 FOLIO_COLS = (216, 171, 171)  # the spec's 216 / 172 / 172, less the 2 px a table needs beyond its columns (step 2, S-2 point 4)
+# Row padding: a 12 pt header is 32.6 px at padding 0 and a row 21.3 (step 2, S-3), each plus twice the padding. The comp's
+# 28 + 3 x 28 needs 112 with a header as tall as a row, which a native table cannot do: at 3.36 the table scrolled (render 1
+# of step 5), at 1.8 too. 1.2 gives a 35 px header and 23.7 px rows, 106 px in the 112 slot (a deviation of the row pitch, logged).
+FOLIO_PAD = 1.2
 
 
 def f2_folio_v10(page, slot):
-    """The folio table as the spec's construction.tables.tbl_f2_folio: header and rows 28 px (12 pt line 21.3 px plus
-    3.36 px row padding, step 2 S-3 point 2), fixed columns, the header ruled in Dusk underneath, the rows in Seam."""
+    """The folio table as the spec's construction.tables.tbl_f2_folio, as near as a native table gets (FOLIO_PAD): fixed
+    columns, the header ruled in Dusk underneath, the rows in Seam."""
     fol = ("Folio OTA Guest (text)", "Folio Direct Guest (text)")
     proj = [proj_col("FolioLine", "Line", display="One room night, 2025"), proj_mea(fol[0], "Via an online agency"), proj_mea(fol[1], "Direct, web and app")]
     colfmt = [{"properties": {"alignment": enum("Right"), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": mref(m_)}} for m_ in fol]
-    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=3.36, header_size=S, column_formatting=colfmt)
+    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=FOLIO_PAD, header_size=S, column_formatting=colfmt)
     objs["columnHeaders"][0]["properties"].update({"outlineStyle": enum("BottomOnly"), "outlineColor": color(INK2), "outlineWeight": num(1),
                                                    "autoSizeColumnWidth": b(False), "wordWrap": b(False)})
     objs["values"][0]["properties"]["wordWrap"] = b(False)
@@ -450,6 +497,11 @@ def f2_folio_v10(page, slot):
 
 # F4 (doc 21 4.5 with doc 22 section 3): one plot area for both scatter layers, fixed ends from the spec
 F4_X, F4_Y = (0.6, 0.95), (0.5, 3.5)
+# S-4 (doc 22 section 5), measured on the stitched page render of step 5: in the slot 656, 872, 1208, 144 Power BI's plot area
+# runs x 672.7 to 1848.7 and y 881.1 to 988 (margins 16.7 / 15.3 / 9.1 / 28); the comp's runs 672 to 1840 and 872 to 992. The two
+# layers take the rect that puts Power BI's plot on the comp's, so the dots land where the comp has them and the seven name
+# boxes keep the spec's positions (a shift alone cannot do it: the scale differed by 0.7 %).
+F4_RECT = (655, 863, 1200, 161)
 F4_ROWS = (("airport", "Airport", "Occupancy Airport GI (text)"), ("city", "City", "Occupancy City GI (text)"), ("highway", "Highway", "Occupancy Highway GI (text)"))
 # where each value starts after its label in the 160 px slot: the label's width at 16 px Segoe UI plus a space (4.4 px),
 # from `powerbi-report-author text measure` (49.5 / 27.0 / 61.2 px); set to the render in build step 5
@@ -486,14 +538,16 @@ def f4_dot_plot(page, tooltip_page=None):
     axis ticks and gridlines, and the 90 % constant line dashed in Dusk with its label; it opens the hotel's tooltip page."""
     x, y, w, h, z, tab = at(page, "ch_f4_dots")
     base = {"legend": legend(False), "categoryLabels": [{"properties": {"show": b(False)}}],
-            "bubbles": [{"properties": {"bubbleSize": integer(0), "markerRangeType": enum("magnitude"), "preventOverflow": b(False)}}]}
+            "markers": [{"properties": {"borderShow": b(False)}}],
+            "bubbles": [{"properties": {"bubbleSize": integer(-10), "markerRangeType": enum("magnitude"), "preventOverflow": b(False)}}]}
     # bottom layer: the location-type averages
     qa = {"Category": {"projections": [proj_col("Hotels", "LocationType", display="Location type")]},
           "X": {"projections": [proj_mea("F4 Type Avg", "Occupancy 2025")]}, "Y": {"projections": [proj_mea("F4 Row Y", "Row")]}}
     oa = f4_axes(copy.deepcopy(base), INK2)
-    oa["bubbles"][0]["properties"].update({"markerShape": enum("diamond"), "bubbleSize": integer(5)})
+    oa["bubbles"][0]["properties"].update({"markerShape": enum("diamond"), "bubbleSize": integer(0)})
     oa["dataPoint"] = [{"properties": {"fill": color(INK2)}, "selector": WILD}]
-    avg = decorative(visual("ch_f4_avg", "scatterChart", *at(page, "ch_f4_avg"), query=qa, objects=oa, filters=[gi_filter()], vcos=vco(padding=0)), 160)
+    _, _, _, _, za, ta = at(page, "ch_f4_avg")
+    avg = decorative(visual("ch_f4_avg", "scatterChart", *F4_RECT, za, ta, query=qa, objects=oa, filters=[gi_filter()], vcos=vco(padding=0), off_grid=True), 160)
     # top layer: the hotels
     qd = {"Category": {"projections": [proj_col("Hotels", "Hotel Short Name", display="Hotel")]},
           "X": {"projections": [proj_mea("Occupancy % 2025", "Occupancy 2025")]}, "Y": {"projections": [proj_mea("F4 Row Y", "Row")]}}
@@ -506,7 +560,7 @@ def f4_dot_plot(page, tooltip_page=None):
     vc = vco(padding=0)
     if tooltip_page:
         vc["visualTooltip"] = page_tooltip(tooltip_page)
-    dots = bind_alt(visual("ch_f4_dots", "scatterChart", x, y, w, h, z, tab, query=qd, objects=od, filters=[gi_filter()], vcos=vc), "Alt F4 Chart (text)")
+    dots = bind_alt(visual("ch_f4_dots", "scatterChart", *F4_RECT, z, tab, query=qd, objects=od, filters=[gi_filter()], vcos=vc, off_grid=True), "Alt F4 Chart (text)")
     return [avg, dots]
 
 
@@ -588,7 +642,7 @@ def f2_folio(page, slot):
     return bind_alt(t, "Alt F2 Folio (text)")
 
 
-def f3_chart(page, slot, tooltip_page=None, measure="NPS 2025 (signed)"):
+def f3_chart(page, slot, tooltip_page=None, measure="NPS 2025 (signed)", v10=False):
     """measure (FinalV3 step 5, P-1): on P1 the label-safe twin, so the bars print '+6.8' and '−4.9' in any locale."""
     q = {"Category": {"projections": [proj_col("Hotels", "Renovation Age Label", display="Years since the last renovation")]}, "Y": {"projections": [proj_mea(measure, "NPS 2025")]}}
     objs = {"categoryAxis": axis(BODY, S, INK), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False),
@@ -597,6 +651,15 @@ def f3_chart(page, slot, tooltip_page=None, measure="NPS 2025 (signed)"):
             # FinalV2 (plan 15 N4): 2 px, a line and not a bar (Björn, 7 Nov: thin, in Dusk); the width key as on the scatter's line
             "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(2), "style": enum("solid"), "position": enum("front"),
                                                     "dataLabelShow": b(False)}, "selector": {"id": "1"}}]}
+    if v10:
+        # The comp's bars: 72 px wide, 186.7 px apart. Power BI's two paddings do not map to that directly; six variants on a
+        # scratch page (step 5) gave step 188.4 and width 72.1 at 54 / 26, step 183.0 at 54 / 30. The value ends put zero at
+        # page y 500 and +6.8 at 436 in Power BI's plot.
+        objs["categoryAxis"][0]["properties"].update({"innerPadding": integer(54), "outerPadding": integer(27)})
+        objs["valueAxis"][0]["properties"].update({"start": num(-8.11), "end": num(10.3)})
+        return plot_rect(chart(page, slot, "clusteredColumnChart", q, objs, None,
+                               filters=[gi_filter(), filter_in("Hotels", "Renovation Age Sort", [1, 2, 3], "flt_dated")], sort=sort_by_column("Hotels", "Renovation Age Label"),
+                               alt_measure="Alt F3 Chart (text)", tooltip_page=tooltip_page), PLOT_RECT[slot])
     return chart(page, slot, "clusteredColumnChart", q, objs, None,
                  filters=[gi_filter(), filter_in("Hotels", "Renovation Age Sort", [1, 2, 3], "flt_dated")], sort=sort_by_column("Hotels", "Renovation Age Label"),
                  alt_measure="Alt F3 Chart (text)", tooltip_page=tooltip_page)
@@ -895,8 +958,10 @@ def brand_row(page_name, sfx):
     L = pg["logo"]
     out = [image_file("z_logo", L["x"], L["y"], L["w"], L["h"], 1003, L["tab"], LOCKUP, "Goodnight Inn"),
            # ZONE_EYEBROW on Night 9.5:1; at the 12 pt floor instead of the kit's 11 pt eyebrow
-           tb(page_name, f"z_eyebrow{sfx}", "  ·  ".join(EYEBROW[page_name]),
-              runs=[(EYEBROW[page_name][0], DISPLAY, SPX, ZONE_EYEBROW, False), ("  ·  " + EYEBROW[page_name][1], DISPLAY, SPX, ZONE_MUTED, False)],
+           # FinalV3 (R-P1-1, doc 21 4.1): the rebuilt page 1 says where the reader is, "1 / 2 · THE WAKE-UP CALL · THE BRAND REVIEW"
+           tb(page_name, f"z_eyebrow{sfx}", (EYEBROW_V10[page_name] + " · " + EYEBROW[page_name][1]) if page_name in EYEBROW_V10 else "  ·  ".join(EYEBROW[page_name]),
+              runs=([(EYEBROW_V10[page_name], DISPLAY, SPX, ZONE_EYEBROW, False), (" · " + EYEBROW[page_name][1], DISPLAY, SPX, ZONE_MUTED, False)] if page_name in EYEBROW_V10 else
+                    [(EYEBROW[page_name][0], DISPLAY, SPX, ZONE_EYEBROW, False), ("  ·  " + EYEBROW[page_name][1], DISPLAY, SPX, ZONE_MUTED, False)]),
               alt=("Page 1 of 2, the wake-up call: the brand review" if sfx == "" else "Page 2 of 2, room to invest: the investment strategy"))]
     return out
 
