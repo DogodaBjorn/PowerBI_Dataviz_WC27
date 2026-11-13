@@ -1,0 +1,54 @@
+== 1 kiosk hotels (GI-02) against the occupancy ranking, 2025
+kiosk set == 20 fullest: True | min kiosk occ 0.8139 | 21st GI012 0.81
+
+== 2 complaints per 1,000 room nights sold: kiosk hotels vs the other 30
+Check-in & waiting times
+Year      2021  2022  2023  2024  2025
+K                                     
+other 30  0.88  0.95  0.99  1.01  0.98
+kiosk 20  0.88  1.07  1.24  1.27  1.26
+Room condition
+Year      2021  2022  2023  2024  2025
+K                                     
+other 30  1.54  1.54  1.52  1.66  1.81
+kiosk 20  1.53  1.49  1.62  1.63  1.78
+
+== 3 ADR growth: kiosk (fullest 20) vs other 30 (tests the 'full but not pricing' idea)
+2023-25 {False: 0.0255, True: 0.0289} | 2021-25 {False: 0.1418, True: 0.1516}
+
+== 4 months at or above 90 % occupancy, 2024-2025 (24 months)
+  Goodnight Inn Toronto Pearson Airport: 17 of 24 | occupancy 2025 0.919
+  Goodnight Inn London Gatwick Airport: 14 of 24 | occupancy 2025 0.904
+  Goodnight Inn Montréal-Trudeau Airport: 13 of 24 | occupancy 2025 0.902
+  Goodnight Inn Kingston: 0 of 24 | occupancy 2025 0.612
+
+== 5 margin after commissions: split of the fall since 2023
+         GOP  Dist_rev   After  Dist_room   Staff
+Year                                             
+2021  0.4086    0.0839  0.3248     0.0889  0.2987
+2022  0.4506    0.0907  0.3599     0.0961  0.2707
+2023  0.4614    0.0968  0.3645     0.1026  0.2694
+2024  0.4576    0.1024  0.3552     0.1085  0.2741
+2025  0.4437    0.1065  0.3373     0.1128  0.2827
+since 2023: after -2.7 pt = operations -1.8 pt, commissions -1.0 pt; staff +1.3 pt
+
+== 6 the 2032 ledger: 2025 brand plus package A at full effect (2025 dollars)
+  Low      profit a year  1.04M | margin after commissions 0.3373 -> 0.3412 | distribution cost % room revenue 0.1128 -> 0.1068 | app's yearly commission saving 1.20M
+  Expected profit a year  3.53M | margin after commissions 0.3373 -> 0.3509 | distribution cost % room revenue 0.1128 -> 0.1008 | app's yearly commission saving 2.41M
+  High     profit a year  6.20M | margin after commissions 0.3373 -> 0.3610 | distribution cost % room revenue 0.1128 -> 0.0948 | app's yearly commission saving 3.61M
+
+== 7 running costs are netted in AnnualOperatingProfitImpactUSD (GI-10 reconciliation)
+  revenue x (1 - distribution %) - running cost = 768,141 vs dataset 768,000
+
+== 8 profit a year by 2032 / capex, per move (Expected)
+  GI-01 Direct booking app & member rates                capex   5.00M  a year  2.35M   47.0 %
+  GI-10 Revenue management system                        capex   2.40M  a year  0.77M   32.0 %
+  GI-02 Self check-in kiosks - 20 busiest hotels         capex   2.00M  a year  0.41M   20.5 %
+  GI-09 Breakfast & grab-and-go upgrade                  capex   4.25M  a year  0.84M   19.8 %
+  GI-05 40-room extension - Goodnight Inn London Gatwick capex   6.60M  a year  1.04M   15.8 %
+  GI-03 Energy efficiency program                        capex  15.00M  a year  1.77M   11.8 %
+  GI-04 40-room extension - Goodnight Inn Toronto Pearso capex   5.80M  a year  0.67M   11.5 %
+  GI-06 40-room extension - Goodnight Inn Kingston       capex   5.40M  a year  0.44M    8.2 %
+  GI-08 New hotel - Goodnight Inn Boston Logan Airport   capex  24.75M  a year  2.00M    8.1 %
+  GI-07 Room refresh - 10 oldest hotels                  capex  29.50M  a year  2.34M    7.9 %
+  package A 37.5 % | tranche 2 (GI-04 + GI-05) 13.8 % on 12.4M
