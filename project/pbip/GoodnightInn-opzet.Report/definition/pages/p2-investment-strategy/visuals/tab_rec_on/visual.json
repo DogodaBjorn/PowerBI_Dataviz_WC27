@@ -114,7 +114,7 @@
             "bottomMargin": {
               "expr": {
                 "Literal": {
-                  "Value": "3L"
+                  "Value": "0L"
                 }
               }
             }

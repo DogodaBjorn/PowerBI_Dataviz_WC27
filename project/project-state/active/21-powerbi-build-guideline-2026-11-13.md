@@ -732,6 +732,24 @@ saves, close every window yourself without saving, renders through the throwaway
 Tier order inside each step follows doc 20: T1 before T2 before T3. If a day slips, drop T3 first
 (R-P1-9, R-P2-11, R-W-4, R-TT-3/4, the submission prune), never the gate.
 
+### Results of page 2, frame and decision card (13 Nov, build step 6 of doc 23)
+
+- **Sections 5 and 6.2 are built** on the v10 slot map (`opzet-layout-v9.json` is no longer read): `p2_frame()` and
+  `p2_decision_card()` in `opzet_report.py`. Recommended matches the comp within 2 px in Low, Expected and High, with two
+  exceptions that are Power BI's, listed below. The retired frame and Recommended visuals of sections 5 and 6.3 are out
+  of the files, and so are `tt-f1` to `tt-f4` as pages (N-4; their canvases and measures go in step 10).
+- **P-2 on the Night masthead** is set per visual (`ctl_button()` with the looks `night_on`, `night_off`, `light_sec`;
+  `button_slicer(night=True)`): the theme carries the light surface only. Every state names its fill, text and outline;
+  the slicer's hover and press states name their text colour too (`interaction:hover`, `interaction:press`).
+- **A native table sets every cell at the top of its row** (no vertical alignment in the catalog), a ruled row carries
+  1 px for its rule, and the header is taller than a row (34 px at row padding 0.5). So `tbl_ledger` uses row padding
+  0.5 and starts 6 px above its slot: the four row tops are on the comp's, a one-line cell sits on the first line of
+  its row where the comp centres it. The same will hold for `tbl_waits` (7.2) and `tbl_hero` has one-line rows only.
+- **`c_rec_lines` is two cards** (S-7), 21 px apart; **`c_rec_nums`** takes the ink of its two signed numbers per
+  measure (`value` with a `metadata` selector, bound to `Rec NPV Ink` and `Rec Run-rate Ink`).
+- **The comp draws the three tab labels in regular weight** (its rule `#stage button {font: inherit}` outranks
+  `.btn.lg {font-weight: 600}`); the report follows P-2 above, Segoe UI Semibold. Open question 5 in doc 23.
+
 ### Results of page 1 (13 Nov, build step 5 of doc 23)
 
 - **S-4, pass with a different cure than doc 22 section 5 planned.** In its slot Power BI's F4 plot was 0.7 % wider and

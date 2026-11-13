@@ -23,7 +23,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 3 | Model foundations and the number checks | done | 13 Nov | c404091 | 56 number measures, 3 tables, 2 columns; 763 checks, all pass in Low, Expected and High, 1 known difference (open question 1). New: a measure cannot carry a static and a dynamic format string; open question 3 (hero caption). Bjorn was not needed in Desktop |
 | 4 | Text measures and `build_checks.py` | done | 13 Nov | 8849312 | Every measure-backed slot of the spec in Low, Expected, High and the empty Build state: 127 equal, 2 known (open question 1, 20.5/20.6 %), 0 different. Checks 1, 3, 4 pass; check 2 is strict on the new copy and open on the old visuals until step 11. Bjorn was not needed in Desktop |
 | 5 | Page 1 | done | 13 Nov | 29e2a7b | P1 on the v10 slot map and on the comp: text rows within 2 px, F3 bars and the F4 plot on the comp's grid, nl-NL prints points only, `a11y_check` 0. Verified with a new tile render (the session window was 540 px wide). Seven small deviations for Bjorn to confirm (open question 4). Bjorn was not needed in Desktop |
-| 6 | Page 2 frame and the decision card | todo | | | |
+| 6 | Page 2 frame and the decision card | done | 13 Nov | (this commit) | P2 on the v10 slot map (v9 no longer read). Frame and decision card on the comp in Low, Expected and High: every text row within 2 px, the same line wraps, the ledger fits its slot in all three; `a11y_check` 0. Two things are Power BI's or a choice: ledger cells sit at the top of their rows, tab labels are Semibold (open question 5). What waits and Build show their frame with the old visuals that still have a slot. Bjorn was not needed in Desktop |
 | 7 | Hero table and capital plan; the cut line | todo | | | |
 | 8 | What waits, and why | todo | | | |
 | 9 | Build your own | todo | | | |
@@ -570,7 +570,110 @@ ledger fits its slot in all three.
 
 **Prompt:** `project/build-steps/step-06.txt` (say: "Read project/build-steps/step-06.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Fri 13 Nov 2026, one session, done):**
+
+*Built* (generators only; P2 42 visuals, was 79; 568 measures, was 564; seven pages, was eleven):
+
+- **Layout switch (rule 9).** `slot_map.V9_PAGES` is empty: every page reads `opzet-layout.json` (v10), the v9 file is
+  no longer read. Page 2 of `opzet-layering.json` is rewritten for the v10 slots, all three states, in reading order
+  (doc 21 section 5 and R-P2-9), decorative slots with a negative tab; steps 7 to 10 adjust their own slots there.
+- **Frame** (`p2_frame()`). Eyebrow "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY"; `btn_back`, a pill on the Night
+  zone with the S-6 link to page 1; headline and two-line subtitle; the tab twins with the new labels, 40 px high,
+  radius 8, the current one Oat White with Night text, the others solid Night with a Mist outline; "Scenario" in Mist
+  and the three pills in the same look; the source line on `Footer P2 (text)` (its three parameters come from the
+  model); the Definitions chip (P-7, as on page 1). The five cards and the outline tile come from the slot map, all with
+  the one card shadow, as the comp's `.frame`. Bookmarks keep their names; display names "P2 Recommended: A",
+  "P2 What waits, and why", "P2 Build your own"; target lists follow the slot map.
+- **Decision card** (`p2_decision_card()`). The A chip; `c_rec_head` as a text box with two paragraphs; `c_rec_nums`,
+  four callouts (capex, NPV through 2032, a year by 2032, a year on cost) with the two signed numbers in Burnt Tangerine
+  below zero; `c_rec_lines` as two cards 21 px apart (S-7); `tbl_ledger` on `Finding` with columns 112 / 280 / 88 / 96 /
+  176, "What we track" in Dusk with its line break, header ruled in Dusk, rows in Seam, no sort arrow (the model sorts
+  `Finding[Label]`); the caption; `btn_build_invite`, a white pill with a Dusk outline and the bookmark `bm_p2_build`.
+- **Removed, not hidden** (doc 21 sections 5 and 6.3): `z_pill_facts`, `chip_f1` to `chip_f4`, `sl_view`, `z_tile_guide`,
+  `c_guide*`, `z_tile_rec`, `hero_packages*`, `c_scatter_title`, `c_rec_title`, `c_rec_mix`, `c_rec_note`,
+  `ch_rec_waterfall`, `ch_rec_cumulative`, `c_uncertainty`, `tag_scatter`, `tag_rec_cum`; the SVG Definitions pill of
+  page 2. With the facts chips the pages `tt-f1` to `tt-f4` left the report (nothing opens them; N-4), and their chart
+  builders left the generator.
+- **The states of steps 7 to 9** (`p2_pending()`, rule 9). Recommended shows the hero card and the bottom card empty.
+  What waits and Build show the new frame with the old visuals that still have a slot in the v10 map, in their new
+  rects: the small scatter stack, the two comparison charts with their hover tags, the three your-plan cards. The old
+  visuals without a slot are gone from the files already: the B and C tiles, the state titles, the Deneb selector and
+  both waterfalls (so `publicCustomVisuals` is no longer written).
+- **Model, four measures:** `Rec NPV Ink`, `Rec Run-rate Ink`, `Alt Rec Head (text)` (the head read from the package,
+  because `a11y_check.py` allows no typed number in a static alt text and the mix line says "20"), `Alt Ledger (text)`
+  (the ledger read row by row). `Alt Rec Nums (text)` now reads the four new numbers.
+- **Tools:** `tiles/mk_tiles.py` takes `--page`, `--scenario` and `--mast` (see "Found", 1); new `tiles/slotdiff.py`.
+
+*Verified* (Desktop 2.159, Windows culture nl-NL, throwaway copy; renders in
+`project/deliverables/screenshots/Step6-p2-frame-card-2026-11-13/`).
+
+| What | Result | Proof |
+|---|---|---|
+| Recommended renders in Low, Expected and High | yes, each from its own tile render | renders 01, 02, 03 |
+| Frame against the comp, render minus comp | eyebrow −0.5 px; back button text −0.2; headline +1.1 (after a 2 px move, see deviations); subtitle +0.3 / +1.6, same wrap; tab labels 0 in y; "Scenario" −0.4; pill labels −0.3 to 0, x within 2; footer −0.4; chip +0.3 | `slotdiff.py` on the stitched capture; overlay 04 |
+| Decision card against the comp | head −0.7 / −1.3; the four values −0.8 to −1.7, their labels +0.5 to +0.7, x within 2; the two lines −1.7 / +0.2; caption −0.9; invitation text −0.8, x 0. In all three cases 65 text rows pair one to one with the comp's: no line wraps differently | same |
+| The ledger fits its slot | header 34 px, rows 44.6 / 44.6 / 65.8 / 44.6: the last row ends at page y 597, the slot at 608; no scrollbar; row tops within 2 px of the comp's in all three cases; High's "three quarters of the rise since 2021 undone" takes two lines, as in the comp | renders 01 to 03 |
+| Typed text | 12 typed slots (eyebrow, back, six tab twins, Scenario, head, caption, invitation), the ledger's five headers and the four number labels equal the spec letter for letter | script run in the session |
+| `build_checks.py` (with the engine) | check 5: 129 ok, 2 known (20.5 / 20.6 %), 0 failed; checks 1, 3, 4 pass; check 2 strict passes, the old list is down to 16 measures and 3 report strings | `analysis/output/build_checks.txt` |
+| `number_checks.py` | 763 checks, 762 ok, 1 known, 0 failed | repeatable |
+| `a11y_check.py` | 0 failures | repeatable |
+| Other validators | `schema_check` 156 files, 0 failing; `validate_json` 0; `validate_tmdl --strict` 0 errors, the 11 expected warnings; Microsoft's validator: the one known error (`hero_s_packages_named`, goes in step 8) | repeatable |
+| The other two states | What waits and Build draw their frame and the old visuals without an error | renders 07, 08 |
+
+*Found on the way (binding for the next steps).*
+
+1. **The tile render can show the masthead and a scenario.** `mk_tiles.py --mast 168` draws the Night zone as a
+   rectangle on the tile pages, so light text is readable and measurable; `--scenario Low` sets the slicer on its own
+   tile and gives every other tile the case as a page filter (a slicer only reaches its own page); the page's own
+   filters are copied to every tile. `slotdiff.py` measures on any background. A card's line can read 1.5 px off
+   depending on where the card's top falls on the capture's pixel grid: a difference under 2 px is noise.
+2. **A native table:** every cell at the top of its row; a ruled row is the text plus twice the padding plus 1 px;
+   the header is about 34 px whatever the padding. So a table starts above its slot by the header's surplus, and the
+   comp's centred cells cannot be had. Step 8 (`tbl_waits`) meets the same.
+3. **A tab's label centres in 40 px with margins 0 / 0;** a 28 px pill needs bottom margin 3 (step 5). In a button the
+   Semibold face is 2.7 % wider than regular, as doc 22 says.
+4. **The comp's scenario cannot be set from its URL.** For the Low and High comp pictures a scratch copy of the comp
+   read `?scen=` into `ST.scen`; the comp itself is untouched. Headless Edge returns before the PNG is written.
+5. **A capture taken right after a reload can miss the cards** (the Build tile looked empty at first): take it twice.
+6. **A region capture through the bridge (`cap.mjs` with x y w h) hung for two minutes** and had to be stopped; the
+   tile pages do that job.
+
+*Deviations from the comp, and why* (open question 5 asks Bjorn to confirm them).
+
+- **Ledger, vertical alignment.** A cell with fewer lines than its row sits on the row's first line; the comp centres
+  it. That is 10 to 12 px higher for "11.3%", "10.1%", "33.7%", "35.1%", "F1 The margin" and the F3 values, 20 px for
+  "0 of 20 · 0" and "20 of 20 · 0", 10 px for the two-line cells of the F4 row. The header words sit 8.5 px higher
+  (the header is 34 px, the comp's 28; the rule under it is on the comp's line). The F3 row sits 1.4 to 2.1 px low.
+- **Ledger, position.** The visual is 1111, 362, 754, 246 in the slot 1112, 368, 752, 240: 6 px up for the header,
+  1 px left and 2 px wide for the cell padding and the scrollbar slack.
+- **Tab labels in Semibold,** 3 to 5 px wider than in the comp's picture, which draws them in regular weight through
+  a CSS accident (doc 21, results of this step). P-2 and the comp's own class say Semibold.
+- **Headline, both pages:** the card sits 2 px under its slot. On page 2's masthead the line measured 2.2 px above the
+  comp's; page 1 has the same card in the same slot, so both moved together (step 5 could not see the header).
+- **`c_rec_nums`** sits 4 px above its slot (a card centres value and label; the comp sets them from the top).
+- **`c_rec_head`** is typed, but a screen reader hears `Alt Rec Head (text)`: the hero's move names ("Booking app &
+  member rates"), not the mix line's ("Booking app with member rates").
+- **`z_footer2` is a card on a measure,** not the static text box of doc 21 section 5: its 8 %, 2025 and 2032 come from
+  `FinanceParameters`, and step 4 mapped it that way.
+
+*Open items for later steps.*
+
+- **Step 7:** the hero card and the bottom card are empty and wait for `tbl_hero` and the capital plan; their z and
+  tab are in `opzet-layering.json` already. `rec_lines()`, `ledger()` and `ctl_button()` show the patterns; the plan's
+  segment cards are multi-line cards (`note()`).
+- **Step 8:** replace the old small scatter stack, `c_scatter_title_s` (still on `Scatter Title Short (text)`) and
+  `ch_cmp_alts`; build `tbl_waits` with the table rules of "Found", 2. The Microsoft validator's one error leaves with
+  the old `hero_s_packages_named`.
+- **Step 9:** `waterfall()`, `deneb_selector()`, `native_selector()`, `SELECTOR`, `DENEB_SPEC` and `DENEB_GUID` are
+  unused since this step and still in `opzet_report.py`: remove them there. `interactions()` points at
+  `dn_build_selector`, which no longer exists: point it at `sl_moves`. The three your-plan cards are the old ones.
+- **Step 10:** `tt-f1` to `tt-f4` are out of the report; their canvases (`canvas-tt-tt-f#.jpg`) and measures
+  (`Facts Chip F# (text)`, `Facts Bar SVG`, `Definitions Pill SVG`, `Definitions Chip (text)`) are still there.
+  `Alt Ledger (text)`, `Alt Rec Head (text)` and `Alt Rec Nums (text)` are written; check them in the Narrator pass.
+- **Step 11 or 12:** one real Ctrl+click on `btn_back` and on a tab (in the browser a plain click), and a look at the
+  hover state of the pills and tabs: the hover fill is Mist with Night text, set but not seen in a capture.
+- **Before the session:** the working tree was clean. The throwaway window was ended with `Stop-Process` (throwaway
+  only); the project was not opened in Desktop, and no Desktop window is left open.
 
 ### Step 7 · Hero table and capital plan; the cut line (about 2 h)
 
@@ -731,3 +834,11 @@ A session that meets a question only Bjorn can answer adds it here and sets its 
    and the Definitions chip as measures. Recommended: accept them as technical corrections. If the Tangerine ring-i
    matters more than the check, say so and it gets a recorded waiver in `a11y_check.py`. Bjorn confirms, or names
    what must change.
+5. **The deviations of step 6 on page 2 (no step is blocked by them).** Listed in the log of step 6 under "Deviations".
+   Two need a word from Bjorn. (a) The ledger is a native table, and a native table sets every cell at the top of its
+   row: "11.3%" stands on the first line of its row, where the comp centres it. Recommended: accept; the only other
+   route is an image or an HTML table, which doc 21 rules out (P-3). (b) The three tab labels are Segoe UI Semibold, as
+   doc 21 P-2 and the comp's own style sheet say; the comp's picture shows them in regular weight because of a CSS
+   accident. Recommended: keep Semibold. If the picture is what was approved, say so: it is one argument in
+   `tab_bar()`. The rest (the 2 px move of the headline on both pages, the ledger 6 px above its slot, the spoken head)
+   are technical corrections.

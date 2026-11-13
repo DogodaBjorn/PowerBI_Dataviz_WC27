@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tbl_ledger",
   "position": {
-    "x": 1112,
-    "y": 361,
+    "x": 1111,
+    "y": 362,
     "z": 30000,
     "width": 754,
-    "height": 247,
+    "height": 246,
     "tabOrder": 340
   },
   "visual": {
@@ -306,7 +306,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "1.2D"
+                  "Value": "0.5D"
                 }
               }
             },

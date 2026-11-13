@@ -16,14 +16,16 @@ Source of truth:
 Canvas 1920x1080; brand kit goodnight-inn-wakeup 3.1, night header with the night-glow canvas (plans 10 and 11;
 theme: project/deliverables/theme.json, canvas: project/tools/brand_canvas_v3.py).
 
-Two visible pages, both named after the contest's questions. P2 has three panel states swapped by display-only
-bookmarks (bm_p2_rec / bm_p2_alts / bm_p2_build), reached through a tab bar:
-  rec    the recommendation A: tile, where the NPV comes from, the cumulative chart (default)
-  alts   B and C, considered and not recommended: two cards and a comparer against A across the bottom
-  build  build your own plan: the Deneb move selector, your plan's numbers and waterfall, a comparer against A
-In alts and build the scatter card shrinks: a bookmark cannot resize a visual, so a second, smaller scatter stack
-(hero_s_packages*) is shown instead of the full one. The scenario lives in the Scenario slicer, so a bookmark never
-changes it (fx-focus rules 1-2). Shapes not yet exercised in Desktop are marked VERIFY.
+Two visible pages, both named after the contest's questions. P2 has three states swapped by display-only bookmarks
+(bm_p2_rec / bm_p2_alts / bm_p2_build), reached through the tab bar in the masthead. The scenario lives in the Scenario
+slicer, so a bookmark never changes it (fx-focus rules 1-2). Shapes not yet exercised in Desktop are marked VERIFY.
+
+FinalV3 (doc 23, the rebuild to the comp rebuild-comp-v10.html, one step per session): P1 is rebuilt (step 5). P2 runs
+on the v10 slot map since step 6, which built the frame (p2_frame) and the decision card of Recommended
+(p2_decision_card); p2_pending() says what steps 7 to 9 still rebuild:
+  rec    Recommended: A: the hero table and the capital plan (step 7), the decision card (built)
+  alts   What waits, and why: the small scatter, the table of what waits, the comparison with A (step 8)
+  build  Build your own: the native move selector, your plan, the comparison with A (step 9)
 """
 import copy
 import json
@@ -34,8 +36,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pbir_lib import (visual, textbox, card, write_report, vco, axis, legend, labels, series_colors, line_styles,  # noqa: E402
-                      table_objects, proj_col, proj_mea, mref, filter_in, filter_measure_gt, sort_by_measure,
-                      sort_by_column, b, num, integer, enum, text, color, mea, col, write_json, tag, PAGE_SCHEMA)
+                      table_objects, proj_col, proj_mea, mref, filter_in, filter_measure_gt,
+                      sort_by_column, b, num, integer, enum, text, color, write_json, tag, PAGE_SCHEMA)
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "project" / "pbip"
@@ -98,7 +100,6 @@ LOCKUP = "gi-lockup-reversed@2x.png"
 S = 12
 SPX = 16
 TITLE_PT = 14  # card titles (kit scale step 3)
-BRANDS = [("GI", "Goodnight Inn"), ("PS", "P&K Select"), ("MO", "Maison d'Or"), ("PP", "Pebble & Pine")]
 WILD = {"data": [{"dataViewWildcard": {"matchingOption": 1}}]}
 
 SLOT = {p["name"]: {v["name"]: v for v in p["visuals"]} for p in LAYOUT["pages"]}
@@ -115,21 +116,6 @@ def layered(page_name, visuals):
             v["position"]["z"], v["position"]["tabOrder"] = o["z"], o["tabOrder"]
     return visuals
 PAGES = {p["name"]: p for p in LAYOUT["pages"]}
-
-
-def topn_filter(table, column, n, measure, name):
-    """TopN as an In-condition over a subquery (the shape the semanticQuery schema allows; pbir_lib.filter_topn's
-    'Top' condition does not validate against it)."""
-    sel = {"Column": {"Expression": {"SourceRef": {"Source": "t"}}, "Property": column}}
-    # Every SourceRef inside the subquery must name an alias declared in its own From; an Entity ref here crashes
-    # Desktop's SemanticQueryRewriter.rewriteOrderBy ("Cannot read properties of undefined (reading 'accept')").
-    sub = {"Version": 2, "From": [{"Name": "t", "Entity": table, "Type": 0}, {"Name": "m", "Entity": "_Measures", "Type": 0}],
-           "Select": [{**sel, "Name": "field"}],
-           "OrderBy": [{"Direction": 2, "Expression": {"Measure": {"Expression": {"SourceRef": {"Source": "m"}}, "Property": measure}}}], "Top": n}
-    return {"name": name, "field": col(table, column), "type": "TopN",
-            "filter": {"Version": 2, "From": [{"Name": "subquery", "Expression": {"Subquery": {"Query": sub}}, "Type": 2}, {"Name": "t", "Entity": table, "Type": 0}],
-                       "Where": [{"Condition": {"In": {"Expressions": [sel], "Table": {"SourceRef": {"Source": "subquery"}}}}}]},
-            "howCreated": "User"}
 
 
 def fv(measure):
@@ -273,6 +259,15 @@ def title(page, name, measure, alt_measure=None, lift=0):
     return v
 
 
+def headline(page, name, measure):
+    """The page headline on the Night zone, 28 pt semibold. The card centres its line 2.2 px above the comp's (measured in
+    build step 6 on page 2's tile render with the Night zone drawn in; step 5 could not see the header), so the card sits
+    2 px under its slot, on both pages alike."""
+    v = dyn(page, name, measure, size=28, colour=ZONE_TEXT, font=DISPLAY)
+    v["position"]["y"] += 2
+    return v
+
+
 # A cardVisual centres its text block in its box, at a 21.9 px pitch for 12 pt, and shows a line only when the box leaves
 # room for it (2 lines from 60 px, 3 from 88; the calibration page of build step 5, 13 Nov). The comp sets the same lines
 # from the top of the slot at 21.3 px. So a note of n lines gets the height CARD_H[n], centred on the comp's text block:
@@ -295,7 +290,7 @@ def p1_visuals():
     measure of TEXT_SLOTS (sketch_model.py) or a typed slot of TEXT_STATIC; the numbers are label-safe (P-1)."""
     # headline and subtitle as cards, like P2's, so the two headers sit on one grid (REVIEW p2)
     # on the night zone (plan 10 D3): masthead and subtitle in ZONE_MUTED (10.2:1 on Night), the headline in ZONE_TEXT
-    v = [dyn(P1, "z_headline", "Headline P1 (text)", size=28, colour=ZONE_TEXT, font=DISPLAY),
+    v = [headline(P1, "z_headline", "Headline P1 (text)"),
          dyn(P1, "c_subtitle", "Subtitle P1 Briefing (text)", size=S, colour=ZONE_MUTED)]
 
     # the KPI band: four cells in one card; values are text measures, one formatter with the context line (REVIEW M7).
@@ -732,7 +727,8 @@ def ctl_button(page, name, label, style, link, alt, large=False):
             "icon": [{"properties": {"shapeType": text("blank")}, "selector": {"id": "default"}}],
             "text": [{"properties": {"show": b(True)}},
                      {"properties": {"text": text(label), "fontFamily": text(font), "fontSize": num(S), "fontColor": color(ink), "bold": b(False),
-                                     "topMargin": integer(0), "bottomMargin": integer(3)}, "selector": {"id": "default"}},
+                                     # a 28 px pill sets its line 1.5 px low without the 3 px (step 5); a 40 px tab centres it
+                                     "topMargin": integer(0), "bottomMargin": integer(0 if large else 3)}, "selector": {"id": "default"}},
                      *[{"properties": {"text": text(label), "fontColor": color(h_ink)}, "selector": {"id": s_}} for s_ in st]],
             "fill": [{"properties": {"show": b(True)}},
                      {"properties": {"fillColor": color(fill), "transparency": num(0)}, "selector": {"id": "default"}},
@@ -934,6 +930,8 @@ def scatter_stack(slot, deco_base, build_layer=False):
     return v
 
 
+# Not placed since build step 6 (their slots are not in the v10 map): waterfall(), deneb_selector() and native_selector().
+# Step 9 of doc 23 removes them with the Deneb route (SELECTOR, DENEB_SPEC, DENEB_GUID, publicCustomVisuals).
 def waterfall(name, table, column, y_measure, flag_measure, y_start, y_end, alt_measure, title_measure=None, muted=False):
     """Where the NPV comes from: one bar per initiative, the total last. No value axis: every bar carries its own
     signed label (plan 11); the ends come from the model so the labels always have room. Plan 10 D6: an increase in
@@ -1011,11 +1009,13 @@ def native_selector():
 
 MIX_A = "Booking app with member rates + Revenue management + Kiosks at the 20 busiest hotels"  # R-P2-6: static, A's composition never changes
 LEDGER_COLS = (112, 280, 88, 96, 176)  # the spec's construction.tables.tbl_ledger (doc 22 section 3)
-# Row padding 1.2: a 12 pt line is 21.28 px, so a two-line row is 45.0 px (the comp's 45) and the three-line row 66.2 (64).
-# The native header is 35 px at this padding (the comp's 28; step 5, "Found" 5), so the table starts LEDGER_LIFT px above its
-# slot and the rows sit where the comp has them; the slot's bottom edge stays. The visual is 2 px wider than its columns
-# (step 2, S-2 point 4: at exactly the column sum Desktop shows a scrollbar).
-LEDGER_PAD, LEDGER_LIFT, LEDGER_SLACK = 1.2, 7, 2
+# Row padding 0.5: a 12 pt line is 21.28 px and a ruled row carries 1 px for its rule (measured on the tile render of step
+# 6: 46.0 px for a two-line row at padding 1.2), so a two-line row is 44.6 px (the comp's 45) and the three-line row 65.8
+# (64): the four row tops stay within 1 px of the comp's. The native header is 34 px at this padding (the comp's 28; step 5,
+# "Found" 5), so the table starts LEDGER_LIFT px above its slot and the rows sit where the comp has them; the slot's bottom
+# edge stays. The visual is 2 px wider than its columns (step 2, S-2 point 4: at exactly the column sum Desktop shows a
+# scrollbar), and starts 1 px left of the slot: a native cell pads 7.7 px on the left, the comp 5.
+LEDGER_PAD, LEDGER_LIFT, LEDGER_SLACK, LEDGER_DX = 0.5, 6, 2, -1
 
 
 def rec_head():
@@ -1035,6 +1035,7 @@ def rec_nums():
     v = nums_card("c_rec_nums", ms, ["capex", "NPV through 2032", "a year by 2032", "a year on cost"], "Alt Rec Nums (text)")
     v["visual"]["objects"]["value"] += [{"properties": {"fontColor": fv(ink)}, "selector": {"metadata": mref(m_)}}
                                         for m_, ink in ((ms[1], "Rec NPV Ink"), (ms[2], "Rec Run-rate Ink"))]
+    v["position"]["y"] -= 4  # the card centres value and label in its 64 px; the comp sets them from the top (tile render: 4.5 px low)
     return v
 
 
@@ -1066,7 +1067,7 @@ def ledger():
     objs["columnWidth"] = [{"properties": {"value": num(w_)}, "selector": {"metadata": q_}}
                            for q_, w_ in zip(("Finding.Label", *[mref(m_) for m_ in ms]), LEDGER_COLS)]
     x, y, w, h, z, tab = at(P2, "tbl_ledger")
-    t = visual("tbl_ledger", "tableEx", x, y - LEDGER_LIFT, w + LEDGER_SLACK, h + LEDGER_LIFT, z, tab, query={"Values": {"projections": proj}}, objects=objs,
+    t = visual("tbl_ledger", "tableEx", x + LEDGER_DX, y - LEDGER_LIFT, w + LEDGER_SLACK, h + LEDGER_LIFT, z, tab, query={"Values": {"projections": proj}}, objects=objs,
                vcos=vco(padding=0), off_grid=True)
     return bind_alt(t, "Alt Ledger (text)")
 
@@ -1076,7 +1077,7 @@ def p2_frame():
     it; slots from the v10 slot map, construction from doc 21 section 5 and P-2. The eyebrow and the logo come from
     brand_row(), the five cards from card_frames()."""
     v = [ctl_button(P2, "btn_back", "← The Brand Review", "night_off", ("PageNavigation", P1), "Back to The Brand Review, page 1"),
-         dyn(P2, "z_headline2", "Headline P2 (text)", size=28, colour=ZONE_TEXT, font=DISPLAY),
+         headline(P2, "z_headline2", "Headline P2 (text)"),
          note(P2, "c_subtitle2", "Subtitle P2 (text)", 2, colour=ZONE_MUTED)]
     v += tab_bar()
     # the label beside the scenario pills is in the slicer's alt text, so it leaves the tab order (plan 11); the comp sets
@@ -1379,7 +1380,7 @@ def main():
     n1, n2 = len(v1), len(v2)
     core = sum(1 for v in v1 + v2 if v["visual"]["visualType"] in ("tableEx", "pivotTable", "clusteredBarChart", "clusteredColumnChart", "lineChart", "scatterChart", "waterfallChart"))
     hidden = sum(1 for v in v2 if v.get("isHidden"))
-    print(f"report written: {rep}  P1 {n1} visuals, P2 {n2} visuals ({hidden} hidden in the {OPEN_STATE} state), {core} core chart/table visuals, selector {SELECTOR}")
+    print(f"report written: {rep}  P1 {n1} visuals, P2 {n2} visuals ({hidden} hidden in the {OPEN_STATE} state), {core} core chart/table visuals")
 
 
 if __name__ == "__main__":

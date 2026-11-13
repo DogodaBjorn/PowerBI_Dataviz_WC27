@@ -23,6 +23,16 @@ Steps (all in the throwaway copy, never in project/pbip; doc 23 rule 6):
 The comp at page pixels: headless Edge with --window-size=1952,1300 on rebuild-comp-v10.html#p1 puts the page at
 (16, 94) at scale 1; crop 1920 x 1080 from there.
 
-Limits. The page background image is not on the tile pages (they are Oat), so text on the Night header zone does not
-show; check the header in a normal capture. A full-page capture in a narrow window is not a pixel reference: Desktop
+Build step 6 (page 2): mk_tiles.py takes --page <folder>, --scenario <Low|Expected|High> (the tile with sl_scenario gets
+the slicer set to that case, the other tiles get it as a page filter; the page's own filters are copied to every tile)
+and --mast 168 (draws the Night header zone as a rectangle under the tile's visuals, so light text on it can be read and
+measured). slotdiff.py <page.png> <comp page png> name,x,y,w,h ... prints the text rows and ink edges of a page
+rectangle in both images and their differences, on any background; give it the stitched capture at its own resolution.
+A card's line can read 1.5 px off in a tile depending on where the card's top falls on the capture's pixel grid: a 1 px
+move of a card moved its text 3.3 px. Trust a difference under 2 px no further than that.
+The comp in a scenario: a scratch copy of the comp with ST.scen read from ?scen=Low, headless Edge as below; Edge
+returns before the PNG is written, wait for the file.
+
+Limits. The page background image is not on the tile pages (they are Oat, or a plain Night rectangle with --mast), so
+the night-glow artwork does not show; check the header's look in a normal capture. A full-page capture in a narrow window is not a pixel reference: Desktop
 scaled x and y differently there (0.4594 and 0.4565) and the background image drifted.
