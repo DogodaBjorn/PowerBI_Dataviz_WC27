@@ -112,6 +112,11 @@
           "name": "canvas-tt-tt-year.jpg",
           "path": "canvas-tt-tt-year.jpg",
           "type": "Image"
+        },
+        {
+          "name": "canvas-tt-tt-glossary.jpg",
+          "path": "canvas-tt-tt-glossary.jpg",
+          "type": "Image"
         }
       ]
     }

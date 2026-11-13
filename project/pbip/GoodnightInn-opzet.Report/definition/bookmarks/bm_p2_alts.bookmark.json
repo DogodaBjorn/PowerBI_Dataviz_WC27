@@ -64,7 +64,12 @@
       "c_you_nums",
       "c_you_rules",
       "ch_build_waterfall",
-      "ch_cmp_build"
+      "ch_cmp_build",
+      "bdg_scatter",
+      "bdg_scatter_s",
+      "bdg_rec_cum",
+      "bdg_cmp_alts",
+      "bdg_cmp_build"
     ],
     "suppressActiveSection": true,
     "suppressData": true
@@ -466,6 +471,40 @@
           "ch_cmp_build": {
             "singleVisual": {
               "visualType": "lineChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "bdg_scatter": {
+            "singleVisual": {
+              "visualType": "image",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "bdg_scatter_s": {
+            "singleVisual": {
+              "visualType": "image"
+            }
+          },
+          "bdg_rec_cum": {
+            "singleVisual": {
+              "visualType": "image",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "bdg_cmp_alts": {
+            "singleVisual": {
+              "visualType": "image"
+            }
+          },
+          "bdg_cmp_build": {
+            "singleVisual": {
+              "visualType": "image",
               "display": {
                 "mode": "hidden"
               }

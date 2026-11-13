@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Both were weighed against A; the chart below compares all three over time.",
+                    "value": "Both weighed against A; the chart below compares all three.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -153,7 +153,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Both were weighed against A; the chart below compares all three over time.'"
+                  "Value": "'Both weighed against A; the chart below compares all three.'"
                 }
               }
             }

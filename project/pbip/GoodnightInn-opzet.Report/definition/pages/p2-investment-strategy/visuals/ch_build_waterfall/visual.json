@@ -23,11 +23,11 @@
                       "Entity": "BuildMove"
                     }
                   },
-                  "Property": "Short Name"
+                  "Property": "Waterfall Label"
                 }
               },
-              "queryRef": "BuildMove.Short Name",
-              "nativeQueryRef": "Short Name"
+              "queryRef": "BuildMove.Waterfall Label",
+              "nativeQueryRef": "Waterfall Label"
             }
           ]
         },

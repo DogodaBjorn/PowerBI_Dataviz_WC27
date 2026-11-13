@@ -1001,7 +1001,7 @@ REC_IDS = 'VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALL
 m("Uncertainty (text)",
   'VAR a = [Recommended Package] VAR k = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Package ), Package[NPV Low] >= 0 ) ) + 0 '
   'VAR lo = CALCULATE ( SUM ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = a ) '
-  'RETURN "Read with care: in the Low case " & IF ( k = 0, "no package pays back by 2032", k & " packages pay back by 2032" ) & ", and A ends at " & ' + sfm("lo") + ' & "."',
+  'RETURN "Low case: " & IF ( k = 0, "no package pays back by 2032", k & " packages pay back by 2032" ) & "; A ends at " & ' + sfm("lo") + ' & "."',
   TXT, C9, "Standing uncertainty line under the recommendation: the Low case, counted from Package.")
 
 
@@ -1437,25 +1437,25 @@ def altvars(k):
 
 
 m("Alt B Why (text)",
-  altvars("B") + 'RETURN IF ( ISBLANK ( x ), BLANK (), "Considered because it swaps the " & dropped & " for the " & added & IF ( rX > rA, ": a guest-score effect in " & rX & " hotels instead of " & rA, "" ) & "." )',
+  altvars("B") + 'RETURN IF ( ISBLANK ( x ), BLANK (), "Considered: it swaps the " & dropped & " for the " & added & IF ( rX > rA, ", a guest-score effect in " & rX & " hotels instead of " & rA, "" ) & "." )',
   TXT, C13, "B, why it was considered: the swap against A and the wider guest-score reach.")
 m("Alt B WhyNot (text)",
   altvars("B") + 'VAR pbA = [Preset A Payback Year] VAR pbX = [Preset B Payback Year] '
   'VAR d = ROUND ( npvA / 100000, 0 ) - ROUND ( npvX / 100000, 0 ) '
-  'RETURN IF ( ISBLANK ( x ), BLANK (), "Not picked purely on the capex-to-NPV mix: " & ' + fmc("capX - capA") + ' & " more capex for an NPV " & FORMAT ( ABS ( d ) / 10, "$0.0" ) & "M" '
-  '& IF ( d > 0, " lower, so A is simply the better deal", IF ( d = 0, " no higher, so A is simply the better deal", " higher, but a later payback" ) ) '
+  'RETURN IF ( ISBLANK ( x ), BLANK (), "Not picked: " & ' + fmc("capX - capA") + ' & " more capex than A for " & FORMAT ( ABS ( d ) / 10, "$0.0" ) & "M" '
+  '& IF ( d > 0, " less NPV", IF ( d = 0, " no more NPV", " more NPV, but a later payback" ) ) '
   '& IF ( ISBLANK ( pbX ) && NOT ISBLANK ( pbA ), " (B is not cash positive by 2032)", IF ( pbX > pbA, " (cash positive in " & pbX & ", A in " & pbA & ")", "" ) ) & "." )',
   TXT, C13, "B, why it was not picked (round 5, Björn): purely the capex-to-NPV mix, A is simply better; the NPV gap from the shown (rounded) figures, so it matches the cards; scenario in view.")
 m("Alt C Why (text)",
-  altvars("C") + 'RETURN IF ( ISBLANK ( x ), BLANK (), "Considered as a strategic investment: the " & added & " is the move that targets NPS head-on (F3)." )',
+  altvars("C") + 'RETURN IF ( ISBLANK ( x ), BLANK (), "Considered: the " & added & " is the one move aimed at NPS (F3)." )',
   TXT, C13, "C, why it is shown (round 5, Björn): a strategic investment aimed at NPS, the answer to 'why not renovate?' (08-verbeterplan V1).")
 m("Alt C WhyNot (text)",
   altvars("C") + 'VAR hiX = CALCULATE ( SUM ( Package[NPV High] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) '
   'VAR allNeg = ROUND ( CALCULATE ( MAX ( Package[NPV Low] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) / 100000, 0 ) < 0 '
   '&& ROUND ( CALCULATE ( MAX ( Package[NPV Expected] ), REMOVEFILTERS ( Package ), Package[PackageID] = x ) / 100000, 0 ) < 0 && ROUND ( hiX / 100000, 0 ) < 0 '
-  'RETURN IF ( ISBLANK ( x ), BLANK (), "Not the financial risk to take now: NPV " & ' + sfm("npvX") + ' & IF ( allNeg, ", below zero in every case, even High (" & ' + sfm("hiX") + ' & ").", '
+  'RETURN IF ( ISBLANK ( x ), BLANK (), "Not picked: NPV " & ' + sfm("npvX") + ' & IF ( allNeg, ", below zero in every case, even High (" & ' + sfm("hiX") + ' & ").", '
   'IF ( ROUND ( npvX / 100000, 0 ) < 0, ", not paying back by 2032 in this case.", ", though it pays back by 2032 in this case." ) ) '
-  '& " One to revisit once A has broken even, or if NPS drops below 0 and growth is at risk." )',
+  '& " Revisit once A has broken even, or if NPS falls below 0." )',
   TXT, C13, "C, why it was not picked (round 5, Björn): not the financial risk to take now, below zero in every case (guarded); revisit at break-even or if NPS turns negative.")
 for k in "BC":
     m(f"Pkg Label {k} (text)", f'LOOKUPVALUE ( PlanSelector[Label], PlanSelector[Key], "{k}" )', TXT, C13, f"Card title of package {k}: its name and role, from PlanSelector.")
@@ -1492,7 +1492,7 @@ for k in "ABC":
     m(f"TT Year {k} (text)", sfm(f"[Preset {k} Cumulative Net (sel)]"), TXT, C9, f"Year tooltip: package {k}'s cumulative net impact to the end of the hovered year, case in view, as text.")
 m("TT Year Plan (text)", 'IF ( [Build Count] = 0, "none yet", ' + sfm("[Build Cumulative Net (sel)]") + " )", TXT, C9,
   "Year tooltip: the plan being built, cumulative net impact to the end of the hovered year, case in view; 'none yet' before a move is picked.")
-m("TT Year Title (text)", "VAR y = MAX ( 'Date'[Year] ) RETURN \"To the end of \" & y & \": where the four options stand\"", TXT, C9, "Year tooltip title: the hovered year.")
+m("TT Year Title (text)", "VAR y = MAX ( 'Date'[Year] ) RETURN \"At the end of \" & y", TXT, C9, "Year tooltip title: the hovered year.")
 m("TT Year All Title (text)", 'VAR s = [Selected Scenario] RETURN "A, B, C and your plan in the " & s & " case"', TXT, C9, "Year tooltip, second card's title: the case in view.")
 alt_m("TT Year A", 'VAR y = MAX ( \'Date\'[Year] ) RETURN "Package A, cumulative net impact to the end of " & y & ": Low " & [TT Year A Low (text)] & ", Expected " & [TT Year A Expected (text)] & ", High " & [TT Year A High (text)] & "."',
       "The year tooltip's first card read aloud.")
@@ -1563,7 +1563,7 @@ m("Build WF Y Start", BIDS + shown_parts("[NPV @ 8%]") + "RETURN IF ( n = 0, -10
 m("Build Point Size", "IF ( ISBLANK ( [Build NPV (sel)] ), BLANK (), 7 )", "0", C12, "Marker size of the your-plan dot on the small scatter; blank (no dot) while nothing is picked.")
 m("Cmp Build Title (text)",
   BIDS + f"VAR s = [Selected Scenario] VAR a32 = {CUM32('A')} VAR y32 = CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR pb = [Build Payback Year] "
-  'RETURN IF ( n = 0, "Pick moves on the right to compare your plan with A (" & s & " case)", "Your plan against A, $M (" & s & " case): yours ends " & IF ( ROUND ( ( y32 - a32 ) / 100000, 0 ) = 0, "level with A", IF ( y32 > a32, "ahead of A by ", "behind A by " ) & ' + fm("ABS ( y32 - a32 )") + ' )'
+  'RETURN IF ( n = 0, "Your plan against A, $M (" & s & " case)", "Your plan against A, $M (" & s & " case): yours ends " & IF ( ROUND ( ( y32 - a32 ) / 100000, 0 ) = 0, "level with A", IF ( y32 > a32, "ahead of A by ", "behind A by " ) & ' + fm("ABS ( y32 - a32 )") + ' )'
   + ' & " in 2032" & IF ( ISBLANK ( pb ), " and is not cash positive by 2032", ", cash positive from " & pb ) )',
   TXT, C12, "Title of the comparer in the build state: your plan against A by 2032 and its payback, scenario in view.")
 # the selector's dataset: one row per BuildMove, never filtered by its own selection
@@ -1731,6 +1731,28 @@ alt_m("Hotel Nums", '"This hotel in 2025: occupancy " & FORMAT ( [Occupancy % 20
 alt_m("Occupancy Hotel Line", f'"Occupancy by month in 2025, this hotel against the whole brand: the hotel averages " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", the brand " & FORMAT ( CALCULATE ( [Occupancy % 2025], {BRAND_ALL} ), "0.0%" ) & "."',
       "The F4 hotel tooltip's line chart read aloud.")
 
+# ---- FinalV2 follow-up (12 Nov, evening; Björn): the hover signifier and the definitions tooltip. Power BI never changes the
+# cursor over a visual that opens a report-page tooltip, so the page itself says where a hover pays: one small ring-i badge in
+# Tangerine (a signifier in Don Norman's sense, CREDITS.md) at the same spot on every hover target and nowhere else, a hint in
+# the footer row that names it once ('hover for more'), and a Definitions chip in that row whose tooltip page (tt-glossary)
+# lists the short words of both pages. The badge is drawn without text, so it renders the same under Publish to Web; the
+# hint's words are at the 16 px floor. Its alt text carries the glossary in one breath (Desktop's 250-character limit).
+_BADGE = ("<circle cx='8' cy='8' r='6.75' fill='none' stroke='" + HX(SIGNAL_MARK) + "' stroke-width='1.5'/>"
+          "<circle cx='8' cy='4.9' r='1.15' fill='" + HX(SIGNAL_MARK) + "'/>"
+          "<rect x='7.1' y='7' width='1.8' height='5' rx='0.9' fill='" + HX(SIGNAL_MARK) + "'/>")
+m("Info Badge SVG", '"data:image/svg+xml;utf8," & ' + SVG_OPEN(16, 16) + ' & "' + _BADGE + '</svg>"', TXT, C14,
+  "The hover signifier: a Tangerine ring with an i, 16 px, on every visual that opens a report-page tooltip; decorative, the footer hint names it.")
+IMAGE_MEASURES.add("Info Badge SVG")
+m("Info Hint SVG",
+  '"data:image/svg+xml;utf8," & ' + SVG_OPEN(136, 24) + " & \"<g transform='translate(9 4)'>" + _BADGE + "</g><text x='136' y='17' text-anchor='end' " + SVG_FONT
+  + " fill='" + HX("#C9D0DC") + "'>hover for more</text></svg>\"", TXT, C14,
+  "The hint in the header line of both pages (on the Night banner, in the zone's muted ink): the badge and 'hover for more', 136 px, right-aligned; decorative.")
+IMAGE_MEASURES.add("Info Hint SVG")
+m("Definitions Chip (text)", '"Definitions"', TXT, C14, "The word Definitions in the header line of both pages; hovering it opens the definitions tooltip page.")
+alt_m("Definitions",
+      '"The short words on these pages. NPV: net present value to 2032. Capex: the investment. Run-rate: profit a year by 2032. NPS: promoters minus detractors. ADR: revenue per room sold. RevPAR: revenue per room available. OTA: an online booking site."',
+      "The Definitions chip read aloud: the glossary in one breath, so a keyboard or screen-reader user gets the terms the hover shows.")
+
 # ---- alt texts of the new visuals (plan 11 practice: the message with live values, from the model)
 alt_m("Guide", '"How to read the chart. " & [Guide (text)] & " A is our recommendation; B and C were considered and not recommended."', "The reading guide read aloud.")
 alt_m("TT Moves", TT_ID + 'RETURN IF ( ISBLANK ( pkg ), BLANK (), "The moves in the hovered package with their net present value: " & [TT Moves (text)] & ". " & [TT Not Included (text)] )',
@@ -1765,6 +1787,7 @@ RETURN
         Proj,
         "ProjectID", InvestmentProjects[ProjectID],
         "Short Name", InvestmentProjects[Short Name],
+        "Waterfall Label", SWITCH ( InvestmentProjects[ProjectID], "GI-01", "App", "GI-02", "Kiosks", "GI-03", "Energy", "GI-04", "Toronto +40", "GI-05", "Gatwick +40", "GI-06", "Kingston +40", "GI-07", "Refresh 10", "GI-08", "Boston", "GI-09", "Breakfast", "GI-10", "Rev. mgmt", InvestmentProjects[Short Name] ),
         "Sort", VAR p = InvestmentProjects[ProjectID]
             RETURN RANKX (
                 Proj,
@@ -1886,7 +1909,7 @@ DATATABLE (
     {
         { "A", "A · Our recommendation", 1 },
         { "B", "B · Breakfast instead of kiosks", 2 },
-        { "C", "C · Why not renovate? For comparison", 3 }
+        { "C", "C · Why not renovate?", 3 }
     }
 )
 """
@@ -2019,8 +2042,11 @@ def main():
     # selector's cross-filter reaches only the Build measures (TREATAS onto InvestmentProjects) and never A's visuals.
     bm = calc_table(
         "BuildMove", "Disconnected copy of the ten Goodnight Inn moves for the build-your-own plan (P2, build state). The Deneb selector cross-filters this table; the Build measures carry the selection onto InvestmentProjects with TREATAS. Sort: by Expected NPV, high to low.",
-        [("ProjectID", "string", None), ("Short Name", "string", None), ("Sort", "int64", "0"), ("Growth", "string", None), ("Answers", "string", None)], BUILD_MOVE)
+        [("ProjectID", "string", None), ("Short Name", "string", None), ("Waterfall Label", "string", None), ("Sort", "int64", "0"), ("Growth", "string", None), ("Answers", "string", None)], BUILD_MOVE)
     assert "\tcolumn 'Short Name'\n\t\tdataType: string\n" in bm
+    # verification 17 (12 Nov): the build waterfall labels its bars with a shorter name (12 characters at most) so no bar
+    # ends in an ellipsis; the selector and the tooltips keep the full Short Name. Both columns sort by the NPV rank.
+    bm = bm.replace("\tcolumn 'Waterfall Label'\n\t\tdataType: string\n", "\tcolumn 'Waterfall Label'\n\t\tdataType: string\n\t\tsortByColumn: Sort\n")
     w(d / "tables" / "BuildMove.tmdl", bm.replace("\tcolumn 'Short Name'\n\t\tdataType: string\n", "\tcolumn 'Short Name'\n\t\tdataType: string\n\t\tsortByColumn: Sort\n"))
     w(d / "tables" / "BuildPoint.tmdl", helper_table(
         "BuildPoint", "One row, 'Your plan': the category of the scatter layer that marks the plan being built (its X and Y are the Build Capex and Build NPV measures).",
