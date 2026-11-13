@@ -147,6 +147,57 @@ Bjorn asked to fix them. Each closure keeps doc 20's Expected copy and changes o
 
 The comp now also checks that no hover tag, F4 name box or hero reference label sits on another visual's chart text.
 
+## 7 · Kickoff prompt for the build session
+
+Run the build in **local** Claude Code sessions on Bjorn's Windows machine: it needs Power BI Desktop for the spikes and
+the renders, which a cloud session does not have. One session per build day keeps the context clean; each starts with
+the prompt below and the day's steps.
+
+| Session | Doc 21 section 13 steps | Ends with |
+|---|---|---|
+| Sat 14 Nov | 1 to 4: layout v10, spikes S-1 to S-8, model (10.1 to 10.3), T1 changes | spikes recorded in doc 21; `build_checks.py` 4 of 4; P1 render in nl-NL |
+| Sun 15 Nov | 5 and 6: P2 frame, decision card, ledger, capital plan, hero, native selector, F4 | the cut-line decisions of the evening (hero, selector, F4) |
+| Mon 16 Nov | 7 and 8: What waits, Build, tooltips, alt text, tab order, layering, render set, prune, parity check | `screenshots/FinalV3/`, keyboard and Narrator pass logged |
+| Tue 17 Nov | 9: Publish to Web gate | Bjorn publishes, then submits |
+
+```text
+You are the build session for the Goodnight Inn entry (Power BI Dataviz World Champs 2027, round 1).
+Submission 17 Nov 2026. Today: <date>. Today's steps: doc 21 section 13, steps <n to m>.
+
+Setup (first session only): git fetch origin; create branch rebuild-finalv3 from
+origin/claude/laughing-mendel-ruw64g. Later sessions: continue on rebuild-finalv3.
+
+Read first, in this order: CLAUDE.md; project/project-state/status.yaml;
+project/project-state/active/20-requirements-storytelling-2026-11-13.md (content);
+21-powerbi-build-guideline-2026-11-13.md (construction); 22-rebuild-comp-v10-handoff-2026-11-13.md
+(the approved comp: where 22 and 21 differ, 22 is newer). Open
+project/design-prototypes/rebuild-comp-v10.html in a browser: that page is what we build, exactly.
+Positions: project/design-prototypes/opzet-layout-v10.json. Column widths, axes, label positions,
+formatters and the exact text of every slot per view and scenario: rebuild-v10-spec.json.
+
+Rules:
+- Only the pbir-operator agent changes project/pbip/, through the generators (opzet_report.py,
+  sketch_model.py, pbir_lib.py); small diffs, validate after each (a11y_check.py, schema_check.py, and
+  build_checks.py once step 4 has written it, doc 21 P-8). Research first: verify every PBIR/TMDL
+  property against its schema, never memory.
+- Commit before opening Desktop. Never save in Desktop; close every window without saving.
+  Render through the throwaway copy. Delete PillowKey.SemanticModel/definition/cultures after
+  each opzet_report.py run.
+- After every render, compare the PNG with the comp at the same view and scenario (px-prototype,
+  +-2 px) and the text measures with rebuild-v10-spec.json "text". Text that wraps where the comp
+  does not, or labels that meet, go back to the comp first (doc 22 rule 2), never into the report.
+- Copy is approved and peer reviewed: do not rewrite it. If something cannot be built as specified,
+  take doc 21's technical fallback where it names one, record it, and tell Bjorn.
+- Cut line (doc 20 section 1): if the hero table is not verified by the evening of 15 Nov, switch to
+  R-P2-3-FB. Tier order T1 before T2 before T3; drop T3 first.
+- Record spike results in doc 21 section 13 and what you built in a build log
+  (project/project-state/active/23-finalv3-bouwlog-<date>.md). Update status.yaml at each gate.
+- Never publish. Bjorn runs Publish to Web on 17 Nov.
+
+End the session with: what was built, what was verified (renders, checks), what deviates from the
+comp and why, and what the next session starts with. Commit and push rebuild-finalv3.
+```
+
 ## Open questions
 
 None. Doc 20's copy is unchanged except where sections 4 and 6 say so; Bjorn sees those rows once.
