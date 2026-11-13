@@ -161,6 +161,19 @@ measure 'NPS 2025 (label-safe)' = [NPS 2025 (signed)]
     formatStringDefinition = """" & [NPS 2025 (signed, text)] & """"
 ```
 
+**Corrected by spike S-1 (13 Nov, section 13, "Step 2 results"):** the literal goes in all three sections of the
+format string (positive; negative; zero), or a negative value prints a second minus. And `formatStringDefinition` is
+written after the measure's properties, in a backtick block:
+
+```tmdl
+measure 'NPS 2025 (label-safe)' = [NPS 2025 (signed)]
+    displayFolder: 15 Storytelling rebuild
+
+    formatStringDefinition = ```
+            VAR t = [NPS 2025 (signed, text)] RETURN """" & t & """;""" & t & """;""" & t & """"
+            ```
+```
+
 - In `sketch_model.py`: give `m()` an optional `fmt_def=` argument that writes `formatStringDefinition`, and a
   helper `label_safe(name, value_expr, text_expr, …)`. The text expression is one of the existing formatters
   (`fm`, `sfm`, a new `pct1`, `pt1`), so labels and tiles print the same characters.
@@ -211,7 +224,8 @@ behind the control row and would change the contrast.
 | A table | A table. Never an SVG | `TT Moves SVG` is the example to remove |
 
 Line breaks inside one measure (`UNICHAR(10)`) are used for the two-line ledger cells. **S-7:** confirm that a
-table cell and a card value both honour the break with word wrap on.
+table cell and a card value both honour the break with word wrap on. **Result (13 Nov):** a table cell does, a card
+value does not. Text that needs a break sits in a table cell, or is split over two cards (section 13, "Step 2 results").
 
 ### P-4 · Bars inside a table (the hero)
 
@@ -701,6 +715,19 @@ saves, close every window yourself without saving, renders through the throwaway
 
 Tier order inside each step follows doc 20: T1 before T2 before T3. If a day slips, drop T3 first
 (R-P1-9, R-P2-11, R-W-4, R-TT-3/4, the submission prune), never the gate.
+
+### Step 2 results: the five small spikes (13 Nov, build step 1 of doc 23)
+
+Run in a throwaway copy on a scratch page, Desktop 2.159 in nl-NL. Proof and method: doc 23, step 1 log; renders in
+`project/deliverables/screenshots/Spikes-step1-2026-11-13/`. S-2 belongs to build step 2.
+
+| Spike | Result | Shape to build |
+|---|---|---|
+| S-1 | **Pass**, with two corrections to P-1 | The format string repeats the literal in three sections, `"""" & t & """;""" & t & """;""" & t & """"`. One section prints a negative value as "−−4.9". In TMDL, `formatStringDefinition` follows the measure's properties (display folder, lineage tag), in a backtick block; right after the expression the project does not open. U+2060 keeps "−" and "$" together in a wrapping table cell |
+| S-5 | **Pass**, the fallback is not needed | `lineStyles`: `areaShow` false on the base series (`selector.metadata`), true on the band. `dataPoint`: `transparency` 70 without a selector |
+| S-6 | **Pass** | `visualLink`: `show` true, `type` `'PageNavigation'`, `navigationSection` `'<page folder name>'`. Ctrl+click in Desktop navigated |
+| S-7 | **Table cell: pass. Card value: fallback** | A table cell honours `UNICHAR(10)` with `values.wordWrap` on. A `cardVisual` value honours no break character (LF, CR+LF, U+2028, U+2029). `c_rec_lines` (6.2) becomes two cards, one per line |
+| S-8 | **Pass** on Windows (Desktop, Edge) | "ⓘ" from a text box run and from a card measure; the SVG disc is not needed. One look on a phone at the Publish to Web gate |
 
 ---
 

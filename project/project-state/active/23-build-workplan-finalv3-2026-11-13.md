@@ -18,7 +18,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 
 | Step | Title | Status | Date | Commit | Note |
 |---|---|---|---|---|---|
-| 1 | Branch and the five small spikes | todo | | | |
+| 1 | Branch and the five small spikes | done | 13 Nov | see step 1 log commit | S-1, S-5, S-6, S-8 pass; S-7 pass in a table cell, fallback for a card (`c_rec_lines` as two cards). Bjorn was not needed in Desktop |
 | 2 | The two big spikes: hero table and native selector | todo | | | |
 | 3 | Model foundations and the number checks | todo | | | |
 | 4 | Text measures and `build_checks.py` | todo | | | |
@@ -101,7 +101,45 @@ Goodnight Inn, Power BI Dataviz World Champs 2027 · submission 17 Nov 2026 · t
 5. Close-out per rule 12: log, progress row, commit, push, five-line report.
 ```
 
-**Log:** _(filled in by the session)_
+**Log (Fri 13 Nov 2026, one session, done):**
+
+*Built.* Branch `rebuild-finalv3` from `origin/claude/laughing-mendel-ruw64g`, pushed. A throwaway copy in the session
+scratchpad with one scratch page (`spike`) and fifteen spike measures; nothing in `project/pbip/` changed. The copy
+builder, the click test and the browser page are kept in `project/tools/desktop_shots/spikes_step1/`
+(`spike_prep.py <pbip dir> <dest dir> [--report-only]`, `s6_click.ps1`, `s8_browser.html`). Property names came from
+Microsoft's catalog (`powerbi-report-author formatting describe-object | search`), not from memory.
+
+*Verified* (Desktop 2.159, Windows culture nl-NL; renders in `project/deliverables/screenshots/Spikes-step1-2026-11-13/`):
+
+| Spike | Result | Proof | What the builder must do |
+|---|---|---|---|
+| S-1 label-safe number | **pass, with two corrections** | render 02: "+6.8", "+3.8", "−4.9" next to today's "+6,8", "−4,9"; "−$0.6M" and "$0.0M" on a column, a bar and a card | (1) The format string needs the literal in **all three sections** (`"t";"t";"t"`). With one section a negative value gets a second sign: "−−4.9" (seen on the column chart). (2) In TMDL `formatStringDefinition` goes **after** the measure's own properties, in a backtick block. Directly after the expression Desktop refuses to open the project ("Invalid indentation") |
+| S-1 minus and `$` on one line | **pass** | render 02 and 03, table columns "Wrap, joiner" / "Wrap, no joiner": without U+2060 the cell breaks after "−" on every other line, with it never | keep U+2060 in `fm` and `sfm` |
+| S-5 area per series | **pass, no fallback, Bjorn not needed** | render 01, top chart: "After commissions" is a line without a fill, the commission band is grey at 70 %; the bottom chart is the same visual without the two properties | `lineStyles.areaShow` = false with `selector.metadata` of the base series (true on the band) and `dataPoint.transparency` = 70 (no selector) |
+| S-6 page-navigation button | **pass, Bjorn not needed** | Desktop lists the button as "Paginanavigatie … CTRL+klik hier om volgen"; a Ctrl+click moved the selected page tab from the spike page to "The Investment Strategy" (`s6_click.ps1` prints NAVIGATED) | `visualContainerObjects.visualLink`: `show` true, `type` `'PageNavigation'`, `navigationSection` `'<page name>'` (the folder name, here `p2-investment-strategy`) |
+| S-7 line break, table cell | **pass** | render 03: "First line GI-01 / Second line" in a 232 px column that fits both on one line; also in a table that holds one measure only | `UNICHAR(10)`, `values.wordWrap` true |
+| S-7 line break, card value | **fallback** | render 03: the card prints `UNICHAR(10)` and CR+LF as a space, U+2028 and U+2029 as nothing; text wrap on | a card never carries a break. This hits `c_rec_lines` (doc 21 §6.2, slot 1112, 312, 752, 48): build it as two cards, one per line (see open items) |
+| S-8 "ⓘ" (U+24D8) | **pass** on Windows | render 03: text box in Tangerine, card chip, 30 pt, on Night; render 04: Edge with the report's font stack, without Segoe UI, and plain sans-serif | text box runs and the card measure as P-7 says; no SVG disc needed |
+
+*Checks.* `powerbi-report-author validate` on the copy: 1 error, the known one (`hero_s_packages_named`, scatter
+`categoryLabels`), none from the spike page. `a11y_check.py`: 0 failures. `schema_check.py`: 0 failing. The project was
+not opened in Desktop and the generators were not run (nothing changed that they write).
+
+*Deviations from the comp.* None; nothing was built in the report.
+
+*Open items for later steps.*
+- **Step 6, `c_rec_lines`:** doc 21 names no fallback for a card that cannot break. Chosen here: two cards in the same
+  slot, one text measure per line, the second card 21 px below the first so the line pitch matches the comp (a 24 px
+  pitch would put line 2 about 3 px low). The alternative, a table with one measure, also breaks correctly, but a table
+  has no property to switch its header off.
+- **Step 5, F1:** the series labels of the stacked area chart come with a grey label background by default; switch it
+  off when the chart is built.
+- **Step 12:** "ⓘ" is proven on Windows only (Desktop and Edge). Look at it once in the published report on a phone.
+- **Work method:** `powerbi-desktop reload` only works when the `.pbip` and the `.Report` folder share a name. A model
+  change still needs a close and reopen of the copy. The "Niet opslaan" button could not be pressed through UI
+  Automation this time; the throwaway window was ended with `Stop-Process` (throwaway only, never the project).
+- **Before the session:** the working tree held a Desktop save of the project from 13 Nov 14:06 (236 files, Desktop
+  artefacts only, no measure changed). It is parked in `git stash` ("Desktop-save 2026-11-13 14:06"), nothing lost.
 
 ### Step 2 · The two big spikes: hero table and native selector (Sat 14 Nov, about 1.5 to 2 h)
 
