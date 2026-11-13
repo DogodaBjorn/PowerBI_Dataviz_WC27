@@ -32,7 +32,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 REPORT = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "project" / "pbip" / "GoodnightInn-opzet.Report"
 MEASURES_TMDL = ROOT / "project" / "pbip" / "PillowKey.SemanticModel" / "definition" / "tables" / "_Measures.tmdl"
-LAYOUT = json.loads((ROOT / "project" / "design-prototypes" / "opzet-layout.json").read_text(encoding="utf-8"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from slot_map import load_layout  # noqa: E402  (build step 5: P1 from v10, P2 from v9 until step 6)
+LAYOUT = load_layout()
 CANVAS = ROOT / "project" / "deliverables" / "backgrounds" / "canvas-night.jpg"
 SURFACE = "#FFFFFF"
 # what a tile paints under its visuals (opzet_report.TILE_KIND): glow and outline are white, tint is Ice, night is Night

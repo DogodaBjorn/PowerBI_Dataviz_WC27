@@ -196,6 +196,126 @@
         ]
       }
     },
+    "actionButton": {
+      "*": {
+        "fill": [
+          {
+            "$id": "default",
+            "show": true,
+            "fillColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          },
+          {
+            "$id": "hover",
+            "fillColor": {
+              "solid": {
+                "color": "#E3DFD3"
+              }
+            },
+            "transparency": 0
+          },
+          {
+            "$id": "selected",
+            "fillColor": {
+              "solid": {
+                "color": "#E3DFD3"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "text": [
+          {
+            "$id": "default",
+            "show": true,
+            "fontFamily": "Segoe UI",
+            "fontSize": 12,
+            "fontColor": {
+              "solid": {
+                "color": "#12233D"
+              }
+            },
+            "bold": false
+          },
+          {
+            "$id": "hover",
+            "fontColor": {
+              "solid": {
+                "color": "#12233D"
+              }
+            }
+          },
+          {
+            "$id": "selected",
+            "fontColor": {
+              "solid": {
+                "color": "#12233D"
+              }
+            }
+          }
+        ],
+        "outline": [
+          {
+            "$id": "default",
+            "show": true,
+            "lineColor": {
+              "solid": {
+                "color": "#4B5466"
+              }
+            },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    "advancedSlicerVisual": {
+      "*": {
+        "outline": [
+          {
+            "$id": "default",
+            "show": true,
+            "lineColor": {
+              "solid": {
+                "color": "#4B5466"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "$id": "selection:selected",
+            "lineColor": {
+              "solid": {
+                "color": "#12233D"
+              }
+            }
+          }
+        ],
+        "value": [
+          {
+            "$id": "default",
+            "fontFamily": "Segoe UI",
+            "fontSize": 12,
+            "fontColor": {
+              "solid": {
+                "color": "#12233D"
+              }
+            }
+          },
+          {
+            "$id": "selection:selected",
+            "fontColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        ]
+      }
+    },
     "page": {
       "*": {
         "background": [

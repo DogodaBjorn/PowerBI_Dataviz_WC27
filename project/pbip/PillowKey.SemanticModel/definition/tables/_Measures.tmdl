@@ -3102,6 +3102,12 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: e363be7a-ef25-51e1-8c4c-0f5f2096ce95
 
+	/// The words on the Definitions chip of the rebuilt pages, 'ⓘ Definitions'; hovering the chip opens the definitions tooltip page.
+	measure 'Chip Definitions (text)' = UNICHAR ( 9432 ) & " Definitions"
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 09802d9f-eed8-511d-9be7-6bd50bbfa044
+
 	/// Staff cost in the period (part of operating expenses).
 	measure 'Staff Cost' = SUM ( MonthlyPerformance[StaffCost] )
 		formatString: \$#,0,,.0\ \M;-\$#,0,,.0\ \M
@@ -3155,6 +3161,12 @@ table _Measures
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: ba103e85-65ac-5f63-a5f2-c2b65ae81a6b
+
+	/// F4 forward link (R-P1-7): the move on page 2 that answers F4, with the number of hotels the kiosk move covers read from the organisers' project properties.
+	measure 'Link F4 (text)' = VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = "GI-02" ) ) RETURN UNICHAR ( 8594 ) & " Page 2: kiosks at the " & FORMAT ( n, "0", "en-US" ) & " busiest hotels; extensions decided at the 2028 gate."
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 5bd58532-1b8e-5d64-9ae8-acc8f35c4f10
 
 	/// Page-2 headline (D6, doc 22 section 4): what A costs now and what it earns a year by 2032, scenario in view.
 	measure 'Headline P2 (text)' = "Fix the middleman first: " & ( VAR __v = ( [Rec Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & " now earns " & ( VAR __v = ( [Rec Run-rate (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & " a year by " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & "."

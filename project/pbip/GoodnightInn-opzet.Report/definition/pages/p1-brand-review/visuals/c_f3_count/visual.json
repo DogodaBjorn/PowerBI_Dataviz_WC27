@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "c_f4_types",
+  "name": "c_f3_count",
   "position": {
-    "x": 56,
-    "y": 904,
-    "z": 38000,
-    "width": 528,
-    "height": 96,
-    "tabOrder": 620
+    "x": 1304,
+    "y": 608,
+    "z": 34500,
+    "width": 560,
+    "height": 24,
+    "tabOrder": 525
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,39 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Occupancy Airport GI (text)"
+                  "Property": "F3 Count (text)"
                 }
               },
-              "queryRef": "_Measures.Occupancy Airport GI (text)",
-              "nativeQueryRef": "Occupancy Airport GI (text)"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Occupancy City GI (text)"
-                }
-              },
-              "queryRef": "_Measures.Occupancy City GI (text)",
-              "nativeQueryRef": "Occupancy City GI (text)"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Occupancy Highway GI (text)"
-                }
-              },
-              "queryRef": "_Measures.Occupancy Highway GI (text)",
-              "nativeQueryRef": "Occupancy Highway GI (text)"
+              "queryRef": "_Measures.F3 Count (text)",
+              "nativeQueryRef": "F3 Count (text)"
             }
           ]
         }
@@ -75,14 +47,14 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "21D"
+                  "Value": "12D"
                 }
               }
             },
@@ -91,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#12233D'"
+                      "Value": "'#4B5466'"
                     }
                   }
                 }
@@ -235,94 +207,13 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#4B5466'"
-                    }
-                  }
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'belowValue'"
-                }
-              }
-            },
-            "horizontalAlignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
+                  "Value": "false"
                 }
               }
             }
           },
           "selector": {
             "id": "default"
-          }
-        },
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Airport hotels'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Occupancy Airport GI (text)"
-          }
-        },
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'City hotels'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Occupancy City GI (text)"
-          }
-        },
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Highway hotels'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Occupancy Highway GI (text)"
           }
         }
       ],
@@ -481,7 +372,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Alt F4 Types (text)"
+                  "Property": "F3 Count (text)"
                 }
               }
             }

@@ -504,7 +504,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_ch_rec_waterfall_11",
+        "name": "flt_ch_rec_waterfall_12",
         "field": {
           "Measure": {
             "Expression": {

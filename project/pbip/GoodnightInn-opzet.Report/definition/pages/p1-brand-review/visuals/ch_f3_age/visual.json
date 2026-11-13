@@ -6,7 +6,7 @@
     "y": 392,
     "z": 34000,
     "width": 560,
-    "height": 272,
+    "height": 216,
     "tabOrder": 520
   },
   "visual": {
@@ -42,11 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "NPS 2025 (signed)"
+                  "Property": "NPS 2025 (label-safe)"
                 }
               },
-              "queryRef": "_Measures.NPS 2025 (signed)",
-              "nativeQueryRef": "NPS 2025 (signed)",
+              "queryRef": "_Measures.NPS 2025 (label-safe)",
+              "nativeQueryRef": "NPS 2025 (label-safe)",
               "displayName": "NPS 2025"
             }
           ]

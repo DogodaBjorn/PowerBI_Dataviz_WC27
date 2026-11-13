@@ -159,9 +159,11 @@ def vco(title=None, title_font=None, title_size=10, title_color=None, alt=None, 
     return v
 
 
-def visual(name, vtype, x, y, w, h, z, tab, query=None, objects=None, vcos=None, filters=None, sort=None, drill=False):
+def visual(name, vtype, x, y, w, h, z, tab, query=None, objects=None, vcos=None, filters=None, sort=None, drill=False, off_grid=False):
+    # off_grid (FinalV3 step 5): slots placed by the data, not by a person (doc 22 section 2: the F4 names, the hero's
+    # reference labels, the plan labels) keep their exact pixels
     for v in (x, y, w, h):
-        assert v % 4 == 0, (name, x, y, w, h)  # round 9b: the header rows sit on a 4 px grid (Björn's own positions); the rest stays on 8
+        assert off_grid or v % 4 == 0, (name, x, y, w, h)  # round 9b: the header rows sit on a 4 px grid (Björn's own positions); the rest stays on 8
     vis = {"visualType": vtype}
     if query is not None:
         vis["query"] = {"queryState": query}
@@ -187,7 +189,7 @@ def sort_by_column(table, name, desc=False):
 
 
 # ------------------------------------------------------------------ visuals
-def textbox(name, x, y, w, h, z, tab, runs, align="left", alt=None):
+def textbox(name, x, y, w, h, z, tab, runs, align="left", alt=None, off_grid=False):
     """runs: list of paragraphs; each paragraph = list of (text, font, size_px, color, bold)."""
     paragraphs = []
     for para in runs:
@@ -199,10 +201,10 @@ def textbox(name, x, y, w, h, z, tab, runs, align="left", alt=None):
             tr.append({"value": t, "textStyle": style})
         paragraphs.append({"textRuns": tr, "horizontalTextAlignment": align})
     objects = {"general": [{"properties": {"paragraphs": paragraphs}}]}
-    return visual(name, "textbox", x, y, w, h, z, tab, objects=objects, vcos=vco(alt=alt, padding=0))
+    return visual(name, "textbox", x, y, w, h, z, tab, objects=objects, vcos=vco(alt=alt, padding=0), off_grid=off_grid)
 
 
-def card(name, x, y, w, h, z, tab, measures, value_font, value_size, value_color, label_font=None, label_size=9, label_color=None, labels=None, units=None, precision=None, align="left", alt=None, title=None, tf=None, tc=None):
+def card(name, x, y, w, h, z, tab, measures, value_font, value_size, value_color, label_font=None, label_size=9, label_color=None, labels=None, units=None, precision=None, align="left", alt=None, title=None, tf=None, tc=None, off_grid=False):
     """cardVisual with one or more measures. labels: list of label texts (same order) or None to hide."""
     projections = [proj_mea(mn) for mn in measures]
     value_props = {"show": b(True), "fontFamily": text(value_font), "fontSize": num(value_size), "fontColor": color(value_color), "horizontalAlignment": enum(align), "textWrap": b(True)}
@@ -229,7 +231,7 @@ def card(name, x, y, w, h, z, tab, measures, value_font, value_size, value_color
                 objects["label"].append({"properties": {"text": text(lb)}, "selector": {"metadata": mref(mn)}})
     else:
         objects["label"] = [{"properties": {"show": b(False)}, "selector": {"id": "default"}}]
-    return visual(name, "cardVisual", x, y, w, h, z, tab, query={"Data": {"projections": projections}}, objects=objects, vcos=vco(title=title, title_font=tf, title_color=tc, alt=alt, padding=0))
+    return visual(name, "cardVisual", x, y, w, h, z, tab, query={"Data": {"projections": projections}}, objects=objects, vcos=vco(title=title, title_font=tf, title_color=tc, alt=alt, padding=0), off_grid=off_grid)
 
 
 def axis(font, size, colour, show=True, title=False, gridlines=False, grid_color=None, units=None, start=None, end=None, extra=None):

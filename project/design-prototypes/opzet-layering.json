@@ -1,5 +1,5 @@
 {
-  "_note": "Björn's layering pass in Power BI Desktop, 11 Nov 2026 (commit e63aa76, saved 12 Nov as 1361f71): the z-order and tab order of every visual on P1 and P2. opzet_report.py applies these over the generated values (FinalV2, plan 15 phase 0 / S6); visuals absent here keep the generator's values.",
+  "_note": "Björn's layering pass in Power BI Desktop, 11 Nov 2026 (commit e63aa76, saved 12 Nov as 1361f71): the z-order and tab order of every visual on P1 and P2. opzet_report.py applies these over the generated values (FinalV2, plan 15 phase 0 / S6); visuals absent here keep the generator's values. FinalV3 build step 5 (13 Nov): the new P1 slots of the v10 slot map join on the same scale, in reading order (lnk_f# after its note, c_f3_count between chart and note, F4 note, rows, link, dots (a11y_check reads by rows), then the footer, btn_next and the Definitions chip); decorative ones (hover tags, row labels, the average layer, the seven name boxes) carry a negative tab; c_f4_types, ch_f4_fullest and z_masthead are gone from the page.",
   "p1-brand-review": {
     "c_f1_kicker": {
       "z": 23000,
@@ -45,10 +45,6 @@
       "z": 37000,
       "tabOrder": 610
     },
-    "c_f4_types": {
-      "z": 38000,
-      "tabOrder": 620
-    },
     "c_subtitle": {
       "z": 8000,
       "tabOrder": 110
@@ -64,10 +60,6 @@
     "ch_f3_age": {
       "z": 34000,
       "tabOrder": 520
-    },
-    "ch_f4_fullest": {
-      "z": 39000,
-      "tabOrder": 630
     },
     "kpi_margin": {
       "z": 14000,
@@ -157,9 +149,105 @@
       "z": 9000,
       "tabOrder": 10
     },
-    "z_masthead": {
-      "z": 6000,
-      "tabOrder": 30
+    "lnk_f1": {
+      "z": 26500,
+      "tabOrder": 340
+    },
+    "lnk_f2": {
+      "z": 31500,
+      "tabOrder": 450
+    },
+    "c_f3_count": {
+      "z": 34500,
+      "tabOrder": 525
+    },
+    "lnk_f3": {
+      "z": 35500,
+      "tabOrder": 540
+    },
+    "tag_f3": {
+      "z": 32500,
+      "tabOrder": -16101
+    },
+    "tag_f4": {
+      "z": 36500,
+      "tabOrder": -17101
+    },
+    "c_f4_note": {
+      "z": 37200,
+      "tabOrder": 620
+    },
+    "lnk_f4": {
+      "z": 37400,
+      "tabOrder": 630
+    },
+    "c_f4_rows_lab_airport": {
+      "z": 37600,
+      "tabOrder": -17201
+    },
+    "c_f4_rows_lab_city": {
+      "z": 37610,
+      "tabOrder": -17202
+    },
+    "c_f4_rows_lab_highway": {
+      "z": 37620,
+      "tabOrder": -17203
+    },
+    "c_f4_rows": {
+      "z": 37700,
+      "tabOrder": 625
+    },
+    "c_f4_rows_city": {
+      "z": 37710,
+      "tabOrder": -17211
+    },
+    "c_f4_rows_highway": {
+      "z": 37720,
+      "tabOrder": -17212
+    },
+    "ch_f4_avg": {
+      "z": 38000,
+      "tabOrder": -17301
+    },
+    "ch_f4_dots": {
+      "z": 39000,
+      "tabOrder": 650
+    },
+    "lbl_f4_kingston": {
+      "z": 39100,
+      "tabOrder": -17401
+    },
+    "lbl_f4_orlando": {
+      "z": 39110,
+      "tabOrder": -17402
+    },
+    "lbl_f4_kuala_lumpur": {
+      "z": 39120,
+      "tabOrder": -17403
+    },
+    "lbl_f4_kansas_city": {
+      "z": 39130,
+      "tabOrder": -17404
+    },
+    "lbl_f4_phoenix": {
+      "z": 39140,
+      "tabOrder": -17405
+    },
+    "lbl_f4_gatwick_montreal": {
+      "z": 39150,
+      "tabOrder": -17406
+    },
+    "lbl_f4_toronto": {
+      "z": 39160,
+      "tabOrder": -17407
+    },
+    "btn_next": {
+      "z": 40200,
+      "tabOrder": 9005
+    },
+    "chip_def": {
+      "z": 40600,
+      "tabOrder": 9010
     }
   },
   "p2-investment-strategy": {

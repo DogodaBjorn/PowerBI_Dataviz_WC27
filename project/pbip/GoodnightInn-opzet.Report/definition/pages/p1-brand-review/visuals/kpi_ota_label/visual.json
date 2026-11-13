@@ -19,7 +19,15 @@
               {
                 "textRuns": [
                   {
-                    "value": "Room revenue booked through online agencies",
+                    "value": "F2",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#12233D"
+                    }
+                  },
+                  {
+                    "value": " · Room revenue booked through online agencies",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",

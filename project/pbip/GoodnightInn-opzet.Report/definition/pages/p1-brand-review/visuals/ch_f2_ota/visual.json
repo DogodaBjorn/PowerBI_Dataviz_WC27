@@ -6,7 +6,7 @@
     "y": 392,
     "z": 29000,
     "width": 560,
-    "height": 168,
+    "height": 144,
     "tabOrder": 420
   },
   "visual": {
@@ -63,6 +63,36 @@
               "queryRef": "_Measures.Trend OTA Sisters",
               "nativeQueryRef": "Trend OTA Sisters",
               "displayName": "The other three brands"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Trend OTA GI (ends)"
+                }
+              },
+              "queryRef": "_Measures.Trend OTA GI (ends)",
+              "nativeQueryRef": "Trend OTA GI (ends)",
+              "displayName": "Goodnight Inn, first and last year"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Trend OTA Sisters (end)"
+                }
+              },
+              "queryRef": "_Measures.Trend OTA Sisters (end)",
+              "nativeQueryRef": "Trend OTA Sisters (end)",
+              "displayName": "The other three brands, last year"
             }
           ]
         }
@@ -127,7 +157,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -166,32 +196,21 @@
             "gridlineShow": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
-            "gridlineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#E3DFD3'"
-                    }
-                  }
-                }
-              }
-            },
-            "gridlineThickness": {
+            "start": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "0.2D"
                 }
               }
             },
-            "labelPrecision": {
+            "end": {
               "expr": {
                 "Literal": {
-                  "Value": "0L"
+                  "Value": "0.55D"
                 }
               }
             }
@@ -204,14 +223,20 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
-            },
-            "position": {
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top'"
+                  "Value": "true"
                 }
               }
             },
@@ -229,7 +254,7 @@
                 }
               }
             },
-            "labelColor": {
+            "color": {
               "solid": {
                 "color": {
                   "expr": {
@@ -240,13 +265,97 @@
                 }
               }
             },
-            "showTitle": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            },
+            "enableBackground": {
               "expr": {
                 "Literal": {
                   "Value": "false"
                 }
               }
             }
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend OTA GI"
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend OTA Sisters"
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Above'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend OTA GI (ends)"
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Under'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend OTA Sisters (end)"
           }
         }
       ],
@@ -256,10 +365,84 @@
             "show": {
               "expr": {
                 "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "seriesPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Right'"
+                }
+              }
+            },
+            "seriesMatchColor": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "seriesColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4B5466'"
+                    }
+                  }
+                }
+              }
+            },
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "seriesFontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "enableBackground": {
+              "expr": {
+                "Literal": {
                   "Value": "false"
                 }
               }
             }
+          }
+        },
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend OTA GI (ends)"
+          }
+        },
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend OTA Sisters (end)"
           }
         }
       ],
@@ -298,6 +481,42 @@
           },
           "selector": {
             "metadata": "_Measures.Trend OTA Sisters"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2589D8'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend OTA GI (ends)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#8E897D'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend OTA Sisters (end)"
           }
         }
       ],
@@ -346,13 +565,55 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "1.5D"
+                  "Value": "2D"
                 }
               }
             }
           },
           "selector": {
             "metadata": "_Measures.Trend OTA Sisters"
+          }
+        },
+        {
+          "properties": {
+            "strokeShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend OTA GI (ends)"
+          }
+        },
+        {
+          "properties": {
+            "strokeShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend OTA Sisters (end)"
           }
         }
       ],

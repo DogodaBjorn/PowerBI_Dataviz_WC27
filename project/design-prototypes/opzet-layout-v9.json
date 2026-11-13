@@ -1,0 +1,1767 @@
+{
+  "_doc": "Slot map, v9 of 2026-11-11 (12-feedbackronde-4, rounds 4 to 9): P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 = the package scatter (layers: cloud, A/B/C, a transparent hover layer for the package tooltip) and a right panel in THREE states: rec (the recommendation A, default), alts (B and C, considered and not recommended) and build (build your own plan). In alts and build the scatter card shrinks (a second, smaller scatter stack hero_s_*) and a comparer card of cumulative net impact spans the bottom. Single source of positions for the PBIR generator (project/tools/opzet_report.py) and the a11y check. Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-wakeup 3.1, night header). 'cards' are furniture (radius 12, white fill) drawn as empty textbox visuals UNDER the content; 'tiles' are inner furniture (kind glow / tint / outline); 'visuals' are Power BI visuals. state: absent = always visible; a list of states = shown only in those states, swapped by display-only bookmarks bm_p2_rec / bm_p2_alts / bm_p2_build. A card may carry shadow: null (the tooltip's base), a tile a radius (0 squares the night header's lower corners). 12 pt (16 px) floor everywhere. Round 7: every tooltip page is the page in miniature: its own night scene (canvas-tt-<page>.jpg), the kicker (y 16) and the title (y 40) on the banner, white cards with the page's shadow hanging 24 px into the banner (16 px margins, 16 px padding); the package tooltip holds two cards (return, moves). Round 8: the titles higher (headline y 80, subtitle y 128), the first card row at y 168 (the horizon at 232, so the top cards hang 64 px into the banner), the gained 16 px spent on air: 24 px vertical gutters on P1, a taller F4 card, the panel's rhythm on P2 with a taller scatter and cumulative chart, the footer at 1032. Round 9 (final): the brand row at y 16/24, headline y 64, subtitle y 112, P2 chips y 56 (Björn's Desktop move, on the grid); the F2 folio table 112 px; the P2 reading guide two lines (tile 112) and the scatter 656 px tall; the finding tooltips' title 72 px; a year tooltip page (tt-year, 560 x 376) for the three cumulative charts. Round 9b: the header rows at Björn's own Desktop positions (logo y 12, eyebrow and masthead y 20, headline y 60, subtitle y 108, P2 chips y 48; a 4 px grid for the header rows only). FinalV2 follow-up (12 Nov, evening, Björn): a hover signifier (bdg_*, a 16 px Tangerine ring-i at the top right of every visual that opens a page tooltip, nowhere else), and, in the masthead's slot (Björn, same evening: the footer was cluttered, the masthead said nothing), a header line right-aligned on the Night banner: the hint (z_hint*: the badge and 'hover for more'), on P2 'Revisit the facts' with the hover words F1 to F4 (hdr_f*, 32 px each, the finding tooltips), and the hover word Definitions (hdr_def*) whose tooltip page tt-glossary (480 x 544) lists the short words of both pages; the footer row is the source line again. Z and tab of the new slots are on the layering file's scale, since that file does not know them. 12 Nov, night (Björn on the FinalV2 renders: the ring-i too small everywhere, its legend in the header's corner, the header line off brand, clumsy and easy to miss, everything in the top-right corner): the header line (z_hint*, z_dot*, z_facts, hdr_*) and the badges (bdg_*) left; the top right of the Night banner is the hanger's again. In their place, each on the card it serves: hover tags (tag_*, 28 px pills in the signal tint with a filled Tangerine disc and the instruction in Night, 'Hover a bar / hotel / dot / year', on a kicker, title, legend or guide row), the Definitions chip at the right end of the footer row (z_pill_def*/chip_def*) and, on P2, left of it 'Revisit the facts' (z_pill_facts, one 856 px pill with the disc, the label and the codes F1 to F4, under four cards chip_f1..4 that carry the finding names and open tt-f1..4; the three move chips of the first version were too busy in the recommendation tile, Björn); P2's source line is slimmer (the rate and horizon are in the subtitle), w 824. chip_f1..4 keep the z and tab Björn's layering file already gives those names (16000-19000, 52010-52040), so the pill under them sits at z 15500. A chip is two slots on one rect: the pill under (z_pill_*), the words as a transparent card on top (chip_*), which takes the hover. P1's footer textbox moves to y 1044 (h 36): its line sat 14 px above P2's card line (rendered 1045 against 1059), so the chip now sits at one height on both pages.",
+  "canvas": {
+    "w": 1920,
+    "h": 1080
+  },
+  "pages": [
+    {
+      "name": "p1-brand-review",
+      "displayName": "The Brand Review",
+      "cards": [
+        {
+          "id": "card_kpi",
+          "x": 32,
+          "y": 168,
+          "w": 1856,
+          "h": 120
+        },
+        {
+          "id": "card_f1",
+          "x": 32,
+          "y": 312,
+          "w": 608,
+          "h": 464
+        },
+        {
+          "id": "card_f2",
+          "x": 656,
+          "y": 312,
+          "w": 608,
+          "h": 464
+        },
+        {
+          "id": "card_f3",
+          "x": 1280,
+          "y": 312,
+          "w": 608,
+          "h": 464
+        },
+        {
+          "id": "card_f4",
+          "x": 32,
+          "y": 800,
+          "w": 1856,
+          "h": 224
+        }
+      ],
+      "logo": {
+        "x": 32,
+        "y": 12,
+        "w": 200,
+        "h": 40,
+        "tab": 10
+      },
+      "visuals": [
+        {
+          "name": "z_eyebrow",
+          "x": 248,
+          "y": 20,
+          "w": 448,
+          "h": 24,
+          "z": 1004,
+          "tab": 20
+        },
+        {
+          "name": "z_headline",
+          "x": 32,
+          "y": 60,
+          "w": 1856,
+          "h": 48,
+          "z": 1001,
+          "tab": 100
+        },
+        {
+          "name": "c_subtitle",
+          "x": 32,
+          "y": 108,
+          "w": 1856,
+          "h": 24,
+          "z": 1002,
+          "tab": 110
+        },
+        {
+          "name": "kpi_occ",
+          "x": 56,
+          "y": 176,
+          "w": 416,
+          "h": 96,
+          "z": 1010,
+          "tab": 200
+        },
+        {
+          "name": "kpi_margin",
+          "x": 520,
+          "y": 176,
+          "w": 416,
+          "h": 96,
+          "z": 1011,
+          "tab": 210
+        },
+        {
+          "name": "kpi_ota",
+          "x": 984,
+          "y": 176,
+          "w": 416,
+          "h": 96,
+          "z": 1012,
+          "tab": 220
+        },
+        {
+          "name": "kpi_nps",
+          "x": 1448,
+          "y": 176,
+          "w": 416,
+          "h": 96,
+          "z": 1013,
+          "tab": 230
+        },
+        {
+          "name": "c_f1_kicker",
+          "x": 56,
+          "y": 328,
+          "w": 560,
+          "h": 24,
+          "z": 1020,
+          "tab": 300
+        },
+        {
+          "name": "c_f1_title",
+          "x": 56,
+          "y": 352,
+          "w": 560,
+          "h": 32,
+          "z": 1021,
+          "tab": 310
+        },
+        {
+          "name": "ch_f1_margin",
+          "x": 56,
+          "y": 392,
+          "w": 560,
+          "h": 264,
+          "z": 1022,
+          "tab": 320
+        },
+        {
+          "name": "c_f1_note",
+          "x": 56,
+          "y": 664,
+          "w": 560,
+          "h": 104,
+          "z": 1023,
+          "tab": 330
+        },
+        {
+          "name": "c_f2_kicker",
+          "x": 680,
+          "y": 328,
+          "w": 560,
+          "h": 24,
+          "z": 1030,
+          "tab": 400
+        },
+        {
+          "name": "c_f2_title",
+          "x": 680,
+          "y": 352,
+          "w": 560,
+          "h": 32,
+          "z": 1031,
+          "tab": 410
+        },
+        {
+          "name": "ch_f2_ota",
+          "x": 680,
+          "y": 392,
+          "w": 560,
+          "h": 168,
+          "z": 1032,
+          "tab": 420
+        },
+        {
+          "name": "tbl_f2_folio",
+          "x": 680,
+          "y": 568,
+          "w": 560,
+          "h": 112,
+          "z": 1033,
+          "tab": 430
+        },
+        {
+          "name": "c_f2_note",
+          "x": 680,
+          "y": 688,
+          "w": 560,
+          "h": 88,
+          "z": 1034,
+          "tab": 440
+        },
+        {
+          "name": "c_f3_kicker",
+          "x": 1304,
+          "y": 328,
+          "w": 400,
+          "h": 24,
+          "z": 1040,
+          "tab": 500
+        },
+        {
+          "name": "tag_f3",
+          "x": 1720,
+          "y": 324,
+          "w": 144,
+          "h": 28,
+          "z": 32500,
+          "tab": 8992
+        },
+        {
+          "name": "c_f3_title",
+          "x": 1304,
+          "y": 352,
+          "w": 560,
+          "h": 32,
+          "z": 1041,
+          "tab": 510
+        },
+        {
+          "name": "ch_f3_age",
+          "x": 1304,
+          "y": 392,
+          "w": 560,
+          "h": 272,
+          "z": 1042,
+          "tab": 520
+        },
+        {
+          "name": "c_f3_note",
+          "x": 1304,
+          "y": 672,
+          "w": 560,
+          "h": 96,
+          "z": 1043,
+          "tab": 530
+        },
+        {
+          "name": "c_f4_kicker",
+          "x": 56,
+          "y": 832,
+          "w": 560,
+          "h": 24,
+          "z": 1050,
+          "tab": 600
+        },
+        {
+          "name": "tag_f4",
+          "x": 1704,
+          "y": 828,
+          "w": 160,
+          "h": 28,
+          "z": 36500,
+          "tab": 8993
+        },
+        {
+          "name": "c_f4_title",
+          "x": 56,
+          "y": 856,
+          "w": 1808,
+          "h": 32,
+          "z": 1051,
+          "tab": 610
+        },
+        {
+          "name": "c_f4_types",
+          "x": 56,
+          "y": 904,
+          "w": 528,
+          "h": 96,
+          "z": 1052,
+          "tab": 620
+        },
+        {
+          "name": "ch_f4_fullest",
+          "x": 616,
+          "y": 880,
+          "w": 1248,
+          "h": 128,
+          "z": 1053,
+          "tab": 630
+        },
+        {
+          "name": "z_footer",
+          "x": 32,
+          "y": 1044,
+          "w": 1696,
+          "h": 36,
+          "z": 1090,
+          "tab": 9000
+        },
+        {
+          "name": "z_pill_def",
+          "x": 1744,
+          "y": 1044,
+          "w": 144,
+          "h": 28,
+          "z": 40500,
+          "tab": 9005
+        },
+        {
+          "name": "chip_def",
+          "x": 1744,
+          "y": 1044,
+          "w": 144,
+          "h": 28,
+          "z": 40600,
+          "tab": 9010
+        }
+      ]
+    },
+    {
+      "name": "p2-investment-strategy",
+      "displayName": "The Investment Strategy",
+      "cards": [
+        {
+          "id": "card_scatter",
+          "x": 32,
+          "y": 168,
+          "w": 1040,
+          "h": 848,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "id": "card_panel",
+          "x": 1088,
+          "y": 168,
+          "w": 800,
+          "h": 848,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "id": "card_scatter_s",
+          "x": 32,
+          "y": 168,
+          "w": 720,
+          "h": 472,
+          "state": [
+            "alts",
+            "build"
+          ]
+        },
+        {
+          "id": "card_panel_w",
+          "x": 768,
+          "y": 168,
+          "w": 1120,
+          "h": 472,
+          "state": [
+            "alts",
+            "build"
+          ]
+        },
+        {
+          "id": "card_compare",
+          "x": 32,
+          "y": 664,
+          "w": 1856,
+          "h": 352,
+          "state": [
+            "alts",
+            "build"
+          ]
+        }
+      ],
+      "logo": {
+        "x": 32,
+        "y": 12,
+        "w": 200,
+        "h": 40,
+        "tab": 10
+      },
+      "visuals": [
+        {
+          "name": "z_eyebrow2",
+          "x": 248,
+          "y": 20,
+          "w": 448,
+          "h": 24,
+          "z": 1004,
+          "tab": 20
+        },
+        {
+          "name": "z_headline2",
+          "x": 32,
+          "y": 60,
+          "w": 1176,
+          "h": 48,
+          "z": 1001,
+          "tab": 100
+        },
+        {
+          "name": "c_subtitle2",
+          "x": 32,
+          "y": 108,
+          "w": 1176,
+          "h": 24,
+          "z": 1002,
+          "tab": 110
+        },
+        {
+          "name": "c_scatter_title",
+          "x": 56,
+          "y": 184,
+          "w": 600,
+          "h": 32,
+          "z": 1010,
+          "tab": 200,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "sl_view",
+          "x": 672,
+          "y": 176,
+          "w": 360,
+          "h": 40,
+          "z": 1013,
+          "tab": 205,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "c_guide_kicker",
+          "x": 72,
+          "y": 232,
+          "w": 320,
+          "h": 24,
+          "z": 1011,
+          "tab": 208,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "c_guide_legend",
+          "x": 400,
+          "y": 232,
+          "w": 632,
+          "h": 24,
+          "z": 1011,
+          "tab": 209,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "c_guide",
+          "x": 72,
+          "y": 256,
+          "w": 960,
+          "h": 72,
+          "z": 1011,
+          "tab": 210,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "tag_scatter",
+          "x": 888,
+          "y": 292,
+          "w": 144,
+          "h": 28,
+          "z": 22500,
+          "tab": 8996,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "hero_packages",
+          "x": 56,
+          "y": 344,
+          "w": 992,
+          "h": 656,
+          "z": 1012,
+          "tab": 220,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "c_scatter_title_s",
+          "x": 56,
+          "y": 184,
+          "w": 672,
+          "h": 32,
+          "z": 1010,
+          "tab": 201,
+          "state": [
+            "alts",
+            "build"
+          ]
+        },
+        {
+          "name": "tag_scatter_s",
+          "x": 584,
+          "y": 188,
+          "w": 144,
+          "h": 28,
+          "z": 21500,
+          "tab": 8997,
+          "state": [
+            "alts",
+            "build"
+          ]
+        },
+        {
+          "name": "hero_s_packages",
+          "x": 56,
+          "y": 224,
+          "w": 672,
+          "h": 408,
+          "z": 1012,
+          "tab": 222,
+          "state": [
+            "alts",
+            "build"
+          ]
+        },
+        {
+          "name": "c_alts_title",
+          "x": 792,
+          "y": 184,
+          "w": 304,
+          "h": 32,
+          "z": 1040,
+          "tab": 285,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_alts_intro",
+          "x": 792,
+          "y": 216,
+          "w": 304,
+          "h": 64,
+          "z": 1041,
+          "tab": 286,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_build_title",
+          "x": 792,
+          "y": 184,
+          "w": 304,
+          "h": 32,
+          "z": 1070,
+          "tab": 287,
+          "state": [
+            "build"
+          ]
+        },
+        {
+          "name": "c_build_intro",
+          "x": 792,
+          "y": 216,
+          "w": 304,
+          "h": 64,
+          "z": 1071,
+          "tab": 288,
+          "state": [
+            "build"
+          ]
+        },
+        {
+          "name": "tab_rec_on",
+          "x": 1104,
+          "y": 184,
+          "w": 248,
+          "h": 40,
+          "z": 1015,
+          "tab": 290,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "tab_rec_off",
+          "x": 1104,
+          "y": 184,
+          "w": 248,
+          "h": 40,
+          "z": 1015,
+          "tab": 291,
+          "state": [
+            "alts",
+            "build"
+          ]
+        },
+        {
+          "name": "tab_alts_on",
+          "x": 1360,
+          "y": 184,
+          "w": 248,
+          "h": 40,
+          "z": 1016,
+          "tab": 292,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "tab_alts_off",
+          "x": 1360,
+          "y": 184,
+          "w": 248,
+          "h": 40,
+          "z": 1016,
+          "tab": 293,
+          "state": [
+            "rec",
+            "build"
+          ]
+        },
+        {
+          "name": "tab_build_on",
+          "x": 1616,
+          "y": 184,
+          "w": 248,
+          "h": 40,
+          "z": 1017,
+          "tab": 294,
+          "state": [
+            "build"
+          ]
+        },
+        {
+          "name": "tab_build_off",
+          "x": 1616,
+          "y": 184,
+          "w": 248,
+          "h": 40,
+          "z": 1017,
+          "tab": 295,
+          "state": [
+            "rec",
+            "alts"
+          ]
+        },
+        {
+          "name": "lbl_scenario",
+          "x": 1112,
+          "y": 248,
+          "w": 88,
+          "h": 24,
+          "z": 1018,
+          "tab": 299
+        },
+        {
+          "name": "sl_scenario",
+          "x": 1200,
+          "y": 240,
+          "w": 368,
+          "h": 40,
+          "z": 1020,
+          "tab": 300
+        },
+        {
+          "name": "img_rec_chip",
+          "x": 1120,
+          "y": 304,
+          "w": 40,
+          "h": 32,
+          "z": 1029,
+          "tab": 395,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "c_rec_title",
+          "x": 1168,
+          "y": 304,
+          "w": 688,
+          "h": 32,
+          "z": 1030,
+          "tab": 400,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "c_rec_mix",
+          "x": 1120,
+          "y": 336,
+          "w": 736,
+          "h": 24,
+          "z": 1031,
+          "tab": 410,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "c_rec_nums",
+          "x": 1120,
+          "y": 368,
+          "w": 736,
+          "h": 72,
+          "z": 1032,
+          "tab": 420,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "c_rec_note",
+          "x": 1120,
+          "y": 448,
+          "w": 736,
+          "h": 72,
+          "z": 1033,
+          "tab": 430,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "ch_rec_waterfall",
+          "x": 1112,
+          "y": 552,
+          "w": 752,
+          "h": 176,
+          "z": 1034,
+          "tab": 440,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "ch_rec_cumulative",
+          "x": 1112,
+          "y": 744,
+          "w": 752,
+          "h": 216,
+          "z": 1035,
+          "tab": 450,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "tag_rec_cum",
+          "x": 1712,
+          "y": 776,
+          "w": 152,
+          "h": 28,
+          "z": 47500,
+          "tab": 8998,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "c_uncertainty",
+          "x": 1112,
+          "y": 968,
+          "w": 752,
+          "h": 32,
+          "z": 1036,
+          "tab": 460,
+          "state": [
+            "rec"
+          ]
+        },
+        {
+          "name": "img_b_chip",
+          "x": 808,
+          "y": 304,
+          "w": 40,
+          "h": 32,
+          "z": 1042,
+          "tab": 505,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_b_title",
+          "x": 856,
+          "y": 304,
+          "w": 448,
+          "h": 32,
+          "z": 1043,
+          "tab": 510,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_b_nums",
+          "x": 808,
+          "y": 344,
+          "w": 496,
+          "h": 56,
+          "z": 1045,
+          "tab": 512,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_b_why",
+          "x": 808,
+          "y": 408,
+          "w": 496,
+          "h": 72,
+          "z": 1046,
+          "tab": 513,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_b_whynot",
+          "x": 808,
+          "y": 488,
+          "w": 496,
+          "h": 96,
+          "z": 1047,
+          "tab": 514,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_b_payback",
+          "x": 808,
+          "y": 592,
+          "w": 496,
+          "h": 24,
+          "z": 1048,
+          "tab": 515,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "img_c_chip",
+          "x": 1352,
+          "y": 304,
+          "w": 40,
+          "h": 32,
+          "z": 1050,
+          "tab": 520,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_c_title",
+          "x": 1400,
+          "y": 304,
+          "w": 448,
+          "h": 32,
+          "z": 1051,
+          "tab": 521,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_c_nums",
+          "x": 1352,
+          "y": 344,
+          "w": 496,
+          "h": 56,
+          "z": 1052,
+          "tab": 522,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_c_why",
+          "x": 1352,
+          "y": 408,
+          "w": 496,
+          "h": 72,
+          "z": 1053,
+          "tab": 523,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_c_whynot",
+          "x": 1352,
+          "y": 488,
+          "w": 496,
+          "h": 96,
+          "z": 1054,
+          "tab": 524,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "c_c_payback",
+          "x": 1352,
+          "y": 592,
+          "w": 496,
+          "h": 24,
+          "z": 1055,
+          "tab": 525,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "ch_cmp_alts",
+          "x": 56,
+          "y": 680,
+          "w": 1808,
+          "h": 320,
+          "z": 1060,
+          "tab": 580,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "tag_cmp_alts",
+          "x": 1712,
+          "y": 680,
+          "w": 152,
+          "h": 28,
+          "z": 63500,
+          "tab": 8999,
+          "state": [
+            "alts"
+          ]
+        },
+        {
+          "name": "dn_build_selector",
+          "x": 792,
+          "y": 296,
+          "w": 560,
+          "h": 328,
+          "z": 1072,
+          "tab": 610,
+          "state": [
+            "build"
+          ]
+        },
+        {
+          "name": "c_you_title",
+          "x": 1376,
+          "y": 304,
+          "w": 480,
+          "h": 40,
+          "z": 1073,
+          "tab": 620,
+          "state": [
+            "build"
+          ]
+        },
+        {
+          "name": "c_you_nums",
+          "x": 1384,
+          "y": 352,
+          "w": 464,
+          "h": 56,
+          "z": 1074,
+          "tab": 621,
+          "state": [
+            "build"
+          ]
+        },
+        {
+          "name": "c_you_rules",
+          "x": 1384,
+          "y": 416,
+          "w": 464,
+          "h": 32,
+          "z": 1075,
+          "tab": 622,
+          "state": [
+            "build"
+          ]
+        },
+        {
+          "name": "ch_build_waterfall",
+          "x": 1384,
+          "y": 456,
+          "w": 464,
+          "h": 160,
+          "z": 1076,
+          "tab": 623,
+          "state": [
+            "build"
+          ]
+        },
+        {
+          "name": "ch_cmp_build",
+          "x": 56,
+          "y": 680,
+          "w": 1808,
+          "h": 320,
+          "z": 1061,
+          "tab": 680,
+          "state": [
+            "build"
+          ]
+        },
+        {
+          "name": "tag_cmp_build",
+          "x": 1712,
+          "y": 680,
+          "w": 152,
+          "h": 28,
+          "z": 64500,
+          "tab": 9001,
+          "state": [
+            "build"
+          ]
+        },
+        {
+          "name": "z_footer2",
+          "x": 32,
+          "y": 1032,
+          "w": 824,
+          "h": 48,
+          "z": 1090,
+          "tab": 9000
+        },
+        {
+          "name": "z_pill_facts",
+          "x": 872,
+          "y": 1044,
+          "w": 856,
+          "h": 28,
+          "z": 15500,
+          "tab": 52005
+        },
+        {
+          "name": "chip_f1",
+          "x": 1032,
+          "y": 1044,
+          "w": 124,
+          "h": 28,
+          "z": 16000,
+          "tab": 52010
+        },
+        {
+          "name": "chip_f2",
+          "x": 1172,
+          "y": 1044,
+          "w": 156,
+          "h": 28,
+          "z": 17000,
+          "tab": 52020
+        },
+        {
+          "name": "chip_f3",
+          "x": 1344,
+          "y": 1044,
+          "w": 192,
+          "h": 28,
+          "z": 18000,
+          "tab": 52030
+        },
+        {
+          "name": "chip_f4",
+          "x": 1552,
+          "y": 1044,
+          "w": 168,
+          "h": 28,
+          "z": 19000,
+          "tab": 52040
+        },
+        {
+          "name": "z_pill_def2",
+          "x": 1744,
+          "y": 1044,
+          "w": 144,
+          "h": 28,
+          "z": 72500,
+          "tab": 52005
+        },
+        {
+          "name": "chip_def2",
+          "x": 1744,
+          "y": 1044,
+          "w": 144,
+          "h": 28,
+          "z": 72600,
+          "tab": 52050
+        }
+      ],
+      "tiles": [
+        {
+          "id": "rec",
+          "x": 1104,
+          "y": 296,
+          "w": 768,
+          "h": 240,
+          "state": [
+            "rec"
+          ],
+          "kind": "glow"
+        },
+        {
+          "id": "guide",
+          "x": 56,
+          "y": 224,
+          "w": 992,
+          "h": 112,
+          "state": [
+            "rec"
+          ],
+          "kind": "tint"
+        },
+        {
+          "id": "b",
+          "x": 792,
+          "y": 296,
+          "w": 528,
+          "h": 328,
+          "state": [
+            "alts"
+          ],
+          "kind": "outline"
+        },
+        {
+          "id": "c",
+          "x": 1336,
+          "y": 296,
+          "w": 528,
+          "h": 328,
+          "state": [
+            "alts"
+          ],
+          "kind": "outline"
+        },
+        {
+          "id": "you",
+          "x": 1368,
+          "y": 296,
+          "w": 496,
+          "h": 328,
+          "state": [
+            "build"
+          ],
+          "kind": "outline"
+        }
+      ]
+    },
+    {
+      "name": "tt-package",
+      "tooltip": true,
+      "canvas": {
+        "w": 480,
+        "h": 552
+      },
+      "cards": [
+        {
+          "id": "tt_return",
+          "x": 16,
+          "y": 48,
+          "w": 448,
+          "h": 256
+        },
+        {
+          "id": "tt_moves",
+          "x": 16,
+          "y": 312,
+          "w": 448,
+          "h": 224
+        }
+      ],
+      "visuals": [
+        {
+          "name": "tt_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 448,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "tt_title",
+          "x": 32,
+          "y": 56,
+          "w": 416,
+          "h": 32,
+          "z": 1001,
+          "tab": 110
+        },
+        {
+          "name": "tt_npv",
+          "x": 32,
+          "y": 96,
+          "w": 224,
+          "h": 56,
+          "z": 1003,
+          "tab": 120
+        },
+        {
+          "name": "tt_capex",
+          "x": 264,
+          "y": 96,
+          "w": 184,
+          "h": 56,
+          "z": 1004,
+          "tab": 130
+        },
+        {
+          "name": "tt_payback",
+          "x": 32,
+          "y": 160,
+          "w": 416,
+          "h": 64,
+          "z": 1005,
+          "tab": 140
+        },
+        {
+          "name": "tt_range_svg",
+          "x": 32,
+          "y": 224,
+          "w": 416,
+          "h": 72,
+          "z": 1006,
+          "tab": 145
+        },
+        {
+          "name": "tt_moves_label",
+          "x": 32,
+          "y": 320,
+          "w": 416,
+          "h": 24,
+          "z": 1008,
+          "tab": 155
+        },
+        {
+          "name": "tt_moves_svg",
+          "x": 32,
+          "y": 344,
+          "w": 416,
+          "h": 184,
+          "z": 1009,
+          "tab": 160
+        }
+      ]
+    },
+    {
+      "name": "tt-f1",
+      "tooltip": true,
+      "canvas": {
+        "w": 480,
+        "h": 456
+      },
+      "cards": [
+        {
+          "id": "tt_find",
+          "x": 16,
+          "y": 48,
+          "w": 448,
+          "h": 392
+        }
+      ],
+      "visuals": [
+        {
+          "name": "ttf_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 448,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "ttf_title",
+          "x": 32,
+          "y": 56,
+          "w": 416,
+          "h": 80,
+          "z": 1001,
+          "tab": 110
+        },
+        {
+          "name": "ttf_chart",
+          "x": 32,
+          "y": 152,
+          "w": 416,
+          "h": 144,
+          "z": 1003,
+          "tab": 120
+        },
+        {
+          "name": "ttf_note",
+          "x": 32,
+          "y": 304,
+          "w": 416,
+          "h": 136,
+          "z": 1004,
+          "tab": 130
+        }
+      ]
+    },
+    {
+      "name": "tt-f2",
+      "tooltip": true,
+      "canvas": {
+        "w": 480,
+        "h": 456
+      },
+      "cards": [
+        {
+          "id": "tt_find",
+          "x": 16,
+          "y": 48,
+          "w": 448,
+          "h": 392
+        }
+      ],
+      "visuals": [
+        {
+          "name": "ttf_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 448,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "ttf_title",
+          "x": 32,
+          "y": 56,
+          "w": 416,
+          "h": 80,
+          "z": 1001,
+          "tab": 110
+        },
+        {
+          "name": "ttf_chart",
+          "x": 32,
+          "y": 152,
+          "w": 416,
+          "h": 144,
+          "z": 1003,
+          "tab": 120
+        },
+        {
+          "name": "ttf_note",
+          "x": 32,
+          "y": 304,
+          "w": 416,
+          "h": 136,
+          "z": 1004,
+          "tab": 130
+        }
+      ]
+    },
+    {
+      "name": "tt-f3",
+      "tooltip": true,
+      "canvas": {
+        "w": 480,
+        "h": 456
+      },
+      "cards": [
+        {
+          "id": "tt_find",
+          "x": 16,
+          "y": 48,
+          "w": 448,
+          "h": 392
+        }
+      ],
+      "visuals": [
+        {
+          "name": "ttf_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 448,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "ttf_title",
+          "x": 32,
+          "y": 56,
+          "w": 416,
+          "h": 80,
+          "z": 1001,
+          "tab": 110
+        },
+        {
+          "name": "ttf_chart",
+          "x": 32,
+          "y": 152,
+          "w": 416,
+          "h": 144,
+          "z": 1003,
+          "tab": 120
+        },
+        {
+          "name": "ttf_note",
+          "x": 32,
+          "y": 304,
+          "w": 416,
+          "h": 136,
+          "z": 1004,
+          "tab": 130
+        }
+      ]
+    },
+    {
+      "name": "tt-f4",
+      "tooltip": true,
+      "canvas": {
+        "w": 480,
+        "h": 416
+      },
+      "cards": [
+        {
+          "id": "tt_find",
+          "x": 16,
+          "y": 48,
+          "w": 448,
+          "h": 352
+        }
+      ],
+      "visuals": [
+        {
+          "name": "ttf_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 448,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "ttf_title",
+          "x": 32,
+          "y": 56,
+          "w": 416,
+          "h": 80,
+          "z": 1001,
+          "tab": 110
+        },
+        {
+          "name": "ttf_types",
+          "x": 32,
+          "y": 144,
+          "w": 416,
+          "h": 56,
+          "z": 1002,
+          "tab": 115
+        },
+        {
+          "name": "ttf_chart",
+          "x": 32,
+          "y": 208,
+          "w": 416,
+          "h": 184,
+          "z": 1003,
+          "tab": 120
+        }
+      ]
+    },
+    {
+      "name": "tt-f3-band",
+      "tooltip": true,
+      "canvas": {
+        "w": 480,
+        "h": 464
+      },
+      "cards": [
+        {
+          "id": "tt_figs",
+          "x": 16,
+          "y": 48,
+          "w": 448,
+          "h": 400
+        }
+      ],
+      "visuals": [
+        {
+          "name": "ttd_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 448,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "ttd_head",
+          "x": 32,
+          "y": 56,
+          "w": 416,
+          "h": 32,
+          "z": 1001,
+          "tab": 105
+        },
+        {
+          "name": "ttd_nums",
+          "x": 32,
+          "y": 96,
+          "w": 416,
+          "h": 56,
+          "z": 1002,
+          "tab": 110
+        },
+        {
+          "name": "ttd_vs",
+          "x": 32,
+          "y": 160,
+          "w": 416,
+          "h": 64,
+          "z": 1003,
+          "tab": 120
+        },
+        {
+          "name": "ttd_chart_title",
+          "x": 32,
+          "y": 232,
+          "w": 416,
+          "h": 24,
+          "z": 1004,
+          "tab": 130
+        },
+        {
+          "name": "ttd_chart",
+          "x": 32,
+          "y": 256,
+          "w": 416,
+          "h": 112,
+          "z": 1005,
+          "tab": 140
+        },
+        {
+          "name": "ttd_foot",
+          "x": 32,
+          "y": 376,
+          "w": 416,
+          "h": 64,
+          "z": 1006,
+          "tab": 150
+        }
+      ]
+    },
+    {
+      "name": "tt-f4-hotel",
+      "tooltip": true,
+      "canvas": {
+        "w": 480,
+        "h": 400
+      },
+      "cards": [
+        {
+          "id": "tt_figs",
+          "x": 16,
+          "y": 48,
+          "w": 448,
+          "h": 336
+        }
+      ],
+      "visuals": [
+        {
+          "name": "ttd_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 448,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "ttd_head",
+          "x": 32,
+          "y": 56,
+          "w": 416,
+          "h": 32,
+          "z": 1001,
+          "tab": 105
+        },
+        {
+          "name": "ttd_nums",
+          "x": 32,
+          "y": 96,
+          "w": 416,
+          "h": 56,
+          "z": 1002,
+          "tab": 110
+        },
+        {
+          "name": "ttd_vs",
+          "x": 32,
+          "y": 160,
+          "w": 416,
+          "h": 64,
+          "z": 1003,
+          "tab": 120
+        },
+        {
+          "name": "ttd_chart_title",
+          "x": 32,
+          "y": 232,
+          "w": 416,
+          "h": 24,
+          "z": 1004,
+          "tab": 130
+        },
+        {
+          "name": "ttd_chart",
+          "x": 32,
+          "y": 256,
+          "w": 416,
+          "h": 112,
+          "z": 1005,
+          "tab": 140
+        }
+      ]
+    },
+    {
+      "name": "tt-year",
+      "tooltip": true,
+      "canvas": {
+        "w": 480,
+        "h": 320
+      },
+      "cards": [
+        {
+          "id": "tt_a",
+          "x": 16,
+          "y": 48,
+          "w": 448,
+          "h": 144
+        },
+        {
+          "id": "tt_all",
+          "x": 16,
+          "y": 208,
+          "w": 448,
+          "h": 96
+        }
+      ],
+      "visuals": [
+        {
+          "name": "tty_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 448,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "tty_title",
+          "x": 32,
+          "y": 56,
+          "w": 416,
+          "h": 40,
+          "z": 1001,
+          "tab": 110
+        },
+        {
+          "name": "tty_a_title",
+          "x": 32,
+          "y": 104,
+          "w": 416,
+          "h": 24,
+          "z": 1002,
+          "tab": 120
+        },
+        {
+          "name": "tty_a_nums",
+          "x": 32,
+          "y": 128,
+          "w": 416,
+          "h": 56,
+          "z": 1003,
+          "tab": 130
+        },
+        {
+          "name": "tty_all_title",
+          "x": 32,
+          "y": 216,
+          "w": 416,
+          "h": 24,
+          "z": 1004,
+          "tab": 140
+        },
+        {
+          "name": "tty_all_nums",
+          "x": 32,
+          "y": 240,
+          "w": 416,
+          "h": 56,
+          "z": 1005,
+          "tab": 150
+        }
+      ]
+    },
+    {
+      "name": "tt-glossary",
+      "tooltip": true,
+      "canvas": {
+        "w": 480,
+        "h": 544
+      },
+      "cards": [
+        {
+          "id": "tt_gloss",
+          "x": 16,
+          "y": 48,
+          "w": 448,
+          "h": 480
+        }
+      ],
+      "visuals": [
+        {
+          "name": "ttg_kicker",
+          "x": 16,
+          "y": 16,
+          "w": 448,
+          "h": 24,
+          "z": 1000,
+          "tab": 100
+        },
+        {
+          "name": "ttg_title",
+          "x": 32,
+          "y": 56,
+          "w": 416,
+          "h": 32,
+          "z": 1001,
+          "tab": 110
+        },
+        {
+          "name": "ttg_list",
+          "x": 32,
+          "y": 96,
+          "w": 416,
+          "h": 416,
+          "z": 1002,
+          "tab": 120
+        }
+      ]
+    }
+  ]
+}

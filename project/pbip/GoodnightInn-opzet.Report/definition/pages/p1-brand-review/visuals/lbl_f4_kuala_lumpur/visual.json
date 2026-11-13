@@ -1,46 +1,35 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "z_pill_def",
+  "name": "lbl_f4_kuala_lumpur",
   "position": {
-    "x": 1744,
-    "y": 1044,
-    "z": 40500,
-    "width": 144,
-    "height": 28,
-    "tabOrder": -1761
+    "x": 1444,
+    "y": 920,
+    "z": 39120,
+    "width": 102,
+    "height": 24,
+    "tabOrder": -17403
   },
   "visual": {
-    "visualType": "image",
+    "visualType": "textbox",
     "objects": {
-      "image": [
+      "general": [
         {
           "properties": {
-            "sourceType": {
-              "expr": {
-                "Literal": {
-                  "Value": "'imageUrl'"
-                }
-              }
-            },
-            "sourceUrl": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Kuala Lumpur",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#12233D"
                     }
-                  },
-                  "Property": "Definitions Pill SVG"
-                }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
               }
-            },
-            "fit": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Fit'"
-                }
-              }
-            }
+            ]
           }
         }
       ]
@@ -65,7 +54,25 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
                 }
               }
             }

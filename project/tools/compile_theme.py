@@ -94,6 +94,28 @@ theme = {
                                "titleFontColor": fill(c["ink_secondary"]),
                                "valueFontColor": fill(c["ink"])}],
         }},
+        # P-2, one control language (doc 21 section 3; FinalV3 build step 5): the state model of the light surface set
+        # once, here. A control that sets nothing gets the secondary look (white, 1 px Dusk outline, Night text) and the
+        # Seam hover; a visual sets only its size, its shape, its text and, for a primary or a masthead control, its fill.
+        # Checked against reportThemeSchema-2.159 (visual-actionButton fill / text / outline with $id default, hover,
+        # selected; actionStates-advancedSlicerVisual for outline and value). The slicer's fill states are not in the
+        # theme schema (fillCustom carries no $id), so button_slicer() keeps them per visual. No shape here: a theme
+        # shape would turn P2's tabs into pills (they are 8 px rectangles, the large size).
+        "actionButton": {"*": {
+            "fill": [{"$id": "default", "show": True, "fillColor": fill(c["surface"]), "transparency": 0},
+                     {"$id": "hover", "fillColor": fill(c["hairline"]), "transparency": 0},
+                     {"$id": "selected", "fillColor": fill(c["hairline"]), "transparency": 0}],
+            "text": [{"$id": "default", "show": True, "fontFamily": body, "fontSize": body_pt, "fontColor": fill(c["ink"]), "bold": False},
+                     {"$id": "hover", "fontColor": fill(c["ink"])},
+                     {"$id": "selected", "fontColor": fill(c["ink"])}],
+            "outline": [{"$id": "default", "show": True, "lineColor": fill(c["ink_secondary"]), "weight": 1}],
+        }},
+        "advancedSlicerVisual": {"*": {
+            "outline": [{"$id": "default", "show": True, "lineColor": fill(c["ink_secondary"]), "weight": 1},
+                        {"$id": "selection:selected", "lineColor": fill(c["ink"])}],
+            "value": [{"$id": "default", "fontFamily": body, "fontSize": body_pt, "fontColor": fill(c["ink"])},
+                      {"$id": "selection:selected", "fontColor": fill(c["surface"])}],
+        }},
         "page": {"*": {
             "background": [{"color": fill(c["canvas"]), "transparency": 0}],
             "outspace": [{"color": fill(c["canvas"]), "transparency": 0}],

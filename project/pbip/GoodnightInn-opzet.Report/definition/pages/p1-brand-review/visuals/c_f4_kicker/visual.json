@@ -3,7 +3,7 @@
   "name": "c_f4_kicker",
   "position": {
     "x": 56,
-    "y": 832,
+    "y": 816,
     "z": 36000,
     "width": 560,
     "height": 24,
@@ -23,11 +23,11 @@
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
-                      "color": "#A63F0E"
+                      "color": "#12233D"
                     }
                   },
                   {
-                    "value": "  ·  WHERE WE ARE FULL",
+                    "value": " · WHERE WE ARE FULL",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",

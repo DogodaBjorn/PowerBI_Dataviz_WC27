@@ -2049,6 +2049,9 @@ m("Months Topped 90% (last 24)",
   "VAR mths = CALCULATETABLE ( VALUES ( MonthlyPerformance[Month] ), REMOVEFILTERS ( 'Date' ), MonthlyPerformance[Month] >= d0 ) "
   "RETURN COUNTROWS ( FILTER ( mths, CALCULATE ( DIVIDE ( SUM ( MonthlyPerformance[RoomsSold] ), SUM ( MonthlyPerformance[RoomsAvailable] ) ), REMOVEFILTERS ( 'Date' ) ) >= 0.9 ) ) + 0", "0", C15,
   "Months, of the last 24 in the data, in which the hotels in context sold 90 percent or more of their available room nights ('topped 90%': the month's occupancy at or above 90%).")
+# P-7 (doc 21 section 3, S-8 passed in step 1): the Definitions chip is one card on this measure, the ring-i (U+24D8) in front
+m("Chip Definitions (text)", 'UNICHAR ( 9432 ) & " Definitions"', TXT, C15,
+  "The words on the Definitions chip of the rebuilt pages, 'ⓘ Definitions'; hovering the chip opens the definitions tooltip page.")
 
 # ================================================================ FinalV3 storytelling rebuild: text measures
 # Build step 4 of doc 23 (docs 20, 21 sections 3 P-8 and 10.2 / 10.3, 22 sections 4 and 6; 13 Nov 2026). Every sentence of the
@@ -2205,6 +2208,10 @@ m("F4 Note (text)",
   'RETURN ' + COPY_NAME.format("h2") + ' & " did in " & MAXX ( FILTER ( hs, Hotels[HotelID] = h2 ), [@m] ) & ", " & ' + COPY_NAME.format("h3") + ' & " in " & MAXX ( FILTER ( hs, Hotels[HotelID] = h3 ), [@m] ) '
   '& IF ( COUNTROWS ( other ) = 1, "; " & ' + COPY_NAME.format("kh") + ' & ", the " & ' + ordinal("COUNTROWS ( ext )") + ' & " extension on offer, in " & IF ( km = 0, "none", FORMAT ( km, "0", "en-US" ) ), "" ) & "."',
   TXT, C15, "F4 note: the next two hotels by months topped 90 %, and the one extension on offer outside them (Kingston) with its count.")
+m("Link F4 (text)",
+  'VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = "GI-02" ) ) '
+  'RETURN UNICHAR ( 8594 ) & " Page 2: kiosks at the " & FORMAT ( n, "0", "en-US" ) & " busiest hotels; extensions decided at the 2028 gate."',
+  TXT, C15, "F4 forward link (R-P1-7): the move on page 2 that answers F4, with the number of hotels the kiosk move covers read from the organisers' project properties.")
 
 # ---- page 2, the shared frame (R-P2-1, R-P2-12)
 m("Headline P2 (text)",
@@ -2413,8 +2420,9 @@ TEXT_SLOTS = {
         "c_f2_title": "F2 Title (text)", "c_f2_note": "F2 Note (text)",
         "tbl_f2_folio": {"rows": "FolioLine[Line]", "sort": "FolioLine[Sort]", "cols": ["FolioLine[Line]", "Folio OTA Guest (text)", "Folio Direct Guest (text)"]},
         "c_f3_title": "F3 Title (text)", "c_f3_count": "F3 Count (text)", "c_f3_note": "F3 Note (text)",
-        "c_f4_title": "F4 Title (text)", "c_f4_note": "F4 Note (text)",
+        "c_f4_title": "F4 Title (text)", "c_f4_note": "F4 Note (text)", "lnk_f4": "Link F4 (text)",
         "c_f4_rows": [["=Airport ", "Occupancy Airport GI (text)"], ["=City ", "Occupancy City GI (text)"], ["=Highway ", "Occupancy Highway GI (text)"]],
+        "chip_def": "Chip Definitions (text)",
     },
     "rec": dict(_P2_FRAME, **{
         "c_hero_title": "Hero Title (text)",
@@ -2447,8 +2455,8 @@ TEXT_SLOTS = {
     }),
 }
 TEXT_STATIC = {  # slot -> where the text is typed (checked against the spec by the report steps, rule 7 of doc 23)
-    **{s: "opzet_report.py, step 5" for s in ("z_eyebrow", "c_f1_kicker", "c_f2_kicker", "c_f3_kicker", "c_f4_kicker", "lnk_f1", "lnk_f2", "lnk_f3", "lnk_f4",
-                                              "tag_f3", "tag_f4", "z_footer", "btn_next", "chip_def", "lbl_f4_kingston", "lbl_f4_orlando", "lbl_f4_kuala_lumpur",
+    **{s: "opzet_report.py, step 5" for s in ("z_eyebrow", "c_f1_kicker", "c_f2_kicker", "c_f3_kicker", "c_f4_kicker", "lnk_f1", "lnk_f2", "lnk_f3",
+                                              "tag_f3", "tag_f4", "z_footer", "btn_next", "lbl_f4_kingston", "lbl_f4_orlando", "lbl_f4_kuala_lumpur",
                                               "lbl_f4_kansas_city", "lbl_f4_phoenix", "lbl_f4_gatwick_montreal", "lbl_f4_toronto")},
     **{s: "opzet_report.py, step 6" for s in ("z_eyebrow2", "btn_back", "tab_rec_on", "tab_rec_off", "tab_alts_on", "tab_alts_off", "tab_build_on", "tab_build_off",
                                               "lbl_scenario", "sl_scenario", "chip_def2", "c_rec_head", "c_ledger_caption", "btn_build_invite")},

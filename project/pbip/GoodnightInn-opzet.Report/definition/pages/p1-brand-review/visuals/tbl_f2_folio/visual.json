@@ -3,7 +3,7 @@
   "name": "tbl_f2_folio",
   "position": {
     "x": 680,
-    "y": 568,
+    "y": 544,
     "z": 30000,
     "width": 560,
     "height": 112,
@@ -107,14 +107,14 @@
             "outlineStyle": {
               "expr": {
                 "Literal": {
-                  "Value": "'None'"
+                  "Value": "'BottomOnly'"
                 }
               }
             },
             "autoSizeColumnWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -126,6 +126,31 @@
               }
             },
             "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4B5466'"
+                    }
+                  }
+                }
+              }
+            },
+            "outlineWeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "wordWrap": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -202,6 +227,13 @@
                   "Value": "'None'"
                 }
               }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }
@@ -244,7 +276,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "3.36D"
                 }
               }
             },
@@ -320,6 +352,50 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Folio Direct Guest (text)"
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "216D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "FolioLine.Line"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "171D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Folio OTA Guest (text)"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "171D"
                 }
               }
             }

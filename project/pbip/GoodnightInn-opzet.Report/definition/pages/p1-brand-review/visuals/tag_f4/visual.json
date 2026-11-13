@@ -3,44 +3,41 @@
   "name": "tag_f4",
   "position": {
     "x": 1704,
-    "y": 828,
+    "y": 812,
     "z": 36500,
     "width": 160,
     "height": 28,
-    "tabOrder": -1704
+    "tabOrder": -17101
   },
   "visual": {
-    "visualType": "image",
+    "visualType": "textbox",
     "objects": {
-      "image": [
+      "general": [
         {
           "properties": {
-            "sourceType": {
-              "expr": {
-                "Literal": {
-                  "Value": "'imageUrl'"
-                }
-              }
-            },
-            "sourceUrl": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "ⓘ",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#A63F0E"
                     }
                   },
-                  "Property": "Hover Tag Hotel SVG"
-                }
+                  {
+                    "value": " Hover a hotel",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#12233D"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
               }
-            },
-            "fit": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Fit'"
-                }
-              }
-            }
+            ]
           }
         }
       ]
@@ -65,7 +62,25 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
                 }
               }
             }
@@ -78,7 +93,32 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E3DFD3'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
                 }
               }
             }
@@ -130,7 +170,7 @@
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "1D"
                 }
               }
             },
@@ -144,14 +184,14 @@
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "8D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "8D"
                 }
               }
             }

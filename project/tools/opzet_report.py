@@ -52,7 +52,9 @@ if OPEN_STATE != "rec":
 # the move selector: Deneb (Björn 10 Nov) or, if the Desktop spike fails, a native button slicer in the same slot
 SELECTOR = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--selector=")), "deneb")
 assert SELECTOR in ("deneb", "native"), SELECTOR
-LAYOUT = json.loads((ROOT / "project" / "design-prototypes" / "opzet-layout.json").read_text(encoding="utf-8"))
+# Build step 5 (doc 23 rule 9): the v10 slot map is opzet-layout.json; P2 and its tt-f1..f4 still come from v9 until step 6
+from slot_map import load_layout  # noqa: E402
+LAYOUT = load_layout()
 THEME = json.loads((ROOT / "project" / "deliverables" / "theme.json").read_text(encoding="utf-8"))
 THEME_FILE = "goodnight-inn-wakeup.json"
 THEME["name"] = THEME_FILE  # the registered file name (pbir_lib / pbir_detect convention)
@@ -224,13 +226,15 @@ def gi_filter():
     return filter_in("Brands", "Brand", ["Goodnight Inn"], "flt_gi")
 
 
-def kpi_cell(slot, label, value_measure, context_measure, alt_measure, colour_measure):
+def kpi_cell(slot, label, value_measure, context_measure, alt_measure, colour_measure, code=None):
     """One KPI of the band: a label, the value and one comparison (DC-051), stacked inside the slot (24 + 40 + 24 px).
     One tab stop per KPI (plan 11): the value reads label, value and comparison aloud (Alt KPI ... (text)); the label
     and the context line are the same words on the canvas, so they leave the tab order. Round 4: the context line's
-    colour comes from a measure (Burnt Tangerine where the news is bad, Deep Coffee where it is best of four)."""
+    colour comes from a measure (Burnt Tangerine where the news is bad, Deep Coffee where it is best of four).
+    FinalV3 (R-P1-2, doc 21 4.1): the finding's code leads the label as its own run, Night semibold ("F4 · Occupancy")."""
     x, y, w, h, z, tab = at(P1, slot)
-    lab = textbox(f"{slot}_label", x, y, w, 24, z, tab, [[(label, BODY, SPX, INK2, False)]])
+    runs = [(code, DISPLAY, SPX, INK, False), (" · " + label, BODY, SPX, INK2, False)] if code else [(label, BODY, SPX, INK2, False)]
+    lab = textbox(f"{slot}_label", x, y, w, 24, z, tab, [runs])
     val = card(slot, x, y + 24, w, 48, z, tab + 1, [value_measure], DISPLAY, 28, INK)
     val["visual"]["objects"]["value"][0]["properties"]["bold"] = b(True)
     ctx = card(f"{slot}_ctx", x, y + 72, w, 24, z, tab + 2, [context_measure], BODY, S, INK2)
@@ -241,13 +245,14 @@ def kpi_cell(slot, label, value_measure, context_measure, alt_measure, colour_me
 _KICK = [0]
 
 
-def kicker(page, name, txt):
+def kicker(page, name, txt, code_colour=BAD, sep="  ·  "):
     """The kit's eyebrow on a white card at the 12 pt floor, out of the tab order: the title after it reads the
     kicker's words first (Alt F# Title (text)). Round 4, a little more orange: the finding's code (F1) in Burnt
-    Tangerine (6.2:1 on white), the words in Deep Coffee."""
+    Tangerine (6.2:1 on white), the words in Deep Coffee. FinalV3 (R-G3, doc 21 4.1): on the rebuilt pages the code is
+    Night and the separator one space each side, as the comp ("F1 · THE MARGIN")."""
     _KICK[0] += 1
-    code, _, rest = txt.partition("  ·  ")
-    runs = [(code, DISPLAY, SPX, BAD, False), ("  ·  " + rest, DISPLAY, SPX, ACCENT, False)] if rest else [(txt, DISPLAY, SPX, ACCENT, False)]
+    code, _, rest = txt.partition(sep)
+    runs = [(code, DISPLAY, SPX, code_colour, False), (sep + rest, DISPLAY, SPX, ACCENT, False)] if rest else [(txt, DISPLAY, SPX, ACCENT, False)]
     return decorative(tb(page, name, txt, runs=runs), 600 + _KICK[0])
 
 
@@ -263,44 +268,266 @@ def title(page, name, measure, alt_measure=None):
 
 
 def p1_visuals():
+    """FinalV3 build step 5 (doc 23): P1 as the comp rebuild-comp-v10.html (#p1) draws it; slots from the v10 slot map,
+    content from doc 20, construction from doc 21 sections 4.1 to 4.5 and doc 22 sections 2 and 3. Every sentence is a
+    measure of TEXT_SLOTS (sketch_model.py) or a typed slot of TEXT_STATIC; the numbers are label-safe (P-1)."""
     # headline and subtitle as cards, like P2's, so the two headers sit on one grid (REVIEW p2)
     # on the night zone (plan 10 D3): masthead and subtitle in ZONE_MUTED (10.2:1 on Night), the headline in ZONE_TEXT
-    # 12 Nov evening (Björn): the masthead line said nothing; 12 Nov, night: the header line left too (hover tags on the cards, chips)
     v = [dyn(P1, "z_headline", "Headline P1 (text)", size=28, colour=ZONE_TEXT, font=DISPLAY),
          dyn(P1, "c_subtitle", "Subtitle P1 Briefing (text)", size=S, colour=ZONE_MUTED)]
 
-    # the KPI band: four cells in one card; values are text measures, one formatter with the context line (REVIEW M7)
-    v += kpi_cell("kpi_occ", "Occupancy", "KPI Occupancy GI (text)", "KPI Occupancy Context (text)", "Alt KPI Occupancy (text)", "KPI Occupancy Context Color")
-    v += kpi_cell("kpi_margin", "Operating margin after commissions", "KPI Margin after GI (text)", "KPI Margin after Context (text)", "Alt KPI Margin after (text)", "KPI Margin after Context Color")
-    v += kpi_cell("kpi_ota", "Room revenue booked through online agencies", "KPI OTA GI (text)", "KPI OTA Context (text)", "Alt KPI OTA (text)", "KPI OTA Context Color")
+    # the KPI band: four cells in one card; values are text measures, one formatter with the context line (REVIEW M7).
+    # R-P1-2: each label leads with the code of the finding it belongs to.
+    v += kpi_cell("kpi_occ", "Occupancy", "KPI Occupancy GI (text)", "KPI Occupancy Context (text)", "Alt KPI Occupancy (text)", "KPI Occupancy Context Color", "F4")
+    v += kpi_cell("kpi_margin", "Operating margin after commissions", "KPI Margin after GI (text)", "KPI Margin after Context (text)", "Alt KPI Margin after (text)", "KPI Margin after Context Color", "F1")
+    v += kpi_cell("kpi_ota", "Room revenue booked through online agencies", "KPI OTA GI (text)", "KPI OTA Context (text)", "Alt KPI OTA (text)", "KPI OTA Context Color", "F2")
     # plan 09 R2: NPS as a guest-quality signal, not the brand's one number (Keiningham et al. 2007; CREDITS.md).
-    # Round 4 (Björn 10 Nov): the context line says it is still positive but falling every year.
-    v += kpi_cell("kpi_nps", "Guest quality: net promoter score", "KPI NPS GI (text)", "KPI NPS Context (text)", "Alt KPI NPS (text)", "KPI NPS Context Color")
+    v += kpi_cell("kpi_nps", "Guest quality: net promoter score (−100 to +100)", "KPI NPS GI (text)", "KPI NPS Context (text)", "Alt KPI NPS (text)", "KPI NPS Context Color", "F3")
 
-    # F1 the margin: before vs after commissions, Goodnight Inn only; the gap between the lines is the channels' take
-    v += [kicker(P1, "c_f1_kicker", "F1  ·  THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)")]
-    v.append(f1_chart(P1, "ch_f1_margin"))
+    k = lambda name, txt: kicker(P1, name, txt, code_colour=INK, sep=" · ")  # noqa: E731  (R-G3: the code in Night)
+    # F1 the margin (4.2): the margin after commissions with the commissions band stacked on it
+    v += [k("c_f1_kicker", "F1 · THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)")]
+    v.append(f1_area(P1, "ch_f1_margin"))
     v.append(dyn(P1, "c_f1_note", "F1 Note (text)"))
+    v.append(link_line(P1, "lnk_f1", "→ Page 2: revenue management and the kiosks."))
 
-    # F2 the middleman: OTA share for the four brands, and the folio (one 2025 room night by channel)
-    v += [kicker(P1, "c_f2_kicker", "F2  ·  THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)", "Alt F2 Title (text)")]
-    v.append(f2_chart(P1, "ch_f2_ota"))
-    v.append(f2_folio(P1, "tbl_f2_folio"))
+    # F2 the middleman (4.3): two lines named at their ends, no legend and no value axis; the folio under it
+    v += [k("c_f2_kicker", "F2 · THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)", "Alt F2 Title (text)")]
+    v.append(f2_ends(P1, "ch_f2_ota"))
+    v.append(f2_folio_v10(P1, "tbl_f2_folio"))
     v.append(dyn(P1, "c_f2_note", "F2 Note (text)"))
+    v.append(link_line(P1, "lnk_f2", "→ Page 2: the booking app with member rates."))
 
-    # F3 the fading welcome: NPS 2025 by years since the last renovation (dated hotels only); a bar opens the band's detail
-    v += [kicker(P1, "c_f3_kicker", "F3  ·  THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)", "Alt F3 Title (text)")]
-    v.append(f3_chart(P1, "ch_f3_age", tooltip_page=TT_F3))
+    # F3 the fading welcome (4.4): label-safe values over the bars; a bar opens the band's detail
+    v += [k("c_f3_kicker", "F3 · THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)", "Alt F3 Title (text)")]
+    v.append(f3_chart(P1, "ch_f3_age", tooltip_page=TT_F3, measure="NPS 2025 (label-safe)"))
+    v.append(dyn(P1, "c_f3_count", "F3 Count (text)"))
     v.append(dyn(P1, "c_f3_note", "F3 Note (text)"))
+    v.append(link_line(P1, "lnk_f3", "→ Page 2: the refresh waits for the 2028 gate, and why."))
 
-    # F4 where we are full; a bar opens the hotel's detail
-    v += [kicker(P1, "c_f4_kicker", "F4  ·  WHERE WE ARE FULL"), title(P1, "c_f4_title", "F4 Title (text)", "Alt F4 Title (text)")]
-    v.append(f4_types(P1, "c_f4_types"))
-    v.append(f4_chart(P1, "ch_f4_fullest", tooltip_page=TT_F4))
+    # F4 where we are full (4.5, doc 22 section 3): the note and link at the left, the three location-type rows, the
+    # dot plot of the 50 hotels on the average diamonds, the seven names as text boxes
+    v += [k("c_f4_kicker", "F4 · WHERE WE ARE FULL"), title(P1, "c_f4_title", "F4 Title (text)", "Alt F4 Title (text)")]
+    v.append(dyn(P1, "c_f4_note", "F4 Note (text)"))
+    # the number of kiosk hotels comes from the model (a11y_check: no typed number but a year), so this link is a card
+    v.append(dyn(P1, "lnk_f4", "Link F4 (text)", colour=INK))
+    v += f4_rows(P1, "c_f4_rows")
+    v += f4_dot_plot(P1, tooltip_page=TT_F4)
+    v += f4_names(P1)
+
+    # the footer row: source line, the page button (P-2, S-6) and the Definitions chip (P-7)
     v.append(tb(P1, "z_footer", FOOTER, alt="Source: Pillow & Key Group dataset. Guest scores weighted by survey responses; 2021 is a depressed base year."))
-    # 12 Nov, night: a hover tag on the two cards with hover detail (in the kicker row), the Definitions chip at the footer row's end
-    v += [hover_tag(P1, "tag_f3", "Bar", 3), hover_tag(P1, "tag_f4", "Hotel", 4)] + definitions_chip(P1, "", 1)
+    v.append(nav_button(P1, "btn_next", "Next: what we fund, and why →", P2, "Next what we fund and why: page 2, The Investment Strategy"))
+    v.append(chip_native(P1, "chip_def", "Chip Definitions (text)", TT_GLOSS, "Alt Definitions (text)"))
+    # P-7 hover tags on the two cards whose visuals open a detail page
+    v += [hover_tag_text(P1, "tag_f3", "Hover a bar", 3), hover_tag_text(P1, "tag_f4", "Hover a hotel", 4)]
     return v
+
+
+# ---------------------------------------------------------------------- FinalV3 P1 builders (build step 5)
+# the ring-i of the hover tags: Burnt Tangerine, not the comp's Tangerine (#E05A22 is 3.7:1 on white, a11y_check's floor is
+# 4.5:1 for any text run; Burnt Tangerine is 6.2:1, the kit's text cut of the same hue)
+TAG_I = BAD
+
+
+def link_line(page, name, txt):
+    """A forward link line under a finding (R-P1-3 to R-P1-7): a static text box in Night at 12 pt. It points at the move
+    on page 2 that answers the finding; the page button in the footer row does the navigation (one control, P-2)."""
+    return tb(page, name, txt, colour=INK)
+
+
+def hover_tag_text(page, name, words, i):
+    """P-7 hover tag, native: a text box with two runs, the ring-i (U+24D8, S-8 passed) in Tangerine and the words in
+    Night, on a white fill with a 1 px Seam border and radius 14. Decorative (an instruction to the mouse; every hover
+    target's alt text says what the hover shows)."""
+    v = textbox(name, *at(page, name), [[("ⓘ", BODY, SPX, TAG_I, False), (" " + words, BODY, SPX, INK, False)]], align="center", alt=None)
+    vc = v["visual"]["visualContainerObjects"]
+    vc["background"] = [{"properties": {"show": b(True), "color": color(SURFACE), "transparency": num(0)}}]
+    vc["border"] = [{"properties": {"show": b(True), "color": color(HAIR), "radius": num(14), "width": num(1)}}]
+    vc["padding"] = [{"properties": {"top": num(1), "bottom": num(0), "left": num(8), "right": num(8)}}]
+    return decorative(v, 700 + i)
+
+
+def chip_native(page, name, text_measure, tooltip_page, alt_measure):
+    """P-7 Definitions chip: one cardVisual with its own container fill, border and radius, the text measure in Night,
+    the tooltip page bound to it (the SVG pill under it is gone)."""
+    v = card(name, *at(page, name), [text_measure], BODY, S, INK, align="center")
+    vc = v["visual"]["visualContainerObjects"]
+    vc["background"] = [{"properties": {"show": b(True), "color": color(SURFACE), "transparency": num(0)}}]
+    vc["border"] = [{"properties": {"show": b(True), "color": color(HAIR), "radius": num(14), "width": num(1)}}]
+    vc["padding"] = [{"properties": {"top": num(2), "bottom": num(0), "left": num(12), "right": num(12)}}]
+    vc["visualTooltip"] = page_tooltip(tooltip_page)
+    return bind_alt(v, alt_measure)
+
+
+def nav_button(page, name, label, target, alt):
+    """P-2 small control on a light surface, primary: a pill in Night with white 12 pt text; hover and pressed take the
+    Seam fill with Night text (the theme's light-surface hover). The page-navigation link is S-6's shape
+    (visualContainerObjects.visualLink: type PageNavigation, navigationSection = the page's folder name)."""
+    st = ("hover", "selected")
+    objs = {"shape": [{"properties": {"tileShape": enum("pill")}}],
+            "icon": [{"properties": {"shapeType": text("blank")}, "selector": {"id": "default"}}],
+            "text": [{"properties": {"show": b(True)}},
+                     {"properties": {"text": text(label), "fontFamily": text(BODY), "fontSize": num(S), "fontColor": color(SURFACE), "bold": b(False)}, "selector": {"id": "default"}},
+                     *[{"properties": {"text": text(label), "fontColor": color(INK)}, "selector": {"id": s_}} for s_ in st]],
+            "fill": [{"properties": {"show": b(True)}},
+                     {"properties": {"fillColor": color(INK), "transparency": num(0)}, "selector": {"id": "default"}},
+                     *[{"properties": {"fillColor": color(HAIR), "transparency": num(0)}, "selector": {"id": s_}} for s_ in st]],
+            "outline": [{"properties": {"show": b(False)}}]}
+    vcos = vco(alt=alt, padding=0)
+    vcos["visualLink"] = [{"properties": {"show": b(True), "type": enum("PageNavigation"), "navigationSection": text(target)}}]
+    return visual(name, "actionButton", *at(page, name), objects=objs, vcos=vcos)
+
+
+def f1_area(page, slot):
+    """F1 (doc 21 4.2, S-5 passed): a stacked area chart. The base series, the margin after commissions, is a 3 px Coffee
+    Blue line with no fill (lineStyles.areaShow false on its selector); the commissions band stacked on it is Warm Grey
+    at 70 % transparency with a 2 px Warm Grey edge, so its top edge is the margin before commissions. The value axis
+    30 % to 50 % (the base is unfilled, so a cut axis distorts no area). Series named at the right, no legend; the series
+    labels' default grey background off (step 1 open item)."""
+    ms = ["Trend Margin after GI", "Trend Commission Take GI"]
+    q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]},
+         "Y": {"projections": [proj_mea(ms[0], "After commissions"), proj_mea(ms[1], "Commissions")]}}
+    ls = line_styles({mref(ms[0]): 3, mref(ms[1]): 2})
+    ls[1]["properties"]["areaShow"] = b(False)
+    ls[2]["properties"]["areaShow"] = b(True)
+    objs = {"categoryAxis": axis(BODY, S, INK2),
+            "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=0.3, end=0.5, extra={"labelPrecision": integer(0)}),
+            "legend": legend(False),
+            "labels": [{"properties": {"show": b(False)}}],
+            "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2),
+                                             "textSize": num(S), "seriesFontFamily": text(BODY), "enableBackground": b(False)}}],
+            "dataPoint": [{"properties": {"transparency": num(70)}}] + series_colors({mref(ms[0]): ACCENT_MARK, mref(ms[1]): SLATE}),
+            "lineStyles": ls}
+    return chart(page, slot, "stackedAreaChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F1 Chart (text)")
+
+
+def f2_ends(page, slot):
+    """F2 (doc 21 4.3, P-5): the Goodnight Inn line (3 px Coffee Blue) and the other three brands as one line (2 px Warm
+    Grey), named at their right ends; no legend, no value axis. The numbers are two label-only series on the same axis,
+    without a line or marker: Trend OTA GI (ends) carries 2021 and 2025 above the blue line, Trend OTA Sisters (end) 2025
+    below the grey one. Whole percentages, so they need no label-safe twin."""
+    gi, si, gi_e, si_e = "Trend OTA GI", "Trend OTA Sisters", "Trend OTA GI (ends)", "Trend OTA Sisters (end)"
+    q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]},
+         "Y": {"projections": [proj_mea(gi, "Goodnight Inn"), proj_mea(si, "The other three brands"), proj_mea(gi_e, "Goodnight Inn, first and last year"),
+                               proj_mea(si_e, "The other three brands, last year")]}}
+    ls = line_styles({mref(gi): 3, mref(si): 2})
+    ls += [{"properties": {"strokeShow": b(False), "showMarker": b(False)}, "selector": {"metadata": mref(m_)}} for m_ in (gi_e, si_e)]
+    lab = {"fontFamily": text(BODY), "fontSize": num(S), "color": color(INK2), "labelDisplayUnits": integer(1), "labelPrecision": integer(0), "enableBackground": b(False)}
+    objs = {"categoryAxis": axis(BODY, S, INK2),
+            "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, start=0.2, end=0.55),
+            "legend": legend(False),
+            "labels": [{"properties": {"show": b(True), **lab}},
+                       *[{"properties": {"showSeries": b(False)}, "selector": {"metadata": mref(m_)}} for m_ in (gi, si)],
+                       {"properties": {"showSeries": b(True), "labelPosition": enum("Above")}, "selector": {"metadata": mref(gi_e)}},
+                       {"properties": {"showSeries": b(True), "labelPosition": enum("Under")}, "selector": {"metadata": mref(si_e)}}],
+            "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2),
+                                             "textSize": num(S), "seriesFontFamily": text(BODY), "enableBackground": b(False)}},
+                             *[{"properties": {"show": b(False)}, "selector": {"metadata": mref(m_)}} for m_ in (gi_e, si_e)]],
+            "dataPoint": series_colors({mref(gi): ACCENT_MARK, mref(si): SLATE, mref(gi_e): ACCENT_MARK, mref(si_e): SLATE}),
+            "lineStyles": ls}
+    return chart(page, slot, "lineChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F2 Chart (text)")
+
+
+FOLIO_COLS = (216, 171, 171)  # the spec's 216 / 172 / 172, less the 2 px a table needs beyond its columns (step 2, S-2 point 4)
+
+
+def f2_folio_v10(page, slot):
+    """The folio table as the spec's construction.tables.tbl_f2_folio: header and rows 28 px (12 pt line 21.3 px plus
+    3.36 px row padding, step 2 S-3 point 2), fixed columns, the header ruled in Dusk underneath, the rows in Seam."""
+    fol = ("Folio OTA Guest (text)", "Folio Direct Guest (text)")
+    proj = [proj_col("FolioLine", "Line", display="One room night, 2025"), proj_mea(fol[0], "Via an online agency"), proj_mea(fol[1], "Direct, web and app")]
+    colfmt = [{"properties": {"alignment": enum("Right"), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": mref(m_)}} for m_ in fol]
+    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=3.36, header_size=S, column_formatting=colfmt)
+    objs["columnHeaders"][0]["properties"].update({"outlineStyle": enum("BottomOnly"), "outlineColor": color(INK2), "outlineWeight": num(1),
+                                                   "autoSizeColumnWidth": b(False), "wordWrap": b(False)})
+    objs["values"][0]["properties"]["wordWrap"] = b(False)
+    objs["columnWidth"] = [{"properties": {"value": num(w)}, "selector": {"metadata": q_}}
+                           for q_, w in zip(("FolioLine.Line", mref(fol[0]), mref(fol[1])), FOLIO_COLS)]
+    t = visual(slot, "tableEx", *at(page, slot), query={"Values": {"projections": proj}}, objects=objs, filters=[gi_filter()], vcos=vco(padding=0))
+    return bind_alt(t, "Alt F2 Folio (text)")
+
+
+# F4 (doc 21 4.5 with doc 22 section 3): one plot area for both scatter layers, fixed ends from the spec
+F4_X, F4_Y = (0.6, 0.95), (0.5, 3.5)
+F4_ROWS = (("airport", "Airport", "Occupancy Airport GI (text)"), ("city", "City", "Occupancy City GI (text)"), ("highway", "Highway", "Occupancy Highway GI (text)"))
+# where each value starts after its label in the 160 px slot: the label's width at 16 px Segoe UI plus a space (4.4 px),
+# from `powerbi-report-author text measure` (49.5 / 27.0 / 61.2 px); set to the render in build step 5
+F4_VALUE_DX = {"airport": 54, "city": 31, "highway": 66}
+
+
+def f4_rows(page, slot):
+    """'Airport 82.0%', 'City 79.1%', 'Highway 77.5%' as three rows of 40 px in the slot (the comp's part(i * 40, 40)): per
+    row a text box with the type in Dusk and a card with the value in Night semibold beside it (a card's label can only
+    sit above or below its value). One tab stop: the first value card reads the three (Alt F4 Types (text))."""
+    x, y, w, h, z, tab = at(page, slot)
+    out = []
+    for i, (key, label, measure) in enumerate(F4_ROWS):
+        ry = y + 40 * i + 8
+        lab = textbox(f"{slot}_lab_{key}", x, ry, 72, 24, z, 0, [[(label, BODY, SPX, INK2, False)]])
+        name = slot if i == 0 else f"{slot}_{key}"
+        val = card(name, x + F4_VALUE_DX[key], ry, w - F4_VALUE_DX[key], 24, z, tab, [measure], DISPLAY, S, INK, off_grid=True)
+        out.append(decorative(lab, 140 + i))
+        out.append(bind_alt(val, "Alt F4 Types (text)") if i == 0 else decorative(val, 150 + i))
+    return out
+
+
+def f4_axes(objs, labels_colour):
+    objs["categoryAxis"] = axis(BODY, S, labels_colour, gridlines=True, grid_color=HAIR, start=F4_X[0], end=F4_X[1], extra={"labelPrecision": integer(0), "labelDisplayUnits": integer(1)})
+    objs["valueAxis"] = axis(BODY, S, INK2, show=False, gridlines=False, start=F4_Y[0], end=F4_Y[1])
+    return objs
+
+
+def f4_dot_plot(page, tooltip_page=None):
+    """Two scatter layers on one rect (ch_f4_avg under ch_f4_dots), the same axis ends, so their plot areas match. Bottom:
+    three Dusk diamonds, one per location type at its 2025 occupancy; the same axis as the top layer (labels and
+    gridlines drawn twice on the same pixels: a white label here would fail a11y_check), so the plot areas match. Top: the 50 hotels at (Occupancy % 2025, F4 Row Y), Night for the
+    seven fullest and Warm Grey for the rest (F4 Dot Color), no category labels (doc 22: the names are text boxes), the X
+    axis ticks and gridlines, and the 90 % constant line dashed in Dusk with its label; it opens the hotel's tooltip page."""
+    x, y, w, h, z, tab = at(page, "ch_f4_dots")
+    base = {"legend": legend(False), "categoryLabels": [{"properties": {"show": b(False)}}],
+            "bubbles": [{"properties": {"bubbleSize": integer(0), "markerRangeType": enum("magnitude"), "preventOverflow": b(False)}}]}
+    # bottom layer: the location-type averages
+    qa = {"Category": {"projections": [proj_col("Hotels", "LocationType", display="Location type")]},
+          "X": {"projections": [proj_mea("F4 Type Avg", "Occupancy 2025")]}, "Y": {"projections": [proj_mea("F4 Row Y", "Row")]}}
+    oa = f4_axes(copy.deepcopy(base), INK2)
+    oa["bubbles"][0]["properties"].update({"markerShape": enum("diamond"), "bubbleSize": integer(5)})
+    oa["dataPoint"] = [{"properties": {"fill": color(INK2)}, "selector": WILD}]
+    avg = decorative(visual("ch_f4_avg", "scatterChart", *at(page, "ch_f4_avg"), query=qa, objects=oa, filters=[gi_filter()], vcos=vco(padding=0)), 160)
+    # top layer: the hotels
+    qd = {"Category": {"projections": [proj_col("Hotels", "Hotel Short Name", display="Hotel")]},
+          "X": {"projections": [proj_mea("Occupancy % 2025", "Occupancy 2025")]}, "Y": {"projections": [proj_mea("F4 Row Y", "Row")]}}
+    od = f4_axes(copy.deepcopy(base), INK2)
+    od["dataPoint"] = [{"properties": {"fill": fv("F4 Dot Color")}, "selector": WILD}]
+    od["xAxisReferenceLine"] = [{"properties": {"show": b(True), "value": num(0.9), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("dashed"),
+                                                "position": enum("back"), "displayName": text("90%"), "dataLabelShow": b(True), "dataLabelText": enum("Name"),
+                                                "dataLabelColor": color(INK), "dataLabelHorizontalPosition": enum("right"), "dataLabelVerticalPosition": enum("under")},
+                                 "selector": {"id": "1"}}]
+    vc = vco(padding=0)
+    if tooltip_page:
+        vc["visualTooltip"] = page_tooltip(tooltip_page)
+    dots = bind_alt(visual("ch_f4_dots", "scatterChart", x, y, w, h, z, tab, query=qd, objects=od, filters=[gi_filter()], vcos=vc), "Alt F4 Chart (text)")
+    return [avg, dots]
+
+
+F4_NAMES = ("kingston", "orlando", "kuala_lumpur", "kansas_city", "phoenix", "gatwick_montreal", "toronto")
+F4_NAME_TEXT = {"kingston": "Kingston", "orlando": "Orlando", "kuala_lumpur": "Kuala Lumpur", "kansas_city": "Kansas City", "phoenix": "Phoenix",
+                "gatwick_montreal": "Gatwick, Montréal", "toronto": "Toronto"}
+F4_NAME_DX = 0  # S-4: the shift of the seven boxes when the rendered plot area differs from the comp's (x 16 to 1184 in the visual)
+
+
+def f4_names(page):
+    """The seven name boxes beside their dots (doc 22 section 3): 12 pt Night on a white fill, no border, decorative and
+    out of the tab order. Static: P1 does not follow the scenario, so the dots never move; the placement avoids all 50
+    dots, so no box covers a dot's tooltip. Positions from the spec (construction.charts.ch_f4.name_slots), not on the grid."""
+    out = []
+    for i, key in enumerate(F4_NAMES):
+        name = f"lbl_f4_{key}"
+        x, y, w, h, z, tab = at(page, name)
+        v = textbox(name, x + F4_NAME_DX, y, w, h, z, tab, [[(F4_NAME_TEXT[key], BODY, SPX, INK, False)]], off_grid=True)
+        v["visual"]["visualContainerObjects"]["background"] = [{"properties": {"show": b(True), "color": color(SURFACE), "transparency": num(0)}}]
+        out.append(decorative(v, 170 + i))
+    return out
 
 
 YEARS = lambda: filter_in("Date", "Year", [2021, 2022, 2023, 2024, 2025], "flt_hist")  # noqa: E731
@@ -361,8 +588,9 @@ def f2_folio(page, slot):
     return bind_alt(t, "Alt F2 Folio (text)")
 
 
-def f3_chart(page, slot, tooltip_page=None):
-    q = {"Category": {"projections": [proj_col("Hotels", "Renovation Age Label", display="Years since the last renovation")]}, "Y": {"projections": [proj_mea("NPS 2025 (signed)", "NPS 2025")]}}
+def f3_chart(page, slot, tooltip_page=None, measure="NPS 2025 (signed)"):
+    """measure (FinalV3 step 5, P-1): on P1 the label-safe twin, so the bars print '+6.8' and '−4.9' in any locale."""
+    q = {"Category": {"projections": [proj_col("Hotels", "Renovation Age Label", display="Years since the last renovation")]}, "Y": {"projections": [proj_mea(measure, "NPS 2025")]}}
     objs = {"categoryAxis": axis(BODY, S, INK), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False),
             "dataPoint": [{"properties": {"fill": fv("Age Band Color")}, "selector": WILD}], "labels": labels(True, BODY, 12, INK), "legend": legend(False),
             # the zero line the bars hang from (REVIEW m4); same object shape as the scatter's, which Desktop rendered

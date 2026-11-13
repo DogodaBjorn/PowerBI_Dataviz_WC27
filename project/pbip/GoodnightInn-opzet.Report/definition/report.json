@@ -79,26 +79,6 @@
           "type": "Image"
         },
         {
-          "name": "canvas-tt-tt-f1.jpg",
-          "path": "canvas-tt-tt-f1.jpg",
-          "type": "Image"
-        },
-        {
-          "name": "canvas-tt-tt-f2.jpg",
-          "path": "canvas-tt-tt-f2.jpg",
-          "type": "Image"
-        },
-        {
-          "name": "canvas-tt-tt-f3.jpg",
-          "path": "canvas-tt-tt-f3.jpg",
-          "type": "Image"
-        },
-        {
-          "name": "canvas-tt-tt-f4.jpg",
-          "path": "canvas-tt-tt-f4.jpg",
-          "type": "Image"
-        },
-        {
           "name": "canvas-tt-tt-f3-band.jpg",
           "path": "canvas-tt-tt-f3-band.jpg",
           "type": "Image"
@@ -116,6 +96,26 @@
         {
           "name": "canvas-tt-tt-glossary.jpg",
           "path": "canvas-tt-tt-glossary.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "canvas-tt-tt-f1.jpg",
+          "path": "canvas-tt-tt-f1.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "canvas-tt-tt-f2.jpg",
+          "path": "canvas-tt-tt-f2.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "canvas-tt-tt-f3.jpg",
+          "path": "canvas-tt-tt-f3.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "canvas-tt-tt-f4.jpg",
+          "path": "canvas-tt-tt-f4.jpg",
           "type": "Image"
         }
       ]

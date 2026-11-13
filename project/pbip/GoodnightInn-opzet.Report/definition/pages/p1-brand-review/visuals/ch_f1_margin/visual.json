@@ -6,11 +6,11 @@
     "y": 392,
     "z": 25000,
     "width": 560,
-    "height": 264,
+    "height": 248,
     "tabOrder": 320
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "stackedAreaChart",
     "query": {
       "queryState": {
         "Category": {
@@ -42,12 +42,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Trend Margin before GI"
+                  "Property": "Trend Margin after GI"
                 }
               },
-              "queryRef": "_Measures.Trend Margin before GI",
-              "nativeQueryRef": "Trend Margin before GI",
-              "displayName": "Before commissions"
+              "queryRef": "_Measures.Trend Margin after GI",
+              "nativeQueryRef": "Trend Margin after GI",
+              "displayName": "After commissions"
             },
             {
               "field": {
@@ -57,12 +57,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Trend Margin after GI"
+                  "Property": "Trend Commission Take GI"
                 }
               },
-              "queryRef": "_Measures.Trend Margin after GI",
-              "nativeQueryRef": "Trend Margin after GI",
-              "displayName": "After commissions"
+              "queryRef": "_Measures.Trend Commission Take GI",
+              "nativeQueryRef": "Trend Commission Take GI",
+              "displayName": "Commissions"
             }
           ]
         }
@@ -225,6 +225,19 @@
           }
         }
       ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "seriesLabels": [
         {
           "properties": {
@@ -273,6 +286,13 @@
                   "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
+            },
+            "enableBackground": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }
@@ -280,20 +300,13 @@
       "dataPoint": [
         {
           "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#8E897D'"
-                    }
-                  }
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "70D"
                 }
               }
             }
-          },
-          "selector": {
-            "metadata": "_Measures.Trend Margin before GI"
           }
         },
         {
@@ -312,6 +325,24 @@
           },
           "selector": {
             "metadata": "_Measures.Trend Margin after GI"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#8E897D'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend Commission Take GI"
           }
         }
       ],
@@ -346,21 +377,14 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "3D"
                 }
               }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Trend Margin before GI"
-          }
-        },
-        {
-          "properties": {
-            "strokeWidth": {
+            },
+            "areaShow": {
               "expr": {
                 "Literal": {
-                  "Value": "3D"
+                  "Value": "false"
                 }
               }
             }
@@ -368,18 +392,26 @@
           "selector": {
             "metadata": "_Measures.Trend Margin after GI"
           }
-        }
-      ],
-      "general": [
+        },
         {
           "properties": {
-            "responsive": {
+            "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "2D"
+                }
+              }
+            },
+            "areaShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend Commission Take GI"
           }
         }
       ]
@@ -443,7 +475,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
