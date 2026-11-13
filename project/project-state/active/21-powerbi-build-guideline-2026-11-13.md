@@ -669,6 +669,16 @@ Power BI can draw. It is a constraint-true comp, not a redesign.
 After Bjorn approves it, the copied slot map **is** `opzet-layout.json` v10. That is the link between action 1
 and action 2.
 
+**Hand-over between the two sessions (added 13 Nov).** The artifact session runs from a clone of GitHub, the
+build session runs on Bjorn's machine because it needs Power BI Desktop. They only share what is pushed.
+
+- Base for both: branch `claude/relaxed-noether-nwhfs9`. `main` is behind it and misses the current report.
+- The artifact session saves the comp as `project/design-prototypes/rebuild-comp-v10.html` and, after Bjorn's
+  approval, the slot map as `project/design-prototypes/opzet-layout-v10.json`. It commits both on its own working
+  branch, pushes that branch and reports the branch name.
+- The build session fetches that branch and creates `rebuild-finalv3` from it. `opzet-layout.json` itself is only
+  changed by the builder (section 11, point 1).
+
 ---
 
 ## 13 · Action 2: taking it live (order for the builder)
@@ -678,8 +688,8 @@ saves, close every window yourself without saving, renders through the throwaway
 
 | Step | When | What | Gate |
 |---|---|---|---|
-| 0 | Fri 13 Nov | **Done:** Bjorn approved N-1 to N-5 (section 2.2; doc 20 amended). Open: commit docs 19 to 21, on Bjorn's word | answers recorded in this file |
-| 1 | Fri 13 Nov | Artifact (section 12), approval, slot map v10 | no overflow in any scenario |
+| 0 | Fri 13 Nov | **Done:** Bjorn approved N-1 to N-5 (section 2.2; doc 20 amended). Docs 19 to 21 committed and pushed on `claude/relaxed-noether-nwhfs9` | answers recorded in this file |
+| 1 | Fri 13 Nov | Artifact (section 12), approval, slot map v10 pushed (hand-over in section 12) | no overflow in any scenario |
 | 2 | Sat 14 Nov, first | Spikes on a scratch page in a throwaway copy: **S-1** label-safe labels, **S-2** hero table, **S-6** navigation button shape, **S-7** line breaks in cells, **S-5** area transparency, **S-8** ⓘ glyph | each spike: pass, or its fallback chosen and written here |
 | 3 | Sat 14 Nov | Model: section 10.1 to 10.3. DAX assertions for E9, E10, E11 in all three scenarios through the modelling MCP | values equal `storytelling_checks.txt` |
 | 4 | Sat 14 Nov | T1 without layout risk: P-1 everywhere, both waterfalls gone, R-G2 words, R-G3 colours, the gate rule in one measure, P1 copy, navigation buttons, footer, `tt-package`, the broken binding | `build_checks.py` 4 of 4; nl-NL render of P1 shows points only |
@@ -737,7 +747,7 @@ Tier order inside each step follows doc 20: T1 before T2 before T3. If a day sli
 | # | Item | Owner |
 |---|---|---|
 | N-1 to N-5 | Closed: approved on 13 Nov (section 2.2) | none |
-| Commit docs 19 to 21 | Not committed yet | Bjorn says when |
+| Comp and slot map v10 | Come back from the artifact session by push (hand-over in section 12) | artifact session, then Bjorn approves |
 | S-1 to S-8 | Spikes, each with its fallback | builder |
 | Publish to Web | SVG data URIs in table cells and in the A chip; the gate of R-X-3 | Bjorn publishes, builder checks |
 | Earlier findings still open | `pbir_detect` header 4 px grid; the MS validator's scatter `categoryLabels` error (the small stack stays, so this stays) | builder, T3 |
