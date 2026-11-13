@@ -87,6 +87,12 @@ table Hotels
 		lineageTag: 89acea06-0df5-550e-ab00-d8598f64a77e
 		summarizeBy: none
 		isDataTypeInferred
+	/// The hotel's name in running copy: its city, or the airport's name where the copy uses that (London Gatwick: Gatwick).
+	column 'Copy Name' = SWITCH ( Hotels[HotelID], "GI027", "Gatwick", Hotels[City] )
+		dataType: string
+		lineageTag: 07a6342f-b303-53df-a64f-83e94d64bd06
+		summarizeBy: none
+		isDataTypeInferred
 	/// Years between the last refresh (or opening, for the never-renovated) and 2025.
 	column 'Years Since Refresh' = 2025 - YEAR(COALESCE(Hotels[LastRenovationDate], Hotels[OpeningDate]))
 		dataType: int64
