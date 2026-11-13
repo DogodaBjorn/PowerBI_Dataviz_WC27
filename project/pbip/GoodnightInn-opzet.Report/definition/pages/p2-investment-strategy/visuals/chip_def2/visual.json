@@ -4,10 +4,10 @@
   "position": {
     "x": 1744,
     "y": 1044,
-    "z": 72600,
+    "z": 66000,
     "width": 144,
     "height": 28,
-    "tabOrder": 52050
+    "tabOrder": 9010
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Definitions Chip (text)"
+                  "Property": "Chip Definitions (text)"
                 }
               },
-              "queryRef": "_Measures.Definitions Chip (text)",
-              "nativeQueryRef": "Definitions Chip (text)"
+              "queryRef": "_Measures.Chip Definitions (text)",
+              "nativeQueryRef": "Chip Definitions (text)"
             }
           ]
         }
@@ -47,7 +47,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             },
@@ -261,14 +261,25 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             },
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "100D"
+                  "Value": "0D"
                 }
               }
             }
@@ -281,7 +292,32 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E3DFD3'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
                 }
               }
             }
@@ -333,21 +369,21 @@
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "4D"
+                  "Value": "0D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "3D"
                 }
               }
             },
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "32D"
+                  "Value": "12D"
                 }
               }
             },

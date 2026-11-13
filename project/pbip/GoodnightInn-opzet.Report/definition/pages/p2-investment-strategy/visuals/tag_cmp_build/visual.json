@@ -3,11 +3,11 @@
   "name": "tag_cmp_build",
   "position": {
     "x": 1712,
-    "y": 680,
-    "z": 64500,
+    "y": 692,
+    "z": 64000,
     "width": 152,
     "height": 28,
-    "tabOrder": -1724
+    "tabOrder": -64001
   },
   "visual": {
     "visualType": "image",

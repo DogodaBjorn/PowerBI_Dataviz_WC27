@@ -4,10 +4,10 @@
   "position": {
     "x": 248,
     "y": 20,
-    "z": 15000,
-    "width": 448,
+    "z": 10000,
+    "width": 480,
     "height": 24,
-    "tabOrder": 1000
+    "tabOrder": 20
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "ROOM TO INVEST",
+                    "value": "2 / 2 · ROOM TO INVEST",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -27,7 +27,7 @@
                     }
                   },
                   {
-                    "value": "  ·  THE INVESTMENT STRATEGY",
+                    "value": " · THE INVESTMENT STRATEGY",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",

@@ -97,26 +97,6 @@
           "name": "canvas-tt-tt-glossary.jpg",
           "path": "canvas-tt-tt-glossary.jpg",
           "type": "Image"
-        },
-        {
-          "name": "canvas-tt-tt-f1.jpg",
-          "path": "canvas-tt-tt-f1.jpg",
-          "type": "Image"
-        },
-        {
-          "name": "canvas-tt-tt-f2.jpg",
-          "path": "canvas-tt-tt-f2.jpg",
-          "type": "Image"
-        },
-        {
-          "name": "canvas-tt-tt-f3.jpg",
-          "path": "canvas-tt-tt-f3.jpg",
-          "type": "Image"
-        },
-        {
-          "name": "canvas-tt-tt-f4.jpg",
-          "path": "canvas-tt-tt-f4.jpg",
-          "type": "Image"
         }
       ]
     }
@@ -124,8 +104,5 @@
   "settings": {
     "useEnhancedTooltips": false,
     "useScaledTooltips": true
-  },
-  "publicCustomVisuals": [
-    "deneb7E15AEF80B9E4D4F8E12924291ECE89A"
-  ]
+  }
 }

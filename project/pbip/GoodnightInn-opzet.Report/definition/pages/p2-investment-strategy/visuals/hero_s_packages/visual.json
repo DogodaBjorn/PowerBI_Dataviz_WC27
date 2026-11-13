@@ -3,11 +3,11 @@
   "name": "hero_s_packages",
   "position": {
     "x": 56,
-    "y": 224,
-    "z": 26000,
+    "y": 272,
+    "z": 45000,
     "width": 672,
-    "height": 408,
-    "tabOrder": 16000
+    "height": 368,
+    "tabOrder": 540
   },
   "visual": {
     "visualType": "scatterChart",
@@ -759,7 +759,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_cloud_10",
+        "name": "flt_cloud_8",
         "field": {
           "Column": {
             "Expression": {

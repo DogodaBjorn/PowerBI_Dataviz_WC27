@@ -1,37 +1,15 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
-  "displayName": "P2 Recommended",
+  "displayName": "P2 Recommended: A",
   "name": "bm_p2_rec",
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
-      "z_card_card_scatter",
-      "z_card_card_panel",
-      "z_card_card_scatter_s",
-      "z_card_card_panel_w",
-      "z_card_card_compare",
-      "z_tile_rec",
-      "z_tile_guide",
-      "z_tile_b",
-      "z_tile_c",
+      "z_card_hero",
+      "z_card_decision",
+      "z_card_scatter_s",
+      "z_card_panel_w",
       "z_tile_you",
-      "c_scatter_title",
-      "sl_view",
-      "c_guide_kicker",
-      "c_guide_legend",
-      "c_guide",
-      "hero_packages",
-      "hero_packages_named",
-      "hero_packages_hover",
-      "c_scatter_title_s",
-      "hero_s_packages",
-      "hero_s_packages_named",
-      "hero_s_packages_build",
-      "hero_s_packages_hover",
-      "c_alts_title",
-      "c_alts_intro",
-      "c_build_title",
-      "c_build_intro",
       "tab_rec_on",
       "tab_rec_off",
       "tab_alts_on",
@@ -39,35 +17,24 @@
       "tab_build_on",
       "tab_build_off",
       "img_rec_chip",
-      "c_rec_title",
-      "c_rec_mix",
+      "c_rec_head",
       "c_rec_nums",
-      "c_rec_note",
-      "ch_rec_waterfall",
-      "ch_rec_cumulative",
-      "c_uncertainty",
-      "img_b_chip",
-      "c_b_title",
-      "c_b_nums",
-      "c_b_why",
-      "c_b_whynot",
-      "c_b_payback",
-      "img_c_chip",
-      "c_c_title",
-      "c_c_nums",
-      "c_c_why",
-      "c_c_whynot",
-      "c_c_payback",
+      "c_rec_lines",
+      "c_rec_lines_2",
+      "tbl_ledger",
+      "c_ledger_caption",
+      "btn_build_invite",
+      "c_scatter_title_s",
+      "hero_s_packages",
+      "hero_s_packages_named",
+      "hero_s_packages_build",
+      "hero_s_packages_hover",
       "ch_cmp_alts",
-      "dn_build_selector",
       "c_you_title",
       "c_you_nums",
       "c_you_rules",
-      "ch_build_waterfall",
       "ch_cmp_build",
-      "tag_scatter",
       "tag_scatter_s",
-      "tag_rec_cum",
       "tag_cmp_alts",
       "tag_cmp_build"
     ],
@@ -80,17 +47,17 @@
     "sections": {
       "p2-investment-strategy": {
         "visualContainers": {
-          "z_card_card_scatter": {
+          "z_card_hero": {
             "singleVisual": {
               "visualType": "textbox"
             }
           },
-          "z_card_card_panel": {
+          "z_card_decision": {
             "singleVisual": {
               "visualType": "textbox"
             }
           },
-          "z_card_card_scatter_s": {
+          "z_card_scatter_s": {
             "singleVisual": {
               "visualType": "textbox",
               "display": {
@@ -98,41 +65,7 @@
               }
             }
           },
-          "z_card_card_panel_w": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "z_card_card_compare": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "z_tile_rec": {
-            "singleVisual": {
-              "visualType": "textbox"
-            }
-          },
-          "z_tile_guide": {
-            "singleVisual": {
-              "visualType": "textbox"
-            }
-          },
-          "z_tile_b": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "z_tile_c": {
+          "z_card_panel_w": {
             "singleVisual": {
               "visualType": "textbox",
               "display": {
@@ -141,118 +74,6 @@
             }
           },
           "z_tile_you": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_scatter_title": {
-            "singleVisual": {
-              "visualType": "cardVisual"
-            }
-          },
-          "sl_view": {
-            "singleVisual": {
-              "visualType": "advancedSlicerVisual"
-            }
-          },
-          "c_guide_kicker": {
-            "singleVisual": {
-              "visualType": "textbox"
-            }
-          },
-          "c_guide_legend": {
-            "singleVisual": {
-              "visualType": "textbox"
-            }
-          },
-          "c_guide": {
-            "singleVisual": {
-              "visualType": "cardVisual"
-            }
-          },
-          "hero_packages": {
-            "singleVisual": {
-              "visualType": "scatterChart"
-            }
-          },
-          "hero_packages_named": {
-            "singleVisual": {
-              "visualType": "scatterChart"
-            }
-          },
-          "hero_packages_hover": {
-            "singleVisual": {
-              "visualType": "scatterChart"
-            }
-          },
-          "c_scatter_title_s": {
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "hero_s_packages": {
-            "singleVisual": {
-              "visualType": "scatterChart",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "hero_s_packages_named": {
-            "singleVisual": {
-              "visualType": "scatterChart",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "hero_s_packages_build": {
-            "singleVisual": {
-              "visualType": "scatterChart",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "hero_s_packages_hover": {
-            "singleVisual": {
-              "visualType": "scatterChart",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_alts_title": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_alts_intro": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_build_title": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_build_intro": {
             "singleVisual": {
               "visualType": "textbox",
               "display": {
@@ -304,14 +125,9 @@
               "visualType": "image"
             }
           },
-          "c_rec_title": {
+          "c_rec_head": {
             "singleVisual": {
               "visualType": "textbox"
-            }
-          },
-          "c_rec_mix": {
-            "singleVisual": {
-              "visualType": "cardVisual"
             }
           },
           "c_rec_nums": {
@@ -319,35 +135,32 @@
               "visualType": "cardVisual"
             }
           },
-          "c_rec_note": {
+          "c_rec_lines": {
             "singleVisual": {
               "visualType": "cardVisual"
             }
           },
-          "ch_rec_waterfall": {
-            "singleVisual": {
-              "visualType": "waterfallChart"
-            }
-          },
-          "ch_rec_cumulative": {
-            "singleVisual": {
-              "visualType": "lineChart"
-            }
-          },
-          "c_uncertainty": {
+          "c_rec_lines_2": {
             "singleVisual": {
               "visualType": "cardVisual"
             }
           },
-          "img_b_chip": {
+          "tbl_ledger": {
             "singleVisual": {
-              "visualType": "image",
-              "display": {
-                "mode": "hidden"
-              }
+              "visualType": "tableEx"
             }
           },
-          "c_b_title": {
+          "c_ledger_caption": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "btn_build_invite": {
+            "singleVisual": {
+              "visualType": "actionButton"
+            }
+          },
+          "c_scatter_title_s": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -355,81 +168,33 @@
               }
             }
           },
-          "c_b_nums": {
+          "hero_s_packages": {
             "singleVisual": {
-              "visualType": "cardVisual",
+              "visualType": "scatterChart",
               "display": {
                 "mode": "hidden"
               }
             }
           },
-          "c_b_why": {
+          "hero_s_packages_named": {
             "singleVisual": {
-              "visualType": "cardVisual",
+              "visualType": "scatterChart",
               "display": {
                 "mode": "hidden"
               }
             }
           },
-          "c_b_whynot": {
+          "hero_s_packages_build": {
             "singleVisual": {
-              "visualType": "cardVisual",
+              "visualType": "scatterChart",
               "display": {
                 "mode": "hidden"
               }
             }
           },
-          "c_b_payback": {
+          "hero_s_packages_hover": {
             "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "img_c_chip": {
-            "singleVisual": {
-              "visualType": "image",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_c_title": {
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_c_nums": {
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_c_why": {
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_c_whynot": {
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_c_payback": {
-            "singleVisual": {
-              "visualType": "cardVisual",
+              "visualType": "scatterChart",
               "display": {
                 "mode": "hidden"
               }
@@ -438,14 +203,6 @@
           "ch_cmp_alts": {
             "singleVisual": {
               "visualType": "lineChart",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "dn_build_selector": {
-            "singleVisual": {
-              "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A",
               "display": {
                 "mode": "hidden"
               }
@@ -475,14 +232,6 @@
               }
             }
           },
-          "ch_build_waterfall": {
-            "singleVisual": {
-              "visualType": "waterfallChart",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
           "ch_cmp_build": {
             "singleVisual": {
               "visualType": "lineChart",
@@ -491,22 +240,12 @@
               }
             }
           },
-          "tag_scatter": {
-            "singleVisual": {
-              "visualType": "image"
-            }
-          },
           "tag_scatter_s": {
             "singleVisual": {
               "visualType": "image",
               "display": {
                 "mode": "hidden"
               }
-            }
-          },
-          "tag_rec_cum": {
-            "singleVisual": {
-              "visualType": "image"
             }
           },
           "tag_cmp_alts": {

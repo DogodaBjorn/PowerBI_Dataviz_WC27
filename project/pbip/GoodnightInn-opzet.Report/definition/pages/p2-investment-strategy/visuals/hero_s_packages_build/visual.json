@@ -3,11 +3,11 @@
   "name": "hero_s_packages_build",
   "position": {
     "x": 56,
-    "y": 224,
-    "z": 30000,
+    "y": 272,
+    "z": 47000,
     "width": 672,
-    "height": 408,
-    "tabOrder": -5001
+    "height": 368,
+    "tabOrder": -47001
   },
   "visual": {
     "visualType": "scatterChart",

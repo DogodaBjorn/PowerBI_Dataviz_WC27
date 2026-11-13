@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "sl_scenario",
   "position": {
-    "x": 1200,
-    "y": 240,
-    "z": 40000,
-    "width": 368,
-    "height": 40,
-    "tabOrder": 27000
+    "x": 1600,
+    "y": 112,
+    "z": 19000,
+    "width": 288,
+    "height": 32,
+    "tabOrder": 130
   },
   "visual": {
     "visualType": "advancedSlicerVisual",
@@ -47,7 +47,7 @@
             "rectangleRoundedCurve": {
               "expr": {
                 "Literal": {
-                  "Value": "20L"
+                  "Value": "16L"
                 }
               }
             }
@@ -106,7 +106,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#FFFFFF'"
+                      "Value": "'#12233D'"
                     }
                   }
                 }
@@ -131,7 +131,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E3DFD3'"
+                      "Value": "'#C9D0DC'"
                     }
                   }
                 }
@@ -149,7 +149,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E3DFD3'"
+                      "Value": "'#C9D0DC'"
                     }
                   }
                 }
@@ -167,7 +167,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#12233D'"
+                      "Value": "'#F7F5EE'"
                     }
                   }
                 }
@@ -194,7 +194,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#4B5466'"
+                      "Value": "'#C9D0DC'"
                     }
                   }
                 }
@@ -226,7 +226,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#12233D'"
+                      "Value": "'#F7F5EE'"
                     }
                   }
                 }
@@ -267,7 +267,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#12233D'"
+                      "Value": "'#F7F5EE'"
                     }
                   }
                 }
@@ -306,7 +306,43 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#FFFFFF'"
+                      "Value": "'#12233D'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "interaction:hover"
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#12233D'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "interaction:press"
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#12233D'"
                     }
                   }
                 }
@@ -315,7 +351,7 @@
             "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }

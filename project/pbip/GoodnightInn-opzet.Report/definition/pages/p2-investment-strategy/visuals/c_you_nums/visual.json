@@ -3,11 +3,11 @@
   "name": "c_you_nums",
   "position": {
     "x": 1384,
-    "y": 352,
-    "z": 69000,
+    "y": 304,
+    "z": 59000,
     "width": 464,
-    "height": 56,
-    "tabOrder": 48000
+    "height": 72,
+    "tabOrder": 760
   },
   "visual": {
     "visualType": "cardVisual",

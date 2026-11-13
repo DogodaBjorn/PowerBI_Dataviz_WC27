@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_rec_nums",
   "position": {
-    "x": 1120,
-    "y": 368,
-    "z": 44000,
-    "width": 736,
-    "height": 72,
-    "tabOrder": 30000
+    "x": 1112,
+    "y": 240,
+    "z": 27000,
+    "width": 752,
+    "height": 64,
+    "tabOrder": 320
   },
   "visual": {
     "visualType": "cardVisual",
@@ -51,11 +51,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Rec Range (text)"
+                  "Property": "Rec Run-rate (text)"
                 }
               },
-              "queryRef": "_Measures.Rec Range (text)",
-              "nativeQueryRef": "Rec Range (text)"
+              "queryRef": "_Measures.Rec Run-rate (text)",
+              "nativeQueryRef": "Rec Run-rate (text)"
             },
             {
               "field": {
@@ -65,11 +65,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Rec Run-rate (text)"
+                  "Property": "Rec A Year on Cost (text)"
                 }
               },
-              "queryRef": "_Measures.Rec Run-rate (text)",
-              "nativeQueryRef": "Rec Run-rate (text)"
+              "queryRef": "_Measures.Rec A Year on Cost (text)",
+              "nativeQueryRef": "Rec A Year on Cost (text)"
             }
           ]
         }
@@ -135,6 +135,52 @@
           },
           "selector": {
             "id": "default"
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Rec NPV Ink"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Rec NPV (text)"
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Rec Run-rate Ink"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Rec Run-rate (text)"
           }
         }
       ],
@@ -330,13 +376,13 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'NPV range, $M'"
+                  "Value": "'a year by 2032'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "_Measures.Rec Range (text)"
+            "metadata": "_Measures.Rec Run-rate (text)"
           }
         },
         {
@@ -344,13 +390,13 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'profit a year by 2032'"
+                  "Value": "'a year on cost'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "_Measures.Rec Run-rate (text)"
+            "metadata": "_Measures.Rec A Year on Cost (text)"
           }
         }
       ],

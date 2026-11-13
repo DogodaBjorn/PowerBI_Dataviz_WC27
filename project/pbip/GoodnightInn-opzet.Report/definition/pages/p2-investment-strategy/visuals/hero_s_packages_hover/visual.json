@@ -3,11 +3,11 @@
   "name": "hero_s_packages_hover",
   "position": {
     "x": 56,
-    "y": 224,
-    "z": 34000,
+    "y": 272,
+    "z": 48000,
     "width": 672,
-    "height": 408,
-    "tabOrder": -4001
+    "height": 368,
+    "tabOrder": -48001
   },
   "visual": {
     "visualType": "scatterChart",

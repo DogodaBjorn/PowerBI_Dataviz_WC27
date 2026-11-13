@@ -3,11 +3,11 @@
   "name": "ch_cmp_build",
   "position": {
     "x": 56,
-    "y": 680,
-    "z": 64000,
+    "y": 688,
+    "z": 63000,
     "width": 1808,
-    "height": 320,
-    "tabOrder": 51000
+    "height": 312,
+    "tabOrder": 820
   },
   "visual": {
     "visualType": "lineChart",
@@ -700,7 +700,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_horizon_16",
+        "name": "flt_horizon_11",
         "field": {
           "Column": {
             "Expression": {

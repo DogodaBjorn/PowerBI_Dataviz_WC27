@@ -1,5 +1,5 @@
 {
-  "_note": "Björn's layering pass in Power BI Desktop, 11 Nov 2026 (commit e63aa76, saved 12 Nov as 1361f71): the z-order and tab order of every visual on P1 and P2. opzet_report.py applies these over the generated values (FinalV2, plan 15 phase 0 / S6); visuals absent here keep the generator's values. FinalV3 build step 5 (13 Nov): the new P1 slots of the v10 slot map join on the same scale, in reading order (lnk_f# after its note, c_f3_count between chart and note, F4 note, rows, link, dots (a11y_check reads by rows), then the footer, btn_next and the Definitions chip); decorative ones (hover tags, row labels, the average layer, the seven name boxes) carry a negative tab; c_f4_types, ch_f4_fullest and z_masthead are gone from the page.",
+  "_note": "Björn's layering pass in Power BI Desktop, 11 Nov 2026 (commit e63aa76, saved 12 Nov as 1361f71): the z-order and tab order of every visual on P1 and P2. opzet_report.py applies these over the generated values (FinalV2, plan 15 phase 0 / S6); visuals absent here keep the generator's values. FinalV3 build step 5 (13 Nov): the new P1 slots of the v10 slot map join on the same scale, in reading order (lnk_f# after its note, c_f3_count between chart and note, F4 note, rows, link, dots (a11y_check reads by rows), then the footer, btn_next and the Definitions chip); decorative ones (hover tags, row labels, the average layer, the seven name boxes) carry a negative tab; c_f4_types, ch_f4_fullest and z_masthead are gone from the page. FinalV3 build step 6 (13 Nov): page 2 is rewritten for the v10 slot map, every slot of all three states in reading order (doc 21 section 5 and R-P2-9: logo, eyebrow, back, headline, subtitle, tabs, scenario; hero card; decision card as head, numbers, lines, ledger, caption, invitation; capital plan; then What waits, Build and the footer row), decorative ones with a negative tab; the old page-2 names (B and C tiles, guide, facts chips, Deneb selector, waterfalls) are gone. Steps 7 to 10 adjust their own slots here.",
   "p1-brand-review": {
     "c_f1_kicker": {
       "z": 23000,
@@ -251,293 +251,269 @@
     }
   },
   "p2-investment-strategy": {
-    "c_alts_intro": {
-      "z": 50000,
-      "tabOrder": 18000
-    },
-    "c_alts_title": {
-      "z": 49000,
-      "tabOrder": 17000
-    },
-    "c_b_nums": {
-      "z": 53000,
-      "tabOrder": 36000
-    },
-    "c_b_payback": {
-      "z": 56000,
-      "tabOrder": 39000
-    },
-    "c_b_title": {
-      "z": 52000,
-      "tabOrder": 35000
-    },
-    "c_b_why": {
-      "z": 54000,
-      "tabOrder": 37000
-    },
-    "c_b_whynot": {
-      "z": 55000,
-      "tabOrder": 38000
-    },
-    "c_build_intro": {
-      "z": 66000,
-      "tabOrder": 20000
-    },
-    "c_build_title": {
-      "z": 65000,
-      "tabOrder": 19000
-    },
-    "c_c_nums": {
-      "z": 59000,
-      "tabOrder": 41000
-    },
-    "c_c_payback": {
-      "z": 62000,
-      "tabOrder": 44000
-    },
-    "c_c_title": {
-      "z": 58000,
-      "tabOrder": 40000
-    },
-    "c_c_why": {
-      "z": 60000,
-      "tabOrder": 42000
-    },
-    "c_c_whynot": {
-      "z": 61000,
-      "tabOrder": 43000
-    },
-    "c_guide": {
-      "z": 22000,
-      "tabOrder": 12000
-    },
-    "c_guide_kicker": {
-      "z": 23000,
-      "tabOrder": -8001
-    },
-    "c_guide_legend": {
-      "z": 24000,
-      "tabOrder": -9001
-    },
-    "c_rec_mix": {
-      "z": 43000,
-      "tabOrder": 29000
-    },
-    "c_rec_note": {
-      "z": 45000,
-      "tabOrder": 31000
-    },
-    "c_rec_nums": {
-      "z": 44000,
-      "tabOrder": 30000
-    },
-    "c_rec_title": {
-      "z": 42000,
-      "tabOrder": 28000
-    },
-    "c_scatter_title": {
-      "z": 20000,
-      "tabOrder": 9000
-    },
-    "c_scatter_title_s": {
-      "z": 21000,
-      "tabOrder": 10000
-    },
-    "c_subtitle2": {
-      "z": 13000,
-      "tabOrder": 8000
-    },
-    "c_uncertainty": {
-      "z": 48000,
-      "tabOrder": 34000
-    },
-    "c_you_nums": {
-      "z": 69000,
-      "tabOrder": 48000
-    },
-    "c_you_rules": {
-      "z": 70000,
-      "tabOrder": 49000
-    },
-    "c_you_title": {
-      "z": 68000,
-      "tabOrder": 47000
-    },
-    "ch_build_waterfall": {
-      "z": 71000,
-      "tabOrder": 50000
-    },
-    "ch_cmp_alts": {
-      "z": 63000,
-      "tabOrder": 45000
-    },
-    "ch_cmp_build": {
-      "z": 64000,
-      "tabOrder": 51000
-    },
-    "ch_rec_cumulative": {
-      "z": 47000,
-      "tabOrder": 33000
-    },
-    "ch_rec_waterfall": {
-      "z": 46000,
-      "tabOrder": 32000
-    },
-    "chip_f1": {
-      "z": 16000,
-      "tabOrder": 52010
-    },
-    "chip_f2": {
-      "z": 17000,
-      "tabOrder": 52020
-    },
-    "chip_f3": {
-      "z": 18000,
-      "tabOrder": 52030
-    },
-    "chip_f4": {
-      "z": 19000,
-      "tabOrder": 52040
-    },
-    "dn_build_selector": {
-      "z": 67000,
-      "tabOrder": 46000
-    },
-    "hero_packages": {
-      "z": 25000,
-      "tabOrder": 14000
-    },
-    "hero_packages_hover": {
-      "z": 33000,
+    "z_card_hero": {
+      "z": 1000,
       "tabOrder": -1001
     },
-    "hero_packages_named": {
-      "z": 28000,
-      "tabOrder": 13000
-    },
-    "hero_s_packages": {
-      "z": 26000,
-      "tabOrder": 16000
-    },
-    "hero_s_packages_build": {
-      "z": 30000,
-      "tabOrder": -5001
-    },
-    "hero_s_packages_hover": {
-      "z": 34000,
-      "tabOrder": -4001
-    },
-    "hero_s_packages_named": {
-      "z": 29000,
-      "tabOrder": 15000
-    },
-    "img_b_chip": {
-      "z": 51000,
-      "tabOrder": -6001
-    },
-    "img_c_chip": {
-      "z": 57000,
-      "tabOrder": -7001
-    },
-    "img_rec_chip": {
-      "z": 41000,
-      "tabOrder": -3001
-    },
-    "lbl_scenario": {
-      "z": 39000,
+    "z_card_decision": {
+      "z": 2000,
       "tabOrder": -2001
     },
-    "sl_scenario": {
-      "z": 40000,
-      "tabOrder": 27000
-    },
-    "sl_view": {
-      "z": 27000,
-      "tabOrder": 11000
-    },
-    "tab_alts_off": {
-      "z": 35000,
-      "tabOrder": 24000
-    },
-    "tab_alts_on": {
-      "z": 36000,
-      "tabOrder": 23000
-    },
-    "tab_build_off": {
-      "z": 37000,
-      "tabOrder": 26000
-    },
-    "tab_build_on": {
-      "z": 38000,
-      "tabOrder": 25000
-    },
-    "tab_rec_off": {
-      "z": 31000,
-      "tabOrder": 22000
-    },
-    "tab_rec_on": {
-      "z": 32000,
-      "tabOrder": 21000
-    },
-    "z_card_card_compare": {
-      "z": 5000,
-      "tabOrder": -14001
-    },
-    "z_card_card_panel": {
-      "z": 2000,
-      "tabOrder": -11001
-    },
-    "z_card_card_panel_w": {
-      "z": 4000,
-      "tabOrder": -13001
-    },
-    "z_card_card_scatter": {
-      "z": 1000,
-      "tabOrder": -10001
-    },
-    "z_card_card_scatter_s": {
+    "z_card_scatter_s": {
       "z": 3000,
-      "tabOrder": -12001
+      "tabOrder": -3001
     },
-    "z_eyebrow2": {
-      "z": 15000,
-      "tabOrder": 1000
+    "z_card_panel_w": {
+      "z": 4000,
+      "tabOrder": -4001
     },
-    "z_footer2": {
-      "z": 72000,
-      "tabOrder": 52000
-    },
-    "z_headline2": {
-      "z": 12000,
-      "tabOrder": 3000
-    },
-    "z_logo": {
-      "z": 14000,
-      "tabOrder": 0
-    },
-    "z_masthead2": {
-      "z": 11000,
-      "tabOrder": 2000
-    },
-    "z_tile_b": {
-      "z": 8000,
-      "tabOrder": -17001
-    },
-    "z_tile_c": {
-      "z": 9000,
-      "tabOrder": -18001
-    },
-    "z_tile_guide": {
-      "z": 7000,
-      "tabOrder": -16001
-    },
-    "z_tile_rec": {
-      "z": 6000,
-      "tabOrder": -15001
+    "z_card_bottom": {
+      "z": 5000,
+      "tabOrder": -5001
     },
     "z_tile_you": {
+      "z": 6000,
+      "tabOrder": -6001
+    },
+    "z_headline2": {
+      "z": 7000,
+      "tabOrder": 100
+    },
+    "c_subtitle2": {
+      "z": 8000,
+      "tabOrder": 110
+    },
+    "z_logo": {
+      "z": 9000,
+      "tabOrder": 10
+    },
+    "z_eyebrow2": {
       "z": 10000,
-      "tabOrder": -19001
+      "tabOrder": 20
+    },
+    "btn_back": {
+      "z": 11000,
+      "tabOrder": 30
+    },
+    "tab_rec_off": {
+      "z": 12000,
+      "tabOrder": 121
+    },
+    "tab_rec_on": {
+      "z": 13000,
+      "tabOrder": 120
+    },
+    "tab_alts_off": {
+      "z": 14000,
+      "tabOrder": 123
+    },
+    "tab_alts_on": {
+      "z": 15000,
+      "tabOrder": 122
+    },
+    "tab_build_off": {
+      "z": 16000,
+      "tabOrder": 125
+    },
+    "tab_build_on": {
+      "z": 17000,
+      "tabOrder": 124
+    },
+    "lbl_scenario": {
+      "z": 18000,
+      "tabOrder": -18001
+    },
+    "sl_scenario": {
+      "z": 19000,
+      "tabOrder": 130
+    },
+    "c_hero_title": {
+      "z": 20000,
+      "tabOrder": 210
+    },
+    "tbl_hero": {
+      "z": 21000,
+      "tabOrder": 220
+    },
+    "lbl_hero_8": {
+      "z": 22000,
+      "tabOrder": -22001
+    },
+    "lbl_hero_0": {
+      "z": 23000,
+      "tabOrder": -23001
+    },
+    "c_hero_caption": {
+      "z": 24000,
+      "tabOrder": 230
+    },
+    "img_rec_chip": {
+      "z": 25000,
+      "tabOrder": -25001
+    },
+    "c_rec_head": {
+      "z": 26000,
+      "tabOrder": 310
+    },
+    "c_rec_nums": {
+      "z": 27000,
+      "tabOrder": 320
+    },
+    "c_rec_lines": {
+      "z": 28000,
+      "tabOrder": 330
+    },
+    "c_rec_lines_2": {
+      "z": 29000,
+      "tabOrder": -29001
+    },
+    "tbl_ledger": {
+      "z": 30000,
+      "tabOrder": 340
+    },
+    "c_ledger_caption": {
+      "z": 31000,
+      "tabOrder": 350
+    },
+    "btn_build_invite": {
+      "z": 32000,
+      "tabOrder": 360
+    },
+    "c_plan_title": {
+      "z": 33000,
+      "tabOrder": 410
+    },
+    "c_plan_t1": {
+      "z": 34000,
+      "tabOrder": 420
+    },
+    "c_plan_t2": {
+      "z": 35000,
+      "tabOrder": 430
+    },
+    "c_plan_t3": {
+      "z": 36000,
+      "tabOrder": 440
+    },
+    "c_plan_t4": {
+      "z": 37000,
+      "tabOrder": 450
+    },
+    "ch_plan_bar": {
+      "z": 38000,
+      "tabOrder": 460
+    },
+    "c_plan_gate": {
+      "z": 39000,
+      "tabOrder": 470
+    },
+    "ch_plan_cum": {
+      "z": 40000,
+      "tabOrder": 480
+    },
+    "c_plan_milestones": {
+      "z": 41000,
+      "tabOrder": 490
+    },
+    "tag_plan_cum": {
+      "z": 42000,
+      "tabOrder": -42001
+    },
+    "c_scatter_title_s": {
+      "z": 43000,
+      "tabOrder": 510
+    },
+    "c_scatter_sub": {
+      "z": 44000,
+      "tabOrder": 520
+    },
+    "hero_s_packages": {
+      "z": 45000,
+      "tabOrder": 540
+    },
+    "hero_s_packages_named": {
+      "z": 46000,
+      "tabOrder": 530
+    },
+    "hero_s_packages_build": {
+      "z": 47000,
+      "tabOrder": -47001
+    },
+    "hero_s_packages_hover": {
+      "z": 48000,
+      "tabOrder": -48001
+    },
+    "tag_scatter_s": {
+      "z": 49000,
+      "tabOrder": -49001
+    },
+    "c_waits_head": {
+      "z": 50000,
+      "tabOrder": 610
+    },
+    "tbl_waits": {
+      "z": 51000,
+      "tabOrder": 620
+    },
+    "ch_cmp_alts": {
+      "z": 52000,
+      "tabOrder": 810
+    },
+    "tag_cmp_alts": {
+      "z": 53000,
+      "tabOrder": -53001
+    },
+    "c_build_head": {
+      "z": 54000,
+      "tabOrder": 710
+    },
+    "sl_moves": {
+      "z": 55000,
+      "tabOrder": 720
+    },
+    "tbl_moves": {
+      "z": 56000,
+      "tabOrder": 730
+    },
+    "c_sel_footer": {
+      "z": 57000,
+      "tabOrder": 740
+    },
+    "c_you_title": {
+      "z": 58000,
+      "tabOrder": 750
+    },
+    "c_you_nums": {
+      "z": 59000,
+      "tabOrder": 760
+    },
+    "c_you_range": {
+      "z": 60000,
+      "tabOrder": 770
+    },
+    "c_you_rules": {
+      "z": 61000,
+      "tabOrder": 780
+    },
+    "ch_build_bars": {
+      "z": 62000,
+      "tabOrder": 790
+    },
+    "ch_cmp_build": {
+      "z": 63000,
+      "tabOrder": 820
+    },
+    "tag_cmp_build": {
+      "z": 64000,
+      "tabOrder": -64001
+    },
+    "z_footer2": {
+      "z": 65000,
+      "tabOrder": 9000
+    },
+    "chip_def2": {
+      "z": 66000,
+      "tabOrder": 9010
     }
   }
 }

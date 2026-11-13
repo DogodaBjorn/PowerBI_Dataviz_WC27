@@ -1979,8 +1979,8 @@ table _Measures
 		displayFolder: 11 Accessibility
 		lineageTag: e4b38ddc-cd53-5a10-a03a-00b266122cdd
 
-	/// The recommendation's numbers card read aloud.
-	measure 'Alt Rec Nums (text)' = "Package A, " & [Selected Scenario] & " case: capex " & [Rec Capex (text)] & ", net present value through 2032 " & [Rec NPV (text)] & ", from " & [Rec Range (text)] & " $M between the Low and High cases, profit a year by 2032 " & [Rec Run-rate (text)] & "."
+	/// The decision card's four numbers read aloud (build step 6: capex, NPV, a year by 2032, a year on cost).
+	measure 'Alt Rec Nums (text)' = "Package A, " & [Selected Scenario] & " case: capex " & [Rec Capex (text)] & ", net present value through 2032 " & [Rec NPV (text)] & ", " & [Rec Run-rate (text)] & " a year by 2032, " & [Rec A Year on Cost (text)] & " a year on cost."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 977bdced-42ac-58aa-b9a6-55b5c6db9576
@@ -3233,6 +3233,30 @@ table _Measures
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 60da4e88-dd24-5a4b-b18c-f50955f26fa6
+
+	/// Decision card: the ink of A's NPV, Burnt Tangerine when the shown value is below zero (the sign carries it too), Night otherwise.
+	measure 'Rec NPV Ink' = IF ( ROUND ( [Rec NPV (sel)] / 100000, 0 ) < 0, "#A63F0E", "#12233D" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 987379d2-3759-5611-997c-6cfdacb562a6
+
+	/// Decision card: the ink of A's profit a year by 2032, Burnt Tangerine when the shown value is below zero, Night otherwise.
+	measure 'Rec Run-rate Ink' = IF ( ROUND ( [Rec Run-rate (sel)] / 100000, 0 ) < 0, "#A63F0E", "#12233D" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e600fd1d-4312-5ed2-9ebe-cd9a21df6939
+
+	/// The decision card's head read aloud: the recommendation and its moves, named as the hero table names them, read from the package.
+	measure 'Alt Rec Head (text)' = VAR a = [Recommended Package] RETURN "Our recommendation: package A. " & CONCATENATEX ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), LOOKUPVALUE ( InvestmentProjects[Move Name], InvestmentProjects[ProjectID], PackageProject[ProjectID] ), " + ", LOOKUPVALUE ( InvestmentProjects[Hero Sort], InvestmentProjects[ProjectID], PackageProject[ProjectID] ), ASC ) & "."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: f41daa73-d0c2-55d6-8ae0-91054130aa5c
+
+	/// The ledger read aloud, row by row in its own order: the finding, what we track, the two values and the status words.
+	measure 'Alt Ledger (text)' = "What package A changes for each of the four findings, " & [Selected Scenario] & " case. " & CONCATENATEX ( ALLNOBLANKROW ( Finding ), Finding[Label] & ": " & SUBSTITUTE ( [Ledger Measure (text)], UNICHAR ( 10 ), ", " ) & "; " & [Ledger 2025 (text)] & " in " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Base year" ) & ", " & [Ledger 2032 (text)] & " in " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & " with A; " & [Ledger Status (text)], ". ", Finding[Ledger Sort], ASC ) & "."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 9db36d62-5c11-58b2-916a-f529d2d8542e
 
 	/// Ledger, 'What we track' (R-P2-5, doc 22 section 4): the measure, a line break, the move(s) that act on it. The kiosks' guest-score change stays in dataset units, never summed, never NPS.
 	measure 'Ledger Measure (text)' = VAR c = SELECTEDVALUE ( Finding[Code] ) VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR kp = MAXX ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Status] = "A" && MoveDecision[Finding] = "F4" ), MoveDecision[ProjectID] ) VAR rp = MAXX ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Finding] = "F3" && MoveDecision[Tranche] = 3 ), MoveDecision[ProjectID] ) VAR s = [Selected Scenario] VAR gs = CALCULATE ( SUM ( InvestmentScenarios[SatisfactionChangePts] ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = kp, InvestmentScenarios[Scenario] = s ) RETURN SWITCH ( c, "F2", "distribution cost, % of room revenue" & UNICHAR ( 10 ) & "booking app with member rates", "F1", "operating margin after commissions" & UNICHAR ( 10 ) & "app + revenue management + kiosks", "F4", "self check-in hotels · rooms added" & UNICHAR ( 10 ) & "kiosks live " & FORMAT ( LOOKUPVALUE ( InvestmentProjects[Completion Date], InvestmentProjects[ProjectID], kp ), "mmm yyyy", "en-US" ) & "; guest score " & IF ( gs < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( gs ), "0.00", "en-US" ) & " there (dataset units)", "F3", "refresh of the " & COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = rp ) ) & " oldest hotels" & UNICHAR ( 10 ) & "why: see What waits, and why" )

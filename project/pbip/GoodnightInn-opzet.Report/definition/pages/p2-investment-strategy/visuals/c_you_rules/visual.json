@@ -3,11 +3,11 @@
   "name": "c_you_rules",
   "position": {
     "x": 1384,
-    "y": 416,
-    "z": 70000,
+    "y": 408,
+    "z": 61000,
     "width": 464,
-    "height": 32,
-    "tabOrder": 49000
+    "height": 48,
+    "tabOrder": 780
   },
   "visual": {
     "visualType": "cardVisual",

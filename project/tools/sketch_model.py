@@ -1394,8 +1394,8 @@ alt_m("Scatter Cloud",
       '"All " & COUNTROWS ( ALLNOBLANKROW ( Package ) ) & " possible packages, each with its capex, net present value through 2032 (" & [Selected Scenario] & " case), range, payback and initiatives. Show as table lists them."',
       "The 456-dot layer read aloud: what its table holds (keyboard users reach the package details there, not in the hover card).")
 alt_m("Rec Nums",
-      '"Package A, " & [Selected Scenario] & " case: capex " & [Rec Capex (text)] & ", net present value through 2032 " & [Rec NPV (text)] & ", from " & [Rec Range (text)] & " $M between the Low and High cases, profit a year by 2032 " & [Rec Run-rate (text)] & "."',
-      "The recommendation's numbers card read aloud.")
+      '"Package A, " & [Selected Scenario] & " case: capex " & [Rec Capex (text)] & ", net present value through 2032 " & [Rec NPV (text)] & ", " & [Rec Run-rate (text)] & " a year by 2032, " & [Rec A Year on Cost (text)] & " a year on cost."',
+      "The decision card's four numbers read aloud (build step 6: capex, NPV, a year by 2032, a year on cost).")
 alt_m("Waterfall",
       FIDS + shown_parts("[NPV @ 8%]") +
       'RETURN IF ( ISBLANK ( f ), BLANK (), "Where the net present value of package " & [Focus Key] & " comes from, " & [Selected Scenario] & " case: " '
@@ -2258,6 +2258,22 @@ m("Rec Line 2 (text)",
   + sfm("[App NPV (sel)]") + ' & " of the " & ' + sfm("npv") + ' ) & ". Every year without it leaves about " & ' + fm("[App Commission Saving (sel)]") + ' & " with the agencies."',
   TXT, C15, "Decision card, line 2 (R-P2-6, E13): how much of A the booking app carries (NPV, or the yearly figure when A does not pay back by 2032), and what each year without it leaves with the agencies.")
 m("Rec Lines (text)", f"[Rec Line 1 (text)] & {LF} & [Rec Line 2 (text)]", TXT, C15, "Decision card, both lines with a line break (alt text and tables; on the canvas two cards, spike S-7).")
+# build step 6: the ink of the card's two signed numbers (the comp's .neg: Burnt Tangerine below zero, on the shown value) and
+# the spoken texts of the head and the ledger
+m("Rec NPV Ink", f'IF ( ROUND ( [Rec NPV (sel)] / 100000, 0 ) < 0, "{BAD}", "{INK}" )', TXT, C15,
+  "Decision card: the ink of A's NPV, Burnt Tangerine when the shown value is below zero (the sign carries it too), Night otherwise.")
+m("Rec Run-rate Ink", f'IF ( ROUND ( [Rec Run-rate (sel)] / 100000, 0 ) < 0, "{BAD}", "{INK}" )', TXT, C15,
+  "Decision card: the ink of A's profit a year by 2032, Burnt Tangerine when the shown value is below zero, Night otherwise.")
+alt_m("Rec Head",
+      'VAR a = [Recommended Package] RETURN "Our recommendation: package A. " & CONCATENATEX ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), '
+      'LOOKUPVALUE ( InvestmentProjects[Move Name], InvestmentProjects[ProjectID], PackageProject[ProjectID] ), " + ", '
+      'LOOKUPVALUE ( InvestmentProjects[Hero Sort], InvestmentProjects[ProjectID], PackageProject[ProjectID] ), ASC ) & "."',
+      "The decision card's head read aloud: the recommendation and its moves, named as the hero table names them, read from the package.")
+alt_m("Ledger",
+      f'"What package A changes for each of the four findings, " & [Selected Scenario] & " case. " & CONCATENATEX ( ALLNOBLANKROW ( Finding ), '
+      f'Finding[Label] & ": " & SUBSTITUTE ( [Ledger Measure (text)], {LF}, ", " ) & "; " & [Ledger 2025 (text)] & " in " & {BASE_YEAR} & ", " & [Ledger 2032 (text)] & " in " & {HORIZON} '
+      '& " with A; " & [Ledger Status (text)], ". ", Finding[Ledger Sort], ASC ) & "."',
+      "The ledger read aloud, row by row in its own order: the finding, what we track, the two values and the status words.")
 _KIOSK = 'VAR kp = MAXX ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Status] = "A" && MoveDecision[Finding] = "F4" ), MoveDecision[ProjectID] ) '
 _KHOTELS = "COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = kp ) )"
 _REFRESH = 'VAR rp = MAXX ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Finding] = "F3" && MoveDecision[Tranche] = 3 ), MoveDecision[ProjectID] ) '

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "lbl_scenario",
   "position": {
-    "x": 1112,
-    "y": 248,
-    "z": 39000,
-    "width": 88,
-    "height": 24,
-    "tabOrder": -2001
+    "x": 1512,
+    "y": 112,
+    "z": 18000,
+    "width": 80,
+    "height": 32,
+    "tabOrder": -18001
   },
   "visual": {
     "visualType": "textbox",
@@ -23,7 +23,7 @@
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
-                      "color": "#4B5466"
+                      "color": "#C9D0DC"
                     }
                   }
                 ],
@@ -119,7 +119,7 @@
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "5D"
                 }
               }
             },
