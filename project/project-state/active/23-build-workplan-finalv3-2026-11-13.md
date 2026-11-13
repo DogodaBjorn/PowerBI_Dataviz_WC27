@@ -21,7 +21,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 1 | Branch and the five small spikes | done | 13 Nov | 3bbc28e | S-1, S-5, S-6, S-8 pass; S-7 pass in a table cell, fallback for a card (`c_rec_lines` as two cards). Bjorn was not needed in Desktop |
 | 2 | The two big spikes: hero table and native selector | done | 13 Nov | f7f3afc | S-2 and S-3 pass natively, no fallback. Both tables need a few pixels the comp did not plan (wider value columns, 2 px of slack, `tbl_moves` 11 px higher); see the log. Bjorn was not needed in Desktop |
 | 3 | Model foundations and the number checks | done | 13 Nov | c404091 | 56 number measures, 3 tables, 2 columns; 763 checks, all pass in Low, Expected and High, 1 known difference (open question 1). New: a measure cannot carry a static and a dynamic format string; open question 3 (hero caption). Bjorn was not needed in Desktop |
-| 4 | Text measures and `build_checks.py` | done | 13 Nov | see log | Every measure-backed slot of the spec in Low, Expected, High and the empty Build state: 127 equal, 2 known (open question 1, 20.5/20.6 %), 0 different. Checks 1, 3, 4 pass; check 2 is strict on the new copy and open on the old visuals until step 11. Bjorn was not needed in Desktop |
+| 4 | Text measures and `build_checks.py` | done | 13 Nov | 8849312 | Every measure-backed slot of the spec in Low, Expected, High and the empty Build state: 127 equal, 2 known (open question 1, 20.5/20.6 %), 0 different. Checks 1, 3, 4 pass; check 2 is strict on the new copy and open on the old visuals until step 11. Bjorn was not needed in Desktop |
 | 5 | Page 1 | todo | | | |
 | 6 | Page 2 frame and the decision card | todo | | | |
 | 7 | Hero table and capital plan; the cut line | todo | | | |
