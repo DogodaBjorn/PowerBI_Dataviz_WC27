@@ -1907,8 +1907,8 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: 49b1e1f7-9070-5d20-bf50-5b8e542eef08
 
-	/// Page-2 source line with the valuation parameters (REVIEW p7).
-	measure 'Footer P2 (text)' = VAR rate = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ) VAR h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Source: Pillow & Key Group dataset and finance parameters (" & FORMAT ( rate, "0%" ) & " discount rate, horizon " & h & "); parts are rounded to add up."
+	/// Page-2 source line: the source and the rounding (the valuation parameters are in the subtitle; REVIEW p7, 12 Nov night).
+	measure 'Footer P2 (text)' = "Source: Pillow & Key Group dataset. Parts are rounded to add up."
 		formatString: @
 		displayFolder: 09 Package matrix
 		lineageTag: 8ac5c564-37f8-574e-8b35-36e5c61646be
@@ -2075,8 +2075,8 @@ table _Measures
 		displayFolder: 13 Round 4 copy
 		lineageTag: 3373962e-cc0c-5194-a70b-2849e5321d0f
 
-	/// The reading guide above the scatter (feedback round 4: 'what am I looking at' before the dots; round 5: say what the 456 are, combinations within the budget).
-	measure 'Guide (text)' = VAR n = COUNTROWS ( ALLNOBLANKROW ( Package ) ) VAR k = CALCULATE ( COUNTROWS ( InvestmentProjects ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) RETURN "Each dot is one of " & n & " possible packages: a mix of the " & k & " moves on offer within the " & FORMAT ( ( budget ) / 1000000, "$#,0.0#" ) & "M" & " budget (at least 3 moves, 1 of them growth). Capex across, NPV through 2032 up; above the line it pays back by 2032. Hover a dot for its moves."
+	/// The reading guide above the scatter (feedback round 4: 'what am I looking at' before the dots; round 5: say what the 456 are, combinations within the budget; 12 Nov, night: the hover instruction is the tag on the tile).
+	measure 'Guide (text)' = VAR n = COUNTROWS ( ALLNOBLANKROW ( Package ) ) VAR k = CALCULATE ( COUNTROWS ( InvestmentProjects ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) RETURN "Each dot is one of " & n & " possible packages: a mix of the " & k & " moves on offer within the " & FORMAT ( ( budget ) / 1000000, "$#,0.0#" ) & "M" & " budget (at least 3 moves, 1 of them growth). Capex across, NPV through 2032 up; above the line it pays back by 2032."
 		formatString: @
 		displayFolder: 13 Round 4 copy
 		lineageTag: 121c22f3-30b5-5edc-8f7c-fd6dc3e07435
@@ -2563,30 +2563,6 @@ table _Measures
 		displayFolder: 10 Package tooltip
 		lineageTag: b8c66b16-0bef-57c3-a10b-81142196875a
 
-	/// The F1 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
-	measure 'Finding Chip F1 (text)' = "F1"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 422dd68b-9a40-5707-a8bc-444b65e52203
-
-	/// The F2 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
-	measure 'Finding Chip F2 (text)' = "F2"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: efd7f9c8-b2e2-589c-8e7f-64afc7500187
-
-	/// The F3 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
-	measure 'Finding Chip F3 (text)' = "F3"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 7985fb53-1cec-559b-9545-68ec587486f4
-
-	/// The F4 chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.
-	measure 'Finding Chip F4 (text)' = "F4"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: ab34835d-7946-5f61-8dd9-b66a92c157ef
-
 	/// Header of the F3 band tooltip: the band, its hotels and rooms.
 	measure 'Band Header (text)' = VAR bnd = SELECTEDVALUE ( Hotels[Renovation Age Label] ) RETURN IF ( ISBLANK ( bnd ), BLANK (), bnd & ": " & COUNTROWS ( Hotels ) & " hotels, " & FORMAT ( SUM ( Hotels[Rooms] ), "#,0" ) & " rooms" )
 		formatString: @
@@ -2671,25 +2647,77 @@ table _Measures
 		displayFolder: 11 Accessibility
 		lineageTag: f94bb586-30d4-5704-bb84-4f2d9497615c
 
-	/// The hover signifier: a Tangerine ring with an i, 16 px, on every visual that opens a report-page tooltip; decorative, the footer hint names it.
-	measure 'Info Badge SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'>" & "<circle cx='8' cy='8' r='6.75' fill='none' stroke='%23E05A22' stroke-width='1.5'/><circle cx='8' cy='4.9' r='1.15' fill='%23E05A22'/><rect x='7.1' y='7' width='1.8' height='5' rx='0.9' fill='%23E05A22'/></svg>"
+	/// The hover tag 'Hover a bar' (144 x 28 px) on every visual whose bars open a report-page tooltip; decorative, the words say what to hover.
+	measure 'Hover Tag Bar SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='144' height='28' viewBox='0 0 144 28'>" & "<rect width='144' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/><text x='32' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>Hover a bar</text></svg>"
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
 		dataCategory: ImageUrl
-		lineageTag: fb645236-1fa1-5a25-aade-1a5a3db1045f
+		lineageTag: ef1f6f92-82c3-5170-977b-4e687ecbc9f2
 
-	/// The hint in the header line of both pages (on the Night banner, in the zone's muted ink): the badge and 'hover for more', 136 px, right-aligned; decorative.
-	measure 'Info Hint SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='136' height='24' viewBox='0 0 136 24'>" & "<g transform='translate(9 4)'><circle cx='8' cy='8' r='6.75' fill='none' stroke='%23E05A22' stroke-width='1.5'/><circle cx='8' cy='4.9' r='1.15' fill='%23E05A22'/><rect x='7.1' y='7' width='1.8' height='5' rx='0.9' fill='%23E05A22'/></g><text x='136' y='17' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%23C9D0DC'>hover for more</text></svg>"
+	/// The hover tag 'Hover a hotel' (160 x 28 px) on every visual whose hotels open a report-page tooltip; decorative, the words say what to hover.
+	measure 'Hover Tag Hotel SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='160' height='28' viewBox='0 0 160 28'>" & "<rect width='160' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/><text x='32' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>Hover a hotel</text></svg>"
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
 		dataCategory: ImageUrl
-		lineageTag: c923e8e7-34a7-5892-9ae1-6739f62b48d5
+		lineageTag: 7fff9474-66ff-5ffa-8c29-76eb95a4aadb
 
-	/// The word Definitions in the header line of both pages; hovering it opens the definitions tooltip page.
+	/// The hover tag 'Hover a dot' (144 x 28 px) on every visual whose dots open a report-page tooltip; decorative, the words say what to hover.
+	measure 'Hover Tag Dot SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='144' height='28' viewBox='0 0 144 28'>" & "<rect width='144' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/><text x='32' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>Hover a dot</text></svg>"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		dataCategory: ImageUrl
+		lineageTag: 6da08da3-70d3-5a10-b5d9-f650d8f59aa8
+
+	/// The hover tag 'Hover a year' (152 x 28 px) on every visual whose years open a report-page tooltip; decorative, the words say what to hover.
+	measure 'Hover Tag Year SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='152' height='28' viewBox='0 0 152 28'>" & "<rect width='152' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/><text x='32' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>Hover a year</text></svg>"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		dataCategory: ImageUrl
+		lineageTag: 52ab73eb-068a-5f73-8ec5-3f73de05b285
+
+	/// The ground of the Definitions chip in the footer row (144 x 28 px): the pill and the disc; the word is the card on top, which takes the hover.
+	measure 'Definitions Pill SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='144' height='28' viewBox='0 0 144 28'>" & "<rect width='144' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/></svg>"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		dataCategory: ImageUrl
+		lineageTag: 8c2e2219-8337-5fae-bebb-f794450c5905
+
+	/// The word Definitions on the chip at the right of the footer row of both pages; hovering it opens the definitions tooltip page.
 	measure 'Definitions Chip (text)' = "Definitions"
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
 		lineageTag: 0b711f65-aca6-538c-b0dc-82d8dc39b477
+
+	/// The 'Revisit the facts' pill in P2's footer row (856 x 28 px): the disc, the label and the codes F1 to F4; the finding names are cards on top, one per zone, which open the finding's tooltip page.
+	measure 'Facts Bar SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='856' height='28' viewBox='0 0 856 28'>" & "<rect width='856' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/><text x='32' y='19.5' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Revisit the facts</text><text x='160' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F1</text><circle cx='292' cy='14' r='1.75' fill='%238E897D'/><text x='300' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F2</text><circle cx='464' cy='14' r='1.75' fill='%238E897D'/><text x='472' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F3</text><circle cx='672' cy='14' r='1.75' fill='%238E897D'/><text x='680' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F4</text></svg>"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		dataCategory: ImageUrl
+		lineageTag: 4a6cf517-75a1-55d7-bd30-7310e98a9af5
+
+	/// The name of finding F1 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f1.
+	measure 'Facts Chip F1 (text)' = "The margin"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: c7475a9f-d590-5521-9a50-516a195cfa12
+
+	/// The name of finding F2 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f2.
+	measure 'Facts Chip F2 (text)' = "The middleman"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: f90aae4a-bb0c-51c2-83b3-29d4b162c838
+
+	/// The name of finding F3 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f3.
+	measure 'Facts Chip F3 (text)' = "The fading welcome"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 160cc565-6903-5e65-82da-08cd002169d8
+
+	/// The name of finding F4 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f4.
+	measure 'Facts Chip F4 (text)' = "Where we are full"
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 72b907ed-ab4c-5731-b355-a418d713c408
 
 	/// The Definitions chip read aloud: the glossary in one breath, so a keyboard or screen-reader user gets the terms the hover shows.
 	measure 'Alt Definitions (text)' = "The short words on these pages. NPV: net present value to 2032. Capex: the investment. Run-rate: profit a year by 2032. NPS: promoters minus detractors. ADR: revenue per room sold. RevPAR: revenue per room available. OTA: an online booking site."

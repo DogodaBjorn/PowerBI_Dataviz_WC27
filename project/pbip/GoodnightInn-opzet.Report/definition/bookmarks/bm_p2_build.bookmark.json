@@ -65,11 +65,11 @@
       "c_you_rules",
       "ch_build_waterfall",
       "ch_cmp_build",
-      "bdg_scatter",
-      "bdg_scatter_s",
-      "bdg_rec_cum",
-      "bdg_cmp_alts",
-      "bdg_cmp_build"
+      "tag_scatter",
+      "tag_scatter_s",
+      "tag_rec_cum",
+      "tag_cmp_alts",
+      "tag_cmp_build"
     ],
     "suppressActiveSection": true,
     "suppressData": true
@@ -500,7 +500,7 @@
               "visualType": "lineChart"
             }
           },
-          "bdg_scatter": {
+          "tag_scatter": {
             "singleVisual": {
               "visualType": "image",
               "display": {
@@ -508,12 +508,12 @@
               }
             }
           },
-          "bdg_scatter_s": {
+          "tag_scatter_s": {
             "singleVisual": {
               "visualType": "image"
             }
           },
-          "bdg_rec_cum": {
+          "tag_rec_cum": {
             "singleVisual": {
               "visualType": "image",
               "display": {
@@ -521,7 +521,7 @@
               }
             }
           },
-          "bdg_cmp_alts": {
+          "tag_cmp_alts": {
             "singleVisual": {
               "visualType": "image",
               "display": {
@@ -529,7 +529,7 @@
               }
             }
           },
-          "bdg_cmp_build": {
+          "tag_cmp_build": {
             "singleVisual": {
               "visualType": "image"
             }

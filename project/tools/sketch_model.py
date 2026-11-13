@@ -1278,11 +1278,12 @@ m("Alt Masthead P2 (text)", f'"2027 to 2032, Goodnight Inn budget " & ' + fmc(BU
 m("Masthead P2 (text)", f'"2027 TO 2032  ·  GOODNIGHT INN BUDGET " & ' + fmc(BUDGET_GI), TXT, C9,
   "Page-2 masthead line on the night zone: the horizon and the brand budget, read from Brands (was typed into the report generator).")
 m("Footer P2 (text)",
-  f'VAR rate = {FP.format("Discount rate")} VAR h = {FP.format("Impact horizon")} '
   # one line at 12 pt: a card shows one line in the 56 px the footer has (renders 9 Nov); R4 kept in short form
   # feedback round 4: shorter still; the three cases are named on the scenario toggle
-  'RETURN "Source: Pillow & Key Group dataset and finance parameters (" & FORMAT ( rate, "0%" ) & " discount rate, horizon " & h & "); parts are rounded to add up."',
-  TXT, C9, "Page-2 source line with the valuation parameters (REVIEW p7).")
+  # 12 Nov, night (Björn): slimmer again, to make room for 'Revisit the facts'; the discount rate and the horizon left
+  # because the subtitle, which every state shows, states both from the same parameters
+  '"Source: Pillow & Key Group dataset. Parts are rounded to add up."',
+  TXT, C9, "Page-2 source line: the source and the rounding (the valuation parameters are in the subtitle; REVIEW p7, 12 Nov night).")
 # the P2 panel's numbers as text, so a card never mixes a visual-formatted number with DAX text (REVIEW M7)
 m("Rec Capex (text)", "VAR a = [Recommended Package] RETURN " + fmc("CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = a )"), TXT, C9, "Capex of A as text.")
 m("Rec NPV (text)", sfm("[Rec NPV (sel)]"), TXT, C9, "NPV through 2032 of A, selected scenario, as text.")
@@ -1421,8 +1422,8 @@ m("Guide (text)",
   f'VAR budget = {BUDGET_GI} '
   # round 9: two lines, not three (a communication page; the dots themselves are the explanation)
   'RETURN "Each dot is one of " & n & " possible packages: a mix of the " & k & " moves on offer within the " & ' + fmc("budget") + ' & " budget (at least 3 moves, 1 of them growth). '
-  'Capex across, NPV through 2032 up; above the line it pays back by 2032. Hover a dot for its moves."',
-  TXT, C13, "The reading guide above the scatter (feedback round 4: 'what am I looking at' before the dots; round 5: say what the 456 are, combinations within the budget).")
+  'Capex across, NPV through 2032 up; above the line it pays back by 2032."',
+  TXT, C13, "The reading guide above the scatter (feedback round 4: 'what am I looking at' before the dots; round 5: say what the 456 are, combinations within the budget; 12 Nov, night: the hover instruction is the tag on the tile).")
 
 
 # ---- B and C: why considered, why not picked (one sentence each), on the same variables as Alt B / Alt C
@@ -1685,9 +1686,7 @@ m("TT Moves (text)",
 
 # ---- round 6: the findings as a reference on page 2 (chips with a page tooltip each) and hover detail on F3 and F4
 C14 = "14 Findings reference and hover detail"
-FINDING_NAMES = (("1", "The margin"), ("2", "The middleman"), ("3", "The fading welcome"), ("4", "Where we are full"))
-for k, nm in FINDING_NAMES:
-    m(f"Finding Chip F{k} (text)", f'"F{k}"', TXT, C14, f"The F{k} chip on page 2: the code (the name is the card's label); hovering it opens the finding's page tooltip.")
+# (12 Nov, night: the F1 to F4 words in the header and their 'Finding Chip' measures left; the moves of A carry the findings, below)
 
 # the F3 band page: grain Hotels[Renovation Age Label] (the hovered bar) within Goodnight Inn (page filter)
 BRAND_ALL = f"REMOVEFILTERS ( Hotels ), {gi}"
@@ -1737,18 +1736,65 @@ alt_m("Occupancy Hotel Line", f'"Occupancy by month in 2025, this hotel against 
 # the footer row that names it once ('hover for more'), and a Definitions chip in that row whose tooltip page (tt-glossary)
 # lists the short words of both pages. The badge is drawn without text, so it renders the same under Publish to Web; the
 # hint's words are at the 16 px floor. Its alt text carries the glossary in one breath (Desktop's 250-character limit).
-_BADGE = ("<circle cx='8' cy='8' r='6.75' fill='none' stroke='" + HX(SIGNAL_MARK) + "' stroke-width='1.5'/>"
-          "<circle cx='8' cy='4.9' r='1.15' fill='" + HX(SIGNAL_MARK) + "'/>"
-          "<rect x='7.1' y='7' width='1.8' height='5' rx='0.9' fill='" + HX(SIGNAL_MARK) + "'/>")
-m("Info Badge SVG", '"data:image/svg+xml;utf8," & ' + SVG_OPEN(16, 16) + ' & "' + _BADGE + '</svg>"', TXT, C14,
-  "The hover signifier: a Tangerine ring with an i, 16 px, on every visual that opens a report-page tooltip; decorative, the footer hint names it.")
-IMAGE_MEASURES.add("Info Badge SVG")
-m("Info Hint SVG",
-  '"data:image/svg+xml;utf8," & ' + SVG_OPEN(136, 24) + " & \"<g transform='translate(9 4)'>" + _BADGE + "</g><text x='136' y='17' text-anchor='end' " + SVG_FONT
-  + " fill='" + HX("#C9D0DC") + "'>hover for more</text></svg>\"", TXT, C14,
-  "The hint in the header line of both pages (on the Night banner, in the zone's muted ink): the badge and 'hover for more', 136 px, right-aligned; decorative.")
-IMAGE_MEASURES.add("Info Hint SVG")
-m("Definitions Chip (text)", '"Definitions"', TXT, C14, "The word Definitions in the header line of both pages; hovering it opens the definitions tooltip page.")
+# 12 Nov, night (Björn on the FinalV2 renders: the 16 px ring-i was too small everywhere, its legend 'hover for more' sat far away
+# in the header's top-right corner, and the header line was off brand, clumsy and easy to miss). The signifier stays (Don
+# Norman's term, CREDITS.md) but it now carries its own label, so no legend is needed: a hover tag, 28 px high, a pill in
+# the signal tint with a filled Tangerine disc and a white i, and the instruction in Night ('Hover a bar'), on the card it
+# serves. Label the icon instead of explaining it elsewhere: Nielsen's recognition-rather-than-recall heuristic (CREDITS.md).
+# The colours are the tooltips' own (orange surface, Night text), so the tag previews what the hover opens. The same pill,
+# without words, sits under the two kinds of hover chips (Definitions in the footer row, the moves of A in the
+# recommendation tile), whose words are a card on top, so the words are real text and the card takes the hover.
+HOVER_TINT = "#FCE6DB"  # kit signal_tint (Burnt Tangerine on it 5.2:1, Night 13.1:1)
+TAG_H = 28
+
+
+def _pill(w):
+    """The pill and the disc with the i, the shared ground of every hover tag and chip (shapes only, no text)."""
+    return ("<rect width='" + str(w) + "' height='" + str(TAG_H) + "' rx='14' fill='" + HX(HOVER_TINT) + "'/>"
+            "<circle cx='14' cy='14' r='10' fill='" + HX(SIGNAL_MARK) + "'/>"
+            "<circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/>"
+            "<rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/>")
+
+
+def _tag_text(x, s, colour=INK, anchor="start"):
+    return "<text x='" + str(x) + "' y='19.5' text-anchor='" + anchor + "' " + SVG_FONT + " font-weight='600' fill='" + HX(colour) + "'>" + s + "</text>"
+
+
+def _svg(w, body):
+    return '"data:image/svg+xml;utf8," & ' + SVG_OPEN(w, TAG_H) + ' & "' + body + '</svg>"'
+
+
+# label, width: the width is the slot's width in opzet-layout.json: 32 px for the disc and the gap, the label as wide as Arial Bold
+# sets it (the Mac fallback under Publish to Web; Segoe UI Semibold is narrower), at least 24 px to spare, rounded up to 8.
+HOVER_TAGS = (("Bar", "Hover a bar", 144), ("Hotel", "Hover a hotel", 160), ("Dot", "Hover a dot", 144), ("Year", "Hover a year", 152))
+for key, label, tw in HOVER_TAGS:
+    m(f"Hover Tag {key} SVG", _svg(tw, _pill(tw) + _tag_text(32, label)), TXT, C14,
+      f"The hover tag '{label}' ({tw} x {TAG_H} px) on every visual whose {key.lower()}s open a report-page tooltip; decorative, the words say what to hover.")
+    IMAGE_MEASURES.add(f"Hover Tag {key} SVG")
+m("Definitions Pill SVG", _svg(144, _pill(144)), TXT, C14,
+  "The ground of the Definitions chip in the footer row (144 x 28 px): the pill and the disc; the word is the card on top, which takes the hover.")
+IMAGE_MEASURES.add("Definitions Pill SVG")
+m("Definitions Chip (text)", '"Definitions"', TXT, C14, "The word Definitions on the chip at the right of the footer row of both pages; hovering it opens the definitions tooltip page.")
+# 'Revisit the facts' (Björn, 12 Nov, night, on the preview: the three move chips in the recommendation tile were too busy,
+# and F4 must stay reachable from page 2): ONE pill in P2's footer row, the disc once, the label, and the four findings as
+# hover zones inside it: the code in Burnt Tangerine (as on the P1 kickers) drawn here, the name a transparent card on top
+# per zone, which takes the hover and opens tt-f1 to tt-f4. Zone = (finding, x in the pill, width); the code sits at the
+# zone's x, the name 26 px further (the card's left padding); widths from Arial Bold metrics with at least 10 px to spare,
+# a Warm Grey dot in each 16 px gap. The pill's width and the zones are the slots in opzet-layout.json (z_pill_facts, chip_f1..4).
+FINDING_NAMES = (("1", "The margin"), ("2", "The middleman"), ("3", "The fading welcome"), ("4", "Where we are full"))
+FACTS_W = 856
+FACTS_ZONES = (("1", 160, 124), ("2", 300, 156), ("3", 472, 192), ("4", 680, 168))
+_facts = _pill(FACTS_W) + "<text x='32' y='19.5' " + SVG_FONT + " fill='" + HX(INK2) + "'>Revisit the facts</text>"
+for j, (k, x, zw) in enumerate(FACTS_ZONES):
+    _facts += _tag_text(x, f"F{k}", BAD)
+    if j < len(FACTS_ZONES) - 1:
+        _facts += "<circle cx='" + str(x + zw + 8) + "' cy='14' r='1.75' fill='" + HX(SLATE) + "'/>"
+m("Facts Bar SVG", _svg(FACTS_W, _facts), TXT, C14,
+  f"The 'Revisit the facts' pill in P2's footer row ({FACTS_W} x {TAG_H} px): the disc, the label and the codes F1 to F4; the finding names are cards on top, one per zone, which open the finding's tooltip page.")
+IMAGE_MEASURES.add("Facts Bar SVG")
+for k, nm in FINDING_NAMES:
+    m(f"Facts Chip F{k} (text)", f'"{nm}"', TXT, C14, f"The name of finding F{k} in the 'Revisit the facts' pill on page 2; hovering it opens tt-f{k}.")
+
 alt_m("Definitions",
       '"The short words on these pages. NPV: net present value to 2032. Capex: the investment. Run-rate: profit a year by 2032. NPS: promoters minus detractors. ADR: revenue per room sold. RevPAR: revenue per room available. OTA: an online booking site."',
       "The Definitions chip read aloud: the glossary in one breath, so a keyboard or screen-reader user gets the terms the hover shows.")

@@ -265,7 +265,7 @@ def title(page, name, measure, alt_measure=None):
 def p1_visuals():
     # headline and subtitle as cards, like P2's, so the two headers sit on one grid (REVIEW p2)
     # on the night zone (plan 10 D3): masthead and subtitle in ZONE_MUTED (10.2:1 on Night), the headline in ZONE_TEXT
-    # 12 Nov evening (Björn): the masthead line said nothing; its slot holds the header line (header_line)
+    # 12 Nov evening (Björn): the masthead line said nothing; 12 Nov, night: the header line left too (hover tags on the cards, chips)
     v = [dyn(P1, "z_headline", "Headline P1 (text)", size=28, colour=ZONE_TEXT, font=DISPLAY),
          dyn(P1, "c_subtitle", "Subtitle P1 Briefing (text)", size=S, colour=ZONE_MUTED)]
 
@@ -298,8 +298,8 @@ def p1_visuals():
     v.append(f4_types(P1, "c_f4_types"))
     v.append(f4_chart(P1, "ch_f4_fullest", tooltip_page=TT_F4))
     v.append(tb(P1, "z_footer", FOOTER, alt="Source: Pillow & Key Group dataset. Guest scores weighted by survey responses; 2021 is a depressed base year."))
-    # 12 Nov evening: the hover signifier on the two cards with hover detail, the hint and the Definitions chip in the footer row
-    v += [badge(P1, "bdg_f3", 3), badge(P1, "bdg_f4", 4)] + header_line(P1, "", 1)
+    # 12 Nov, night: a hover tag on the two cards with hover detail (in the kicker row), the Definitions chip at the footer row's end
+    v += [hover_tag(P1, "tag_f3", "Bar", 3), hover_tag(P1, "tag_f4", "Hotel", 4)] + definitions_chip(P1, "", 1)
     return v
 
 
@@ -614,35 +614,50 @@ def image_measure(page, name, measure, alt):
     return visual(name, "image", x, y, w, h, z, tab, objects=objs, vcos=vco(alt=alt, padding=0))
 
 
-def badge(page, name, i):
-    """The hover signifier (12 Nov evening, Björn; a signifier in Don Norman's sense, CREDITS.md): Power BI never changes the
-    cursor over a visual that opens a report-page tooltip, so a 16 px Tangerine ring-i (Info Badge SVG) sits at the top right
-    of every such visual, and nowhere else, so the mark keeps its meaning; the footer-row hint (Info Hint SVG) names it once.
-    Decorative. Under a chip it sits BELOW the chip (its card is transparent), so the chip, not the badge, takes the hover."""
-    return decorative(image_measure(page, name, "Info Badge SVG", None), 700 + i)
+def hover_tag(page, name, key, i):
+    """The hover signifier, 12 Nov, night (Björn on FinalV2: the 16 px ring-i was too small everywhere and its legend, 'hover for
+    more' in the header's top-right corner, sat far from what it explained). Still a signifier in Don Norman's sense
+    (CREDITS.md): Power BI never changes the cursor over a visual that opens a report-page tooltip. Now the mark carries its
+    own label, so nothing has to explain it elsewhere (Nielsen, recognition rather than recall; CREDITS.md): a 28 px pill in
+    the tooltips' own colours (signal tint, a filled Tangerine disc with a white i, Night words) on the card it serves, on
+    the row that has room (a kicker row, a title row, a legend row, the reading guide). Only on visuals that open a
+    report-page tooltip, so the mark keeps its meaning. Decorative: the words are an instruction to the mouse, which a
+    screen reader cannot use, and every hover target's alt text carries what the hover shows."""
+    return decorative(image_measure(page, name, f"Hover Tag {key} SVG", None), 700 + i)
 
 
-def hover_word(page, name, measure, tooltip_page, alt_measure, align="center"):
-    """A word on the Night banner that opens a report-page tooltip (12 Nov evening, Björn: the footer chips cluttered the
-    page while the masthead said nothing): a cardVisual in the eyebrow's light blue, no pill, the tooltip bound to it."""
-    v = card(name, *at(page, name), [measure], DISPLAY, S, ZONE_EYEBROW, align=align)
-    v["visual"]["visualContainerObjects"]["padding"] = [{"properties": {"top": num(0), "bottom": num(0), "left": num(0), "right": num(0)}}]
-    v["visual"]["visualContainerObjects"]["visualTooltip"] = page_tooltip(tooltip_page)
+def chip_card(page, name, text_measure, tooltip_page, alt_measure, pad_left=32, pad_right=12):
+    """The words of a hover chip (12 Nov, night): a transparent cardVisual on top of its pill, which takes the hover, opens
+    the report-page tooltip and carries the alt text. The words are real text (the service's Segoe UI web font under Publish
+    to Web), pad_left past the disc or the code drawn in the pill underneath."""
+    v = card(name, *at(page, name), [text_measure], DISPLAY, S, INK, align="left")
+    vc = v["visual"]["visualContainerObjects"]
+    vc["padding"] = [{"properties": {"top": num(4), "bottom": num(0), "left": num(pad_left), "right": num(pad_right)}}]
+    vc["visualTooltip"] = page_tooltip(tooltip_page)
     return bind_alt(v, alt_measure)
 
 
-def header_line(page, sfx, i):
-    """The header line in the masthead's slot, right-aligned on the Night banner: the hint (the badge and 'hover for more'),
-    on P2 'Revisit the facts' with the hover words F1 to F4 (the finding tooltips), and the hover word Definitions (the
-    glossary page). The words and the dots are out of the tab order; the hover words carry the findings' and the glossary's
-    alt text, so a keyboard user hears what a hover would show."""
-    dot = lambda name, j: decorative(tb(page, name, "·", font=DISPLAY, colour=ZONE_MUTED, align="center"), 680 + j)  # noqa: E731
-    out = [decorative(image_measure(page, f"z_hint{sfx}", "Info Hint SVG", None), 690 + i)]
-    if page == P2:
-        out += [dot("z_dot2a", 1), decorative(tb(page, "z_facts", "Revisit the facts", colour=ZONE_MUTED, align="right"), 685)]
-        out += [hover_word(page, f"hdr_f{k}", f"Finding Chip F{k} (text)", f"tt-f{k}", f"Alt F{k} Title (text)") for k, _ in FINDINGS]
-    out += [dot(f"z_dot{sfx}" + ("b" if sfx else ""), 2 + i), hover_word(page, f"hdr_def{sfx}", "Definitions Chip (text)", TT_GLOSS, "Alt Definitions (text)", align="right")]
+def hover_chip(page, name, svg_measure, text_measure, tooltip_page, alt_measure, i):
+    """A chip that is itself a hover target: the pill and the disc as an SVG underneath (z_pill_<x>, decorative), the
+    words as chip_card() on the same rect (chip_<x>)."""
+    bg = decorative(image_measure(page, "z_pill_" + name.split("_", 1)[1], svg_measure, None), 760 + i)
+    return [bg, chip_card(page, name, text_measure, tooltip_page, alt_measure)]
+
+
+def facts_bar():
+    """'Revisit the facts' in P2's footer row (12 Nov, night; Björn on the preview: the move chips in the recommendation tile
+    were too busy, and F4 must stay reachable from page 2): one pill (Facts Bar SVG: the disc once, the label, the codes F1 to
+    F4 in Burnt Tangerine) under four transparent cards, one per finding, each showing the finding's name 26 px past its code
+    and opening that finding's tooltip page. Visible in every state of P2. Alt text: the finding and its title."""
+    out = [decorative(image_measure(P2, "z_pill_facts", "Facts Bar SVG", None), 770)]
+    out += [chip_card(P2, f"chip_f{k}", f"Facts Chip F{k} (text)", f"tt-f{k}", f"Alt F{k} Title (text)", pad_left=26, pad_right=0) for k, _ in FINDINGS]
     return out
+
+
+def definitions_chip(page, sfx, i):
+    """The Definitions chip at the right end of the footer row of both pages (12 Nov, night: out of the header's corner, next to
+    the source line where a reader looks for how the numbers are meant); its tooltip is the glossary page."""
+    return hover_chip(page, f"chip_def{sfx}", "Definitions Pill SVG", "Definitions Chip (text)", TT_GLOSS, "Alt Definitions (text)", i)
 
 
 def brand_row(page_name, sfx):
@@ -822,7 +837,6 @@ def native_selector():
 
 def p2_visuals():
     v = [dyn(P2, "z_headline2", "Headline P2 (text)", size=28, colour=ZONE_TEXT, font=DISPLAY)]
-    v += header_line(P2, "2", 2)  # the hint, 'Revisit the facts' F1 to F4 and Definitions in the masthead's slot (12 Nov evening)
     v.append(dyn(P2, "c_subtitle2", "Subtitle P2 (text)", size=S, colour=ZONE_MUTED))
 
     # ---- the scatter card, rec state: title, zoom toggle, the reading guide (round 4: 'what am I looking at' before
@@ -897,8 +911,11 @@ def p2_visuals():
     v.append(cumulative_chart("ch_cmp_build", [("Preset A Cumulative Net (sel)", "A, our recommendation"), ("Build Cumulative Net (sel)", "Your plan")],
                               [ACCENT_MARK, SIGNAL_MARK], [3, 3], dashed=(), title_measure="Cmp Build Title (text)", alt_measure="Alt Cmp Build (text)"))
     v.append(dyn(P2, "z_footer2", "Footer P2 (text)"))
-    # 12 Nov evening: the hover signifier on every hover target (the scatter's dots, the three year charts), the footer row's extras
-    v += [badge(P2, "bdg_scatter", 20), badge(P2, "bdg_scatter_s", 21), badge(P2, "bdg_rec_cum", 22), badge(P2, "bdg_cmp_alts", 23), badge(P2, "bdg_cmp_build", 24)]
+    # 12 Nov, night: a hover tag on every hover target (the scatter's dots in the reading guide and the small card's title row, the
+    # three year charts in their legend or title row); in the footer row 'Revisit the facts' and the Definitions chip
+    v += [hover_tag(P2, "tag_scatter", "Dot", 20), hover_tag(P2, "tag_scatter_s", "Dot", 21), hover_tag(P2, "tag_rec_cum", "Year", 22),
+          hover_tag(P2, "tag_cmp_alts", "Year", 23), hover_tag(P2, "tag_cmp_build", "Year", 24)]
+    v += facts_bar() + definitions_chip(P2, "2", 2)
     return v
 
 

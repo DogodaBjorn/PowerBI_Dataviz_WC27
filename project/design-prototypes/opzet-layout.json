@@ -1,5 +1,5 @@
 {
-  "_doc": "Slot map, v9 of 2026-11-11 (12-feedbackronde-4, rounds 4 to 9): P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 = the package scatter (layers: cloud, A/B/C, a transparent hover layer for the package tooltip) and a right panel in THREE states: rec (the recommendation A, default), alts (B and C, considered and not recommended) and build (build your own plan). In alts and build the scatter card shrinks (a second, smaller scatter stack hero_s_*) and a comparer card of cumulative net impact spans the bottom. Single source of positions for the PBIR generator (project/tools/opzet_report.py) and the a11y check. Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-wakeup 3.1, night header). 'cards' are furniture (radius 12, white fill) drawn as empty textbox visuals UNDER the content; 'tiles' are inner furniture (kind glow / tint / outline); 'visuals' are Power BI visuals. state: absent = always visible; a list of states = shown only in those states, swapped by display-only bookmarks bm_p2_rec / bm_p2_alts / bm_p2_build. A card may carry shadow: null (the tooltip's base), a tile a radius (0 squares the night header's lower corners). 12 pt (16 px) floor everywhere. Round 7: every tooltip page is the page in miniature: its own night scene (canvas-tt-<page>.jpg), the kicker (y 16) and the title (y 40) on the banner, white cards with the page's shadow hanging 24 px into the banner (16 px margins, 16 px padding); the package tooltip holds two cards (return, moves). Round 8: the titles higher (headline y 80, subtitle y 128), the first card row at y 168 (the horizon at 232, so the top cards hang 64 px into the banner), the gained 16 px spent on air: 24 px vertical gutters on P1, a taller F4 card, the panel's rhythm on P2 with a taller scatter and cumulative chart, the footer at 1032. Round 9 (final): the brand row at y 16/24, headline y 64, subtitle y 112, P2 chips y 56 (Björn's Desktop move, on the grid); the F2 folio table 112 px; the P2 reading guide two lines (tile 112) and the scatter 656 px tall; the finding tooltips' title 72 px; a year tooltip page (tt-year, 560 x 376) for the three cumulative charts. Round 9b: the header rows at Björn's own Desktop positions (logo y 12, eyebrow and masthead y 20, headline y 60, subtitle y 108, P2 chips y 48; a 4 px grid for the header rows only). FinalV2 follow-up (12 Nov, evening, Björn): a hover signifier (bdg_*, a 16 px Tangerine ring-i at the top right of every visual that opens a page tooltip, nowhere else), and, in the masthead's slot (Björn, same evening: the footer was cluttered, the masthead said nothing), a header line right-aligned on the Night banner: the hint (z_hint*: the badge and 'hover for more'), on P2 'Revisit the facts' with the hover words F1 to F4 (hdr_f*, 32 px each, the finding tooltips), and the hover word Definitions (hdr_def*) whose tooltip page tt-glossary (480 x 544) lists the short words of both pages; the footer row is the source line again. Z and tab of the new slots are on the layering file's scale, since that file does not know them.",
+  "_doc": "Slot map, v9 of 2026-11-11 (12-feedbackronde-4, rounds 4 to 9): P1 = headline, four benchmarked KPIs, three findings (F1 margin, F2 middleman with the folio, F3 fading welcome), F4 where we are full. P2 = the package scatter (layers: cloud, A/B/C, a transparent hover layer for the package tooltip) and a right panel in THREE states: rec (the recommendation A, default), alts (B and C, considered and not recommended) and build (build your own plan). In alts and build the scatter card shrinks (a second, smaller scatter stack hero_s_*) and a comparer card of cumulative net impact spans the bottom. Single source of positions for the PBIR generator (project/tools/opzet_report.py) and the a11y check. Canvas 1920x1080, 8 px grid, margin 32, gutter 16 (brand kit goodnight-inn-wakeup 3.1, night header). 'cards' are furniture (radius 12, white fill) drawn as empty textbox visuals UNDER the content; 'tiles' are inner furniture (kind glow / tint / outline); 'visuals' are Power BI visuals. state: absent = always visible; a list of states = shown only in those states, swapped by display-only bookmarks bm_p2_rec / bm_p2_alts / bm_p2_build. A card may carry shadow: null (the tooltip's base), a tile a radius (0 squares the night header's lower corners). 12 pt (16 px) floor everywhere. Round 7: every tooltip page is the page in miniature: its own night scene (canvas-tt-<page>.jpg), the kicker (y 16) and the title (y 40) on the banner, white cards with the page's shadow hanging 24 px into the banner (16 px margins, 16 px padding); the package tooltip holds two cards (return, moves). Round 8: the titles higher (headline y 80, subtitle y 128), the first card row at y 168 (the horizon at 232, so the top cards hang 64 px into the banner), the gained 16 px spent on air: 24 px vertical gutters on P1, a taller F4 card, the panel's rhythm on P2 with a taller scatter and cumulative chart, the footer at 1032. Round 9 (final): the brand row at y 16/24, headline y 64, subtitle y 112, P2 chips y 56 (Björn's Desktop move, on the grid); the F2 folio table 112 px; the P2 reading guide two lines (tile 112) and the scatter 656 px tall; the finding tooltips' title 72 px; a year tooltip page (tt-year, 560 x 376) for the three cumulative charts. Round 9b: the header rows at Björn's own Desktop positions (logo y 12, eyebrow and masthead y 20, headline y 60, subtitle y 108, P2 chips y 48; a 4 px grid for the header rows only). FinalV2 follow-up (12 Nov, evening, Björn): a hover signifier (bdg_*, a 16 px Tangerine ring-i at the top right of every visual that opens a page tooltip, nowhere else), and, in the masthead's slot (Björn, same evening: the footer was cluttered, the masthead said nothing), a header line right-aligned on the Night banner: the hint (z_hint*: the badge and 'hover for more'), on P2 'Revisit the facts' with the hover words F1 to F4 (hdr_f*, 32 px each, the finding tooltips), and the hover word Definitions (hdr_def*) whose tooltip page tt-glossary (480 x 544) lists the short words of both pages; the footer row is the source line again. Z and tab of the new slots are on the layering file's scale, since that file does not know them. 12 Nov, night (Björn on the FinalV2 renders: the ring-i too small everywhere, its legend in the header's corner, the header line off brand, clumsy and easy to miss, everything in the top-right corner): the header line (z_hint*, z_dot*, z_facts, hdr_*) and the badges (bdg_*) left; the top right of the Night banner is the hanger's again. In their place, each on the card it serves: hover tags (tag_*, 28 px pills in the signal tint with a filled Tangerine disc and the instruction in Night, 'Hover a bar / hotel / dot / year', on a kicker, title, legend or guide row), the Definitions chip at the right end of the footer row (z_pill_def*/chip_def*) and, on P2, left of it 'Revisit the facts' (z_pill_facts, one 856 px pill with the disc, the label and the codes F1 to F4, under four cards chip_f1..4 that carry the finding names and open tt-f1..4; the three move chips of the first version were too busy in the recommendation tile, Björn); P2's source line is slimmer (the rate and horizon are in the subtitle), w 824. chip_f1..4 keep the z and tab Björn's layering file already gives those names (16000-19000, 52010-52040), so the pill under them sits at z 15500. A chip is two slots on one rect: the pill under (z_pill_*), the words as a transparent card on top (chip_*), which takes the hover. P1's footer textbox moves to y 1044 (h 36): its line sat 14 px above P2's card line (rendered 1045 against 1059), so the chip now sits at one height on both pages.",
   "canvas": {
     "w": 1920,
     "h": 1080
@@ -61,33 +61,6 @@
           "h": 24,
           "z": 1004,
           "tab": 20
-        },
-        {
-          "name": "z_hint",
-          "x": 1624,
-          "y": 20,
-          "w": 136,
-          "h": 24,
-          "z": 6100,
-          "tab": 8980
-        },
-        {
-          "name": "z_dot",
-          "x": 1768,
-          "y": 20,
-          "w": 16,
-          "h": 24,
-          "z": 6101,
-          "tab": 8981
-        },
-        {
-          "name": "hdr_def",
-          "x": 1792,
-          "y": 20,
-          "w": 96,
-          "h": 24,
-          "z": 6102,
-          "tab": 40
         },
         {
           "name": "z_headline",
@@ -228,17 +201,17 @@
           "name": "c_f3_kicker",
           "x": 1304,
           "y": 328,
-          "w": 560,
+          "w": 400,
           "h": 24,
           "z": 1040,
           "tab": 500
         },
         {
-          "name": "bdg_f3",
-          "x": 1856,
-          "y": 332,
-          "w": 16,
-          "h": 16,
+          "name": "tag_f3",
+          "x": 1720,
+          "y": 324,
+          "w": 144,
+          "h": 28,
           "z": 32500,
           "tab": 8992
         },
@@ -279,11 +252,11 @@
           "tab": 600
         },
         {
-          "name": "bdg_f4",
-          "x": 1856,
-          "y": 836,
-          "w": 16,
-          "h": 16,
+          "name": "tag_f4",
+          "x": 1704,
+          "y": 828,
+          "w": 160,
+          "h": 28,
           "z": 36500,
           "tab": 8993
         },
@@ -317,11 +290,29 @@
         {
           "name": "z_footer",
           "x": 32,
-          "y": 1032,
-          "w": 1856,
-          "h": 48,
+          "y": 1044,
+          "w": 1696,
+          "h": 36,
           "z": 1090,
           "tab": 9000
+        },
+        {
+          "name": "z_pill_def",
+          "x": 1744,
+          "y": 1044,
+          "w": 144,
+          "h": 28,
+          "z": 40500,
+          "tab": 9005
+        },
+        {
+          "name": "chip_def",
+          "x": 1744,
+          "y": 1044,
+          "w": 144,
+          "h": 28,
+          "z": 40600,
+          "tab": 9010
         }
       ]
     },
@@ -401,87 +392,6 @@
           "tab": 20
         },
         {
-          "name": "z_hint2",
-          "x": 1280,
-          "y": 20,
-          "w": 136,
-          "h": 24,
-          "z": 11100,
-          "tab": 8980
-        },
-        {
-          "name": "z_dot2a",
-          "x": 1424,
-          "y": 20,
-          "w": 16,
-          "h": 24,
-          "z": 11101,
-          "tab": 8981
-        },
-        {
-          "name": "z_facts",
-          "x": 1448,
-          "y": 20,
-          "w": 152,
-          "h": 24,
-          "z": 11102,
-          "tab": 8982
-        },
-        {
-          "name": "hdr_f1",
-          "x": 1608,
-          "y": 20,
-          "w": 32,
-          "h": 24,
-          "z": 11111,
-          "tab": 2100
-        },
-        {
-          "name": "hdr_f2",
-          "x": 1648,
-          "y": 20,
-          "w": 32,
-          "h": 24,
-          "z": 11112,
-          "tab": 2200
-        },
-        {
-          "name": "hdr_f3",
-          "x": 1688,
-          "y": 20,
-          "w": 32,
-          "h": 24,
-          "z": 11113,
-          "tab": 2300
-        },
-        {
-          "name": "hdr_f4",
-          "x": 1728,
-          "y": 20,
-          "w": 32,
-          "h": 24,
-          "z": 11114,
-          "tab": 2400
-        },
-        {
-          "name": "z_dot2b",
-          "x": 1768,
-          "y": 20,
-          "w": 16,
-          "h": 24,
-          "z": 11104,
-          "tab": 8983
-        },
-        {
-          "name": "hdr_def2",
-          "x": 1792,
-          "y": 20,
-          "w": 96,
-          "h": 24,
-          "z": 11105,
-          "tab": 2500
-        },
-        {
           "name": "z_headline2",
           "x": 32,
           "y": 60,
@@ -507,18 +417,6 @@
           "h": 32,
           "z": 1010,
           "tab": 200,
-          "state": [
-            "rec"
-          ]
-        },
-        {
-          "name": "bdg_scatter",
-          "x": 1040,
-          "y": 192,
-          "w": 16,
-          "h": 16,
-          "z": 20500,
-          "tab": 8996,
           "state": [
             "rec"
           ]
@@ -572,6 +470,18 @@
           ]
         },
         {
+          "name": "tag_scatter",
+          "x": 888,
+          "y": 292,
+          "w": 144,
+          "h": 28,
+          "z": 22500,
+          "tab": 8996,
+          "state": [
+            "rec"
+          ]
+        },
+        {
           "name": "hero_packages",
           "x": 56,
           "y": 344,
@@ -597,11 +507,11 @@
           ]
         },
         {
-          "name": "bdg_scatter_s",
-          "x": 720,
-          "y": 192,
-          "w": 16,
-          "h": 16,
+          "name": "tag_scatter_s",
+          "x": 584,
+          "y": 188,
+          "w": 144,
+          "h": 28,
           "z": 21500,
           "tab": 8997,
           "state": [
@@ -848,11 +758,11 @@
           ]
         },
         {
-          "name": "bdg_rec_cum",
-          "x": 1840,
-          "y": 748,
-          "w": 16,
-          "h": 16,
+          "name": "tag_rec_cum",
+          "x": 1712,
+          "y": 776,
+          "w": 152,
+          "h": 28,
           "z": 47500,
           "tab": 8998,
           "state": [
@@ -1028,11 +938,11 @@
           ]
         },
         {
-          "name": "bdg_cmp_alts",
-          "x": 1840,
-          "y": 684,
-          "w": 16,
-          "h": 16,
+          "name": "tag_cmp_alts",
+          "x": 1712,
+          "y": 680,
+          "w": 152,
+          "h": 28,
           "z": 63500,
           "tab": 8999,
           "state": [
@@ -1112,11 +1022,11 @@
           ]
         },
         {
-          "name": "bdg_cmp_build",
-          "x": 1840,
-          "y": 684,
-          "w": 16,
-          "h": 16,
+          "name": "tag_cmp_build",
+          "x": 1712,
+          "y": 680,
+          "w": 152,
+          "h": 28,
           "z": 64500,
           "tab": 9001,
           "state": [
@@ -1127,10 +1037,73 @@
           "name": "z_footer2",
           "x": 32,
           "y": 1032,
-          "w": 1152,
+          "w": 824,
           "h": 48,
           "z": 1090,
           "tab": 9000
+        },
+        {
+          "name": "z_pill_facts",
+          "x": 872,
+          "y": 1044,
+          "w": 856,
+          "h": 28,
+          "z": 15500,
+          "tab": 52005
+        },
+        {
+          "name": "chip_f1",
+          "x": 1032,
+          "y": 1044,
+          "w": 124,
+          "h": 28,
+          "z": 16000,
+          "tab": 52010
+        },
+        {
+          "name": "chip_f2",
+          "x": 1172,
+          "y": 1044,
+          "w": 156,
+          "h": 28,
+          "z": 17000,
+          "tab": 52020
+        },
+        {
+          "name": "chip_f3",
+          "x": 1344,
+          "y": 1044,
+          "w": 192,
+          "h": 28,
+          "z": 18000,
+          "tab": 52030
+        },
+        {
+          "name": "chip_f4",
+          "x": 1552,
+          "y": 1044,
+          "w": 168,
+          "h": 28,
+          "z": 19000,
+          "tab": 52040
+        },
+        {
+          "name": "z_pill_def2",
+          "x": 1744,
+          "y": 1044,
+          "w": 144,
+          "h": 28,
+          "z": 72500,
+          "tab": 52005
+        },
+        {
+          "name": "chip_def2",
+          "x": 1744,
+          "y": 1044,
+          "w": 144,
+          "h": 28,
+          "z": 72600,
+          "tab": 52050
         }
       ],
       "tiles": [
