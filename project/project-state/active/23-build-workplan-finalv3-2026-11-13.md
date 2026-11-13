@@ -19,7 +19,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | Step | Title | Status | Date | Commit | Note |
 |---|---|---|---|---|---|
 | 1 | Branch and the five small spikes | done | 13 Nov | 3bbc28e | S-1, S-5, S-6, S-8 pass; S-7 pass in a table cell, fallback for a card (`c_rec_lines` as two cards). Bjorn was not needed in Desktop |
-| 2 | The two big spikes: hero table and native selector | todo | | | |
+| 2 | The two big spikes: hero table and native selector | done | 13 Nov | COMMIT_STEP2 | S-2 and S-3 pass natively, no fallback. Both tables need a few pixels the comp did not plan (wider value columns, 2 px of slack, `tbl_moves` 11 px higher); see the log. Bjorn was not needed in Desktop |
 | 3 | Model foundations and the number checks | todo | | | |
 | 4 | Text measures and `build_checks.py` | todo | | | |
 | 5 | Page 1 | todo | | | |
@@ -150,7 +150,93 @@ doc 21 N-1), here and in doc 21 §13.
 
 **Prompt:** `project/build-steps/step-02.txt` (say: "Read project/build-steps/step-02.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Fri 13 Nov 2026, one session, done):**
+
+*Built.* A throwaway copy in the session scratchpad with four scratch pages (`s2-hero-expected`, `-low`, `-high`,
+`s3-selector`), three spike columns on `InvestmentProjects` and twelve spike measures; nothing in `project/pbip/`
+changed. The tools are kept in `project/tools/desktop_shots/spikes_step2/`: `spike2_prep.py <pbip dir> <dest dir>
+[--report-only] [--diag] [key=value …]` (holds the `bar_cell()` prototype and both table builders),
+`measure.py hero|selector <png>` (row pitch, reference lines, scrollbars, tile against row) and `s3_keys.ps1`
+(Space, Tab and click on a slicer tile). Before the work, the step files were merged in from
+`claude/laughing-mendel-ruw64g` (69121c6): they had landed there after this branch split off.
+
+*Verified* (Desktop 2.159, Windows culture nl-NL; renders in `project/deliverables/screenshots/Spikes-step2-2026-11-13/`;
+all measures taken from bridge captures at 2.29 capture pixels per page pixel):
+
+| Spike | Result | Proof | What the builder must do |
+|---|---|---|---|
+| S-2 hero table | **pass, native, four corrections** | renders 01 to 03 (Expected, Low, High): both reference lines unbroken over the ten rows (340 px), at page x 573.6 and 925.1 against 573.84 and 925.09 computed; no scrollbar; values right-aligned and complete, "+$0.03M" and "−$30.5M" included; row pitch 34.0, header 32.6. Render 04 shows the line across row boundaries, enlarged | see the four points below |
+| S-3 native selector | **pass, native, three corrections** | render 05: tile pitch 32.05 and row pitch 32.05, row centre minus tile centre 0.44 px on all ten rows (spread 0.01); check icon on A's three tiles; "Picked: 3 moves, $9.4M of $60.0M". Render 06: Space on "Breakfast upgrade" gives four moves. Render 07: after a reload the saved three are back (the table was still loading in that capture). Render 08: nothing picked, the table keeps its ten rows | see the three points below |
+
+**S-2, what the hero table needs** (`tbl_hero`, doc 21 §6.1):
+1. **Image size sits in `grid`, and the width must be set.** `grid.imageHeight` 34 and `grid.imageWidth`. With the
+   height alone Desktop fits each bar into a 34 px square (the "squared image cell" of 10 Nov).
+   `pbir_lib.table_objects()` writes both into `values`; move them to `grid`. The width is one value for the whole table.
+2. **An image is drawn 7 px from the left edge of its cell, and its column must be the image + 11 px.** At image
+   + 9 Desktop draws a clipped ellipsis mark beside the image. So both bar images are **173 px wide** (the narrow
+   bar column of the comp, 180, minus 7), every x inside the SVG is the comp's cell x minus 7, and the NPV bar column
+   is **184**, not 180. With that offset the lines land where `lbl_hero_8` and `lbl_hero_0` expect them.
+3. **A text cell pads about 7.7 px left and 5 px right** (the comp counted 5 and 5). "−$27.3M" is 60 px wide: the
+   last column must be **74**, not 72, or the three long values end in "…".
+4. **The visual is 2 px wider than its columns.** At exactly the column sum Desktop shows a horizontal scrollbar,
+   and then a vertical one. The height of 372 holds.
+
+Built that way: columns **280 / 104 / 96 / 196 / 64 / 184 / 74**, visual **56, 240, 1000, 372**, row padding 0, grid off,
+`columnHeaders.outlineStyle` `'BottomOnly'` in Dusk (1 px), auto-size off. Other shapes that worked: the status and
+NPV font colours as `values.fontColor` bound to a measure (selector: `dataViewWildcard` + `metadata`), Answers in
+Dusk through `columnFormatting.fontColor`, the two empty headers as a zero-width space, the order through
+`Move Name` sorted by `Hero Sort` in the model (no sort in the visual). `Hero Sort` is a calculated column without
+context transition (column-only tables, `SUMX ( FILTER ( InvestmentScenarios … ) )`).
+
+**S-3, what the selector needs** (`sl_moves`, `tbl_moves`, doc 21 §8):
+1. **Slicer:** `layout` rowCount 10, columnCount 1, maxTiles 10, cellPadding 0; `shapeCustomRectangle.tileShape`
+   `'rectangle'`; `selection.singleSelect` false; `selectionIcon` show, size 16, position Left, **colour Night on the
+   default and on the `selection:selected` state** (without the second one the checked box is white on white);
+   `fillCustom` white when selected, Seam on hover; the saved selection as `general.filter` (In, the three short
+   names of A). The slot 792, 280, 216, 320 stays.
+2. **Table rows of 32 px need `grid.rowPadding` 5.36** (a 12 pt line is 21.28 px; Desktop honours the fraction).
+   **The header takes the same padding and becomes 43 px** (32.6 at padding 0), so the table starts at **y 237**, not
+   248, with height 363: then row 1 starts at 280, beside the first tile.
+3. **Columns 92 / 64 / 74 / 118 and 2 px of slack: 1008, 237, 350, 363.** The table also needs one `BuildMove` column
+   to get a row per move: `Short Name` at `columnWidth` 0. Nothing shows, and a screen reader reads the name with
+   the row. `visualInteractions`: `sl_moves` to `tbl_moves` = `NoFilter`.
+
+The Build measures read the slicer as they are: no selection means no filter, so `ISFILTERED` is false and the title
+says "Nothing picked yet". **Keyboard:** every tile is a focusable button with a toggle state. With the focus on
+"Breakfast upgrade", Space switched it from off to on; Tab moved the focus to "Gatwick +40 rooms"; Space switched
+that one on. The focus was set through UI Automation and the keys were posted to the report's render widget
+(`s3_keys.ps1`), so Bjorn was not needed. Not tested here: the walk from the page into the slicer with a real
+keyboard (Tab to the visual, Enter). That is part of the keyboard pass of step 10.
+
+*Checks.* `powerbi-report-author validate` on the copy: 1 error, the known one (`hero_s_packages_named`, scatter
+`categoryLabels`), none from the scratch pages. `a11y_check.py`: 0 failures. `schema_check.py`: 0 failing. The project
+was not opened in Desktop and the generators were not run (nothing changed that they write). The final renders 01 to
+05 come from a copy rebuilt from scratch with the committed script.
+
+*Deviations from the comp* (nothing is built yet; these are what steps 7 and 9 will meet):
+- **Hero:** the table runs to x 1056 instead of 1048 and the NPV values end 7 px further right (1051 against about
+  1043). Bars, reference lines and both reference labels are on the comp's positions. Text in the other columns
+  starts 2.7 px right of the comp (cell padding).
+- **Selector:** the four header labels of `tbl_moves` sit 9 px higher than in the comp (table at y 237), and the
+  table ends at x 1358 instead of 1352 (the tile frame starts at 1368).
+- The slot map and the spec still hold the comp's numbers (`tbl_hero` 992 wide, 180 / 72; `tbl_moves` 1008, 248,
+  344, 352 and 72 / 116). They were not changed in this step: the comp is Bjorn's approved contract.
+
+*Open items for later steps.*
+- **Step 3 or 4, one number:** the kiosks' Expected "a year on cost" is exactly 20.55 % ($411,000 on $2.0M). DAX
+  prints **20.6 %**; the comp and the spec print **20.5 %** (a rounding accident of the browser; in High it rounds
+  30.85 up to 30.9). The hero title carries this number. See "Open questions".
+- **Step 7:** the 173 px image shows a yield up to 83.6 %. The highest value in the data is 82.1 % (the app, High).
+  The domain of −10 % to 90 % stays; a value above 83.6 % would be cut off at the image's edge.
+- **Step 7, row seam:** at a fractional zoom each row boundary shows one half-tone pixel in the line (render 04);
+  at 100 % there is none. Look at it once in the browser at the Publish to Web gate (step 12), with the SVG cells.
+- **Step 9:** "Picked: 4 moves, $13.65M" still comes from the old two-decimal formatter (`Build Capex (text)`);
+  step 4 replaces it. Capex "$15.0M" and NPV "−$12.2M" stand 4 px apart in `tbl_moves`; it fits, but there is no room left.
+- **Work method:** a bridge capture also holds Desktop's canvas margin and the pane strip, so `measure.py` finds the
+  page through two Night squares in the page corners. `powerbi-desktop reload` keeps the open page; `s3_keys.ps1`
+  selects the page tab first. A changed measure reaches the running copy through the modelling MCP
+  (`measure_operations` Update), a changed calculated column needs a rebuild and a reopen. The first capture after
+  opening can be empty: take it again. The throwaway windows were ended with `Stop-Process` (throwaway only).
 
 ### Step 3 · Model foundations and the number checks (about 2 h)
 
@@ -384,4 +470,12 @@ execute it" to keep going, or name a step file.
 
 ## Open questions
 
-None at the start. A session that meets a question only Bjorn can answer adds it here and sets its step to `blocked`.
+A session that meets a question only Bjorn can answer adds it here and sets its step to `blocked`.
+
+1. **20.5 % or 20.6 % for the kiosks (from step 2, needed in step 4; no step is blocked by it).** The value is exactly
+   20.55 %. The approved text says "the kiosks earn 20.5% a year on cost"; Power BI's own rounding gives 20.6 %, the
+   same rule that gives 30.9 % in High. Recommended: 20.6 %, and the spec's `text` block is corrected in step 4 so the
+   text diff stays honest. Bjorn decides.
+2. **The pixel changes of step 2** (hero table 8 px wider with its last two columns at 184 and 74; `tbl_moves` at
+   y 237 with columns 74 and 118). Recommended: accept them as technical corrections and put them into
+   `opzet-layout-v10.json` and `rebuild-v10-spec.json` in steps 7 and 9. Bjorn confirms, or names what must stay.

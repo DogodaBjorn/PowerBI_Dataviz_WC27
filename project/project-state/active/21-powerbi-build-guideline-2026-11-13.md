@@ -241,6 +241,12 @@ one full-height reference line. The measure gets `dataCategory: ImageUrl`.
 - The value is **not** in the SVG. It sits in its own right-aligned text column next to the bar.
 - Numbers concatenated into the SVG go through the existing `_svg()` helper conventions (points, no locale).
 
+**Corrected by spike S-2 (13 Nov, section 13, "Results of the two big spikes"):** the image size is set in `grid`
+(`imageHeight` and `imageWidth`, one width for the whole table). Desktop draws an image 7 px from the left edge of
+its cell and needs the column to be the image + 11 px. So `bar_cell()` takes the comp's column width for its
+geometry, subtracts 7 from every x, and writes an image as wide as the narrowest bar column minus 7. The visual is
+2 px wider than the sum of its columns. Prototype: `project/tools/desktop_shots/spikes_step2/spike2_prep.py`.
+
 ### P-5 · Direct labels at line ends
 
 Legends go; every line is named and valued at its right end.
@@ -434,6 +440,9 @@ Expected "a year on cost", fixed at refresh, so the order never follows the scen
 - No tooltip page on this table. Alt text `Alt Hero (text)` names the top three moves and the 8 % line.
 - `lbl_hero_8` and `lbl_hero_0` sit at fixed x because the column widths and the domains are fixed. The generator
   computes both x values from the same constants it passes to `bar_cell()`.
+- **S-2 result (13 Nov): pass.** Columns 280 / 104 / 96 / 196 / 64 / **184** / **74**, visual width **1000**, image
+  173 px drawn 7 px into its cell (section 13, "Results of the two big spikes"). The widths in the table above are the
+  comp's and are too narrow by those pixels.
 - **S-2:** build this table first, alone on a page, and render it in Desktop: the reference line continuous, no
   scrollbar, values aligned. Then one Publish to Web check of SVG cells at the gate. Fallback: two bar charts
   with identical category sort, row padding and height, category axis on the left chart only, labels by P-1,
@@ -561,6 +570,8 @@ Retired: `c_alts_title`, `c_alts_intro`, `img_b_chip`, `img_c_chip`, `c_b_*` (5)
   marker with a white `BuildPoint` label "You" drawn as the category label beside it. Over budget keeps
   Tangerine (R-B-3).
 - Kiosks answer F4 (D4): change the `Answers` mapping in one place, the `MoveDecision` table (section 10.1).
+- **S-3 result (13 Nov): pass.** `tbl_moves` at **1008, 237, 350, 363** with row padding 5.36 (the header becomes 43 px)
+  and a hidden `Short Name` column; the slicer slot stays (section 13, "Results of the two big spikes").
 - **S-3:** render the slicer and the table side by side. Pass = the ten rows line up within 1 px over the full
   height, the check icon shows on selected tiles, the saved selection survives a reload, Tab and Space select a
   tile. If it fails by the evening of 15 Nov: Deneb stays (N-1, technical fallback).
@@ -715,6 +726,16 @@ saves, close every window yourself without saving, renders through the throwaway
 
 Tier order inside each step follows doc 20: T1 before T2 before T3. If a day slips, drop T3 first
 (R-P1-9, R-P2-11, R-W-4, R-TT-3/4, the submission prune), never the gate.
+
+### Results of the two big spikes (13 Nov, build step 2 of doc 23)
+
+Run in a throwaway copy on four scratch pages, Desktop 2.159 in nl-NL. Proof, measures and method: doc 23, step 2
+log; renders in `project/deliverables/screenshots/Spikes-step2-2026-11-13/`. Both feed the cut line of step 6 above.
+
+| Spike | Result | Shape to build |
+|---|---|---|
+| S-2 | **Pass**, native table, no fallback | `tableEx`, columns **280 / 104 / 96 / 196 / 64 / 184 / 74**, visual 56, 240, **1000**, 372. `grid`: rowPadding 0, imageHeight 34, **imageWidth 173**, gridlines off. `columnHeaders.outlineStyle` `'BottomOnly'`. Both SVGs 173 x 34, every x = the comp's cell x minus 7. Lines measured at 573.6 and 925.1 (computed 573.84 and 925.09), unbroken over ten rows in Low, Expected and High, no scrollbar. The 72 px value column cut "−$12.2M" to "−$12.2…"; 74 holds it |
+| S-3 | **Pass**, native slicer and table, Deneb can go (N-1) | Slicer 792, 280, 216, 320: 10 rows, cellPadding 0, tile shape `'rectangle'`, multi-select, selection icon 16 px in Night on the default **and** the selected state, saved selection in `general.filter`. Table **1008, 237, 350, 363**: `grid.rowPadding` **5.36**, columns `Short Name` at width 0 + **92 / 64 / 74 / 118**, `NoFilter` from the slicer. Tile pitch and row pitch 32.05 px, 0.44 px apart on all ten rows. Space and Tab work on a tile; a reload brings the saved selection back; nothing picked leaves ten rows and "Nothing picked yet" |
 
 ### Step 2 results: the five small spikes (13 Nov, build step 1 of doc 23)
 

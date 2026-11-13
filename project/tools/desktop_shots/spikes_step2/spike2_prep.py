@@ -8,7 +8,10 @@ Property names come from `powerbi-report-author formatting describe-object table
 (Microsoft's catalog) and, for the header outline values, from Desktop's own table code ('BottomOnly').
 
 Knobs (key=value, all optional; the defaults are the values that passed on 13 Nov 2026):
-  hero_pad=0  hero_img_h=34  hero_img_w=   moves_pad=5  moves_y=   tile_pad=0  icon=16  key_w=0
+  hero_pad=0  hero_img_h=34  hero_h=372  hero_w=(columns + 2)  hero_cols=280/104/96/196/64/184/74
+  img_pad=7  img_w=(the comp's narrow bar column - img_pad)
+  active=<page name>  moves_pad=5.36  moves_y=237  moves_h=(to the slicer's bottom)  moves_cols=92/64/74/118  tile_pad=0  icon=16  key_w=0
+Flags: --report-only (Desktop is open: rewrite the pages, then `powerbi-desktop reload`), --diag (Tangerine gridlines)
 """
 import json
 import shutil
@@ -19,6 +22,7 @@ args = [a for a in sys.argv[1:] if not a.startswith("--") and "=" not in a]
 KNOB = dict(a.split("=", 1) for a in sys.argv[1:] if "=" in a and not a.startswith("--"))
 SRC, DST = Path(args[0]), Path(args[1])
 REPORT_ONLY = "--report-only" in sys.argv
+DIAG = "--diag" in sys.argv
 SRC_REPORT = "GoodnightInn-opzet.Report"
 REPORT = "SPIKE2-throwaway.Report"  # same stem as the .pbip, or `powerbi-desktop reload` finds no report folder
 MODEL = "PillowKey.SemanticModel"
@@ -28,9 +32,18 @@ FONT = "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
 NIGHT, DUSK, HAIR, TANGERINE, BLUE, BLUE_T, GREY, BAD = "#12233D", "#4B5466", "#E3DFD3", "#E05A22", "#2589D8", "#1763A8", "#8E897D", "#A63F0E"
 
 # ---------------------------------------------------------------- the hero constants (spec construction.tables.tbl_hero)
-HERO = dict(x=56, y=240, w=992, h=372)
-HERO_COLS = [280, 104, 96, 196, 64, 180, 72]
+SPEC_COLS = [280, 104, 96, 196, 64, 180, 72]  # the comp's widths: the bar geometry and the reference labels stay on these
+# What Desktop needs (measured 13 Nov): an image column of image + 11 px (7 left, 4 right; less draws a clipped
+# ellipsis beside the image) and 74 px for "−$27.3M" (cells pad 7.7 px left and 5 px right; the comp assumed 5 + 5).
+HERO_COLS = [int(v) for v in KNOB.get("hero_cols", "280/104/96/196/64/184/74").split("/")]
+# 2 px wider than the columns: at exactly the column sum Desktop shows a horizontal and then a vertical scrollbar
+HERO = dict(x=56, y=240, w=int(KNOB.get("hero_w", sum(HERO_COLS) + 2)), h=int(KNOB.get("hero_h", 372)))
 ROW_H, INSET, BAR_Y, BAR_H = 34, 4, 8, 18
+# Desktop draws an image IMG_PAD px from the left edge of its cell (measured, not a setting), and `grid.imageWidth` is
+# one value for the whole table. So both bar images get the same width, the narrow column minus the padding, and
+# every x inside the SVG is the comp's cell x minus IMG_PAD. The reference lines then sit where the comp has them.
+IMG_PAD = float(KNOB.get("img_pad", 7))
+IMG_W = int(KNOB.get("img_w", 0)) or int(SPEC_COLS[5] - IMG_PAD)
 YDOM, YREF = (-0.1, 0.9), 0.08
 NDOM, NREF = (-32e6, 12e6), 0.0
 
@@ -42,8 +55,8 @@ def bar_x(v, dom, w):
 
 def hero_ref_x():
     """Page x of the two reference lines; the labels lbl_hero_8 / lbl_hero_0 are placed from the same constants."""
-    x_y = HERO["x"] + sum(HERO_COLS[:3]) + bar_x(YREF, YDOM, HERO_COLS[3])
-    x_n = HERO["x"] + sum(HERO_COLS[:5]) + bar_x(NREF, NDOM, HERO_COLS[5])
+    x_y = HERO["x"] + sum(HERO_COLS[:3]) + bar_x(YREF, YDOM, SPEC_COLS[3])
+    x_n = HERO["x"] + sum(HERO_COLS[:5]) + bar_x(NREF, NDOM, SPEC_COLS[5])
     return x_y, x_n
 
 
@@ -52,17 +65,17 @@ def bar_cell(value_expr, dom, w, ref, fill_expr):
     Fixed pixel width and fixed domain, so the reference line has the same x in every row and scenario.
     Numbers go through FORMAT ( x, "0.0", "en-US" ): a comma locale never breaks the SVG. '#' is written as %23."""
     span, inner = dom[1] - dom[0], w - 2 * INSET
-    x0 = bar_x(max(dom[0], min(dom[1], 0.0)), dom, w)
-    xr = bar_x(ref, dom, w)
+    x0 = bar_x(max(dom[0], min(dom[1], 0.0)), dom, w) - IMG_PAD
+    xr = bar_x(ref, dom, w) - IMG_PAD
     f = 'FORMAT ( {0}, "0.0", "en-US" )'
     return (
         f"VAR v = {value_expr} "
         f"VAR c = MIN ( MAX ( v, {dom[0]!r} ), {dom[1]!r} ) "
-        f"VAR xv = {INSET} + ( c - ( {dom[0]!r} ) ) / {span!r} * {inner} "
+        f"VAR xv = {INSET - IMG_PAD!r} + ( c - ( {dom[0]!r} ) ) / {span!r} * {inner} "
         f"VAR x0 = {x0!r} "
         f'VAR fill = SUBSTITUTE ( {fill_expr}, "#", "%23" ) '
         "RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ), BLANK (), "
-        f"\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='{w}' height='{ROW_H}' viewBox='0 0 {w} {ROW_H}'>"
+        f"\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='{IMG_W}' height='{ROW_H}' viewBox='0 0 {IMG_W} {ROW_H}'>"
         f"<rect x='\" & {f.format('MIN ( x0, xv )')} & \"' y='{BAR_Y}' width='\" & {f.format('ABS ( xv - x0 )')} & \"' height='{BAR_H}' fill='\" & fill & \"'/>"
         f"<rect x='{xr - 0.5:.2f}' y='0' width='1' height='{ROW_H}' fill='%2312233D' shape-rendering='crispEdges'/></svg>\" )"
     )
@@ -140,8 +153,8 @@ measures = [
     ("S2 Mark Color", MARK, None),
     ("S2 Status Text Color", f'SWITCH ( {STAT}, "A", "{BLUE_T}", "2028 gate", "{NIGHT}", "{DUSK}" )', None),
     ("S2 NPV Text Color", f'IF ( ROUND ( [NPV @ 8%] / 1000000, 2 ) < 0, "{BAD}", "{NIGHT}" )', None),
-    ("S2 Yield Bar SVG", bar_cell(YLD, YDOM, HERO_COLS[3], YREF, MARK), "ImageUrl"),
-    ("S2 NPV Bar SVG", bar_cell("[NPV @ 8%]", NDOM, HERO_COLS[5], NREF, MARK), "ImageUrl"),
+    ("S2 Yield Bar SVG", bar_cell(YLD, YDOM, SPEC_COLS[3], YREF, MARK), "ImageUrl"),
+    ("S2 NPV Bar SVG", bar_cell("[NPV @ 8%]", NDOM, SPEC_COLS[5], NREF, MARK), "ImageUrl"),
     ("S3 Run-rate (text)", RR_T, None),
     ("S3 NPV Text Color", f'IF ( ROUND ( [Move NPV (num)] / 1000000, 2 ) < 0, "{BAD}", "{NIGHT}" )', None),
     ("S3 Picked (text)", '"Picked: " & [Build Count] & IF ( [Build Count] = 1, " move, ", " moves, " ) & [Build Capex (text)] & " of $60.0M"', None),
@@ -153,6 +166,12 @@ for name, expr, cat in measures:
     if cat:
         mea_lines.append(f"\t\tdataCategory: {cat}")
     mea_lines.append("")
+
+
+# the expressions as data too: a measure change does not reach a running Desktop through `powerbi-desktop reload`
+# (report only); push it with the modelling MCP (measure_operations Update) or project/tools/sync_measures_to_desktop.ps1
+DST.mkdir(parents=True, exist_ok=True)
+(DST / "spike_measures.json").write_text(json.dumps({n: e for n, e, _ in measures}, indent=1, ensure_ascii=False), encoding="utf-8")
 
 
 def insert_before_first(path, marker, block):
@@ -242,6 +261,10 @@ def page(name, title):
     }, indent=2) + "\n", encoding="utf-8")
     SPIKE_PAGES.append(name)
     z[0] = 0
+    # fiducials: Night squares at the page corners, so measure.py can map capture pixels to page pixels
+    for nm, fx, fy in (("fid_tl", 0, 0), ("fid_br", 1904, 1064)):
+        write(p, nm, fx, fy, 16, 16, {"visualType": "textbox", "objects": {}, "visualContainerObjects": vco(background=NIGHT),
+                                      "drillFilterOtherVisuals": False})
     return p
 
 
@@ -284,6 +307,9 @@ def table(projections, widths, header_h_hint=None, row_padding=0, image=None, ri
     widths by queryRef · right: queryRefs right-aligned (header and values) · font_colors: {queryRef: hex} (static)
     · field_colors: {queryRef: measure name} (font colour from a measure) · image: (height, width or None)."""
     grid = {"gridVertical": lit("false"), "gridHorizontal": lit("false"), "rowPadding": lit(f"{row_padding}D"), "outlineStyle": lit("'None'")}
+    if DIAG:  # diagnostic render: Tangerine gridlines show the real column and row boundaries
+        grid.update({"gridVertical": lit("true"), "gridVerticalColor": col(TANGERINE), "gridVerticalWeight": lit("1D"),
+                     "gridHorizontal": lit("true"), "gridHorizontalColor": col(TANGERINE), "gridHorizontalWeight": lit("1D")})
     if image:
         grid["imageHeight"] = lit(f"{image[0]}D")
         if image[1]:
@@ -314,7 +340,7 @@ def table(projections, widths, header_h_hint=None, row_padding=0, image=None, ri
 # ---------------------------------------------------------------- S-2: the hero table, one page per scenario
 GI = filter_in("InvestmentProjects", "Brand", ["Goodnight Inn"], "flt_gi_proj")
 HERO_PAD = float(KNOB.get("hero_pad", 0))
-HERO_IMG = (float(KNOB.get("hero_img_h", ROW_H)), float(KNOB["hero_img_w"]) if KNOB.get("hero_img_w") else None)
+HERO_IMG = (float(KNOB.get("hero_img_h", ROW_H)), IMG_W)
 hero_q = ["InvestmentProjects.S2 Move Name", "_Measures.S2 Answers (text)", "InvestmentProjects.S2 Status", "_Measures.S2 Yield Bar SVG",
           "_Measures.S2 Yield (text)", "_Measures.S2 NPV Bar SVG", "_Measures.S2 NPV (text)"]
 
@@ -332,7 +358,8 @@ x8, x0 = hero_ref_x()
 for scen in ("Expected", "Low", "High"):
     pg = page(f"s2-hero-{scen.lower()}", f"S-2 hero · {scen}")
     scen_f = filter_in("Scenario", "Scenario", [scen], "flt_scen")
-    write(pg, "n_s2", 56, 120, 992, 24, textbox(f"S-2 · hero table, {scen} case · slot 56, 240, 992, 372 · rows 34, header 32, row padding {HERO_PAD:g}"))
+    write(pg, "n_s2", 56, 120, 992, 24, textbox(f"S-2 · hero table, {scen} case · 56, 240, {HERO['w']}, {HERO['h']} · columns "
+                                                + "/".join(str(c) for c in HERO_COLS) + f" · rows 34, row padding {HERO_PAD:g}"))
     write(pg, "c_scen", 56, 152, 300, 24, card("Selected Scenario"), [scen_f])
     # the two reference labels at the comp's slots (lbl_hero_8 starts at the 8 % line, lbl_hero_0 ends at the 0 line)
     write(pg, "lbl_hero_8", round(x8), 216, 176, 24, textbox("8%: our cost of money"))
@@ -346,13 +373,17 @@ for scen in ("Expected", "Low", "High"):
 # ---------------------------------------------------------------- S-3: the native selector
 SL = dict(x=792, y=280, w=216, h=320)
 TM = dict(x=1008, y=248, w=344, h=352)
-MOVES_COLS = [92, 64, 72, 116]
+MOVES_SPEC = [92, 64, 72, 116]  # the comp's widths
+# Desktop needs 74 for "−$27.3M" and 118 for the header "A year by 2032" (cell padding, see the hero), and 2 px of slack
+MOVES_COLS = [int(v) for v in KNOB.get("moves_cols", "92/64/74/118").split("/")]
 A_MOVES = ["Booking app", "Revenue management", "Kiosks at 20 desks"]
-MOVES_PAD = float(KNOB.get("moves_pad", 5))
+# rows of 32 px: a 12 pt line is 21.28 px, so the padding is (32 - 21.28) / 2; Desktop honours the fraction.
+# The header takes the same padding and becomes 43.3 px (32.6 at padding 0), so the table starts at 280 - 43 = 237.
+MOVES_PAD = float(KNOB.get("moves_pad", 5.36))
 TILE_PAD = int(KNOB.get("tile_pad", 0))
 ICON = int(KNOB.get("icon", 16))
 KEY_W = float(KNOB.get("key_w", 0))
-MOVES_Y = int(KNOB.get("moves_y", TM["y"]))
+MOVES_Y = int(KNOB.get("moves_y", 237))
 
 
 def move_slicer(selected):
@@ -371,7 +402,8 @@ def move_slicer(selected):
         "label": [{"properties": {"show": lit("false")}, **sel("default")}],
         "padding": [{"properties": {"paddingSelection": lit("'Custom'"), "topMargin": lit("0L"), "bottomMargin": lit("0L"),
                                     "leftMargin": lit("8L"), "rightMargin": lit("8L")}, **sel("default")}],
-        "selectionIcon": [{"properties": {"show": lit("true"), "position": lit("'Left'"), "size": lit(f"{ICON}L"), "color": col(NIGHT)}, **sel("default")}],
+        "selectionIcon": [{"properties": {"show": lit("true"), "position": lit("'Left'"), "size": lit(f"{ICON}L"), "color": col(NIGHT)}, **sel("default")},
+                          {"properties": {"color": col(NIGHT)}, **sel("selection:selected")}],
         "selection": [{"properties": {"singleSelect": lit("false"), "strictSingleSelect": lit("false"), "selectAllCheckboxEnabled": lit("false")}}],
         "general": [{"properties": {"filter": {"filter": {
             "Version": 2, "From": [{"Name": "b", "Entity": "BuildMove", "Type": 0}],
@@ -386,11 +418,13 @@ def move_slicer(selected):
             "drillFilterOtherVisuals": False}
 
 
-moves_q = ["BuildMove.Sort", "_Measures.Move Answers (text)", "_Measures.Move Capex (text)", "_Measures.Move NPV (text)", "_Measures.S3 Run-rate (text)"]
+# The table needs one BuildMove column to get a row per move. It is the move's own name at width 0: nothing shows
+# (the names are on the tiles), and a screen reader still reads the name with the row.
+moves_q = ["BuildMove.Short Name", "_Measures.Move Answers (text)", "_Measures.Move Capex (text)", "_Measures.Move NPV (text)", "_Measures.S3 Run-rate (text)"]
 
 
 def moves_table():
-    proj = [proj_c("BuildMove", "Sort", "​"), proj_m("Move Answers (text)", "Answers"), proj_m("Move Capex (text)", "Capex"),
+    proj = [proj_c("BuildMove", "Short Name", "Move"), proj_m("Move Answers (text)", "Answers"), proj_m("Move Capex (text)", "Capex"),
             proj_m("Move NPV (text)", "NPV"), proj_m("S3 Run-rate (text)", "A year by 2032")]
     return table(proj, dict(zip(moves_q, [KEY_W] + MOVES_COLS)), row_padding=MOVES_PAD, right=tuple(moves_q[2:]),
                  font_colors={moves_q[1]: DUSK, moves_q[0]: "#FFFFFF"}, field_colors={moves_q[3]: "S3 NPV Text Color"},
@@ -398,10 +432,11 @@ def moves_table():
 
 
 pg = page("s3-selector", "S-3 selector")
-write(pg, "n_s3", 792, 120, 1072, 24, textbox(f"S-3 · button slicer 792, 280, 216, 320 beside table 1008, {MOVES_Y}, 344, 352 · "
+MOVES_W, MOVES_H = sum(MOVES_COLS) + KEY_W + 2, int(KNOB.get("moves_h", SL["y"] + SL["h"] - MOVES_Y))
+write(pg, "n_s3", 792, 120, 1072, 24, textbox(f"S-3 · button slicer 792, 280, 216, 320 beside table 1008, {MOVES_Y}, {MOVES_W:g}, {MOVES_H} · "
                                                f"row padding {MOVES_PAD:g}, tile padding {TILE_PAD}, icon {ICON}"))
 write(pg, "sl_moves", SL["x"], SL["y"], SL["w"], SL["h"], move_slicer(A_MOVES))
-write(pg, "tbl_moves", TM["x"], MOVES_Y, TM["w"] + KEY_W, TM["h"], moves_table())
+write(pg, "tbl_moves", TM["x"], MOVES_Y, MOVES_W, MOVES_H, moves_table())
 write(pg, "c_sel_footer", 792, 608, 560, 24, card("S3 Picked (text)"))
 write(pg, "c_build_title", 1384, 256, 464, 40, card("Build Title (text)"))
 write(pg, "n_s3b", 792, 648, 1072, 24, textbox("The two cards read the slicer's selection through the Build measures (ISFILTERED / ALLSELECTED on BuildMove)."))
@@ -415,6 +450,6 @@ pj.write_text(json.dumps(pd, indent=2) + "\n", encoding="utf-8")
 pj = PAGES / "pages.json"
 pages = json.loads(pj.read_text(encoding="utf-8"))
 pages["pageOrder"] = SPIKE_PAGES + [p for p in pages["pageOrder"] if p not in SPIKE_PAGES]
-pages["activePageName"] = SPIKE_PAGES[0]
+pages["activePageName"] = KNOB.get("active", SPIKE_PAGES[0])  # active=s3-selector puts the selector on screen for s3_keys.ps1
 pj.write_text(json.dumps(pages, indent=2) + "\n", encoding="utf-8")
 print("copy ready:", DST, "| pages:", ", ".join(SPIKE_PAGES), f"| reference lines at page x {x8:.2f}, {x0:.2f}")
