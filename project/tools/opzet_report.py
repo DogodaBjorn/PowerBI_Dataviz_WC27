@@ -23,7 +23,7 @@ slicer, so a bookmark never changes it (fx-focus rules 1-2). Shapes not yet exer
 FinalV3 (doc 23, the rebuild to the comp rebuild-comp-v10.html, one step per session): P1 is rebuilt (step 5). P2 runs
 on the v10 slot map since step 6, which built the frame (p2_frame) and the decision card of Recommended
 (p2_decision_card); p2_pending() says what steps 7 to 9 still rebuild:
-  rec    Recommended: A: the hero table and the capital plan (step 7), the decision card (built)
+  rec    Recommended: A: the hero table and the capital plan (built in step 7), the decision card (built)
   alts   What waits, and why: the small scatter, the table of what waits, the comparison with A (step 8)
   build  Build your own: the native move selector, your plan, the comparison with A (step 9)
 """
@@ -56,6 +56,7 @@ SELECTOR = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--selecto
 assert SELECTOR in ("deneb", "native"), SELECTOR
 # Build steps 5 and 6 (doc 23 rule 9): the v10 slot map is opzet-layout.json for every page; opzet-layout-v9.json is no longer read
 from slot_map import load_layout  # noqa: E402
+import sketch_model as sm  # noqa: E402  (build step 7: the hero table's geometry and the gate year, defined once beside the measures)
 LAYOUT = load_layout()
 THEME = json.loads((ROOT / "project" / "deliverables" / "theme.json").read_text(encoding="utf-8"))
 THEME_FILE = "goodnight-inn-wakeup.json"
@@ -1104,9 +1105,150 @@ def p2_decision_card():
     return v
 
 
+# ---------------------------------------------------------------------- FinalV3 build step 7: the hero table and the capital plan
+# The hero table as spike S-2 found it (doc 23, log of step 2; doc 21 6.1): the comp's columns with the three corrections a
+# native table needs (an image column is its image + 11 px, "−$27.3M" needs 74 px, 2 px of slack against a scrollbar). The
+# geometry lives in sketch_model.py, beside bar_cell(), so the bars, the reference lines and their two labels cannot drift.
+HERO_SLACK = 2
+# R-P2-3 caption, as approved (rebuild-v10-spec.json). Open question 3 of doc 23: its second sentence is not true in the data.
+HERO_CAPTION = "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still ramping up in 2032."
+ZW = "​"  # the header of a value column: the comp leaves it empty, a table column needs a name (one and two zero-width spaces)
+
+
+def hero_table():
+    """tbl_hero (R-P2-3, P-4): the ten moves in the model's order (Move Name is sorted by Hero Sort: the Expected 'a year on
+    cost', fixed at refresh), each with the finding it answers, its status as a word, and two bar cells with their values
+    beside them. Row padding 0 and an image as high as the row, so each reference line runs unbroken down the ten rows.
+    Status and NPV take their ink from the model (P-6: the word first, the colour second). No tooltip page."""
+    ms = ("Move Answers (text)", "Move Status (text)", "Hero Yield Bar SVG", "Move Yield (text)", "Hero NPV Bar SVG", "Move NPV (text)")
+    proj = [proj_col("InvestmentProjects", "Move Name", display="Move"), proj_mea(ms[0], "Answers"), proj_mea(ms[1], "Status"),
+            proj_mea(ms[2], "A year on cost"), proj_mea(ms[3], ZW), proj_mea(ms[4], "NPV through 2032"), proj_mea(ms[5], ZW * 2)]
+    refs = ["InvestmentProjects.Move Name", *[mref(m_) for m_ in ms]]
+    colfmt = [{"properties": {"fontColor": color(INK2), "styleHeader": b(False), "styleValues": b(True)}, "selector": {"metadata": refs[1]}},
+              *[{"properties": {"alignment": enum("Right"), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": refs[i]}} for i in (4, 6)]]
+    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=0, header_size=S, column_formatting=colfmt)
+    objs["grid"][0]["properties"].update({"gridHorizontal": b(False), "imageHeight": num(sm.HERO_ROW_H), "imageWidth": num(sm.HERO_IMG_W)})
+    objs["columnHeaders"][0]["properties"].update({"outlineStyle": enum("BottomOnly"), "outlineColor": color(INK2), "outlineWeight": num(1),
+                                                   "autoSizeColumnWidth": b(False), "wordWrap": b(False)})
+    objs["values"][0]["properties"].update({"wordWrap": b(False), "urlIcon": b(False)})
+    objs["values"] += [{"properties": {"fontColor": fv(ink)}, "selector": {**WILD, "metadata": refs[i]}} for i, ink in ((2, "Move Status Ink"), (6, "Move NPV Ink"))]
+    objs["columnWidth"] = [{"properties": {"value": num(w_)}, "selector": {"metadata": q_}} for q_, w_ in zip(refs, sm.HERO_COLS)]
+    x, y, w, h, z, tab = at(P2, "tbl_hero")
+    t = visual("tbl_hero", "tableEx", x, y, sum(sm.HERO_COLS) + HERO_SLACK, h, z, tab, query={"Values": {"projections": proj}}, objects=objs, vcos=vco(padding=0))
+    return bind_alt(t, "Alt Hero (text)")
+
+
+def p2_hero():
+    """The hero card of Recommended (doc 21 6.1, slots of doc 22 section 2): the title that follows the scenario, the two
+    reference labels at the x of their lines, the table, the caption."""
+    x8, x0 = sm.hero_ref_x()
+    s8, s0 = SLOT[P2]["lbl_hero_8"], SLOT[P2]["lbl_hero_0"]
+    # the slot map carries the comp's computed x; the generator's own constants must give the same pixels
+    assert s8["x"] == round(x8) and s0["x"] + s0["w"] == round(x0), (x8, x0, s8, s0)
+    lab8 = textbox("lbl_hero_8", *at(P2, "lbl_hero_8"), [[("8%: our cost of money", BODY, SPX, INK2, False)]], off_grid=True)
+    lab0 = textbox("lbl_hero_0", *at(P2, "lbl_hero_0"), [[("pays back by 2032 →", BODY, SPX, INK2, False)]], align="right", off_grid=True)
+    return [title(P2, "c_hero_title", "Hero Title (text)", lift=5), decorative(lab8, 40), decorative(lab0, 41), hero_table(),
+            tb(P2, "c_hero_caption", HERO_CAPTION)]
+
+
+def line_cards(page, name, measures, alt_measure, deco, colour=INK):
+    """A text block with fixed line breaks: a card value never breaks a line (spike S-7), so each line is its own card at the
+    comp's 21.3 px pitch, set from the top of the slot (rec_lines() of step 6). One tab stop: the first card reads them all."""
+    x, y, w, h, z, tab = at(page, name)
+    top = round(y + 21.3 / 2 - 0.7 - CARD_H[1] / 2)
+    out = []
+    for i, measure in enumerate(measures):
+        v = card(name if i == 0 else f"{name}_{i + 1}", x, top + round(21.3 * i), w, CARD_H[1], z, tab, [measure], BODY, S, colour, off_grid=True)
+        out.append(bind_alt(v, alt_measure) if i == 0 else decorative(v, deco + i))
+    return out
+
+
+PLAN_FILL = (ACCENT_MARK, INK, "#717B8B", SLATE)  # tranche 1, tranche 2, tranche 3 (Night at 60 % on white), not needed (spec ch_plan_bar)
+PLAN_LINES = {1: 2, 2: 3, 3: 3, 4: 1}             # lines of each segment's label (TEXT_SLOTS)
+PLAN_RECT = {}  # the visual rects that put Power BI's plot on the comp's (PLOT_RECT of step 5); filled from the tile render
+PLAN_X_END = 2032.8                 # spec ch_plan_cum.x_axis_end: room for the end labels inside the plot, no 2033 tick
+PLAN_Y = (-10_000_000, 20_000_000)  # spec ch_plan_cum.y: −10 to +20 $M, ticks at −10, 0, +10, +20
+PLAN_LABEL_POS = "Above"            # doc 22 section 3 asks for Right; a line chart knows Above and Under only (catalog, Microsoft validator)
+GATE_LINES = 4                      # lines of the gate rule at 12 pt in 704 px (the comp)
+
+
+def plan_bar():
+    """ch_plan_bar (R-P2-7, doc 21 6.3 with doc 22 section 3): one stacked bar of four measures, the budget from left to
+    right, no axes, no legend and no data labels (the four cards above print the amounts). The value axis ends at the
+    budget, so each segment starts under its card."""
+    ms = ["Tranche 1 Capex", "Tranche 2 Capex", "Tranche 3 Capex", "Not Needed Capex"]
+    # a bar chart needs a category: the brand, one value under the page's brand filter, so one bar
+    q = {"Category": {"projections": [proj_col("Brands", "Brand", active=True)]},
+         "Y": {"projections": [proj_mea(ms[0], "Tranche 1"), proj_mea(ms[1], "Tranche 2"), proj_mea(ms[2], "Tranche 3"), proj_mea(ms[3], "Not needed")]}}
+    va = axis(BODY, S, INK2, show=False, gridlines=False, start=0)
+    va[0]["properties"]["end"] = mtext("Move Budget (num)")
+    ca = axis(BODY, S, INK2, show=False)
+    ca[0]["properties"].update({"innerPadding": integer(0), "outerPadding": integer(0)})
+    objs = {"categoryAxis": ca, "valueAxis": va, "legend": legend(False), "labels": [{"properties": {"show": b(False)}}],
+            "dataPoint": series_colors(dict(zip([mref(m_) for m_ in ms], PLAN_FILL)))}
+    v = chart(P2, "ch_plan_bar", "barChart", q, objs, None, alt_measure="Alt Plan Bar (text)")
+    return plot_rect(v, PLAN_RECT["ch_plan_bar"]) if "ch_plan_bar" in PLAN_RECT else v
+
+
+def plan_cum():
+    """ch_plan_cum (R-P2-7, doc 21 6.3 and P-5 as doc 22 section 3 amends them): package A's cumulative net impact in the
+    three cases. The case in view is the 3 px Coffee Blue line; the other two are 1.5 px Warm Grey, Low dashed and High
+    dotted (A Cumulative Line (...) is blank for the case in view). One data label per line on the last year: the name and
+    the value from the label-safe format string, on white; the case in view in Deep Coffee semibold. The end series come
+    after the lines and the first line is formatted in whole $M, so the value axis prints "+$10M" in any locale (P-1 b).
+    Zero line named (R-G2), the gate as a dashed line at mid-2028; a year opens the year tooltip."""
+    sel = "Preset A Cumulative Net (sel)"
+    thin = [(f"A Cumulative Line ({c})", f"{c} case") for c in ("Low", "Expected", "High")]
+    ends = [(f"A Cumulative End {c} (label-safe)", f"{c} case, last year") for c in ("Low", "Expected", "High")]
+    end_sel = ("A Cumulative End Sel (label-safe)", "The case in view, last year")
+    series = thin + [(sel, "The case in view")] + ends + [end_sel]
+    q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m_, d_) for m_, d_ in series]}}
+    ls = line_styles({**{mref(m_): 1.5 for m_, _ in thin}, mref(sel): 3}, dashed=(mref(thin[0][0]),))
+    next(e for e in ls if e.get("selector", {}).get("metadata") == mref(thin[2][0]))["properties"]["lineStyle"] = enum("dotted")
+    ls += [{"properties": {"strokeShow": b(False), "showMarker": b(False)}, "selector": {"metadata": mref(m_)}} for m_, _ in ends + [end_sel]]
+    lab = {"fontFamily": text(BODY), "fontSize": num(S), "color": color(INK2), "labelDisplayUnits": integer(1),
+           "enableBackground": b(True)}  # white and opaque from the theme (compile_theme.py, lineChart labels)
+    years = HORIZON()["filter"]["Where"][0]["Condition"]["In"]["Values"]
+    first_year = int(years[0][0]["Literal"]["Value"].rstrip("L"))
+    objs = {"categoryAxis": axis(BODY, S, INK2, start=first_year, end=PLAN_X_END, extra={"labelPrecision": integer(0)}),
+            "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, units=1, start=PLAN_Y[0], end=PLAN_Y[1]),
+            "legend": legend(False), "seriesLabels": [{"properties": {"show": b(False)}}],
+            "labels": [{"properties": {"show": b(True), **lab}},
+                       *[{"properties": {"showSeries": b(False)}, "selector": {"metadata": mref(m_)}} for m_, _ in thin + [(sel, "")]],
+                       *[{"properties": {"showSeries": b(True), "labelPosition": enum(PLAN_LABEL_POS)}, "selector": {"metadata": mref(m_)}} for m_, _ in ends],
+                       {"properties": {"showSeries": b(True), "labelPosition": enum(PLAN_LABEL_POS), "color": color(ACCENT), "fontFamily": text(DISPLAY)},
+                        "selector": {"metadata": mref(end_sel[0])}}],
+            "dataPoint": series_colors({**{mref(m_): SLATE for m_, _ in thin + ends}, mref(sel): ACCENT_MARK, mref(end_sel[0]): ACCENT_MARK}),
+            "lineStyles": ls,
+            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
+                                                    "position": enum("back"), "displayName": text("Cash positive above this line"), "dataLabelShow": b(True),
+                                                    "dataLabelText": enum("Name"), "dataLabelColor": color(INK2), "dataLabelHorizontalPosition": enum("left"),
+                                                    "dataLabelVerticalPosition": enum("above")}, "selector": {"id": "1"}}],
+            "xAxisReferenceLine": [{"properties": {"show": b(True), "value": num(sm.GATE_YEAR + 0.5), "lineColor": color(INK), "transparency": num(0), "width": num(1),
+                                                   "style": enum("dashed"), "position": enum("back"), "displayName": text(f"The {sm.GATE_YEAR} gate"), "dataLabelShow": b(True),
+                                                   "dataLabelText": enum("Name"), "dataLabelColor": color(INK), "dataLabelHorizontalPosition": enum("right"),
+                                                   "dataLabelVerticalPosition": enum("above")}, "selector": {"id": "1"}}]}
+    v = chart(P2, "ch_plan_cum", "lineChart", q, objs, None, filters=[HORIZON()], alt_measure="Alt Plan Cum (text)", tooltip_page=TT_YEAR)
+    return plot_rect(v, PLAN_RECT["ch_plan_cum"]) if "ch_plan_cum" in PLAN_RECT else v
+
+
+def p2_capital_plan():
+    """The capital plan in the bottom card of Recommended (doc 21 6.3, N-5; slots of doc 22 section 2): title, hover tag,
+    the four segment labels above their segments, the plan bar, the gate rule, A's cumulative chart and the milestone
+    line. Reading order: title, segments left to right, bar, gate, chart, milestones (R-P2-9)."""
+    v = [title(P2, "c_plan_title", "Capital Plan Title (text)", lift=5), hover_tag_text(P2, "tag_plan_cum", "Hover a year", 22)]
+    for k, n in PLAN_LINES.items():
+        v += line_cards(P2, f"c_plan_t{k}", [f"Plan T{k} L{i} (text)" for i in range(1, n + 1)], f"Plan T{k} (text)", 50 + 10 * k)
+    v.append(plan_bar())
+    v.append(note(P2, "c_plan_gate", "Gate Rule (text)", GATE_LINES, colour=INK))
+    v.append(plan_cum())
+    v.append(note(P2, "c_plan_milestones", "Milestones (text)", 1))
+    return v
+
+
 def p2_pending():
-    """What steps 7 to 9 of doc 23 still rebuild (rule 9: a state that is not rebuilt yet may show only its frame). The hero
-    table and the capital plan (step 7) have no visual yet. Of What waits (step 8) and Build (step 9) the old visuals that
+    """What steps 7 to 9 of doc 23 still rebuild (rule 9: a state that is not rebuilt yet may show only its frame). Recommended
+    is complete since step 7 (p2_hero, p2_capital_plan). Of What waits (step 8) and Build (step 9) the old visuals that
     still have a slot in the v10 map stay in their new rects until their step replaces them: the small scatter stack, the
     two comparison charts with their hover tags, and the three cards of your plan. Everything else of the old page 2 is
     gone from the files (the B and C tiles, the Deneb selector, the waterfalls, the state titles)."""
@@ -1124,7 +1266,7 @@ def p2_pending():
 
 
 def p2_visuals():
-    return p2_frame() + p2_decision_card() + p2_pending()
+    return p2_frame() + p2_hero() + p2_decision_card() + p2_capital_plan() + p2_pending()
 
 
 # ====================================================================== the package tooltip (08-verbeterplan V2, round 4)
@@ -1226,7 +1368,7 @@ def scene_visual(name):
     return [decorative(image_file("z_canvas", 0, 0, cv["w"], cv["h"], 0, 0, f, None), 0)]
 
 
-DATA_VISUALS = {"lineChart", "clusteredColumnChart", "clusteredBarChart", "scatterChart", "tableEx", "waterfallChart"}  # round 9: + bars (the F4 chip tooltip)
+DATA_VISUALS = {"lineChart", "clusteredColumnChart", "clusteredBarChart", "barChart", "scatterChart", "tableEx", "waterfallChart"}  # round 9: + bars (the F4 chip tooltip)
 
 
 def finish(visuals):

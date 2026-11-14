@@ -1,17 +1,10 @@
-build_checks: 138 results, 135 ok, 2 known, 1 open, 0 failed
+build_checks: 5 results, 4 ok, 0 known, 1 open, 0 failed (static: check 5 skipped)
 
   ok    1 bound fields exist: 1 ok
   ok    2 R-G2 vocabulary, rebuilt copy (strict): 1 ok
   open  2 R-G2 vocabulary, old report and old measures (open until step 11): 1 open
   ok    3 no two-decimal $M in a text measure: 1 ok
   ok    4 one release rule: 1 ok
-  ok    5 text against the spec: 129 ok, 2 KNOWN
-  ok    5 every spec slot is accounted for: 1 ok
-  ok    2 R-G2 vocabulary, printed text (strict): 1 ok
-
-KNOWN (not failures)
-  5 text against the spec · P2 rec Expected · tbl_hero: spec '20.5%' model '20.6%'
-  5 text against the spec · P2 rec Expected · c_hero_title: spec 'Two moves pass both tests; the kiosks earn 20.5% a year on cost but pay back after 2032' | model 'Two moves pass both tests; the kiosks earn 20.6% a year on cost but pay back after 2032'
 
 OPEN (expected until the old visuals are gone, step 11)
   2 R-G2 vocabulary, old report and old measures (open until step 11) · 16 measures, 3 report strings: Alt C (text); Alt Cumulative (text); Alt Definitions (text); Alt Plan Table (text); Alt Scatter (text); Alt Scatter Cloud (text); Cumulative Title (text); Facts Bar SVG; Plan Ops (text); Plan Title (text); Plan Valid (text); Rec Held (text); Rec Rules (text); TT Range (text); TT Range SVG; TT Title (text) | report: Break-even; Pays back, break-even; Run-rate

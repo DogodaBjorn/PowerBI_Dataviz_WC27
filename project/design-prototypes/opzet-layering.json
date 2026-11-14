@@ -514,6 +514,26 @@
     "chip_def2": {
       "z": 66000,
       "tabOrder": 9010
+    },
+    "c_plan_t1_2": {
+      "z": 34100,
+      "tabOrder": -34101
+    },
+    "c_plan_t2_2": {
+      "z": 35100,
+      "tabOrder": -35101
+    },
+    "c_plan_t2_3": {
+      "z": 35200,
+      "tabOrder": -35201
+    },
+    "c_plan_t3_2": {
+      "z": 36100,
+      "tabOrder": -36101
+    },
+    "c_plan_t3_3": {
+      "z": 36200,
+      "tabOrder": -36201
     }
   }
 }

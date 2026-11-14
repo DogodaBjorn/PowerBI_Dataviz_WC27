@@ -190,6 +190,31 @@
     },
     {
       "source": "hero_s_packages_hover",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
       "target": "img_rec_chip",
       "type": "NoFilter"
     },
@@ -226,6 +251,81 @@
     {
       "source": "hero_s_packages_hover",
       "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_plan_milestones",
       "type": "NoFilter"
     },
     {
@@ -395,6 +495,31 @@
     },
     {
       "source": "hero_s_packages_build",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
       "target": "img_rec_chip",
       "type": "NoFilter"
     },
@@ -431,6 +556,81 @@
     {
       "source": "hero_s_packages_build",
       "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_milestones",
       "type": "NoFilter"
     },
     {
@@ -497,7 +697,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_page_projects_12",
+        "name": "flt_page_projects_14",
         "field": {
           "Column": {
             "Expression": {
@@ -551,7 +751,7 @@
         "howCreated": "User"
       },
       {
-        "name": "flt_page_brand_13",
+        "name": "flt_page_brand_15",
         "field": {
           "Column": {
             "Expression": {

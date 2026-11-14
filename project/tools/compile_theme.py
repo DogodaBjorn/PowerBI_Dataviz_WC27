@@ -116,6 +116,11 @@ theme = {
             "value": [{"$id": "default", "fontFamily": body, "fontSize": body_pt, "fontColor": fill(c["ink"])},
                       {"$id": "selection:selected", "fontColor": fill(c["surface"])}],
         }},
+        # FinalV3 build step 7: a data label that asks for a background (the end labels of the cumulative charts, doc 22
+        # section 3) gets the card's white, opaque. Set here because Microsoft's CLI validator reads a fill named
+        # backgroundColor inside a visual's labels as a misplaced "color" (PBIR_FORMATTING_PROP_NESTED); the shape itself
+        # is the theme schema's (reportThemeSchema-2.159, visual-lineChart labels: backgroundColor, backgroundTransparency).
+        "lineChart": {"*": {"labels": [{"backgroundColor": fill(c["surface"]), "backgroundTransparency": 0}]}},
         "page": {"*": {
             "background": [{"color": fill(c["canvas"]), "transparency": 0}],
             "outspace": [{"color": fill(c["canvas"]), "transparency": 0}],

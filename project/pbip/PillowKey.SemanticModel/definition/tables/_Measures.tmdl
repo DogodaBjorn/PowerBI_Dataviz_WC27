@@ -2931,9 +2931,9 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 8f231a16-004c-5961-9a74-ce1a30905940
 
-	/// Capital plan chart: package A's cumulative net impact in the Low case; blank when Low is the case in view (the emphasised line draws it).
+	/// Capital plan chart: package A's cumulative net impact in the Low case; blank when Low is the case in view (the emphasised line draws it). Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).
 	measure 'A Cumulative Line (Low)' = IF ( [Selected Scenario] = "Low", BLANK (), [TT Year A (Low)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		formatString: +\$#,0,,\M;−\$#,0,,\M;\$0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 38ce4fc2-e908-5a0f-b9de-2d7d24de29e0
 
@@ -2946,9 +2946,9 @@ table _Measures
 				VAR __t = "Low " & ( VAR __v = ( [A Cumulative Line (Low)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
 				```
 
-	/// Capital plan chart: package A's cumulative net impact in the Expected case; blank when Expected is the case in view (the emphasised line draws it).
+	/// Capital plan chart: package A's cumulative net impact in the Expected case; blank when Expected is the case in view (the emphasised line draws it). Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).
 	measure 'A Cumulative Line (Expected)' = IF ( [Selected Scenario] = "Expected", BLANK (), [TT Year A (Expected)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		formatString: +\$#,0,,\M;−\$#,0,,\M;\$0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: e7ad6fe0-deae-599b-8e7b-f3b983255638
 
@@ -2961,9 +2961,9 @@ table _Measures
 				VAR __t = "Expected " & ( VAR __v = ( [A Cumulative Line (Expected)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
 				```
 
-	/// Capital plan chart: package A's cumulative net impact in the High case; blank when High is the case in view (the emphasised line draws it).
+	/// Capital plan chart: package A's cumulative net impact in the High case; blank when High is the case in view (the emphasised line draws it). Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).
 	measure 'A Cumulative Line (High)' = IF ( [Selected Scenario] = "High", BLANK (), [TT Year A (High)] )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		formatString: +\$#,0,,\M;−\$#,0,,\M;\$0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: c4590e9d-fc4c-580a-a703-234395bfa73f
 
@@ -3383,6 +3383,36 @@ table _Measures
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: a041666e-4a3a-5c48-993c-84f2fba3a944
+
+	/// Hero row: the text colour of the status word (Deep Coffee for package A, Night for the 2028 gate, Dusk for not now). The bars keep the mark colours (Move Status Color).
+	measure 'Move Status Ink' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( st, "A", "#1763A8", "2028 gate", "#12233D", "#4B5466" ) )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: c19569d0-ba81-5495-bba8-177ec1b61a85
+
+	/// Hero row: the ink of the move's NPV, Burnt Tangerine when the shown value is below zero (the sign carries it too), Night otherwise.
+	measure 'Move NPV Ink' = VAR v = [Move NPV (num)] RETURN IF ( ROUND ( v / 10000, 0 ) < 0, "#A63F0E", "#12233D" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 78c2b4bb-717c-56da-a17e-d60f6aef7133
+
+	/// The hero table read aloud: what it ranks, the title's verdict, the three highest moves with both numbers, and what the two reference lines mean.
+	measure 'Alt Hero (text)' = VAR t = ADDCOLUMNS ( SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects[ProjectID], InvestmentProjects[Brand], InvestmentProjects[Hero Sort] ), InvestmentProjects[Brand] = "Goodnight Inn" ), "@p", InvestmentProjects[ProjectID], "@o", InvestmentProjects[Hero Sort] ), "@y", VAR p = [@p] RETURN CALCULATE ( [A Year on Cost], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ), "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR s = [Selected Scenario] RETURN "The ten moves ranked by what each earns a year on its cost, with the finding each answers, its status and its NPV through " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ", " & s & " case. " & [Hero Title (text)] & ". Highest: " & CONCATENATEX ( TOPN ( 3, t, [@o], ASC ), LOOKUPVALUE ( InvestmentProjects[Move Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __p = ( [@y] ) * 100 RETURN IF ( ROUND ( __p, 1 ) < 0, UNICHAR ( 8722 ), "" ) & FORMAT ( ABS ( __p ), "0.0", "en-US" ) & "%" ) & " a year on cost, NPV " & ( VAR __v = ( [@v] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), "; ", [@o], ASC ) & ". The two marked lines are our " & FORMAT ( LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ), "0%", "en-US" ) & " cost of money and NPV zero."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: a7b5ff8a-2a35-5f76-ade7-a430d3cfa25c
+
+	/// The capital plan bar read aloud: the four segments with their labels, in order.
+	measure 'Alt Plan Bar (text)' = "How the $" & FORMAT ( CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) / 1000000, "#,0", "en-US" ) & "M budget is planned, in four parts. " & SUBSTITUTE ( [Plan T1 (text)], UNICHAR ( 10 ), ", " ) & ". " & SUBSTITUTE ( [Plan T2 (text)], UNICHAR ( 10 ), ", " ) & ". " & SUBSTITUTE ( [Plan T3 (text)], UNICHAR ( 10 ), ", " ) & ". " & SUBSTITUTE ( [Plan T4 (text)], UNICHAR ( 10 ), ", " ) & "."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 4eb48b17-da97-53b1-9e84-d5889ccde30d
+
+	/// The capital plan's cumulative chart read aloud: the three end points, the cash-positive year in the case in view, and the gate.
+	measure 'Alt Plan Cum (text)' = VAR pb = [Preset A Payback Year] VAR s = [Selected Scenario] RETURN "Package A, cumulative net impact by year to " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & " in the three cases. By " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ": Low " & ( VAR __v = ( CALCULATE ( [TT Year A (Low)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", Expected " & ( VAR __v = ( CALCULATE ( [TT Year A (Expected)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", High " & ( VAR __v = ( CALCULATE ( [TT Year A (High)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". In the " & s & " case " & IF ( ISBLANK ( pb ), "A is not cash positive by " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ), "A is cash positive from " & pb ) & ". The Board decides on the rest at the 2028 gate."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 0cceffcb-c65f-5fa9-9f6a-b186c9218717
 
 	/// Proof chart title (R-W-1): every package the contest rules allow, and how many beat A's NPV through 2032 in the case in view (none, in all three).
 	measure 'Proof Title (text)' = VAR s = [Selected Scenario] VAR t = ADDCOLUMNS ( ALLNOBLANKROW ( Package ), "@v", SWITCH ( s, "Low", Package[NPV Low], "High", Package[NPV High], Package[NPV Expected] ) ) VAR av = [Rec NPV (sel)] VAR beat = COUNTROWS ( FILTER ( t, [@v] > av ) ) + 0 RETURN "We checked all " & COUNTROWS ( t ) & " packages the rules allow: " & IF ( beat = 0, "none beats A", beat & IF ( beat = 1, " beats A", " beat A" ) ) & " through " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" )

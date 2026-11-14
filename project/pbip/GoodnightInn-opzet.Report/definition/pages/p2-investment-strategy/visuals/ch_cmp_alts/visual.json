@@ -754,7 +754,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_horizon_10",
+        "name": "flt_horizon_12",
         "field": {
           "Column": {
             "Expression": {

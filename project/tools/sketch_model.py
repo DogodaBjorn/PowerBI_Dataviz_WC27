@@ -661,6 +661,8 @@ C9 = "09 Package matrix"
 # the earlier "#,0.0,," rendered "$9.400.000,0,,M" in Desktop (7 Nov). USDM above already uses the right form.
 SUSDM = r"+\$#,0,,.0\M;" + "−" + r"\$#,0,,.0\M;\$0.0\M"
 USDM1 = r"\$#,0,,.0\M"
+# whole $M for a value axis: a tick carries no decimal separator in any locale (doc 21 P-1 b); "+$10M", "−$10M", "$0M"
+SUSDM0 = r"+\$#,0,,\M;" + "−" + r"\$#,0,,\M;\$0\M"
 MINUS = 'UNICHAR ( 8722 )'
 
 
@@ -1991,8 +1993,9 @@ m("App Run-rate (sel)", APP_IDS + f"RETURN CALCULATE ( [2032 Run-rate], {APP_T} 
 # label-safe (P-1). In the chart the end series come AFTER the line series, so the value axis keeps a line's format.
 _YEND = f"VAR __y = MAX ( 'Date'[Year] ) VAR __h = {HORIZON} RETURN IF ( __y = __h, {{0}} )"
 for scn in ("Low", "Expected", "High"):
-    m(f"A Cumulative Line ({scn})", f'IF ( [Selected Scenario] = "{scn}", BLANK (), [TT Year A ({scn})] )', SUSDM, C15,
-      f"Capital plan chart: package A's cumulative net impact in the {scn} case; blank when {scn} is the case in view (the emphasised line draws it).")
+    m(f"A Cumulative Line ({scn})", f'IF ( [Selected Scenario] = "{scn}", BLANK (), [TT Year A ({scn})] )', SUSDM0, C15,
+      f"Capital plan chart: package A's cumulative net impact in the {scn} case; blank when {scn} is the case in view (the emphasised line draws it). "
+      "Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).")
     label_safe(f"A Cumulative End {scn} (label-safe)", _YEND.format(f"[A Cumulative Line ({scn})]"), f'"{scn} " & ' + sfm(f"[A Cumulative Line ({scn})]"), C15,
                f"Capital plan chart, end label of the {scn} line: its value on the horizon year only, printed as '{scn}' and the amount.")
 label_safe("A Cumulative End Sel (label-safe)", _YEND.format("[Preset A Cumulative Net (sel)]"), '[Selected Scenario] & " " & ' + sfm("[Preset A Cumulative Net (sel)]"), C15,
@@ -2338,6 +2341,32 @@ m("Milestones (text)",
   + ' & IF ( [@dep] <> "", " (" & IF ( ' + is_plural("[@p]") + ', "they need", "it needs" ) & " the " & LOWER ( ' + pid_switch("[@dep]", MOVE_LABEL) + ' ) & ")", "" ), " · ", [@d], ASC ) '
   f'& " · " & IF ( ISBLANK ( pb ), "Not cash positive by " & {HORIZON}, "Cash positive " & pb ) & " (" & [Selected Scenario] & ")"',
   TXT, C15, "Capital plan milestone strip: the go-live of A's moves in order, the dependency, and the year A turns cash positive (undiscounted cumulative), scenario in view.")
+
+# ---- build step 7 (doc 23): what the hero table and the capital plan need beside the numbers and the text
+# the inks of two hero columns (doc 22 section 3): the status word in a text colour (Warm Grey is 3.5:1 as text), the NPV
+# in Burnt Tangerine below zero, on the shown value
+m("Move Status Ink", f'VAR st = {MOVE_ST} RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( st, "A", "{ACCENT}", "2028 gate", "{INK}", "{INK2}" ) )', TXT, C15,
+  "Hero row: the text colour of the status word (Deep Coffee for package A, Night for the 2028 gate, Dusk for not now). The bars keep the mark colours (Move Status Color).")
+m("Move NPV Ink", f'VAR v = [Move NPV (num)] RETURN IF ( ROUND ( v / 10000, 0 ) < 0, "{BAD}", "{INK}" )', TXT, C15,
+  "Hero row: the ink of the move's NPV, Burnt Tangerine when the shown value is below zero (the sign carries it too), Night otherwise.")
+_A32 = "CALCULATE ( [TT Year A ({0})], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = " + HORIZON + " )"
+alt_m("Hero",
+      _HERO_T + 'VAR s = [Selected Scenario] '
+      'RETURN "The ten moves ranked by what each earns a year on its cost, with the finding each answers, its status and its NPV through " & ' + HORIZON + ' & ", " & s & " case. " '
+      '& [Hero Title (text)] & ". Highest: " & CONCATENATEX ( TOPN ( 3, t, [@o], ASC ), LOOKUPVALUE ( InvestmentProjects[Move Name], InvestmentProjects[ProjectID], [@p] ) & " " & '
+      + pct1("[@y]") + ' & " a year on cost, NPV " & ' + sfm("[@v]") + ', "; ", [@o], ASC ) & ". The two marked lines are our " & FORMAT ( ' + RATE + ', "0%", "en-US" ) & " cost of money and NPV zero."',
+      "The hero table read aloud: what it ranks, the title's verdict, the three highest moves with both numbers, and what the two reference lines mean.")
+alt_m("Plan Bar",
+      '"How the $" & FORMAT ( ' + BUDGET_GI + ' / 1000000, "#,0", "en-US" ) & "M budget is planned, in four parts. " & '
+      + ' & ". " & '.join(f'SUBSTITUTE ( [Plan T{k} (text)], {LF}, ", " )' for k in (1, 2, 3, 4)) + ' & "."',
+      "The capital plan bar read aloud: the four segments with their labels, in order.")
+alt_m("Plan Cum",
+      "VAR pb = [Preset A Payback Year] VAR s = [Selected Scenario] "
+      'RETURN "Package A, cumulative net impact by year to " & ' + HORIZON + ' & " in the three cases. By " & ' + HORIZON + ' & ": Low " & ' + sfm(_A32.format("Low"))
+      + ' & ", Expected " & ' + sfm(_A32.format("Expected")) + ' & ", High " & ' + sfm(_A32.format("High"))
+      + ' & ". In the " & s & " case " & IF ( ISBLANK ( pb ), "A is not cash positive by " & ' + HORIZON + ', "A is cash positive from " & pb ) & '
+      + f'". The Board decides on the rest at the {GATE_YEAR} gate."',
+      "The capital plan's cumulative chart read aloud: the three end points, the cash-positive year in the case in view, and the gate.")
 
 # ---- What waits, and why (R-W-1 to R-W-3)
 _NPV_SEL = 'VAR s = [Selected Scenario] VAR t = ADDCOLUMNS ( ALLNOBLANKROW ( Package ), "@v", SWITCH ( s, "Low", Package[NPV Low], "High", Package[NPV High], Package[NPV Expected] ) ) '

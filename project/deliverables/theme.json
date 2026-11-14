@@ -316,6 +316,20 @@
         ]
       }
     },
+    "lineChart": {
+      "*": {
+        "labels": [
+          {
+            "backgroundColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "backgroundTransparency": 0
+          }
+        ]
+      }
+    },
     "page": {
       "*": {
         "background": [
