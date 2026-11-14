@@ -1,0 +1,341 @@
+Show keyboard shortcuts
+Show screen reader tips
+Skip to main content
+← The Brand Review
+2 / 2 · ROOM TO INVEST
+· THE INVESTMENT STRATEGY
+Recommended: A
+What waits, and why
+Build your own
+Fix the middleman first: $9.4M now earns $6.2M a year by 2032.
+The other $50.6M waits for one Board decision in mid-2028. High case. NPV through 2032 at 8% in 2025 dollars is the contest's rule and counts nothing after 2032, so we also show what each move earns a year once it is live.
+Scenario
+Low
+Expected
+High
+Three moves pass both tests; the breakfast upgrade earns 26.4% a year on cost but pays back after 2032
+Our recommendation: package A
+Booking app with member rates + Revenue management + Kiosks at the 20 busiest hotels
+8%: our cost of money
+pays back by 2032 →
+capex
+$9.4M
+NPV through 2032
++⁠$12.7M
+a year by 2032
++⁠$6.2M
+a year on cost
+66.0%
+Scroll up
+Scroll down
+Scroll left
+Scroll right
+Row Selection
+Move
+Answers
+Status
+A year on cost
+​
+NPV through 2032
+​​
+Select Row
+Booking app & member rates
+F2 · growth
+A
+Additional Conditional Formatting
+82.1%
++⁠$9.5M
+Additional Conditional Formatting
+Select Row
+Revenue management
+F1 · growth
+A
+Additional Conditional Formatting
+61.7%
++⁠$3.2M
+Additional Conditional Formatting
+Select Row
+Kiosks at the 20 busiest hotels
+F4
+A
+Additional Conditional Formatting
+30.9%
++⁠$0.03M
+Additional Conditional Formatting
+Select Row
+Breakfast upgrade
+F3 · growth
+not now
+Additional Conditional Formatting
+26.4%
+−⁠$0.1M
+Additional Conditional Formatting
+Select Row
+Gatwick +40 rooms
+F4 · growth
+2028 gate
+Additional Conditional Formatting
+16.9%
+−⁠$3.3M
+Additional Conditional Formatting
+Select Row
+Energy programme
+F1
+not now
+Additional Conditional Formatting
+15.8%
+−⁠$10.5M
+Additional Conditional Formatting
+Select Row
+Toronto +40 rooms
+F4 · growth
+2028 gate
+Additional Conditional Formatting
+12.3%
+−⁠$3.6M
+Additional Conditional Formatting
+Select Row
+Kingston +40 rooms
+F4 · growth
+not now
+Additional Conditional Formatting
+8.9%
+−⁠$3.8M
+Additional Conditional Formatting
+Select Row
+Boston new hotel
+F4 · growth
+not now
+Additional Conditional Formatting
+9.0%
+−⁠$17.8M
+Additional Conditional Formatting
+Select Row
+Refresh, 10 oldest hotels
+F3
+2028 gate
+Additional Conditional Formatting
+11.5%
+−⁠$24.1M
+Additional Conditional Formatting
+Worst case (Low): −⁠$5.5M through 2032, and still +⁠$1.0M a year by 2032.
+The app carries it: +⁠$9.5M of the +⁠$12.7M. Every year without it leaves about $3.6M with the agencies.
+Scroll up
+Scroll down
+Scroll left
+Scroll right
+Row Selection
+Finding
+What we track
+2025
+2032 with A
+Status
+Select Row
+F2 The middleman
+distribution cost, % of room revenue
+booking app with member rates
+11.3%
+9.5%
+three quarters of the rise since 2021 undone
+Select Row
+F1 The margin
+operating margin after commissions
+app + revenue management + kiosks
+33.7%
+36.1%
+most of the fall since 2023 recovered
+Select Row
+F4 Where we are full
+self check-in hotels · rooms added
+kiosks live Apr 2028; guest score +0.35 there (dataset units)
+0 of 20 · 0
+20 of 20 · 0
+rooms decided at the 2028 gate
+Select Row
+F3 The fading welcome
+refresh of the 10 oldest hotels
+why: see What waits, and why
+not started
+not started
+deferred to the 2028 gate
+Think you can beat A? Build your own →
+A year on cost = what a move adds to operating profit in 2032 ÷ what it costs.
+2025 brand plus A's full yearly effect, in 2025 dollars.
+The $60M plan: $9.4M now, two decisions in 2028
+ⓘ
+Hover a year
+Tranche 1 · package A
+Tranche 2 · Gatwick and Toronto +40 rooms
+Tranche 3 · the refresh
+Not needed · $8.7M
+$9.4M · 2027
+$12.4M · 2028 gate
+$29.5M · 2028 gate
++⁠$1.8M a year once live · 14.8% a year on cost
++⁠$3.4M a year once live · 11.5% a year on cost
+The 2028 gate, once all three moves are live: the Board releases tranche 2 if distribution cost has fallen at least 0.6 points (the app's Low case) and Gatwick and Toronto still topped 90% in 6 of the last 12 months. The refresh comes back to the same meeting with a case that looks beyond 2032. A decision rule, not a forecast.
+$0M
++$20M
+2027
+2028
+2029
+2030
+2031
+2032
+The 2028 gate
+Cash positive above this line
+Low −⁠$4.6M
+Expected +⁠$6.8M
+High +⁠$19.2M
+RMS live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Cash positive 2029 (High)
+Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.
+ⓘ Definitions
+-
++
+100%
+Microsoft Power BI
+2
+of
+2
+M
+2031:
+Low case −$6M,
+High case +$13M,
+The case in view +$3.3M
+aria: The Investment Strategy
+aria: Show keyboard shortcuts
+aria: Show screen reader tips (opens in new tab)
+aria: Skip to main content
+aria: Power BI Report
+aria: Power BI Report
+aria:  Goodnight Inn
+aria: Page navigation  Back to The Brand Review, page 1. Click here to follow
+aria:  Page 2 of 2, room to invest: the investment strategy
+aria: 2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY
+aria: Bookmark  Recommended A, the current view: the recommendation, package A. Click here to follow
+aria: Bookmark  What waits and why: show the moves that wait for the 2028 gate, and why. Click here to follow
+aria: Bookmark  Build your own: show pick moves and compare your plan with A. Click here to follow
+aria:  Fix the middleman first: $9.4M now earns $6.2M a year by 2032.
+aria: Card
+aria: Headline P2 (text), Fix the middleman first: $9.4M now earns $6.2M a year by 2032. card
+aria:  The other $50.6M waits for one Board decision in mid-2028. High case. NPV through 2032 at 8% in 2025 dollars is the contest's rule and counts nothing after 2032, so we also show what each move earns a year once it is live.
+aria: Card
+aria: Subtitle P2 (text), The other $50.6M waits for one Board decision in mid-2028. High case. NPV through 2032 at 8% in 2025 dollars is the contest's rule and counts nothing after 2032, so we also show what each move earns a year once it is live. card
+aria: Scenario
+aria:  Scenario: Low, Expected or High; every number on this page follows it
+aria: Search
+aria:  Three moves pass both tests; the breakfast upgrade earns 26.4% a year on cost but pays back after 2032
+aria: Card
+aria: Hero Title (text), Three moves pass both tests; the breakfast upgrade earns 26.4% a year on cost but pays back after 2032 card
+aria: Image
+aria:  Our recommendation: package A. Booking app & member rates + Revenue management + Kiosks at the 20 busiest hotels.
+aria: Our recommendation: package A
+Booking app with member rates + Revenue management + Kiosks at the 20 busiest hotels
+aria: 8%: our cost of money
+aria: pays back by 2032 →
+aria:  Package A, High case: capex $9.4M, net present value through 2032 +⁠$12.7M, +⁠$6.2M a year by 2032, 66.0% a year on cost.
+aria: Card
+aria: capex, $9.4M card
+aria: NPV through 2032, +⁠$12.7M card
+aria: a year by 2032, +⁠$6.2M card
+aria: a year on cost, 66.0% card
+aria:  The ten moves ranked by what each earns a year on its cost, High case, with the finding each answers, its status and its NPV through 2032. First: Booking app & member rates, 82.1% a year on cost, NPV +⁠$9.5M. The two marked lines are our 8% cost of money and NPV zero.
+aria: Can be sorted
+aria: Can be sorted
+aria: Can be sorted
+aria: Can be sorted
+aria: Can be sorted
+aria: Can be sorted
+aria: Can be sorted
+aria:  Worst case (Low): −⁠$5.5M through 2032, and still +⁠$1.0M a year by 2032.
+The app carries it: +⁠$9.5M of the +⁠$12.7M. Every year without it leaves about $3.6M with the agencies.
+aria: Card
+aria: Rec Line 1 (text), Worst case (Low): −⁠$5.5M through 2032, and still +⁠$1.0M a year by 2032. card
+aria: Card
+aria: Rec Line 2 (text), The app carries it: +⁠$9.5M of the +⁠$12.7M. Every year without it leaves about $3.6M with the agencies. card
+aria:  What package A changes for each finding by 2032, High case. F2 The middleman: three quarters of the rise since 2021 undone; F1 The margin: most of the fall since 2023 recovered; F4 Where we are full: rooms decided at the 2028 gate; F3 The fading welcome: deferred to the 2028 gate. The table gives what we track and both values.
+aria: Can be sorted
+aria: Can be sorted
+aria: Can be sorted
+aria: Can be sorted
+aria: Can be sorted
+aria: Bookmark  Think you can beat A Build your own: show the state where you pick moves and compare your plan with A. Click here to follow
+aria:  A year on cost = what a move adds to operating profit in 2032 ÷ what it costs.
+aria: A year on cost = what a move adds to operating profit in 2032 ÷ what it costs.
+aria:  2025 brand plus A's full yearly effect, in 2025 dollars.
+aria: 2025 brand plus A's full yearly effect, in 2025 dollars.
+aria:  The $60M plan: $9.4M now, two decisions in 2028
+aria: Card
+aria: Capital Plan Title (text), The $60M plan: $9.4M now, two decisions in 2028 card
+aria: ⓘ Hover a year
+aria:  Tranche 1 · package A
+$9.4M · 2027
+aria: Card
+aria: Plan T1 L1 (text), Tranche 1 · package A card
+aria:  Tranche 2 · Gatwick and Toronto +40 rooms
+$12.4M · 2028 gate
++⁠$1.8M a year once live · 14.8% a year on cost
+aria: Card
+aria: Plan T2 L1 (text), Tranche 2 · Gatwick and Toronto +40 rooms card
+aria:  Tranche 3 · the refresh
+$29.5M · 2028 gate
++⁠$3.4M a year once live · 11.5% a year on cost
+aria: Card
+aria: Plan T3 L1 (text), Tranche 3 · the refresh card
+aria:  Not needed · $8.7M
+aria: Card
+aria: Plan T4 L1 (text), Not needed · $8.7M card
+aria: Card
+aria: Plan T1 L2 (text), $9.4M · 2027 card
+aria: Card
+aria: Plan T2 L2 (text), $12.4M · 2028 gate card
+aria: Card
+aria: Plan T3 L2 (text), $29.5M · 2028 gate card
+aria: Card
+aria: Plan T2 L3 (text), +⁠$1.8M a year once live · 14.8% a year on cost card
+aria: Card
+aria: Plan T3 L3 (text), +⁠$3.4M a year once live · 11.5% a year on cost card
+aria:  How the $60M budget is planned: tranche 1, package A, $9.4M now; tranche 2, $12.4M, and tranche 3, $29.5M, wait for the 2028 gate; $8.7M is not needed.
+aria: Plot area
+aria: Tranche 1
+aria: 9400000
+aria: Tranche 2
+aria: 12400000
+aria: Tranche 3
+aria: 29500000
+aria: Not needed
+aria: 8700000
+aria: Series labels
+aria:  The 2028 gate, once all three moves are live: the Board releases tranche 2 if distribution cost has fallen at least 0.6 points (the app's Low case) and Gatwick and Toronto still topped 90% in 6 of the last 12 months. The refresh comes back to the same meeting with a case that looks beyond 2032. A decision rule, not a forecast.
+aria: Card
+aria: Gate Rule (text), The 2028 gate, once all three moves are live: the Board releases tranche 2 if distribution cost has fallen at least 0.6 points (the app's Low case) and Gatwick and Toronto still topped 90% in 6 of the last 12 months. The refresh comes back to the same meeting with a case that looks beyond 2032. A decision rule, not a forecast. card
+aria:  Package A, cumulative net impact by year to 2032 in the three cases. By 2032: Low −⁠$4.6M, Expected +⁠$6.8M, High +⁠$19.2M. In the High case A is cash positive from 2029. The Board decides on the rest at the 2028 gate.
+aria: $0M
+aria: +$20M
+aria: Forecast area
+aria: Plot area
+aria: Year 2027. Low case −$8M.
+aria: Series labels
+aria:  RMS live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Cash positive 2029 (High)
+aria: Card
+aria: Milestones (text), RMS live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Cash positive 2029 (High) card
+aria:  Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.
+aria: Card
+aria: Footer P2 (text), Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up. card
+aria:  Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a move adds in a full year. A year on cost: that profit over capex. Tranche: a part of the budget, one Board decision.
+aria: Card
+aria: Chip Definitions (text), ⓘ Definitions card
+aria: Zoom Out
+aria: Zoom In
+aria: Zoom level. Click to open the Zoom dialog box
+aria: Fit to page
+aria: Microsoft Power BI (Opens in new tab)
+aria: Previous Page
+aria: Next Page
+aria: The Brand Review
+aria: The Investment Strategy
+aria: Share via Facebook
+aria: Share via Twitter
+aria: Share via LinkedIn
+aria: Share
+aria: Open in full-screen mode
