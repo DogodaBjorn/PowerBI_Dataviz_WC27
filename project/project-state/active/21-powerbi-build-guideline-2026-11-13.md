@@ -724,13 +724,48 @@ saves, close every window yourself without saving, renders through the throwaway
 | 3 | Sat 14 Nov | Model: section 10.1 to 10.3. DAX assertions for E9, E10, E11 in all three scenarios through the modelling MCP | values equal `storytelling_checks.txt` |
 | 4 | Sat 14 Nov | T1 without layout risk: P-1 everywhere, both waterfalls gone, R-G2 words, R-G3 colours, the gate rule in one measure, P1 copy, navigation buttons, footer, `tt-package`, the broken binding | `build_checks.py` 4 of 4; nl-NL render of P1 shows points only |
 | 5 | Sun 15 Nov | P2 frame (section 5), decision card with the ledger, capital plan | render Recommended × Low / Expected / High |
-| 6 | Sun 15 Nov | Hero table. **S-3** native selector, **S-4** F4 dots | **cut line, evening:** hero or R-P2-3-FB; native selector or Deneb; native F4 or Deneb strip |
+| 6 | Sun 15 Nov | Hero table. **S-3** native selector, **S-4** F4 dots | **cut line, evening:** hero or R-P2-3-FB; native selector or Deneb; native F4 or Deneb strip  **Decided 14 Nov (build step 7 of doc 23):** hero = the native table, verified in Low, Expected and High, no R-P2-3-FB; selector = native slicer and table (S-3 passed), Deneb goes in build step 9; F4 = the native dot plot (S-4 solved in build step 5), no Deneb strip. Bjorn confirms |
 | 7 | Mon 16 Nov | What waits, Build, tooltips, alt texts, tab order, layering file | keyboard pass and Narrator pass logged (R-X-1); `a11y_check.py` 0 errors |
 | 8 | Mon 16 Nov | Render set `screenshots/FinalV3/` (R-X-3). Submission prune (10.4). Parity check, contest compliance (R-X-2) | visual types present: line, area, column, bar, stacked bar, scatter, table |
 | 9 | Tue 17 Nov | Publish to Web gate. **Bjorn publishes.** Checks: SVG cells in the hero, tooltips, page buttons, nl and de browser, visual headers against the hover tags, tooltip scale at 1366 px, one touch test | then submit |
 
 Tier order inside each step follows doc 20: T1 before T2 before T3. If a day slips, drop T3 first
 (R-P1-9, R-P2-11, R-W-4, R-TT-3/4, the submission prune), never the gate.
+
+### Results of the hero table and the capital plan, and the cut line (14 Nov, build step 7 of doc 23)
+
+- **Cut line, three decisions (Bjorn confirms):** (1) the hero is the native table of 6.1, verified in Low, Expected and
+  High; R-P2-3-FB is not needed. (2) The Build selector is the native slicer beside a table (S-3); the Deneb visual and
+  `publicCustomVisuals` go in build step 9. (3) F4 is the native dot plot of 4.5 (S-4, build step 5); no Deneb strip.
+- **Sections 6.1 and 6.3 are built:** `p2_hero()` and `p2_capital_plan()` in `opzet_report.py`. Recommended is complete.
+- **6.1, the hero table as built:** `tableEx` at 56, **244**, 1000, **374** (the slot is 56, 240, 992, 372). A native table
+  is 32.5 px of header, 1 px of rule and ten rows of 34 px: 373 px, so at 372 it showed both scrollbars. A cell's text is
+  set from the top of its row, 5.25 px above where the comp centres it; so the table starts 4 px lower and the bars sit
+  5 px higher in their images (`HERO_TEXT_LIFT`: bar y 3 to 21 of 34). Row text, header text and bars are then within
+  2 px of the comp; the header rule and the two reference lines are 4.5 px under the comp's. Status and NPV take their
+  ink from `Move Status Ink` and `Move NPV Ink`. The two value columns carry a zero-width space as their header.
+- **6.3, the plan bar:** a `barChart` needs a category: `Brands[Brand]`, one value under the page's brand filter. Value
+  axis 0 to the budget (`Move Budget (num)`), `layout.stackedGapSize` 0 (without it 2.7 px of white between the
+  segments), both axes off. Its visual rect is 56, 780, 1808, 40: Power BI keeps about 8 px above a bar.
+- **6.3, the cumulative chart, three things Power BI decides:**
+  1. **No label position Right** (doc 22 section 3). A line chart's data label goes Above or Under its point (the
+     catalog, the theme schema and Microsoft's validator list the same enum). Built: Low Under, Expected and High Above,
+     and Power BI moves a label sideways where it has room (High stands right of its line end). The emphasised line has
+     one end series per case (`A Cumulative End Sel Low / Expected / High (label-safe)`), because a series has one
+     position. Open question 6 in doc 23.
+  2. **Two ticks, not four.** In 102 px of plot Power BI draws +$20M and $0M; the comp's -$10M and +$10M do not appear
+     and there is no property for the tick step.
+  3. **An axis format needs its decimal point.** `+\$#,0,,\M` printed "+$20.000.000M" (the commas do not scale without
+     a point); `+\$#,0,,.\M` prints "+$20M". The thin lines carry that format (`SUSDM0`) and come first in the chart,
+     so the axis is locale-safe (P-1 b).
+  The names of the zero line and of the gate line are semibold (a constant line's label has no weight property, as F4's
+  "90%" in build step 5). The label background is white from the theme (`compile_theme.py`, `lineChart` labels): the
+  same fill inside the visual trips Microsoft's validator (PBIR_FORMATTING_PROP_NESTED), wrongly.
+- **Multi-line labels with fixed breaks** (`c_plan_t1` to `t4`): one card per line at a 21.3 px pitch (`line_cards()`),
+  as `c_rec_lines` in build step 6.
+- **Measuring a table in a narrow window:** a tile seam through a table is no reference. At a fractional zoom Desktop
+  snaps a visual by up to 1.6 page px, and a table's rows by a device pixel each. A scratch page that shows the table
+  whole gives the real sizes (`tools/desktop_shots/step7/`).
 
 ### Results of page 2, frame and decision card (13 Nov, build step 6 of doc 23)
 

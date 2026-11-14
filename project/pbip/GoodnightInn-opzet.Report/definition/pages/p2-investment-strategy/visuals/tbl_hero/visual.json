@@ -3,10 +3,10 @@
   "name": "tbl_hero",
   "position": {
     "x": 56,
-    "y": 240,
+    "y": 244,
     "z": 21000,
     "width": 1000,
-    "height": 372,
+    "height": 374,
     "tabOrder": 220
   },
   "visual": {

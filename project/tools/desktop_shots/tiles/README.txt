@@ -36,3 +36,7 @@ returns before the PNG is written, wait for the file.
 Limits. The page background image is not on the tile pages (they are Oat, or a plain Night rectangle with --mast), so
 the night-glow artwork does not show; check the header's look in a normal capture. A full-page capture in a narrow window is not a pixel reference: Desktop
 scaled x and y differently there (0.4594 and 0.4565) and the background image drifted.
+
+Build step 7: a seam through a table, a bar or a chart is no reference either (Desktop snaps a visual by up to 1.6 page px
+at this zoom and rounds each table row to a device pixel). Show such a visual whole on a scratch page:
+tools/desktop_shots/step7/README.txt.

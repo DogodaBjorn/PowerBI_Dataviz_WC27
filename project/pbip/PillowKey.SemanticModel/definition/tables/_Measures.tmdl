@@ -2786,14 +2786,14 @@ table _Measures
 		lineageTag: 89662495-368d-5a7a-a5db-d8073d45c822
 
 	/// Hero table, bar cell of 'a year on cost' for the move in the row (scenario in view): a bar from 0 in the move's status colour and the 8 % line (our cost of money). Fixed domain -10 % to 90 %. Decorative: the value stands in the column beside it.
-	measure 'Hero Yield Bar SVG' = VAR v = [A Year on Cost] VAR c = MIN ( MAX ( v, -0.1 ), 0.9 ) VAR xv = -3.0 + ( c - ( -0.1 ) ) / 1.0 * 188 VAR x0 = 15.8 VAR fill = SUBSTITUTE ( [Move Status Color], "#", "%23" ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) || ISBLANK ( v ), BLANK (), "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='173' height='34' viewBox='0 0 173 34'><rect x='" & FORMAT ( MIN ( x0, xv ), "0.0", "en-US" ) & "' y='8' width='" & FORMAT ( ABS ( xv - x0 ), "0.0", "en-US" ) & "' height='18' fill='" & fill & "'/><rect x='30.34' y='0' width='1' height='34' fill='%2312233D' shape-rendering='crispEdges'/></svg>" )
+	measure 'Hero Yield Bar SVG' = VAR v = [A Year on Cost] VAR c = MIN ( MAX ( v, -0.1 ), 0.9 ) VAR xv = -3.0 + ( c - ( -0.1 ) ) / 1.0 * 188 VAR x0 = 15.8 VAR fill = SUBSTITUTE ( [Move Status Color], "#", "%23" ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) || ISBLANK ( v ), BLANK (), "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='173' height='34' viewBox='0 0 173 34'><rect x='" & FORMAT ( MIN ( x0, xv ), "0.0", "en-US" ) & "' y='3' width='" & FORMAT ( ABS ( xv - x0 ), "0.0", "en-US" ) & "' height='18' fill='" & fill & "'/><rect x='30.34' y='0' width='1' height='34' fill='%2312233D' shape-rendering='crispEdges'/></svg>" )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		dataCategory: ImageUrl
 		lineageTag: f249eec3-edc6-5b60-94d4-e7ff202368b1
 
 	/// Hero table, bar cell of the NPV through 2032 for the move in the row (scenario in view): a bar from 0 in the move's status colour and the zero line (pays back by 2032 to its right). Fixed domain -$32M to +$12M. Decorative: the value stands in the column beside it.
-	measure 'Hero NPV Bar SVG' = VAR v = [NPV @ 8%] VAR c = MIN ( MAX ( v, -32000000.0 ), 12000000.0 ) VAR xv = -3.0 + ( c - ( -32000000.0 ) ) / 44000000.0 * 172 VAR x0 = 122.0909090909091 VAR fill = SUBSTITUTE ( [Move Status Color], "#", "%23" ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) || ISBLANK ( v ), BLANK (), "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='173' height='34' viewBox='0 0 173 34'><rect x='" & FORMAT ( MIN ( x0, xv ), "0.0", "en-US" ) & "' y='8' width='" & FORMAT ( ABS ( xv - x0 ), "0.0", "en-US" ) & "' height='18' fill='" & fill & "'/><rect x='121.59' y='0' width='1' height='34' fill='%2312233D' shape-rendering='crispEdges'/></svg>" )
+	measure 'Hero NPV Bar SVG' = VAR v = [NPV @ 8%] VAR c = MIN ( MAX ( v, -32000000.0 ), 12000000.0 ) VAR xv = -3.0 + ( c - ( -32000000.0 ) ) / 44000000.0 * 172 VAR x0 = 122.0909090909091 VAR fill = SUBSTITUTE ( [Move Status Color], "#", "%23" ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) || ISBLANK ( v ), BLANK (), "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='173' height='34' viewBox='0 0 173 34'><rect x='" & FORMAT ( MIN ( x0, xv ), "0.0", "en-US" ) & "' y='3' width='" & FORMAT ( ABS ( xv - x0 ), "0.0", "en-US" ) & "' height='18' fill='" & fill & "'/><rect x='121.59' y='0' width='1' height='34' fill='%2312233D' shape-rendering='crispEdges'/></svg>" )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		dataCategory: ImageUrl
@@ -2933,7 +2933,7 @@ table _Measures
 
 	/// Capital plan chart: package A's cumulative net impact in the Low case; blank when Low is the case in view (the emphasised line draws it). Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).
 	measure 'A Cumulative Line (Low)' = IF ( [Selected Scenario] = "Low", BLANK (), [TT Year A (Low)] )
-		formatString: +\$#,0,,\M;−\$#,0,,\M;\$0\M
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 38ce4fc2-e908-5a0f-b9de-2d7d24de29e0
 
@@ -2948,7 +2948,7 @@ table _Measures
 
 	/// Capital plan chart: package A's cumulative net impact in the Expected case; blank when Expected is the case in view (the emphasised line draws it). Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).
 	measure 'A Cumulative Line (Expected)' = IF ( [Selected Scenario] = "Expected", BLANK (), [TT Year A (Expected)] )
-		formatString: +\$#,0,,\M;−\$#,0,,\M;\$0\M
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: e7ad6fe0-deae-599b-8e7b-f3b983255638
 
@@ -2963,7 +2963,7 @@ table _Measures
 
 	/// Capital plan chart: package A's cumulative net impact in the High case; blank when High is the case in view (the emphasised line draws it). Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).
 	measure 'A Cumulative Line (High)' = IF ( [Selected Scenario] = "High", BLANK (), [TT Year A (High)] )
-		formatString: +\$#,0,,\M;−\$#,0,,\M;\$0\M
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: c4590e9d-fc4c-580a-a703-234395bfa73f
 
@@ -2976,13 +2976,31 @@ table _Measures
 				VAR __t = "High " & ( VAR __v = ( [A Cumulative Line (High)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
 				```
 
-	/// Capital plan chart, end label of the emphasised line (the case in view): its value on the horizon year only, printed as the case name and the amount.
-	measure 'A Cumulative End Sel (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset A Cumulative Net (sel)] )
+	/// Capital plan chart, end label of the emphasised line when Low is the case in view: its value on the horizon year only, printed as 'Low' and the amount; blank in the other cases.
+	measure 'A Cumulative End Sel Low (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, IF ( [Selected Scenario] = "Low", [Preset A Cumulative Net (sel)] ) )
 		displayFolder: 15 Storytelling rebuild
-		lineageTag: c3dccace-25f1-52c9-950f-f521f82797e1
+		lineageTag: e9e56be7-ffe2-5a97-b3f9-12e946bb1b10
 
 		formatStringDefinition = ```
-				VAR __t = [Selected Scenario] & " " & ( VAR __v = ( [Preset A Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				VAR __t = "Low " & ( VAR __v = ( [Preset A Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Capital plan chart, end label of the emphasised line when Expected is the case in view: its value on the horizon year only, printed as 'Expected' and the amount; blank in the other cases.
+	measure 'A Cumulative End Sel Expected (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, IF ( [Selected Scenario] = "Expected", [Preset A Cumulative Net (sel)] ) )
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 2fa6bec1-ad39-55dc-ab33-9d0721ab7319
+
+		formatStringDefinition = ```
+				VAR __t = "Expected " & ( VAR __v = ( [Preset A Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				```
+
+	/// Capital plan chart, end label of the emphasised line when High is the case in view: its value on the horizon year only, printed as 'High' and the amount; blank in the other cases.
+	measure 'A Cumulative End Sel High (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, IF ( [Selected Scenario] = "High", [Preset A Cumulative Net (sel)] ) )
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 8dbb398f-658d-54f3-aea9-4c5efb421da4
+
+		formatStringDefinition = ```
+				VAR __t = "High " & ( VAR __v = ( [Preset A Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
 				```
 
 	/// Comparison chart, end label of package A: its cumulative net impact on the horizon year only, printed as 'A' and the amount, scenario in view.

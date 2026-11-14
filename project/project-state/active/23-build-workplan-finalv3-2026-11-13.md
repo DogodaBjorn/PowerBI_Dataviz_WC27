@@ -24,7 +24,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 4 | Text measures and `build_checks.py` | done | 13 Nov | 8849312 | Every measure-backed slot of the spec in Low, Expected, High and the empty Build state: 127 equal, 2 known (open question 1, 20.5/20.6 %), 0 different. Checks 1, 3, 4 pass; check 2 is strict on the new copy and open on the old visuals until step 11. Bjorn was not needed in Desktop |
 | 5 | Page 1 | done | 13 Nov | 29e2a7b | P1 on the v10 slot map and on the comp: text rows within 2 px, F3 bars and the F4 plot on the comp's grid, nl-NL prints points only, `a11y_check` 0. Verified with a new tile render (the session window was 540 px wide). Seven small deviations for Bjorn to confirm (open question 4). Bjorn was not needed in Desktop |
 | 6 | Page 2 frame and the decision card | done | 13 Nov | 5116804 | P2 on the v10 slot map (v9 no longer read). Frame and decision card on the comp in Low, Expected and High: every text row within 2 px, the same line wraps, the ledger fits its slot in all three; `a11y_check` 0. Two things are Power BI's or a choice: ledger cells sit at the top of their rows, tab labels are Semibold (open question 5). What waits and Build show their frame with the old visuals that still have a slot. Bjorn was not needed in Desktop |
-| 7 | Hero table and capital plan; the cut line | todo | | | |
+| 7 | Hero table and capital plan; the cut line | done | 14 Nov | COMMIT7 | Recommended is complete: hero table and capital plan on the comp in Low, Expected and High, text rows and bars within 2 px, the plan bar and the chart's plot on the comp's grid; `a11y_check` 0, 763 number checks and the text diff pass. Cut line: native hero table, native selector, native F4 (Bjorn confirms). Three things are Power BI's: end labels above or under their line ends, not right of them (open question 6); two axis ticks instead of four; the hero's rule 4.5 px low. Bjorn was not needed in Desktop |
 | 8 | What waits, and why | todo | | | |
 | 9 | Build your own | todo | | | |
 | 10 | Tooltips, alt text, tab order | todo | | | |
@@ -695,7 +695,118 @@ colours, plan bar labels off, end labels); spec `tables.tbl_hero`, `charts.ch_pl
 
 **Prompt:** `project/build-steps/step-07.txt` (say: "Read project/build-steps/step-07.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Sat 14 Nov 2026, one session, done):**
+
+*The three cut-line decisions (doc 20 section 1, rule 10; Bjorn confirms).*
+
+| Decision | Outcome | Why |
+|---|---|---|
+| Hero: the table, or R-P2-3-FB (two bar charts) | **The native table.** No fallback | Built in the report and rendered in Low, Expected and High: both reference lines unbroken over the ten rows, no scrollbar, every value complete ("+$0.03M", "−$30.5M"), rows and bars within 2 px of the comp |
+| Build selector: native, or Deneb | **Native** (button slicer beside a table). Deneb goes in step 9 | S-3 passed in step 2: rows aligned within 1 px, the saved selection survives a reload, Space and Tab work |
+| F4: native dot plot, or Deneb strip | **Native.** No Deneb strip | S-4 solved in step 5 with `F4_RECT`; the seven names sit beside their dots |
+
+Written in doc 21 section 13 (row 6 and "Results of the hero table and the capital plan") and as one line in the gate
+note of `status.yaml`.
+
+*Built* (generators only; P2 62 visuals, was 42; 575 measures, was 568).
+
+- **Hero card** (`p2_hero()`): `c_hero_title` on `Hero Title (text)`; `lbl_hero_8` and `lbl_hero_0` as decorative text
+  boxes at the x of their lines (the generator asserts that the slot map's x equals `hero_ref_x()`); `tbl_hero`
+  (`hero_table()`): `Move Name` in the model's order, Answers in Dusk, Status and NPV with their ink from the model, the two
+  SVG bar cells, columns 280 / 104 / 96 / 196 / 64 / 184 / 74, row padding 0, image 173 x 34, one Dusk rule under the
+  header; the caption as approved.
+- **Capital plan** (`p2_capital_plan()`): title on `Capital Plan Title (text)`; the hover tag (P-7); the four segment
+  labels as one card per line (`line_cards()`, the pattern of `c_rec_lines`); `ch_plan_bar`, one stacked bar of the four
+  capex measures on a value axis that ends at the budget, no labels; the gate rule as a four-line card; `ch_plan_cum`
+  (`plan_cum()`): the case in view 3 px Coffee Blue, the other two 1.5 px Warm Grey (Low dashed, High dotted), the zero
+  line named, the gate as a dashed line at mid-2028, x axis to 2032.8, one label per line end, `tt-year` on hover; the
+  milestone line.
+- **Model** (`sketch_model.py`): `Move Status Ink`, `Move NPV Ink`; `A Cumulative End Sel Low / Expected / High
+  (label-safe)` in place of the one `A Cumulative End Sel (label-safe)` (see deviations); `SUSDM0`, a whole-$M format, on
+  the three `A Cumulative Line (...)` measures; `HERO_TEXT_LIFT` moves the bar 5 px up inside its image; first alt texts
+  for the three new data visuals (`Alt Hero`, `Alt Plan Bar`, `Alt Plan Cum (text)`; step 10 reviews them).
+- **Theme** (`compile_theme.py`): the background of a line chart's data label is white and opaque.
+- **Layering** (`opzet-layering.json`): the five extra line cards of the segment labels, out of the tab order.
+- **Tools:** `tools/desktop_shots/step7/` (scratch pages that show a table or a chart whole, and their measuring scripts).
+
+*Verified* (Desktop 2.159, Windows culture nl-NL, throwaway copy; the session window was 540 px wide, so every render is
+a tile render; renders in `project/deliverables/screenshots/Step7-rec-hero-plan-2026-11-14/`).
+
+| What | Result | Proof |
+|---|---|---|
+| Recommended renders in Low, Expected and High | yes, each from its own tile render; the hero title, the bars, the tranche lines, the milestone and the emphasised line follow the case | renders 01, 02, 03 |
+| Hero against the comp, render minus comp | title +0.7 to +1.2 px; the two reference labels −0.2, x +1; header words −0.1 / +0.1; the ten rows of Move, Answers, Status and A year on cost −0.3 to −1.9, x within 1; the bars start at y 279.7 (comp 280) at a 34 px pitch; caption −0.8. Same in all three cases. Outside 2 px: see deviations | `slotdiff.py` on the stitched captures; overlay 04 |
+| The hero's real sizes | header 32.5 px, rule 1 px, rows 34.0 px, a cell's cap centre 12.25 px under its row's top: measured on a scratch page that shows the table whole, with a marker | `tools/desktop_shots/step7/hero_probe.py` |
+| No scrollbar, values complete | none in the three cases; "+$0.03M", "−$30.5M" and "−$27.3M" print whole | renders 01 to 03 |
+| Capital plan against the comp | title +0.9; the nine label lines −1.0 to +1.5, x within 2; gate rule +0.9 to +2.3 (four lines, the comp's wraps); milestones −0.8, x +2; hover tag +0.9 | same |
+| The plan bar | y 788.3 to 819.9 (comp 788 to 820); segment ends at x 338.5 / 712.4 / 1601.1 (comp 339.3 / 712.9 / 1601.8), no white between the segments | `step7/bar_probe.py`, `bar_measure.py`; render 01 |
+| The chart's plot | +$20M gridline at y 846.5 (comp 846), zero line 914.9 (914), gate line x 1120.8 (1120.6), 2027 at x 864.2 (864), 2032 at 1717.6 by the line's last pixel (1719.2) | `step7/scan_cum.py`, `bar_measure.py` |
+| nl-NL | the session is nl-NL: axis "+$20M" and "$0M", labels "Low −$4.6M", every value in the table with a point | renders 01 to 03 |
+| Typed text | `lbl_hero_8`, `lbl_hero_0`, `c_hero_caption`, `tag_plan_cum`, the hero's seven headers and the two line names of the chart equal the spec letter for letter, in all three views | script run in the session |
+| `build_checks.py` (with the engine) | check 5: 129 ok, 2 known (20.5 / 20.6 %), 0 failed; checks 1, 3, 4 pass; check 2 strict passes, the old list unchanged (16 measures, 3 report strings) | `analysis/output/build_checks.txt` |
+| `number_checks.py` | 763 checks, 762 ok, 1 known, 0 failed | `analysis/output/number_checks.txt` |
+| `a11y_check.py` | 0 failures | repeatable |
+| Other validators | `schema_check` 175 files, 0 failing; `validate_json` 0; `validate_tmdl --strict` 0 errors, 13 expected label-safe warnings (11 + 3 new − 1 retired); Microsoft's validator: the one known error (`hero_s_packages_named`, goes in step 8) | repeatable |
+
+*Found on the way (binding for the next steps).*
+
+1. **A tile seam through a table or a chart is no reference.** At this zoom Desktop snapped a visual's position by up
+   to 1.6 page px (a 2 px move showed as 0 or 3.3) and rounded each table row to a device pixel (33.75 px for 34). For a
+   table or a chart, make a scratch page of 480 x 270 that shows it whole, with a marker at a known y
+   (`step7/hero_probe.py`, `bar_probe.py`). Text in cards and text boxes measured as before.
+2. **A native table of n rows is 33.5 + 34 n px here** (header 32.5, rule 1); give the visual 1 px more or it scrolls.
+   A cell's text sits 5.25 px above the middle of a 34 px row. Step 9's `tbl_moves` uses row padding instead (S-3), so
+   its text is centred; step 8's `tbl_waits` wraps and meets the ledger's rule (step 6).
+3. **A line chart's data label goes Above or Under**, nothing else. Power BI shifts it sideways when it has room.
+   Steps 8 and 9 planned A Above, B and C Below, You Below: those exist.
+4. **A value axis format must keep its decimal point** (`#,0,,.`) or the commas do not scale. `SUSDM0` is that format;
+   the first series of a chart with a visible value axis carries it. Steps 8 and 9: `Preset A Cumulative Net (sel)` is
+   still `SUSDM` ("+$10.0M", and "+$10,0M" in a Dutch session); give the comparison charts a first series in `SUSDM0`.
+5. **Power BI picks the ticks.** 102 px of plot gave two (+$20M, $0M). The taller comparison charts will get more.
+6. **A bar chart needs a category** (Microsoft's validator: PBIR_ROLE_REQUIRED_MISSING); `layout.stackedGapSize` 0
+   closes the white seams of a stacked bar; about 8 px stay free above a bar.
+7. **Microsoft's validator reads `labels.backgroundColor` as a misplaced colour**; the theme schema has exactly that
+   fill. Set it in the theme.
+8. **Do not refresh the copy twice.** A second `refresh_desktop_model.ps1` on the same window left Desktop "not ready"
+   for ten minutes; the port is in the first run's output. `opzet_report.py` now imports `sketch_model` (geometry, gate
+   year), as the two check scripts do.
+
+*Deviations from the comp, and why* (open question 6 asks Bjorn about the first; the others are Power BI's).
+
+- **End labels of the chart:** above or under their line ends, not right of them. Render minus comp: High 2 px lower, Expected
+  21 px higher, Low 8 px lower, and all three start 50 to 70 px further left (Power BI sets High right of its line end,
+  the other two over theirs). No label meets another or a line in any case. The comp's picture cannot be had natively.
+- **Axis ticks:** +$20M and $0M; the comp also shows +$10M and −$10M. Tick labels sit 2 px higher than the comp's (Power
+  BI centres them on their gridline) and the year labels 2 px higher.
+- **Line names in the chart** ("Cash positive above this line", "The 2028 gate") are semibold; the comp's are regular.
+- **The zero line runs to the plot's right edge** (2032.8); the comp ends it at 2032.
+- **Hero, header rule and reference lines:** 4.5 px under the comp's (rule at y 276.5, lines from 277.5 to 617.5), so
+  that text and bars are on the comp. The lines end 4 px above the caption's letters (the comp: 9).
+- **Hero, width:** the table runs to x 1056, not 1048, and the NPV values end 6 px further right (step 2, open question
+  2). The header rule runs to 1054.
+- **Hero, bars:** 5 px higher inside their rows than the spec's `bar_y` 8, to stay on their row's text.
+- **`tbl_hero` and the slot map:** the visual is 56, 244, 1000, 374; `ch_plan_bar` 56, 780, 1808, 40; `ch_plan_cum`
+  792, 834, 1077, 146 (`PLAN_RECT`). The slot map and the spec keep the comp's numbers.
+- **The two value columns of the hero have a zero-width space as header** (the comp: empty). A table column needs a name;
+  step 10's Narrator pass decides whether it should be a spoken one.
+- **`c_plan_title` is a card on a measure** (doc 21 says text box): its amounts come from the model, as step 4 mapped it.
+
+*Open items for later steps.*
+
+- **Open question 3** (the caption's second sentence) is still open; the caption is built as approved. It is one
+  constant, `HERO_CAPTION`.
+- **Open question 2:** the hero's pixels are built as step 2 found them; `opzet-layout-v10.json` and the spec were not
+  changed (the comp is the contract until Bjorn says so).
+- **Step 8:** `cumulative_chart()` still builds the old comparison charts (legend, "Break-even", `SUSDM` axis). Rebuild
+  it on `plan_cum()`'s pattern; see "Found" 3 to 5.
+- **Step 10:** the three new alt texts are first versions; the hero's value headers; `tt-year` now opens from
+  `ch_plan_cum` too.
+- **Step 11:** the prune must keep `Move Status Ink`, `Move NPV Ink`, the six `A Cumulative End ...` series and the
+  measures only an alt text reads.
+- **Step 12:** look at the hero's SVG cells and the row seams in the browser (step 2's item), and at the end labels of
+  the chart at 1366 px.
+- **Before the session:** the working tree was clean. The throwaway windows were ended with `Stop-Process` (throwaway
+  only); the project was not opened in Desktop, and no Desktop window is left open.
 
 ### Step 8 · What waits, and why (about 1.5 h)
 
@@ -842,3 +953,11 @@ A session that meets a question only Bjorn can answer adds it here and sets its 
    accident. Recommended: keep Semibold. If the picture is what was approved, say so: it is one argument in
    `tab_bar()`. The rest (the 2 px move of the headline on both pages, the ledger 6 px above its slot, the spoken head)
    are technical corrections.
+6. **The end labels of the capital plan's chart (from step 7; no step is blocked by it).** The comp sets each label
+   right of its line end ("Expected +$6.8M" beside the blue line). Power BI's line chart can set a data label above or
+   under its point only. Built: Low under its line end, Expected and High above theirs; nothing overlaps in any case,
+   but Expected's label stands 21 px above its line, close under High's. Recommended: accept. The alternatives are a
+   legend-like key in the title row (three typed names, the values in the tooltip) or series names at the right edge
+   without their values. Steps 8 and 9 use Above and Below as the comp has them, so this question is about this chart
+   only. Bjorn confirms, or picks an alternative. The same answer covers the two ticks instead of four and the semibold
+   line names (see the log of step 7, deviations).

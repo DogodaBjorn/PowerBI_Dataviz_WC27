@@ -22,7 +22,7 @@ slicer, so a bookmark never changes it (fx-focus rules 1-2). Shapes not yet exer
 
 FinalV3 (doc 23, the rebuild to the comp rebuild-comp-v10.html, one step per session): P1 is rebuilt (step 5). P2 runs
 on the v10 slot map since step 6, which built the frame (p2_frame) and the decision card of Recommended
-(p2_decision_card); p2_pending() says what steps 7 to 9 still rebuild:
+(p2_decision_card), step 7 the hero table and the capital plan (p2_hero, p2_capital_plan); p2_pending() says what steps 8 and 9 still rebuild:
   rec    Recommended: A: the hero table and the capital plan (built in step 7), the decision card (built)
   alts   What waits, and why: the small scatter, the table of what waits, the comparison with A (step 8)
   build  Build your own: the native move selector, your plan, the comparison with A (step 9)
@@ -1110,6 +1110,13 @@ def p2_decision_card():
 # native table needs (an image column is its image + 11 px, "−$27.3M" needs 74 px, 2 px of slack against a scrollbar). The
 # geometry lives in sketch_model.py, beside bar_cell(), so the bars, the reference lines and their two labels cannot drift.
 HERO_SLACK = 2
+# Measured in build step 7 on a scratch page that shows the table whole (a tile seam through a table is no reference: at a
+# fractional zoom Desktop snaps a table by up to 1.6 page px): header 32.5 px plus its 1 px rule, ten rows of 34.0 px, 373 px
+# in all, so at the slot's 372 the table showed both scrollbars. A cell's text is set from the top of its row: its cap
+# centre is 12.25 px under the row's top (header: 12.05), where the comp centres it at 17.5 (header: 16.5). So the table
+# starts HERO_DY px under its slot and the bars sit sm.HERO_TEXT_LIFT px higher in their cells: row text, header text and
+# bars land within 1.3 px of the comp's. The price is the header rule and the two reference lines, 4.5 px under the comp's.
+HERO_DY, HERO_DH = 4, 2
 # R-P2-3 caption, as approved (rebuild-v10-spec.json). Open question 3 of doc 23: its second sentence is not true in the data.
 HERO_CAPTION = "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still ramping up in 2032."
 ZW = "​"  # the header of a value column: the comp leaves it empty, a table column needs a name (one and two zero-width spaces)
@@ -1134,7 +1141,8 @@ def hero_table():
     objs["values"] += [{"properties": {"fontColor": fv(ink)}, "selector": {**WILD, "metadata": refs[i]}} for i, ink in ((2, "Move Status Ink"), (6, "Move NPV Ink"))]
     objs["columnWidth"] = [{"properties": {"value": num(w_)}, "selector": {"metadata": q_}} for q_, w_ in zip(refs, sm.HERO_COLS)]
     x, y, w, h, z, tab = at(P2, "tbl_hero")
-    t = visual("tbl_hero", "tableEx", x, y, sum(sm.HERO_COLS) + HERO_SLACK, h, z, tab, query={"Values": {"projections": proj}}, objects=objs, vcos=vco(padding=0))
+    t = visual("tbl_hero", "tableEx", x, y + HERO_DY, sum(sm.HERO_COLS) + HERO_SLACK, h + HERO_DH, z, tab, query={"Values": {"projections": proj}}, objects=objs,
+               vcos=vco(padding=0), off_grid=True)
     return bind_alt(t, "Alt Hero (text)")
 
 
@@ -1165,10 +1173,16 @@ def line_cards(page, name, measures, alt_measure, deco, colour=INK):
 
 PLAN_FILL = (ACCENT_MARK, INK, "#717B8B", SLATE)  # tranche 1, tranche 2, tranche 3 (Night at 60 % on white), not needed (spec ch_plan_bar)
 PLAN_LINES = {1: 2, 2: 3, 3: 3, 4: 1}             # lines of each segment's label (TEXT_SLOTS)
-PLAN_RECT = {}  # the visual rects that put Power BI's plot on the comp's (PLOT_RECT of step 5); filled from the tile render
+# the visual rects that put Power BI's plot on the comp's (PLOT_RECT of step 5), measured on the tile render of step 7.
+# The bar: in its 32 px slot Power BI drew a 22.3 px bar, 8.2 px under the visual's top.
+# (at 42 px high it drew 32.6 px, 9.7 px under the top). The line chart: in its slot (792, 828, 1072, 148) the plot ran
+# x 864.2 to 1851.4 and y 841.9 (+$20M) to 946.0 (-$10M); the comp's runs 864 to 1856 and 846 to 948.
+PLAN_RECT = {"ch_plan_bar": (56, 780, 1808, 40), "ch_plan_cum": (792, 834, 1077, 146)}
 PLAN_X_END = 2032.8                 # spec ch_plan_cum.x_axis_end: room for the end labels inside the plot, no 2033 tick
 PLAN_Y = (-10_000_000, 20_000_000)  # spec ch_plan_cum.y: −10 to +20 $M, ticks at −10, 0, +10, +20
-PLAN_LABEL_POS = "Above"            # doc 22 section 3 asks for Right; a line chart knows Above and Under only (catalog, Microsoft validator)
+# doc 22 section 3 asks for Right; a line chart knows Above and Under only (the catalog, the theme schema and Microsoft's
+# validator agree). Low ends under the zero line, so its label goes under the line; Expected and High go above theirs.
+PLAN_LABEL_POS = ("Under", "Above", "Above")
 GATE_LINES = 4                      # lines of the gate rule at 12 pt in 704 px (the comp)
 
 
@@ -1185,6 +1199,7 @@ def plan_bar():
     ca = axis(BODY, S, INK2, show=False)
     ca[0]["properties"].update({"innerPadding": integer(0), "outerPadding": integer(0)})
     objs = {"categoryAxis": ca, "valueAxis": va, "legend": legend(False), "labels": [{"properties": {"show": b(False)}}],
+            "layout": [{"properties": {"stackedGapSize": num(0)}}],  # no white seam between the segments (the comp draws none)
             "dataPoint": series_colors(dict(zip([mref(m_) for m_ in ms], PLAN_FILL)))}
     v = chart(P2, "ch_plan_bar", "barChart", q, objs, None, alt_measure="Alt Plan Bar (text)")
     return plot_rect(v, PLAN_RECT["ch_plan_bar"]) if "ch_plan_bar" in PLAN_RECT else v
@@ -1194,18 +1209,19 @@ def plan_cum():
     """ch_plan_cum (R-P2-7, doc 21 6.3 and P-5 as doc 22 section 3 amends them): package A's cumulative net impact in the
     three cases. The case in view is the 3 px Coffee Blue line; the other two are 1.5 px Warm Grey, Low dashed and High
     dotted (A Cumulative Line (...) is blank for the case in view). One data label per line on the last year: the name and
-    the value from the label-safe format string, on white; the case in view in Deep Coffee semibold. The end series come
+    the value from the label-safe format string, on white; the case in view in Deep Coffee semibold (one end series per
+    case for it, because a series has one label position: PLAN_LABEL_POS). The end series come
     after the lines and the first line is formatted in whole $M, so the value axis prints "+$10M" in any locale (P-1 b).
     Zero line named (R-G2), the gate as a dashed line at mid-2028; a year opens the year tooltip."""
     sel = "Preset A Cumulative Net (sel)"
     thin = [(f"A Cumulative Line ({c})", f"{c} case") for c in ("Low", "Expected", "High")]
     ends = [(f"A Cumulative End {c} (label-safe)", f"{c} case, last year") for c in ("Low", "Expected", "High")]
-    end_sel = ("A Cumulative End Sel (label-safe)", "The case in view, last year")
-    series = thin + [(sel, "The case in view")] + ends + [end_sel]
+    ends_sel = [(f"A Cumulative End Sel {c} (label-safe)", f"{c} case in view, last year") for c in ("Low", "Expected", "High")]
+    series = thin + [(sel, "The case in view")] + ends + ends_sel
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m_, d_) for m_, d_ in series]}}
     ls = line_styles({**{mref(m_): 1.5 for m_, _ in thin}, mref(sel): 3}, dashed=(mref(thin[0][0]),))
     next(e for e in ls if e.get("selector", {}).get("metadata") == mref(thin[2][0]))["properties"]["lineStyle"] = enum("dotted")
-    ls += [{"properties": {"strokeShow": b(False), "showMarker": b(False)}, "selector": {"metadata": mref(m_)}} for m_, _ in ends + [end_sel]]
+    ls += [{"properties": {"strokeShow": b(False), "showMarker": b(False)}, "selector": {"metadata": mref(m_)}} for m_, _ in ends + ends_sel]
     lab = {"fontFamily": text(BODY), "fontSize": num(S), "color": color(INK2), "labelDisplayUnits": integer(1),
            "enableBackground": b(True)}  # white and opaque from the theme (compile_theme.py, lineChart labels)
     years = HORIZON()["filter"]["Where"][0]["Condition"]["In"]["Values"]
@@ -1215,10 +1231,10 @@ def plan_cum():
             "legend": legend(False), "seriesLabels": [{"properties": {"show": b(False)}}],
             "labels": [{"properties": {"show": b(True), **lab}},
                        *[{"properties": {"showSeries": b(False)}, "selector": {"metadata": mref(m_)}} for m_, _ in thin + [(sel, "")]],
-                       *[{"properties": {"showSeries": b(True), "labelPosition": enum(PLAN_LABEL_POS)}, "selector": {"metadata": mref(m_)}} for m_, _ in ends],
-                       {"properties": {"showSeries": b(True), "labelPosition": enum(PLAN_LABEL_POS), "color": color(ACCENT), "fontFamily": text(DISPLAY)},
-                        "selector": {"metadata": mref(end_sel[0])}}],
-            "dataPoint": series_colors({**{mref(m_): SLATE for m_, _ in thin + ends}, mref(sel): ACCENT_MARK, mref(end_sel[0]): ACCENT_MARK}),
+                       *[{"properties": {"showSeries": b(True), "labelPosition": enum(pos)}, "selector": {"metadata": mref(m_)}} for (m_, _), pos in zip(ends, PLAN_LABEL_POS)],
+                       *[{"properties": {"showSeries": b(True), "labelPosition": enum(pos), "color": color(ACCENT), "fontFamily": text(DISPLAY)},
+                          "selector": {"metadata": mref(m_)}} for (m_, _), pos in zip(ends_sel, PLAN_LABEL_POS)]],
+            "dataPoint": series_colors({**{mref(m_): SLATE for m_, _ in thin + ends}, mref(sel): ACCENT_MARK, **{mref(m_): ACCENT_MARK for m_, _ in ends_sel}}),
             "lineStyles": ls,
             "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
                                                     "position": enum("back"), "displayName": text("Cash positive above this line"), "dataLabelShow": b(True),
@@ -1240,7 +1256,9 @@ def p2_capital_plan():
     for k, n in PLAN_LINES.items():
         v += line_cards(P2, f"c_plan_t{k}", [f"Plan T{k} L{i} (text)" for i in range(1, n + 1)], f"Plan T{k} (text)", 50 + 10 * k)
     v.append(plan_bar())
-    v.append(note(P2, "c_plan_gate", "Gate Rule (text)", GATE_LINES, colour=INK))
+    gate = note(P2, "c_plan_gate", "Gate Rule (text)", GATE_LINES, colour=INK)
+    gate["position"]["y"] += 2  # the four lines sat 1.8 px above the comp's on the tile render
+    v.append(gate)
     v.append(plan_cum())
     v.append(note(P2, "c_plan_milestones", "Milestones (text)", 1))
     return v

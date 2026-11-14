@@ -3,10 +3,10 @@
   "name": "ch_plan_cum",
   "position": {
     "x": 792,
-    "y": 828,
+    "y": 834,
     "z": 40000,
-    "width": 1072,
-    "height": 148,
+    "width": 1077,
+    "height": 146,
     "tabOrder": 480
   },
   "visual": {
@@ -147,12 +147,42 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "A Cumulative End Sel (label-safe)"
+                  "Property": "A Cumulative End Sel Low (label-safe)"
                 }
               },
-              "queryRef": "_Measures.A Cumulative End Sel (label-safe)",
-              "nativeQueryRef": "A Cumulative End Sel (label-safe)",
-              "displayName": "The case in view, last year"
+              "queryRef": "_Measures.A Cumulative End Sel Low (label-safe)",
+              "nativeQueryRef": "A Cumulative End Sel Low (label-safe)",
+              "displayName": "Low case in view, last year"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "A Cumulative End Sel Expected (label-safe)"
+                }
+              },
+              "queryRef": "_Measures.A Cumulative End Sel Expected (label-safe)",
+              "nativeQueryRef": "A Cumulative End Sel Expected (label-safe)",
+              "displayName": "Expected case in view, last year"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "A Cumulative End Sel High (label-safe)"
+                }
+              },
+              "queryRef": "_Measures.A Cumulative End Sel High (label-safe)",
+              "nativeQueryRef": "A Cumulative End Sel High (label-safe)",
+              "displayName": "High case in view, last year"
             }
           ]
         }
@@ -468,7 +498,7 @@
             "labelPosition": {
               "expr": {
                 "Literal": {
-                  "Value": "'Above'"
+                  "Value": "'Under'"
                 }
               }
             }
@@ -531,6 +561,45 @@
             "labelPosition": {
               "expr": {
                 "Literal": {
+                  "Value": "'Under'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1763A8'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.A Cumulative End Sel Low (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
                   "Value": "'Above'"
                 }
               }
@@ -555,7 +624,46 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.A Cumulative End Sel (label-safe)"
+            "metadata": "_Measures.A Cumulative End Sel Expected (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Above'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1763A8'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.A Cumulative End Sel High (label-safe)"
           }
         }
       ],
@@ -701,7 +809,43 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.A Cumulative End Sel (label-safe)"
+            "metadata": "_Measures.A Cumulative End Sel Low (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2589D8'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.A Cumulative End Sel Expected (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2589D8'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.A Cumulative End Sel High (label-safe)"
           }
         }
       ],
@@ -882,7 +1026,49 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.A Cumulative End Sel (label-safe)"
+            "metadata": "_Measures.A Cumulative End Sel Low (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "strokeShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.A Cumulative End Sel Expected (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "strokeShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.A Cumulative End Sel High (label-safe)"
           }
         }
       ],

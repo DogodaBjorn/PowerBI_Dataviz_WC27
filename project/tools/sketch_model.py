@@ -661,8 +661,10 @@ C9 = "09 Package matrix"
 # the earlier "#,0.0,," rendered "$9.400.000,0,,M" in Desktop (7 Nov). USDM above already uses the right form.
 SUSDM = r"+\$#,0,,.0\M;" + "−" + r"\$#,0,,.0\M;\$0.0\M"
 USDM1 = r"\$#,0,,.0\M"
-# whole $M for a value axis: a tick carries no decimal separator in any locale (doc 21 P-1 b); "+$10M", "−$10M", "$0M"
-SUSDM0 = r"+\$#,0,,\M;" + "−" + r"\$#,0,,\M;\$0\M"
+# whole $M for a value axis: a tick carries no decimal separator in any locale (doc 21 P-1 b); "+$10M", "−$10M", "$0M".
+# The decimal point stays in the string with nothing after it: without it the two commas do not scale and the axis
+# printed "+$20.000.000M" (build step 7, tried live in the throwaway copy)
+SUSDM0 = r"+\$#,0,,.\M;" + "−" + r"\$#,0,,.\M;\$0\M"
 MINUS = 'UNICHAR ( 8722 )'
 
 
@@ -1882,7 +1884,13 @@ _HERO = json.loads((ROOT / "project" / "design-prototypes" / "rebuild-v10-spec.j
 HERO_SPEC_COLS = list(_HERO["cols"])              # the comp's widths: the bar geometry stays on these
 HERO_COLS = [280, 104, 96, 196, 64, 184, 74]      # as built (S-2): an image column is the image + 11 px, "−$27.3M" needs 74
 HERO_X, HERO_ROW_H = 56, _HERO["row_h"]
-HERO_INSET, HERO_BAR_Y, HERO_BAR_H = _HERO["bar_cell"]["inset_px"], _HERO["bar_cell"]["bar_y"], _HERO["bar_cell"]["bar_h"]
+HERO_INSET, HERO_BAR_H = _HERO["bar_cell"]["inset_px"], _HERO["bar_cell"]["bar_h"]
+# Build step 7: a native cell sets its text from the top of the row, 5.25 px above where the comp centres it (measured on a
+# scratch page: cap centre 12.25 px under the row's top, the comp's 17.5). The comp's bar is centred on the text, so the bar
+# moves up by the same 5 px inside its image (y 3 instead of the spec's 8) and the whole table moves down (HERO_DY in
+# opzet_report.py): text and bars then sit on the comp's, each on its own row's text line.
+HERO_TEXT_LIFT = 5
+HERO_BAR_Y = _HERO["bar_cell"]["bar_y"] - HERO_TEXT_LIFT
 HERO_IMG_PAD = 7                                   # Desktop draws an image 7 px into its cell (measured in S-2, not a setting)
 HERO_IMG_W = HERO_SPEC_COLS[5] - HERO_IMG_PAD      # grid.imageWidth is one value per table: the narrow bar column minus the padding
 HERO_YDOM, HERO_YREF = tuple(float(v) for v in _HERO["yield_domain"]), float(_HERO["yield_ref"])
@@ -1998,8 +2006,13 @@ for scn in ("Low", "Expected", "High"):
       "Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).")
     label_safe(f"A Cumulative End {scn} (label-safe)", _YEND.format(f"[A Cumulative Line ({scn})]"), f'"{scn} " & ' + sfm(f"[A Cumulative Line ({scn})]"), C15,
                f"Capital plan chart, end label of the {scn} line: its value on the horizon year only, printed as '{scn}' and the amount.")
-label_safe("A Cumulative End Sel (label-safe)", _YEND.format("[Preset A Cumulative Net (sel)]"), '[Selected Scenario] & " " & ' + sfm("[Preset A Cumulative Net (sel)]"), C15,
-           "Capital plan chart, end label of the emphasised line (the case in view): its value on the horizon year only, printed as the case name and the amount.")
+# build step 7: a line chart sets a data label above or under its point and nowhere else, and one series has one position.
+# The Low line ends under the zero line (its label goes under it), the other two end above it (label above), so the
+# emphasised line's label is one series per case, blank unless that case is in view (they replace the one end series of step 3).
+for scn in ("Low", "Expected", "High"):
+    label_safe(f"A Cumulative End Sel {scn} (label-safe)", _YEND.format(f'IF ( [Selected Scenario] = "{scn}", [Preset A Cumulative Net (sel)] )'),
+               f'"{scn} " & ' + sfm("[Preset A Cumulative Net (sel)]"), C15,
+               f"Capital plan chart, end label of the emphasised line when {scn} is the case in view: its value on the horizon year only, printed as '{scn}' and the amount; blank in the other cases.")
 for k in "ABC":
     label_safe(f"Preset {k} Cumulative End (label-safe)", _YEND.format(f"[Preset {k} Cumulative Net (sel)]"), f'"{k} " & ' + sfm(f"[Preset {k} Cumulative Net (sel)]"), C15,
                f"Comparison chart, end label of package {k}: its cumulative net impact on the horizon year only, printed as '{k}' and the amount, scenario in view.")

@@ -3,10 +3,10 @@
   "name": "ch_plan_bar",
   "position": {
     "x": 56,
-    "y": 788,
+    "y": 780,
     "z": 38000,
     "width": 1808,
-    "height": 32,
+    "height": 40,
     "tabOrder": 460
   },
   "visual": {
@@ -256,6 +256,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "layout": [
+        {
+          "properties": {
+            "stackedGapSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
                 }
               }
             }
