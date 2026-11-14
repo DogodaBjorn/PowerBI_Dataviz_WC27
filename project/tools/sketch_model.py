@@ -1608,7 +1608,7 @@ m("Build Point Color", BOVER + f'RETURN IF ( over, "{SIGNAL_MARK}", "{INK}" )', 
   "Marker colour of the plan dot in the proof chart: Night (Night is 'your plan', R-G3), Tangerine while the picked capex passes the budget.")
 m("Build You Ink", BOVER + f'RETURN IF ( over, "{BAD}", "{INK}" )', TXT, C12,
   "Ink of the name 'You' above the plan dot: Night, Burnt Tangerine while over the budget (the text cut of Tangerine: 6.2:1 on white).")
-m("Build You Label NPV", f"[Build NPV (sel)] + {YOU_LABEL_LIFT}", SUSDM0, C12,
+m("Build You Label NPV", f"VAR v = [Build NPV (sel)] RETURN IF ( NOT ISBLANK ( v ), v + {YOU_LABEL_LIFT} )", SUSDM0, C12,
   "Where the name 'You' is anchored in the proof chart, NOT a value: the plan's NPV plus a fixed lift, so that Power BI's label, which it sets under an invisible point, "
   "lands above the plan dot. Shown nowhere as a number (the layer has no tooltip and no tab stop).")
 m("Cmp Build Title (text)",
@@ -2095,6 +2095,7 @@ _BARS_X = (BIDS + "VAR t = ADDCOLUMNS ( ids, \"@v\", VAR p = [@p] RETURN CALCULA
            "\"@w\", VAR p = [@p] RETURN LOOKUPVALUE ( BuildBar[Name Px], BuildBar[ProjectID], p ) ) "
            f"VAR lo = MIN ( MINX ( t, [@v] ), 0 ) VAR hi = MAX ( MAXX ( t, [@v] ), 0 ) VAR lw = MIN ( {BARS_W} * 0.45, MAXX ( t, [@w] ) + 14 ) "
            f"VAR d = IF ( hi - lo = 0, 1000000, hi - lo ) VAR room = d * {BARS_PAD} / ( {BARS_W} - lw - 2 * {BARS_PAD} ) ")
+m("Build Bars Zero", "IF ( [Build Count] > 0, 0 )", "0", C15, "Build bar chart: where its zero line stands; blank while nothing is picked, so the empty chart draws no line.")
 m("Build Bars X Start", _BARS_X + "RETURN IF ( n > 0, lo - room )", "0", C15, "Value axis start of the build bar chart (the axis is hidden): the lowest picked NPV or zero, less the room the labels need.")
 m("Build Bars X End", _BARS_X + "RETURN IF ( n > 0, hi + room )", "0", C15, "Value axis end of the build bar chart (the axis is hidden): the highest picked NPV or zero, plus the room the labels need.")
 

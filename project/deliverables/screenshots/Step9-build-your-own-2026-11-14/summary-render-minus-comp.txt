@@ -1,0 +1,126 @@
+== build_Low
+  c_scatter_sub                rows 1/1  max dy 0.3  left 0  right 1
+  c_build_head                 rows 2/2  max dy 1.2  left 2  right 2
+  sl_moves names               rows 10/10  max dy 1.1  left 0  right 1
+  tbl_moves header             rows 1/1  max dy 9.2  left 1  right 2
+  tbl_moves Answers            rows 10/10  max dy 1.1  left 1  right 2
+  tbl_moves Capex              rows 10/10  max dy 0.5  left 2  right 2
+  tbl_moves NPV                rows 10/10  max dy 1.0  left 1  right 1
+  tbl_moves A year             rows 10/10  max dy 0.5  left 3  right 3
+  c_sel_footer                 rows 1/1  max dy 0.7  left 2  right 1
+  c_you_title                  rows 1/1  max dy 0.5  left 0  right 0
+  c_you_nums values            rows 1/1  max dy 1.6  left 1  right 1
+  c_you_nums labels            rows 2/2  max dy 1.7  left 1  right 1
+  c_you_range                  rows 1/1  max dy 0.8  left 1  right 1
+  c_you_rules                  rows 1/1  max dy 0.2  left 1  right 0
+  ch_build_bars names          rows 3/3  max dy 1.6  left 1  right 2
+  ch_cmp_build title           rows 1/1  max dy 0.7  left 0  right 1
+  tag_cmp_build                rows 1/1  max dy 0.4  left 1  right 1
+  sl_moves boxes (unchecked, Dusk) runs 10/10  max d: top 0.3 bottom 0.3 left 0.7 right 1.0
+  ch_build_bars Tangerine bars runs 3/3  max d: top 1.0 bottom 0.6 left 1.1 right 1.1
+  alarm band                   runs 0/0  max d: top 0.0 bottom 0.0 left 0.0 right 0.0
+== build_Expected
+  c_scatter_sub                rows 1/1  max dy 0.2  left 0  right 0
+  c_build_head                 rows 2/2  max dy 1.2  left 2  right 2
+  sl_moves names               rows 10/10  max dy 1.1  left 0  right 1
+  tbl_moves header             rows 1/1  max dy 9.2  left 1  right 2
+  tbl_moves Answers            rows 10/10  max dy 1.1  left 1  right 2
+  tbl_moves Capex              rows 10/10  max dy 0.5  left 2  right 2
+  tbl_moves NPV                rows 10/10  max dy 1.0  left 1  right 1
+  tbl_moves A year             rows 10/10  max dy 0.5  left 3  right 3
+  c_sel_footer                 rows 1/1  max dy 0.7  left 2  right 1
+  c_you_title                  rows 1/1  max dy 0.5  left 0  right 0
+  c_you_nums values            rows 1/1  max dy 1.6  left 1  right 0
+  c_you_nums labels            rows 2/2  max dy 1.7  left 1  right 1
+  c_you_range                  rows 1/1  max dy 0.8  left 1  right 1
+  c_you_rules                  rows 1/1  max dy 0.2  left 1  right 0
+  ch_build_bars names          rows 3/3  max dy 1.6  left 1  right 2
+  ch_cmp_build title           rows 1/1  max dy 0.7  left 0  right 1
+  tag_cmp_build                rows 1/1  max dy 0.4  left 1  right 1
+  sl_moves boxes (unchecked, Dusk) runs 10/10  max d: top 0.3 bottom 0.3 left 0.7 right 1.0
+  ch_build_bars Tangerine bars runs 1/1  max d: top 0.1 bottom 0.5 left 1.1 right 0.3
+  alarm band                   runs 0/0  max d: top 0.0 bottom 0.0 left 0.0 right 0.0
+== build_High
+  c_scatter_sub                rows 1/1  max dy 0.2  left 0  right 1
+  c_build_head                 rows 2/2  max dy 1.2  left 2  right 2
+  sl_moves names               rows 10/10  max dy 1.1  left 0  right 1
+  tbl_moves header             rows 1/1  max dy 9.2  left 1  right 2
+  tbl_moves Answers            rows 10/10  max dy 1.1  left 1  right 2
+  tbl_moves Capex              rows 10/10  max dy 0.5  left 2  right 2
+  tbl_moves NPV                rows 10/10  max dy 1.0  left 1  right 1
+  tbl_moves A year             rows 10/10  max dy 0.5  left 3  right 3
+  c_sel_footer                 rows 1/1  max dy 0.7  left 2  right 1
+  c_you_title                  rows 1/1  max dy 0.5  left 0  right 0
+  c_you_nums values            rows 1/1  max dy 1.6  left 1  right 1
+  c_you_nums labels            rows 2/2  max dy 1.7  left 1  right 1
+  c_you_range                  rows 1/1  max dy 0.8  left 1  right 1
+  c_you_rules                  rows 1/1  max dy 0.2  left 1  right 0
+  ch_build_bars names          rows 3/3  max dy 1.6  left 1  right 2
+  ch_cmp_build title           rows 1/1  max dy 0.7  left 0  right 0
+  tag_cmp_build                rows 1/1  max dy 0.4  left 1  right 1
+  sl_moves boxes (unchecked, Dusk) runs 10/10  max d: top 0.3 bottom 0.3 left 0.7 right 1.0
+  ch_build_bars Tangerine bars runs 0/0  max d: top 0.0 bottom 0.0 left 0.0 right 0.0
+  alarm band                   runs 0/0  max d: top 0.0 bottom 0.0 left 0.0 right 0.0
+== build_none
+  c_scatter_sub                rows 1/1  max dy 0.2  left 0  right 0
+  c_build_head                 rows 2/2  max dy 1.2  left 2  right 2
+  sl_moves names               rows 10/10  max dy 1.1  left 0  right 1
+  tbl_moves header             rows 1/1  max dy 9.2  left 1  right 2
+  tbl_moves Answers            rows 10/10  max dy 1.1  left 1  right 2
+  tbl_moves Capex              rows 10/10  max dy 0.5  left 2  right 2
+  tbl_moves NPV                rows 10/10  max dy 1.0  left 1  right 1
+  tbl_moves A year             rows 10/10  max dy 0.5  left 3  right 3
+  c_sel_footer                 rows 1/1  max dy 0.7  left 2  right 1
+  c_you_title                  rows 1/1  max dy 0.5  left 0  right 0
+  c_you_nums values            empty in both
+  c_you_nums labels            empty in both
+  c_you_range                  empty in both
+  c_you_rules                  rows 2/2  max dy 1.1  left 1  right 1
+  ch_build_bars names          empty in both
+  ch_cmp_build title           rows 1/1  max dy 0.7  left 0  right 1
+  tag_cmp_build                rows 1/1  max dy 0.4  left 1  right 1
+  sl_moves boxes (unchecked, Dusk) runs 10/10  max d: top 0.3 bottom 0.3 left 0.7 right 1.0
+  ch_build_bars Tangerine bars runs 0/0  max d: top 0.0 bottom 0.0 left 0.0 right 0.0
+  alarm band                   runs 0/0  max d: top 0.0 bottom 0.0 left 0.0 right 0.0
+== build_over
+  c_scatter_sub                rows 1/1  max dy 0.2  left 0  right 0
+  c_build_head                 rows 2/2  max dy 1.2  left 2  right 2
+  sl_moves names               rows 10/10  max dy 1.1  left 0  right 1
+  tbl_moves header             rows 1/1  max dy 9.2  left 1  right 2
+  tbl_moves Answers            rows 10/10  max dy 1.1  left 1  right 2
+  tbl_moves Capex              rows 10/10  max dy 0.5  left 2  right 2
+  tbl_moves NPV                rows 10/10  max dy 1.0  left 1  right 1
+  tbl_moves A year             rows 10/10  max dy 0.5  left 3  right 3
+  c_sel_footer                 rows 1/1  max dy 0.7  left 2  right 2
+  c_you_title                  rows 1/1  max dy 0.3  left 0  right 1
+  c_you_nums values            rows 1/1  max dy 1.6  left 1  right 1
+  c_you_nums labels            rows 2/2  max dy 1.7  left 1  right 1
+  c_you_range                  rows 1/1  max dy 0.8  left 1  right 0
+  c_you_rules                  rows 1/1  max dy 0.3  left 1  right 0
+  ch_build_bars names          rows 3/3  max dy 2.4  left 3  right 3
+  ch_cmp_build title           rows 1/1  max dy 0.7  left 0  right 1
+  tag_cmp_build                rows 1/1  max dy 0.4  left 1  right 1
+  sl_moves boxes (unchecked, Dusk) runs 10/10  max d: top 0.3 bottom 0.3 left 0.7 right 1.0
+  ch_build_bars Tangerine bars runs 3/3  max d: top 1.0 bottom 0.6 left 2.3 right 1.7
+  alarm band                   runs 1/1  max d: top 1.1 bottom 1.4 left 0.7 right 0.4
+== build_rule
+  c_scatter_sub                rows 1/1  max dy 0.2  left 0  right 0
+  c_build_head                 rows 2/2  max dy 1.2  left 2  right 2
+  sl_moves names               rows 10/10  max dy 1.1  left 0  right 1
+  tbl_moves header             rows 1/1  max dy 9.2  left 1  right 2
+  tbl_moves Answers            rows 10/10  max dy 1.1  left 1  right 2
+  tbl_moves Capex              rows 10/10  max dy 0.5  left 2  right 2
+  tbl_moves NPV                rows 10/10  max dy 1.0  left 1  right 1
+  tbl_moves A year             rows 10/10  max dy 0.5  left 3  right 3
+  c_sel_footer                 rows 1/1  max dy 0.7  left 2  right 1
+  c_you_title                  rows 1/1  max dy 0.5  left 0  right 0
+  c_you_nums values            rows 1/1  max dy 1.6  left 1  right 0
+  c_you_nums labels            rows 2/2  max dy 1.7  left 1  right 1
+  c_you_range                  rows 1/1  max dy 0.8  left 1  right 0
+  c_you_rules                  rows 1/1  max dy 0.3  left 1  right 1
+  ch_build_bars names          rows 3/3  max dy 1.3  left 1  right 1
+  ch_cmp_build title           rows 1/1  max dy 0.7  left 0  right 1
+  tag_cmp_build                rows 1/1  max dy 0.4  left 1  right 1
+  sl_moves boxes (unchecked, Dusk) runs 10/10  max d: top 0.3 bottom 0.3 left 0.7 right 1.0
+  ch_build_bars Tangerine bars runs 2/2  max d: top 0.5 bottom 0.6 left 1.6 right 1.8
+  alarm band                   runs 0/0  max d: top 0.0 bottom 0.0 left 0.0 right 0.0

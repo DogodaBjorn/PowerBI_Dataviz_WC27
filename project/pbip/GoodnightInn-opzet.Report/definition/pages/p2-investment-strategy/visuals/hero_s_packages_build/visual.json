@@ -338,7 +338,7 @@
             "bubbleSize": {
               "expr": {
                 "Literal": {
-                  "Value": "5L"
+                  "Value": "2L"
                 }
               }
             },

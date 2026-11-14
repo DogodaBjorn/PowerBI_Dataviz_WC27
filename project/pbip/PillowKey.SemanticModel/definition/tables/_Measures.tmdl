@@ -2448,7 +2448,7 @@ table _Measures
 		lineageTag: e2b2b714-014b-5ead-acd5-4595a511cbac
 
 	/// Where the name 'You' is anchored in the proof chart, NOT a value: the plan's NPV plus a fixed lift, so that Power BI's label, which it sets under an invisible point, lands above the plan dot. Shown nowhere as a number (the layer has no tooltip and no tab stop).
-	measure 'Build You Label NPV' = [Build NPV (sel)] + 11090000
+	measure 'Build You Label NPV' = VAR v = [Build NPV (sel)] RETURN IF ( NOT ISBLANK ( v ), v + 11090000 )
 		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
 		displayFolder: 12 Build your own
 		lineageTag: 3e7a169c-b1e9-51f6-80b4-3faf6b30223a
@@ -3143,6 +3143,12 @@ table _Measures
 		formatString: 0
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 9e626e4b-9736-59e5-a99e-980dd299294b
+
+	/// Build bar chart: where its zero line stands; blank while nothing is picked, so the empty chart draws no line.
+	measure 'Build Bars Zero' = IF ( [Build Count] > 0, 0 )
+		formatString: 0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 710be7ac-03e1-5c94-be16-d935873be51e
 
 	/// Value axis start of the build bar chart (the axis is hidden): the lowest picked NPV or zero, less the room the labels need.
 	measure 'Build Bars X Start' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR t = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ), "@w", VAR p = [@p] RETURN LOOKUPVALUE ( BuildBar[Name Px], BuildBar[ProjectID], p ) ) VAR lo = MIN ( MINX ( t, [@v] ), 0 ) VAR hi = MAX ( MAXX ( t, [@v] ), 0 ) VAR lw = MIN ( 464 * 0.45, MAXX ( t, [@w] ) + 14 ) VAR d = IF ( hi - lo = 0, 1000000, hi - lo ) VAR room = d * 72 / ( 464 - lw - 2 * 72 ) RETURN IF ( n > 0, lo - room )

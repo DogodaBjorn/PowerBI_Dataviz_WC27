@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_build_bars",
   "position": {
-    "x": 1384,
-    "y": 464,
+    "x": 1379,
+    "y": 462,
     "z": 62000,
-    "width": 464,
-    "height": 168,
+    "width": 467,
+    "height": 157,
     "tabOrder": 790
   },
   "visual": {
@@ -144,6 +144,13 @@
               "expr": {
                 "Literal": {
                   "Value": "40L"
+                }
+              }
+            },
+            "outerPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
                 }
               }
             },
@@ -341,8 +348,13 @@
             },
             "value": {
               "expr": {
-                "Literal": {
-                  "Value": "0D"
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Build Bars Zero"
                 }
               }
             },

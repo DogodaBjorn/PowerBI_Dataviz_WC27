@@ -855,15 +855,17 @@ def scatter_axes(objs):
     return objs
 
 
-# Build step 9, the plan dot: 12 px (the comp's r 6). Without a size field bubbleSize -15 gives 8 px and 0 gives 11 px
-# (build step 8), so 5 gives 12.
-YOU_BUBBLE = 5
+# Build step 9, the plan dot: 12 px (the comp's r 6). Without a size field bubbleSize -15 gives 8 px (build step 8), 5 gave
+# 14.1 px and 2 gives 13.1 px on the strip render of step 9 (the comp's dot reads 11 to 12 px there).
+YOU_BUBBLE = 2
 # The name "You" above the plan dot (doc 22 section 3): a layer of its own with both axes hidden, so its plot is its visual
 # rect, and a value axis that runs YOU_HEAD above the proof chart's: the name hangs from an invisible point 42.7 px above the
 # dot (sketch_model YOU_LABEL_LIFT), and that point of a plan near the top of the chart lies above +$20M (A in the High
 # case: +$12.7M + $11.1M). Same scale as the proof chart: 308 px for $80M, so $20M more are 77 px more.
 YOU_HEAD = 20_000_000
-YOU_RECT = (144, 203, 572, 385)  # the proof chart's plot (page x 144 to 716, y 280 to 588), 77 px taller at the top
+# the proof chart's plot (page x 144 to 716, y 280 to 588), 77 px taller at the top, and 8 px higher: at (144, 203) the name
+# stood 7.4 px under the comp's (strip render of step 9); at 195 it is within 1.5 px in Low, Expected and High
+YOU_RECT = (144, 195, 572, 385)
 
 
 def you_label(slot, z):
@@ -1379,7 +1381,7 @@ def move_slicer():
                                   "horizontalAlignment": text("left"), "verticalAlignment": text("middle")}, "selector": st("default")},
                   *[{"properties": {"fontColor": color(INK), "bold": b(False)}, "selector": st(i_)} for i_ in states[1:]]],
         "label": [{"properties": {"show": b(False)}, "selector": st("default")}],
-        "padding": [{"properties": {"paddingSelection": text("Custom"), "topMargin": integer(0), "bottomMargin": integer(0), "leftMargin": integer(8), "rightMargin": integer(8)},
+        "padding": [{"properties": {"paddingSelection": text("Custom"), "topMargin": integer(0), "bottomMargin": integer(SEL_LIFT), "leftMargin": integer(SEL_LEFT), "rightMargin": integer(8)},
                      "selector": st("default")}],
         # without the colour on the selected state the checked box is white on white (S-3)
         "selectionIcon": [{"properties": {"show": b(True), "position": enum("Left"), "size": integer(16), "spacing": integer(8), "color": color(INK)}, "selector": st("default")},
@@ -1395,13 +1397,16 @@ def move_slicer():
 
 
 MOVES_ROWS = range(10)  # the ten Goodnight Inn moves (BuildMove)
+# measured on the strip render of step 9: with the comp's 8 px at the left Power BI set box and name 2.5 to 3 px right of the
+# comp's, and 1 to 2 px low in the tile
+SEL_LEFT, SEL_LIFT = 5, 2
 # tbl_moves as spike S-3 found it (doc 23, log of step 2; doc 21 section 8): the comp's columns 92 / 64 / 72 / 116 with the
 # two corrections a native table needs ("−$27.3M" needs 74 px, the header "A year by 2032" 118) and 2 px of slack against a
 # scrollbar. A ruled row of one 12 pt line is 21.28 px + twice the padding + 1 px for its rule (build step 6), so the
 # padding is 4.86 for the selector's 32 px. The header takes the same padding and is about 42 px (the comp's 32), so the
 # table starts MOVES_LIFT px above its slot and its first row begins at y 280, beside the first tile.
 MOVES_COLS = (92, 64, 74, 118)
-MOVES_PAD, MOVES_LIFT, MOVES_SLACK = 4.86, 10, 2
+MOVES_PAD, MOVES_LIFT, MOVES_SLACK, MOVES_DX = 4.86, 10, 2, -2
 
 
 def moves_table():
@@ -1424,7 +1429,7 @@ def moves_table():
     objs["values"] += [{"properties": {"fontColor": fv("Move NPV Ink")}, "selector": {**WILD, "metadata": refs[3]}}]
     objs["columnWidth"] = [{"properties": {"value": num(w_)}, "selector": {"metadata": q_}} for q_, w_ in zip(refs, (0, *MOVES_COLS))]
     x, y, w, h, z, tab = at(P2, "tbl_moves")
-    t = visual("tbl_moves", "tableEx", x, y - MOVES_LIFT, sum(MOVES_COLS) + MOVES_SLACK, h + MOVES_LIFT + 2, z, tab, query={"Values": {"projections": proj}}, objects=objs,
+    t = visual("tbl_moves", "tableEx", x + MOVES_DX, y - MOVES_LIFT, sum(MOVES_COLS) + MOVES_SLACK, h + MOVES_LIFT + 2, z, tab, query={"Values": {"projections": proj}}, objects=objs,
                vcos=vco(padding=0), off_grid=True)
     return bind_alt(t, "Alt Moves (text)")
 
@@ -1451,6 +1456,7 @@ def you_title():
 YOU_NUMS = (("Build Capex (text)", "Build Label Capex (text)", 1, None), ("Build NPV (text)", "Build Label NPV (text)", 2, "Build NPV Ink"),
             ("Build Run-rate (text)", "Build Label Run-rate (text)", 1, "Build Run-rate Ink"), ("Build A Year on Cost (text)", "Build Label A Year on Cost (text)", 1, None))
 YOU_NUM_W, YOU_NUM_STEP, YOU_VALUE_LINE = 107, 119, 28.4
+YOU_NUM_DY = 0  # tried 1 in step 9: the text moved 3.2 px on the strip render (1.6 px above the comp's became 1.6 px under it), so 0 stays
 
 
 def you_nums():
@@ -1458,13 +1464,13 @@ def you_nums():
     out = []
     for i, (value, label, lines, ink) in enumerate(YOU_NUMS):
         cx = x + YOU_NUM_STEP * i
-        v = card("c_you_nums" if i == 0 else f"c_you_nums_v{i + 1}", cx, round(y + YOU_VALUE_LINE / 2 - 16), YOU_NUM_W + 8, 32, z, tab, [value], DISPLAY, 16, INK, off_grid=True)
+        v = card("c_you_nums" if i == 0 else f"c_you_nums_v{i + 1}", cx, round(y + YOU_VALUE_LINE / 2 - 16) + YOU_NUM_DY, YOU_NUM_W + 8, 32, z, tab, [value], DISPLAY, 16, INK, off_grid=True)
         if ink:
             v["visual"]["objects"]["value"][0]["properties"]["fontColor"] = fv(ink)
         out.append(bind_alt(v, "Alt You Nums (text)") if i == 0 else decorative(v, 70 + i))
         centre = y + YOU_VALUE_LINE + lines * 21.3 / 2 - 0.7
         # the two-line label keeps the comp's 107 px so it wraps where the comp does; a one-line label gets the gap too
-        lab = card(f"c_you_nums_l{i + 1}", cx, round(centre - CARD_H[lines] / 2), YOU_NUM_W + (0 if lines > 1 else 8), CARD_H[lines], z, tab, [label], BODY, S, INK2, off_grid=True)
+        lab = card(f"c_you_nums_l{i + 1}", cx, round(centre - CARD_H[lines] / 2) + YOU_NUM_DY, YOU_NUM_W + (0 if lines > 1 else 8), CARD_H[lines], z, tab, [label], BODY, S, INK2, off_grid=True)
         out.append(decorative(lab, 80 + i))
     return out
 
@@ -1487,9 +1493,12 @@ def top_text(page, name, measure, colour_measure, alt_measure=None):
 
 # ch_build_bars (doc 22 section 3; spec charts.ch_build_bars): the visual rect that puts Power BI's rows and bars on the comp's
 # (PLOT_RECT of step 5). The comp sets five rows of 32 px from the top of the slot (1384, 464, 464, 168) and starts the bars
-# 14 px right of the longest name; measured in build step 9.
-BARS_RECT = (1384, 464, 464, 168)
-BARS_INNER = 40  # the comp's bar is 60 % of its row
+# 14 px right of the longest name. Measured in build step 9: in the slot's own rect the rows stood 29.6 px apart and 10 px
+# low (Power BI keeps 8 px above its plot and an outer padding of its own); with outer padding 0 and this rect five rows
+# are 32 px apart from y 464. x and width: the strip render moves by about 3 px for 1 px of rect (Desktop snaps a visual to
+# its device pixels at that zoom), so the two edges were settled from two renders one px apart (doc 23, log of step 9).
+BARS_RECT = (1379, 462, 467, 157)
+BARS_INNER = 40  # the comp's bar is 60 % of its row (measured: 16.8 px in a 32 px row, the comp's 18)
 
 
 def build_bars():
@@ -1503,11 +1512,12 @@ def build_bars():
          "Tooltips": {"projections": [proj_mea("Build Bar Order", "Order")]}}
     va = axis(BODY, S, INK2, show=False, gridlines=False)
     va[0]["properties"].update({"start": mtext("Build Bars X Start"), "end": mtext("Build Bars X End")})
-    ca = axis(BODY, S, INK2, gridlines=None, extra={"maxMarginFactor": integer(45), "innerPadding": integer(BARS_INNER), "concatenateLabels": b(False)})
+    ca = axis(BODY, S, INK2, gridlines=None, extra={"maxMarginFactor": integer(45), "innerPadding": integer(BARS_INNER), "outerPadding": integer(0), "concatenateLabels": b(False)})
     objs = {"categoryAxis": ca, "valueAxis": va, "legend": legend(False),
             "dataPoint": [{"properties": {"fill": fv("Build Bar Color")}, "selector": WILD}],
             "labels": labels(True, BODY, S, INK, units=1, position="OutsideEnd"),
-            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
+            # the zero line's value is a measure: blank while nothing is picked, or the empty chart would still draw the line
+            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": mtext("Build Bars Zero"), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
                                                     "position": enum("front"), "dataLabelShow": b(False)}, "selector": {"id": "1"}}]}
     v = chart(P2, "ch_build_bars", "clusteredBarChart", q, objs, None, sort=sort_by_measure("Build Bar Order"), alt_measure="Alt Build Bars (text)")
     return plot_rect(v, BARS_RECT)

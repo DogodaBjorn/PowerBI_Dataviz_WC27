@@ -1,4 +1,4 @@
-number_checks: 763 checks, 762 ok, 1 known difference(s), 0 failed
+number_checks: 766 checks, 765 ok, 1 known difference(s), 0 failed
 
   ok    workbook: a year on cost per move (E9): 30 ok
   ok    workbook: profit a year per move: 30 ok
@@ -34,6 +34,7 @@ number_checks: 763 checks, 762 ok, 1 known difference(s), 0 failed
   ok    model: end series are blank before the horizon year: 3 ok
   ok    model: a dynamic format string repeats its literal in three sections: 3 ok
   ok    spec: selector table: 120 ok
+  ok    model: build bars, the empty rows (five rows in all, value zero, a space as label): 3 ok
   ok    spec: build bars, names and labels in NPV order: 3 ok
   ok    model: build bar colours (Night adds, Tangerine costs): 3 ok
   ok    spec: your-plan numbers: 6 ok

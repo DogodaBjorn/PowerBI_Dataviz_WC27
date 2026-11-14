@@ -225,9 +225,10 @@ q.append("EVALUATE CALCULATETABLE ( GENERATE ( CROSSJOIN ( " + SCEN_T + ", SELEC
 q.append("EVALUATE CALCULATETABLE ( GENERATE ( " + SCEN_T + ", VAR s = [s] RETURN " + row([(n, calc(f"[{n}]", SF)) for n in B_NUM]
          + [("yoc_txt", calc(sm.pct1("[Build A Year on Cost (sel)]"), SF)), ("rr_txt", calc(sm.sfm("[Build Run-rate (sel)]"), SF))]) + f" ), BuildMove[ProjectID] IN {GI_IDS} )")
 q.append("EVALUATE " + row([(n, f"[{n}]") for n in B_NUM] + [("end", calc("[Build Cumulative End Name (label-safe)]", "'Date'[Year] = 2032")), ("bar", "[Build Bar NPV]")]))
-# T5-T7 · the build bars per scenario (package A picked)
+# T5-T7 · the build bars per scenario (package A picked). Build step 9: the chart's rows come from BuildBar (the ten moves
+# and four empty rows that keep the bars' pitch); with three moves picked, two empty rows show, with value zero and no label
 for s in SCEN:
-    q.append("EVALUATE SUMMARIZECOLUMNS ( BuildMove[ProjectID], BuildMove[Short Name], TREATAS ( " + GI_IDS + f", BuildMove[ProjectID] ), TREATAS ( {{ \"{s}\" }}, Scenario[Scenario] ), "
+    q.append("EVALUATE SUMMARIZECOLUMNS ( BuildBar[ProjectID], BuildBar[Name], BuildBar[Pad], TREATAS ( " + GI_IDS + f", BuildMove[ProjectID] ), TREATAS ( {{ \"{s}\" }}, Scenario[Scenario] ), "
              '"v", [Build Bar NPV], "ls", [Build Bar NPV (label-safe)], "fmt", ' + sm.FMT_DEFS["Build Bar NPV (label-safe)"] + ', "color", [Build Bar Color] )')
 # T8 · F4 per hotel; T9 · F4 per location type; T10 · the trend years; T11 · the F3 bands
 GI_H = 'TREATAS ( { "Goodnight Inn" }, Hotels[Brand] )'
@@ -360,8 +361,12 @@ for s in SCEN:
         check("spec: selector table", (p, s, "NPV"), want[2], clean(moves[p, s]["move_npv_txt"]))
         check("spec: selector table", (p, s, "a year by 2032"), want[3], clean(moves[p, s]["move_rr_txt"]))
     lab = bld["ch_build_bars"]["labels"]
-    got = sorted(bars[s], key=lambda r: -r["v"])
-    check("spec: build bars, names and labels in NPV order", s, lab, [x for r in got for x in (r.get("BuildMove[Short Name]", r.get("Short Name")), lit(r["fmt"]))])
+    shown = [r for r in bars[s] if r["v"] is not None]  # the format expression is never blank, so the query returns every row of BuildBar
+    pads = [r for r in shown if r.get("BuildBar[Pad]", r.get("Pad"))]
+    check("model: build bars, the empty rows (five rows in all, value zero, a space as label)", s, [2, [0, 0], [" ", " "]],
+          [len(pads), [r["v"] for r in pads], [lit(r["fmt"]) for r in pads]])
+    got = sorted([r for r in shown if r not in pads], key=lambda r: -r["v"])
+    check("spec: build bars, names and labels in NPV order", s, lab, [x for r in got for x in (r.get("BuildBar[Name]", r.get("Name")), lit(r["fmt"]))])
     check("model: build bar colours (Night adds, Tangerine costs)", s, [sm.SIGNAL_MARK if half_up(r["v"] / 1e6, 2) < 0 else sm.INK for r in got], [r["color"] for r in got])
     you = bld["c_you_nums"].split("\n")
     check("spec: your-plan numbers", ("a year by 2032", s), you[4], clean(build[s]["rr_txt"]))
