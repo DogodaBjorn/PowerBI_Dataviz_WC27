@@ -13,6 +13,14 @@ follow once a direction is chosen.
 | `D3-two-futures.pbip` | D3 Two futures, the ledger (cream, ink, mono figures) | p1 2032 if we do nothing · p2 2032 with the plan |
 | `PillowKey.SemanticModel/` | Shared model (TMDL): the organisers' 16 tables + `_Measures`, `ProjectCashflow`, `HotelOutlook`, helper tables | |
 
+## Since 14 Nov 2026: the model on disk is the submission model
+
+The entry is `GoodnightInn-opzet.pbip`. From build step 11 of doc 23 the committed `PillowKey.SemanticModel` is written
+with `python project/tools/sketch_model.py --submission`: only the measures and helper tables that report reaches
+(333 of 600 measures, 29 of 35 tables). **The three sketches below do not open on that model**: they bind measures and
+tables that were left out. To look at a sketch again, write the full model with the plain command under "Regenerate"
+(and run it with `--submission` again before anything is published; `build_checks.py` check 6 fails on the full model).
+
 ## Regenerate
 
 ```

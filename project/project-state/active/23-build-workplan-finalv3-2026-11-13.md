@@ -28,7 +28,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 8 | What waits, and why | done | 14 Nov | ff2baa2 | What waits on the comp in Low, Expected and High: every text row within 2 px, all fifteen table cells wrap as the comp's, the table fits in High, both plots within 1.3 px; the lettered discs are native (a letter layer of its own); A is the NPV maximum in all three cases; `a11y_check` 0, 763 number checks and the text diff pass, Microsoft's validator 0 errors. Outside 2 px, all Power BI's: header words 8.7 px high, ticks every $20M, axis labels 4 to 5 px high, A's end label 5 px high, Low's plot 3 px high. One choice for Bjorn: A's disc in Deep Coffee for the letter's contrast (open question 7). Bjorn was not needed in Desktop |
 | 9 | Build your own | done | 14 Nov | 42e280e | Build on the comp with package A picked in Low, Expected and High, with nothing picked, over the budget and with a broken rule: every text row within 2 px, bars and boxes within about 2 px, the empty state shows the rules sentence once and no numbers, the saved selection survives a reload, Space on a tile changes the plan and leaves the table's ten rows; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Deneb and the waterfalls are gone. Outside 2 px: the table's header words 9.2 px high, its last column 3 px right, A's end label 5 px high. Three things for Bjorn (open question 8): the bars scroll from eight picked moves on, the zero line of the bars runs under the empty rows, a plan beyond $62M has no dot. Bjorn was not needed in Desktop |
 | 10 | Tooltips, alt text, tab order | done | 14 Nov | 7cee2a7 | The Tab key ran backwards on both pages (Desktop goes from the highest `tabOrder` down): turned round, and walked with real keys in the designed order. `tt-package` with the R-TT-1 sentence and a native moves table, the glossary in the report's words, points only in every tooltip, `tt-f1` to `tt-f4` gone. Alt texts reviewed in three cases: one raised an engine error, one printed a raw number, four table texts shortened; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Both passes by script (real keys, the accessibility tree), not by ear; four things for Bjorn (open question 9). Bjorn was not needed in Desktop |
-| 11 | Final checks and the FinalV3 render set | todo | | | |
+| 11 | Final checks and the FinalV3 render set | done | 14 Nov | 14163ef | The submission prune: 333 of 600 measures and 29 of 35 tables stay, and the committed model is that model (`sketch_model.py --submission`; the three sketches need the full build). `build_checks` 6 of 6 with the new reachability gate, 766 number checks, `a11y_check` 0, Microsoft's validator 0 errors, compliance (R-X-2) 5 of 5 by script plus package A in the engine. Render set FinalV3: 20 renders with their comp views and a README that lists every deviation; nothing new outside 2 px, and the prune changed no pixel. Not seen in this session: the header artwork and a real click on the page buttons (step 12). One question for Bjorn (open question 10). Bjorn was not needed in Desktop |
 | 12 | Publish to Web gate (Bjorn publishes), then submit | todo | | | |
 
 Status values: `todo`, `doing` (stopped mid-step; see its log), `done`, `blocked` (needs Bjorn).
@@ -1224,7 +1224,91 @@ the "heard" column is the text a screen reader is handed, not a recording of Nar
 
 **Prompt:** `project/build-steps/step-11.txt` (say: "Read project/build-steps/step-11.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Sat 14 Nov 2026, one session, done):**
+
+*Built* (generators and check scripts; the report is unchanged: P1 62 and P2 81 visuals, seven pages).
+
+- **The submission prune** (doc 21 section 10.4). `python project/tools/sketch_model.py --submission` writes the full
+  model, asks `reachability()` what the report reaches, and rewrites what gets shorter: **333 of 600 measures, 29 of 35
+  tables, 21 of 22 relationships**. Left out: 267 measures and the tables `HotelOutlook`, `Timeline`, `PlanYear`,
+  `BridgeStep`, `KpiLine`, `ScatterView`. Roots are the 231 measures and the tables `GoodnightInn-opzet.Report` binds
+  (visuals, filters, bookmarks, formatting) and any measure a calculated column or table reads; from there through
+  each measure's DAX and its dynamic format string, and through the DAX of every table kept. A `Table[Column]` with a
+  measure's name (`ProjectCashflow[Disruption]`) is not counted as that measure. The organisers' sixteen tables always
+  stay. Every measure the earlier steps asked to keep is reached on its own (the inks, the end series, the letter
+  layer, `TTMove` and its rows, the measures behind `TEXT_SLOTS`); no keep-list was needed.
+- **The committed model is the submission model.** The plain `sketch_model.py` still writes everything, for the three
+  direction sketches (`D1` to `D3`), which do not open on the pruned model (`project/pbip/SKETCHES.md` says so).
+- **The gate:** `build_checks.py` check 6: 0 bound measures missing, 0 unreachable measures left, 0 unread helper
+  tables left. It fails on the full model. Checks 2, 3 and 4 read the measures the model on disk holds, and check 2's
+  "open" list became a real pass or fail (it passes: the nine old measures went with the prune).
+- **`number_checks.py` on a pruned model:** it reads six measures the report does not (the hero's four domain
+  measures, `Tranche 1 Run-rate`, `Tranche 1 Year on Cost`). It now defines them in its own query from the generator's
+  DAX (`sketch_model.query_defines`), and reads the selector's capex from `Move Capex (text)`, the measure the table
+  shows. It runs on the full model and on the pruned one alike.
+- **`tools/compliance_check.py`** (R-X-2 from the files): pages, visual types, fonts, images, data sources.
+- **`tools/desktop_shots/step11/`**: `slot_sheet.py` (every slot of a view, render minus comp) and a README with the
+  round that made the set.
+
+*Verified* (Desktop 2.159, Windows culture nl-NL, throwaway copy on the pruned model; the project was not opened).
+
+| What | Result | Proof |
+|---|---|---|
+| The pruned model opens and loads | the copy opens in Desktop, its engine holds 29 tables, the refresh takes 7 s, every page and tooltip page renders | `refresh_desktop_model.ps1` in the session; the render set |
+| `build_checks.py` (with the engine) | **6 of 6**: 139 results, 137 ok, 2 known (20.5 / 20.6 %), 0 failed. Check 5: 129 texts equal the spec in Low, Expected, High and the empty Build state | `analysis/output/build_checks.txt` |
+| The reachability gate | 231 bound measures, 333 in the model, 0 missing, 0 unreachable left, 0 unread helper tables left | check 6, same file |
+| `number_checks.py` | 766 checks, 765 ok, 1 known, 0 failed; six measures defined in the query | `analysis/output/number_checks.txt` |
+| `alt_texts.py` | 136 stops, 107 on a measure, 0 flags, in three cases | `analysis/output/alt_texts.txt` |
+| `a11y_check.py`, `schema_check.py` | 0 failures; 196 files, 0 failing | repeatable |
+| Other validators | `validate_tmdl --strict` 0 errors, the 13 expected label-safe warnings; `validate_json` 321 files, 0 errors; Microsoft's validator 0 errors (34 warnings, all about 24 px text boxes) | repeatable |
+| Parity | a fresh run of both generators into a scratch folder equals `project/pbip` file for file | `diff -r` in the session |
+| **Render set FinalV3** | 20 renders: page 1; Recommended, What waits in Low, Expected, High; Build as it opens, with six moves, over the budget and with nothing picked; nine tooltip views. Each page render with its comp view beside it | `deliverables/screenshots/FinalV3/` and its README |
+| The set against the comp | text slots within 2 px: page 1 31 of 37, Recommended 23 of 27 in each case, What waits 14 of 15 in each case, Build 20 of 20 (19 of 20 over the budget). Every text slot has the comp's number of lines in every view. What is outside reads 2.1 to 2.5 px (the method's limit), is the active tab's outline (the label itself within 0.1 px in y), or the title inside the alarm band | `FinalV3/slot-sheet-render-minus-comp.txt` |
+| The prune changed nothing on the canvas | three Build renders and all nine tooltip renders are byte for byte the renders of steps 9 and 10; the three What waits renders equal step 8's within capture noise | `cmp` in the session; FinalV3 README |
+
+*R-X-2, the compliance list.*
+
+| Rule | Result | Proof |
+|---|---|---|
+| Exactly two visible pages; tooltip pages hidden | yes: The Brand Review, The Investment Strategy; five hidden tooltip pages | `compliance_check.py` |
+| At least four built-in visual types | line 4, stacked area 1, clustered column 1, clustered bar 1, stacked bar 1, scatter 8 layers, table 5; no custom visual, `publicCustomVisuals` absent | same |
+| A = three moves, two of them growth, the label visible | `Package[Preset] = "A"`: 3 moves, 2 growth (booking app, revenue management; the kiosks are not). The hero's Answers column prints "F2 · growth", "F1 · growth", "F4" | DAX query in the session; renders 02 to 04 |
+| Within budget | A costs $9.4M of $60.0M; the plan's four parts are 9.4 + 12.4 + 29.5 + 8.7 = 60.0 | same query; `number_checks.py` |
+| Financial and operational impact through 2032 on the canvas | the four numbers and the 2032 ledger (distribution cost, margin, kiosks live and guest score, the refresh) | renders 02 to 04 |
+| Provided data only | sixteen tables read the organisers' workbook through `DataFile`; twelve are calculated in the model, of which six hold typed labels, sort orders or decision data (`Finding`, `WaitOption`, `MoveDecision`, `PlanSelector`, `FolioLine`, `BuildPoint`) and no measured value | `compliance_check.py` |
+| Built-in fonts | Segoe UI and Segoe UI Semibold (with Power BI's own fallback stack) in the report and the theme; the SVG cells hold no text | same |
+| Embedded images | seven registered images inside the report; no web address in the report or in a measure | same |
+
+*Deviations from the comp.* None is new. The FinalV3 README lists every one outside 2 px by page, with the open
+question it belongs to (questions 1, 2 and 4 to 9).
+
+*Found on the way.*
+
+1. **A render is repeatable to the byte** when nothing changed: `cmp` against the last set is a cheap regression test.
+2. **A tooltip capture can come back without its visuals even on the second pass** (66 KB instead of 179 KB): compare
+   file sizes with the last set, and capture again.
+3. **A heredoc eats a backslash before n too** (again): a patch script with backslashes goes through the Write tool.
+4. **`pbir_detect.py` is not green,** and was not part of any step's checks: 11 unwaived findings, none a defect of the
+   entry (see open question 10 and doc 21 section 16).
+
+*Open items.*
+
+- **Not done here, for step 12:** a real click on `btn_next`, `btn_back`, a tab and the invitation (the posted clicks
+  of steps 1 and 5 do not land in the narrow window; in the browser it is one plain click each); the header's look
+  with the night-glow artwork and the hanger (the strip renders have a plain Night zone, and a whole-page capture in
+  this window puts the background image off its place); and the lists the logs of steps 5 to 10 left for the
+  published report (Tab from the top, the hover states, the letters in the discs, "You" over its dot, the bars with
+  eight moves, the tooltips at 616 and 928 px, "ⓘ" on a phone).
+- **Step 12 must write the model with `--submission`.** After any fix in `sketch_model.py`: `python
+  project/tools/sketch_model.py --submission`, then `opzet_report.py`, delete `cultures`, and `build_checks.py`
+  (check 6 fails if the flag was forgotten). A new binding in the report needs the report written first, then the
+  model: the prune reads the report on disk.
+- **Left as they are:** the retired measures and tables stay in the generator (the full build needs them for the
+  sketches); `BuildMove[Waterfall Label]` is an unused column in the shipped model (the prune drops measures and
+  helper tables, not columns); `deliverables/deneb-specs/dn_build_selector.json` and `tools/build_selector_spec.py`
+  stay as the record of round 4's selector, and Deneb's line in CREDITS.md stays (a credit is never removed).
+- **Before the session:** the working tree was clean and equal to the generators' output. The throwaway window was
+  ended with `Stop-Process` (throwaway only); the project was not opened in Desktop, and no Desktop window is left open.
 
 ### Step 12 · Publish to Web gate (Bjorn publishes), then submit (about 1 h)
 
@@ -1316,3 +1400,13 @@ A session that meets a question only Bjorn can answer adds it here and sets its 
    tooltip. (d) The package tooltip is 616 px high, 64 more than before: the moves table at body size needs the room
    for a package of eight moves. Recommended: accept; the alternative is a table at 10 pt, under the floor. The same
    answer covers the table alt texts as summaries and the two passes done by script instead of by ear.
+10. **Step 11: the pruned model in the repository, and the detector's findings (no step is blocked by it).** (a) The
+    model in `project/pbip` is now the submission model: 333 measures, 29 tables. The three direction sketches of
+    6 Nov (`D1` to `D3`) bind measures that are no longer in it, so they do not open until the full model is written
+    again (`python project/tools/sketch_model.py`, without the flag). Recommended: keep it this way through the
+    submission, so what you publish is what was checked; say so if the sketches must keep opening, and the pruned
+    model moves to a folder of its own. (b) `scripts/pbir_detect.py` lists 11 findings without a waiver: the 8 px grid
+    on both pages (the comp's slots are on a 1 px grid), the two Night-zone text colours on the eight masthead
+    controls of page 2 (the same two colours your waiver `zone-text-headline` covers for the headline), and the
+    plan bar's `#717B8B` (tranche 3, from the comp's spec). Recommended: waive the three as kit colours and as the
+    comp's grid; a waiver is yours to give, so none was written.

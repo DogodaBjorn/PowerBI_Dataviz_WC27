@@ -732,6 +732,31 @@ saves, close every window yourself without saving, renders through the throwaway
 Tier order inside each step follows doc 20: T1 before T2 before T3. If a day slips, drop T3 first
 (R-P1-9, R-P2-11, R-W-4, R-TT-3/4, the submission prune), never the gate.
 
+### Results of the final checks, the prune and the render set (14 Nov, build step 11 of doc 23)
+
+Row 8 of the table above is done; the full log is in doc 23, step 11. What differs from this document, or adds to it:
+
+- **Submission prune (section 10.4).** `python project/tools/sketch_model.py --submission` writes the model the entry
+  ships with: 333 of 600 measures, 29 of 35 tables (`BridgeStep`, `KpiLine`, `Timeline`, `PlanYear`, `HotelOutlook`
+  and `ScatterView` go; `PlanSelector` stays), 21 of 22 relationships. The script decides (`reachability()` in
+  `sketch_model.py`): roots are the fields `GoodnightInn-opzet.Report` binds and the measures a calculated column or
+  table reads; from there through every measure's DAX and its dynamic format string, and through the DAX of every
+  table kept. A kept object is byte for byte the object of the full build (lineage tags come from names).
+- **The committed model is the submission model.** The three direction sketches (`D1` to `D3`) do not open on it; the
+  plain `sketch_model.py` writes the full model again (`project/pbip/SKETCHES.md`).
+- **The gate is check 6 of `build_checks.py`:** 0 bound measures missing, 0 unreachable measures left, 0 unread helper
+  tables left. It fails on the full model, so a habit run of the generator without `--submission` cannot pass unseen.
+  Checks 2, 3 and 4 now read the measures the model on disk holds; check 2's "open" list is gone (it is a pass or a
+  fail on everything).
+- **Check scripts on a pruned model.** `number_checks.py` reads six measures the report does not (the hero's four
+  domain measures, tranche 1 on its own). It defines those in its own query from the generator's DAX
+  (`sketch_model.query_defines`), so it runs on the full model and on the pruned one alike.
+- **Compliance (R-X-2)** is a script too: `tools/compliance_check.py` (pages, visual types, fonts, images, data
+  sources, from the files). Visual types on the two pages: line 4, stacked area 1, clustered column 1, clustered bar 1,
+  stacked bar 1, scatter 8 layers, table 5.
+- **For section 15 (template):** point 5 stands as built: the reachability report is a check with a count, and the
+  prune is a flag on the model generator, not a second generator.
+
 ### Results of tooltips, alt text and tab order (14 Nov, build step 10 of doc 23)
 
 Section 9 is built; the full log, the renders and the two passes are in doc 23, step 10. What differs from this
@@ -947,3 +972,4 @@ Run in a throwaway copy on a scratch page, Desktop 2.159 in nl-NL. Proof and met
 | S-1 to S-8 | Spikes, each with its fallback | builder |
 | Publish to Web | SVG data URIs in table cells and in the A chip; the gate of R-X-3 | Bjorn publishes, builder checks |
 | Earlier findings still open | `pbir_detect` header 4 px grid; the MS validator's scatter `categoryLabels` error (the small stack stays, so this stays) | builder, T3 |
+| `pbir_detect` after the rebuild (14 Nov, build step 11) | The MS validator's error is gone since build step 8. `pbir_detect` lists 11 unwaived findings: the 8 px grid on both pages (the comp's slots and the corrections of steps 5 to 9 are on a 1 px grid), the two Night-zone text tokens `#F7F5EE` and `#C9D0DC` on the eight masthead controls of page 2 (back button, scenario pills, six tab twins) (the tokens the waiver `zone-text-headline` already covers for the headline), and `#717B8B` in the plan bar (tranche 3, Night at 60 % on white, from the comp's spec). None is a defect of the entry; a waiver is Bjorn's to give | Bjorn |
