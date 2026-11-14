@@ -29,7 +29,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 9 | Build your own | done | 14 Nov | 42e280e | Build on the comp with package A picked in Low, Expected and High, with nothing picked, over the budget and with a broken rule: every text row within 2 px, bars and boxes within about 2 px, the empty state shows the rules sentence once and no numbers, the saved selection survives a reload, Space on a tile changes the plan and leaves the table's ten rows; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Deneb and the waterfalls are gone. Outside 2 px: the table's header words 9.2 px high, its last column 3 px right, A's end label 5 px high. Three things for Bjorn (open question 8): the bars scroll from eight picked moves on, the zero line of the bars runs under the empty rows, a plan beyond $62M has no dot. Bjorn was not needed in Desktop |
 | 10 | Tooltips, alt text, tab order | done | 14 Nov | 7cee2a7 | The Tab key ran backwards on both pages (Desktop goes from the highest `tabOrder` down): turned round, and walked with real keys in the designed order. `tt-package` with the R-TT-1 sentence and a native moves table, the glossary in the report's words, points only in every tooltip, `tt-f1` to `tt-f4` gone. Alt texts reviewed in three cases: one raised an engine error, one printed a raw number, four table texts shortened; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Both passes by script (real keys, the accessibility tree), not by ear; four things for Bjorn (open question 9). Bjorn was not needed in Desktop |
 | 11 | Final checks and the FinalV3 render set | done | 14 Nov | 892e588 | The submission prune (14163ef): 333 of 600 measures and 29 of 35 tables stay, and the committed model is that model (`sketch_model.py --submission`; the three sketches need the full build). `build_checks` 6 of 6 with the new reachability gate, 766 number checks, `a11y_check` 0, Microsoft's validator 0 errors, compliance (R-X-2) 5 of 5 by script plus package A in the engine. Render set FinalV3: 20 renders with their comp views and a README that lists every deviation; nothing new outside 2 px, and the prune changed no pixel. Not seen in this session: the header artwork and a real click on the page buttons (step 12). One question for Bjorn (open question 10). Bjorn was not needed in Desktop |
-| 12 | Publish to Web gate (Bjorn publishes), then submit | doing | 14 Nov | c8785fd | Publish 2 verified signed out (en, nl, de; 1920 and 1366; touch; Tab): the mouse reaches every live visual, a click filters nothing, nl and de equal en to the pixel. Since then, not yet published: the header strip without fill, and Bjorn's decisions of 14 Nov (the caption's second sentence gone, the model trimmed to what the report reads: 25 tables, 125 columns, engine checks 766 and 139 all ok; six waivers and a white seam in the plan bar). **Waits for Bjorn:** Publish a third time from the new copy window; then the gate runs once more |
+| 12 | Publish to Web gate (Bjorn publishes), then submit | doing | 14 Nov | (see log) | Publish 3 verified signed out: the trimmed model serves everything, the caption and the plan bar's seams are live, the mouse and the clicks are clean, nl and de equal en. One thing left: a CLICKED chart or table keeps Power BI's own band in its header strip and cuts the line above it; fixed in the z-order (the visual lies under what stands above it), Desktop renders unchanged. **Waits for Bjorn:** Publish a fourth time from the copy; then the gate runs once more |
 
 Status values: `todo`, `doing` (stopped mid-step; see its log), `done`, `blocked` (needs Bjorn).
 
@@ -1448,9 +1448,32 @@ the head of "Open questions" lists every answer. Three of them changed the entry
 File checks after all of it: `strip_check` 0, `a11y_check` 0, `schema_check` 196 files, `compliance_check` 5 of 5,
 `validate_tmdl --strict` 0 errors (13 expected warnings), Microsoft's validator 0 errors.
 
-*Waits for Bjorn:* **Publiceren** a third time, from the NEW window "Goodnight Inn" (the copy was written again for
-the trimmed model), over the same report, then say so. The session waits for the link to serve it (`meta`), runs
-`gate.py` once more and looks at a hovered and a clicked table.
+*Publish 3 (14 Nov, 19:17 UTC; on the link from 20:37 local).* `gate.py` again, publish 2 as reference.
+
+| What | Result on publish 3 |
+|---|---|
+| The link | "Goodnight Inn", seven pages; the trimmed model serves every page, state and tooltip |
+| The mouse at 1920 and 1366 px | clear, as on publish 2 (the same note on the bubble over the scenario pills) |
+| A click on a mark or a row | nothing outside the clicked visual changes |
+| nl and de against en | equal to the pixel |
+| Against publish 2 | page 1, What waits and Build equal. Recommended differs where it should: the caption is one sentence, the plan bar has its three white seams |
+| The header strip on HOVER | fixed: the strip is clear (`vcHeader` computes to a transparent background) |
+| The header strip after a CLICK | **still fails.** A clicked chart or table keeps a band of its own in the strip (`vcHeader`, rgb 250 250 250, Power BI's, not the theme's) until the next click elsewhere: the years under F2's chart, "The app carries it…" above the ledger and "Click a move to add or remove it." above the moves table are still cut |
+
+*The band, fixed in the z-order (`mouse_order()` in `opzet_report.py`, second rule).* The band cannot be styled away,
+but it is painted in the clicked visual's own layer. So a visual with a header now lies under everything that stands
+in its header strip: the line above it paints over the band. The pass has two rules, both "the upper one on top"
+(the mouse; the band), and orders with a stable sort: two visuals that overlap and have no rule between them keep the
+order of the layering file, so nothing else changes what paints over what. 20 visuals of page 1 and 52 of page 2
+carry a new z number; the pairs that changed order are the ones meant (a title over its chart, a head over its
+table, the plan's label lines over the bar) and pairs that are never on screen together. `strip_check.py` checks the
+band too: 29 failures on publish 3's build, 0 on the new one. Desktop renders both pages pixel for pixel as before
+the change (bridge captures). The header icons of a visual can now lie under the text card above it; the keyboard
+reaches them as before.
+
+*Waits for Bjorn:* **Publiceren** a fourth time from the window "Goodnight Inn" (the report is reloaded in it; the
+model did not change), over the same report, then say so. The session waits for the link (`meta`), runs `gate.py`
+and measures the strip above a clicked table.
 
 *Open.* The Desktop window with the publish copy is left open for Bjorn's Publish click; the session that finishes
 this step closes it. The `.pbix` for the submission comes from the same copy (Bestand > Opslaan als), after the
