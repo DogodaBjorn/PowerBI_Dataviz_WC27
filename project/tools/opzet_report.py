@@ -1846,13 +1846,27 @@ def is_live(v):
     return v["visual"]["visualType"] in MOUSE_TYPES or tt.get("show") == b(True)
 
 
+def has_header(v):
+    """A visual that shows its header in the published report (finish(): every chart and table in the tab order)."""
+    vh = v["visual"].get("visualContainerObjects", {}).get("visualHeader", [{}])[0].get("properties", {})
+    return vh.get("show") == b(True)
+
+
+SLIVER = 8  # two visuals that share less than this in height stand above one another; they do not overlap
+
+
 def mouse_order(page_name, visuals):
-    """Lowers the z of whatever would blind a live visual (is_live) in the published report, after the layering file:
-    - a visual that only shows something (text, a frame, a table) and lies over a live one, or whose strip reaches
-      into it, goes just under that live visual. It still paints: every live visual has a clear background (asserted);
-    - a live visual whose strip reaches into another live one above it on the page goes under that one (the scenario
-      pills under the tabs); two live visuals that overlap keep their order (the scatter's layers).
-    Pairs that are never on screen together (different states) are left alone. The tab order is not touched."""
+    """The z-order the published report needs, after the layering file. Two rules, both "the upper one on top":
+    1. THE MOUSE. Nothing may lie over a live visual (is_live) or reach into it with its header strip: such a visual
+       goes under the live one. Not counted: a visual that stands above the live one on the page, and another live
+       visual that overlaps it (the scatter's layers keep their order).
+    2. THE BAND. A chart or table that is clicked keeps a light band in its header strip until the next click
+       (rgb 250 250 250, Power BI's own, also when the theme makes the header clear: measured on publish 3). It painted
+       over the line that stands above the visual: the years under F2's chart, "The app carries it" above the ledger.
+       So a visual with a header goes under everything that stands in its strip.
+    Each rule only ever puts the lower visual of a pair under the upper one, so they cannot contradict each other. The
+    order of everything else stays as the layering file has it; z numbers change only where the order does. Pairs that
+    are never on screen together (different states) are left alone. The tab order is not touched."""
     def box(v):
         p = v["position"]
         return p["x"], p["y"], p["x"] + p["width"], p["y"] + p["height"]
@@ -1865,29 +1879,52 @@ def mouse_order(page_name, visuals):
         bg = v["visual"].get("visualContainerObjects", {}).get("background", [{}])[0].get("properties", {})
         return bg.get("show") != b(True) or bg.get("transparency") == num(100)
 
-    live = [v for v in visuals if is_live(v)]
-    for _ in range(len(visuals)):
-        moved = False
-        for a in sorted(live, key=lambda v: v["position"]["z"]):
-            ax0, ay0, ax1, ay1 = box(a)
-            under = 0
-            for c in sorted(visuals, key=lambda v: v["position"]["z"]):
-                if c is a or c["position"]["z"] <= a["position"]["z"] or not together(a, c):
-                    continue
-                cx0, cy0, cx1, cy1 = box(c)
-                if cx0 >= ax1 or cx1 <= ax0:
-                    continue
-                body = cy0 < ay1 and cy1 > ay0
-                strip = not body and cy0 >= ay1 and cy0 - STRIP < ay1
-                if (body and not is_live(c)) or strip:
+    pairs = []  # (upper, lower): upper must be higher in z
+    for a in visuals:
+        ax0, ay0, ax1, ay1 = box(a)
+        for c in visuals:
+            if c is a or not together(a, c):
+                continue
+            cx0, cy0, cx1, cy1 = box(c)
+            if cx0 >= ax1 or cx1 <= ax0:
+                continue
+            c_above = cy1 <= ay0 + SLIVER                      # c stands above a
+            same_box = (cx0, cy0, cx1, cy1) == (ax0, ay0, ax1, ay1)
+            if is_live(a) and not c_above and not (same_box and is_live(c)):
+                body = min(ay1, cy1) - max(ay0, cy0) > 0
+                strip = cy0 - STRIP < ay1 and cy1 > ay0     # c's strip or body reaches into a
+                if strip and not (body and is_live(c)):
                     assert not body or clear(a), (a["name"], c["name"])
-                    under += 1
-                    c["position"]["z"] = a["position"]["z"] - 500 + under  # the layering file steps by 1000 or 500: free numbers
-                    moved = True
-        if not moved:
-            break
-    zs = [v["position"]["z"] for v in visuals]
-    assert len(zs) == len(set(zs)), sorted(z for z in zs if zs.count(z) > 1)
+                    pairs.append((a, c))
+            if has_header(a) and c_above and cy1 > ay0 - STRIP:  # c stands in a's strip: the band must not cover it
+                pairs.append((c, a))
+    # The order: every rule pair holds; two visuals that overlap and have no rule between them keep the order the
+    # layering file gave them (what paints over what does not change by accident); everything else stays as close to
+    # the layering file as the pairs allow (always the lowest z that is free to go next).
+    z0 = {v["name"]: v["position"]["z"] for v in visuals}
+    by = {v["name"]: v for v in visuals}
+    rule = {(u["name"], l["name"]) for u, l in pairs}
+    keep = set()
+    for a in visuals:
+        ax0, ay0, ax1, ay1 = box(a)
+        for c in visuals:
+            cx0, cy0, cx1, cy1 = box(c)
+            if z0[c["name"]] < z0[a["name"]] and min(ax1, cx1) > max(ax0, cx0) and min(ay1, cy1) > max(ay0, cy0) and together(a, c):
+                if (c["name"], a["name"]) not in rule and (a["name"], c["name"]) not in rule:
+                    keep.add((a["name"], c["name"]))  # a over c, as it was
+    order, left = [], set(by)
+    while left:
+        free = [n for n in left if all(l not in left for u, l in rule | keep if u == n)]  # everything that must lie under n is placed
+        if not free:  # only the kept orders may give way, never a rule
+            free = [n for n in left if all(l not in left for u, l in rule if u == n)]
+            assert free, f"{page_name}: the z-order rules contradict each other: {sorted(left)[:6]}"
+        n = min(free, key=lambda n: z0[n])
+        order.append(by[n]); left.remove(n)
+    last = 0
+    for v in order:  # keep a number where the order allows it
+        z = v["position"]["z"]
+        v["position"]["z"] = z if z > last else last + 1
+        last = v["position"]["z"]
     return visuals
 
 

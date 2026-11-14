@@ -13,6 +13,9 @@ states) the check lists each live visual that has, higher in the z-order and on 
   - the strip of another visual reaching into it (fails when it takes more than 2 % of the live visual's area), or
   - a visual that is not live lying over it (fails: its body and its strip take the mouse there).
 Two live visuals that overlap (the scatter's layers) are a design decision and are listed as a note.
+The band: a chart or table that is clicked keeps a light band in its header strip until the next click (Power BI's
+own, measured on publish 3). It fails when a visual with a header has, LOWER in the z-order, a visual standing in
+that strip: the band would paint over it (the years under a chart, the line above a table).
 It also fails when a chart or a table has no interaction list: a click on a mark or a row would cross-filter the page.
 Exit code 1 on a failure.
 """
@@ -41,7 +44,8 @@ def load(page):
         tt = (v.get("visualContainerObjects", {}).get("visualTooltip") or [{}])[0].get("properties", {})
         out.append({"name": d["name"], "type": v.get("visualType", ""), "z": p.get("z", 0), "hidden": d.get("isHidden", False),
                     "box": (p["x"], p["y"], p["x"] + p["width"], p["y"] + p["height"]),
-                    "live": v.get("visualType") in MOUSE_TYPES or lit(tt.get("show")) == "true"})
+                    "live": v.get("visualType") in MOUSE_TYPES or lit(tt.get("show")) == "true",
+                    "header": lit((v.get("visualContainerObjects", {}).get("visualHeader") or [{}])[0].get("properties", {}).get("show")) == "true"})
     return out
 
 
@@ -78,6 +82,8 @@ for page in pages:
                 w = min(ax1, cx1) - max(ax0, cx0)
                 if w <= 0:
                     continue
+                if cy1 <= ay0 + 8:
+                    continue  # c stands above a (it shares less than 8 px with it): nothing of a's marks lies there
                 body = max(0, min(ay1, cy1) - max(ay0, cy0))
                 strip = max(0, min(ay1, cy0) - max(ay0, cy0 - STRIP))
                 if body and c["live"]:
@@ -86,6 +92,14 @@ for page in pages:
                     lines.append(("FAIL", f"{a['name']} lies under {c['name']} ({100 * w * (body + strip) / area:.0f}% of it with the strip)"))
                 elif strip and 100 * w * strip / area > 2:
                     lines.append(("FAIL", f"{a['name']} loses {100 * w * strip / area:.0f}% to the strip above {c['name']}"))
+        for t in (v for v in shown if v["header"]):
+            tx0, ty0, tx1, ty1 = t["box"]
+            for c in shown:
+                cx0, cy0, cx1, cy1 = c["box"]
+                if c is t or c["z"] >= t["z"] or min(tx1, cx1) - max(tx0, cx0) <= 0:
+                    continue
+                if cy1 <= ty0 + 8 and cy1 > ty0 - STRIP:
+                    lines.append(("FAIL", f"the band of {t['name']} (clicked) paints over {c['name']}, which stands in its header strip"))
         f_ = sum(1 for k, _ in lines if k == "FAIL"); fails += f_; notes += len(lines) - f_
         print(f"{page} · {st}: {sum(1 for v in shown if v['live'])} live visuals, {f_} blinded" + ("" if not lines else ""))
         for k, l in lines:
