@@ -29,7 +29,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 9 | Build your own | done | 14 Nov | 42e280e | Build on the comp with package A picked in Low, Expected and High, with nothing picked, over the budget and with a broken rule: every text row within 2 px, bars and boxes within about 2 px, the empty state shows the rules sentence once and no numbers, the saved selection survives a reload, Space on a tile changes the plan and leaves the table's ten rows; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Deneb and the waterfalls are gone. Outside 2 px: the table's header words 9.2 px high, its last column 3 px right, A's end label 5 px high. Three things for Bjorn (open question 8): the bars scroll from eight picked moves on, the zero line of the bars runs under the empty rows, a plan beyond $62M has no dot. Bjorn was not needed in Desktop |
 | 10 | Tooltips, alt text, tab order | done | 14 Nov | 7cee2a7 | The Tab key ran backwards on both pages (Desktop goes from the highest `tabOrder` down): turned round, and walked with real keys in the designed order. `tt-package` with the R-TT-1 sentence and a native moves table, the glossary in the report's words, points only in every tooltip, `tt-f1` to `tt-f4` gone. Alt texts reviewed in three cases: one raised an engine error, one printed a raw number, four table texts shortened; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Both passes by script (real keys, the accessibility tree), not by ear; four things for Bjorn (open question 9). Bjorn was not needed in Desktop |
 | 11 | Final checks and the FinalV3 render set | done | 14 Nov | 892e588 | The submission prune (14163ef): 333 of 600 measures and 29 of 35 tables stay, and the committed model is that model (`sketch_model.py --submission`; the three sketches need the full build). `build_checks` 6 of 6 with the new reachability gate, 766 number checks, `a11y_check` 0, Microsoft's validator 0 errors, compliance (R-X-2) 5 of 5 by script plus package A in the engine. Render set FinalV3: 20 renders with their comp views and a README that lists every deviation; nothing new outside 2 px, and the prune changed no pixel. Not seen in this session: the header artwork and a real click on the page buttons (step 12). One question for Bjorn (open question 10). Bjorn was not needed in Desktop |
-| 12 | Publish to Web gate (Bjorn publishes), then submit | todo | | | |
+| 12 | Publish to Web gate (Bjorn publishes), then submit | doing | 14 Nov | | Preflight green, the publish copy `E:\GoodnightInn-publish\Goodnight Inn.pbip` written and loaded, the checker for the published link ready (`tools/desktop_shots/step12/`). **Waits for Bjorn:** Publish from the copy, Publish to web, and the link; then the checks run (see the log) |
 
 Status values: `todo`, `doing` (stopped mid-step; see its log), `done`, `blocked` (needs Bjorn).
 
@@ -1323,7 +1323,49 @@ re-publishes. Record the results here and in doc 21 §16.
 
 **Prompt:** `project/build-steps/step-12.txt` (say: "Read project/build-steps/step-12.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Sat 14 Nov 2026, first session, stopped at the publish: status `doing`):**
+
+*Done before the publish.*
+
+- **Preflight, all green on `73e7e00`:** the working tree clean; a fresh run of both generators (the model with
+  `--submission`) equals `project/pbip` file for file; `schema_check` 196 files, 0 failing; `a11y_check` 0;
+  `compliance_check` 5 of 5; `build_checks --static` checks 2, 3, 4 and 6 ok (its output file was put back, so
+  `analysis/output/build_checks.txt` is still step 11's engine run).
+- **The publish copy.** `E:\GoodnightInn-publish\Goodnight Inn.pbip`, written with `throwaway_copy.py --name
+  "Goodnight Inn"` from `project/pbip` at `73e7e00`, opened in Desktop 2.159 and loaded (`refresh_desktop_model.ps1`,
+  29 tables, 6 s); both pages render with data (bridge capture). Bjorn publishes from this copy, so Desktop's save
+  lands in the copy and never in the project (rule 6; the saves of 7, 12 and 13 Nov are why). The report's name in
+  the service is "Goodnight Inn"; it opens on The Brand Review (`activePageName`).
+- **The checker for the published link:** `tools/desktop_shots/step12/web.mjs` (headless Edge, signed out, fresh
+  profile; browser locale, window size and touch per run; hover, click, tap, Tab, page capture, visible texts) and
+  `locale_scan.py` (decimal comma or a Dutch or German word in those texts). Tried on the comp in nl-NL, de-DE and
+  en-US: the locale reaches `navigator.language` and `Intl` (see the README there for what did not work).
+
+*Waits for Bjorn (in this order).*
+
+1. In the open Desktop window "Goodnight Inn": **Publiceren**; Desktop asks to save, say yes (it is the copy); pick
+   the workspace.
+2. In the service, open the report: **Bestand > Rapport insluiten > Publiceren op internet (openbaar)**, and give
+   the session the link (`https://app.powerbi.com/view?r=...`).
+3. The session then runs the checks of this step on the link and reports them one at a time; what only a person can
+   judge (a real finger on a phone, the look of the header) it asks Bjorn to look at.
+
+*The checks, to record as pass or fail once the link is there.*
+
+| # | Check | How | Result |
+|---|---|---|---|
+| 1 | SVG cells in the hero table and the A chip | page capture, Recommended in Low, Expected, High | open |
+| 2 | Tooltips: `tt-package`, `tt-f3-band`, `tt-f4-hotel`, `tt-year`, `tt-glossary`, and the text tooltips | hover per target, capture | open |
+| 3 | Page buttons: `btn_next`, `btn_back`, the three tabs, the invitation, the scenario pills, the selector tiles | one plain click each, capture | open |
+| 4 | nl and de browser: decimal points only, no Dutch or German word (R-G1) | `web.mjs --lang nl-NL` and `de-DE`, `locale_scan.py`, by eye | open |
+| 5 | Visual headers against the hover tags | hover each tagged visual, capture | open |
+| 6 | Tooltip scale at 1366 px | `--w 1366 --h 768`, the tooltips of check 2 | open |
+| 7 | One touch test | `--touch` taps on the buttons and a tooltip target; Bjorn once on a phone | open |
+| 8 | From the earlier logs: Tab from the top takes the logo first (open question 9a); the header artwork and the hanger; the letters in the discs; "You" over its dot; the bars with eight moves | Tab key and captures | open |
+
+*Open.* The Desktop window with the publish copy is left open for Bjorn's Publish click; the session that finishes
+this step closes it. The `.pbix` for the submission comes from the same copy (Bestand > Opslaan als), after the
+checks pass.
 
 ---
 
