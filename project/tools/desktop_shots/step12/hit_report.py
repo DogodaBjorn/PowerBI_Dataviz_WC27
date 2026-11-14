@@ -59,8 +59,16 @@ print(f"{len(hit['containers'])} containers on the page, scale {hit['scale']:.3f
 for c, (name, live) in zip(hit["containers"], names):
     if not (live or ALL):
         continue
-    # under the BODY of another live visual: by design (the scatter's layers); its strip is never by design
-    lost = {k: n for k, n in c["by"].items() if not (int(k.split(":")[0]) >= 0 and names[int(k.split(":")[0])][1] and k.endswith(":body") and not ALL)}
+    # under the BODY of another live visual: by design (the scatter's layers); its strip is never by design.
+    # Under the body of a visual that stands ABOVE this one and shares less than 8 px with it (a title over its
+    # chart, the z-order's second rule): by design too; the sample grid can make those few px look like a row.
+    def by_design(k):
+        j, where = int(k.split(":")[0]), k.split(":")[1]
+        if j < 0 or where != "body" or ALL:
+            return False
+        o = hit["containers"][j]["rect"]
+        return names[j][1] or o[1] + o[3] <= c["rect"][1] + 8
+    lost = {k: n for k, n in c["by"].items() if not by_design(k)}
     share = 100 * sum(lost.values()) / max(1, c["total"])
     if share < 2:
         continue

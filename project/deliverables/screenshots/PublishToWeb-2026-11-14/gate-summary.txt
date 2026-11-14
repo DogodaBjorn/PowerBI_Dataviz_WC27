@@ -1,0 +1,95 @@
+== the link
+  report 'Goodnight Inn', last published 2026-11-14T20:45:37.84 UTC, 7 pages
+== the mouse at 1920 px (hit_test.js: live visuals and their marks)
+  p1: hit_report: 1 live visual(s) lose 2% or more, 0 of 54 marks blind
+     ch_f4_dots               [655, 863, 1200, 161] loses  7.2% to c_f4_title (body) 7%
+  p2_rec: hit_report: clear (7 live visuals, 6 marks)
+  p2_alts: hit_report: clear (7 live visuals, 461 marks)
+  p2_build: hit_report: clear (8 live visuals, 461 marks)
+== the mouse at 1366 px (hit_test.js: live visuals and their marks)
+  p1: hit_report: 1 live visual(s) lose 2% or more, 0 of 54 marks blind
+     ch_f4_dots               [655, 863, 1200, 161] loses  7.2% to c_f4_title (body) 7%
+  p2_rec: hit_report: clear (7 live visuals, 6 marks)
+  p2_alts: hit_report: 1 live visual(s) lose 2% or more, 0 of 461 marks blind
+     sl_scenario              [1600, 111, 288, 32] loses 10.9% to outside (body) 11%
+  p2_build: hit_report: 1 live visual(s) lose 2% or more, 0 of 461 marks blind
+     sl_scenario              [1600, 111, 288, 32] loses 45.4% to outside (body) 45%
+== a click on a mark or a row: what changes on the page (the whole page, before and after)
+  alts_cmp_line        changed box (56, 218, 1875, 907), 294 pixels
+  alts_dot_a           changed box (56, 665, 1875, 685), 83 pixels
+  alts_grey            changed box None, 0 pixels
+  alts_waits_row       changed box (791, 0, 1865, 628), 133523 pixels
+  build_bar            changed box (1453, 476, 1669, 554), 1399 pixels
+  build_cmp            changed box (56, 218, 1875, 685), 170 pixels
+  build_moves_row      changed box (1006, 0, 1852, 600), 19499 pixels
+  p1_f1_area           changed box (680, 524, 1240, 544), 87 pixels
+  p1_f3_bar            changed box (635, 159, 1840, 607), 8281 pixels
+  p1_f4_dot            changed box (655, 843, 1855, 991), 2941 pixels
+  p1_folio_row         changed box (655, 524, 1855, 863), 13506 pixels
+  rec_cum_line         changed box (792, 342, 1869, 834), 148 pixels
+  rec_hero_row         changed box (56, 224, 1056, 616), 52439 pixels
+  rec_ledger_row       changed box (56, 224, 1865, 591), 37585 pixels
+  rec_plan_bar         changed box None, 0 pixels
+== the band of a clicked visual: the line above it, before and after the click
+  the years under F2's chart       unchanged
+  F3's title                       unchanged
+  F4's title                       unchanged
+  the hero's column labels         unchanged
+  the lines above the ledger       unchanged
+  the plan bar                     unchanged
+  the head of What waits           unchanged
+  the head of Build                unchanged
+  the rules line above the bars    unchanged
+== nl and de against en (the page, pixel for pixel)
+  de_p1.png: differs in (635, 159, 1226, 160), 0 pixels
+  nl_p1_tt_f4_toronto.png: differs in (1242, 873, 1730, 909), 0 pixels
+  (every pair not listed is equal)
+== Tab after Ctrl+Enter
+   None | Show screen reader tips (opens in new tab)
+   button | Skip to main content
+   region | Power BI Report
+   img | Goodnight Inn
+   group | Page 1 of 2, the wake-up call: the brand review
+   group | Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome
+   group | Goodnight Inn in 2025, against the three other Pillow & Key Group brands. For th
+== against g3 (page captures of the same view)
+  de_p1.png: differs in (1010, 429, 1011, 430), 0 pixels
+  de_p1_header_f1.png: equal
+  de_p1_tag_f3.png: equal
+  de_p2_build_tile8.png: differs in (8, 144, 1905, 709), 0 pixels
+  de_p2_build_tile8_off.png: differs in (8, 144, 1905, 709), 0 pixels
+  de_p2_rec_expected.png: equal
+  de_p2_rec_expected_again.png: equal
+  de_p2_rec_high.png: equal
+  de_p2_rec_low.png: equal
+  en_p1.png: differs in (1010, 429, 1011, 430), 0 pixels
+  en_p1_after_back.png: differs in (1010, 429, 1011, 430), 0 pixels
+  en_p1_header_f1.png: equal
+  en_p1_tab14.png: equal
+  en_p1_tag_f3.png: equal
+  en_p2_alts.png: differs in (8, 144, 1905, 709), 0 pixels
+  en_p2_build.png: differs in (8, 144, 1905, 709), 0 pixels
+  en_p2_build_tile8.png: differs in (8, 144, 1905, 709), 0 pixels
+  en_p2_build_tile8_off.png: differs in (8, 144, 1905, 709), 0 pixels
+  en_p2_build_tile_clicked.png: differs in (8, 144, 1905, 709), 0 pixels
+  en_p2_invite_clicked.png: differs in (8, 144, 1905, 709), 0 pixels
+  en_p2_rec_back.png: equal
+  en_p2_rec_expected.png: equal
+  en_p2_rec_expected_again.png: equal
+  en_p2_rec_high.png: equal
+  en_p2_rec_low.png: equal
+  nl_p1.png: differs in (635, 159, 1226, 430), 0 pixels
+  nl_p1_header_f1.png: equal
+  nl_p1_tag_f3.png: equal
+  nl_p2_build_tile8.png: differs in (8, 144, 1905, 709), 0 pixels
+  nl_p2_build_tile8_off.png: differs in (8, 144, 1905, 709), 0 pixels
+  nl_p2_rec_expected.png: differs in (635, 159, 1908, 736), 0 pixels
+  nl_p2_rec_expected_again.png: equal
+  nl_p2_rec_high.png: equal
+  nl_p2_rec_low.png: equal
+  touch_touch_alts.png: differs in (10, 6, 1213, 452), 0 pixels
+  touch_touch_alts_low.png: differs in (10, 91, 1213, 452), 0 pixels
+  touch_touch_back.png: equal
+  touch_touch_dot.png: differs in (81, 111, 1284, 472), 0 pixels
+  touch_touch_p2.png: equal
+  w1366_p2_rec.png: equal

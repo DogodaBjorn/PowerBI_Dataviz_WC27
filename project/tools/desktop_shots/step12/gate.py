@@ -111,6 +111,21 @@ if "clicks" in logs:
             bb, n = changed(Image.open(a).convert("RGB"), Image.open(b).convert("RGB"))
             print(f"  {b.name[6:-11]:20} changed box {bb}, {n} pixels")
 
+# The band: a clicked chart or table keeps a light band in its header strip. What stands there must look the same
+# before and after the click (page coordinates of the line above each visual, left of the header's two icons).
+BANDS = [("p1_folio_row", "the years under F2's chart", (680, 505, 1190, 543)), ("p1_f3_bar", "F3's title", (1304, 347, 1800, 391)),
+         ("p1_f4_dot", "F4's title", (56, 835, 1690, 862)), ("rec_hero_row", "the hero's column labels", (574, 216, 925, 240)),
+         ("rec_ledger_row", "the lines above the ledger", (1112, 310, 1800, 361)), ("rec_cum_line", "the plan bar", (792, 788, 1800, 820)),
+         ("alts_waits_row", "the head of What waits", (792, 184, 1800, 237)), ("build_moves_row", "the head of Build", (792, 184, 1300, 237)),
+         ("build_bar", "the rules line above the bars", (1384, 408, 1800, 456))]
+if "clicks" in logs:
+    print("== the band of a clicked visual: the line above it, before and after the click")
+    for name, what, box in BANDS:
+        a, b_ = OUT / f"en_ck_{name}_after.png", OUT / f"en_ck_{name}_before.png"
+        if a.exists() and b_.exists():
+            d = ImageChops.difference(Image.open(a).convert("RGB").crop(box), Image.open(b_).convert("RGB").crop(box)).convert("L").point(lambda v: 255 if v > 24 else 0)
+            print(f"  {what:32} " + ("unchanged" if not d.getbbox() else f"CHANGED inside {d.getbbox()} of {box}"))
+
 print("== nl and de against en (the page, pixel for pixel)")
 for f in sorted(OUT.glob("en_p*.png")):
     for loc in ("nl", "de"):
