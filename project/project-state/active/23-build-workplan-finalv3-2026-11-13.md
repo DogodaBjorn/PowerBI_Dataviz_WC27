@@ -1520,6 +1520,33 @@ pixel what publish 1 showed.
 4. Optional: remove the Publish to web code of the old report "GoodnightInn-opzet" (the build of 13 Nov is still
    public under it).
 
+### After the gate · review round 2, two decisions overruled (14 Nov, late)
+
+The five reviewers read the fourth publish again (docs `24-*-v2-2026-11-14.md`; captures for them in
+`deliverables/screenshots/Committee-walkthrough-2026-11-14/`). Bjorn: a decision of 14 Nov does not stand against a
+finding that is genuine and valid. Checked against that rule, the four decided things the reviews still list:
+
+| Decided on 14 Nov | Findings | Verdict | Done |
+|---|---|---|---|
+| Question 11, the bubble "Click here to follow": leave it | UX-30, CL-46, J-VE-14 | **Overruled.** The premise was wrong: it is not only the service's text. A button's Action card has a switch "No tooltips" (`visualLink.suppressDefaultTooltip`, in visualConfiguration 2.6.0 and the 2.159 theme schema) | `NO_BUBBLE` on all nine buttons (`fc7c7b2`). Not provable in Desktop: **to be seen on the next publish** |
+| Question 6, two axis ticks on the plan chart: accept | UX-24, DS2-08 | **Overruled.** The comp ticks −10, 0, +10, +20; Microsoft Learn: a tick interval cannot be set. The axis is typed, so the two missing ticks are typed | two hairline reference lines in `ch_plan_cum` and two text boxes in the axis gutter, `plan_ticks()` (`fc7c7b2`, `ba7579c`). Desktop render: four ticks, evenly spaced |
+| Question 9d, the package tooltip's empty foot for a three-move package: accept | UX-25, DS2-11 | **Stands.** A tooltip page has one height; the one hover layer serves all 456 packages, so a second, shorter page cannot be bound. The alternatives lose something (a table under the 12 pt floor, or "+2 more" instead of the moves) | nothing |
+| Round 9, the puns in the eyebrows: keep | CL-24 | **Stands.** The reviewer records it as decided and asks for no change | nothing |
+
+Also in question 6, and valid, **not built yet:** the end labels' white boxes hide the last stretch of the High and
+the Low line, so two of the three lines seem to stop before 2032 (DS2-08; seen at 2 px per page px in
+`Committee-walkthrough-2026-11-14/zoom/`). The comp sets each label right of its line end. Power BI's data labels
+cannot do that; cards right of the line ends can, bound to the end measures. That is model and report work with a
+spike, and DS2-01 asks for a title on the same chart: one piece of work for the fix round.
+
+Checks after the two fixes: `schema_check` 197 files 0 failing, `a11y_check` 0, `strip_check` 0, `compliance_check`
+5 of 5, `build_checks --static` 6 of 6; the model is untouched. **The published report is the fourth publish and does
+not have these fixes.** They reach a judge only through a new publish from a fresh copy and a `gate.py` run; on that
+run look for: no bubble over a tab at 1366 px, a button's spoken name no longer ending in "Click here to follow",
+and the two new tick labels in line with Power BI's own (set from the published capture: Desktop's strip render
+snaps a chart by up to 2 px, so it cannot settle that). The open Desktop window "Goodnight Inn" still holds the
+fourth publish: a `.pbix` saved from it is the version without the fixes.
+
 ---
 
 ## 3 · Prompt files
