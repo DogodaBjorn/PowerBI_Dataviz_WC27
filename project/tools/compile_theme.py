@@ -87,8 +87,13 @@ theme = {
                           "fontColor": fill(c["ink_secondary"])}],
             # kept visible: the header carries "show as a table" and focus mode,
             # accessibility features the contest scores
+            # Build step 12 (published report, 14 Nov): the header is a strip of 20 screen px ABOVE the visual
+            # (31 page px in a 1366 px window). With an opaque fill it painted over whatever stands there as
+            # soon as the visual was hovered or clicked: the years under F2's chart above the folio table, the
+            # line above the ledger, "Click a move to add or remove it." above the moves table. So the strip
+            # has no fill; its two icons keep their colour.
             "visualHeader": [{"show": True, "foreground": fill(c["ink_secondary"]),
-                              "background": fill(c["surface"]), "transparency": 0}],
+                              "background": fill(c["surface"]), "transparency": 100}],
             "visualTooltip": [{"fontFamily": body, "fontSize": caption,
                                "background": fill(c["surface"]),
                                "titleFontColor": fill(c["ink_secondary"]),

@@ -80,6 +80,10 @@ elif RUN == "clicks":  # a click on a mark or a row must not change any other vi
     probe("ck_alts_waits_row", 1000, 440, None); probe("ck_alts_cmp_line", 1055, 800, None); probe("ck_alts_dot_a", 188, 345, None); probe("ck_alts_grey", 315, 394, None)
     click(TAB["build"], 5000)
     probe("ck_build_moves_row", 1150, 330, None); probe("ck_build_bar", 1680, 482, None); probe("ck_build_cmp", 1055, 860, None)
+elif RUN == "tabrest":  # the mouse resting on a tab after the click: what lies over the scenario pills then
+    click(NEXT, 7000); click(TAB["build"], 2500); full("tabrest_build")
+    steps.append({"op": "eval", "js": "(() => { const e = document.elementFromPoint(innerWidth * 0.9, innerHeight * 0.185); let p = e, path = []; while (p && path.length < 6) { path.push(p.tagName + '.' + String(p.className).slice(0, 40)); p = p.parentElement; } return path; })()"})
+    click(SCEN["High"], 4000); shot("tabrest_high")
 elif RUN == "tips":  # the tooltips again, for the 1366 px window
     hover("p1_tt_f3_oldest", 1770, 525); hover("p1_tt_f4_free_dot", 1680, 880); hover("p1_tt_glossary", 1816, 1058)
     click(NEXT, 7000); shot("p2_rec"); hover("p2_tt_year", 1500, 900)
@@ -95,7 +99,8 @@ elif RUN == "touch":
     click(NEXT, 7000, "ptap"); shot("touch_p2")
     click(TAB["alts"], 5000, "ptap"); shot("touch_alts")
     click(SCEN["Low"], 5000, "ptap"); shot("touch_alts_low")
-    click((392, 440), 3000, "ptap"); full("touch_dot")
+    click((188, 345), 3000, "ptap"); full("touch_dot")   # A's disc: a tap opens the package tooltip
+    click((1100, 150), 1500, "ptap")
     click(BACK, 6000, "ptap"); shot("touch_back")
 else:
     sys.exit("unknown run " + RUN)
