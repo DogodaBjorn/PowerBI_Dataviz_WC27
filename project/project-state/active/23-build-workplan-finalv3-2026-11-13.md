@@ -29,7 +29,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 9 | Build your own | done | 14 Nov | 42e280e | Build on the comp with package A picked in Low, Expected and High, with nothing picked, over the budget and with a broken rule: every text row within 2 px, bars and boxes within about 2 px, the empty state shows the rules sentence once and no numbers, the saved selection survives a reload, Space on a tile changes the plan and leaves the table's ten rows; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Deneb and the waterfalls are gone. Outside 2 px: the table's header words 9.2 px high, its last column 3 px right, A's end label 5 px high. Three things for Bjorn (open question 8): the bars scroll from eight picked moves on, the zero line of the bars runs under the empty rows, a plan beyond $62M has no dot. Bjorn was not needed in Desktop |
 | 10 | Tooltips, alt text, tab order | done | 14 Nov | 7cee2a7 | The Tab key ran backwards on both pages (Desktop goes from the highest `tabOrder` down): turned round, and walked with real keys in the designed order. `tt-package` with the R-TT-1 sentence and a native moves table, the glossary in the report's words, points only in every tooltip, `tt-f1` to `tt-f4` gone. Alt texts reviewed in three cases: one raised an engine error, one printed a raw number, four table texts shortened; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Both passes by script (real keys, the accessibility tree), not by ear; four things for Bjorn (open question 9). Bjorn was not needed in Desktop |
 | 11 | Final checks and the FinalV3 render set | done | 14 Nov | 892e588 | The submission prune (14163ef): 333 of 600 measures and 29 of 35 tables stay, and the committed model is that model (`sketch_model.py --submission`; the three sketches need the full build). `build_checks` 6 of 6 with the new reachability gate, 766 number checks, `a11y_check` 0, Microsoft's validator 0 errors, compliance (R-X-2) 5 of 5 by script plus package A in the engine. Render set FinalV3: 20 renders with their comp views and a README that lists every deviation; nothing new outside 2 px, and the prune changed no pixel. Not seen in this session: the header artwork and a real click on the page buttons (step 12). One question for Bjorn (open question 10). Bjorn was not needed in Desktop |
-| 12 | Publish to Web gate (Bjorn publishes), then submit | doing | 14 Nov | | Preflight green, the publish copy `..\GoodnightInn-publish\Goodnight Inn.pbip` written and loaded, the checker for the published link ready (`tools/desktop_shots/step12/`). **Waits for Bjorn:** Publish from the copy, Publish to web, and the link; then the checks run (see the log) |
+| 12 | Publish to Web gate (Bjorn publishes), then submit | doing | 14 Nov | 72e0e36 | Publish 1 checked signed out in an en, nl and de browser, at 1920 and 1366, with touch and with the Tab key: locale, SVG cells, tooltip scale, visual headers and Tab order pass. Two defects only the service shows, both fixed in the generators: the 20 px header strip above every visual blinded six of F4's named dots, part of the tabs and the selector's last tile; a click on a row or a mark cross-filtered the page. **Waits for Bjorn:** Publish once more from the copy (same report, the link stays); then every check is repeated on publish 2 |
 
 Status values: `todo`, `doing` (stopped mid-step; see its log), `done`, `blocked` (needs Bjorn).
 
@@ -1358,18 +1358,48 @@ columns, no Next button. No check was recorded on it. `web.mjs` now has the op `
 publish time and its pages, from the link's own public call), and every check run starts with it. Still needed
 from Bjorn: the Publish to web link of the report **"Goodnight Inn"** (published 14 Nov), made on that report.
 
-*The checks, to record as pass or fail once the right link is there.*
+*Second link (14 Nov, about 19:00): the right report, publish 1.* "Goodnight Inn", published 14 Nov 17:28 UTC,
+seven pages. Every run below is headless Edge, signed out, a fresh profile, 1920 x 1180 unless said.
 
-| # | Check | How | Result |
+| # | Check | Result on publish 1 | Proof |
 |---|---|---|---|
-| 1 | SVG cells in the hero table and the A chip | page capture, Recommended in Low, Expected, High | open |
-| 2 | Tooltips: `tt-package`, `tt-f3-band`, `tt-f4-hotel`, `tt-year`, `tt-glossary`, and the text tooltips | hover per target, capture | open |
-| 3 | Page buttons: `btn_next`, `btn_back`, the three tabs, the invitation, the scenario pills, the selector tiles | one plain click each, capture | open |
-| 4 | nl and de browser: decimal points only, no Dutch or German word (R-G1) | `web.mjs --lang nl-NL` and `de-DE`, `locale_scan.py`, by eye | open |
-| 5 | Visual headers against the hover tags | hover each tagged visual, capture | open |
-| 6 | Tooltip scale at 1366 px | `--w 1366 --h 768`, the tooltips of check 2 | open |
-| 7 | One touch test | `--touch` taps on the buttons and a tooltip target; Bjorn once on a phone | open |
-| 8 | From the earlier logs: Tab from the top takes the logo first (open question 9a); the header artwork and the hanger; the letters in the discs; "You" over its dot; the bars with eight moves | Tab key and captures | open |
+| 1 | SVG cells in the hero table and the A chip | **pass**: the bars of both columns in all ten rows, the chip's hanger, the header artwork with the hanger | page captures of Recommended in Low, Expected, High |
+| 2 | Tooltips | `tt-f3-band`, `tt-glossary` (both pages), `tt-year` (plan chart and comparison chart), `tt-package` (A, C and a grey dot) open and are complete. **Fail: `tt-f4-hotel`** opens on a free dot, but six of the seven named dots (Toronto, Phoenix, Orlando, Kuala Lumpur, one of Gatwick and Montréal, and two more) give nothing | hover captures; `hit_test.js` |
+| 3 | Buttons | Next, Back, the three tabs, the invitation, the scenario pills and a selector tile all work at 1920. **Fail at 1366:** a click on the middle of "What waits, and why" does nothing | captures before and after each click |
+| 4 | nl and de browser (R-G1) | **pass**: the service's own words turn Dutch and German, every text of the report is the same line as in English, and the page captures (page 1, Recommended in three cases, nine tooltips) are pixel for pixel the English ones. No decimal comma, no "Totaal" | `locale_scan.py`; image difference none |
+| 5 | Visual headers against the hover tags | **pass**: the two header icons (filter, focus mode) sit under each tag and right of the title's end on F3, F4, the plan chart and the hero table; nothing meets | hover captures |
+| 6 | Tooltip scale at 1366 px | **pass**: the page is 1223 px wide, the tooltips scale with it and stay inside the window (F3 band, glossary, year) | `--w 1366 --h 768` |
+| 7 | Touch | Next and a scenario pill answer a tap; the tab did not (the same cause as check 3). Tooltip by tap: after publish 2. Bjorn: once on a phone | `--touch` |
+| 8 | The lists of the earlier logs | **Tab: pass** (open question 9a is answered): after Ctrl+Enter the logo takes the focus first, then eyebrow, headline, subtitle, the four KPIs, F1. Letters in the discs, "You" over its dot: pass. Header artwork: pass | `plan.py keys`; captures |
+
+*Two defects of the published report, neither visible in Desktop, both fixed in the generators (`72e0e36`).*
+
+1. **The header strip.** In the service every visual container is 20 screen px taller than its visual: a strip above
+   it that takes the mouse, also where the visual header is off (all 62 containers of page 1 measured: the container
+   starts 20 px above the visual). A visual higher in the z-order blinds whatever lies under its strip. The strip is
+   20 SCREEN px, so 31 page px in a 1366 px window. Blinded: F4's named dots under the name boxes, the lower part of
+   the tabs under the scenario pills (the whole middle at 1366), the selector's last tile under the footer line, the
+   foot of the plan chart. **Fix:** `mouse_order()` in `opzet_report.py`, after the layering file: whatever lies over
+   a live visual (a button, a slicer, anything with a tooltip) or reaches into it with its strip goes just under it in
+   z; planned for a strip of 36 page px. 19 visuals changed their z, none its place or its tab stop. F4: the dots are
+   now the top layer, so the gridlines and the 90 % line moved to the bottom layer, where the name boxes' white fill
+   still covers them.
+2. **A click filtered the page.** A click on F3's bar emptied the F4 plot and changed the folio's numbers
+   ($109.91 instead of $109.31); a click on a hero row redrew the plan chart for that one move; a click on a row of
+   `tbl_moves` cut the selector down to one tile and the plan to one move. **Fix:** `no_cross_filter()`: every chart
+   and table has a NoFilter entry towards every other visual, on both pages (305 and 1,280 entries). What is left is
+   Power BI's own mark on the visual that was clicked.
+
+New checks: `tools/strip_check.py` (from the files: 0 failures on the fixed build; on publish 1's build it lists the
+same blinded visuals as the measurement, 41 failures with the missing interaction lists) and
+`tools/desktop_shots/step12/hit_test.js` with `hit_report.py` (in the published page). After the fix: `a11y_check` 0,
+`schema_check` 196 files 0 failing, `compliance_check` 5 of 5, `build_checks --static` ok, Microsoft's validator 0
+errors (34 warnings, as before); the model is unchanged. The fixed report is in the publish copy and reloaded in the
+open Desktop window (both pages render; bridge capture).
+
+*Waits for Bjorn:* **Publiceren** once more from the window "Goodnight Inn", over the same report (the link stays),
+then say so. The session then repeats every check on publish 2, with the captures of publish 1 as the regression
+reference (the pages rendered pixel for pixel alike in every run).
 
 *Open.* The Desktop window with the publish copy is left open for Bjorn's Publish click; the session that finishes
 this step closes it. The `.pbix` for the submission comes from the same copy (Bestand > Opslaan als), after the
