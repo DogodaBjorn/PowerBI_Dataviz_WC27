@@ -9,8 +9,8 @@ The published report is checked in headless Edge, signed out, with a fresh profi
       reads the texts web.mjs collected for a decimal comma or a Dutch or German word (R-G1).
 
 The publish copy (the project is never opened or saved in Desktop, doc 23 rule 6):
-  python ..\throwaway_copy.py project\pbip E:\GoodnightInn-publish --name "Goodnight Inn"
-  set PBI_DESKTOP_PATH; powerbi-desktop open "E:\GoodnightInn-publish\Goodnight Inn.pbip"; wait 30 s
+  python ..\throwaway_copy.py project\pbip ..\GoodnightInn-publish --name "Goodnight Inn"
+  set PBI_DESKTOP_PATH; powerbi-desktop open "..\GoodnightInn-publish\Goodnight Inn.pbip"; wait 30 s
   powershell -File project\tools\refresh_desktop_model.ps1          (data in about 6 s)
   Bjorn: Publish (Desktop asks to save: yes, it is the copy), then in the service File > Embed report >
   Publish to web (public). After a fix in the generators: write the copy again, open, refresh, Bjorn publishes
