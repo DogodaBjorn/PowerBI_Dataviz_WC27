@@ -59,7 +59,8 @@ print(f"{len(hit['containers'])} containers on the page, scale {hit['scale']:.3f
 for c, (name, live) in zip(hit["containers"], names):
     if not (live or ALL):
         continue
-    lost = {k: n for k, n in c["by"].items() if not (int(k.split(":")[0]) >= 0 and names[int(k.split(":")[0])][1] and not ALL)}  # under a live one: by design
+    # under the BODY of another live visual: by design (the scatter's layers); its strip is never by design
+    lost = {k: n for k, n in c["by"].items() if not (int(k.split(":")[0]) >= 0 and names[int(k.split(":")[0])][1] and k.endswith(":body") and not ALL)}
     share = 100 * sum(lost.values()) / max(1, c["total"])
     if share < 2:
         continue
@@ -68,7 +69,7 @@ for c, (name, live) in zip(hit["containers"], names):
     bad += 1
 AXIS = ("text.setFocusRing", "DIV.small-multiples")  # axis words and card texts: nothing to hover
 marks = [m for m in hit["marks"] if not m["kind"].startswith(AXIS) and (names[m["of"]][1] or ALL)]
-blind = [m for m in marks if not m["ok"] and not (m["by"] >= 0 and names[m["by"]][1] and not ALL)]
+blind = [m for m in marks if not m["ok"] and not (m["by"] >= 0 and names[m["by"]][1] and m["where"] == "body" and not ALL)]
 groups = {}
 for m in blind:
     groups.setdefault((names[m["of"]][0], m["kind"][:24], who(m["by"]), m["where"]), []).append(m)
