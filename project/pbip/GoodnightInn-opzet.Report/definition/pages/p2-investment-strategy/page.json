@@ -84,6 +84,4806 @@
   },
   "visualInteractions": [
     {
+      "source": "tbl_hero",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "ch_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "z_card_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "z_card_decision",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "z_card_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "z_card_panel_w",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "z_card_bottom",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "z_tile_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "z_eyebrow2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "btn_back",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "z_headline2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_subtitle2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tab_rec_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tab_rec_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tab_alts_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tab_alts_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tab_build_on",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tab_build_off",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "lbl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "sl_scenario",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "z_footer2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "chip_def2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_hero_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "lbl_hero_8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "lbl_hero_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tbl_hero",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_hero_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "img_rec_chip",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_rec_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_rec_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_rec_lines",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_rec_lines_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tbl_ledger",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_ledger_caption",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "btn_build_invite",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tag_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_t1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_t1_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_t2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_t2_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_t2_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_t3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_t3_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_t3_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "ch_plan_bar",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_gate",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "ch_plan_cum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_milestones",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_scatter_title_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "hero_s_packages",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "hero_s_packages_build",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "hero_s_packages_you",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "hero_s_packages_hover",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tag_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_build_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "sl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tbl_moves",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_sel_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_title_alarm",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_nums",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_nums_l1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_nums_v2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_nums_l2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_nums_v3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_nums_l3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_nums_v4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_nums_l4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_range",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_you_rules",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "ch_build_bars",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "tag_cmp_build",
+      "type": "NoFilter"
+    },
+    {
       "source": "hero_s_packages_hover",
       "target": "z_card_hero",
       "type": "NoFilter"

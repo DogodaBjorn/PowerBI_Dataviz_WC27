@@ -522,18 +522,19 @@ def f4_rows(page, slot):
     return out
 
 
-def f4_axes(objs, labels_colour):
-    objs["categoryAxis"] = axis(BODY, S, labels_colour, gridlines=True, grid_color=HAIR, start=F4_X[0], end=F4_X[1], extra={"labelPrecision": integer(0), "labelDisplayUnits": integer(1)})
+def f4_axes(objs, labels_colour, gridlines=True):
+    objs["categoryAxis"] = axis(BODY, S, labels_colour, gridlines=gridlines, grid_color=HAIR, start=F4_X[0], end=F4_X[1], extra={"labelPrecision": integer(0), "labelDisplayUnits": integer(1)})
     objs["valueAxis"] = axis(BODY, S, INK2, show=False, gridlines=False, start=F4_Y[0], end=F4_Y[1])
     return objs
 
 
 def f4_dot_plot(page, tooltip_page=None):
     """Two scatter layers on one rect (ch_f4_avg under ch_f4_dots), the same axis ends, so their plot areas match. Bottom:
-    three Dusk diamonds, one per location type at its 2025 occupancy; the same axis as the top layer (labels and
-    gridlines drawn twice on the same pixels: a white label here would fail a11y_check), so the plot areas match. Top: the 50 hotels at (Occupancy % 2025, F4 Row Y), Night for the
+    three Dusk diamonds, one per location type at its 2025 occupancy; the same axis as the top layer (the axis words
+    drawn twice on the same pixels: a white label here would fail a11y_check), so the plot areas match; the gridlines and
+    the 90 % constant line dashed in Dusk with its label. Top: the 50 hotels at (Occupancy % 2025, F4 Row Y), Night for the
     seven fullest and Warm Grey for the rest (F4 Dot Color), no category labels (doc 22: the names are text boxes), the X
-    axis ticks and gridlines, and the 90 % constant line dashed in Dusk with its label; it opens the hotel's tooltip page."""
+    axis words only (step 12: no gridlines, no constant line); it opens the hotel's tooltip page."""
     x, y, w, h, z, tab = at(page, "ch_f4_dots")
     base = {"legend": legend(False), "categoryLabels": [{"properties": {"show": b(False)}}],
             "markers": [{"properties": {"borderShow": b(False)}}],
@@ -545,16 +546,19 @@ def f4_dot_plot(page, tooltip_page=None):
     oa["bubbles"][0]["properties"].update({"markerShape": enum("diamond"), "bubbleSize": integer(0)})
     oa["dataPoint"] = [{"properties": {"fill": color(INK2)}, "selector": WILD}]
     _, _, _, _, za, ta = at(page, "ch_f4_avg")
-    avg = decorative(visual("ch_f4_avg", "scatterChart", *F4_RECT, za, ta, query=qa, objects=oa, filters=[gi_filter()], vcos=vco(padding=0), off_grid=True), 160)
     # top layer: the hotels
     qd = {"Category": {"projections": [proj_col("Hotels", "Hotel Short Name", display="Hotel")]},
           "X": {"projections": [proj_mea("Occupancy % 2025", "Occupancy 2025")]}, "Y": {"projections": [proj_mea("F4 Row Y", "Row")]}}
-    od = f4_axes(copy.deepcopy(base), INK2)
+    # Build step 12: the dots are the top layer, over the name boxes (mouse_order: under a name box's header strip a
+    # dot has no tooltip in the published report). So this layer draws dots and axis words only; the gridlines and the
+    # 90 % line are the bottom layer's, where the name boxes' white fill still covers them behind a name.
+    od = f4_axes(copy.deepcopy(base), INK2, gridlines=False)
     od["dataPoint"] = [{"properties": {"fill": fv("F4 Dot Color")}, "selector": WILD}]
-    od["xAxisReferenceLine"] = [{"properties": {"show": b(True), "value": num(0.9), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("dashed"),
+    oa["xAxisReferenceLine"] = [{"properties": {"show": b(True), "value": num(0.9), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("dashed"),
                                                 "position": enum("back"), "displayName": text("90%"), "dataLabelShow": b(True), "dataLabelText": enum("Name"),
                                                 "dataLabelColor": color(INK), "dataLabelHorizontalPosition": enum("right"), "dataLabelVerticalPosition": enum("under")},
                                  "selector": {"id": "1"}}]
+    avg = decorative(visual("ch_f4_avg", "scatterChart", *F4_RECT, za, ta, query=qa, objects=oa, filters=[gi_filter()], vcos=vco(padding=0), off_grid=True), 160)
     vc = vco(padding=0)
     if tooltip_page:
         vc["visualTooltip"] = page_tooltip(tooltip_page)
@@ -1808,8 +1812,84 @@ def build_target(name):
     return name in BUILD_TARGETS or name.startswith("c_you_")
 
 
-def interactions(v2):
+def no_cross_filter(visuals, keep=()):
+    """Build step 12 (Publish to Web gate, 14 Nov): in the published report a click on a row or a mark selects it, and
+    every other visual on the page follows (cross-filter and cross-highlight): a click on F3's bar emptied the F4 plot
+    and changed the folio's numbers, a click on a row of tbl_moves cut the selector down to that one move. Desktop's
+    edit mode never showed it. So every chart and table filters nothing (NoFilter towards every other visual); only
+    the visual itself still marks what was clicked. The slicers are not sources here: the scenario pills filter the
+    whole page by design, and the move selector has its own list (interactions). keep = sources that have their own."""
     out = []
+    selectable = DATA_VISUALS | {"stackedAreaChart", "areaChart"}  # F1's area chart is not in DATA_VISUALS (finish() treats it apart)
+    for src in visuals:
+        if src["visual"]["visualType"] in selectable and src["name"] not in keep:
+            out += [{"source": src["name"], "target": o["name"], "type": "NoFilter"} for o in visuals if o["name"] != src["name"]]
+    return out
+
+
+# Build step 12: the header strip. In the service (measured on the published report, tools/desktop_shots/step12/
+# hit_test.js) every visual container is 20 screen px taller than its visual: a strip above it that takes the mouse,
+# also where the visual header is switched off. A visual higher in the z-order so blinds what lies under the strip
+# above it: six of F4's seven named dots had no tooltip under the name boxes, the tabs lost their lower part to the
+# scenario pills, the selector's last tile lay under the footer line's strip. The strip is 20 SCREEN px: 31 page px in
+# a 1366 px window, more on a smaller one, so the generator plans for 36.
+STRIP = 36
+MOUSE_TYPES = {"actionButton", "advancedSlicerVisual", "slicer"}
+
+
+def is_live(v):
+    """A visual the mouse must reach: a button, a slicer, or anything that opens a tooltip."""
+    tt = v["visual"].get("visualContainerObjects", {}).get("visualTooltip", [{}])[0].get("properties", {})
+    return v["visual"]["visualType"] in MOUSE_TYPES or tt.get("show") == b(True)
+
+
+def mouse_order(page_name, visuals):
+    """Lowers the z of whatever would blind a live visual (is_live) in the published report, after the layering file:
+    - a visual that only shows something (text, a frame, a table) and lies over a live one, or whose strip reaches
+      into it, goes just under that live visual. It still paints: every live visual has a clear background (asserted);
+    - a live visual whose strip reaches into another live one above it on the page goes under that one (the scenario
+      pills under the tabs); two live visuals that overlap keep their order (the scatter's layers).
+    Pairs that are never on screen together (different states) are left alone. The tab order is not touched."""
+    def box(v):
+        p = v["position"]
+        return p["x"], p["y"], p["x"] + p["width"], p["y"] + p["height"]
+
+    def together(a, c):
+        sa, sc = states_of(page_name, a["name"]), states_of(page_name, c["name"])
+        return sa is None or sc is None or bool(set(sa) & set(sc))
+
+    def clear(v):
+        bg = v["visual"].get("visualContainerObjects", {}).get("background", [{}])[0].get("properties", {})
+        return bg.get("show") != b(True) or bg.get("transparency") == num(100)
+
+    live = [v for v in visuals if is_live(v)]
+    for _ in range(len(visuals)):
+        moved = False
+        for a in sorted(live, key=lambda v: v["position"]["z"]):
+            ax0, ay0, ax1, ay1 = box(a)
+            under = 0
+            for c in sorted(visuals, key=lambda v: v["position"]["z"]):
+                if c is a or c["position"]["z"] <= a["position"]["z"] or not together(a, c):
+                    continue
+                cx0, cy0, cx1, cy1 = box(c)
+                if cx0 >= ax1 or cx1 <= ax0:
+                    continue
+                body = cy0 < ay1 and cy1 > ay0
+                strip = not body and cy0 >= ay1 and cy0 - STRIP < ay1
+                if (body and not is_live(c)) or strip:
+                    assert not body or clear(a), (a["name"], c["name"])
+                    under += 1
+                    c["position"]["z"] = a["position"]["z"] - 500 + under  # the layering file steps by 1000 or 500: free numbers
+                    moved = True
+        if not moved:
+            break
+    zs = [v["position"]["z"] for v in visuals]
+    assert len(zs) == len(set(zs)), sorted(z for z in zs if zs.count(z) > 1)
+    return visuals
+
+
+def interactions(v2):
+    out = no_cross_filter(v2, keep=("hero_s_packages_hover", "hero_s_packages_build", "hero_s_packages_you"))
     names = {o["name"] for o in v2}
     # the hover layers only show tooltips, the build dot only marks: a click on them must not filter or dim anything
     for src in ("hero_s_packages_hover", "hero_s_packages_build", "hero_s_packages_you"):
@@ -1823,10 +1903,10 @@ def interactions(v2):
 
 
 def main():
-    v1 = finish(layered(P1, no_card_fill(scene_visual(P1) + card_frames(P1) + brand_row(P1, "") + p1_visuals())))
-    v2 = finish(layered(P2, no_card_fill(scene_visual(P2) + card_frames(P2) + brand_row(P2, "2") + p2_visuals())))
+    v1 = mouse_order(P1, finish(layered(P1, no_card_fill(scene_visual(P1) + card_frames(P1) + brand_row(P1, "") + p1_visuals()))))
+    v2 = mouse_order(P2, finish(layered(P2, no_card_fill(scene_visual(P2) + card_frames(P2) + brand_row(P2, "2") + p2_visuals()))))
     vt = finish(no_card_fill(scene_visual(TT) + card_frames(TT) + tt_visuals()))
-    pages = [page(P1, "The Brand Review", v1),
+    pages = [page(P1, "The Brand Review", v1, interactions=no_cross_filter(v1)),
              page(P2, "The Investment Strategy", v2,
                   filters=[filter_in("InvestmentProjects", "Brand", ["Goodnight Inn"], "flt_page_projects"), filter_in("Brands", "Brand", ["Goodnight Inn"], "flt_page_brand")],
                   interactions=interactions(v2)),

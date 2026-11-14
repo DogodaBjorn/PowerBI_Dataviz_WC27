@@ -46,9 +46,11 @@ const evaluate = async js => {
 };
 const log = o => console.log(JSON.stringify(o));
 
-// .displayArea is the report page in the service too; with "fit to page" it has the page's 16:9 box.
+// .displayArea is the report page plus a 20 px strip on top, in the service as in Desktop (measured 14 Nov: 1920 x
+// 1100 at y 10 in a 1920 x 1180 window, the logo 30 px under the window's top): the page is its bottom w * 9/16.
 const PAGEBOX_JS = `(() => { const d = document.querySelector('.displayArea'); if (!d) return null;
-  const r = d.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; })()`;
+  const r = d.getBoundingClientRect(); const h = r.width * 1080 / 1920;
+  return { x: r.x, y: r.y + (r.height - h), w: r.width, h }; })()`;
 const READY_JS = `(() => ({ visuals: document.querySelectorAll('.visualContainer, visual-container').length,
   busy: document.querySelectorAll('.spinner, .powerbi-spinner, .circle').length }))()`;
 const TEXTS_JS = `(() => { const out = []; const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -90,7 +92,8 @@ try {
         box = null; log({ op: "ready", ...st, lang: await evaluate("navigator.language") }); break;
       }
       case "eval": log({ op: "eval", value: await evaluate(s.js) }); break;
-      case "meta": log({ op: "meta", ...(await evaluate(META_JS)) }); break;
+      case "evalfile": { const v = await evaluate(fs.readFileSync(s.file, "utf8")); fs.writeFileSync(s.out, JSON.stringify(v), "utf8"); log({ op: "evalfile", out: s.out }); break; }
+      case "meta":log({ op: "meta", ...(await evaluate(META_JS)) }); break;
       case "pagebox": box = await evaluate(PAGEBOX_JS); log({ op: "pagebox", box }); break;
       case "shot": { const r = await send("Page.captureScreenshot", { format: "png" });
         fs.writeFileSync(s.out, Buffer.from(r.data, "base64")); log({ op: "shot", out: s.out }); break; }
@@ -105,7 +108,7 @@ try {
       case "ptap": { const [x, y] = await pt(s);
         await send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] }); await sleep(80);
         await send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] }); log({ op: "ptap", x, y }); break; }
-      case "key": { const k = { key: s.key, code: s.code ?? s.key, windowsVirtualKeyCode: s.vk ?? ({ Tab: 9, Enter: 13, Escape: 27, " ": 32 })[s.key] ?? 0, modifiers: s.shift ? 8 : 0 };
+      case "key": { const k = { key: s.key, code: s.code ?? s.key, windowsVirtualKeyCode: s.vk ?? ({ Tab: 9, Enter: 13, Escape: 27, " ": 32 })[s.key] ?? 0, modifiers: (s.shift ? 8 : 0) | (s.ctrl ? 2 : 0) };
         await send("Input.dispatchKeyEvent", { type: "keyDown", ...k }); await send("Input.dispatchKeyEvent", { type: "keyUp", ...k }); break; }
       case "focus": log({ op: "focus", value: await evaluate(FOCUS_JS) }); break;
       case "texts": { const t = await evaluate(TEXTS_JS); fs.writeFileSync(s.out, t.join("\n"), "utf8"); log({ op: "texts", out: s.out, n: t.length }); break; }
