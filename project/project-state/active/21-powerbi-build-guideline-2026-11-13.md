@@ -732,6 +732,36 @@ saves, close every window yourself without saving, renders through the throwaway
 Tier order inside each step follows doc 20: T1 before T2 before T3. If a day slips, drop T3 first
 (R-P1-9, R-P2-11, R-W-4, R-TT-3/4, the submission prune), never the gate.
 
+### Results of Build your own (14 Nov, build step 9 of doc 23)
+
+Built and verified against the comp in Low, Expected and High, with nothing picked, over the budget and with a broken
+rule; the full log is in doc 23, step 9. What section 8 said and what was built:
+
+- **The selector is native (N-1, S-3):** `sl_moves`, a button slicer of ten tiles, beside `tbl_moves`. The Deneb visual,
+  its route in the generator and `publicCustomVisuals` are gone; so are both waterfalls. The report needs no custom visual.
+- **`sl_moves`:** as S-3 found it, plus a 1 px Seam rule at the foot of every tile (the slicer's accent bar), 5 px at the
+  left and 2 px at the bottom of a tile, so box and name sit on the comp's.
+- **`tbl_moves`:** 1006, 238, 350, 364 (the slot is 1008, 248, 344, 352): columns 92 / 64 / 74 / 118, rows ruled in Seam
+  at row padding 4.86 (32 px a row, the tile's pitch), the header about 42 px, so the table starts 10 px above its slot.
+  The NPV takes its ink from the model (`Move NPV Ink`).
+- **`c_you_title`** is two cards (a card has one padding): the plain title, and the alarm band, which is white and empty
+  within the budget. **`c_you_nums`** is eight cards, a value and a label for each of the four numbers, all on measures
+  that are empty while nothing is picked (a card cannot hide its label). **`c_you_rules`** is a shape whose text is the
+  measure: a shape sets its text from the top, a card centres it, and the line is one or two lines long.
+- **`ch_build_bars`:** a clustered bar chart on a row source of its own, `BuildBar` (the ten moves and four empty rows).
+  A native bar chart spreads its rows over the plot; the empty rows fill it up to five, so up to five picked moves stand
+  32 px apart from the top, as the comp sets them. The hidden value axis ends on two measures (`Build Bars X Start`,
+  `Build Bars X End`: the comp's 72 px of room for the labels); the zero line's value is a measure too, blank while
+  nothing is picked. Visual rect 1379, 462, 467, 157.
+- **`ch_cmp_build`:** `cmp_chart()` with your plan as two measures (Night within the budget, Tangerine over it: a line
+  has one colour) under A; labels "You" Under and "A" Above; the axis ends from `Cmp Build Y Start` / `End`.
+  `tag_cmp_build` is the native hover tag.
+- **The plan dot:** Night, Tangerine over the budget (`Build Point Color`), under the lettered discs. Its name "You" is a
+  layer of its own (`hero_s_packages_you`) with hidden axes and a plot 77 px taller than the proof chart's: the name hangs
+  from an invisible point $11.09M above the dot, which for a plan near the top lies above the chart's +$20M.
+- **Interactions:** `sl_moves` filters the cards of the your-plan tile, the footer, the bars, the comparison chart, the
+  plan dot and its name; nothing else, and not `tbl_moves`.
+
 ### Results of What waits (14 Nov, build step 8 of doc 23)
 
 Built and verified against the comp in Low, Expected and High; the full log is in doc 23, step 8. What this document

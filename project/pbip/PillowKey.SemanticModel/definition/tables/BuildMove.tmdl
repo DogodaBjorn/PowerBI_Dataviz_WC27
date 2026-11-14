@@ -1,4 +1,4 @@
-/// Disconnected copy of the ten Goodnight Inn moves for the build-your-own plan (P2, build state). The Deneb selector cross-filters this table; the Build measures carry the selection onto InvestmentProjects with TREATAS. Sort: by Expected NPV, high to low.
+/// Disconnected copy of the ten Goodnight Inn moves for the build-your-own plan (P2, build state). The move selector (the slicer sl_moves) filters this table; the Build measures carry the selection onto InvestmentProjects with TREATAS. Sort: by Expected NPV, high to low.
 table BuildMove
 	lineageTag: f970d77a-fe1b-501d-9593-62ee64acaf88
 

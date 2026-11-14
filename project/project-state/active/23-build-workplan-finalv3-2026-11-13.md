@@ -26,7 +26,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 6 | Page 2 frame and the decision card | done | 13 Nov | 5116804 | P2 on the v10 slot map (v9 no longer read). Frame and decision card on the comp in Low, Expected and High: every text row within 2 px, the same line wraps, the ledger fits its slot in all three; `a11y_check` 0. Two things are Power BI's or a choice: ledger cells sit at the top of their rows, tab labels are Semibold (open question 5). What waits and Build show their frame with the old visuals that still have a slot. Bjorn was not needed in Desktop |
 | 7 | Hero table and capital plan; the cut line | done | 14 Nov | a09c731 | Recommended is complete: hero table and capital plan on the comp in Low, Expected and High, text rows and bars within 2 px, the plan bar and the chart's plot on the comp's grid; `a11y_check` 0, 763 number checks and the text diff pass. Cut line: native hero table, native selector, native F4 (Bjorn confirms). Three things are Power BI's: end labels above or under their line ends, not right of them (open question 6); two axis ticks instead of four; the hero's rule 4.5 px low. Bjorn was not needed in Desktop |
 | 8 | What waits, and why | done | 14 Nov | ff2baa2 | What waits on the comp in Low, Expected and High: every text row within 2 px, all fifteen table cells wrap as the comp's, the table fits in High, both plots within 1.3 px; the lettered discs are native (a letter layer of its own); A is the NPV maximum in all three cases; `a11y_check` 0, 763 number checks and the text diff pass, Microsoft's validator 0 errors. Outside 2 px, all Power BI's: header words 8.7 px high, ticks every $20M, axis labels 4 to 5 px high, A's end label 5 px high, Low's plot 3 px high. One choice for Bjorn: A's disc in Deep Coffee for the letter's contrast (open question 7). Bjorn was not needed in Desktop |
-| 9 | Build your own | todo | | | |
+| 9 | Build your own | done | 14 Nov | 57305bc | Build on the comp with package A picked in Low, Expected and High, with nothing picked, over the budget and with a broken rule: every text row within 2 px, bars and boxes within about 2 px, the empty state shows the rules sentence once and no numbers, the saved selection survives a reload, Space on a tile changes the plan and leaves the table's ten rows; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Deneb and the waterfalls are gone. Outside 2 px: the table's header words 9.2 px high, its last column 3 px right, A's end label 5 px high. Three things for Bjorn (open question 8): the bars scroll from eight picked moves on, the zero line of the bars runs under the empty rows, a plan beyond $62M has no dot. Bjorn was not needed in Desktop |
 | 10 | Tooltips, alt text, tab order | todo | | | |
 | 11 | Final checks and the FinalV3 render set | todo | | | |
 | 12 | Publish to Web gate (Bjorn publishes), then submit | todo | | | |
@@ -965,7 +965,124 @@ numbers; the saved selection survives a reload.
 
 **Prompt:** `project/build-steps/step-09.txt` (say: "Read project/build-steps/step-09.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Sat 14 Nov 2026, one session, done):**
+
+*Built* (generators only; P2 81 visuals, was 66; 601 measures, was 580; 34 tables, was 33).
+
+- **Panel** (`p2_build()` in `opzet_report.py`): `c_build_head`, a text box with two paragraphs; `sl_moves`
+  (`move_slicer()`), the native selector as S-3 found it, with a 1 px Seam rule at the foot of every tile (the slicer's
+  accent bar) and package A as its saved selection; `tbl_moves` (`moves_table()`): the move's name at width 0, Answers in
+  Dusk, Capex, NPV with its ink from the model, A year by 2032, rows ruled in Seam at the tile's 32 px; `c_sel_footer`.
+- **Your-plan tile:** `c_you_title` as two cards (`you_title()`: the plain title, and the alarm band with its own
+  padding); `c_you_nums` as a value card and a label card for each of the four numbers (`you_nums()`); `c_you_range`;
+  `c_you_rules` as a shape whose text and ink are measures (`top_text()`: set from the top, one line or two);
+  `ch_build_bars` (`build_bars()`), a clustered bar chart on the new table `BuildBar`.
+- **Bottom card:** `ch_cmp_build` by `cmp_chart()` (your plan Night, Tangerine over the budget, A on top; "You" Under,
+  "A" Above; no legend; `tt-year` on hover) and the native hover tag `tag_cmp_build`.
+- **Proof chart:** the plan dot rebuilt (Night, Tangerine over the budget, under the discs) and its name "You" as a layer
+  of its own, `hero_s_packages_you` (`you_label()`), in the Build state only.
+- **Model** (`sketch_model.py`): table `BuildBar` (the ten moves and four empty rows) with `Build Bar NPV`, `(label-safe)`,
+  `Color`, `Order`, `Build Bars X Start` / `End` / `Zero`; `Build Cumulative Line`, `Build Cumulative Line (over)`,
+  `Preset A Cumulative Line` (whole $M), `Cmp Build Y Start` / `End` (`nice_axis()`); `Build Title Plain (text)`,
+  `Build Title Alarm (text)`; the four `Build Label ... (text)`; `Build NPV Ink`, `Build Run-rate Ink`; `Build Point
+  Color`, `Build You Ink`, `Build You Label NPV`; `BuildPoint[Name]`. The five text measures of the tile return an empty
+  text while nothing is picked (they printed "$0.0M" or a blank), and `Build Valid Color` is Night for the empty state.
+  First alt texts: `Alt You Nums` (rewritten), `Alt Build Bars`, `Alt Moves`.
+- **Interactions:** `sl_moves` filters the your-plan cards, the footer, the bars, the comparison chart, the plan dot and
+  its name (DataFilter); every other visual, `tbl_moves` included, is NoFilter.
+- **Removed:** `deneb_selector()`, `native_selector()`, `waterfall()`, `cumulative_chart()`, the SVG `hover_tag()`,
+  `p2_pending()`, the `--selector` switch and `publicCustomVisuals`. No visual of type Deneb or waterfall is left.
+- **Theme** (`compile_theme.py`): a scatter's category label with a background gets the card's white (the name "You").
+- **Layering** (`opzet-layering.json`): the nine extra cards of the tile and the name layer, on the file's scale.
+- **Checks:** `a11y_check.py` reads a category label with a background of its own against that background;
+  `number_checks.py` reads the bars from `BuildBar` and checks the two empty rows.
+- **Tools:** `tiles/mk_tiles.py --picked`, and `tools/desktop_shots/step9/` (`round.py`, `comp_shots.py`, `marks.py`,
+  `summary.py`, README): the render round as scripts, so the next session does not rebuild them.
+
+*Verified* (Desktop 2.159, Windows culture nl-NL, throwaway copy; renders and the per-slot summary in
+`project/deliverables/screenshots/Step9-build-your-own-2026-11-14/`).
+
+| What | Result | Proof |
+|---|---|---|
+| Build renders: package A picked in Low, Expected, High; nothing picked; over the budget; a broken rule | yes, each from its own strip render, each beside the comp at the same view | renders 01 to 06 |
+| Text rows against the comp, worst case over the six views | head 1.2 px; the ten names of the selector 1.1; Answers 1.1, Capex 0.5, NPV 1.0, A year 0.5; footer 0.7; title 0.5; the four numbers 1.6, their labels 1.7; range 0.8; rules 1.1; bar names 2.4; chart title 0.7; hover tag 0.4. Every slot has the comp's number of text rows in every view ("NPV through 2032" wraps, the empty-state sentence is two lines) | `summary-render-minus-comp.txt` (`step9/summary.py`) |
+| Selector | the ten boxes within 0.3 px in y and 1.0 in x; names within 1 px; tile rules and table rules run on | `step9/marks.py`; renders |
+| Bars | three rows 32 px apart from the top, as the comp: bars at y 472.0 to 488.8, 503.5 to 520.4, 535.1 to 552.5 (comp 471 to 489, 503 to 521, 535 to 553); bar ends within 2.3 px in x, names within 3 | `step9/marks.py` |
+| **Empty state** | "Nothing picked yet", the R-B-2 sentence once (in `c_you_rules`), no number, no label, no bar, no zero line, no plan dot; the chart shows A alone; the footer reads "Picked: 0 moves, $0.0M of $60.0M" as the spec | render 04 |
+| Over the budget | the alarm band fills the slot (within 1.4 px), white title 12 px inside it; the plan's line and the rules line change colour | render 05 |
+| A broken rule | "Not yet within the rules: the kiosks need the booking app." in Burnt Tangerine, one line | render 06 |
+| The plan dot and its name | "You" above its dot within 0.4 (Low), 0.9 (Expected) and 1.5 px (High) of the comp's; the dot 13 px (comp 12); at the opening state it lies under A. Tangerine dot and Burnt Tangerine name for a plan over the budget and inside the chart | renders 01 to 03, 06, 10 |
+| Comparison chart | title follows the case; gridlines within 1.8 px; "You" 0.7 px from the comp's; ticks −$10M to +$10M by 5, as the comp | renders 01 to 03 |
+| **A real toggle on the real page** | focus on the tile "Breakfast upgrade" (UI Automation), Space posted: the tile goes from off to on; four moves, $13.7M; title, numbers, range, rules, bars and footer follow; `tbl_moves` keeps ten rows | render 07 (`spikes_step2/s3_keys.ps1`) |
+| **The saved selection survives a reload** | after `powerbi-desktop reload` the three tiles of A are on again and the tile reads "3 moves" | render 08; the tiles' toggle states read back |
+| Typed text | `c_build_head`, `tag_cmp_build` and the table's four headers equal the spec letter for letter | script run in the session |
+| `build_checks.py` (with the engine) | check 5: 129 ok, 2 known (20.5 / 20.6 %), 0 failed, Build with nothing picked included; checks 1, 3, 4 pass; check 2 strict passes, the old list is 16 measures and 2 report strings | `analysis/output/build_checks.txt` |
+| `number_checks.py` | 766 checks, 765 ok, 1 known, 0 failed (3 new: the empty rows of the bars per case) | `analysis/output/number_checks.txt` |
+| `a11y_check.py` | 0 failures | repeatable |
+| Other validators | `schema_check` 195 files, 0 failing; `validate_json` 0; `validate_tmdl --strict` 0 errors, the 13 expected label-safe warnings; Microsoft's validator 0 errors | repeatable |
+
+*Found on the way (binding for the next steps).*
+
+1. **A strip render moves by about 3 px for 1 px of a visual's rect.** Desktop snaps a visual to device pixels at this
+   zoom. To settle an edge, render at two rects one px apart and take the position both readings allow. The bars' rect was
+   settled that way (x 1379 and 1380, right edge 1844 and 1847); a 1 px lift of the number cards read as 3.2 px.
+2. **A native bar chart spreads its rows over its plot** and keeps 8 px above it and an outer padding of its own. To set
+   bars from the top at a fixed pitch: a row source with empty rows (name of no-break spaces, value zero, a space as
+   label), `outerPadding` 0, and a rect that makes five rows 32 px. The row source must be a table of its own.
+3. **A reference line still draws in an empty chart.** Bind its value to a measure that is blank then.
+4. **A card cannot hide its label** while its value is empty, and it centres its text. For text that must start at the top
+   whatever its length, a `shape` takes its text and its ink from measures and has a vertical alignment.
+5. **A scatter label hangs 16.7 px under an invisible point** (step 8). Above a dot near the plot's top the anchor leaves
+   the plot: give the label a layer with hidden axes (its plot is then its rect) and a taller value range at the same
+   scale. That layer stood 8 px low at first; it is set by its rect.
+6. **A category label's colour can be a measure** (the name "You"), and its background must come from the theme:
+   Microsoft's validator rejects `categoryLabels.backgroundColor` in a visual, as it did `labels.backgroundColor`.
+7. **The slicer's accent bar** (position Bottom, width 1) is a tile's row rule; an outline has all four sides.
+8. `s3_keys.ps1` finds no tile on its first run after a reload (it only opens the page tab); run it twice.
+9. Scripts with nested quotes: the Write tool, never a heredoc (again).
+
+*Deviations from the comp, and why* (open question 8 asks Bjorn about the first three; the others are Power BI's or
+corrections that earlier steps already made).
+
+- **Bars, from six moves on:** the rows share a plot of 157 px (the comp's 168), so six rows stand 26.2 px apart (28).
+  **From eight moves on Power BI scrolls the bars** (it keeps about 22 px a row); the comp squeezes ten rows of 16 px
+  text into 168 px, which no chart can print. Eight moves fit the budget ($46.5M), so a reader can meet the scrollbar.
+- **Bars, the zero line:** it runs down the five rows (to y 617) while fewer are picked; the comp ends it under the last
+  bar. The bars are 16.8 px thick (18).
+- **A plan beyond $62M has no dot:** the proof chart's axis ends there, and Power BI draws nothing outside it. The comp
+  draws that dot outside the chart, over the panel (and marks it red itself). Over the budget and inside the axis the
+  dot is Tangerine (render 10). Its name is Burnt Tangerine there, not the comp's Tangerine (3.7:1 on white).
+- **`tbl_moves`:** header words 9.2 px higher than the comp's (the native header is about 42 px, the comp's 32; S-3);
+  "A year by 2032" 3 px further right and the table ends at x 1356, not 1352 (columns 74 and 118, S-3). The table starts
+  2 px left of its slot, so Answers, Capex and NPV are within 2 px.
+- **Comparison chart:** A's end label 4.9 to 6.8 px higher than the comp's; the zero line's name 3.8 px higher and 8 px
+  right; gridlines run to the plot's right edge; over the budget (axis −$80M to +$20M) Power BI prints two ticks, the
+  comp six. As in steps 7 and 8.
+- **Proof chart:** ticks every $20M (step 8). The dot is 13 px (12).
+- **Constructions that differ from doc 21 section 8:** the title is two cards, the numbers eight, the rules line a shape,
+  the bars read `BuildBar`; reasons in "Built" and in doc 21 section 13.
+- **Visual rects:** `tbl_moves` 1006, 238, 350, 364; `ch_build_bars` 1379, 462, 467, 157; `ch_cmp_build` 56, 685, 1819,
+  316; the name layer 144, 195, 572, 385. The slot map and the spec keep the comp's numbers.
+
+*Open items for later steps.*
+
+- **Bjorn's keyboard try** was done through UI Automation: Space switches a tile (render 07). Tab was posted too, but
+  where the focus went could not be read back in this session (step 2 read it: the next tile). The walk from the page
+  into the selector with a real keyboard is part of step 10's keyboard pass.
+- **Step 10:** `Alt You Nums`, `Alt Build Bars` and `Alt Moves` are first versions; the selector's spoken name is typed
+  (`SELECTOR_ALT`); a tile's name is read with a trailing mark (the check icon), look at it in the Narrator pass. The
+  extra cards of the tile, the alarm band, the name layer and the plan dot are out of the tab order. The hidden first
+  column of `tbl_moves` gives each row its move's name for a screen reader.
+- **Step 11:** the prune must keep the measures of "Built" and `BuildBar`, `BuildPoint[Name]`. Unused since this step:
+  the waterfall measures (`Build WF Note (text)`, `Build WF Y Start` / `End`, `Build Project NPV (shown)`, `Build Row
+  Flag`, `Alt Build Waterfall (text)`, the `Preset ... WF ...` and `Waterfall ...` families), `Build Point Size`, `Move
+  Case (text)`, `Move Capex (num)`, the `Hover Tag ... SVG` measures, `BuildMove[Waterfall Label]`. The files
+  `deliverables/deneb-specs/dn_build_selector.json` and `tools/build_selector_spec.py` are no longer read; they and
+  Deneb's line in CREDITS.md are step 11's to settle.
+- **Step 12:** in the browser, look at the name "You" over its dot, at the selector's check boxes and at the bars with
+  eight moves picked.
+- **Before the session:** the working tree was clean. The throwaway windows were ended with `Stop-Process` (throwaway
+  only); the project was not opened in Desktop, and no Desktop window is left open.
 
 ### Step 10 · Tooltips, alt text, tab order (about 1.5 h)
 
@@ -1082,3 +1199,12 @@ A session that meets a question only Bjorn can answer adds it here and sets its 
    recorded waiver in `a11y_check.py`. The same answer covers the other deviations of step 8, all Power BI's own (see
    the log of step 8, deviations): the table's header words 8.7 px high, ticks every $20M instead of every $10M, axis
    labels 4 to 5 px closer to their plots, A's end label 5 px higher, and Low's comparison plot 3 px higher at the top.
+8. **The bars of the picked moves, and the plan dot (from step 9; no step is blocked by it).** Three things in Build are
+   Power BI's and differ from the comp. (a) From eight picked moves on the bar chart scrolls: it keeps about 22 px a row
+   and the tile holds seven. Eight moves fit the budget. Recommended: accept. The alternative is a smaller chart font for
+   that chart only (under the 12 pt floor), or bars without names. (b) While fewer than five moves are picked the zero
+   line of the bars runs on under the last bar, to the foot of the chart. Recommended: accept; without the line the bars
+   lose their base. (c) A plan of more than $62M has no dot in the proof chart, because the axis ends there; the alarm
+   band, the Tangerine line and the bars say that it is over the budget. Recommended: accept; the comp drew that dot
+   outside the chart. The same answer covers the other deviations of step 9 (see its log): the table's header words
+   9.2 px high and its last column 3 px right, and the name "You" in Burnt Tangerine over the budget.

@@ -2940,7 +2940,7 @@ def main():
     # feedback round 4: the build-your-own plan. BuildMove is a disconnected copy of the ten Goodnight Inn moves, so the
     # selector's cross-filter reaches only the Build measures (TREATAS onto InvestmentProjects) and never A's visuals.
     bm = calc_table(
-        "BuildMove", "Disconnected copy of the ten Goodnight Inn moves for the build-your-own plan (P2, build state). The Deneb selector cross-filters this table; the Build measures carry the selection onto InvestmentProjects with TREATAS. Sort: by Expected NPV, high to low.",
+        "BuildMove", "Disconnected copy of the ten Goodnight Inn moves for the build-your-own plan (P2, build state). The move selector (the slicer sl_moves) filters this table; the Build measures carry the selection onto InvestmentProjects with TREATAS. Sort: by Expected NPV, high to low.",
         [("ProjectID", "string", None), ("Short Name", "string", None), ("Waterfall Label", "string", None), ("Sort", "int64", "0"), ("Growth", "string", None), ("Answers", "string", None)], BUILD_MOVE)
     assert "\tcolumn 'Short Name'\n\t\tdataType: string\n" in bm
     # verification 17 (12 Nov): the build waterfall labels its bars with a shorter name (12 characters at most) so no bar

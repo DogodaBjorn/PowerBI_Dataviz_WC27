@@ -46,3 +46,8 @@ mk_tiles.py --rows 1 writes four strip pages of 480 x 1080 (t_0_0 .. t_0_3, and 
 1.84 px per page px; stitch.py <dir> <cal> <out> --rows 1 joins them. No horizontal seam is left: a chart or a table
 higher than 270 px is measured in y without a seam through it (with 270 px tiles the comparison chart of What waits read
 up to 4 px wrong across the seam at y 810). Vertical seams stay at page x 480, 960 and 1440. Use this for page 2.
+
+Build step 9: a state with a selection. mk_tiles.py --picked "Booking app,Revenue management" (short names; "" = nothing
+picked; left out = the selection saved in sl_moves) carries the moves picked in Build your own to every strip: the strips
+that hold the selector get its selection, the others a page filter on BuildMove[Short Name]. The source page's visual
+interactions are copied to every strip, so tbl_moves keeps its ten rows. The round as scripts: tools/desktop_shots/step9.
