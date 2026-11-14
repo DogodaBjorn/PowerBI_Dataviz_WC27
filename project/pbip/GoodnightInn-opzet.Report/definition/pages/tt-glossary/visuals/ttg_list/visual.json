@@ -6,8 +6,8 @@
     "y": 96,
     "z": 1002,
     "width": 416,
-    "height": 416,
-    "tabOrder": 120
+    "height": 368,
+    "tabOrder": 9880
   },
   "visual": {
     "visualType": "textbox",
@@ -16,6 +16,90 @@
         {
           "properties": {
             "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Move",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#12233D"
+                    }
+                  },
+                  {
+                    "value": "  one of the ten investments Goodnight Inn can make.",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#4B5466"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Package",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#12233D"
+                    }
+                  },
+                  {
+                    "value": "  a set of moves funded together. A is the package we recommend.",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#4B5466"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Growth",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#12233D"
+                    }
+                  },
+                  {
+                    "value": "  a move the dataset marks as growth; a package needs at least one.",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#4B5466"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Capex",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#12233D"
+                    }
+                  },
+                  {
+                    "value": "  the one-off investment a move takes; the brand's budget caps what a package may spend.",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+                      "fontSize": "16px",
+                      "color": "#4B5466"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
               {
                 "textRuns": [
                   {
@@ -40,7 +124,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Capex",
+                    "value": "Pays back by 2032",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -48,7 +132,7 @@
                     }
                   },
                   {
-                    "value": "  the one-off investment a move takes; the brand's budget caps what a plan may spend.",
+                    "value": "  the NPV through 2032 is zero or more.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -61,7 +145,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Run-rate",
+                    "value": "Cash positive",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -69,7 +153,7 @@
                     }
                   },
                   {
-                    "value": "  the operating profit a move adds in a full year once it is live, measured in 2032.",
+                    "value": "  from that year on, the cumulative net impact, undiscounted, is above zero.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -82,7 +166,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Pays back, break-even",
+                    "value": "A year by 2032",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -90,7 +174,7 @@
                     }
                   },
                   {
-                    "value": "  the first year the cumulative net impact, undiscounted, is above zero.",
+                    "value": "  the operating profit a move adds in a full year once it is live, measured in 2032 (its run-rate).",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -103,7 +187,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Low, Expected, High",
+                    "value": "A year on cost",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -111,91 +195,7 @@
                     }
                   },
                   {
-                    "value": "  the organisers' three cases for every move; every number on page 2 follows the case in view.",
-                    "textStyle": {
-                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
-                      "fontSize": "16px",
-                      "color": "#4B5466"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "NPS",
-                    "textStyle": {
-                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
-                      "fontSize": "16px",
-                      "color": "#12233D"
-                    }
-                  },
-                  {
-                    "value": "  net promoter score: promoters minus detractors among surveyed guests, weighted by responses.",
-                    "textStyle": {
-                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
-                      "fontSize": "16px",
-                      "color": "#4B5466"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "ADR",
-                    "textStyle": {
-                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
-                      "fontSize": "16px",
-                      "color": "#12233D"
-                    }
-                  },
-                  {
-                    "value": "  average daily rate: room revenue per room night sold.",
-                    "textStyle": {
-                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
-                      "fontSize": "16px",
-                      "color": "#4B5466"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "RevPAR",
-                    "textStyle": {
-                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
-                      "fontSize": "16px",
-                      "color": "#12233D"
-                    }
-                  },
-                  {
-                    "value": "  revenue per available room: room revenue per room night available, sold or not.",
-                    "textStyle": {
-                      "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
-                      "fontSize": "16px",
-                      "color": "#4B5466"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "OTA, online agencies",
-                    "textStyle": {
-                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
-                      "fontSize": "16px",
-                      "color": "#12233D"
-                    }
-                  },
-                  {
-                    "value": "  booking sites that take a commission on every room night they bring.",
+                    "value": "  a year by 2032 divided by capex (a yield).",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -329,7 +329,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'The definitions of the short words on these pages, one line each'"
+                  "Value": "'The words of the investment decision, one line each'"
                 }
               }
             }

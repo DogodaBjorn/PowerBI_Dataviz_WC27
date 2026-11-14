@@ -732,6 +732,28 @@ saves, close every window yourself without saving, renders through the throwaway
 Tier order inside each step follows doc 20: T1 before T2 before T3. If a day slips, drop T3 first
 (R-P1-9, R-P2-11, R-W-4, R-TT-3/4, the submission prune), never the gate.
 
+### Results of tooltips, alt text and tab order (14 Nov, build step 10 of doc 23)
+
+Section 9 is built; the full log, the renders and the two passes are in doc 23, step 10. What differs from this
+document, or adds to it:
+
+- **Tab order (section 5, section 11.2).** Desktop's Tab key runs from the highest `tabOrder` to the lowest. The slot
+  map, `opzet-layering.json` and the generator keep the reading order as rising numbers; `page()` in `opzet_report.py`
+  turns them round when it writes the report (`TAB_FALLING`). Measured with real keys in Desktop 2.159; to be seen once
+  more in the published report (section 16).
+- **`tt-package`.** As the table of section 9, with one addition: the moves table needs a row source of its own,
+  `TTMove` (the ten moves and a Total row), so the total is a row and comes from a measure. The page is 616 px high,
+  not trimmed below its 552: the table at 12 pt needs 256 px for a package of eight moves.
+- **`tt-glossary`.** Seventeen terms in two columns, 928 x 496. "Run-rate" and "yield" appear there only;
+  `build_checks.py` reads that page apart.
+- **`tt-f3-band`, `tt-f4-hotel`.** Beyond the colour roles: their three figures became text measures, because a card
+  on a formatted measure prints the session's decimal comma (P-1 applies to tooltip cards too).
+- **Alt text (R-P2-9).** A chart or a card says its message within 250 characters; a table says what it holds and its
+  first row or status words, and leaves the rows to the table's own cells. `tools/alt_texts.py` evaluates every bound
+  alt text in the three cases; it found one that raised an engine error and one that printed an unformatted number.
+- **For section 15 (template):** `a11y_check.py`'s reading-order check and any generator that writes `tabOrder` must
+  know the direction; an alt-text measure needs an engine evaluation, not only a name check.
+
 ### Results of Build your own (14 Nov, build step 9 of doc 23)
 
 Built and verified against the comp in Low, Expected and High, with nothing picked, over the budget and with a broken

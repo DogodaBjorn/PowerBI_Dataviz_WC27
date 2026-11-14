@@ -7,7 +7,7 @@
     "z": 60000,
     "width": 464,
     "height": 24,
-    "tabOrder": 770
+    "tabOrder": -60001
   },
   "visual": {
     "visualType": "cardVisual",
@@ -355,24 +355,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "altText": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Build Range (text)"
                 }
               }
             }

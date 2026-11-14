@@ -50,6 +50,7 @@ ref table PlanSelector
 ref table ScatterView
 ref table BuildMove
 ref table BuildBar
+ref table TTMove
 ref table BuildPoint
 ref table MoveDecision
 ref table Finding

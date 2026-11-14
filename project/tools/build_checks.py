@@ -101,10 +101,11 @@ def walk(node, refs, texts):
             walk(v, refs, texts)
 
 
-refs, report_texts, files = [], [], 0
+refs, report_texts, gloss_texts, files = [], [], [], 0
 for f in REPORT.rglob("*.json"):
     files += 1
-    walk(json.loads(f.read_text(encoding="utf-8")), refs, report_texts)
+    # the glossary page is read apart: R-G2 allows "run-rate" and "yield" there and nowhere else (build step 10)
+    walk(json.loads(f.read_text(encoding="utf-8")), refs, gloss_texts if "tt-glossary" in f.parts else report_texts)
 
 # ---------------------------------------------------------------- 1 · every bound measure and column exists
 missing = sorted({(k, e, p) for k, e, p in refs
@@ -143,7 +144,8 @@ strict = [(n, lit, pat) for n in sorted(rebuilt) for lit in dax_literals(txt.get
 record("2 R-G2 vocabulary, rebuilt copy (strict)", f"{len(rebuilt)} text measures of the slot map", not strict,
        "; ".join(f"{n}: '{lit[:60]}'" for n, lit, _ in strict))
 old_m = sorted({n for n, d in TEXT_MEASURES if n not in rebuilt and any(never_hits(lit) for lit in dax_literals(d))})
-old_r = sorted({t for t in report_texts if never_hits(t)})
+GLOSSARY_ONLY = {r"\brun-rate\b", r"\bROI\b|\bIRR\b|\byield\b"}  # R-G2: "allowed only in the glossary" (tt-glossary)
+old_r = sorted({t for t in report_texts if never_hits(t)} | {t for t in gloss_texts if any(pat not in GLOSSARY_ONLY for pat, _ in never_hits(t))})
 results.append(("2 R-G2 vocabulary, old report and old measures (open until step 11)", f"{len(old_m)} measures, {len(old_r)} report strings", "open",
                 "; ".join(old_m[:40]) + (" | report: " + "; ".join(old_r[:20]) if old_r else "")))
 
@@ -169,7 +171,7 @@ RULE = r"\breleases?\b"
 OTHER = r"\breleases?\b|\brevisit\b(?! the facts\b)|\bbroken even\b"  # 'Revisit the facts': the old pill's label, no rule (gone in step 6)
 holders = sorted({n for n, d, *_ in sm.MEASURES if any(re.search(RULE, lit, re.IGNORECASE) for lit in dax_literals(d))})
 others = sorted({n for n, d, *_ in sm.MEASURES if n != "Gate Rule (text)" and any(re.search(OTHER, lit, re.IGNORECASE) for lit in dax_literals(d))})
-rep = sorted({t for t in report_texts if re.search(OTHER, t, re.IGNORECASE)})
+rep = sorted({t for t in report_texts + gloss_texts if re.search(OTHER, t, re.IGNORECASE)})
 record("4 one release rule", "Gate Rule (text)", holders == ["Gate Rule (text)"] and not others and not rep,
        f"holders {holders}; other measures {others}; report strings {rep}")
 

@@ -628,14 +628,15 @@ def line_pair(page, slot, cat_table, cat_col, own, brand, own_label, brand_label
 def detail_page_visuals(which):
     """The F3 band page and the F4 hotel page: the kicker and the band or hotel on the banner; a card with three
     figures and the brand's under them; a card with a titled two-line chart against the brand and one closing line
-    (weakest guest scores / who fills the hotel)."""
+    (weakest guest scores / who fills the hotel). Build step 10: the three figures are text measures (R-G1: points in
+    any locale)."""
     if which == TT_F3:
-        head, nums, labels_, alt_nums, vs, foot = ("Band Header (text)", ["NPS 2025 (signed)", "Occupancy % 2025", "RevPAR 2025"], ["NPS 2025", "occupancy 2025", "RevPAR 2025"],
+        head, nums, labels_, alt_nums, vs, foot = ("Band Header (text)", ["TT NPS 2025 (text)", "TT Occupancy 2025 (text)", "TT RevPAR 2025 (text)"], ["NPS 2025", "occupancy 2025", "RevPAR 2025"],
                                                   "Alt Band Nums (text)", "Band vs Brand (text)", "Weakest Scores (text)")
         ch_title = "NPS by year, this band against the brand"
         ch = line_pair(which, "ttd_chart", "Date", "Year", "NPS Band (line)", "NPS Brand (line)", "This band", "Goodnight Inn", [YEARS()], alt_measure="Alt NPS Band Line (text)")
     else:
-        head, nums, labels_, alt_nums, vs, foot = ("Hotel Header (text)", ["Occupancy % 2025", "ADR 2025", "RevPAR 2025"], ["occupancy 2025", "ADR 2025", "RevPAR 2025"],
+        head, nums, labels_, alt_nums, vs, foot = ("Hotel Header (text)", ["TT Occupancy 2025 (text)", "TT ADR 2025 (text)", "TT RevPAR 2025 (text)"], ["occupancy 2025", "ADR 2025", "RevPAR 2025"],
                                                   "Alt Hotel Nums (text)", "Hotel vs Brand (text)", None)  # FinalV2 N6: no room-nights line (answers no decision)
         ch_title = "Occupancy by month 2025, this hotel against the brand"
         # round 7: month letters on the axis (a 496 px chart rotated the three-letter names)
@@ -669,25 +670,36 @@ def extra_tooltip_pages():
 # 12 Nov evening (Björn): the definitions behind the Definitions chip. The short words of both pages, one line each, in the
 # report's own words (the subtitle of P2 already defines NPV in situ; this is the place to look them all up). Years only, no
 # typed figures: the rate and the budget live in the model and on the pages.
-GLOSSARY = (("NPV", "net present value: benefits minus capex and disruption through 2032, in 2025 dollars at the organisers' rate."),
-            ("Capex", "the one-off investment a move takes; the brand's budget caps what a plan may spend."),
-            ("Run-rate", "the operating profit a move adds in a full year once it is live, measured in 2032."),
-            ("Pays back, break-even", "the first year the cumulative net impact, undiscounted, is above zero."),
-            ("Low, Expected, High", "the organisers' three cases for every move; every number on page 2 follows the case in view."),
-            ("NPS", "net promoter score: promoters minus detractors among surveyed guests, weighted by responses."),
-            ("ADR", "average daily rate: room revenue per room night sold."),
-            ("RevPAR", "revenue per available room: room revenue per room night available, sold or not."),
-            ("OTA, online agencies", "booking sites that take a commission on every room night they bring."))
+# Build step 10 (R-TT-3): the report's own words (R-G2), "Case in view" gone; two columns, the decision words of page 2 at
+# the left, the scenarios and the measures of page 1 at the right. "Run-rate" and "yield" appear here and nowhere else.
+GLOSSARY = ((("Move", "one of the ten investments Goodnight Inn can make."),
+             ("Package", "a set of moves funded together. A is the package we recommend."),
+             ("Growth", "a move the dataset marks as growth; a package needs at least one."),
+             ("Capex", "the one-off investment a move takes; the brand's budget caps what a package may spend."),
+             ("NPV", "net present value: benefits minus capex and disruption through 2032, in 2025 dollars at the organisers' rate."),
+             ("Pays back by 2032", "the NPV through 2032 is zero or more."),
+             ("Cash positive", "from that year on, the cumulative net impact, undiscounted, is above zero."),
+             ("A year by 2032", "the operating profit a move adds in a full year once it is live, measured in 2032 (its run-rate)."),
+             ("A year on cost", "a year by 2032 divided by capex (a yield).")),
+            (("Tranche", "a part of the budget, funded by one Board decision."),
+             ("The 2028 gate", "the Board meeting in mid-2028 that decides on the next tranche, by the rule on page 2."),
+             ("Low, Expected, High", "the organisers' three scenarios for every move; page 2 follows the one picked under Scenario."),
+             ("Topped 90%", "a month in which a hotel sold 90% or more of its room nights."),
+             ("NPS", "net promoter score: promoters minus detractors among surveyed guests, weighted by responses."),
+             ("ADR", "average daily rate: room revenue per room night sold."),
+             ("RevPAR", "revenue per available room: room revenue per room night available, sold or not."),
+             ("OTA, online agencies", "booking sites that take a commission on every room night they bring.")))
 
 
 def glossary_page_visuals():
     pg = TT_GLOSS
-    x, y, w, h, z, tab = at(pg, "ttg_list")
-    paras = [[(term, DISPLAY, SPX, INK, False), ("  " + what, BODY, SPX, INK2, False)] for term, what in GLOSSARY]
-    lst = textbox("ttg_list", x, y, w, h, z, tab, paras, alt="The definitions of the short words on these pages, one line each")
-    return [night_kicker(pg, "ttg_kicker", "DEFINITIONS"),
-            tb(pg, "ttg_title", "The terms on these pages", font=DISPLAY, size=19, colour=INK),
-            lst]
+    out = [night_kicker(pg, "ttg_kicker", "DEFINITIONS"),
+           tb(pg, "ttg_title", "The terms on these pages", font=DISPLAY, size=19, colour=INK)]
+    for name, terms, alt in (("ttg_list", GLOSSARY[0], "The words of the investment decision, one line each"),
+                             ("ttg_list2", GLOSSARY[1], "The scenarios and the measures of the brand review, one line each")):
+        paras = [[(term, DISPLAY, SPX, INK, False), ("  " + what, BODY, SPX, INK2, False)] for term, what in terms]
+        out.append(textbox(name, *at(pg, name), paras, alt=alt))
+    return out
 
 
 def year_page_visuals():
@@ -1534,7 +1546,9 @@ def p2_build():
     v = [build_head(), move_slicer(), moves_table(), note(P2, "c_sel_footer", "Build Picked (text)", 1)]
     v += you_title()
     v += you_nums()
-    v.append(note(P2, "c_you_range", "Build Range (text)", 1, colour=INK))
+    # build step 10: out of the tab order. The card is empty while nothing is picked (a stop that says nothing), and the
+    # numbers' alt text (Alt You Nums) already reads the range with the four numbers.
+    v.append(decorative(note(P2, "c_you_range", "Build Range (text)", 1, colour=INK), 60))
     v.append(top_text(P2, "c_you_rules", "Build Valid (text)", "Build Valid Color"))
     v.append(build_bars())
     lines = [("Build Cumulative Line", "Your plan", INK, 3, False, "Build Cumulative End Name (label-safe)", "Under", INK),
@@ -1551,6 +1565,27 @@ def p2_visuals():
 
 # ====================================================================== the package tooltip (08-verbeterplan V2, round 4)
 TT = "tt-package"
+# The moves table of the package tooltip (build step 10; R-TT-1, doc 21 section 9): Move, Capex, NPV at 12 pt on TTMove (the
+# ten moves in the selector's order and a Total row; the TT Row measures are blank outside the hovered package, so only its
+# moves and the total show). Columns and 2 px of slack fill the card's 416 px; the height holds the largest package
+# (eight moves and the total) without a scrollbar.
+TT_MOVES_COLS = (226, 86, 102)
+TT_MOVES_PAD = 0.6  # measured in step 10: header 33 px, a row 21.6 px + twice the padding + its rule; eight moves and the total fit 256 px
+
+
+def tt_moves_table():
+    ms = ("TT Row Capex (text)", "TT Row NPV (text)")
+    proj = [proj_col("TTMove", "Name", display="Move"), proj_mea(ms[0], "Capex"), proj_mea(ms[1], "NPV")]
+    refs = ["TTMove.Name", *[mref(m_) for m_ in ms]]
+    colfmt = [{"properties": {"alignment": enum("Right"), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": r_}} for r_ in refs[1:]]
+    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=TT_MOVES_PAD, header_size=S, column_formatting=colfmt)
+    objs["columnHeaders"][0]["properties"].update({"outlineStyle": enum("BottomOnly"), "outlineColor": color(INK2), "outlineWeight": num(1),
+                                                   "autoSizeColumnWidth": b(False), "wordWrap": b(False)})
+    objs["values"][0]["properties"]["wordWrap"] = b(False)
+    objs["values"] += [{"properties": {"fontColor": fv("TT Row NPV Ink")}, "selector": {**WILD, "metadata": refs[2]}}]
+    objs["columnWidth"] = [{"properties": {"value": num(w_)}, "selector": {"metadata": q_}} for q_, w_ in zip(refs, TT_MOVES_COLS)]
+    t = visual("tt_moves_tbl", "tableEx", *at(TT, "tt_moves_tbl"), query={"Values": {"projections": proj}}, objects=objs, vcos=vco(padding=0))
+    return bind_alt(t, "Alt TT Moves (text)")
 
 
 def tt_visuals():
@@ -1558,7 +1593,9 @@ def tt_visuals():
     (PACKAGE A · EXPECTED CASE) and the title; a white card with the NPV, the capex, the verdict over the three cases
     and the range bar on the shared axis; a second card with the moves and their capex and NPV, adding up to the
     package. The round-6 waterfall bars, Answers column, histogram strip and move grid left: too much for a hover.
-    Grain: one Package[PackageID] from the hover layer. Every SVG has a text twin (TT Range (text), TT Moves (text))."""
+    Grain: one Package[PackageID] from the hover layer.
+    Build step 10 (R-TT-1, doc 21 section 9): the range strip is one sentence (TT Range (text)) and the moves are a native
+    table at body size (tt_moves_table()); no SVG is left on the page."""
     def c(name, measure, size, colour, font=BODY, bold=False, label=None, align="left"):
         x, y, w, h, z, tab = at(TT, name)
         vv = card(name, x, y, w, h, z, tab, [measure], font, size, colour, BODY, S, INK2, labels=[label] if label else None, align=align)
@@ -1570,9 +1607,9 @@ def tt_visuals():
          c("tt_npv", "TT NPV (text)", 20, INK, DISPLAY, True, label="NPV through 2032"),
          c("tt_capex", "TT Capex (text)", 18, INK, DISPLAY, False, label="capex"),
          c("tt_payback", "TT Payback (text)", S, INK, bold=True),  # the verdict over the three cases
-         decorative(image_measure(TT, "tt_range_svg", "TT Range SVG", None), 3),  # the range bar on the shared axis, numbers inside
+         dyn(TT, "tt_range", "TT Range (text)"),  # R-TT-1: the three cases in one sentence, two lines at 12 pt
          c("tt_moves_label", "TT Moves Label (text)", S, INK, DISPLAY),
-         decorative(image_measure(TT, "tt_moves_svg", "TT Moves SVG", None), 2)]  # the moves list as one SVG (round 6)
+         tt_moves_table()]
     v[2]["visual"]["objects"]["value"][0]["properties"]["fontColor"] = fv("TT NPV Color")
     v[4]["visual"]["objects"]["value"][0]["properties"]["fontColor"] = fv("TT Payback Color")
     return v
@@ -1699,6 +1736,16 @@ def no_card_fill(visuals):
     return visuals
 
 
+# Build step 10 (R-X-1, R-P2-9): which way the Tab key runs. Measured in Desktop 2.159 with real key presses
+# (tools/desktop_shots/step10/a11y_pass.ps1 -Do canvaswalk): Tab goes from the HIGHEST tabOrder to the lowest, Shift+Tab the
+# other way; with the rising numbers the report carried until step 10, Tab started at the Definitions chip and ended at the
+# logo. The generator and opzet-layering.json keep the reading order as rising numbers (10 = first stop); page() turns them
+# into Desktop's falling order as its last act. Negative numbers (out of the tab order) stay as they are. If the published
+# report ever shows the opposite, this one switch turns it back.
+TAB_FALLING = True
+TAB_TOP = 10000
+
+
 def page(name, display, visuals, filters=None, tooltip=False, interactions=None):
     # colour only: furniture (cards, logo) is drawn by visuals so it scales with the content on any viewport
     cv = PAGES[name].get("canvas", LAYOUT["canvas"])
@@ -1724,6 +1771,12 @@ def page(name, display, visuals, filters=None, tooltip=False, interactions=None)
         sts = states_of(name, vis["name"])
         if sts and OPEN_STATE not in sts:
             vis["isHidden"] = True
+    if TAB_FALLING:
+        for vis in visuals:
+            t = vis["position"]["tabOrder"]
+            if t >= 0:
+                assert t < TAB_TOP, (vis["name"], t)
+                vis["position"]["tabOrder"] = TAB_TOP - t
     return p, visuals
 
 

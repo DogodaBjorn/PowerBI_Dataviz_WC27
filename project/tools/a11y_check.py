@@ -55,6 +55,9 @@ fails, notes = [], []
 SVG_FONT = re.compile(r"font-size='(\d+(?:\.\d+)?)'")
 
 
+TAB_FALLING = True  # the same switch as opzet_report.TAB_FALLING: the first stop of the Tab key has the highest tabOrder
+
+
 def fail(where, msg):
     fails.append(f"FAIL  {where}: {msg}")
 
@@ -461,7 +464,8 @@ for pname in pages_meta["pageOrder"]:
                 # a tile is a sub-card (round 4: B and C side by side): a visual inside one is placed by the tile's
                 # rectangle against visuals outside it, so a tile is read whole before the next tile or row
                 tile = tile_of(pl, p["x"], p["y"], p["width"], p["height"], st)
-                seq.append((t, grp, p["y"], p["y"] + p["height"], p["x"], p["x"] + p["width"], v["name"], tile))
+                # build step 10: Tab runs from the highest tabOrder to the lowest (opzet_report.TAB_FALLING, measured in Desktop)
+                seq.append((-t if TAB_FALLING else t, grp, p["y"], p["y"] + p["height"], p["x"], p["x"] + p["width"], v["name"], tile))
             seq.sort(key=lambda e: e[:2])
             for a, b2 in zip(seq, seq[1:]):
                 if b2[1] < a[1]:

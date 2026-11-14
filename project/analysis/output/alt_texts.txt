@@ -1,0 +1,305 @@
+alt_texts: 136 visuals in the tab order, 107 on a measure, 0 flag(s)
+
+=== p1-brand-review
+ 9990 z_logo (image) [typed] 13 chars
+      Goodnight Inn
+ 9980 z_eyebrow (textbox) [typed] 47 chars
+      Page 1 of 2, the wake-up call: the brand review
+ 9900 z_headline (cardVisual) [Headline P1 (text)] 91/91/91 chars
+      Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome is fading.
+ 9890 c_subtitle (cardVisual) [Subtitle P1 Briefing (text)] 136/136/136 chars
+      Goodnight Inn in 2025, against the three other Pillow & Key Group brands. For the Board: what is wrong, before page 2 says what to fund.
+ 9799 kpi_occ (cardVisual) [Alt KPI Occupancy (text)] 77/77/77 chars
+      Goodnight Inn occupancy in 2025: 79.4%, best of 4, the others 64.7% to 72.9%.
+ 9789 kpi_margin (cardVisual) [Alt KPI Margin after (text)] 94/94/94 chars
+      Goodnight Inn operating margin after commissions in 2025: 33.7%, 2nd of 4, −2.8 pt since 2023.
+ 9779 kpi_ota (cardVisual) [Alt KPI OTA (text)] 111/111/111 chars
+      Share of Goodnight Inn room revenue booked through online agencies in 2025: 50.0%, highest of 4, 33.0% in 2021.
+ 9769 kpi_nps (cardVisual) [Alt KPI NPS (text)] 159/159/159 chars
+      Guest quality: Goodnight Inn net promoter score in 2025: +3.3, still positive, but falling every year, last of 4, from +8.5 in 2021; the others +14.7 to +31.9.
+ 9690 c_f1_title (cardVisual) [Alt F1 Title (text)] 72/72/72 chars
+      F1, the margin. After commissions, the margin fell 2.8 points since 2023
+ 9680 ch_f1_margin (stackedAreaChart) [Alt F1 Chart (text)] 195/195/195 chars
+      After commissions, Goodnight Inn's operating margin rose from 32.5% in 2021 to 36.5% in 2023 and fell back to 33.7% in 2025. The gap to the margin before commissions grew from 8.4 to 10.6 points.
+ 9670 c_f1_note (cardVisual) [F1 Note (text)] 188/188/188 chars
+      Commissions took 1.0 of those points and running costs 1.8 (staff rose from 26.9% to 28.3% of revenue). Room rates rose 2.7%, in line with the other brands, so no price premium absorbs it.
+ 9660 lnk_f1 (textbox) [typed] 44 chars
+      → Page 2: revenue management and the kiosks.
+ 9590 c_f2_title (cardVisual) [Alt F2 Title (text)] 76/76/76 chars
+      F2, the middleman. Online agencies now book 50% of room revenue, up from 33%
+ 9580 ch_f2_ota (lineChart) [Alt F2 Chart (text)] 176/176/176 chars
+      Online agencies booked 50.0% of Goodnight Inn's room revenue in 2025, up from 33.0% in 2021. The other brands in 2025: Maison d'Or 23.2%, P&K Select 24.2%, Pebble & Pine 35.9%.
+ 9570 tbl_f2_folio (tableEx) [Alt F2 Folio (text)] 181/181/181 chars
+      One Goodnight Inn room night in 2025. Via an online agency the guest pays $109.31, fees take $19.68, the inn keeps $89.63. Booked direct: $111.56, fees $4.46, the inn keeps $107.10.
+ 9560 c_f2_note (cardVisual) [F2 Note (text)] 201/201/201 chars
+      Booked direct, the guest pays $2.25 more and we keep $17.47 more. Nothing rewards the guest for booking direct; member rates change that. At the 2021 channel mix, 2025 commissions would be $4.8M lower.
+ 9550 lnk_f2 (textbox) [typed] 44 chars
+      → Page 2: the booking app with member rates.
+ 9490 c_f3_title (cardVisual) [Alt F3 Title (text)] 81/81/81 chars
+      F3, the fading welcome. Hotels last renovated 10 years or more ago score NPS −4.9
+ 9480 ch_f3_age (clusteredColumnChart) [Alt F3 Chart (text)] 250/250/250 chars
+      Goodnight Inn's 2025 net promoter score by years since the last renovation: 5 years or less +6.8, 6 to 9 years +3.8, 10 years or more −4.9. Hovering a bar shows that band's occupancy, revenue per room, its NPS since 2021 and its weakest guest scores.
+ 9475 c_f3_count (cardVisual) [F3 Count (text)] 43/43/43 chars
+      44 of 50 hotels; 6 have no renovation date.
+ 9470 c_f3_note (cardVisual) [F3 Note (text)] 221/221/221 chars
+      Since 2018 Goodnight Inn spent $1.0M per hotel on renovation; the other brands spent $5.9M to $7.9M. None has started since 2020. Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause.
+ 9460 lnk_f3 (textbox) [typed] 55 chars
+      → Page 2: the refresh waits for the 2028 gate, and why.
+ 9390 c_f4_title (cardVisual) [Alt F4 Title (text)] 102/102/102 chars
+      F4, where we are full. Our airports run full: Toronto topped 90% occupancy in 17 of the last 24 months
+ 9380 c_f4_note (cardVisual) [F4 Note (text)] 83/83/83 chars
+      Gatwick did in 14, Montréal in 13; Kingston, the third extension on offer, in none.
+ 9375 c_f4_rows (cardVisual) [Alt F4 Types (text)] 112/112/112 chars
+      Goodnight Inn occupancy in 2025 by location type: airport hotels 82.0%, city hotels 79.1%, highway hotels 77.5%.
+ 9370 lnk_f4 (cardVisual) [Link F4 (text)] 79/79/79 chars
+      → Page 2: kiosks at the 20 busiest hotels; extensions decided at the 2028 gate.
+ 9350 ch_f4_dots (scatterChart) [Alt F4 Chart (text)] 241/241/241 chars
+      The 7 fullest Goodnight Inn hotels in 2025, 5 of them airports: Toronto Pearson Airport 91.9%, London Gatwick Airport 90.4%, Montréal-Trudeau Airport 90.2%, Phoenix Airport 88.5%, Kansas City 87.4%, Kuala Lumpur 86.5%, Orlando Airport 85.2%.
+ 1000 z_footer (textbox) [typed] 109 chars
+      Source: Pillow & Key Group dataset. Guest scores weighted by survey responses; 2021 is a depressed base year.
+  995 btn_next (actionButton) [typed] 58 chars
+      Next what we fund and why: page 2, The Investment Strategy
+  990 chip_def (cardVisual) [Alt Definitions (text)] 227/227/227 chars
+      Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a move adds in a full year. A year on cost: that profit over capex. Tranche: a part of the budget, one Board decision.
+
+=== p2-investment-strategy   (context: InvestmentProjects[Brand] = "Goodnight Inn", Brands[Brand] = "Goodnight Inn")
+ 9990 z_logo (image) [typed] 13 chars
+      Goodnight Inn
+ 9980 z_eyebrow2 (textbox) [typed] 52 chars
+      Page 2 of 2, room to invest: the investment strategy
+ 9970 btn_back (actionButton) [typed] 32 chars
+      Back to The Brand Review, page 1
+ 9900 z_headline2 (cardVisual) [Headline P2 (text)] 62/62/62 chars
+      Fix the middleman first: $9.4M now earns $3.5M a year by 2032.
+      Low: Fix the middleman first: $9.4M now earns $1.0M a year by 2032.
+      High: Fix the middleman first: $9.4M now earns $6.2M a year by 2032.
+ 9890 c_subtitle2 (cardVisual) [Subtitle P2 (text)] 221/226/222 chars
+      The other $50.6M waits for one Board decision in mid-2028. Expected case. NPV through 2032 at 8% in 2025 dollars is the contest's rule and counts nothing after 2032, so we also show what each move earns a year once it is live.
+      Low: The other $50.6M waits for one Board decision in mid-2028. Low case. NPV through 2032 at 8% in 2025 dollars is the contest's rule and counts nothing after 2032, so we also show what each move earns a year once it is live.
+      High: The other $50.6M waits for one Board decision in mid-2028. High case. NPV through 2032 at 8% in 2025 dollars is the contest's rule and counts nothing after 2032, so we also show what each move earns a year once it is live.
+ 9880 tab_rec_on (actionButton) [typed] 62 chars
+      Recommended A, the current view: the recommendation, package A
+ 9879 tab_rec_off (actionButton) [typed] 49 chars
+      Recommended A: show the recommendation, package A
+ 9878 tab_alts_on (actionButton) [typed] 84 chars
+      What waits and why, the current view: the moves that wait for the 2028 gate, and why
+ 9877 tab_alts_off (actionButton) [typed] 71 chars
+      What waits and why: show the moves that wait for the 2028 gate, and why
+ 9876 tab_build_on (actionButton) [typed] 73 chars
+      Build your own, the current view: pick moves and compare your plan with A
+ 9875 tab_build_off (actionButton) [typed] 60 chars
+      Build your own: show pick moves and compare your plan with A
+ 9870 sl_scenario (advancedSlicerVisual) [typed] 69 chars
+      Scenario: Low, Expected or High; every number on this page follows it
+ 9790 c_hero_title (cardVisual) [Hero Title (text)] 93/87/102 chars
+      Two moves pass both tests; the kiosks earn 20.6% a year on cost but pay back after 2032
+      Low: No moves pass both tests; the booking app earns 12.1% a year on cost but pays back after 2032
+      High: Three moves pass both tests; the breakfast upgrade earns 26.4% a year on cost but pays back after 2032
+ 9780 tbl_hero (tableEx) [Alt Hero (text)] 267/272/268 chars   <-- long (272)
+      The ten moves ranked by what each earns a year on its cost, Expected case, with the finding each answers, its status and its NPV through 2032. First: Booking app & member rates, 47.0% a year on cost, NPV +$3.4M. The two marked lines are our 8% cost of money and NPV zero.
+      Low: The ten moves ranked by what each earns a year on its cost, Low case, with the finding each answers, its status and its NPV through 2032. First: Booking app & member rates, 12.1% a year on cost, NPV −$2.8M. The two marked lines are our 8% cost of money and NPV zero.
+      High: The ten moves ranked by what each earns a year on its cost, High case, with the finding each answers, its status and its NPV through 2032. First: Booking app & member rates, 82.1% a year on cost, NPV +$9.5M. The two marked lines are our 8% cost of money and NPV zero.
+ 9770 c_hero_caption (textbox) [typed] 119 chars
+      A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still ramping up in 2032.
+ 9690 c_rec_head (textbox) [Alt Rec Head (text)] 113/113/113 chars
+      Our recommendation: package A. Booking app & member rates + Revenue management + Kiosks at the 20 busiest hotels.
+ 9680 c_rec_nums (cardVisual) [Alt Rec Nums (text)] 119/124/121 chars
+      Package A, Expected case: capex $9.4M, net present value through 2032 +$3.3M, +$3.5M a year by 2032, 37.5% a year on cost.
+      Low: Package A, Low case: capex $9.4M, net present value through 2032 −$5.5M, +$1.0M a year by 2032, 11.1% a year on cost.
+      High: Package A, High case: capex $9.4M, net present value through 2032 +$12.7M, +$6.2M a year by 2032, 66.0% a year on cost.
+ 9670 c_rec_lines (cardVisual) [Rec Lines (text)] 178/177/178 chars
+      Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.
+The app carries it: +$3.4M of the +$3.3M. Every year without it leaves about $2.4M with the agencies.
+      Low: Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.
+The app carries it: +$0.6M of that +$1.0M. Every year without it leaves about $1.2M with the agencies.
+      High: Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.
+The app carries it: +$9.5M of the +$12.7M. Every year without it leaves about $3.6M with the agencies.
+ 9660 tbl_ledger (tableEx) [Alt Ledger (text)] 326/316/328 chars   <-- long (328)
+      What package A changes for each finding by 2032, Expected case. F2 The middleman: half the rise since 2021 undone; F1 The margin: half the fall since 2023 recovered; F4 Where we are full: rooms decided at the 2028 gate; F3 The fading welcome: deferred to the 2028 gate. The table gives what we track and both values.
+      Low: What package A changes for each finding by 2032, Low case. F2 The middleman: a quarter of the rise since 2021 undone; F1 The margin: a little of the fall since 2023 recovered; F4 Where we are full: rooms decided at the 2028 gate; F3 The fading welcome: deferred to the 2028 gate. The table gives what we track and both values.
+      High: What package A changes for each finding by 2032, High case. F2 The middleman: three quarters of the rise since 2021 undone; F1 The margin: most of the fall since 2023 recovered; F4 Where we are full: rooms decided at the 2028 gate; F3 The fading welcome: deferred to the 2028 gate. The table gives what we track and both values.
+ 9650 c_ledger_caption (textbox) [typed] 56 chars
+      2025 brand plus A's full yearly effect, in 2025 dollars.
+ 9640 btn_build_invite (actionButton) [typed] 101 chars
+      Think you can beat A Build your own: show the state where you pick moves and compare your plan with A
+ 9590 c_plan_title (cardVisual) [Capital Plan Title (text)] 47/47/47 chars
+      The $60M plan: $9.4M now, two decisions in 2028
+ 9580 c_plan_t1 (cardVisual) [Plan T1 (text)] 34/34/34 chars
+      Tranche 1 · package A
+$9.4M · 2027
+ 9570 c_plan_t2 (cardVisual) [Plan T2 (text)] 108/108/108 chars
+      Tranche 2 · Gatwick and Toronto +40 rooms
+$12.4M · 2028 gate
++$1.7M a year once live · 13.8% a year on cost
+      Low: Tranche 2 · Gatwick and Toronto +40 rooms
+$12.4M · 2028 gate
++$1.5M a year once live · 11.7% a year on cost
+      High: Tranche 2 · Gatwick and Toronto +40 rooms
+$12.4M · 2028 gate
++$1.8M a year once live · 14.8% a year on cost
+ 9560 c_plan_t3 (cardVisual) [Plan T3 (text)] 89/89/90 chars
+      Tranche 3 · the refresh
+$29.5M · 2028 gate
++$2.3M a year once live · 7.9% a year on cost
+      Low: Tranche 3 · the refresh
+$29.5M · 2028 gate
++$1.3M a year once live · 4.5% a year on cost
+      High: Tranche 3 · the refresh
+$29.5M · 2028 gate
++$3.4M a year once live · 11.5% a year on cost
+ 9550 c_plan_t4 (cardVisual) [Plan T4 (text)] 18/18/18 chars
+      Not needed · $8.7M
+ 9540 ch_plan_bar (barChart) [Alt Plan Bar (text)] 151/151/151 chars
+      How the $60M budget is planned: tranche 1, package A, $9.4M now; tranche 2, $12.4M, and tranche 3, $29.5M, wait for the 2028 gate; $8.7M is not needed.
+ 9530 c_plan_gate (cardVisual) [Gate Rule (text)] 328/328/328 chars   <-- long (328)
+      The 2028 gate, once all three moves are live: the Board releases tranche 2 if distribution cost has fallen at least 0.6 points (the app's Low case) and Gatwick and Toronto still topped 90% in 6 of the last 12 months. The refresh comes back to the same meeting with a case that looks beyond 2032. A decision rule, not a forecast.
+ 9520 ch_plan_cum (lineChart) [Alt Plan Cum (text)] 219/222/218 chars
+      Package A, cumulative net impact by year to 2032 in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Expected case A is cash positive from 2031. The Board decides on the rest at the 2028 gate.
+      Low: Package A, cumulative net impact by year to 2032 in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Low case A is not cash positive by 2032. The Board decides on the rest at the 2028 gate.
+      High: Package A, cumulative net impact by year to 2032 in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the High case A is cash positive from 2029. The Board decides on the rest at the 2028 gate.
+ 9510 c_plan_milestones (cardVisual) [Milestones (text)] 114/112/108 chars
+      RMS live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Cash positive 2031 (Expected)
+      Low: RMS live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Not cash positive by 2032 (Low)
+      High: RMS live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Cash positive 2029 (High)
+ 9490 c_scatter_title_s (cardVisual) [Proof Title (text)] 70/70/70 chars
+      We checked all 456 packages the rules allow: none beats A through 2032
+ 9480 c_scatter_sub (cardVisual) [Proof Subtitle (text)] 46/63/64 chars
+      Only 6 pay back by 2032, all under $15M. Each dot is a package.
+      Low: None pays back by 2032. Each dot is a package.
+      High: Only 57 pay back by 2032, all under $35M. Each dot is a package.
+ 9470 hero_s_packages_named (scatterChart) [Alt Scatter (text)] 221/226/224 chars
+      We checked all 456 packages the rules allow: none beats A through 2032 (Expected case). A, our recommendation: capex $9.4M, net present value +$3.3M. B, the alternative: $11.7M, +$2.7M. C, with the refresh: $36.9M, −$23.4M.
+      Low: We checked all 456 packages the rules allow: none beats A through 2032 (Low case). A, our recommendation: capex $9.4M, net present value −$5.5M. B, the alternative: $11.7M, −$6.9M. C, with the refresh: $36.9M, −$34.8M.
+      High: We checked all 456 packages the rules allow: none beats A through 2032 (High case). A, our recommendation: capex $9.4M, net present value +$12.7M. B, the alternative: $11.7M, +$12.6M. C, with the refresh: $36.9M, −$11.4M.
+ 9460 hero_s_packages (scatterChart) [Alt Scatter Cloud (text)] 183/188/184 chars
+      All 456 packages the rules allow, each with its capex, its net present value through 2032 (Expected case), the three cases, whether it pays back, and its moves. Show as a table lists them.
+      Low: All 456 packages the rules allow, each with its capex, its net present value through 2032 (Low case), the three cases, whether it pays back, and its moves. Show as a table lists them.
+      High: All 456 packages the rules allow, each with its capex, its net present value through 2032 (High case), the three cases, whether it pays back, and its moves. Show as a table lists them.
+ 9390 c_waits_head (textbox) [typed] 78 chars
+      What waits, and why. One alternative and two tranches, each weighed against A.
+ 9380 tbl_waits (tableEx) [Alt Waits (text)] 261/266/262 chars   <-- long (266)
+      Three options weighed against A, Expected case: B · Breakfast instead of kiosks; Tranche 2 · Airport extensions, +80 rooms; Tranche 3 · The refresh of the 10 oldest hotels (in package C). For each: its numbers, why it is on the table, why not now and when we decide.
+      Low: Three options weighed against A, Low case: B · Breakfast instead of kiosks; Tranche 2 · Airport extensions, +80 rooms; Tranche 3 · The refresh of the 10 oldest hotels (in package C). For each: its numbers, why it is on the table, why not now and when we decide.
+      High: Three options weighed against A, High case: B · Breakfast instead of kiosks; Tranche 2 · Airport extensions, +80 rooms; Tranche 3 · The refresh of the 10 oldest hotels (in package C). For each: its numbers, why it is on the table, why not now and when we decide.
+ 9290 c_build_head (textbox) [typed] 49 chars
+      Build your own. Click a move to add or remove it.
+ 9280 sl_moves (advancedSlicerVisual) [typed] 106 chars
+      Moves: pick a move to add it to your plan or to take it out; the table beside it gives each move's numbers
+ 9270 tbl_moves (tableEx) [Alt Moves (text)] 199/204/200 chars
+      The ten moves, Expected case, in the order of the list beside it, each with the finding it answers, its capex, its NPV through 2032 and what it adds a year by 2032. First: Booking app, $5.0M, NPV +$3.4M.
+      Low: The ten moves, Low case, in the order of the list beside it, each with the finding it answers, its capex, its NPV through 2032 and what it adds a year by 2032. First: Booking app, $5.0M, NPV −$2.8M.
+      High: The ten moves, High case, in the order of the list beside it, each with the finding it answers, its capex, its NPV through 2032 and what it adds a year by 2032. First: Booking app, $5.0M, NPV +$9.5M.
+ 9260 c_sel_footer (cardVisual) [Build Picked (text)] 32/32/32 chars
+      Picked: 0 moves, $0.0M of $60.0M
+ 9250 c_you_title (cardVisual) [Build Title (text)] 18/18/18 chars
+      Nothing picked yet
+ 9240 c_you_nums (cardVisual) [Alt You Nums (text)] 145/145/145 chars
+      Your plan: nothing picked yet. Pick at least three moves, one of them growth, within $60.0M. Your plan appears here and is compared with A below.
+ 9220 c_you_rules (shape) [Build Valid (text)] 114/114/114 chars
+      Pick at least three moves, one of them growth, within $60.0M. Your plan appears here and is compared with A below.
+ 9210 ch_build_bars (clusteredBarChart) [Alt Build Bars (text)] 20/20/20 chars
+      No moves picked yet.
+ 9190 ch_cmp_alts (lineChart) [Alt Cmp Alts (text)] 98/103/100 chars
+      Cumulative net impact 2027 to 2032 against A, Expected case, by 2032: A +$6.8M, B +$6.8M, C −$19.2M.
+      Low: Cumulative net impact 2027 to 2032 against A, Low case, by 2032: A −$4.6M, B −$5.8M, C −$34.1M.
+      High: Cumulative net impact 2027 to 2032 against A, High case, by 2032: A +$19.2M, B +$19.7M, C −$3.3M.
+ 9180 ch_cmp_build (lineChart) [Alt Cmp Build (text)] 96/101/98 chars
+      Cumulative net impact of A 2027 to 2032, Expected case, ends at +$6.8M; pick moves to add your plan.
+      Low: Cumulative net impact of A 2027 to 2032, Low case, ends at −$4.6M; pick moves to add your plan.
+      High: Cumulative net impact of A 2027 to 2032, High case, ends at +$19.2M; pick moves to add your plan.
+ 1000 z_footer2 (cardVisual) [Footer P2 (text)] 134/134/134 chars
+      Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.
+  990 chip_def2 (cardVisual) [Alt Definitions (text)] 227/227/227 chars
+      Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a move adds in a full year. A year on cost: that profit over capex. Tranche: a part of the budget, one Board decision.
+
+=== p2-investment-strategy|Build with package A picked   (context: InvestmentProjects[Brand] = "Goodnight Inn", Brands[Brand] = "Goodnight Inn", TREATAS ( { "Booking app", "Revenue management", "Kiosks at 20 desks" }, BuildMove[Short Name] ))
+ 9260 c_sel_footer (cardVisual) [Build Picked (text)] 32/32/32 chars
+      Picked: 3 moves, $9.4M of $60.0M
+ 9250 c_you_title (cardVisual) [Build Title (text)] 36/36/36 chars
+      Your plan: 3 moves, live by Apr 2028
+ 9240 c_you_nums (cardVisual) [Alt You Nums (text)] 226/231/228 chars
+      Your plan, Expected case: capex $9.4M, net present value through 2032 +$3.3M, +$3.5M a year by 2032, 37.5% a year on cost. Between the Low and High cases: −$5.5M to +$12.7M. Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
+      Low: Your plan, Low case: capex $9.4M, net present value through 2032 −$5.5M, +$1.0M a year by 2032, 11.1% a year on cost. Between the Low and High cases: −$5.5M to +$12.7M. Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
+      High: Your plan, High case: capex $9.4M, net present value through 2032 +$12.7M, +$6.2M a year by 2032, 66.0% a year on cost. Between the Low and High cases: −$5.5M to +$12.7M. Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
+ 9220 c_you_rules (shape) [Build Valid (text)] 53/53/53 chars
+      Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
+ 9210 ch_build_bars (clusteredBarChart) [Alt Build Bars (text)] 153/158/155 chars
+      Net present value through 2032 of each picked move, Expected case, highest first: Booking app +$3.4M, Revenue management +$0.5M, Kiosks at 20 desks −$0.6M.
+      Low: Net present value through 2032 of each picked move, Low case, highest first: Kiosks at 20 desks −$1.2M, Revenue management −$1.5M, Booking app −$2.8M.
+      High: Net present value through 2032 of each picked move, High case, highest first: Booking app +$9.5M, Revenue management +$3.2M, Kiosks at 20 desks +$0.03M.
+ 9180 ch_cmp_build (lineChart) [Alt Cmp Build (text)] 84/89/87 chars
+      Cumulative net impact 2027 to 2032, Expected case, by 2032: your plan +$6.8M, A +$6.8M.
+      Low: Cumulative net impact 2027 to 2032, Low case, by 2032: your plan −$4.6M, A −$4.6M.
+      High: Cumulative net impact 2027 to 2032, High case, by 2032: your plan +$19.2M, A +$19.2M.
+
+=== tt-package   (context: TREATAS ( { LOOKUPVALUE ( Package[PackageID], Package[Preset], "A" ) }, Package[PackageID] ))
+ 9890 tt_title (cardVisual) [TT Title (text)] 22/22/22 chars
+      A · Our recommendation
+ 9880 tt_npv (cardVisual) [TT NPV (text)] 7/7/8 chars
+      +$3.3M
+      Low: −$5.5M
+      High: +$12.7M
+ 9870 tt_capex (cardVisual) [TT Capex (text)] 5/5/5 chars
+      $9.4M
+ 9860 tt_payback (cardVisual) [TT Payback (text)] 31/56/56 chars
+      Pays back by 2032 except in Low; cash positive from 2031
+      Low: Pays back by 2032 except in Low
+      High: Pays back by 2032 except in Low; cash positive from 2029
+ 9855 tt_range (cardVisual) [TT Range (text)] 93/93/93 chars
+      Low −$5.5M · Expected +$3.3M · High +$12.7M through 2032; it pays back by 2032 above zero.
+ 9845 tt_moves_label (cardVisual) [TT Moves Label (text)] 24/24/24 chars
+      In this package: 3 moves
+ 9840 tt_moves_tbl (tableEx) [Alt TT Moves (text)] 282/282/283 chars   <-- long (283)
+      The moves in the hovered package with their net present value: Booking app +$3.4M; Revenue management +$0.5M; Kiosks at 20 desks −$0.6M. Not in it: Energy programme, Toronto +40 rooms, Gatwick +40 rooms, Kingston +40 rooms, Refresh 10 oldest, Boston new hotel, Breakfast upgrade.
+      Low: The moves in the hovered package with their net present value: Kiosks at 20 desks −$1.2M; Revenue management −$1.5M; Booking app −$2.8M. Not in it: Energy programme, Toronto +40 rooms, Gatwick +40 rooms, Kingston +40 rooms, Refresh 10 oldest, Boston new hotel, Breakfast upgrade.
+      High: The moves in the hovered package with their net present value: Booking app +$9.5M; Revenue management +$3.2M; Kiosks at 20 desks +$0.03M. Not in it: Energy programme, Toronto +40 rooms, Gatwick +40 rooms, Kingston +40 rooms, Refresh 10 oldest, Boston new hotel, Breakfast upgrade.
+
+=== tt-year   (context: 'Date'[Year] = 2030)
+ 9890 tty_title (cardVisual) [TT Year Title (text)] 18/18/18 chars
+      At the end of 2030
+ 9880 tty_a_title (textbox) [typed] 20 chars
+      A in the three cases
+ 9870 tty_a_nums (cardVisual) [Alt TT Year A (text)] 97/97/97 chars
+      Package A, cumulative net impact to the end of 2030: Low −$6.7M, Expected −$0.2M, High +$6.8M.
+ 9860 tty_all_title (cardVisual) [TT Year All Title (text)] 37/42/38 chars
+      A, B, C and your plan in the Expected case
+      Low: A, B, C and your plan in the Low case
+      High: A, B, C and your plan in the High case
+ 9850 tty_all_nums (cardVisual) [Alt TT Year All (text)] 105/110/106 chars
+      Cumulative net impact to the end of 2030, Expected case: A −$0.2M, B −$1.1M, C −$30.1M, your plan none yet.
+      Low: Cumulative net impact to the end of 2030, Low case: A −$6.7M, B −$8.3M, C −$38.4M, your plan none yet.
+      High: Cumulative net impact to the end of 2030, High case: A +$6.8M, B +$6.3M, C −$21.3M, your plan none yet.
+
+=== tt-f3-band   (context: Brands[Brand] = "Goodnight Inn", Hotels[Renovation Age Sort] = 3)
+ 9895 ttd_head (cardVisual) [Band Header (text)] 40/40/40 chars
+      10 years or more: 10 hotels, 1,215 rooms
+ 9890 ttd_nums (cardVisual) [Alt Band Nums (text)] 77/77/77 chars
+      This band in 2025: NPS −4.9, occupancy 79.2%, revenue per available room $85.
+ 9880 ttd_vs (cardVisual) [Band vs Brand (text)] 73/73/73 chars
+      Goodnight Inn, all hotels, 2025: NPS +3.3, occupancy 79.4%, RevPAR $84.80
+ 9870 ttd_chart_title (textbox) [typed] 40 chars
+      NPS by year, this band against the brand
+ 9860 ttd_chart (lineChart) [Alt NPS Band Line (text)] 133/133/133 chars
+      Net promoter score by year, 2021 to 2025, this band against the whole brand: the band from +3.1 to −4.9, the brand from +8.5 to +3.3.
+ 9850 ttd_foot (cardVisual) [Weakest Scores (text)] 66/66/66 chars
+      Weakest guest scores 2025: room comfort 6.7, amenities 6.9 (of 10)
+
+=== tt-f4-hotel   (context: Brands[Brand] = "Goodnight Inn", TREATAS ( { "GI027" }, Hotels[HotelID] ))
+ 9895 ttd_head (cardVisual) [Hotel Header (text)] 42/42/42 chars
+      London Gatwick Airport, airport, 160 rooms
+ 9890 ttd_nums (cardVisual) [Alt Hotel Nums (text)] 94/94/94 chars
+      This hotel in 2025: occupancy 90.4%, average daily rate $161, revenue per available room $145.
+ 9880 ttd_vs (cardVisual) [Hotel vs Brand (text)] 76/76/76 chars
+      Goodnight Inn, all hotels, 2025: occupancy 79.4%, ADR $106.82, RevPAR $84.80
+ 9870 ttd_chart_title (textbox) [typed] 53 chars
+      Occupancy by month 2025, this hotel against the brand
+ 9860 ttd_chart (lineChart) [Alt Occupancy Hotel Line (text)] 106/106/106 chars
+      Occupancy by month in 2025, this hotel against the whole brand: the hotel averages 90.4%, the brand 79.4%.
+
+=== tt-glossary
+ 9890 ttg_title (textbox) [typed] 24 chars
+      The terms on these pages
+ 9880 ttg_list (textbox) [typed] 51 chars
+      The words of the investment decision, one line each
+ 9870 ttg_list2 (textbox) [typed] 65 chars
+      The scenarios and the measures of the brand review, one line each

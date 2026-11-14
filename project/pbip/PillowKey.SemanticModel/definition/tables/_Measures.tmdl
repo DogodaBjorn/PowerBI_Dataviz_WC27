@@ -1475,8 +1475,8 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: ce856be0-e775-5119-8bf3-7a669da1e10c
 
-	/// Tooltip header: A, B or C by name and role, any other package by its size.
-	measure 'TT Title (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR k = LOOKUPVALUE ( Package[Preset], Package[PackageID], pkg ) VAR n = LOOKUPVALUE ( Package[Projects], Package[PackageID], pkg ) RETURN IF ( ISBLANK ( pkg ), BLANK (), SWITCH ( k, "", "A package of " & n & " moves", "C", "C · Why not renovate?", LOOKUPVALUE ( PlanSelector[Label], PlanSelector[Key], k ) ) )
+	/// Tooltip header: A, B or C by name and role (PlanSelector[Label]; build step 10: C is named by its moves, R-G2), any other package by its size.
+	measure 'TT Title (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR k = LOOKUPVALUE ( Package[Preset], Package[PackageID], pkg ) VAR n = LOOKUPVALUE ( Package[Projects], Package[PackageID], pkg ) RETURN IF ( ISBLANK ( pkg ), BLANK (), SWITCH ( k, "", "A package of " & n & " moves", LOOKUPVALUE ( PlanSelector[Label], PlanSelector[Key], k ) ) )
 		formatString: @
 		displayFolder: 10 Package tooltip
 		lineageTag: d6a2d462-1ad1-5ea5-b8fc-c9095bf65a69
@@ -1499,14 +1499,14 @@ table _Measures
 		displayFolder: 10 Package tooltip
 		lineageTag: 5d5c5592-89ac-5169-9213-9c7daf7d1d56
 
-	/// Tooltip NPV colour: Deep Coffee when it pays back by 2032 (NPV at least zero), Burnt Tangerine below (08-verbeterplan V2); the sign and the payback line carry it too.
-	measure 'TT NPV Color' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR npv = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = pkg ) RETURN IF ( ROUND ( npv / 100000, 0 ) >= 0, "#1763A8", "#A63F0E" )
+	/// Tooltip NPV colour: Night when it pays back by 2032 (NPV at least zero), Burnt Tangerine below; the sign and the payback line carry it too. Build step 10 (R-TT-4, R-G3): blue means package A only, so a positive NPV of any package is Night.
+	measure 'TT NPV Color' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR npv = CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = pkg ) RETURN IF ( ROUND ( npv / 100000, 0 ) >= 0, "#12233D", "#A63F0E" )
 		formatString: @
 		displayFolder: 10 Package tooltip
 		lineageTag: 9b298b18-b872-5fa7-b539-bfafab6ee91d
 
-	/// Tooltip: NPV of the hovered package in all three cases, $M, and the name of the range bar's zero line (round 6).
-	measure 'TT Range (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR lo = LOOKUPVALUE ( Package[NPV Low], Package[PackageID], pkg ) / 1000000 VAR ex = LOOKUPVALUE ( Package[NPV Expected], Package[PackageID], pkg ) / 1000000 VAR hi = LOOKUPVALUE ( Package[NPV High], Package[PackageID], pkg ) / 1000000 RETURN IF ( ISBLANK ( pkg ), BLANK (), "Low " & IF ( lo < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( lo ), "0.0" ) & ", Expected " & IF ( ex < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( ex ), "0.0" ) & ", High " & IF ( hi < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( hi ), "0.0" ) & " ($M; the dark line is break-even)" )
+	/// Tooltip (R-TT-1): NPV of the hovered package in the three cases in one sentence, and what 'pays back' means; also the keyboard layer's text twin.
+	measure 'TT Range (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR lo = LOOKUPVALUE ( Package[NPV Low], Package[PackageID], pkg ) VAR ex = LOOKUPVALUE ( Package[NPV Expected], Package[PackageID], pkg ) VAR hi = LOOKUPVALUE ( Package[NPV High], Package[PackageID], pkg ) RETURN IF ( ISBLANK ( pkg ), BLANK (), "Low " & ( VAR __v = ( lo ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & " · Expected " & ( VAR __v = ( ex ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & " · High " & ( VAR __v = ( hi ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & " through " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & "; it pays back by " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & " above zero." )
 		formatString: @
 		displayFolder: 10 Package tooltip
 		lineageTag: 4357e07f-0d11-526f-8e6b-dbc04ccfd4e6
@@ -1974,13 +1974,13 @@ table _Measures
 		lineageTag: 13b95952-84ae-5020-9ac3-e2658b097f9d
 
 	/// The A/B/C layer of the scatter read aloud: how many packages pay back, then A, B and C with capex and net present value in the case in view.
-	measure 'Alt Scatter (text)' = [Scatter Title (text)] & " (" & [Selected Scenario] & " case). A, our recommendation: capex " & ( VAR __v = ( [Preset A Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & ", net present value " & ( VAR __v = ( [Preset A NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". B, the alternative: " & ( VAR __v = ( [Preset B Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & ", " & ( VAR __v = ( [Preset B NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". C, the answer to why not renovate: " & ( VAR __v = ( [Preset C Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & ", " & ( VAR __v = ( [Preset C NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "."
+	measure 'Alt Scatter (text)' = [Proof Title (text)] & " (" & [Selected Scenario] & " case). A, our recommendation: capex " & ( VAR __v = ( [Preset A Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & ", net present value " & ( VAR __v = ( [Preset A NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". B, the alternative: " & ( VAR __v = ( [Preset B Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & ", " & ( VAR __v = ( [Preset B NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". C, with the refresh: " & ( VAR __v = ( [Preset C Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & ", " & ( VAR __v = ( [Preset C NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 1c782b3e-b1ad-510b-9d6d-433e8ad14a8e
 
 	/// The 456-dot layer read aloud: what its table holds (keyboard users reach the package details there, not in the hover card).
-	measure 'Alt Scatter Cloud (text)' = "All " & COUNTROWS ( ALLNOBLANKROW ( Package ) ) & " possible packages, each with its capex, net present value through 2032 (" & [Selected Scenario] & " case), range, payback and initiatives. Show as table lists them."
+	measure 'Alt Scatter Cloud (text)' = "All " & COUNTROWS ( ALLNOBLANKROW ( Package ) ) & " packages the rules allow, each with its capex, its net present value through 2032 (" & [Selected Scenario] & " case), the three cases, whether it pays back, and its moves. Show as a table lists them."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: e4b38ddc-cd53-5a10-a03a-00b266122cdd
@@ -2519,19 +2519,29 @@ table _Measures
 		displayFolder: 10 Package tooltip
 		lineageTag: 35eca03e-56b0-5fc6-966c-b9386baae031
 
-	/// Tooltip: the hovered package's Low-High band and Expected dot on one fixed NPV axis shared by every package, the A/B/C ticks (B under the band when it stands within 24 px of A; C only when clear of break-even, A and B), the break-even line and the Low and High numbers on their own row; decorative, TT Range (text) is its text twin (keyboard tooltip, alt text).
-	measure 'TT Range SVG' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR dMin = FLOOR ( MINX ( ALL ( Package ), Package[NPV Low] ) / 5000000, 1 ) * 5000000 VAR dMax = CEILING ( MAXX ( ALL ( Package ), Package[NPV High] ) / 5000000, 1 ) * 5000000 VAR k = 400 / ( dMax - dMin ) VAR lo = LOOKUPVALUE ( Package[NPV Low], Package[PackageID], pkg ) VAR ex = LOOKUPVALUE ( Package[NPV Expected], Package[PackageID], pkg ) VAR hi = LOOKUPVALUE ( Package[NPV High], Package[PackageID], pkg ) VAR x0 = 8 + ( 0 - dMin ) * k VAR xL = 8 + ( lo - dMin ) * k VAR xE = 8 + ( ex - dMin ) * k VAR xH = 8 + ( hi - dMin ) * k VAR xA = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "A" ) - dMin ) * k VAR xB = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "B" ) - dMin ) * k VAR xC = 8 + ( LOOKUPVALUE ( Package[NPV Expected], Package[Preset], "C" ) - dMin ) * k VAR bDown = ABS ( xA - xB ) < 24 VAR cShown = ABS ( xC - x0 ) >= 24 && ABS ( xC - xA ) >= 24 && ABS ( xC - xB ) >= 24 VAR dotc = IF ( ROUND ( ex / 100000, 0 ) >= 0, "%231763A8", "%23A63F0E" ) VAR lowAnchor = IF ( xL < 80, "start", "end" ) VAR xLo = IF ( xL < 80, 0, xL ) VAR highAnchor = IF ( xH + 88 > 416, "end", "start" ) VAR xHi = IF ( xH + 88 > 416, 416, xH + 4 ) RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='416' height='72' viewBox='0 0 416 72'>" & "<line x1='1' x2='1' y1='2' y2='14' stroke='%2312233D' stroke-width='1.5'/><text x='6' y='13' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>break-even</text>" & "<line x1='" & FORMAT ( xA, "0.0", "en-US" ) & "' x2='" & FORMAT ( xA, "0.0", "en-US" ) & "' y1='15' y2='26' stroke='%231763A8' stroke-width='2'/><text x='" & FORMAT ( xA, "0.0", "en-US" ) & "' y='13' text-anchor='middle' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%231763A8'>A</text>" & IF ( bDown, "<line x1='" & FORMAT ( xB, "0.0", "en-US" ) & "' x2='" & FORMAT ( xB, "0.0", "en-US" ) & "' y1='34' y2='38' stroke='%2312233D' stroke-width='2'/><text x='" & FORMAT ( xB, "0.0", "en-US" ) & "' y='50' text-anchor='middle' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>B</text>", "<line x1='" & FORMAT ( xB, "0.0", "en-US" ) & "' x2='" & FORMAT ( xB, "0.0", "en-US" ) & "' y1='15' y2='26' stroke='%2312233D' stroke-width='2'/><text x='" & FORMAT ( xB, "0.0", "en-US" ) & "' y='13' text-anchor='middle' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>B</text>" ) & IF ( cShown, "<line x1='" & FORMAT ( xC, "0.0", "en-US" ) & "' x2='" & FORMAT ( xC, "0.0", "en-US" ) & "' y1='15' y2='26' stroke='%2312233D' stroke-width='2'/><text x='" & FORMAT ( xC, "0.0", "en-US" ) & "' y='13' text-anchor='middle' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>C</text>", "" ) & "<rect x='" & FORMAT ( xL, "0.0", "en-US" ) & "' y='26' width='" & FORMAT ( xH - xL, "0.0", "en-US" ) & "' height='8' rx='4' fill='%238E897D' fill-opacity='0.45'/>" & "<line x1='" & FORMAT ( x0, "0.0", "en-US" ) & "' x2='" & FORMAT ( x0, "0.0", "en-US" ) & "' y1='15' y2='37' stroke='%2312233D' stroke-width='1.5'/>" & "<circle cx='" & FORMAT ( xE, "0.0", "en-US" ) & "' cy='30' r='5' fill='" & dotc & "' stroke='%23FFFFFF' stroke-width='2'/>" & "<text x='" & FORMAT ( xLo, "0.0", "en-US" ) & "' y='66' text-anchor='" & lowAnchor & "' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Low " & IF ( lo < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( lo ) / 1000000, "0.0", "en-US" ) & "</text>" & "<text x='" & FORMAT ( xHi, "0.0", "en-US" ) & "' y='66' text-anchor='" & highAnchor & "' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>High " & IF ( hi < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( hi ) / 1000000, "0.0", "en-US" ) & "</text></svg>" )
+	/// Package tooltip, moves table: the capex of the row's move when it is in the hovered package, the package's capex on the Total row, blank otherwise (so the table lists the package's moves only).
+	measure 'TT Row Capex (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ), "@p", PackageProject[ProjectID] ) VAR p = SELECTEDVALUE ( TTMove[ProjectID] ) VAR c = SWITCH ( TRUE (), ISBLANK ( pkg ) || ISBLANK ( p ), BLANK (), p = "total", LOOKUPVALUE ( Package[CapexUSD], Package[PackageID], pkg ), p IN ids, LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], p ) ) RETURN IF ( ISBLANK ( c ), BLANK (), ( VAR __v = ( c ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) )
 		formatString: @
 		displayFolder: 10 Package tooltip
-		dataCategory: ImageUrl
-		lineageTag: 2e74355c-f4db-5197-b21c-9ec9620b064e
+		lineageTag: fec1fd38-c180-5cf4-95ee-0dab2859618b
 
-	/// Tooltip: the moves of the hovered package as a list with capex and NPV each (positives first, the sinker last) and a totals row; the move NPVs are rounded so they add up to the package. Decorative: TT Moves (text) and Alt TT Moves say the same in words.
-	measure 'TT Moves SVG' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 10000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 10000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 10000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 10000 ) VAR tot = SUMX ( adj, [@s] ) VAR cap = LOOKUPVALUE ( Package[CapexUSD], Package[PackageID], pkg ) VAR nrows = COUNTROWS ( adj ) VAR moveRows = CONCATENATEX ( adj, VAR y = 18 * RANKX ( adj, [@s] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.0000001, , DESC ) RETURN "<text x='0' y='" & ( y + 14 ) & "' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%2312233D'>" & LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & "</text>" & "<text x='320' y='" & ( y + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%2312233D'>" & ( VAR __v = ( LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], [@p] ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & "</text>" & "<text x='416' y='" & ( y + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='" & IF ( [@s] < 0, "%23A63F0E", "%2312233D" ) & "'>" & ( VAR __v = ( [@s] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "</text>", "" ) VAR yT = 18 * ( nrows + 1 ) VAR total = "<text x='0' y='" & ( yT + 14 ) & "' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>" & "Total" & "</text>" & "<text x='320' y='" & ( yT + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%2312233D'>" & ( VAR __v = ( cap ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & "</text>" & "<text x='416' y='" & ( yT + 14 ) & "' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='" & IF ( tot < 0, "%23A63F0E", "%2312233D" ) & "'>" & ( VAR __v = ( tot ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "</text>" RETURN IF ( ISBLANK ( pkg ), BLANK (), "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='416' height='184' viewBox='0 0 416 184'>" & "<text x='0' y='14' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Move</text><text x='320' y='14' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Capex</text><text x='416' y='14' text-anchor='end' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>NPV</text>" & "<line x1='0' x2='416' y1='17.5' y2='17.5' stroke='%23E3DFD3'/>" & "<line x1='0' x2='416' y1='" & ( 18 * ( nrows + 1 ) + 0.5 ) & "' y2='" & ( 18 * ( nrows + 1 ) + 0.5 ) & "' stroke='%23E3DFD3'/>" & moveRows & total & "</svg>" )
+	/// Package tooltip, moves table: NPV through 2032 of the row's move alone (as the hero table and the selector print it), the package's NPV on the Total row; scenario in view; blank for a move outside the package.
+	measure 'TT Row NPV (num)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ), "@p", PackageProject[ProjectID] ) VAR p = SELECTEDVALUE ( TTMove[ProjectID] ) RETURN SWITCH ( TRUE (), ISBLANK ( pkg ) || ISBLANK ( p ), BLANK (), p = "total", CALCULATE ( [Package NPV (sel)], REMOVEFILTERS ( Package ), Package[PackageID] = pkg ), p IN ids, CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) )
+		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		displayFolder: 10 Package tooltip
+		lineageTag: 8e4e0c6b-3c9d-5b57-83f5-bd87d6682256
+
+	/// Package tooltip, moves table: the row's NPV as text (sfm).
+	measure 'TT Row NPV (text)' = VAR v = [TT Row NPV (num)] RETURN IF ( ISBLANK ( v ), BLANK (), ( VAR __v = ( v ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 10 Package tooltip
-		dataCategory: ImageUrl
-		lineageTag: 9ca4b6cc-849d-5c24-9f04-b7258da9503e
+		lineageTag: 8ebf148c-832c-5900-af00-d314bed705f8
+
+	/// Package tooltip, moves table: Burnt Tangerine for an NPV below zero, Night otherwise (R-G3; the sign says it too).
+	measure 'TT Row NPV Ink' = VAR v = [TT Row NPV (num)] RETURN IF ( ROUND ( v / 10000, 0 ) < 0, "#A63F0E", "#12233D" )
+		formatString: @
+		displayFolder: 10 Package tooltip
+		lineageTag: 7fdc048e-6c30-50f6-a077-92413ce8f93f
 
 	/// Tooltip text twin of the moves list: each move with its NPV inside the package, positives first (the keyboard layer's tooltip and the alt text).
 	measure 'TT Moves (text)' = VAR pkg = SELECTEDVALUE ( Package[PackageID] ) VAR ids = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = pkg ), "@p", PackageProject[ProjectID] ) VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 10000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 10000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 10000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 10000 ) RETURN IF ( ISBLANK ( pkg ), BLANK (), CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __v = ( [@s] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), "; ", [@s], DESC ) )
@@ -2540,13 +2550,13 @@ table _Measures
 		lineageTag: b8c66b16-0bef-57c3-a10b-81142196875a
 
 	/// Header of the F3 band tooltip: the band, its hotels and rooms.
-	measure 'Band Header (text)' = VAR bnd = SELECTEDVALUE ( Hotels[Renovation Age Label] ) RETURN IF ( ISBLANK ( bnd ), BLANK (), bnd & ": " & COUNTROWS ( Hotels ) & " hotels, " & FORMAT ( SUM ( Hotels[Rooms] ), "#,0" ) & " rooms" )
+	measure 'Band Header (text)' = VAR bnd = SELECTEDVALUE ( Hotels[Renovation Age Label] ) RETURN IF ( ISBLANK ( bnd ), BLANK (), bnd & ": " & COUNTROWS ( Hotels ) & " hotels, " & FORMAT ( SUM ( Hotels[Rooms] ), "#,0", "en-US" ) & " rooms" )
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
 		lineageTag: 6e2a0089-24f5-5cb1-89ea-914f74bcdb88
 
 	/// F3 band tooltip: the brand's own 2025 figures under the band's three, the same formatters.
-	measure 'Band vs Brand (text)' = "Goodnight Inn, all hotels, 2025: NPS " & IF ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) ), "0.0" ) & ", occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0.00" )
+	measure 'Band vs Brand (text)' = "Goodnight Inn, all hotels, 2025: NPS " & IF ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ) ), "0.0", "en-US" ) & ", occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%", "en-US" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0.00", "en-US" )
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
 		lineageTag: 189a7e04-3179-5f45-916d-32dbfa78b1ca
@@ -2564,31 +2574,55 @@ table _Measures
 		lineageTag: c72756bc-a058-5559-98df-82a04c3529ed
 
 	/// F3 band tooltip: the two lowest of the five guest-score dimensions in 2025, response-weighted (what a refresh would have to fix).
-	measure 'Weakest Scores (text)' = VAR t = UNION ( ROW ( "@n", "cleanliness", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[CleanlinessScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "service", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[ServiceScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "room comfort", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[RoomComfortScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "amenities", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[AmenitiesScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "value for money", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[ValueForMoneyScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( Hotels[Renovation Age Label] ) ), BLANK (), "Weakest guest scores 2025: " & CONCATENATEX ( TOPN ( 2, t, [@v], ASC ), [@n] & " " & FORMAT ( [@v], "0.0" ), ", ", [@v], ASC ) & " (of 10)" )
+	measure 'Weakest Scores (text)' = VAR t = UNION ( ROW ( "@n", "cleanliness", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[CleanlinessScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "service", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[ServiceScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "room comfort", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[RoomComfortScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "amenities", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[AmenitiesScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ), ROW ( "@n", "value for money", "@v", CALCULATE ( DIVIDE ( SUMX ( GuestExperience, GuestExperience[ValueForMoneyScore] * GuestExperience[SurveyResponses] ), SUM ( GuestExperience[SurveyResponses] ) ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( Hotels[Renovation Age Label] ) ), BLANK (), "Weakest guest scores 2025: " & CONCATENATEX ( TOPN ( 2, t, [@v], ASC ), [@n] & " " & FORMAT ( [@v], "0.0", "en-US" ), ", ", [@v], ASC ) & " (of 10)" )
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
 		lineageTag: b6d0a913-af44-5683-aaaf-834c047fad83
 
 	/// The F3 band tooltip's three figures read aloud.
-	measure 'Alt Band Nums (text)' = "This band in 2025: NPS " & [NPS 2025 (signed)] & ", occupancy " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", revenue per available room " & FORMAT ( [RevPAR 2025], "$#,0" ) & "."
+	measure 'Alt Band Nums (text)' = "This band in 2025: NPS " & ( VAR __q = ( [NPS 2025 (signed)] ) RETURN IF ( ROUND ( __q, 1 ) = 0, "0.0", IF ( __q < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( __q ), "0.0", "en-US" ) ) ) & ", occupancy " & FORMAT ( [Occupancy % 2025], "0.0%", "en-US" ) & ", revenue per available room " & FORMAT ( [RevPAR 2025], "$#,0", "en-US" ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 0a12882e-b70b-51e1-82d5-2fd9d5d312cf
 
 	/// The F3 band tooltip's line chart read aloud.
-	measure 'Alt NPS Band Line (text)' = "Net promoter score by year, 2021 to 2025, this band against the whole brand: the band from " & FORMAT ( [NPS (weighted) 2021], "+0.0;-0.0;0.0" ) & " to " & FORMAT ( [NPS (weighted) 2025], "+0.0;-0.0;0.0" ) & ", the brand from " & FORMAT ( CALCULATE ( [NPS (weighted) 2021], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "+0.0;-0.0;0.0" ) & " to " & FORMAT ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "+0.0;-0.0;0.0" ) & "."
+	measure 'Alt NPS Band Line (text)' = "Net promoter score by year, 2021 to 2025, this band against the whole brand: the band from " & FORMAT ( [NPS (weighted) 2021], "+0.0;−0.0;0.0", "en-US" ) & " to " & FORMAT ( [NPS (weighted) 2025], "+0.0;−0.0;0.0", "en-US" ) & ", the brand from " & FORMAT ( CALCULATE ( [NPS (weighted) 2021], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "+0.0;−0.0;0.0", "en-US" ) & " to " & FORMAT ( CALCULATE ( [NPS (weighted) 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "+0.0;−0.0;0.0", "en-US" ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 923cef95-153b-571c-9a22-3f2d2c8fbf02
 
+	/// Hover detail card: the NPS 2025 of the hovered band as text, one decimal with its sign.
+	measure 'TT NPS 2025 (text)' = VAR v = [NPS 2025 (signed)] RETURN IF ( ISBLANK ( v ), BLANK (), ( VAR __q = ( v ) RETURN IF ( ROUND ( __q, 1 ) = 0, "0.0", IF ( __q < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( __q ), "0.0", "en-US" ) ) ) )
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 67ea49dd-db05-586e-a80e-515dfd1cc52e
+
+	/// Hover detail card: occupancy 2025 of the hovered band or hotel as text, one decimal.
+	measure 'TT Occupancy 2025 (text)' = VAR v = [Occupancy % 2025] RETURN IF ( ISBLANK ( v ), BLANK (), ( VAR __p = ( v ) * 100 RETURN IF ( ROUND ( __p, 1 ) < 0, UNICHAR ( 8722 ), "" ) & FORMAT ( ABS ( __p ), "0.0", "en-US" ) & "%" ) )
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: 96bec9e5-f4f0-5275-9bc9-9c433478fd97
+
+	/// Hover detail card: ADR 2025 of the hovered band or hotel as text, in dollars and cents.
+	measure 'TT ADR 2025 (text)' = VAR v = [ADR 2025] RETURN IF ( ISBLANK ( v ), BLANK (), FORMAT ( v, "$#,0.00", "en-US" ) )
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: b426926e-c5fe-5367-abdd-3716a3bef97d
+
+	/// Hover detail card: RevPAR 2025 of the hovered band or hotel as text, in dollars and cents.
+	measure 'TT RevPAR 2025 (text)' = VAR v = [RevPAR 2025] RETURN IF ( ISBLANK ( v ), BLANK (), FORMAT ( v, "$#,0.00", "en-US" ) )
+		formatString: @
+		displayFolder: 14 Findings reference and hover detail
+		lineageTag: d5664779-f507-537d-ae8d-adba7445da62
+
 	/// Header of the F4 hotel tooltip: the hotel, its location type and rooms.
-	measure 'Hotel Header (text)' = VAR h = SELECTEDVALUE ( Hotels[Hotel Short Name] ) RETURN IF ( ISBLANK ( h ), BLANK (), h & ", " & LOWER ( SELECTEDVALUE ( Hotels[LocationType] ) ) & ", " & FORMAT ( SUM ( Hotels[Rooms] ), "#,0" ) & " rooms" )
+	measure 'Hotel Header (text)' = VAR h = SELECTEDVALUE ( Hotels[Hotel Short Name] ) RETURN IF ( ISBLANK ( h ), BLANK (), h & ", " & LOWER ( SELECTEDVALUE ( Hotels[LocationType] ) ) & ", " & FORMAT ( SUM ( Hotels[Rooms] ), "#,0", "en-US" ) & " rooms" )
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
 		lineageTag: 70cdf61d-21d1-5b34-af2a-575e2efdd1e5
 
 	/// F4 hotel tooltip: the brand's own 2025 figures under the hotel's three.
-	measure 'Hotel vs Brand (text)' = "Goodnight Inn, all hotels, 2025: occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & ", ADR " & FORMAT ( CALCULATE ( [ADR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0.00" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0.00" )
+	measure 'Hotel vs Brand (text)' = "Goodnight Inn, all hotels, 2025: occupancy " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%", "en-US" ) & ", ADR " & FORMAT ( CALCULATE ( [ADR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0.00", "en-US" ) & ", RevPAR " & FORMAT ( CALCULATE ( [RevPAR 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "$#,0.00", "en-US" )
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
 		lineageTag: 9505e74c-5a93-53e8-9d09-8b4fce534510
@@ -2606,19 +2640,19 @@ table _Measures
 		lineageTag: 86d49a63-98d9-5729-ab1a-c81d6967be2c
 
 	/// F4 hotel tooltip: who fills the hotel, the three largest guest segments by 2025 room nights and the rest.
-	measure 'Segments 2025 (text)' = VAR t = ADDCOLUMNS ( VALUES ( GuestSegments[Segment] ), "@s", CALCULATE ( SUM ( GuestSegments[RoomNights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) VAR tot = SUMX ( t, [@s] ) VAR top3 = TOPN ( 3, t, [@s], DESC ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( Hotels[Hotel Short Name] ) ) || ISBLANK ( tot ), BLANK (), "Room nights 2025: " & CONCATENATEX ( top3, LOWER ( GuestSegments[Segment] ) & " " & FORMAT ( DIVIDE ( [@s], tot ), "0%" ), ", ", [@s], DESC ) & ", other " & FORMAT ( 1 - DIVIDE ( SUMX ( top3, [@s] ), tot ), "0%" ) )
+	measure 'Segments 2025 (text)' = VAR t = ADDCOLUMNS ( VALUES ( GuestSegments[Segment] ), "@s", CALCULATE ( SUM ( GuestSegments[RoomNights] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025 ) ) VAR tot = SUMX ( t, [@s] ) VAR top3 = TOPN ( 3, t, [@s], DESC ) RETURN IF ( ISBLANK ( SELECTEDVALUE ( Hotels[Hotel Short Name] ) ) || ISBLANK ( tot ), BLANK (), "Room nights 2025: " & CONCATENATEX ( top3, LOWER ( GuestSegments[Segment] ) & " " & FORMAT ( DIVIDE ( [@s], tot ), "0%", "en-US" ), ", ", [@s], DESC ) & ", other " & FORMAT ( 1 - DIVIDE ( SUMX ( top3, [@s] ), tot ), "0%", "en-US" ) )
 		formatString: @
 		displayFolder: 14 Findings reference and hover detail
 		lineageTag: bca0f778-ba11-50f6-bc11-15e6ef5a6501
 
 	/// The F4 hotel tooltip's three figures read aloud.
-	measure 'Alt Hotel Nums (text)' = "This hotel in 2025: occupancy " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", average daily rate " & FORMAT ( [ADR 2025], "$#,0" ) & ", revenue per available room " & FORMAT ( [RevPAR 2025], "$#,0" ) & "."
+	measure 'Alt Hotel Nums (text)' = "This hotel in 2025: occupancy " & FORMAT ( [Occupancy % 2025], "0.0%", "en-US" ) & ", average daily rate " & FORMAT ( [ADR 2025], "$#,0", "en-US" ) & ", revenue per available room " & FORMAT ( [RevPAR 2025], "$#,0", "en-US" ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 53e33675-924d-55a5-a9b7-23235150c360
 
 	/// The F4 hotel tooltip's line chart read aloud.
-	measure 'Alt Occupancy Hotel Line (text)' = "Occupancy by month in 2025, this hotel against the whole brand: the hotel averages " & FORMAT ( [Occupancy % 2025], "0.0%" ) & ", the brand " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%" ) & "."
+	measure 'Alt Occupancy Hotel Line (text)' = "Occupancy by month in 2025, this hotel against the whole brand: the hotel averages " & FORMAT ( [Occupancy % 2025], "0.0%", "en-US" ) & ", the brand " & FORMAT ( CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), REMOVEFILTERS ( Brands ), REMOVEFILTERS ( Hotels ), Brands[Brand] = "Goodnight Inn" ), "0.0%", "en-US" ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: f94bb586-30d4-5704-bb84-4f2d9497615c
@@ -2651,52 +2685,8 @@ table _Measures
 		dataCategory: ImageUrl
 		lineageTag: 52ab73eb-068a-5f73-8ec5-3f73de05b285
 
-	/// The ground of the Definitions chip in the footer row (144 x 28 px): the pill and the disc; the word is the card on top, which takes the hover.
-	measure 'Definitions Pill SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='144' height='28' viewBox='0 0 144 28'>" & "<rect width='144' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/></svg>"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		dataCategory: ImageUrl
-		lineageTag: 8c2e2219-8337-5fae-bebb-f794450c5905
-
-	/// The word Definitions on the chip at the right of the footer row of both pages; hovering it opens the definitions tooltip page.
-	measure 'Definitions Chip (text)' = "Definitions"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 0b711f65-aca6-538c-b0dc-82d8dc39b477
-
-	/// The 'Revisit the facts' pill in P2's footer row (856 x 28 px): the disc, the label and the codes F1 to F4; the finding names are cards on top, one per zone, which open the finding's tooltip page.
-	measure 'Facts Bar SVG' = "data:image/svg+xml;utf8," & "<svg xmlns='http://www.w3.org/2000/svg' width='856' height='28' viewBox='0 0 856 28'>" & "<rect width='856' height='28' rx='14' fill='%23FCE6DB'/><circle cx='14' cy='14' r='10' fill='%23E05A22'/><circle cx='14' cy='9.4' r='1.6' fill='%23FFFFFF'/><rect x='12.8' y='12.2' width='2.4' height='7.4' rx='1.2' fill='%23FFFFFF'/><text x='32' y='19.5' font-family='Segoe UI, Arial, sans-serif' font-size='16' fill='%234B5466'>Revisit the facts</text><text x='160' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F1</text><circle cx='292' cy='14' r='1.75' fill='%238E897D'/><text x='300' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F2</text><circle cx='464' cy='14' r='1.75' fill='%238E897D'/><text x='472' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F3</text><circle cx='672' cy='14' r='1.75' fill='%238E897D'/><text x='680' y='19.5' text-anchor='start' font-family='Segoe UI, Arial, sans-serif' font-size='16' font-weight='600' fill='%23A63F0E'>F4</text></svg>"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		dataCategory: ImageUrl
-		lineageTag: 4a6cf517-75a1-55d7-bd30-7310e98a9af5
-
-	/// The name of finding F1 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f1.
-	measure 'Facts Chip F1 (text)' = "The margin"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: c7475a9f-d590-5521-9a50-516a195cfa12
-
-	/// The name of finding F2 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f2.
-	measure 'Facts Chip F2 (text)' = "The middleman"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: f90aae4a-bb0c-51c2-83b3-29d4b162c838
-
-	/// The name of finding F3 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f3.
-	measure 'Facts Chip F3 (text)' = "The fading welcome"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 160cc565-6903-5e65-82da-08cd002169d8
-
-	/// The name of finding F4 in the 'Revisit the facts' pill on page 2; hovering it opens tt-f4.
-	measure 'Facts Chip F4 (text)' = "Where we are full"
-		formatString: @
-		displayFolder: 14 Findings reference and hover detail
-		lineageTag: 72b907ed-ab4c-5731-b355-a418d713c408
-
-	/// The Definitions chip read aloud: the glossary in one breath, so a keyboard or screen-reader user gets the terms the hover shows.
-	measure 'Alt Definitions (text)' = "The short words on these pages. NPV: net present value to 2032. Capex: the investment. Run-rate: profit a year by 2032. NPS: promoters minus detractors. ADR: revenue per room sold. RevPAR: revenue per room available. OTA: an online booking site."
+	/// The Definitions chip read aloud: the decision words of the glossary in one breath (under 250 characters), so a keyboard or screen-reader user gets the terms the hover shows.
+	measure 'Alt Definitions (text)' = "Definitions. NPV: net present value through " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ". Pays back: NPV of zero or more. A year by " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ": the profit a move adds in a full year. A year on cost: that profit over capex. Tranche: a part of the budget, one Board decision."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 68655a71-0b3f-52d3-838d-22d4ef8672d3
@@ -2755,8 +2745,8 @@ table _Measures
 		displayFolder: 11 Accessibility
 		lineageTag: 08e86ed0-9a3e-5926-b8ca-75eb96db587c
 
-	/// The moves table read aloud: each move with its capex and its NPV through 2032 (first version of build step 9; step 10 reviews it).
-	measure 'Alt Moves (text)' = "The ten moves, " & [Selected Scenario] & " case, in the order of the list beside it: " & CONCATENATEX ( ALLNOBLANKROW ( BuildMove ), BuildMove[Short Name] & " " & [Move Capex (text)] & ", net present value " & [Move NPV (text)], "; ", BuildMove[Sort], ASC ) & "."
+	/// The moves table read aloud (build step 10: shortened from the list of all ten, 580 characters): what the rows hold and the first move; the rows are read cell by cell inside the table.
+	measure 'Alt Moves (text)' = "The ten moves, " & [Selected Scenario] & " case, in the order of the list beside it, each with the finding it answers, its capex, its NPV through " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & " and what it adds a year by " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ". First: " & CONCATENATEX ( TOPN ( 1, ALLNOBLANKROW ( BuildMove ), BuildMove[Sort], ASC ), BuildMove[Short Name] & ", " & [Move Capex (text)] & ", NPV " & [Move NPV (text)], "; " ) & "."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 31c3284f-5e52-5692-b4b0-c3791dedec66
@@ -3354,8 +3344,8 @@ table _Measures
 		displayFolder: 11 Accessibility
 		lineageTag: f41daa73-d0c2-55d6-8ae0-91054130aa5c
 
-	/// The ledger read aloud, row by row in its own order: the finding, what we track, the two values and the status words.
-	measure 'Alt Ledger (text)' = "What package A changes for each of the four findings, " & [Selected Scenario] & " case. " & CONCATENATEX ( ALLNOBLANKROW ( Finding ), Finding[Label] & ": " & SUBSTITUTE ( [Ledger Measure (text)], UNICHAR ( 10 ), ", " ) & "; " & [Ledger 2025 (text)] & " in " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Base year" ) & ", " & [Ledger 2032 (text)] & " in " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & " with A; " & [Ledger Status (text)], ". ", Finding[Ledger Sort], ASC ) & "."
+	/// The ledger read aloud (build step 10: shortened from the row-by-row reading of step 6, which ran to 760 characters): each finding with its status words; what we track and the two values are read cell by cell inside the table.
+	measure 'Alt Ledger (text)' = "What package A changes for each finding by " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ", " & [Selected Scenario] & " case. " & CONCATENATEX ( ALLNOBLANKROW ( Finding ), Finding[Label] & ": " & [Ledger Status (text)], "; ", Finding[Ledger Sort], ASC ) & ". The table gives what we track and both values."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 9db36d62-5c11-58b2-916a-f529d2d8542e
@@ -3498,20 +3488,20 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 78c2b4bb-717c-56da-a17e-d60f6aef7133
 
-	/// The hero table read aloud: what it ranks, the title's verdict, the three highest moves with both numbers, and what the two reference lines mean.
-	measure 'Alt Hero (text)' = VAR t = ADDCOLUMNS ( SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects[ProjectID], InvestmentProjects[Brand], InvestmentProjects[Hero Sort] ), InvestmentProjects[Brand] = "Goodnight Inn" ), "@p", InvestmentProjects[ProjectID], "@o", InvestmentProjects[Hero Sort] ), "@y", VAR p = [@p] RETURN CALCULATE ( [A Year on Cost], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ), "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR s = [Selected Scenario] RETURN "The ten moves ranked by what each earns a year on its cost, with the finding each answers, its status and its NPV through " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ", " & s & " case. " & [Hero Title (text)] & ". Highest: " & CONCATENATEX ( TOPN ( 3, t, [@o], ASC ), LOOKUPVALUE ( InvestmentProjects[Move Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __p = ( [@y] ) * 100 RETURN IF ( ROUND ( __p, 1 ) < 0, UNICHAR ( 8722 ), "" ) & FORMAT ( ABS ( __p ), "0.0", "en-US" ) & "%" ) & " a year on cost, NPV " & ( VAR __v = ( [@v] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), "; ", [@o], ASC ) & ". The two marked lines are our " & FORMAT ( LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ), "0%", "en-US" ) & " cost of money and NPV zero."
+	/// The hero table read aloud (build step 10: under 250 characters): what it ranks, the first move with both numbers, and what the two reference lines mean. The title's verdict is the tab stop before it; the rows are read cell by cell inside the table.
+	measure 'Alt Hero (text)' = VAR t = ADDCOLUMNS ( SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjects[ProjectID], InvestmentProjects[Brand], InvestmentProjects[Hero Sort] ), InvestmentProjects[Brand] = "Goodnight Inn" ), "@p", InvestmentProjects[ProjectID], "@o", InvestmentProjects[Hero Sort] ), "@y", VAR p = [@p] RETURN CALCULATE ( [A Year on Cost], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ), "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR s = [Selected Scenario] VAR top1 = TOPN ( 1, t, [@o], ASC ) RETURN "The ten moves ranked by what each earns a year on its cost, " & s & " case, with the finding each answers, its status and its NPV through " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ". First: " & CONCATENATEX ( top1, LOOKUPVALUE ( InvestmentProjects[Move Name], InvestmentProjects[ProjectID], [@p] ) & ", " & ( VAR __p = ( [@y] ) * 100 RETURN IF ( ROUND ( __p, 1 ) < 0, UNICHAR ( 8722 ), "" ) & FORMAT ( ABS ( __p ), "0.0", "en-US" ) & "%" ) & " a year on cost, NPV " & ( VAR __v = ( [@v] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), "; " ) & ". The two marked lines are our " & FORMAT ( LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" ), "0%", "en-US" ) & " cost of money and NPV zero."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: a7b5ff8a-2a35-5f76-ade7-a430d3cfa25c
 
-	/// The capital plan bar read aloud: the four segments with their labels, in order.
-	measure 'Alt Plan Bar (text)' = "How the $" & FORMAT ( CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) / 1000000, "#,0", "en-US" ) & "M budget is planned, in four parts. " & SUBSTITUTE ( [Plan T1 (text)], UNICHAR ( 10 ), ", " ) & ". " & SUBSTITUTE ( [Plan T2 (text)], UNICHAR ( 10 ), ", " ) & ". " & SUBSTITUTE ( [Plan T3 (text)], UNICHAR ( 10 ), ", " ) & ". " & SUBSTITUTE ( [Plan T4 (text)], UNICHAR ( 10 ), ", " ) & "."
+	/// The capital plan bar read aloud (build step 10: the message and the four amounts; each segment's own label is a tab stop above the bar).
+	measure 'Alt Plan Bar (text)' = "How the $" & FORMAT ( CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) / 1000000, "#,0", "en-US" ) & "M budget is planned: tranche 1, package A, " & ( VAR __v = ( [Tranche 1 Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & " now; tranche 2, " & ( VAR __v = ( [Tranche 2 Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & ", and tranche 3, " & ( VAR __v = ( [Tranche 3 Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & ", wait for the 2028 gate; " & ( VAR __v = ( [Not Needed Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & " is not needed."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 4eb48b17-da97-53b1-9e84-d5889ccde30d
 
 	/// The capital plan's cumulative chart read aloud: the three end points, the cash-positive year in the case in view, and the gate.
-	measure 'Alt Plan Cum (text)' = VAR pb = [Preset A Payback Year] VAR s = [Selected Scenario] RETURN "Package A, cumulative net impact by year to " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & " in the three cases. By " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ": Low " & ( VAR __v = ( CALCULATE ( [TT Year A (Low)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", Expected " & ( VAR __v = ( CALCULATE ( [TT Year A (Expected)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", High " & ( VAR __v = ( CALCULATE ( [TT Year A (High)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". In the " & s & " case " & IF ( ISBLANK ( pb ), "A is not cash positive by " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ), "A is cash positive from " & pb ) & ". The Board decides on the rest at the 2028 gate."
+	measure 'Alt Plan Cum (text)' = VAR pb = [Preset A Payback Year] VAR s = [Selected Scenario] VAR hz = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Package A, cumulative net impact by year to " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & " in the three cases. By " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ": Low " & ( VAR __v = ( CALCULATE ( [TT Year A (Low)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", Expected " & ( VAR __v = ( CALCULATE ( [TT Year A (Expected)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", High " & ( VAR __v = ( CALCULATE ( [TT Year A (High)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". In the " & s & " case " & IF ( ISBLANK ( pb ), "A is not cash positive by " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ), "A is cash positive from " & pb ) & ". The Board decides on the rest at the 2028 gate."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 0cceffcb-c65f-5fa9-9f6a-b186c9218717
@@ -3582,8 +3572,8 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 661d37c2-b725-5393-8a8c-e8ddd479b14b
 
-	/// The What-waits table read aloud, row by row in its own order: the option, its four numbers, why it is on the table, why not now and when we decide (first version of build step 8; step 10 reviews it).
-	measure 'Alt Waits (text)' = "What waits, and why, " & [Selected Scenario] & " case. " & CONCATENATEX ( ALLNOBLANKROW ( WaitOption ), WaitOption[Title] & ": " & SUBSTITUTE ( [Wait Numbers (text)], UNICHAR ( 10 ), ", " ) & ". Why it is on the table: " & [Wait Why (text)] & " Why not now: " & [Wait WhyNot (text)] & " When we decide: " & SUBSTITUTE ( [Wait When (text)], UNICHAR ( 10 ), " " ), " ", WaitOption[Sort], ASC )
+	/// The What-waits table read aloud (build step 10: shortened from the row-by-row reading of step 8, which ran to 1,300 characters): the three options and what each row holds; the cells are read inside the table.
+	measure 'Alt Waits (text)' = "Three options weighed against A, " & [Selected Scenario] & " case: " & CONCATENATEX ( ALLNOBLANKROW ( WaitOption ), WaitOption[Title], "; ", WaitOption[Sort], ASC ) & ". For each: its numbers, why it is on the table, why not now and when we decide."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: f3ac2ccf-946e-5695-867b-c63fef0ad553

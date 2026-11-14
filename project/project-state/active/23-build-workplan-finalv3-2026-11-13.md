@@ -27,7 +27,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 7 | Hero table and capital plan; the cut line | done | 14 Nov | a09c731 | Recommended is complete: hero table and capital plan on the comp in Low, Expected and High, text rows and bars within 2 px, the plan bar and the chart's plot on the comp's grid; `a11y_check` 0, 763 number checks and the text diff pass. Cut line: native hero table, native selector, native F4 (Bjorn confirms). Three things are Power BI's: end labels above or under their line ends, not right of them (open question 6); two axis ticks instead of four; the hero's rule 4.5 px low. Bjorn was not needed in Desktop |
 | 8 | What waits, and why | done | 14 Nov | ff2baa2 | What waits on the comp in Low, Expected and High: every text row within 2 px, all fifteen table cells wrap as the comp's, the table fits in High, both plots within 1.3 px; the lettered discs are native (a letter layer of its own); A is the NPV maximum in all three cases; `a11y_check` 0, 763 number checks and the text diff pass, Microsoft's validator 0 errors. Outside 2 px, all Power BI's: header words 8.7 px high, ticks every $20M, axis labels 4 to 5 px high, A's end label 5 px high, Low's plot 3 px high. One choice for Bjorn: A's disc in Deep Coffee for the letter's contrast (open question 7). Bjorn was not needed in Desktop |
 | 9 | Build your own | done | 14 Nov | 42e280e | Build on the comp with package A picked in Low, Expected and High, with nothing picked, over the budget and with a broken rule: every text row within 2 px, bars and boxes within about 2 px, the empty state shows the rules sentence once and no numbers, the saved selection survives a reload, Space on a tile changes the plan and leaves the table's ten rows; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Deneb and the waterfalls are gone. Outside 2 px: the table's header words 9.2 px high, its last column 3 px right, A's end label 5 px high. Three things for Bjorn (open question 8): the bars scroll from eight picked moves on, the zero line of the bars runs under the empty rows, a plan beyond $62M has no dot. Bjorn was not needed in Desktop |
-| 10 | Tooltips, alt text, tab order | todo | | | |
+| 10 | Tooltips, alt text, tab order | done | 14 Nov | (this commit) | The Tab key ran backwards on both pages (Desktop goes from the highest `tabOrder` down): turned round, and walked with real keys in the designed order. `tt-package` with the R-TT-1 sentence and a native moves table, the glossary in the report's words, points only in every tooltip, `tt-f1` to `tt-f4` gone. Alt texts reviewed in three cases: one raised an engine error, one printed a raw number, four table texts shortened; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Both passes by script (real keys, the accessibility tree), not by ear; four things for Bjorn (open question 9). Bjorn was not needed in Desktop |
 | 11 | Final checks and the FinalV3 render set | todo | | | |
 | 12 | Publish to Web gate (Bjorn publishes), then submit | todo | | | |
 
@@ -1104,7 +1104,105 @@ match their specs.
 
 **Prompt:** `project/build-steps/step-10.txt` (say: "Read project/build-steps/step-10.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Sat 14 Nov 2026, one session, done):**
+
+*Built* (generators only; 600 measures, was 601; 35 tables, was 34; P1 62 and P2 81 visuals, unchanged).
+
+- **The Tab key ran backwards; it is turned round.** Measured in Desktop with real key presses: Tab goes from the
+  highest `tabOrder` to the lowest. With the rising numbers every step had written, Tab started at the Definitions chip
+  and ended at the logo, on both pages. `opzet_report.py` keeps the reading order as rising numbers and `page()` turns
+  them round as its last act (`TAB_FALLING`, `TAB_TOP`); `a11y_check.py` reads the order the same way. One switch.
+- **`tt-package`** (R-TT-1, doc 21 section 9): the range strip is one sentence on `TT Range (text)` ("Low −$5.5M ·
+  Expected +$3.3M · High +$12.7M through 2032; it pays back by 2032 above zero."); the moves are a native table at
+  12 pt, Move · Capex · NPV, on the new table `TTMove` (the ten moves in the selector's order and a Total row), with
+  `TT Row Capex (text)`, `TT Row NPV (num)`, `(text)` and `TT Row NPV Ink`: the total is a row from a measure, an NPV
+  below zero is Burnt Tangerine. `TT NPV Color` is Night above zero (blue means A only, R-TT-4). `TT Title (text)`
+  reads all three names from `PlanSelector`; C is "C · App, revenue management and the refresh" (it said "Why not
+  renovate?", an R-G2 word). `TT Payback Color` was defined in step 4. Page 480 x 616 (was 552).
+- **`tt-glossary`** (R-TT-3): seventeen terms in two columns, the decision words of page 2 at the left, the scenarios
+  and page 1's measures at the right; "case in view" is gone; page 928 x 496 (was 480 x 544). `build_checks.py` reads
+  the glossary apart: "run-rate" and "yield" pass there and nowhere else.
+- **`tt-f3-band`, `tt-f4-hotel`** (R-G1, R-TT-4): the three figures of each card are text measures (`TT NPS / Occupancy
+  / ADR / RevPAR 2025 (text)`); as formatted measures they printed "−4,9", "79,2%" and "$84,99" in a Dutch session.
+  Every `FORMAT` of the two pages carries "en-US" (22 calls). Colours were right already: the band or hotel in Night,
+  Goodnight Inn in Coffee Blue, nothing in orange. **`tt-year`** needed nothing: R-G2 words, your plan in Night.
+- **`tt-f1` to `tt-f4`:** their four canvases are deleted, with `Facts Bar SVG`, `Facts Chip F1…F4 (text)`,
+  `Definitions Pill SVG`, `Definitions Chip (text)`, `TT Range SVG` and `TT Moves SVG`. The pages left in step 6.
+- **Alt texts** (R-P2-9), reviewed on what the engine returns in Low, Expected and High (new `tools/alt_texts.py`):
+  - `Alt Plan Cum (text)` raised an engine error (LOOKUPVALUE inside a filter argument), so the capital plan's chart
+    had no alt text at all. Fixed.
+  - `Alt Band Nums (text)` read "NPS -4.88716613852422". Fixed.
+  - The four table alt texts read every row (hero 483 characters, ledger 760, What waits 1,320, selector 586). They
+    now say what the table holds and its first row or its status words (267 to 328); the rows are read cell by cell
+    inside the table (seen in the accessibility tree). `Alt Plan Bar (text)` 309 to 151.
+  - `Alt Scatter (text)` opens with the proof title, as the canvas does, and names C by the refresh; `Alt Scatter
+    Cloud (text)` and `Alt Definitions (text)` in the report's words.
+- **Tab order:** `c_you_range` is out of it (empty while nothing is picked; the numbers' alt text reads the range).
+  Everything else was in the order of doc 21 section 5 and R-P2-9 already, in `opzet-layering.json`.
+- **Tools:** `tools/alt_texts.py`; `tools/desktop_shots/step10/` (`tt_pages.py`: the tooltip pages as ordinary pages
+  with the hover's context as page filters; `crop_page.py`; `a11y_pass.ps1`: the accessibility tree and real key
+  walks; `spoken.py`: what is heard, from a tree dump; README).
+
+*Verified* (Desktop 2.159, Windows culture nl-NL, throwaway copy; renders, spoken names and key walks in
+`project/deliverables/screenshots/Step10-tooltips-a11y-2026-11-14/`).
+
+| What | Result | Proof |
+|---|---|---|
+| Tooltip renders against their specs | `tt-package` for A (Expected and Low), B, C and a package of eight moves: the R-TT-1 sentence in two lines, the table at 12 pt with its total, eight moves fit without a scrollbar, points only. `tt-year`, `tt-f3-band`, `tt-f4-hotel`: points only, no orange inside. `tt-glossary`: seventeen terms, no line cut | renders 01 to 09 |
+| **Keyboard pass, where the focus went** | Real keys sent to Desktop (Ctrl+F6 to the canvas, then Tab or Shift+Tab), the focused element read back after each. After the reversal Ctrl+F6 lands on the logo on both pages. Page 2, Recommended, all 43 visuals: logo, eyebrow, back, headline, subtitle, three tabs, scenario, hero title, hero table, caption, recommendation head, numbers, lines, ledger, caption, invitation, plan title, the four tranche labels, plan bar, gate rule, chart, milestones, footer, Definitions (R-P2-9). Page 1, all 62: logo, eyebrow, headline, subtitle, four KPIs, F1 to F4 each as title, chart, note, link (F2 with its folio, F3 with its count, F4 as title, note, rows, link, dots), footer, next, Definitions | `keys-p2-recommended-shift-tab.txt`, `keys-p1-shift-tab.txt` (walked backwards, read from the bottom up) |
+| The direction, before the change | Build state, old numbers: Tab went Definitions, footer, chart, bars, rules; Shift+Tab went logo, eyebrow, back, headline, subtitle, tabs, scenario, proof title, subtitle, both scatter layers, Build head | the two `keys-p2-build-before-the-reversal` files |
+| **Screen-reader pass, what is heard** | The name and role Desktop gives a screen reader, read from its accessibility tree for page 1 and page 2 in all three states: every stop has a name, the measure-bound texts arrive whole (328 characters, no cut at 250), buttons read "Bladwijzer" or "Paginanavigatie" plus our text. Tables: header row, then each row cell by cell; the bar cells are skipped; a cell coloured by a measure gets Power BI's own "Aanvullende voorwaardelijke opmaak" after its value. Selector: ten toggle buttons, three "on" at the opening state | `spoken-p1.txt`, `spoken-p2-rec.txt`, `spoken-p2-alts.txt`, `spoken-p2-build.txt` |
+| Alt texts in the three cases | 136 stops, 107 on a measure, page 2 also with A picked in Build: none empty, no R-G2 word, no colour word, charts and cards within 250 characters | `analysis/output/alt_texts.txt` |
+| `a11y_check.py` | 0 failures | repeatable |
+| `build_checks.py` (with the engine) | check 5: 129 ok, 2 known (20.5 / 20.6 %), 0 failed; checks 1, 3, 4 pass; check 2 strict passes, the old list is 9 measures and 0 report strings | run in the session (`analysis/output/build_checks.txt` still holds step 9's run) |
+| `number_checks.py` | 766 checks, 765 ok, 1 known, 0 failed | repeatable |
+| Other validators | `schema_check` 196 files, 0 failing; `validate_json` 0; `validate_tmdl --strict` 0 errors, the 13 expected warnings; Microsoft's validator 0 errors | repeatable |
+
+*What the two passes are, and are not.* Bjorn was not at the keyboard. The keys were real key presses sent by script;
+the "heard" column is the text a screen reader is handed, not a recording of Narrator's voice. Three limits:
+1. **Desktop only shows edit mode.** There every visual takes the focus, also the ones out of the tab order (25 on
+   page 2, 33 on page 1; they have no name, the A chip reads "Afbeelding"), and Tab on an image falls into its header
+   button, where it stays. So the full walks were made with Shift+Tab. Whether the published report skips the hidden
+   ones and passes the logo is a look in step 12.
+2. **What waits and Build** were not walked whole after the reversal. Their order comes from the same numbers
+   (`a11y_check.py` checks the reading order per state) and from the Build walk before it.
+3. **Inside a visual** (Enter, arrows, Esc) only the selector was tried, in step 9 (Space switches a tile).
+
+*Found on the way (binding for the next steps).*
+
+1. **Tab runs from the highest `tabOrder` down.** Write reading order as rising numbers and let `page()` turn them.
+2. **A tooltip page renders as an ordinary page** once its type, visibility and binding are dropped and the hover's
+   context is a page filter (`tt_pages.py`). Fitted to the 540 px window it comes out at 2.09 px per page px.
+3. **LOOKUPVALUE inside a CALCULATE filter is an engine error**, silent in the report: the visual just has no alt
+   text. `alt_texts.py` evaluates every bound alt text, so run it after any change to one.
+4. **A card on a formatted measure prints the session's decimals.** Text measures with "en-US" for anything a card shows.
+5. **Row padding 0.6 in a 12 pt table:** header 33 px, rows 23.8 px; nine rows and the header fit 256 px.
+6. A patch script that rewrites a generator must keep its line endings (the `.py` files are LF in git, CRLF on disk).
+
+*Deviations, and why* (open question 9 asks Bjorn about the first four).
+
+- **`tt-package` is 616 px high, not shorter than its 552.** The strip left (72 px), but the table at body size
+  needs 256 px for the largest package (eight moves, two of the 456) where the 16 px SVG list had 184. With A's
+  three moves 120 px of the second card stay empty.
+- **The glossary's definitions are this session's wording.** R-TT-3 names the terms, not their text.
+- **C's name in the tooltip** is new copy: "C · App, revenue management and the refresh".
+- **Table alt texts are summaries**, not the row-by-row readings of steps 6 to 9.
+- **The hero's two value columns keep a zero-width header** (step 7): a reader hears the row in order, "…, A, 47.0%,
+  +$3.4M". A spoken header would need white text on white in the header row; left as it is.
+- **`opzet-layout-v10.json` was not changed** (the comp's export); the two tooltip pages differ from it in
+  `opzet-layout.json` only.
+
+*Open items for later steps.*
+
+- **Step 11:** the prune must keep `TTMove`, the four `TT Row` measures and the four `TT … 2025 (text)`. Unused since
+  this step: `Scatter Title (text)` (the alt text reads the proof title; no measure and no visual reads it). Check 2's
+  old list is nine unbound measures. Render the tooltip pages for FinalV3 with `step10/tt_pages.py`.
+- **Step 12, in the published report:** press Tab from the top of each page: logo first, Definitions last, no stop
+  without a name (limit 1); Enter, arrows and Esc in the hero table and the selector; the package tooltip on A and on
+  a dot far right (616 px high); the glossary tooltip from the chip at the bottom right (928 px wide, it must open
+  upward and to the left); one listen with a screen reader if there is time.
+- **Before the session:** the working tree was clean. The throwaway window was ended with `Stop-Process` (throwaway
+  only); the project was not opened in Desktop, and no Desktop window is left open.
 
 ### Step 11 · Final checks and the FinalV3 render set (about 2 h)
 
@@ -1208,3 +1306,13 @@ A session that meets a question only Bjorn can answer adds it here and sets its 
    band, the Tangerine line and the bars say that it is over the budget. Recommended: accept; the comp drew that dot
    outside the chart. The same answer covers the other deviations of step 9 (see its log): the table's header words
    9.2 px high and its last column 3 px right, and the name "You" in Burnt Tangerine over the budget.
+9. **Step 10: the Tab direction, and three pieces of new wording (no step is blocked by it).** (a) Every step wrote
+   the tab order as rising numbers. In Desktop the Tab key runs from the highest number down, so the report tabbed
+   from the Definitions chip up to the logo. Step 10 turned the numbers round (`TAB_FALLING` in `opzet_report.py`)
+   and walked both pages with real keys in the designed order. That was Desktop's edit mode. Recommended: keep it,
+   and press Tab once in the published report in step 12; the logo must take the focus first. If it does not, the
+   switch goes back. (b) The glossary's seventeen definitions are the session's wording (R-TT-3 names the terms
+   only): read them in render 09. (c) Package C is called "C · App, revenue management and the refresh" in its
+   tooltip. (d) The package tooltip is 616 px high, 64 more than before: the moves table at body size needs the room
+   for a package of eight moves. Recommended: accept; the alternative is a table at 10 pt, under the floor. The same
+   answer covers the table alt texts as summaries and the two passes done by script instead of by ear.
