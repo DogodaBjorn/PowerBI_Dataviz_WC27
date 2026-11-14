@@ -16,6 +16,10 @@ The publish copy (the project is never opened or saved in Desktop, doc 23 rule 6
   Publish to web (public). After a fix in the generators: write the copy again, open, refresh, Bjorn publishes
   over the same report (the link stays).
 
+Start every run with {"op":"ready"},{"op":"meta"}: meta prints the report's name in the service, its last publish
+time and its pages. The first link of 14 Nov was the old report "GoodnightInn-opzet" (13 Nov), not the new one.
+In a 1920 x 1180 window the service gives .displayArea 1920 x 1100 at y 10 (the page plus a 20 px strip).
+
 What was learned:
   - Edge's --lang and --accept-lang leave navigator.languages on the Windows list (a de-DE run answered "nl").
     Emulation.setUserAgentOverride with acceptLanguage sets the header and navigator.language(s);

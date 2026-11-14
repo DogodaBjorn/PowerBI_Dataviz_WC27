@@ -56,7 +56,16 @@ const TEXTS_JS = `(() => { const out = []; const w = document.createTreeWalker(d
     const e = n.parentElement; const r = e.getBoundingClientRect(); if (r.width && r.height) out.push(t); }
   document.querySelectorAll('[aria-label]').forEach(e => out.push('aria: ' + e.getAttribute('aria-label')));
   return out; })()`;
-const FOCUS_JS = `(() => { let e = document.activeElement; while (e && e.shadowRoot && e.shadowRoot.activeElement) e = e.shadowRoot.activeElement;
+// Which report the link really shows: its name in the service, when it was last published, its pages. The page's
+// own public call (modelsAndExploration) is asked again with the link's key; run it after "ready".
+const KEY = (() => { try { return JSON.parse(Buffer.from(new URL(URL_).searchParams.get("r"), "base64").toString()).k; } catch { return ""; } })();
+const META_JS = `(async () => { const u = performance.getEntriesByType('resource').map(e => e.name).find(n => /public\\/reports.*modelsAndExploration/.test(n));
+  if (!u) return { error: 'no modelsAndExploration call seen' };
+  const j = await (await fetch(u, { headers: { 'X-PowerBI-ResourceKey': '${KEY}' } })).json();
+  const r = (j.exploration || {}).report || {};
+  return { report: r.displayName, lastPublished: r.lastUpdatedTime, reportId: r.objectId,
+    pages: ((j.exploration || {}).sections || []).map(s => s.displayName) }; })()`;
+const FOCUS_JS =`(() => { let e = document.activeElement; while (e && e.shadowRoot && e.shadowRoot.activeElement) e = e.shadowRoot.activeElement;
   return e ? { tag: e.tagName, role: e.getAttribute('role'), name: (e.getAttribute('aria-label') || e.innerText || '').slice(0, 120) } : null; })()`;
 
 try {
@@ -81,6 +90,7 @@ try {
         box = null; log({ op: "ready", ...st, lang: await evaluate("navigator.language") }); break;
       }
       case "eval": log({ op: "eval", value: await evaluate(s.js) }); break;
+      case "meta": log({ op: "meta", ...(await evaluate(META_JS)) }); break;
       case "pagebox": box = await evaluate(PAGEBOX_JS); log({ op: "pagebox", box }); break;
       case "shot": { const r = await send("Page.captureScreenshot", { format: "png" });
         fs.writeFileSync(s.out, Buffer.from(r.data, "base64")); log({ op: "shot", out: s.out }); break; }

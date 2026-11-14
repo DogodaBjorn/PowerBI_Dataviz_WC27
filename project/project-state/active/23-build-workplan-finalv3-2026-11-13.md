@@ -1350,7 +1350,15 @@ re-publishes. Record the results here and in doc 21 §16.
 3. The session then runs the checks of this step on the link and reports them one at a time; what only a person can
    judge (a real finger on a phone, the look of the header) it asks Bjorn to look at.
 
-*The checks, to record as pass or fail once the link is there.*
+*First link (14 Nov, 18:35): the wrong report.* Bjorn published the copy (Desktop saved it at 18:29) and gave a
+Publish to Web link. Opened signed out in headless Edge, the link shows the report **"GoodnightInn-opzet"**
+(`4888e342…`, the report of 7 Nov), last published on 13 Nov at 07:40 UTC, with eleven pages (`tt-f1` to `tt-f4`
+still there): the build of before the rebuild, not the "Goodnight Inn" of today. Seen on the page too: F4 as seven
+columns, no Next button. No check was recorded on it. `web.mjs` now has the op `meta` (the report's name, its last
+publish time and its pages, from the link's own public call), and every check run starts with it. Still needed
+from Bjorn: the Publish to web link of the report **"Goodnight Inn"** (published 14 Nov), made on that report.
+
+*The checks, to record as pass or fail once the right link is there.*
 
 | # | Check | How | Result |
 |---|---|---|---|
