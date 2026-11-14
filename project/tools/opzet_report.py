@@ -394,6 +394,13 @@ def chip_native(page, name, text_measure, tooltip_page, alt_measure):
     return bind_alt(v, alt_measure)
 
 
+# Review round of 14 Nov (UX-30, CL-46, J-VE-14; overrules open question 11 of doc 23): Power BI's own bubble on a button
+# with an action ("Click here to follow", in the browser's language; at 1366 px it hung over the scenario pills after a
+# click on a tab). The Action card has a switch for it, "No tooltips": visualLink.suppressDefaultTooltip (boolean, in
+# visualConfiguration 2.6.0 and in reportThemeSchema 2.159 under that title). Every button carries it.
+NO_BUBBLE = {"suppressDefaultTooltip": b(True)}
+
+
 def nav_button(page, name, label, target, alt):
     """P-2 small control on a light surface, primary: a pill in Night with white 12 pt text; hover and pressed take the
     Seam fill with Night text (the theme's light-surface hover). The page-navigation link is S-6's shape
@@ -413,7 +420,7 @@ def nav_button(page, name, label, target, alt):
                      *[{"properties": {"fillColor": color(HAIR), "transparency": num(0)}, "selector": {"id": s_}} for s_ in st]],
             "outline": [{"properties": {"show": b(False)}}]}
     vcos = vco(alt=alt, padding=0)
-    vcos["visualLink"] = [{"properties": {"show": b(True), "type": enum("PageNavigation"), "navigationSection": text(target)}}]
+    vcos["visualLink"] = [{"properties": {"show": b(True), "type": enum("PageNavigation"), "navigationSection": text(target), **NO_BUBBLE}}]
     return visual(name, "actionButton", *at(page, name), objects=objs, vcos=vcos)
 
 
@@ -757,7 +764,7 @@ def ctl_button(page, name, label, style, link, alt, large=False):
                         *[{"properties": {"lineColor": color(line), "weight": num(1), "transparency": num(0)}, "selector": {"id": s_}} for s_ in st]]}
     vcos = vco(alt=alt, padding=0)
     kind, target = link
-    vcos["visualLink"] = [{"properties": {"show": b(True), "type": enum(kind), "navigationSection" if kind == "PageNavigation" else "bookmark": text(target)}}]
+    vcos["visualLink"] = [{"properties": {"show": b(True), "type": enum(kind), "navigationSection" if kind == "PageNavigation" else "bookmark": text(target), **NO_BUBBLE}}]
     return visual(name, "actionButton", x, y, w, h, z, tab, objects=objs, vcos=vcos)
 
 
@@ -1222,13 +1229,39 @@ def plan_cum():
             "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
                                                     "position": enum("back"), "displayName": text("Cash positive above this line"), "dataLabelShow": b(True),
                                                     "dataLabelText": enum("Name"), "dataLabelColor": color(INK2), "dataLabelHorizontalPosition": enum("left"),
-                                                    "dataLabelVerticalPosition": enum("above")}, "selector": {"id": "1"}}],
+                                                    "dataLabelVerticalPosition": enum("above")}, "selector": {"id": "1"}},
+                                    # the two gridlines Power BI leaves out (plan_ticks()): the same hairline, no label
+                                    *[{"properties": {"show": b(True), "value": num(val), "lineColor": color(HAIR), "transparency": num(0), "width": num(1), "style": enum("solid"),
+                                                      "position": enum("back"), "displayName": text(f"Gridline {i}"), "dataLabelShow": b(False)}, "selector": {"id": str(i)}}
+                                      for i, (val, _) in enumerate(PLAN_TICKS, start=2)]],
             "xAxisReferenceLine": [{"properties": {"show": b(True), "value": num(sm.GATE_YEAR + 0.5), "lineColor": color(INK), "transparency": num(0), "width": num(1),
                                                    "style": enum("dashed"), "position": enum("back"), "displayName": text(f"The {sm.GATE_YEAR} gate"), "dataLabelShow": b(True),
                                                    "dataLabelText": enum("Name"), "dataLabelColor": color(INK), "dataLabelHorizontalPosition": enum("right"),
                                                    "dataLabelVerticalPosition": enum("above")}, "selector": {"id": "1"}}]}
     v = chart(P2, "ch_plan_cum", "lineChart", q, objs, None, filters=[HORIZON()], alt_measure="Alt Plan Cum (text)", tooltip_page=TT_YEAR)
     return plot_rect(v, PLAN_RECT["ch_plan_cum"]) if "ch_plan_cum" in PLAN_RECT else v
+
+
+# Review round of 14 Nov (UX-24, DS2-08; overrules the "two ticks" part of open question 6): the comp ticks the plan
+# chart at −10, 0, +10 and +20 $M; Power BI picks its own ticks (Microsoft Learn: the interval cannot be set) and gave
+# +$20M and $0M in 103 px of plot, so the Low line ran under zero without a scale. The axis is typed (PLAN_Y), so the two
+# missing ticks are typed too: a hairline reference line in the chart (plan_cum()) and its label as a text box in the
+# axis gutter, 12 pt Night-70 like the axis. Measured on the fourth publish at 2 px per page px: +$20M's gridline at
+# y 846.5 and the zero line at 915.25 (3.4375 px per $M), the labels' right edge at x 842, their baseline 5 px under
+# their gridline; a 16 px text box sets its baseline 17 px under its top.
+PLAN_TICKS = ((10_000_000, "+$10M"), (-10_000_000, "−$10M"))
+PLAN_TICK_ZERO_Y, PLAN_TICK_PX, PLAN_TICK_RIGHT, PLAN_TICK_W = 915.25, 3.4375e-6, 843, 56
+
+
+def plan_ticks():
+    x, y, w, h, z, tab = at(P2, "ch_plan_cum")
+    out = []
+    for i, (val, label) in enumerate(PLAN_TICKS, start=1):
+        line_y = PLAN_TICK_ZERO_Y - val * PLAN_TICK_PX
+        v = textbox(f"ch_plan_cum_t{i}", PLAN_TICK_RIGHT - PLAN_TICK_W, round(line_y + 5 - 17), PLAN_TICK_W, 24, z, tab,
+                    [[(label, BODY, SPX, INK2, False)]], align="right", off_grid=True)
+        out.append(decorative(v, 95 + i))
+    return out
 
 
 def p2_capital_plan():
@@ -1243,6 +1276,7 @@ def p2_capital_plan():
     gate["position"]["y"] += 2  # the four lines sat 1.8 px above the comp's on the tile render
     v.append(gate)
     v.append(plan_cum())
+    v += plan_ticks()
     v.append(note(P2, "c_plan_milestones", "Milestones (text)", 1))
     return v
 

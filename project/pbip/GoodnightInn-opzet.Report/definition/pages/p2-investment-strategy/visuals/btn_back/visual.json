@@ -521,6 +521,13 @@
                   "Value": "'p1-brand-review'"
                 }
               }
+            },
+            "suppressDefaultTooltip": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }

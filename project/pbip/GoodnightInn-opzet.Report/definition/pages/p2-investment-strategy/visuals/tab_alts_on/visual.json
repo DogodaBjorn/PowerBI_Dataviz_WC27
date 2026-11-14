@@ -521,6 +521,13 @@
                   "Value": "'bm_p2_alts'"
                 }
               }
+            },
+            "suppressDefaultTooltip": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }

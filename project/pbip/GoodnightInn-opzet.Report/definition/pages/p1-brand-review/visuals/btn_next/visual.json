@@ -425,6 +425,13 @@
                   "Value": "'p2-investment-strategy'"
                 }
               }
+            },
+            "suppressDefaultTooltip": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
