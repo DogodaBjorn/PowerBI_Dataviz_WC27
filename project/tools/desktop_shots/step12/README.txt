@@ -8,6 +8,17 @@ The published report is checked in headless Edge, signed out, with a fresh profi
   locale_scan.py <texts.txt> ...
       reads the texts web.mjs collected for a decimal comma or a Dutch or German word (R-G1).
 
+  gate.py <url> <out dir> [--ref <earlier out dir>] [--only hit,clicks,...]
+      the whole gate in one run (sixteen browser runs, four at a time, about 6 minutes) and one summary: which report
+      the link shows, the mouse at 1920 and 1366 px, what a click changes, nl and de against en, the Tab order, and
+      every page capture against an earlier run. The tooltips' and the pages' look is judged by eye on the captures.
+  plan.py <out dir> <run> [tag]      the step files gate.py runs (p1, p2, states, more, clicks, tips, keys, touch)
+  hit_test.js, hit_report.py         who gets the mouse, measured in the published page (see ..\..\strip_check.py for
+                                     the same question answered from the report files, before a publish)
+
+A republish reaches the link late: Publish to Web serves a cached copy (on 14 Nov a republish of 18:13 UTC was not
+on the link 15 minutes later). `meta` shows the last publish time the link serves; wait until it moves.
+
 The publish copy (the project is never opened or saved in Desktop, doc 23 rule 6):
   python ..\throwaway_copy.py project\pbip ..\GoodnightInn-publish --name "Goodnight Inn"
   set PBI_DESKTOP_PATH; powerbi-desktop open "..\GoodnightInn-publish\Goodnight Inn.pbip"; wait 30 s

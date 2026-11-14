@@ -21,7 +21,7 @@
       const j = cons.indexOf(o); const where = o && y < vis(o).y ? 'strip' : 'body';
       by[j + ':' + where] = (by[j + ':' + where] || 0) + 1;
     }
-    out.containers.push({ i, rect: page(r), type: (String((c.querySelector('.visual') || c).className).match(/visual-(\w+)/) || [])[1] || '', total, own, by });
+    out.containers.push({ i, z: Number(getComputedStyle(c).zIndex) || Number(getComputedStyle(c.parentElement).zIndex) || 0, rect: page(r), type: (String((c.querySelector('.visual') || c).className).match(/visual-(\w+)/) || [])[1] || '', total, own, by });
   });
   const sel = 'path.scatterMarker, rect.column, rect.bar, .slicerItemContainer, [role="button"], [role="option"], [role="link"], [role="tab"], button';
   document.querySelectorAll(sel).forEach(m => {
