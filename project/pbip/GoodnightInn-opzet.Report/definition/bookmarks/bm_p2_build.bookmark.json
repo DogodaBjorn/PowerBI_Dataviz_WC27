@@ -50,6 +50,7 @@
       "hero_s_packages",
       "hero_s_packages_build",
       "hero_s_packages_named",
+      "hero_s_packages_letters",
       "hero_s_packages_hover",
       "c_waits_head",
       "tbl_waits",
@@ -390,6 +391,11 @@
             }
           },
           "hero_s_packages_named": {
+            "singleVisual": {
+              "visualType": "scatterChart"
+            }
+          },
+          "hero_s_packages_letters": {
             "singleVisual": {
               "visualType": "scatterChart"
             }

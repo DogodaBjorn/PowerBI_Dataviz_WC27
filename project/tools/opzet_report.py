@@ -856,11 +856,13 @@ def brand_row(page_name, sfx):
 PROOF_X, PROOF_Y = (5_000_000, 62_000_000), (-60_000_000, 20_000_000)
 # The visual rect that puts Power BI's plot on the comp's (PLOT_RECT of step 5): the comp draws the plot at x 144 to 716 and
 # y 280 to 588 of the page (x0 88, x1 w - 12, y0 8, y1 h - 52 inside the slot 56, 272, 672, 368). Measured in build step 8.
-PROOF_RECT = None
-# The A/B/C layer: the lettered discs of the comp (R-W-1, R-W-4), 22 px, the letter in white inside the dot. Doc 21 7.1 keeps
-# the tag under the dot as the fallback if the letters fall beside the dots at this size (NAMED_TAG, measured in step 8).
+PROOF_RECT = (56, 268, 682, 369)
+# The A/B/C layer: the lettered discs of the comp (R-W-1, R-W-4), 22 px (Named Point Size (small) at this multiplier). On a
+# sized dot Power BI sets the category label under the dot at this plot size (measured again in step 8), so the letters are a
+# layer of their own (sketch_model PROOF_LETTER_LIFT): the tag under the dot, doc 21 7.1's fallback, is not needed.
 NAMED_BUBBLE = -22
-NAMED_TAG = False
+# the cloud's dots: 8 px, the comp's r 4 (0 gave 11 px; measured in step 8)
+CLOUD_BUBBLE = -15
 
 
 def scatter_axes(objs):
@@ -873,10 +875,11 @@ def scatter_axes(objs):
 def scatter_stack(slot, deco_base):
     """The proof chart (R-W-1): the package scatter as layers on one plot area (same axis ends and tick formats,
     preventOverflow off on all, so the plot areas match). 1 the cloud: every package but A, B and C, Warm Grey. 2 the plan
-    being built, one dot (Build state only; step 9 of doc 23 rebuilds it as the comp's "You"). 3 A, B and C on top with
-    their letters: Power BI draws larger markers first, so a cloud in the same visual painted over B and C (REVIEW M2).
-    4 a hover layer on top: all 456 packages, fully transparent markers, wired to the tooltip page, so every dot shows its
-    own card (08-verbeterplan V2). The band where a package pays back by 2032 is shaded and named at its right end."""
+    being built, one dot (Build state only; step 9 of doc 23 rebuilds it as the comp's "You"). 3 A, B and C as 22 px discs:
+    Power BI draws larger markers first, so a cloud in the same visual painted over B and C (REVIEW M2). 4 their letters.
+    5 a hover layer on top: all 456 packages, fully transparent markers, wired to the tooltip page, so every dot shows its
+    own card (08-verbeterplan V2). The band where a package pays back by 2032 is shaded and named at its right end.
+    z and tab order of the layers: opzet-layering.json."""
     v = []
     q = {"Category": {"projections": [proj_col("Package", "PackageID")]},
          "X": {"projections": [proj_mea("Package Capex", "Capex")]},
@@ -903,7 +906,7 @@ def scatter_stack(slot, deco_base):
     place = lambda *a, **k: visual(*a, **k, off_grid=True)  # noqa: E731  (PROOF_RECT is measured, not placed by hand)
     q_cloud = {k: val for k, val in q.items() if k != "Size"}
     o_cloud = copy.deepcopy(objs)
-    o_cloud["bubbles"][0]["properties"]["bubbleSize"] = integer(0)
+    o_cloud["bubbles"][0]["properties"]["bubbleSize"] = integer(CLOUD_BUBBLE)
     # The cloud is a tab stop after the A/B/C layer (pass-3 review: the package card is hover-only). Its header gives
     # 'Show as table', and the card's facts ride in its Tooltips well, so a keyboard user reads every package's
     # capex, NPV, payback, range and initiatives there (the axis measures print whole $M since step 8, so the exact
@@ -924,17 +927,24 @@ def scatter_stack(slot, deco_base):
     o4["dataPoint"] = [{"properties": {"fill": color(SIGNAL_MARK)}, "selector": WILD}]
     o4["bubbles"][0]["properties"]["bubbleSize"] = integer(-20)
     v.append(decorative(place(f"{slot}_build", "scatterChart", x, y, w, h, z + 3, 0, query=q4, objects=o4, vcos=vco(padding=0)), deco_base + 1))
-    # A, B and C: their own, equal size (Named Point Size (small)) so each dot is wide enough for its letter
+    # A, B and C: their own, equal size (Named Point Size (small)), no label of their own
     q2 = {**q, "Category": {"projections": [proj_col("Package", "Preset", display="Package")]},
           "Size": {"projections": [proj_mea("Named Point Size (small)", "Marker size")]}}
     o2 = quiet(copy.deepcopy(objs))
-    o2["categoryLabels"] = [{"properties": {"show": b(True), "fontFamily": text(DISPLAY), "fontSize": num(S), "color": color(SURFACE), "bold": b(True)}}]
     o2["dataPoint"] = [{"properties": {"fill": fv("Named Point Color")}, "selector": WILD}]
     o2["bubbles"][0]["properties"]["bubbleSize"] = integer(NAMED_BUBBLE)
-    if NAMED_TAG:  # the fallback of doc 21 7.1: the letter in white on a Night box under the dot
-        o2["categoryLabels"][0]["properties"].update({"enableBackground": b(True), "backgroundColor": color(INK), "backgroundTransparency": num(0)})
-    v.append(bind_alt(place(f"{slot}_named", "scatterChart", x, y, w, h, z + 2, tab, query=q2, objects=o2, filters=[filter_in("Package", "Preset", ["A", "B", "C"], "flt_named")],
-                            vcos=vco(padding=0)), "Alt Scatter (text)"))
+    named = [filter_in("Package", "Preset", ["A", "B", "C"], "flt_named")]
+    v.append(bind_alt(place(f"{slot}_named", "scatterChart", x, y, w, h, z + 2, tab, query=q2, objects=o2, filters=named, vcos=vco(padding=0)), "Alt Scatter (text)"))
+    # their letters: the same three packages as invisible, unsized points a fixed lift above their dots, so the label Power
+    # BI sets under each point lands in the middle of its disc (sketch_model PROOF_LETTER_LIFT). White semibold, decorative.
+    qL = {"Category": {"projections": [proj_col("Package", "Preset", display="Package")]}, "X": q["X"],
+          "Y": {"projections": [proj_mea("Named Letter NPV (sel)", "NPV through 2032")]}}
+    oL = quiet(copy.deepcopy(o_cloud))
+    oL["markers"] = [{"properties": {"transparency": num(100), "borderShow": b(False)}}]
+    oL["dataPoint"] = [{"properties": {"fill": fv("Named Point Color")}, "selector": WILD}]  # the disc under the letter (a11y_check reads the letter against it)
+    oL["categoryLabels"] = [{"properties": {"show": b(True), "fontFamily": text(DISPLAY), "fontSize": num(S), "color": color(SURFACE), "bold": b(True)}}]
+    v.append(decorative(place(f"{slot}_letters", "scatterChart", x, y, w, h, z + 3, 0, query=qL, objects=oL,
+                              filters=[filter_in("Package", "Preset", ["A", "B", "C"], "flt_letters")], vcos=vco(padding=0)), deco_base + 2))
     o3 = quiet(copy.deepcopy(o_cloud))
     o3["markers"] = [{"properties": {"transparency": num(100), "borderShow": b(False)}}]
     hv = vco(padding=0)
@@ -1277,7 +1287,7 @@ def p2_capital_plan():
 
 
 # ---------------------------------------------------------------------- FinalV3 build step 8: What waits, and why
-PROOF_TITLE_DY = 0  # set to the tile render of step 8
+PROOF_TITLE_DY = -2  # set to the tile render of step 8
 TITLE2_H = 72  # a card that shows two 14 pt lines; it centres them, the comp sets them from the top of the slot (24.9 px a line)
 
 
@@ -1297,7 +1307,7 @@ WAITS_COLS = (168, 224, 216, 256, 208)  # the spec's construction.tables.tbl_wai
 # padding is 5.5. The native header grows with the padding (32.6 px + twice the padding, the comp's is 32), so the table
 # starts WAITS_LIFT px above its slot and the first row's rule stays on the comp's line. 2 px wider than its columns (S-2
 # point 4) and 1 px left of the slot (a native cell pads 7.7 px on the left, the comp 5), as the ledger.
-WAITS_PAD, WAITS_LIFT, WAITS_SLACK, WAITS_DX = 5.5, 12, 2, -1
+WAITS_PAD, WAITS_LIFT, WAITS_SLACK, WAITS_DX = 4.9, 10, 2, -1
 WAITS_HEAD = ("What waits, and why", "One alternative and two tranches, each weighed against A.")
 
 
@@ -1319,7 +1329,8 @@ def waits_table():
     objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=WAITS_PAD, header_size=S)
     objs["columnHeaders"][0]["properties"].update({"outlineStyle": enum("BottomOnly"), "outlineColor": color(INK2), "outlineWeight": num(1),
                                                    "autoSizeColumnWidth": b(False), "wordWrap": b(False)})
-    objs["values"][0]["properties"]["wordWrap"] = b(True)
+    # the rule under the last row (the comp rules every row): a native table rules between rows only, so the values area gets a bottom outline in Seam
+    objs["values"][0]["properties"].update({"wordWrap": b(True), "outlineStyle": enum("BottomOnly"), "outlineColor": color(HAIR), "outlineWeight": num(1)})
     objs["columnWidth"] = [{"properties": {"value": num(w_)}, "selector": {"metadata": q_}}
                            for q_, w_ in zip(("WaitOption.Title", *[mref(m_) for m_ in ms]), WAITS_COLS)]
     x, y, w, h, z, tab = at(P2, "tbl_waits")
@@ -1331,7 +1342,8 @@ def waits_table():
 CMP_X_END = 2032.6  # spec ch_cmp_alts.x_axis_end: room for the end labels inside the plot, no 2033 tick
 # the visual rect that puts Power BI's plot on the comp's (PLOT_RECT of step 5), measured in build step 8: the comp draws
 # the plot at x 128 to 1856 and y 731 to 972 of the page (under a 29 px title row in the slot 56, 688, 1808, 312)
-CMP_RECT = {}
+CMP_RECT = {"ch_cmp_alts": (56, 688, 1819, 313)}
+CMP_SPACE = 8
 
 
 def cmp_chart(name, lines, title_measure, alt_measure, y_prefix):
@@ -1369,6 +1381,8 @@ def cmp_chart(name, lines, title_measure, alt_measure, y_prefix):
     v = chart(P2, name, "lineChart", q, objs, None, title_measure=title_measure, filters=[HORIZON()], alt_measure=alt_measure, tooltip_page=TT_YEAR)
     if name in CMP_RECT:
         plot_rect(v, CMP_RECT[name])
+    if CMP_SPACE is not None:
+        v["visual"]["visualContainerObjects"]["spacing"] = [{"properties": {"customizeSpacing": b(True), "spaceBelowTitleArea": num(CMP_SPACE)}}]
     return v
 
 

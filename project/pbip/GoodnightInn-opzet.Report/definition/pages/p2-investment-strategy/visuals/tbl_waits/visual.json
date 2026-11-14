@@ -3,10 +3,10 @@
   "name": "tbl_waits",
   "position": {
     "x": 791,
-    "y": 236,
+    "y": 238,
     "z": 51000,
     "width": 1074,
-    "height": 404,
+    "height": 402,
     "tabOrder": 620
   },
   "visual": {
@@ -254,7 +254,7 @@
             "outlineStyle": {
               "expr": {
                 "Literal": {
-                  "Value": "'None'"
+                  "Value": "'BottomOnly'"
                 }
               }
             },
@@ -262,6 +262,24 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E3DFD3'"
+                    }
+                  }
+                }
+              }
+            },
+            "outlineWeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
                 }
               }
             }
@@ -306,7 +324,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "5.5D"
+                  "Value": "4.9D"
                 }
               }
             },

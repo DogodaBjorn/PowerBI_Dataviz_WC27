@@ -435,9 +435,13 @@
       "z": 46000,
       "tabOrder": 530
     },
+    "hero_s_packages_letters": {
+      "z": 46500,
+      "tabOrder": -46501
+    },
     "hero_s_packages_build": {
-      "z": 47000,
-      "tabOrder": -47001
+      "z": 45500,
+      "tabOrder": -45501
     },
     "hero_s_packages_hover": {
       "z": 48000,

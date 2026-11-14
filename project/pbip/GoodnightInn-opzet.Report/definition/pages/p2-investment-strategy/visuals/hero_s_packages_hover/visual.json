@@ -3,10 +3,10 @@
   "name": "hero_s_packages_hover",
   "position": {
     "x": 56,
-    "y": 272,
+    "y": 268,
     "z": 48000,
-    "width": 672,
-    "height": 368,
+    "width": 682,
+    "height": 369,
     "tabOrder": -48001
   },
   "visual": {
@@ -337,7 +337,7 @@
             "bubbleSize": {
               "expr": {
                 "Literal": {
-                  "Value": "0L"
+                  "Value": "-15L"
                 }
               }
             },

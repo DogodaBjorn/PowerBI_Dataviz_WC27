@@ -360,6 +360,11 @@
     },
     {
       "source": "hero_s_packages_hover",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
       "target": "c_waits_head",
       "type": "NoFilter"
     },
@@ -675,6 +680,11 @@
     },
     {
       "source": "hero_s_packages_build",
+      "target": "hero_s_packages_letters",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
       "target": "hero_s_packages_hover",
       "type": "NoFilter"
     },
@@ -727,7 +737,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_page_projects_15",
+        "name": "flt_page_projects_16",
         "field": {
           "Column": {
             "Expression": {
@@ -781,7 +791,7 @@
         "howCreated": "User"
       },
       {
-        "name": "flt_page_brand_16",
+        "name": "flt_page_brand_17",
         "field": {
           "Column": {
             "Expression": {

@@ -3,10 +3,10 @@
   "name": "hero_s_packages_named",
   "position": {
     "x": 56,
-    "y": 272,
+    "y": 268,
     "z": 46000,
-    "width": 672,
-    "height": 368,
+    "width": 682,
+    "height": 369,
     "tabOrder": 530
   },
   "visual": {
@@ -395,38 +395,6 @@
         {
           "properties": {
             "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "bold": {
               "expr": {
                 "Literal": {
                   "Value": "false"

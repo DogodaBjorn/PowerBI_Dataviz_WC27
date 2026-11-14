@@ -1112,11 +1112,17 @@ table _Measures
 		displayFolder: 09 Package matrix
 		lineageTag: 99fdc34c-ca72-5a60-9e08-665b8470b83b
 
-	/// Size of the A/B/C layer's dots in the small scatter (alts and build), about 23 px (the stack's cap at its multiplier). Measured 10 Nov: in this smaller plot Power BI puts the letters UNDER the dots whatever their size, so the small layer draws each letter as a tag in the dot's colour instead.
-	measure 'Named Point Size (small)' = IF ( SELECTEDVALUE ( Package[Preset] ) = "A", 7.2, 6.6 )
+	/// Size of the A/B/C layer's dots in the small scatter (What waits and Build): 22 px for all three, the comp's lettered discs (build step 8, measured 21.8 px at the stack's multiplier). Their letters are a layer of their own, see Named Letter NPV (sel).
+	measure 'Named Point Size (small)' = 7.2
 		formatString: 0
 		displayFolder: 09 Package matrix
 		lineageTag: a9941996-fe80-5651-9d15-973caf2f8184
+
+	/// Where the letter of A, B or C is anchored in the small scatter, NOT a value: the package's NPV plus a fixed lift, so that Power BI's label, which it sets under an invisible point, lands inside the package's disc. Shown nowhere as a number (the layer has no tooltip and no tab stop).
+	measure 'Named Letter NPV (sel)' = [Package NPV (sel)] + 4340000
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
+		displayFolder: 09 Package matrix
+		lineageTag: ce6d57d8-4126-56b1-a461-68464b3a5858
 
 	/// Capex of the package in focus.
 	measure 'Focus Capex' = VAR f = [Focus Package] RETURN CALCULATE ( SUM ( Package[CapexUSD] ), REMOVEFILTERS ( Package ), Package[PackageID] = f )

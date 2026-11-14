@@ -9,7 +9,10 @@ usage: mk_tiles.py <copy .Report dir> [--page NAME] [--scenario Low|Expected|Hig
               sl_scenario gets the slicer with that case selected; every other tile gets the case as a page filter (the
               measures read the same SELECTEDVALUE either way). The source page's own filters are copied to every tile.
   --mast      build step 6: draw the Night header zone (0 to PX page px) as a rectangle under the tile's visuals, because a
-              tile page has no background image and light text on Oat cannot be read or measured. 168 for both pages."""
+              tile page has no background image and light text on Oat cannot be read or measured. 168 for both pages.
+  --rows      build step 8: tile rows (default 4). A narrow Desktop window is still tall, and a tile page is fitted to its
+              width, so --rows 1 gives four strips of 480 x 1080 at the same scale: no horizontal seam, and a chart or a
+              table that is higher than 270 px is measured in y without a seam through it (stitch.py --rows 1)."""
 import copy
 import json
 import os
@@ -19,7 +22,8 @@ import sys
 rep = sys.argv[1]; D = rep + "/definition/pages"
 opt = lambda k, d=None: sys.argv[sys.argv.index(k) + 1] if k in sys.argv else d  # noqa: E731
 SRC, SCEN, MAST = opt("--page", "p1-brand-review"), opt("--scenario"), int(opt("--mast", "0"))
-TW, TH = 480, 270
+ROWS = int(opt("--rows", "4"))
+TW, TH = 480, 1080 // ROWS
 src = f"{D}/{SRC}/visuals"
 vis = [json.load(open(f"{src}/{n}/visual.json", encoding="utf-8")) for n in sorted(os.listdir(src))]
 src_filters = json.load(open(f"{D}/{SRC}/page.json", encoding="utf-8")).get("filterConfig", {}).get("filters", [])
@@ -56,7 +60,7 @@ def page(name, visuals, filters=None):
 
 
 names = []
-for r in range(4):
+for r in range(ROWS):
     for c in range(4):
         tx, ty = c * TW, r * TH
         out = []

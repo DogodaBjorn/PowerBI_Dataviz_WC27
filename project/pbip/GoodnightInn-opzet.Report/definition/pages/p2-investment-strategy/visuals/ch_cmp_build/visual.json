@@ -700,7 +700,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_horizon_14",
+        "name": "flt_horizon_15",
         "field": {
           "Column": {
             "Expression": {

@@ -92,7 +92,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_tt_brand_20",
+        "name": "flt_tt_brand_21",
         "field": {
           "Column": {
             "Expression": {

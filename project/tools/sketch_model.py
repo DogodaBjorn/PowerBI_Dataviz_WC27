@@ -815,9 +815,18 @@ m("Package Point Size",
 m("Named Point Size", 'IF ( SELECTEDVALUE ( Package[Preset] ) = "A", 5.8, 5.3 )', "0", C9,
   "Size of the A/B/C layer's dots in the full-size scatter: about 24 and 22 px, so Power BI centres each letter inside its dot (round 5: at the cloud's "
   "sizes B and C were too small for their letters, which fell beside the dots).")
-m("Named Point Size (small)", 'IF ( SELECTEDVALUE ( Package[Preset] ) = "A", 7.2, 6.6 )', "0", C9,
-  "Size of the A/B/C layer's dots in the small scatter (alts and build), about 23 px (the stack's cap at its multiplier). Measured 10 Nov: in this smaller "
-  "plot Power BI puts the letters UNDER the dots whatever their size, so the small layer draws each letter as a tag in the dot's colour instead.")
+m("Named Point Size (small)", "7.2", "0", C9,
+  "Size of the A/B/C layer's dots in the small scatter (What waits and Build): 22 px for all three, the comp's lettered discs (build step 8, measured 21.8 px at the "
+  "stack's multiplier). Their letters are a layer of their own, see Named Letter NPV (sel).")
+# Build step 8, measured in Desktop: on a sized dot of this plot Power BI sets the category label under the dot, never inside
+# it (as on 10 Nov), and on an unsized, invisible point it sets the label 17.2 px under the point, for A, B and C alike. So the
+# letters are a layer of their own: the same three packages, drawn that far ABOVE their dot, so each letter lands in the
+# middle of its disc (the comp draws it 0.5 px under the centre). The proof chart's value axis is fixed at -60 to +20 $M
+# over 308 px (opzet_report.py PROOF_Y and PROOF_RECT), so 16.7 px are 16.7 x 80 / 308 = $4.34M in every scenario.
+PROOF_LETTER_LIFT = 4_340_000
+m("Named Letter NPV (sel)", f"[Package NPV (sel)] + {PROOF_LETTER_LIFT}", SUSDM0, C9,
+  "Where the letter of A, B or C is anchored in the small scatter, NOT a value: the package's NPV plus a fixed lift, so that Power BI's label, which it sets under "
+  "an invisible point, lands inside the package's disc. Shown nowhere as a number (the layer has no tooltip and no tab stop).")
 
 
 def focus(expr, fmt, name, doc):

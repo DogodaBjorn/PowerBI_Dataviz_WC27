@@ -5,8 +5,8 @@
     "x": 56,
     "y": 688,
     "z": 52000,
-    "width": 1808,
-    "height": 312,
+    "width": 1819,
+    "height": 313,
     "tabOrder": 810
   },
   "visual": {
@@ -1076,6 +1076,26 @@
             }
           }
         }
+      ],
+      "spacing": [
+        {
+          "properties": {
+            "customizeSpacing": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "spaceBelowTitleArea": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": false
@@ -1083,7 +1103,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_horizon_13",
+        "name": "flt_horizon_14",
         "field": {
           "Column": {
             "Expression": {
