@@ -25,7 +25,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 5 | Page 1 | done | 13 Nov | 29e2a7b | P1 on the v10 slot map and on the comp: text rows within 2 px, F3 bars and the F4 plot on the comp's grid, nl-NL prints points only, `a11y_check` 0. Verified with a new tile render (the session window was 540 px wide). Seven small deviations for Bjorn to confirm (open question 4). Bjorn was not needed in Desktop |
 | 6 | Page 2 frame and the decision card | done | 13 Nov | 5116804 | P2 on the v10 slot map (v9 no longer read). Frame and decision card on the comp in Low, Expected and High: every text row within 2 px, the same line wraps, the ledger fits its slot in all three; `a11y_check` 0. Two things are Power BI's or a choice: ledger cells sit at the top of their rows, tab labels are Semibold (open question 5). What waits and Build show their frame with the old visuals that still have a slot. Bjorn was not needed in Desktop |
 | 7 | Hero table and capital plan; the cut line | done | 14 Nov | a09c731 | Recommended is complete: hero table and capital plan on the comp in Low, Expected and High, text rows and bars within 2 px, the plan bar and the chart's plot on the comp's grid; `a11y_check` 0, 763 number checks and the text diff pass. Cut line: native hero table, native selector, native F4 (Bjorn confirms). Three things are Power BI's: end labels above or under their line ends, not right of them (open question 6); two axis ticks instead of four; the hero's rule 4.5 px low. Bjorn was not needed in Desktop |
-| 8 | What waits, and why | todo | | | |
+| 8 | What waits, and why | done | 14 Nov | COMMIT8 | What waits on the comp in Low, Expected and High: every text row within 2 px, all fifteen table cells wrap as the comp's, the table fits in High, both plots within 1.3 px; the lettered discs are native (a letter layer of its own); A is the NPV maximum in all three cases; `a11y_check` 0, 763 number checks and the text diff pass, Microsoft's validator 0 errors. Outside 2 px, all Power BI's: header words 8.7 px high, ticks every $20M, axis labels 4 to 5 px high, A's end label 5 px high, Low's plot 3 px high. One choice for Bjorn: A's disc in Deep Coffee for the letter's contrast (open question 7). Bjorn was not needed in Desktop |
 | 9 | Build your own | todo | | | |
 | 10 | Tooltips, alt text, tab order | todo | | | |
 | 11 | Final checks and the FinalV3 render set | todo | | | |
@@ -827,7 +827,121 @@ a tile render; renders in `project/deliverables/screenshots/Step7-rec-hero-plan-
 
 **Prompt:** `project/build-steps/step-08.txt` (say: "Read project/build-steps/step-08.txt and execute it").
 
-**Log:** _(filled in by the session)_
+**Log (Sat 14 Nov 2026, one session, done):**
+
+*Built* (generators only; P2 66 visuals, was 62; 580 measures, was 575).
+
+- **Proof card** (`p2_proof()`, shared by What waits and Build): `c_scatter_title_s` on `Proof Title (text)` (two lines),
+  the native hover tag "ⓘ Hover a dot" (P-7), `c_scatter_sub` on `Proof Subtitle (text)`, and the scatter stack
+  (`scatter_stack()`): axes typed from the spec (capex $5M to $62M, NPV −$60M to +$20M, `PROOF_X`, `PROOF_Y`), ticks in
+  whole $M, the zero line in Dusk, the shaded band named "Pays back by 2032", the cloud's dots 8 px, A, B and C as
+  22 px discs with their letters inside.
+- **The letters are a layer of their own** (`hero_s_packages_letters`): on a sized dot Power BI sets the label under the
+  dot at this plot size (measured again), and on an invisible, unsized point it sets the label 17.2 px under the point. So
+  the letters hang from three invisible points a fixed $4.34M (16.7 px) above their discs (`Named Letter NPV (sel)`,
+  `sketch_model.PROOF_LETTER_LIFT`) and land in the middle of the discs. Doc 21 7.1's fallback (a tag under the dot) is
+  not needed, and Microsoft's validator's one error left with the tag.
+- **Panel** (`p2_waits()`): `c_waits_head`, a text box with two paragraphs; `tbl_waits` (`waits_table()`), a native table
+  on `WaitOption` with columns 168 / 224 / 216 / 256 / 208, word wrap, the line breaks of "The numbers" and "When we
+  decide", header ruled in Dusk, rows ruled in Seam, a rule under the last row.
+- **Comparison chart** (`cmp_chart()`, written so that step 9 can call it for A and You): `ch_cmp_alts` with C (Warm
+  Grey, dashed), B (Night) and A on top (Coffee Blue, 3 px); one label per line end from the label-safe end series, A
+  Above in Deep Coffee semibold, B and C Under; no legend; x axis to 2032.6; the zero line named; the title inside the
+  visual on `Cmp Alts Title (text)`; `tt-year` on hover; the native hover tag "ⓘ Hover a year".
+- **Model** (`sketch_model.py`): `Cmp Alts Y Start` / `Cmp Alts Y End` (`nice_axis()`: the comp's `niceTicks` in DAX, zero
+  inside, 8 % headroom, whole steps: −50 to +10, −50 to +20, −40 to +40 $M in Low, Expected, High); `Preset C Cumulative
+  Line` in whole $M as the chart's first series; `Package Capex`, `Package NPV (sel)`, `Build Capex`, `Build NPV (sel)`
+  formatted in whole $M (`USDM0`, `SUSDM0`: every scatter layer must print the same ticks, P-1 b); `Named Point Size
+  (small)` one size for the three discs; `Named Letter NPV (sel)`; `Alt Waits (text)`, a first version (step 10 reviews it).
+- **Layering** (`opzet-layering.json`): the letters layer above the discs; the plan dot under the discs (doc 22 section 3).
+  `STATE_ONLY` in `opzet_report.py` shows the plan dot in Build only (the comp draws no "You" in What waits).
+- **Removed:** the old small stack's tag labels, the SVG hover tags of this state, the old comparison chart of A, B and C
+  (legend, "Break-even"). The retired visuals of doc 21 7.3 (`c_alts_title`, `c_alts_intro`, the B and C chips, cards and
+  tiles) left the report in step 6; none is left in the files.
+- **Tools:** `tiles/mk_tiles.py --rows 1` and `tiles/stitch.py --rows 1` (see "Found", 1).
+
+*Verified* (Desktop 2.159, Windows culture nl-NL, throwaway copy; renders in
+`project/deliverables/screenshots/Step8-what-waits-2026-11-14/`).
+
+| What | Result | Proof |
+|---|---|---|
+| What waits renders in Low, Expected and High | yes, each from its own strip render; subtitle, table, chart title, axis and labels follow the case | renders 01, 02, 03 |
+| Text rows against the comp, render minus comp | proof title +1.8 / +1.3 px; subtitle +0.2; hover tags 0.2 to 0.8; panel head within 1.1; chart title −0.7. The same in all three cases | `slotdiff.py` on the stitched captures |
+| The table against the comp | all fifteen cells wrap as the comp's, in all three cases (52 text rows pair one to one; Low 51, as the comp); rows within 1.4 px, x within 2; header rule at y 280.0 (comp 279.5), row rules at 376.9 / 495.0 / 634.8 (comp 376.5 / 494.5 / 634.5) | same; `meas.py` of the session |
+| **The table fits in High** | yes: its last rule is at y 634.8, the slot ends at 640; no scrollbar in any case | render 03 |
+| The scatter's plot | band from x 144.2 to 716.7 (comp 144 to 716); +$20M at y 279.7, zero line 356.7, −$20M 434.0, −$40M 510.7, −$60M 587.8 (comp 280 / 357 / 434 / 511 / 588); discs 21.8 px, A at 188.3, 343.9 (comp 188.2, 344.2); the three letters inside their discs in Low, Expected and High | same; renders 01 to 03 |
+| The comparison chart's plot | Expected: +$20M at y 730.6, zero 798.9, −$20M 868.3, −$40M 936.9 (comp 731 / 799.9 / 868.7 / 937.6); 2027 at x 128, 2032 at 1670.9 (comp 128 and 1670.9); High within 1 px too. Low: see deviations | same |
+| End labels | A Above, B and C Under in all three cases; no label meets another; B and C within 1.3 px of the comp's, A 4.6 to 6.5 px higher | `slotdiff.py` |
+| The axis ends from the model | −50 / +10, −50 / +20, −40 / +40 $M: the comp's in every case | DAX query in the session |
+| **A is the NPV maximum in all three scenarios** (doc 21 7.1) | 0 of 456 packages above A in Low (−$5.47M), Expected (+$3.28M) and High (+$12.72M) | DAX query in the session |
+| The letters stay inside the plot | the highest letter anchor is $17.06M (A in High), under the axis end of $20M; every package lies inside −$60M to +$20M and $5M to $62M | DAX query in the session |
+| nl-NL | the session is nl-NL: ticks "+$20M", "$10M", labels "A +$6.8M", every amount in the table with a point | renders 01 to 03 |
+| Typed text | `tag_scatter_s`, `c_waits_head`, `tag_cmp_alts`, the table's five headers, "Pays back by 2032" and "Cash positive above this line" equal the spec letter for letter, in all three views | script run in the session |
+| `build_checks.py` (with the engine) | check 5: 129 ok, 2 known (20.5 / 20.6 %), 0 failed; checks 1, 3, 4 pass; check 2 strict passes, the old list unchanged (16 measures, 3 report strings) | `analysis/output/build_checks.txt` |
+| `number_checks.py` | 763 checks, 762 ok, 1 known, 0 failed | `analysis/output/number_checks.txt` |
+| `a11y_check.py` | 0 failures | repeatable |
+| Other validators | `schema_check` 180 files, 0 failing; `validate_json` 0; `validate_tmdl --strict` 0 errors, the 13 expected label-safe warnings; **Microsoft's validator: 0 errors** (the known one left with the tag labels) | repeatable |
+
+*Found on the way (binding for the next steps).*
+
+1. **Render in strips, not in tiles.** The narrow Desktop window is tall (the capture is 1200 x 5142 px), and a tile page is
+   fitted to its width. `mk_tiles.py --rows 1` writes four strips of 480 x 1080 at the same 1.84 px per page px, and
+   `stitch.py --rows 1` joins them: no horizontal seam. With 270 px tiles a chart higher than a tile read up to 4 px
+   wrong across the seam (the first two rounds of this step). Step 9 should render Build this way.
+2. **A scatter's category label:** under the dot on a sized dot, 17.2 px under the point on an unsized one, never inside.
+   A letter inside a disc is a second layer with lifted, invisible points (see "Built"). The lift is in dollars, so it
+   holds only while the value axis is fixed.
+3. **A scatter's dot sizes here:** `bubbleSize` −15 without a Size field gives 8 px, 0 gives 11 px; with a Size field
+   in magnitude mode, 7.2 at −22 gives 21.8 px.
+4. **`visualContainerObjects.spacing`** (`customizeSpacing` true, `spaceBelowTitle` n) moves a chart's plot 1 px per unit
+   under its title (default 2), the title stays; `spaceBelowTitleArea` did nothing. Power BI sets a 14 pt title 2.6 px
+   lower in its row than the comp, so the chart starts 3 px above its slot.
+5. **A native table's text line is 21.5 to 21.6 px,** not the comp's 21.28: a wrapping row is lines x 21.55 + twice the
+   padding + 1. Padding 4.9 puts the three rules within 0.5 px of the comp's. The header is 31.9 px + twice the padding
+   down to the centre of its rule. A native table rules between rows only: `values.outlineStyle` BottomOnly draws the
+   rule under the last row.
+6. **A line chart's plot starts about 3 px higher when no tick sits on the axis end** (Low: the axis ends at +$10M, Power
+   BI ticks every $20M). The plot's bottom does not move.
+7. **A value axis bound to two measures works** (`start` and `end` as measure expressions): the comp's `niceTicks` is
+   `nice_axis()` in `sketch_model.py`; step 9 calls it for `ch_cmp_build` ("as ch_cmp_alts").
+8. **Never cut a block out of a generator by its neighbours' names without reading what lies between** (a slip of this
+   session, caught by the next run and restored from git before anything was committed).
+
+*Deviations from the comp, and why* (open question 7 asks Bjorn about the first; the others are Power BI's).
+
+- **A's disc is Deep Coffee** (`#1763A8`), not the comp's Coffee Blue (`#2589D8`): the white letter reads at 6.2:1
+  instead of 3.7:1 (the floor for 12 pt text is 4.5:1). It is the colour the lettered discs had before (R-W-1: "the same
+  lettered discs as before"); the same choice as the ring-i of step 5.
+- **Table, header words:** 8.7 px higher than the comp's (the native header is 41.7 px to its rule, the comp's 32; the
+  rule is on the comp's line). As the ledger (open question 5).
+- **Ticks:** both charts tick every $20M, the comp every $10M (Power BI picks the ticks).
+- **Axis labels:** the scatter's capex ticks 4.1 px and its axis title 4.9 px higher, the comparison chart's year labels
+  4 px higher (Power BI sets them closer to the plot); the comparison chart's value labels end 12 px further left.
+- **A's end label** stands 4.6 to 6.5 px higher above its line end than the comp's 15 px.
+- **Zero line of the comparison chart:** its name starts 16 px further left (the plot starts 10 px left of 2027), and the
+  line and the gridlines run to the plot's right edge; the comp ends them at 2032.
+- **Low only:** the comparison chart's plot starts 3 px higher ("Found", 6): zero line 3.3 px, the −$20M line 2 px and
+  the lines of A and B about 3 px above the comp's; the bottom is on the comp.
+- **Visual rects:** scatter 56, 269, 682, 369 (slot 56, 272, 672, 368); `ch_cmp_alts` 56, 685, 1819, 316 (slot 56, 688,
+  1808, 312); `tbl_waits` 791, 238, 1074, 402 (slot 792, 248, 1072, 392); the proof title's card 56, 173, 520, 72. The
+  slot map and the spec keep the comp's numbers.
+- **`c_scatter_sub` is a card on a measure,** not the text box of doc 21 7.1: its count and its amount follow the case.
+
+*Open items for later steps.*
+
+- **Step 9:** `p2_proof()` already serves Build; the plan dot (`hero_s_packages_build`) is the old Tangerine dot, now
+  under the discs and shown in Build only: rebuild it as the comp's "You" (Night, Tangerine over budget, label above).
+  `cmp_chart()` and `nice_axis()` are ready for `ch_cmp_build`; `cumulative_chart()` and `hover_tag()` are used by Build
+  only and go with it. `BUILD_TARGETS` still names the waterfall.
+- **Step 10:** `Alt Waits (text)` is a first version; the letters layer and the plan dot are decorative; `tt-year` now
+  opens from `ch_cmp_alts` as rebuilt; the keyboard cloud layer's table view now lists the exact capex and NPV as text.
+- **Step 11:** the prune must keep `Named Letter NPV (sel)`, `Preset C Cumulative Line`, `Cmp Alts Y Start`, `Cmp Alts Y
+  End` and the three `Preset … Cumulative End (label-safe)`. Unused since this step: `Scatter Title Short (text)`,
+  `Scatter X Start`, `Scatter X End`, `Scatter Y Start`, `Scatter Y End`, `Hover Tag Dot SVG`.
+- **Step 12:** look at the letters in the discs and at A's label in the browser at 1366 px (the letter lift is in page
+  pixels through a fixed axis, so it should hold; it has not been seen outside Desktop).
+- **Before the session:** the working tree was clean. The throwaway windows were ended with `Stop-Process` (throwaway
+  only); the project was not opened in Desktop, and no Desktop window is left open.
 
 ### Step 9 · Build your own (about 2 h)
 
@@ -961,3 +1075,10 @@ A session that meets a question only Bjorn can answer adds it here and sets its 
    without their values. Steps 8 and 9 use Above and Below as the comp has them, so this question is about this chart
    only. Bjorn confirms, or picks an alternative. The same answer covers the two ticks instead of four and the semibold
    line names (see the log of step 7, deviations).
+7. **A's disc in the proof chart (from step 8; no step is blocked by it).** The comp fills A's disc with Coffee Blue
+   (`#2589D8`) and sets a white "A" in it: 3.7:1, under the 4.5:1 floor for 12 pt text that `a11y_check.py` holds every
+   label to. Built: Deep Coffee (`#1763A8`, 6.2:1), the colour the lettered discs had before the rebuild. Recommended:
+   keep Deep Coffee. If the comp's lighter blue matters more, say so: it is one colour in `Named Point Color` and a
+   recorded waiver in `a11y_check.py`. The same answer covers the other deviations of step 8, all Power BI's own (see
+   the log of step 8, deviations): the table's header words 8.7 px high, ticks every $20M instead of every $10M, axis
+   labels 4 to 5 px closer to their plots, A's end label 5 px higher, and Low's comparison plot 3 px higher at the top.

@@ -3,10 +3,10 @@
   "name": "ch_cmp_alts",
   "position": {
     "x": 56,
-    "y": 688,
+    "y": 685,
     "z": 52000,
     "width": 1819,
-    "height": 313,
+    "height": 316,
     "tabOrder": 810
   },
   "visual": {
@@ -1087,7 +1087,7 @@
                 }
               }
             },
-            "spaceBelowTitleArea": {
+            "spaceBelowTitle": {
               "expr": {
                 "Literal": {
                   "Value": "8D"

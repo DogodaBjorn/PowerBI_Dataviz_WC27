@@ -732,6 +732,24 @@ saves, close every window yourself without saving, renders through the throwaway
 Tier order inside each step follows doc 20: T1 before T2 before T3. If a day slips, drop T3 first
 (R-P1-9, R-P2-11, R-W-4, R-TT-3/4, the submission prune), never the gate.
 
+### Results of What waits (14 Nov, build step 8 of doc 23)
+
+Built and verified against the comp in Low, Expected and High; the full log is in doc 23, step 8. What this document
+said and what was built:
+
+- **7.1, the named layer:** the lettered discs are kept (R-W-4), natively. Power BI sets a scatter label under its dot at
+  this plot size, so the letters are a layer of their own: three invisible points a fixed $4.34M above the discs
+  (`Named Letter NPV (sel)`), whose labels land inside the discs. The fallback (a tag under the dot) is not used. A's disc
+  is Deep Coffee for its white letter (doc 23, open question 7).
+- **7.1, the check:** A is the NPV maximum in all three scenarios (0 of 456 packages above it; DAX query, 14 Nov).
+- **7.1, axes:** fixed from the spec ($5M to $62M, −$60M to +$20M), ticks in whole $M (`USDM0`, `SUSDM0` on the four
+  scatter measures). `c_scatter_sub` is a card on `Proof Subtitle (text)`, not a text box: it follows the case.
+- **7.2:** `tbl_waits` with doc 22's columns (168 / 224 / 216 / 256 / 208) at row padding 4.9; the header is 10 px taller
+  than the comp's, so the table starts 10 px above its slot; a bottom outline on the values draws the last rule.
+- **7.3:** `ch_cmp_alts` by `cmp_chart()` (doc 22 section 3: one label per line end, A Above, B and C Under). The value
+  axis ends come from the model (`Cmp Alts Y Start`, `Cmp Alts Y End`, the comp's `niceTicks` with 8 % headroom); the
+  first series (`Preset C Cumulative Line`) carries the whole-$M tick format. `tag_cmp_alts` is the native hover tag.
+
 ### Results of the hero table and the capital plan, and the cut line (14 Nov, build step 7 of doc 23)
 
 - **Cut line, three decisions (Bjorn confirms):** (1) the hero is the native table of 6.1, verified in Low, Expected and

@@ -40,3 +40,9 @@ scaled x and y differently there (0.4594 and 0.4565) and the background image dr
 Build step 7: a seam through a table, a bar or a chart is no reference either (Desktop snaps a visual by up to 1.6 page px
 at this zoom and rounds each table row to a device pixel). Show such a visual whole on a scratch page:
 tools/desktop_shots/step7/README.txt.
+
+Build step 8: strips instead of tiles. The narrow Desktop window is tall, and a tile page is fitted to its width, so
+mk_tiles.py --rows 1 writes four strip pages of 480 x 1080 (t_0_0 .. t_0_3, and t_cal at the same size) at the same
+1.84 px per page px; stitch.py <dir> <cal> <out> --rows 1 joins them. No horizontal seam is left: a chart or a table
+higher than 270 px is measured in y without a seam through it (with 270 px tiles the comparison chart of What waits read
+up to 4 px wrong across the seam at y 810). Vertical seams stay at page x 480, 960 and 1440. Use this for page 2.

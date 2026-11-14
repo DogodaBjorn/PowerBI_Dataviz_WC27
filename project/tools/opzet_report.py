@@ -1287,7 +1287,7 @@ def p2_capital_plan():
 
 
 # ---------------------------------------------------------------------- FinalV3 build step 8: What waits, and why
-PROOF_TITLE_DY = -2  # set to the tile render of step 8
+PROOF_TITLE_DY = 0  # as measured on the strip render of step 8: the two lines land within 1 px of the comp's
 TITLE2_H = 72  # a card that shows two 14 pt lines; it centres them, the comp sets them from the top of the slot (24.9 px a line)
 
 
@@ -1342,7 +1342,10 @@ def waits_table():
 CMP_X_END = 2032.6  # spec ch_cmp_alts.x_axis_end: room for the end labels inside the plot, no 2033 tick
 # the visual rect that puts Power BI's plot on the comp's (PLOT_RECT of step 5), measured in build step 8: the comp draws
 # the plot at x 128 to 1856 and y 731 to 972 of the page (under a 29 px title row in the slot 56, 688, 1808, 312)
-CMP_RECT = {"ch_cmp_alts": (56, 688, 1819, 313)}
+CMP_RECT = {"ch_cmp_alts": (56, 685, 1819, 316)}
+# the comp leaves 14 px between its title row and the top tick; Power BI starts the plot 3 px higher. The container's
+# "space below title" moves the plot 1 px per unit (default 2; measured at 5 and 8 in step 8), the title stays. The visual
+# starts 3 px above its slot: Power BI sets the title 2.6 px lower in its row than the comp does.
 CMP_SPACE = 8
 
 
@@ -1382,7 +1385,7 @@ def cmp_chart(name, lines, title_measure, alt_measure, y_prefix):
     if name in CMP_RECT:
         plot_rect(v, CMP_RECT[name])
     if CMP_SPACE is not None:
-        v["visual"]["visualContainerObjects"]["spacing"] = [{"properties": {"customizeSpacing": b(True), "spaceBelowTitleArea": num(CMP_SPACE)}}]
+        v["visual"]["visualContainerObjects"]["spacing"] = [{"properties": {"customizeSpacing": b(True), "spaceBelowTitle": num(CMP_SPACE)}}]
     return v
 
 
