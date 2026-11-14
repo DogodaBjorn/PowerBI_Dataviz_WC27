@@ -114,7 +114,11 @@ for f in sorted((MODEL / "tables").glob("*.tmdl")):
         calc.append(f.stem + (" (typed labels or decision data)" if "DATATABLE" in raw else ""))
     else:
         other.append(f.stem)
-record(len(m_parts) == 16 and not other, "provided data only",
+# build step 12: the submission trim leaves out the organisers' sheets nothing reads (12 of the 16 stay); what counts
+# is that every table with a Power Query reads one of the sixteen sheets through DataFile, and nothing else.
+ORGANISERS = {"Date", "Region", "Scenario", "Brands", "Hotels", "Renovations", "MonthlyPerformance", "GuestSegments", "BookingChannels", "GuestExperience",
+              "GuestComplaints", "InvestmentProjects", "InvestmentProjectProperties", "InvestmentScenarios", "FinanceAssumptions", "FinanceParameters"}
+record(bool(m_parts) and set(m_parts) <= ORGANISERS and not other, "provided data only",
        f"{len(m_parts)} tables read the organisers' workbook through the DataFile parameter; {len(calc)} tables are calculated in the model: {', '.join(calc)}"
        + (f"; other sources: {other}" if other else ""))
 

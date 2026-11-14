@@ -2,12 +2,6 @@
 table Renovations
 	lineageTag: ef621b43-0bc1-5ba8-8d4a-da19f306b6f4
 
-	column RenovationID
-		dataType: string
-		lineageTag: 4e695ed7-ece2-515d-83f8-fa045b42a7bf
-		summarizeBy: none
-		sourceColumn: RenovationID
-
 	column HotelID
 		dataType: string
 		isHidden
@@ -23,27 +17,6 @@ table Renovations
 		sourceColumn: StartDate
 
 		annotation UnderlyingDateTimeDataType = Date
-
-	column EndDate
-		dataType: dateTime
-		formatString: Short Date
-		lineageTag: 09a53baa-f199-53ed-8889-4d7607fe0936
-		summarizeBy: none
-		sourceColumn: EndDate
-
-		annotation UnderlyingDateTimeDataType = Date
-
-	column RenovationType
-		dataType: string
-		lineageTag: 867ef162-2c8a-57d4-9cca-7fb59f02c7f4
-		summarizeBy: none
-		sourceColumn: RenovationType
-
-	column RoomsOutOfServicePct
-		dataType: double
-		lineageTag: 2594a1ec-873a-51c1-a480-f6fdd0aca47c
-		summarizeBy: none
-		sourceColumn: RoomsOutOfServicePct
 
 	column CostUSD
 		dataType: int64
@@ -61,7 +34,8 @@ table Renovations
 				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
 				    Sheet = Source{[Item="Renovations",Kind="Sheet"]}[Data],
 				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
-				    Typed = Table.TransformColumnTypes(Promoted, {{"RenovationID", type text}, {"HotelID", type text}, {"StartDate", type date}, {"EndDate", type date}, {"RenovationType", type text}, {"RoomsOutOfServicePct", type number}, {"CostUSD", Int64.Type}})
+				    Selected = Table.SelectColumns(Promoted, {"HotelID", "StartDate", "CostUSD"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"HotelID", type text}, {"StartDate", type date}, {"CostUSD", Int64.Type}})
 				in
 				    Typed
 

@@ -26,12 +26,6 @@ table GuestExperience
 		summarizeBy: none
 		sourceColumn: SurveyResponses
 
-	column OverallScore
-		dataType: double
-		lineageTag: 73869406-1bae-5c50-8821-e098d0bdd3d8
-		summarizeBy: none
-		sourceColumn: OverallScore
-
 	column CleanlinessScore
 		dataType: double
 		lineageTag: c21e01fe-ce33-5c2b-8fc5-2e7c7efbc3d7
@@ -77,7 +71,8 @@ table GuestExperience
 				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
 				    Sheet = Source{[Item="GuestExperience",Kind="Sheet"]}[Data],
 				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
-				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"SurveyResponses", Int64.Type}, {"OverallScore", type number}, {"CleanlinessScore", type number}, {"ServiceScore", type number}, {"RoomComfortScore", type number}, {"AmenitiesScore", type number}, {"ValueForMoneyScore", type number}, {"NetPromoterScore", type number}})
+				    Selected = Table.SelectColumns(Promoted, {"HotelID", "Month", "SurveyResponses", "CleanlinessScore", "ServiceScore", "RoomComfortScore", "AmenitiesScore", "ValueForMoneyScore", "NetPromoterScore"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"HotelID", type text}, {"Month", type date}, {"SurveyResponses", Int64.Type}, {"CleanlinessScore", type number}, {"ServiceScore", type number}, {"RoomComfortScore", type number}, {"AmenitiesScore", type number}, {"ValueForMoneyScore", type number}, {"NetPromoterScore", type number}})
 				in
 				    Typed
 

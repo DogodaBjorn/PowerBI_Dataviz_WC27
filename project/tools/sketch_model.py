@@ -2821,20 +2821,24 @@ def report_refs(report_dir=None):
     """Every field a report binds: {(kind, table, name)} over all its JSON (visuals, filters, bookmarks, formatting)."""
     refs = set()
 
-    def walk(node):
+    def walk(node, alias):
         if isinstance(node, dict):
+            frm = node.get("From")
+            if isinstance(frm, list) and all(isinstance(x, dict) and "Name" in x and "Entity" in x for x in frm):
+                alias = {**alias, **{x["Name"]: x["Entity"] for x in frm}}  # a filter's own names for its tables (step 12)
             for kind in ("Measure", "Column"):
                 v = node.get(kind)
                 if isinstance(v, dict) and "Property" in v and isinstance(v.get("Expression"), dict):
-                    refs.add((kind, v["Expression"].get("SourceRef", {}).get("Entity") or "", v["Property"]))
+                    src = v["Expression"].get("SourceRef", {})
+                    refs.add((kind, src.get("Entity") or alias.get(src.get("Source"), ""), v["Property"]))
             for v in node.values():
-                walk(v)
+                walk(v, alias)
         elif isinstance(node, list):
             for v in node:
-                walk(v)
+                walk(v, alias)
 
     for f in (Path(report_dir or OPZET_REPORT) / "definition").rglob("*.json"):
-        walk(json.loads(f.read_text(encoding="utf-8")))
+        walk(json.loads(f.read_text(encoding="utf-8")), {})
     return refs
 
 
@@ -2898,6 +2902,12 @@ def reachability(definition=None, report_dir=None):
     return {"bound": bound, "missing": sorted(bound - on_disk), "keep_measures": keep_m, "keep_tables": keep_t,
             "unreachable_left": sorted(on_disk - keep_m), "unread_tables_left": sorted(tables - keep_t),
             "on_disk": on_disk}
+
+
+def model_usage(definition=None, report_dir=None):
+    """The tables and columns of the model on disk that nothing reads (model_trim.usage): the gate of the trim."""
+    import model_trim
+    return model_trim.usage(Path(definition or MODEL / "definition"), report_refs(report_dir), {x[0] for x in MEASURES}, table_deps)
 
 
 def query_defines(query_text, model_measures):
@@ -3099,6 +3109,15 @@ def main():
         left = reachability(d)
         assert not left["missing"] and not left["unreachable_left"] and not left["unread_tables_left"], left
         print(f"submission prune: {len(MEASURES) - len(measures)} unreachable measures and {len(dropped)} unread tables left out ({', '.join(dropped)})")
+        # build step 12 (Bjorn, 14 Nov: only what the report uses): the tables and columns nothing reads (model_trim.py)
+        import model_trim
+        u = model_trim.trim(d, report_refs(), {x[0] for x in MEASURES}, table_deps)
+        after = model_usage(d)
+        assert not after["unused_tables"] and not after["unused_columns"], after
+        n_cols = sum(len(v) for v in u["unused_columns"].values())
+        tables = [t for t in tables if t not in u["unused_tables"]]
+        rels = [x for x in rels if x[0] not in u["unused_tables"] and x[2] not in u["unused_tables"]]
+        print(f"submission trim: {len(u['unused_tables'])} tables nothing reads left out ({', '.join(u['unused_tables'])}), and {n_cols} columns in {len(u['unused_columns'])} tables")
     print(f"model written: {len(tables)} tables, {len(measures)} measures, {len(rels)} relationships")
 
 

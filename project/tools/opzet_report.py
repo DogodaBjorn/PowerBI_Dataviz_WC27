@@ -1098,7 +1098,7 @@ HERO_SLACK = 2
 # bars land within 1.3 px of the comp's. The price is the header rule and the two reference lines, 4.5 px under the comp's.
 HERO_DY, HERO_DH = 4, 2
 # R-P2-3 caption, as approved (rebuild-v10-spec.json). Open question 3 of doc 23: its second sentence is not true in the data.
-HERO_CAPTION = "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still ramping up in 2032."
+HERO_CAPTION = "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs."
 ZW = "​"  # the header of a value column: the comp leaves it empty, a table column needs a name (one and two zero-width spaces)
 
 
@@ -1179,7 +1179,10 @@ def plan_bar():
     ca = axis(BODY, S, INK2, show=False)
     ca[0]["properties"].update({"innerPadding": integer(0), "outerPadding": integer(0)})
     objs = {"categoryAxis": ca, "valueAxis": va, "legend": legend(False), "labels": [{"properties": {"show": b(False)}}],
-            "layout": [{"properties": {"stackedGapSize": num(0)}}],  # no white seam between the segments (the comp draws none)
+            # Build step 12 (Bjorn, 14 Nov: a waiver only where accessibility is not at stake): tranche 3 (#717B8B) and
+            # "not needed" (#8E897D) stand side by side at 1.23:1, so the bar alone did not show where tranche 3 ends.
+            # A white seam of 3 px between the segments does (the comp drew none; until step 12 this was 0).
+            "layout": [{"properties": {"stackedGapSize": num(3)}}],
             "dataPoint": series_colors(dict(zip([mref(m_) for m_ in ms], PLAN_FILL)))}
     v = chart(P2, "ch_plan_bar", "barChart", q, objs, None, alt_measure="Alt Plan Bar (text)")
     return plot_rect(v, PLAN_RECT["ch_plan_bar"]) if "ch_plan_bar" in PLAN_RECT else v

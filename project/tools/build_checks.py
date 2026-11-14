@@ -286,10 +286,11 @@ if not STATIC:
 
 # ---------------------------------------------------------------- 6 · the reachability gate (submission prune)
 reach = sm.reachability(MODEL, REPORT.parent)
-record("6 reachability (submission prune)", f"{len(reach['bound'])} bound measures, {len(reach['on_disk'])} in the model, {len(model)} tables",
-       not reach["missing"] and not reach["unreachable_left"] and not reach["unread_tables_left"],
+use = sm.model_usage(MODEL, REPORT.parent)  # build step 12: the tables and columns nothing reads
+record("6 reachability (submission prune and trim)", f"{len(reach['bound'])} bound measures, {len(reach['on_disk'])} in the model, {len(model)} tables, {len(use['columns'])} columns",
+       not reach["missing"] and not reach["unreachable_left"] and not reach["unread_tables_left"] and not use["unused_tables"] and not use["unused_columns"],
        f"bound and missing: {reach['missing']}; unreachable measures left: {len(reach['unreachable_left'])} {reach['unreachable_left'][:12]}; "
-       f"unread helper tables left: {reach['unread_tables_left']}")
+       f"unread helper tables left: {reach['unread_tables_left']}; tables nothing reads: {use['unused_tables']}; columns nothing reads: {use['unused_columns']}")
 
 # ---------------------------------------------------------------- report
 fails = [r for r in results if r[2] == "FAIL"]

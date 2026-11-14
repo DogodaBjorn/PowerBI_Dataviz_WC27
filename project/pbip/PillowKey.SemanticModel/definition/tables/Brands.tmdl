@@ -8,25 +8,6 @@ table Brands
 		summarizeBy: none
 		sourceColumn: Brand
 
-	column Segment
-		dataType: string
-		lineageTag: 25e15e8d-4b1a-52a9-acb4-50543957042b
-		summarizeBy: none
-		sourceColumn: Segment
-
-	column Properties
-		dataType: int64
-		formatString: 0
-		lineageTag: 6e751704-0dba-5810-bdd5-507bf13ff7b5
-		summarizeBy: none
-		sourceColumn: Properties
-
-	column Positioning
-		dataType: string
-		lineageTag: f6d7ba6c-1979-59ca-b1fa-5662fa0d496e
-		summarizeBy: none
-		sourceColumn: Positioning
-
 	column InvestmentBudgetUSD
 		dataType: int64
 		formatString: 0
@@ -43,7 +24,8 @@ table Brands
 				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
 				    Sheet = Source{[Item="Brands",Kind="Sheet"]}[Data],
 				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
-				    Typed = Table.TransformColumnTypes(Promoted, {{"Brand", type text}, {"Segment", type text}, {"Properties", Int64.Type}, {"Positioning", type text}, {"InvestmentBudgetUSD", Int64.Type}})
+				    Selected = Table.SelectColumns(Promoted, {"Brand", "InvestmentBudgetUSD"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"Brand", type text}, {"InvestmentBudgetUSD", Int64.Type}})
 				in
 				    Typed
 

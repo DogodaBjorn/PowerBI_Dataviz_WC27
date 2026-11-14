@@ -16,25 +16,21 @@ queryGroup Dimensions
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["DataFile","Date","Region","Scenario","Brands","Hotels","Renovations","MonthlyPerformance","GuestSegments","BookingChannels","GuestExperience","GuestComplaints","InvestmentProjects","InvestmentProjectProperties","InvestmentScenarios","FinanceAssumptions","FinanceParameters","_Measures"]
+annotation PBI_QueryOrder = ["DataFile","Date","Scenario","Brands","Hotels","Renovations","MonthlyPerformance","BookingChannels","GuestExperience","InvestmentProjects","InvestmentProjectProperties","InvestmentScenarios","FinanceParameters","_Measures"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table Date
-ref table Region
 ref table Scenario
 ref table Brands
 ref table Hotels
 ref table Renovations
 ref table MonthlyPerformance
-ref table GuestSegments
 ref table BookingChannels
 ref table GuestExperience
-ref table GuestComplaints
 ref table InvestmentProjects
 ref table InvestmentProjectProperties
 ref table InvestmentScenarios
-ref table FinanceAssumptions
 ref table FinanceParameters
 ref table _Measures
 ref table ProjectCashflow

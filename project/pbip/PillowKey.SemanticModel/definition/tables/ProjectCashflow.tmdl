@@ -54,15 +54,6 @@ table ProjectCashflow
 		isDataTypeInferred
 		sourceColumn: [Benefit]
 
-	column RevenueBenefit
-		dataType: double
-		formatString: \$#,0;(\$#,0)
-		lineageTag: f400941b-1689-53aa-9860-617cd7ca0f7a
-		summarizeBy: none
-		isNameInferred
-		isDataTypeInferred
-		sourceColumn: [RevenueBenefit]
-
 	column DiscountFactor
 		dataType: double
 		formatString: 0.0000
@@ -75,64 +66,69 @@ table ProjectCashflow
 	partition ProjectCashflow = calculated
 		mode: import
 		source = ```
-				VAR RampY1 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - first year after completion" )
-				VAR RampY2 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - second year after completion" )
-				VAR RampY3 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - third year onwards" )
-				VAR FirstYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Earliest investment date" )
-				VAR LastYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" )
-				VAR Rate = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" )
-				VAR Origin = DATE ( FirstYear, 1, 1 )
-				VAR Horizon =
-				    FILTER ( ALLNOBLANKROW ( 'Date'[Date] ), YEAR ( 'Date'[Date] ) >= FirstYear && YEAR ( 'Date'[Date] ) <= LastYear && DAY ( 'Date'[Date] ) = 1 )
-				VAR Hotel25 =
-				    ADDCOLUMNS (
-				        SELECTCOLUMNS ( ALLNOBLANKROW ( Hotels[HotelID] ), "@Hid", Hotels[HotelID] ),
-				        "@Brand", LOOKUPVALUE ( Hotels[Brand], Hotels[HotelID], [@Hid] ),
-				        "@Rev25", VAR vHid = [@Hid] RETURN SUMX ( FILTER ( MonthlyPerformance, MonthlyPerformance[HotelID] = vHid && YEAR ( MonthlyPerformance[Month] ) = 2025 ), MonthlyPerformance[TotalRevenue] )
-				    )
-				RETURN
-				    SELECTCOLUMNS (
-				        GENERATE (
-				            InvestmentScenarios,
-				            VAR vPid = InvestmentScenarios[ProjectID]
-				            VAR vStart = LOOKUPVALUE ( InvestmentProjects[Planned Start], InvestmentProjects[ProjectID], vPid )
-				            VAR vDur = LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], vPid )
-				            VAR vCapex = LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], vPid )
-				            VAR vOos = LOOKUPVALUE ( InvestmentProjects[RoomsOutOfServicePct], InvestmentProjects[ProjectID], vPid )
-				            VAR vScope = LOOKUPVALUE ( InvestmentProjects[Scope], InvestmentProjects[ProjectID], vPid )
-				            VAR vBrand = LOOKUPVALUE ( InvestmentProjects[Brand], InvestmentProjects[ProjectID], vPid )
-				            VAR vDone = EDATE ( vStart, vDur )
-				            VAR vMappedRev =
-				                IF (
-				                    vScope = "Brand-wide",
-				                    SUMX ( FILTER ( Hotel25, [@Brand] = vBrand ), [@Rev25] ),
-				                    SUMX ( FILTER ( InvestmentProjectProperties, InvestmentProjectProperties[ProjectID] = vPid ), VAR vHid = InvestmentProjectProperties[HotelID] RETURN MAXX ( FILTER ( Hotel25, [@Hid] = vHid ), [@Rev25] ) )
-				                )
-				            VAR vOP = InvestmentScenarios[AnnualOperatingProfitImpactUSD]
-				            VAR vRev = InvestmentScenarios[AnnualRevenueImpactUSD]
-				            RETURN
-				                ADDCOLUMNS (
-				                    Horizon,
-				                    "@Capex", IF ( 'Date'[Date] >= vStart && 'Date'[Date] < vDone, DIVIDE ( vCapex, vDur ), 0 ),
-				                    "@Disruption", IF ( 'Date'[Date] >= vStart && 'Date'[Date] < vDone, vOos * vMappedRev / 12, 0 ),
-				                    "@Benefit",
-				                        VAR vM = DATEDIFF ( vDone, 'Date'[Date], MONTH )
-				                        RETURN IF ( 'Date'[Date] >= vDone, vOP / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 ),
-				                    "@RevenueBenefit",
-				                        VAR vM = DATEDIFF ( vDone, 'Date'[Date], MONTH )
-				                        RETURN IF ( 'Date'[Date] >= vDone, vRev / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 ),
-				                    "@Df", DIVIDE ( 1, POWER ( 1 + Rate, DATEDIFF ( Origin, 'Date'[Date], MONTH ) / 12 ) )
-				                )
-				        ),
-				        "ProjectID", InvestmentScenarios[ProjectID],
-				        "Scenario", InvestmentScenarios[Scenario],
-				        "Month", 'Date'[Date],
-				        "Capex", [@Capex],
-				        "Disruption", [@Disruption],
-				        "Benefit", [@Benefit],
-				        "RevenueBenefit", [@RevenueBenefit],
-				        "DiscountFactor", [@Df]
-				    )
+				SELECTCOLUMNS (
+					(
+					VAR RampY1 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - first year after completion" )
+					VAR RampY2 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - second year after completion" )
+					VAR RampY3 = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Ramp-up - third year onwards" )
+					VAR FirstYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Earliest investment date" )
+					VAR LastYear = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" )
+					VAR Rate = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Discount rate" )
+					VAR Origin = DATE ( FirstYear, 1, 1 )
+					VAR Horizon =
+					    FILTER ( ALLNOBLANKROW ( 'Date'[Date] ), YEAR ( 'Date'[Date] ) >= FirstYear && YEAR ( 'Date'[Date] ) <= LastYear && DAY ( 'Date'[Date] ) = 1 )
+					VAR Hotel25 =
+					    ADDCOLUMNS (
+					        SELECTCOLUMNS ( ALLNOBLANKROW ( Hotels[HotelID] ), "@Hid", Hotels[HotelID] ),
+					        "@Brand", LOOKUPVALUE ( Hotels[Brand], Hotels[HotelID], [@Hid] ),
+					        "@Rev25", VAR vHid = [@Hid] RETURN SUMX ( FILTER ( MonthlyPerformance, MonthlyPerformance[HotelID] = vHid && YEAR ( MonthlyPerformance[Month] ) = 2025 ), MonthlyPerformance[TotalRevenue] )
+					    )
+					RETURN
+					    SELECTCOLUMNS (
+					        GENERATE (
+					            InvestmentScenarios,
+					            VAR vPid = InvestmentScenarios[ProjectID]
+					            VAR vStart = LOOKUPVALUE ( InvestmentProjects[Planned Start], InvestmentProjects[ProjectID], vPid )
+					            VAR vDur = LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], vPid )
+					            VAR vCapex = LOOKUPVALUE ( InvestmentProjects[CapexUSD], InvestmentProjects[ProjectID], vPid )
+					            VAR vOos = LOOKUPVALUE ( InvestmentProjects[RoomsOutOfServicePct], InvestmentProjects[ProjectID], vPid )
+					            VAR vScope = LOOKUPVALUE ( InvestmentProjects[Scope], InvestmentProjects[ProjectID], vPid )
+					            VAR vBrand = LOOKUPVALUE ( InvestmentProjects[Brand], InvestmentProjects[ProjectID], vPid )
+					            VAR vDone = EDATE ( vStart, vDur )
+					            VAR vMappedRev =
+					                IF (
+					                    vScope = "Brand-wide",
+					                    SUMX ( FILTER ( Hotel25, [@Brand] = vBrand ), [@Rev25] ),
+					                    SUMX ( FILTER ( InvestmentProjectProperties, InvestmentProjectProperties[ProjectID] = vPid ), VAR vHid = InvestmentProjectProperties[HotelID] RETURN MAXX ( FILTER ( Hotel25, [@Hid] = vHid ), [@Rev25] ) )
+					                )
+					            VAR vOP = InvestmentScenarios[AnnualOperatingProfitImpactUSD]
+					            VAR vRev = InvestmentScenarios[AnnualRevenueImpactUSD]
+					            RETURN
+					                ADDCOLUMNS (
+					                    Horizon,
+					                    "@Capex", IF ( 'Date'[Date] >= vStart && 'Date'[Date] < vDone, DIVIDE ( vCapex, vDur ), 0 ),
+					                    "@Disruption", IF ( 'Date'[Date] >= vStart && 'Date'[Date] < vDone, vOos * vMappedRev / 12, 0 ),
+					                    "@Benefit",
+					                        VAR vM = DATEDIFF ( vDone, 'Date'[Date], MONTH )
+					                        RETURN IF ( 'Date'[Date] >= vDone, vOP / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 ),
+					                    "@RevenueBenefit",
+					                        VAR vM = DATEDIFF ( vDone, 'Date'[Date], MONTH )
+					                        RETURN IF ( 'Date'[Date] >= vDone, vRev / 12 * SWITCH ( TRUE (), vM < 12, RampY1, vM < 24, RampY2, RampY3 ), 0 ),
+					                    "@Df", DIVIDE ( 1, POWER ( 1 + Rate, DATEDIFF ( Origin, 'Date'[Date], MONTH ) / 12 ) )
+					                )
+					        ),
+					        "ProjectID", InvestmentScenarios[ProjectID],
+					        "Scenario", InvestmentScenarios[Scenario],
+					        "Month", 'Date'[Date],
+					        "Capex", [@Capex],
+					        "Disruption", [@Disruption],
+					        "Benefit", [@Benefit],
+					        "RevenueBenefit", [@RevenueBenefit],
+					        "DiscountFactor", [@Df]
+					    )
+					),
+					"ProjectID", [ProjectID], "Scenario", [Scenario], "Month", [Month], "Capex", [Capex], "Disruption", [Disruption], "Benefit", [Benefit], "DiscountFactor", [DiscountFactor]
+				)
 				```
 
 	annotation PBI_ResultType = Table

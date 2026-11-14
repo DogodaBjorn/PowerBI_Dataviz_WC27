@@ -14,19 +14,6 @@ table FinanceParameters
 		summarizeBy: none
 		sourceColumn: Value
 
-	column Unit
-		dataType: string
-		lineageTag: 3299f552-933d-5788-9e4f-f634457cea68
-		summarizeBy: none
-		sourceColumn: Unit
-
-	column Notes
-		dataType: string
-		lineageTag: 0c9b0840-9b95-5dd3-aca8-71939b32ea9f
-		summarizeBy: none
-		sourceColumn: Notes
-
-
 	partition FinanceParameters = m
 		mode: import
 		queryGroup: Dimensions
@@ -35,7 +22,8 @@ table FinanceParameters
 				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
 				    Sheet = Source{[Item="FinanceParameters",Kind="Sheet"]}[Data],
 				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
-				    Typed = Table.TransformColumnTypes(Promoted, {{"Parameter", type text}, {"Value", type number}, {"Unit", type text}, {"Notes", type text}})
+				    Selected = Table.SelectColumns(Promoted, {"Parameter", "Value"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"Parameter", type text}, {"Value", type number}})
 				in
 				    Typed
 

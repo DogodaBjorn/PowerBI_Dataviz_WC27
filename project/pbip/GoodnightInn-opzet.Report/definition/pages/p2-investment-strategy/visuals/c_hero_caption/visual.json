@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still ramping up in 2032.",
+                    "value": "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -153,7 +153,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still ramping up in 2032.'"
+                  "Value": "'A year on cost = what a move adds to operating profit in 2032 ÷ what it costs.'"
                 }
               }
             }

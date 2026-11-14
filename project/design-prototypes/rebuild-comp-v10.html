@@ -711,7 +711,7 @@ R.tbl_hero = () => {
   return `<table class="pbi hero"><colgroup>${HERO_COLS.map(w => `<col style="width:${w}px">`).join('')}</colgroup>
     <tr style="height:32px"><th>Move</th><th>Answers</th><th>Status</th><th>A year on cost</th><th></th><th>NPV through 2032</th><th></th></tr>${rows}</table>`;
 };
-R.c_hero_caption = () => T('A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still ramping up in 2032.', 'f16 dusk');
+R.c_hero_caption = () => T('A year on cost = what a move adds to operating profit in 2032 ÷ what it costs.', 'f16 dusk');
 R.img_rec_chip = () => `<svg width="40" height="32" viewBox="0 -2 40 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="0.5" y="0.5" width="39" height="27" rx="13.5" fill="#EAF2FB" stroke="#EAF2FB"/><g transform="translate(14.2 3) scale(0.2115)"><mask id="gi-h"><rect width="64" height="104" fill="white"/><circle cx="32" cy="24" r="10" fill="black"/><rect x="32" y="22.5" width="40" height="3" fill="black"/></mask><rect x="4" y="4" width="56" height="96" rx="14" fill="#2589D8" mask="url(#gi-h)"/></g></svg>`;
 R.c_rec_head = () => T(`<div class="head20">Our recommendation: package A</div><div class="night">Booking app with member rates + Revenue management + Kiosks at the 20 busiest hotels</div>`);
 function nums(items, size) {
