@@ -29,7 +29,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 9 | Build your own | done | 14 Nov | 42e280e | Build on the comp with package A picked in Low, Expected and High, with nothing picked, over the budget and with a broken rule: every text row within 2 px, bars and boxes within about 2 px, the empty state shows the rules sentence once and no numbers, the saved selection survives a reload, Space on a tile changes the plan and leaves the table's ten rows; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Deneb and the waterfalls are gone. Outside 2 px: the table's header words 9.2 px high, its last column 3 px right, A's end label 5 px high. Three things for Bjorn (open question 8): the bars scroll from eight picked moves on, the zero line of the bars runs under the empty rows, a plan beyond $62M has no dot. Bjorn was not needed in Desktop |
 | 10 | Tooltips, alt text, tab order | done | 14 Nov | 7cee2a7 | The Tab key ran backwards on both pages (Desktop goes from the highest `tabOrder` down): turned round, and walked with real keys in the designed order. `tt-package` with the R-TT-1 sentence and a native moves table, the glossary in the report's words, points only in every tooltip, `tt-f1` to `tt-f4` gone. Alt texts reviewed in three cases: one raised an engine error, one printed a raw number, four table texts shortened; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Both passes by script (real keys, the accessibility tree), not by ear; four things for Bjorn (open question 9). Bjorn was not needed in Desktop |
 | 11 | Final checks and the FinalV3 render set | done | 14 Nov | 892e588 | The submission prune (14163ef): 333 of 600 measures and 29 of 35 tables stay, and the committed model is that model (`sketch_model.py --submission`; the three sketches need the full build). `build_checks` 6 of 6 with the new reachability gate, 766 number checks, `a11y_check` 0, Microsoft's validator 0 errors, compliance (R-X-2) 5 of 5 by script plus package A in the engine. Render set FinalV3: 20 renders with their comp views and a README that lists every deviation; nothing new outside 2 px, and the prune changed no pixel. Not seen in this session: the header artwork and a real click on the page buttons (step 12). One question for Bjorn (open question 10). Bjorn was not needed in Desktop |
-| 12 | Publish to Web gate (Bjorn publishes), then submit | doing | 14 Nov | 72e0e36 | Publish 1 checked signed out in an en, nl and de browser, at 1920 and 1366, with touch and with the Tab key: locale, SVG cells, tooltip scale, visual headers and Tab order pass. Two defects only the service shows, both fixed in the generators: the 20 px header strip above every visual blinded seven of F4's dots (Toronto among them), part of the tabs and the selector's last tile; a click on a row or a mark cross-filtered the page. **Waits for Bjorn:** Publish once more from the copy (same report, the link stays); then every check is repeated on publish 2 |
+| 12 | Publish to Web gate (Bjorn publishes), then submit | doing | 14 Nov | 437f80c | Publish 2 verified signed out (en, nl, de; 1920 and 1366; touch; Tab): the mouse reaches every live visual, Toronto's dot opens its tooltip, the tabs work on a laptop, a click filters nothing, nl and de equal en to the pixel. One more defect found and fixed: the header strip of a hovered or clicked table painted white over the line above it (theme, strip without fill). **Waits for Bjorn:** Publish a third time from the copy; then the gate runs once more |
 
 Status values: `todo`, `doing` (stopped mid-step; see its log), `done`, `blocked` (needs Bjorn).
 
@@ -1397,9 +1397,32 @@ same blinded visuals as the measurement, 41 failures with the missing interactio
 errors (34 warnings, as before); the model is unchanged. The fixed report is in the publish copy and reloaded in the
 open Desktop window (both pages render; bridge capture).
 
-*Waits for Bjorn:* **Publiceren** once more from the window "Goodnight Inn", over the same report (the link stays),
-then say so. The session then repeats every check on publish 2, with the captures of publish 1 as the regression
-reference (the pages rendered pixel for pixel alike in every run).
+*Publish 2 (14 Nov, 18:14 UTC; on the link from 19:36 local, the Publish to Web cache held publish 1 for about
+twenty minutes).* The whole gate again with `step12/gate.py` (sixteen browser runs), publish 1's captures as reference.
+
+| What | Result on publish 2 |
+|---|---|
+| The mouse (`hit_test.js`) at 1920 px | **clear** on page 1 and in all three states of page 2: every live visual is the topmost container over its whole area, 54 + 6 + 461 + 461 marks reach the mouse |
+| The mouse at 1366 px | **clear** on page 1 and Recommended. In What waits and Build the run reports the scenario pills partly covered: that is Power BI's own bubble "Click here to follow", which hangs under the mouse while it rests on a tab after the click (see open question 11) |
+| F4's named dots | Toronto's dot opens `tt-f4-hotel` ("Toronto Pearson Airport, airport, 150 rooms, 91.9%") |
+| Tabs at 1366 px, by click and by tap | work: What waits and Build open from the middle of their tab |
+| A click on a mark or a row | nothing outside the clicked visual changes any more: F3's bar, an F4 dot, a folio row, a hero row, a ledger row, a row of What waits, a row of `tbl_moves`, the bars, the three line charts. The clicked visual marks its own selection (Power BI's) |
+| nl and de against en | every page and tooltip capture equal to the pixel (0 pixels over the threshold) |
+| Against publish 1 | Recommended in three cases, What waits, Build: equal. Page 1: only inside F4's plot, under the threshold (the gridlines moved a layer down) |
+| Touch (emulated, 1366) | Next, a tab, a scenario pill and Back answer a tap. A tap on A's disc opens no tooltip in the emulation: on a touch screen Power BI opens a tooltip on press and hold; Bjorn checks that once on a phone |
+
+*One more defect, seen on publish 2, fixed (`437f80c`).* A table or chart that is hovered or clicked shows its header
+strip, and the theme gave that strip a white fill: it painted over whatever stands in the 20 screen px above the
+visual. Seen: the years under F2's line chart vanish while the folio table is clicked; the line "The app carries
+it…" is cut above the ledger; "Click a move to add or remove it." is cut above the moves table. **Fix:**
+`compile_theme.py`, `visualHeader.transparency` 100 (the key is in the theme schema the file was checked against): the
+header and its two icons stay (doc 21: kept for "Show as a table"), the strip has no fill. All file checks green again
+(`strip_check` 0, `a11y_check` 0, `schema_check` 196 files, `compliance_check` 5 of 5, Microsoft's validator 0 errors).
+The fix is in the publish copy and reloaded in the open Desktop window.
+
+*Waits for Bjorn:* **Publiceren** a third time from the window "Goodnight Inn", over the same report, then say so.
+The session waits for the link to serve it (`meta`), runs `gate.py` once more and looks at a hovered and a clicked
+table.
 
 *Open.* The Desktop window with the publish copy is left open for Bjorn's Publish click; the session that finishes
 this step closes it. The `.pbix` for the submission comes from the same copy (Bestand > Opslaan als), after the
@@ -1490,3 +1513,8 @@ A session that meets a question only Bjorn can answer adds it here and sets its 
     controls of page 2 (the same two colours your waiver `zone-text-headline` covers for the headline), and the
     plan bar's `#717B8B` (tranche 3, from the comp's spec). Recommended: waive the three as kit colours and as the
     comp's grid; a waiver is yours to give, so none was written.
+11. **Step 12: the bubble "Click here to follow" (no step is blocked by it).** While the mouse rests on a button
+    (Next, Back, a tab, the invitation), Power BI shows its own small bubble "Click here to follow", in the browser's
+    language ("Klik hier om volgen"). At 1366 px it hangs over the scenario pills after a click on a tab until the
+    mouse moves. It is the service's text, on every report with buttons. A button's own tooltip text would replace it
+    (for example the tab's name), but that is new copy, so nothing was changed. Recommended: leave it. Bjorn decides.
