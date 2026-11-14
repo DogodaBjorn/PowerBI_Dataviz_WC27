@@ -874,7 +874,7 @@ def you_label(slot, z):
             "bubbles": [{"properties": {"bubbleSize": integer(CLOUD_BUBBLE), "markerRangeType": enum("magnitude"), "preventOverflow": b(False)}}], "legend": legend(False),
             "markers": [{"properties": {"transparency": num(100), "borderShow": b(False)}}],
             "categoryLabels": [{"properties": {"show": b(True), "fontFamily": text(DISPLAY), "fontSize": num(S), "color": fv("Build You Ink"), "bold": b(True),
-                                               "enableBackground": b(True), "backgroundColor": color(SURFACE), "backgroundTransparency": num(0)}}]}
+                                               "enableBackground": b(True)}}]}  # white and opaque from the theme (compile_theme.py)
     x, y, w, h = YOU_RECT
     return visual(f"{slot}_you", "scatterChart", x, y, w, h, z, 0, query=q, objects=objs, vcos=vco(padding=0), off_grid=True)
 

@@ -332,24 +332,6 @@
                   "Value": "true"
                 }
               }
-            },
-            "backgroundColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "backgroundTransparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
             }
           }
         }

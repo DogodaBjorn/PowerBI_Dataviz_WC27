@@ -330,6 +330,20 @@
         ]
       }
     },
+    "scatterChart": {
+      "*": {
+        "categoryLabels": [
+          {
+            "backgroundColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "backgroundTransparency": 0
+          }
+        ]
+      }
+    },
     "page": {
       "*": {
         "background": [

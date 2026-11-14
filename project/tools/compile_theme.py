@@ -121,6 +121,8 @@ theme = {
         # backgroundColor inside a visual's labels as a misplaced "color" (PBIR_FORMATTING_PROP_NESTED); the shape itself
         # is the theme schema's (reportThemeSchema-2.159, visual-lineChart labels: backgroundColor, backgroundTransparency).
         "lineChart": {"*": {"labels": [{"backgroundColor": fill(c["surface"]), "backgroundTransparency": 0}]}},
+        # build step 9: the same for a scatter's category label with a background (the plan's name "You" in the proof chart)
+        "scatterChart": {"*": {"categoryLabels": [{"backgroundColor": fill(c["surface"]), "backgroundTransparency": 0}]}},
         "page": {"*": {
             "background": [{"color": fill(c["canvas"]), "transparency": 0}],
             "outspace": [{"color": fill(c["canvas"]), "transparency": 0}],
