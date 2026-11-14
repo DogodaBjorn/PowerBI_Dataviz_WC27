@@ -29,7 +29,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 9 | Build your own | done | 14 Nov | 42e280e | Build on the comp with package A picked in Low, Expected and High, with nothing picked, over the budget and with a broken rule: every text row within 2 px, bars and boxes within about 2 px, the empty state shows the rules sentence once and no numbers, the saved selection survives a reload, Space on a tile changes the plan and leaves the table's ten rows; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Deneb and the waterfalls are gone. Outside 2 px: the table's header words 9.2 px high, its last column 3 px right, A's end label 5 px high. Three things for Bjorn (open question 8): the bars scroll from eight picked moves on, the zero line of the bars runs under the empty rows, a plan beyond $62M has no dot. Bjorn was not needed in Desktop |
 | 10 | Tooltips, alt text, tab order | done | 14 Nov | 7cee2a7 | The Tab key ran backwards on both pages (Desktop goes from the highest `tabOrder` down): turned round, and walked with real keys in the designed order. `tt-package` with the R-TT-1 sentence and a native moves table, the glossary in the report's words, points only in every tooltip, `tt-f1` to `tt-f4` gone. Alt texts reviewed in three cases: one raised an engine error, one printed a raw number, four table texts shortened; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Both passes by script (real keys, the accessibility tree), not by ear; four things for Bjorn (open question 9). Bjorn was not needed in Desktop |
 | 11 | Final checks and the FinalV3 render set | done | 14 Nov | 892e588 | The submission prune (14163ef): 333 of 600 measures and 29 of 35 tables stay, and the committed model is that model (`sketch_model.py --submission`; the three sketches need the full build). `build_checks` 6 of 6 with the new reachability gate, 766 number checks, `a11y_check` 0, Microsoft's validator 0 errors, compliance (R-X-2) 5 of 5 by script plus package A in the engine. Render set FinalV3: 20 renders with their comp views and a README that lists every deviation; nothing new outside 2 px, and the prune changed no pixel. Not seen in this session: the header artwork and a real click on the page buttons (step 12). One question for Bjorn (open question 10). Bjorn was not needed in Desktop |
-| 12 | Publish to Web gate (Bjorn publishes), then submit | doing | 14 Nov | (see log) | Publish 3 verified signed out: the trimmed model serves everything, the caption and the plan bar's seams are live, the mouse and the clicks are clean, nl and de equal en. One thing left: a CLICKED chart or table keeps Power BI's own band in its header strip and cuts the line above it; fixed in the z-order (the visual lies under what stands above it), Desktop renders unchanged. **Waits for Bjorn:** Publish a fourth time from the copy; then the gate runs once more |
+| 12 | Publish to Web gate (Bjorn publishes), then submit | blocked | 14 Nov | ca9b086 | **The gate is passed** on the fourth publish (signed out; en, nl, de; 1920 and 1366 px; click, tap and Tab): every check of the step, plus the mouse test, the click test and the band test. Found and fixed on the way, none visible in Desktop: the header strip that takes the mouse, the cross-filter on a click, the band of a clicked visual. Also built: Bjorn's decisions of 14 Nov (caption, 20.6 %, the model trimmed to what the report reads, the waivers, the plan bar's seams); all eleven open questions closed. **Blocked on Bjorn only:** the phone check, the `.pbix` from the open copy window, the submission |
 
 Status values: `todo`, `doing` (stopped mid-step; see its log), `done`, `blocked` (needs Bjorn).
 
@@ -1471,13 +1471,54 @@ band too: 29 failures on publish 3's build, 0 on the new one. Desktop renders bo
 the change (bridge captures). The header icons of a visual can now lie under the text card above it; the keyboard
 reaches them as before.
 
-*Waits for Bjorn:* **Publiceren** a fourth time from the window "Goodnight Inn" (the report is reloaded in it; the
-model did not change), over the same report, then say so. The session waits for the link (`meta`), runs `gate.py`
-and measures the strip above a clicked table.
+*The fourth publish, first try (21:25 local): Desktop's error.* Publishing from the window the report had been
+reloaded into gave "Could not find a PackageSession for the given sessionID" (Power Query's session, in the save around
+the publish); the copy was not saved. The window was closed, the copy written again from the project, opened fresh and
+refreshed (25 tables, 6 s, both pages byte for byte the earlier captures), and Bjorn published from that window at
+21:45 without an error. Lesson: hand Bjorn a freshly opened window, never one that was reloaded.
 
-*Open.* The Desktop window with the publish copy is left open for Bjorn's Publish click; the session that finishes
-this step closes it. The `.pbix` for the submission comes from the same copy (Bestand > Opslaan als), after the
-checks pass.
+*Publish 4 (14 Nov, 20:45 UTC; on the link one minute later).* `gate.py`, publish 3 as reference: **every check passes.**
+
+| # | Check of this step | Final result (publish 4) |
+|---|---|---|
+| 1 | SVG cells in the hero table and the A chip | pass |
+| 2 | Tooltips (`tt-f3-band`, `tt-f4-hotel` also on Toronto's dot, `tt-glossary`, `tt-package`, `tt-year`) | pass |
+| 3 | Page buttons, tabs, scenario pills, the invitation, the selector | pass, by click and by tap, at 1920 and 1366 px |
+| 4 | nl and de browser (R-G1) | pass: every page and tooltip equal to en to the pixel |
+| 5 | Visual headers against the hover tags | pass |
+| 6 | Tooltip scale at 1366 px | pass |
+| 7 | Touch | pass in the emulation for every button; a tooltip by press and hold on a real phone is Bjorn's to try |
+| 8 | Tab from the top; header artwork; letters in the discs; "You" over its dot | pass |
+| + | The mouse reaches every live visual (`hit_test.js`, 1920 and 1366 px) | clear |
+| + | A click on a mark or a row changes nothing else | pass |
+| + | The band of a clicked visual leaves the line above it alone (nine places) | pass |
+| + | Against publish 3 | every page capture equal (0 pixels over the threshold) |
+
+Evidence: `project/deliverables/screenshots/PublishToWeb-2026-11-14/` (16 captures, the gate's summary, a README).
+
+*What the published report taught (none of it shows in Desktop).*
+
+1. Every visual container is 20 screen px taller than its visual, upwards, and that strip takes the mouse.
+2. A click on a mark or a row cross-filters the page unless every chart and table has its NoFilter list.
+3. A clicked chart or table keeps a light band in that strip; only the z-order keeps it off the line above.
+4. The theme's `visualHeader` fill covers the strip on hover; transparency 100 clears it.
+5. Publish to Web serves a cached copy: a republish took 1 to 20 minutes to reach the link; `meta` shows which one
+   the link serves.
+6. `powerbi-desktop reload` and then Publish can fail in Desktop's save; publish from a freshly opened window.
+7. A model change needs the engine: the trim's first try passed every file check and failed in the engine.
+
+*Deviations from the comp made in this step:* the plan bar's white seams of 3 px (accessibility, Bjorn's condition on
+the waivers); the hero caption is one sentence (Bjorn, open question 3). Everything else on the canvas is pixel for
+pixel what publish 1 showed.
+
+*Still Bjorn's (the step's "done when" asks for the submission):*
+
+1. Once on a phone: press and hold on a dot, to see a tooltip open by touch.
+2. The `.pbix`: in the open Desktop window "Goodnight Inn" (the publish copy, saved at the fourth publish),
+   Bestand > Opslaan als > `.pbix`. Then close the window; it is the copy, so saving it harms nothing.
+3. The submission in the Contests Gallery with the link, the `.pbix`, the image and the description (17 Nov).
+4. Optional: remove the Publish to web code of the old report "GoodnightInn-opzet" (the build of 13 Nov is still
+   public under it).
 
 ---
 
