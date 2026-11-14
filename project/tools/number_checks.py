@@ -46,7 +46,7 @@ T2, T3 = ["GI-04", "GI-05"], ["GI-07"]
 WJ, MINUS = "⁠", "−"
 # open question 1 of doc 23: the kiosks' Expected "a year on cost" is exactly 20.55 %. The spec prints 20.5 (the
 # browser's rounding), the model 20.6 (Power BI's). Bjorn decides; until then this one difference is expected.
-KNOWN = {("hero yield", "GI-02", "Expected"): ("20.5%", "20.6%", "open question 1 of doc 23 (20.55 % exactly)")}
+KNOWN = {}  # decided 14 Nov (Bjorn): 20.6 %, and the spec's text block says so since build step 12
 
 results = []  # (group, key, expected, actual, state)
 

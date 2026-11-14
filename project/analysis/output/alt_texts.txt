@@ -99,8 +99,8 @@ alt_texts: 136 visuals in the tab order, 107 on a measure, 0 flag(s)
       The ten moves ranked by what each earns a year on its cost, Expected case, with the finding each answers, its status and its NPV through 2032. First: Booking app & member rates, 47.0% a year on cost, NPV +$3.4M. The two marked lines are our 8% cost of money and NPV zero.
       Low: The ten moves ranked by what each earns a year on its cost, Low case, with the finding each answers, its status and its NPV through 2032. First: Booking app & member rates, 12.1% a year on cost, NPV −$2.8M. The two marked lines are our 8% cost of money and NPV zero.
       High: The ten moves ranked by what each earns a year on its cost, High case, with the finding each answers, its status and its NPV through 2032. First: Booking app & member rates, 82.1% a year on cost, NPV +$9.5M. The two marked lines are our 8% cost of money and NPV zero.
- 9770 c_hero_caption (textbox) [typed] 119 chars
-      A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still ramping up in 2032.
+ 9770 c_hero_caption (textbox) [typed] 78 chars
+      A year on cost = what a move adds to operating profit in 2032 ÷ what it costs.
  9690 c_rec_head (textbox) [Alt Rec Head (text)] 113/113/113 chars
       Our recommendation: package A. Booking app & member rates + Revenue management + Kiosks at the 20 busiest hotels.
  9680 c_rec_nums (cardVisual) [Alt Rec Nums (text)] 119/124/121 chars

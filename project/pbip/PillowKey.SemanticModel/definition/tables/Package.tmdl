@@ -189,7 +189,7 @@ table Package
 					        "RunRate Low", [@RrL], "RunRate Expected", [@RrE], "RunRate High", [@RrH]
 					    )
 					),
-					"PackageID", [PackageID], "Mask", [Mask], "Projects", [Projects], "CapexUSD", [CapexUSD], "ContainsRefresh", [ContainsRefresh], "HotelsRated", [HotelsRated], "NPV Low", [NPV Low], "NPV Expected", [NPV Expected], "NPV High", [NPV High], "RunRate Low", [RunRate Low], "RunRate Expected", [RunRate Expected], "RunRate High", [RunRate High], "Preset", [Preset], "Draw Rank", [Draw Rank]
+					"PackageID", [PackageID], "Mask", [Mask], "Projects", [Projects], "CapexUSD", [CapexUSD], "ContainsRefresh", [ContainsRefresh], "HotelsRated", [HotelsRated], "NPV Low", [NPV Low], "NPV Expected", [NPV Expected], "NPV High", [NPV High], "RunRate Low", [RunRate Low], "RunRate Expected", [RunRate Expected], "RunRate High", [RunRate High]
 				)
 				```
 

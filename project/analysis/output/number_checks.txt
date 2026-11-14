@@ -1,4 +1,4 @@
-number_checks: 766 checks, 765 ok, 1 known difference(s), 0 failed
+number_checks: 766 checks, 766 ok, 0 known difference(s), 0 failed
 
   ok    workbook: a year on cost per move (E9): 30 ok
   ok    workbook: profit a year per move: 30 ok
@@ -18,7 +18,7 @@ number_checks: 766 checks, 765 ok, 1 known difference(s), 0 failed
   ok    workbook: commission take per year (F1 band): 5 ok
   ok    workbook: OTA end labels (F2): 10 ok
   ok    spec: hero table row order: 3 ok
-  ok    hero yield: 29 ok, 1 known
+  ok    hero yield: 30 ok
   ok    spec: hero NPV through 2032 (E10): 30 ok
   ok    spec: hero status: 30 ok
   ok    spec: hero answers start with the MoveDecision finding: 30 ok
@@ -44,9 +44,6 @@ number_checks: 766 checks, 765 ok, 1 known difference(s), 0 failed
   ok    spec: F4 row averages: 3 ok
   ok    doc 20 E5: months at or above 90 %: 4 ok
   ok    model: hero bar cell is a well-formed SVG with the reference line at its constant x: 60 ok
-
-KNOWN (not failures)
-  hero yield ('GI-02', 'Expected'): expected '20.5%', model '20.6%'  [open question 1 of doc 23 (20.55 % exactly)]
 
 Values (model, as its formatters print them):
   Low      A: capex $9.4M, NPV −$5.5M, a year +$1.0M, a year on cost 11.1% | ledger: distribution cost 11.3% -> 10.7%, margin after commissions 33.7% -> 34.1%, app saves $1.2M a year | tranche 2 11.7%, tranche 3 4.5% | rise undone 0.251, fall recovered 0.145

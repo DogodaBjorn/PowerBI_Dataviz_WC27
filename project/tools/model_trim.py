@@ -188,7 +188,8 @@ def trim(definition, report_refs, measure_names, table_deps):
                 m2 = re.search(r"(source = ```\n)(.*?)(\n\t\t\t\t```)", b, re.S)
                 assert m2, t
                 inner = "\n".join(("\t" + ln if ln.strip() else ln) for ln in m2.group(2).splitlines())
-                names = ", ".join(f'"{c}", [{c}]' for c in kept)
+                # the table's own columns only: a calculated column on a calculated table (Package[Preset]) is not in its DAX
+                names = ", ".join(f'"{c}", [{c}]' for c in kept if not tables[t]["cols"][c]["calc"])
                 b = b.replace(m2.group(0), m2.group(1) + "\t\t\t\tSELECTCOLUMNS (\n\t\t\t\t\t(\n" + inner + "\n\t\t\t\t\t),\n\t\t\t\t\t" + names + "\n\t\t\t\t)" + m2.group(3))
             out.append(b)
         f.write_text("".join(out), encoding="utf-8", newline="\n")

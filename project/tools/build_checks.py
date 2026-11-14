@@ -50,7 +50,7 @@ WJ = "⁠"
 A_IDS = ["GI-01", "GI-02", "GI-10"]  # package A, the opening selection of Build your own (doc 22: the Build views)
 # open question 1 of doc 23: the kiosks' Expected 'a year on cost' is exactly 20.55 %; the spec prints 20.5 (the browser's
 # rounding), the model 20.6 (Power BI's). Bjorn decides; until then this one difference is expected wherever it shows.
-KNOWN = [("P2 rec Expected", "c_hero_title", "20.5%", "20.6%"), ("P2 rec Expected", "tbl_hero", "20.5%", "20.6%")]
+KNOWN = []  # decided 14 Nov (Bjorn): 20.6 %, and the spec's text block says so since build step 12
 
 results = []  # (check, key, state, detail)
 

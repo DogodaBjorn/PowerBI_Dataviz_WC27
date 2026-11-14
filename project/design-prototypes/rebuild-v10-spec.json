@@ -568,7 +568,7 @@
    "tab_build_off": "Build your own",
    "lbl_scenario": "Scenario",
    "sl_scenario": "Low\nExpected\nHigh",
-   "c_hero_title": "Two moves pass both tests; the kiosks earn 20.5% a year on cost but pay back after 2032",
+   "c_hero_title": "Two moves pass both tests; the kiosks earn 20.6% a year on cost but pay back after 2032",
    "lbl_hero_8": "8%: our cost of money",
    "lbl_hero_0": "pays back by 2032 →",
    "tbl_hero": [
@@ -604,7 +604,7 @@
      "F4",
      "A",
      "",
-     "20.5%",
+     "20.6%",
      "",
      "−$0.6M"
     ],

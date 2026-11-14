@@ -29,7 +29,7 @@ label positions and the exact text per view: `rebuild-v10-spec.json`.
 | 9 | Build your own | done | 14 Nov | 42e280e | Build on the comp with package A picked in Low, Expected and High, with nothing picked, over the budget and with a broken rule: every text row within 2 px, bars and boxes within about 2 px, the empty state shows the rules sentence once and no numbers, the saved selection survives a reload, Space on a tile changes the plan and leaves the table's ten rows; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Deneb and the waterfalls are gone. Outside 2 px: the table's header words 9.2 px high, its last column 3 px right, A's end label 5 px high. Three things for Bjorn (open question 8): the bars scroll from eight picked moves on, the zero line of the bars runs under the empty rows, a plan beyond $62M has no dot. Bjorn was not needed in Desktop |
 | 10 | Tooltips, alt text, tab order | done | 14 Nov | 7cee2a7 | The Tab key ran backwards on both pages (Desktop goes from the highest `tabOrder` down): turned round, and walked with real keys in the designed order. `tt-package` with the R-TT-1 sentence and a native moves table, the glossary in the report's words, points only in every tooltip, `tt-f1` to `tt-f4` gone. Alt texts reviewed in three cases: one raised an engine error, one printed a raw number, four table texts shortened; `a11y_check` 0, 766 number checks and the text diff pass, Microsoft's validator 0 errors. Both passes by script (real keys, the accessibility tree), not by ear; four things for Bjorn (open question 9). Bjorn was not needed in Desktop |
 | 11 | Final checks and the FinalV3 render set | done | 14 Nov | 892e588 | The submission prune (14163ef): 333 of 600 measures and 29 of 35 tables stay, and the committed model is that model (`sketch_model.py --submission`; the three sketches need the full build). `build_checks` 6 of 6 with the new reachability gate, 766 number checks, `a11y_check` 0, Microsoft's validator 0 errors, compliance (R-X-2) 5 of 5 by script plus package A in the engine. Render set FinalV3: 20 renders with their comp views and a README that lists every deviation; nothing new outside 2 px, and the prune changed no pixel. Not seen in this session: the header artwork and a real click on the page buttons (step 12). One question for Bjorn (open question 10). Bjorn was not needed in Desktop |
-| 12 | Publish to Web gate (Bjorn publishes), then submit | doing | 14 Nov | 437f80c | Publish 2 verified signed out (en, nl, de; 1920 and 1366; touch; Tab): the mouse reaches every live visual, Toronto's dot opens its tooltip, the tabs work on a laptop, a click filters nothing, nl and de equal en to the pixel. One more defect found and fixed: the header strip of a hovered or clicked table painted white over the line above it (theme, strip without fill). **Waits for Bjorn:** Publish a third time from the copy; then the gate runs once more |
+| 12 | Publish to Web gate (Bjorn publishes), then submit | doing | 14 Nov | c8785fd | Publish 2 verified signed out (en, nl, de; 1920 and 1366; touch; Tab): the mouse reaches every live visual, a click filters nothing, nl and de equal en to the pixel. Since then, not yet published: the header strip without fill, and Bjorn's decisions of 14 Nov (the caption's second sentence gone, the model trimmed to what the report reads: 25 tables, 125 columns, engine checks 766 and 139 all ok; six waivers and a white seam in the plan bar). **Waits for Bjorn:** Publish a third time from the new copy window; then the gate runs once more |
 
 Status values: `todo`, `doing` (stopped mid-step; see its log), `done`, `blocked` (needs Bjorn).
 
@@ -1420,9 +1420,37 @@ header and its two icons stay (doc 21: kept for "Show as a table"), the strip ha
 (`strip_check` 0, `a11y_check` 0, `schema_check` 196 files, `compliance_check` 5 of 5, Microsoft's validator 0 errors).
 The fix is in the publish copy and reloaded in the open Desktop window.
 
-*Waits for Bjorn:* **Publiceren** a third time from the window "Goodnight Inn", over the same report, then say so.
-The session waits for the link to serve it (`meta`), runs `gate.py` once more and looks at a hovered and a clicked
-table.
+*Bjorn's decisions (14 Nov, evening), built before publish 3 (`c8785fd` and the commit after it).* The table at
+the head of "Open questions" lists every answer. Three of them changed the entry:
+
+1. **The hero caption** is one sentence now: "A year on cost = what a move adds to operating profit in 2032 ÷ what it
+   costs." (generator, spec, comp).
+2. **The model holds only what the report reads.** `tools/model_trim.py`, run by `sketch_model.py --submission` after
+   the measure prune: the organisers' tables `FinanceAssumptions`, `GuestComplaints`, `GuestSegments` and `Region` leave
+   with their six relationships, and 49 columns in 14 tables: a source column leaves the table and its Power Query
+   (`Table.SelectColumns` before the types), a calculated column leaves with its DAX, a column of a calculated table
+   leaves through a `SELECTCOLUMNS` around the table's DAX (`BuildMove`, `Finding`, `Package`, `ProjectCashflow`).
+   Left: 25 tables, 333 measures, 125 columns, 15 relationships. What "read" means is in the module's head; on this
+   model the rule gives exactly the engine's own list (`INFO.CALCDEPENDENCY` from the report's bindings: 124 columns
+   and the measure table's placeholder). `sketch_model.report_refs` now resolves a filter's table aliases. Gate:
+   `build_checks.py` check 6 (nothing unused left). `compliance_check.py` counts the organisers' sheets that are read
+   (12 of the 16) instead of asking for sixteen.
+   *Verified in the engine* (Desktop 2.159, the publish copy reopened without cache and refreshed in 6 s): no table in
+   error; `number_checks` 766 of 766, `build_checks` 139 of 139 (no known difference any more), `alt_texts` 0 flags.
+   The first try failed in the engine and was corrected: a calculated column on a calculated table (`Package[Preset]`,
+   `Package[Draw Rank]`) is not in the table's DAX and must not be named in the `SELECTCOLUMNS`.
+3. **The waivers** (`project-state/pbir-detect-waivers.yaml`): the comp's 1 px grid on both pages (position only), the
+   two Night-zone text tokens on the Back button, the scenario pills and the tabs (14.4:1 and 10.2:1 on Night), and
+   the plan bar's `#717B8B` (4.3:1 on white). `pbir_detect`: 15 findings, 0 unwaived. Not waived but fixed: tranche 3
+   beside "not needed" is 1.2:1, so `ch_plan_bar` has `stackedGapSize` 3 (a white seam; the comp drew none). A
+   deviation from the comp, made for Bjorn's accessibility condition; seen in Desktop (bridge capture).
+
+File checks after all of it: `strip_check` 0, `a11y_check` 0, `schema_check` 196 files, `compliance_check` 5 of 5,
+`validate_tmdl --strict` 0 errors (13 expected warnings), Microsoft's validator 0 errors.
+
+*Waits for Bjorn:* **Publiceren** a third time, from the NEW window "Goodnight Inn" (the copy was written again for
+the trimmed model), over the same report, then say so. The session waits for the link to serve it (`meta`), runs
+`gate.py` once more and looks at a hovered and a clicked table.
 
 *Open.* The Desktop window with the publish copy is left open for Bjorn's Publish click; the session that finishes
 this step closes it. The `.pbix` for the submission comes from the same copy (Bestand > Opslaan als), after the
@@ -1440,6 +1468,19 @@ execute it" to keep going, or name a step file.
 ## Open questions
 
 A session that meets a question only Bjorn can answer adds it here and sets its step to `blocked`.
+
+**Bjorn's answers of 14 Nov 2026 (during build step 12). All eleven questions are closed.**
+
+| Question | Answer | What was done |
+|---|---|---|
+| 1 · 20.5 % or 20.6 % | 20.6 % | The spec's text block says 20.6 % now; the known-difference lists of `build_checks.py` and `number_checks.py` are empty |
+| 2, 4, 5, 6, 7, 8, 9b to 9d · the deviations from the comp | all accepted | nothing to change |
+| 3 · the hero caption's second sentence | drop it, now | "Late moves are still ramping up in 2032." is gone from the generator, the spec and the comp |
+| 9a · the Tab direction | OK | confirmed in the published report in step 12: the logo takes the focus first |
+| Step 7 · the cut line | confirmed | native hero table, native selector, native F4 |
+| 10a · the model | "cleaned and trimmed so that only what is used in the report is there; anything else can be dropped" | `model_trim.py` after the measure prune: 4 organisers' tables and 49 columns leave; 25 tables, 333 measures, 125 columns, 15 relationships. The three sketches of 6 Nov still need the full build (`sketch_model.py` without the flag) |
+| 10b · the detector's findings | "only waived if it doesn't jeopardize quality or accessibility" | six waivers in `pbir-detect-waivers.yaml`, each with why it does not (0 unwaived). Where accessibility was at stake, a fix instead: the plan bar's segments got a white seam of 3 px (tranche 3 beside "not needed" is 1.2:1) |
+| 11 · the bubble "Click here to follow" | leave it | nothing to change |
 
 1. **20.5 % or 20.6 % for the kiosks (from step 2, needed in step 4; no step is blocked by it).** The value is exactly
    20.55 %. The approved text says "the kiosks earn 20.5% a year on cost"; Power BI's own rounding gives 20.6 %, the
