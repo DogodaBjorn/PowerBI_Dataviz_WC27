@@ -8,7 +8,12 @@
   4. exactly one measure holds the release rule (Gate Rule (text)), and no other measure or text box contains
      "release", "revisit" or "broken even";
   5. every text measure of sketch_model.TEXT_SLOTS, evaluated in Low, Expected and High (and Build with nothing picked),
-     equals the approved text of design-prototypes/rebuild-v10-spec.json -> text (U+2060 stripped first).
+     equals the approved text of design-prototypes/rebuild-v10-spec.json -> text (U+2060 stripped first);
+  6. the reachability gate of the submission prune (doc 21 section 10.4, build step 11): 0 bound measures missing,
+     0 measures left that the report cannot reach, 0 helper tables left that nothing reads. It fails on the full model
+     (`sketch_model.py` without `--submission`): that build is for the direction sketches, not for the entry.
+
+Checks 2, 3 and 4 read the measures the model on disk holds (after the prune: the 333 the report reaches).
 
 Checks 1 to 4 read the files only. Check 5 asks a running Desktop that has the model open and refreshed (in practice the
 throwaway copy) through run_dax.ps1:
@@ -58,9 +63,6 @@ def dax_literals(dax):
     return [s.replace('""', '"') for s in re.findall(r'"((?:[^"]|"")*)"', dax)]
 
 
-TEXT_MEASURES = [(n, d) for n, d, f, *_ in sm.MEASURES if f == sm.TXT]
-
-
 # ---------------------------------------------------------------- the model and the report on disk
 def tmdl_name(raw):
     raw = raw.strip()
@@ -80,6 +82,8 @@ for f in (MODEL / "tables").glob("*.tmdl"):
             model[tbl][mm.group(1) + "s"].add(tmdl_name(mm.group(2)))
 all_measures = set().union(*(t["measures"] for t in model.values()))
 all_columns = set().union(*(t["columns"] for t in model.values()))
+ON_DISK = [x for x in sm.MEASURES if x[0] in all_measures]  # the generator's measures that the model on disk holds
+TEXT_MEASURES = [(n, d) for n, d, f, *_ in ON_DISK if f == sm.TXT]
 
 
 def walk(node, refs, texts):
@@ -146,8 +150,8 @@ record("2 R-G2 vocabulary, rebuilt copy (strict)", f"{len(rebuilt)} text measure
 old_m = sorted({n for n, d in TEXT_MEASURES if n not in rebuilt and any(never_hits(lit) for lit in dax_literals(d))})
 GLOSSARY_ONLY = {r"\brun-rate\b", r"\bROI\b|\bIRR\b|\byield\b"}  # R-G2: "allowed only in the glossary" (tt-glossary)
 old_r = sorted({t for t in report_texts if never_hits(t)} | {t for t in gloss_texts if any(pat not in GLOSSARY_ONLY for pat, _ in never_hits(t))})
-results.append(("2 R-G2 vocabulary, old report and old measures (open until step 11)", f"{len(old_m)} measures, {len(old_r)} report strings", "open",
-                "; ".join(old_m[:40]) + (" | report: " + "; ".join(old_r[:20]) if old_r else "")))
+record("2 R-G2 vocabulary, every other text measure and report string", f"{len(old_m)} measures, {len(old_r)} report strings", not old_m and not old_r,
+       "; ".join(old_m[:40]) + (" | report: " + "; ".join(old_r[:20]) if old_r else ""))
 
 # ---------------------------------------------------------------- 3 · no money in $M with two decimals
 FM_EXCEPTION = 'IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" )'  # fm / sfm: two decimals only below $0.05M
@@ -169,8 +173,8 @@ record("3 no two-decimal $M in a text measure", f"{len(TEXT_MEASURES)} text meas
 # ---------------------------------------------------------------- 4 · one release rule
 RULE = r"\breleases?\b"
 OTHER = r"\breleases?\b|\brevisit\b(?! the facts\b)|\bbroken even\b"  # 'Revisit the facts': the old pill's label, no rule (gone in step 6)
-holders = sorted({n for n, d, *_ in sm.MEASURES if any(re.search(RULE, lit, re.IGNORECASE) for lit in dax_literals(d))})
-others = sorted({n for n, d, *_ in sm.MEASURES if n != "Gate Rule (text)" and any(re.search(OTHER, lit, re.IGNORECASE) for lit in dax_literals(d))})
+holders = sorted({n for n, d, *_ in ON_DISK if any(re.search(RULE, lit, re.IGNORECASE) for lit in dax_literals(d))})
+others = sorted({n for n, d, *_ in ON_DISK if n != "Gate Rule (text)" and any(re.search(OTHER, lit, re.IGNORECASE) for lit in dax_literals(d))})
 rep = sorted({t for t in report_texts + gloss_texts if re.search(OTHER, t, re.IGNORECASE)})
 record("4 one release rule", "Gate Rule (text)", holders == ["Gate Rule (text)"] and not others and not rep,
        f"holders {holders}; other measures {others}; report strings {rep}")
@@ -280,6 +284,13 @@ if not STATIC:
     printed = [(k, v) for view in vals for k, v in vals[view].items() if isinstance(v, str) and never_hits(v)]
     record("2 R-G2 vocabulary, printed text (strict)", "every evaluated scalar", not printed, "; ".join(f"{k}: {v[:60]!r}" for k, v in printed))
 
+# ---------------------------------------------------------------- 6 · the reachability gate (submission prune)
+reach = sm.reachability(MODEL, REPORT.parent)
+record("6 reachability (submission prune)", f"{len(reach['bound'])} bound measures, {len(reach['on_disk'])} in the model, {len(model)} tables",
+       not reach["missing"] and not reach["unreachable_left"] and not reach["unread_tables_left"],
+       f"bound and missing: {reach['missing']}; unreachable measures left: {len(reach['unreachable_left'])} {reach['unreachable_left'][:12]}; "
+       f"unread helper tables left: {reach['unread_tables_left']}")
+
 # ---------------------------------------------------------------- report
 fails = [r for r in results if r[2] == "FAIL"]
 lines = [f"build_checks: {len(results)} results, {sum(r[2] == 'ok' for r in results)} ok, {sum(r[2] == 'KNOWN' for r in results)} known, "
@@ -289,7 +300,7 @@ for c, k, st, d in results:
     groups.setdefault(c, []).append(st)
 for c, sts in groups.items():
     lines.append(f"  {('FAIL' if 'FAIL' in sts else 'open' if 'open' in sts else 'ok  ')}  {c}: " + ", ".join(f"{sts.count(s)} {s}" for s in ("ok", "KNOWN", "open", "FAIL") if sts.count(s)))
-for title, st in (("KNOWN (not failures)", "KNOWN"), ("OPEN (expected until the old visuals are gone, step 11)", "open"), ("FAILED", "FAIL")):
+for title, st in (("KNOWN (not failures)", "KNOWN"), ("FAILED", "FAIL")):
     rows = [r for r in results if r[2] == st]
     if rows:
         lines += ["", title]

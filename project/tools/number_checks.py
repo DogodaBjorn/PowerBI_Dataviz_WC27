@@ -211,7 +211,7 @@ q.append("EVALUATE GENERATE ( CROSSJOIN ( SELECTCOLUMNS ( FILTER ( ALL ( Investm
              ("bsort", "LOOKUPVALUE ( BuildMove[Sort], BuildMove[ProjectID], p )"), ("short", "LOOKUPVALUE ( BuildMove[Short Name], BuildMove[ProjectID], p )"),
              ("move_rr", calc("[Move Run-rate (num)]", "BuildMove[ProjectID] = p", SF)), ("move_rr_txt", calc(sm.sfm("[Move Run-rate (num)]"), "BuildMove[ProjectID] = p", SF)),
              ("move_npv_txt", calc(sm.sfm("[Move NPV (num)]"), "BuildMove[ProjectID] = p", SF)),
-             ("move_capex_txt", calc(sm.fm("[Move Capex (num)]"), "BuildMove[ProjectID] = p")), ("move_answers", calc("[Move Answers (text)]", "BuildMove[ProjectID] = p"))]) + " )")
+             ("move_capex_txt", calc("[Move Capex (text)]", "BuildMove[ProjectID] = p")), ("move_answers", calc("[Move Answers (text)]", "BuildMove[ProjectID] = p"))]) + " )")
 # T1 · scalars per scenario, as numbers and as the formatters print them
 q.append("EVALUATE GENERATE ( " + SCEN_T + ", VAR s = [s] RETURN " + row(
     [(n, calc(f"[{n}]", SF)) for n in S_NUM]
@@ -240,7 +240,15 @@ q.append(f"EVALUATE SUMMARIZECOLUMNS ( Hotels[Renovation Age Sort], {GI_H}, \"v\
 
 with tempfile.TemporaryDirectory() as td:
     qf, rf = Path(td) / "q.dax", Path(td) / "r.json"
-    qf.write_text("\n".join(q) + "\n", encoding="utf-8")
+    # after the submission prune the model no longer holds the measures only this script reads (the hero's domain,
+    # tranche 1 on its own): those are defined in the query, from the generator's own DAX (sketch_model.query_defines)
+    tmdl = (ROOT / "project" / "pbip" / "PillowKey.SemanticModel" / "definition" / "tables" / "_Measures.tmdl").read_text(encoding="utf-8")
+    on_disk = {mt.group(1)[1:-1].replace("''", "'") if mt.group(1).startswith("'") else mt.group(1)
+               for mt in re.finditer(r"(?m)^\tmeasure\s+('(?:[^']|'')*'|[^\s=]+)", tmdl)}
+    defines = sm.query_defines("\n".join(q), on_disk)
+    if defines:
+        print(f"number_checks: {defines.count('MEASURE _Measures[')} measures defined in the query (not in the model on disk)")
+    qf.write_text(defines + "\n".join(q) + "\n", encoding="utf-8")
     run = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(HERE / "run_dax.ps1"), "-Port", str(PORT), "-Query", str(qf), "-Out", str(rf)],
                          capture_output=True, text=True, encoding="utf-8", errors="replace")
     print(run.stdout.strip())

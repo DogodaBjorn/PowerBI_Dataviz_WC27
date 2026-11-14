@@ -2749,9 +2749,9 @@ PRESET_COL = (
 )
 
 
-def measures_table():
+def measures_table(measures=None):
     out = ["/// Measure home for the three sketches. Base measures read columns; everything else reads measures.", "table _Measures", f"\tlineageTag: {tag('table._Measures')}", ""]
-    for name, dax, fmt, folder, doc in MEASURES:
+    for name, dax, fmt, folder, doc in (MEASURES if measures is None else measures):
         out.append(f"\t/// {doc}")
         out.append(f"\tmeasure {q(name)} = {dax}")
         if name not in FMT_DEFS:  # never both: the engine refuses a measure with a static and a dynamic format string
@@ -2806,11 +2806,125 @@ def sort_by(text, *pairs):
     return text
 
 
+# ---------------------------------------------------------------- the submission prune (doc 21 section 10.4, build step 11)
+# `sketch_model.py --submission` writes the model the entry ships with: only the measures the report
+# GoodnightInn-opzet.Report can reach, and no helper table that nothing left reads. The default build keeps everything,
+# so the three direction sketches still open. The script decides, not a list: reachability() is also the gate of
+# build_checks.py (check 6: 0 bound measures missing, 0 unreachable measures left, 0 unread helper tables left).
+OPZET_REPORT = ROOT / "project" / "pbip" / "GoodnightInn-opzet.Report"
+# every table the generator adds to the organisers' sixteen, in the order model.tmdl lists them
+ADDED_TABLES = ["_Measures", "ProjectCashflow", "HotelOutlook", "Timeline", "PlanYear", "BridgeStep", "FolioLine", "KpiLine", "Package", "PackageProject", "PlanSelector",
+                "ScatterView", "BuildMove", "BuildBar", "TTMove", "BuildPoint", "MoveDecision", "Finding", "WaitOption"]
+
+
+def report_refs(report_dir=None):
+    """Every field a report binds: {(kind, table, name)} over all its JSON (visuals, filters, bookmarks, formatting)."""
+    refs = set()
+
+    def walk(node):
+        if isinstance(node, dict):
+            for kind in ("Measure", "Column"):
+                v = node.get(kind)
+                if isinstance(v, dict) and "Property" in v and isinstance(v.get("Expression"), dict):
+                    refs.add((kind, v["Expression"].get("SourceRef", {}).get("Entity") or "", v["Property"]))
+            for v in node.values():
+                walk(v)
+        elif isinstance(node, list):
+            for v in node:
+                walk(v)
+
+    for f in (Path(report_dir or OPZET_REPORT) / "definition").rglob("*.json"):
+        walk(json.loads(f.read_text(encoding="utf-8")))
+    return refs
+
+
+def _tmdl_code(text):
+    """A table's TMDL without its /// descriptions: a description may name a table it does not read."""
+    return "\n".join(ln for ln in text.splitlines() if not ln.lstrip().startswith("///"))
+
+
+def measure_deps(text, names, tables):
+    """Measures a DAX text reads: every [Name] that is a measure name and not a column of a table (Table[Name])."""
+    import re
+    out = set()
+    for mt in re.finditer(r"(?:'((?:[^']|'')+)'|\b([A-Za-z_]\w*))?\[([^\[\]]+)\]", text):
+        if mt.group(3) in names and (mt.group(1) or mt.group(2)) not in tables:
+            out.add(mt.group(3))
+    return out
+
+
+def table_deps(text, tables):
+    import re
+    return {t for t in tables if re.search(r"(?<![\w'])'?" + re.escape(t) + r"'?(?![\w'])", text)}
+
+
+def reachability(definition=None, report_dir=None):
+    """What the report reaches in the model whose table files stand in <definition>/tables.
+    Roots: the measures and tables the report binds, and the measures a calculated column or table reads. From there
+    through every measure's DAX and dynamic format string, and through the DAX of every table kept. The organisers'
+    tables and _Measures always stay."""
+    definition = Path(definition or MODEL / "definition")
+    files = {f.stem: _tmdl_code(f.read_text(encoding="utf-8")) for f in (definition / "tables").glob("*.tmdl")}
+    tables = set(files)
+    dax = {n: d + "\n" + FMT_DEFS.get(n, "") for n, d, *_ in MEASURES}
+    names = set(dax)
+    refs = report_refs(report_dir)
+    bound = {p for k, e, p in refs if k == "Measure"}
+    keep_m, todo = set(), set(bound)
+    for t, text in files.items():
+        if t != "_Measures":
+            todo |= measure_deps(text, names, tables)
+    while todo:
+        n = todo.pop()
+        if n in keep_m or n not in names:
+            continue
+        keep_m.add(n)
+        todo |= measure_deps(dax[n], names, tables)
+    keep_t = set(SHIPPED) | {"_Measures"}
+    todo = {e for k, e, p in refs if e} | table_deps("\n".join(dax[n] for n in keep_m), tables)
+    for t in SHIPPED:  # a calculated column on an organisers' table may read a helper table
+        todo |= table_deps(files.get(t, ""), tables)
+    while todo:
+        t = todo.pop()
+        if t in keep_t or t not in tables:
+            continue
+        keep_t.add(t)
+        todo |= table_deps(files[t], tables)
+    on_disk = set()
+    if "_Measures" in files:
+        import re
+        on_disk = {(mt.group(1)[1:-1].replace("''", "'") if mt.group(1).startswith("'") else mt.group(1))
+                   for mt in re.finditer(r"(?m)^\tmeasure\s+('(?:[^']|'')*'|[^\s=]+)", files["_Measures"])}
+    return {"bound": bound, "missing": sorted(bound - on_disk), "keep_measures": keep_m, "keep_tables": keep_t,
+            "unreachable_left": sorted(on_disk - keep_m), "unread_tables_left": sorted(tables - keep_t),
+            "on_disk": on_disk}
+
+
+def query_defines(query_text, model_measures):
+    """A DEFINE block for a DAX query that reads measures the model on disk no longer has (the submission prune):
+    each missing measure, and what it reads, as a query measure from the generator's own DAX. Empty when none is missing.
+    The check scripts put it in front of their queries, so they run on the full model and on the pruned one alike."""
+    dax = {n: d for n, d, *_ in MEASURES}
+    names, tables = set(dax), set(SHIPPED) | set(ADDED_TABLES)
+    need, todo = [], measure_deps(query_text, names, tables) - set(model_measures)
+    while todo:
+        n = todo.pop()
+        if n in need:
+            continue
+        need.append(n)
+        todo |= measure_deps(dax[n], names, tables) - set(model_measures) - set(need)
+    if not need:
+        return ""
+    return "DEFINE\n" + "\n".join(f"MEASURE _Measures[{n}] = {dax[n]}" for n in sorted(need)) + "\n"
+
+
 def main():
     global MODEL
     import sys
-    if len(sys.argv) > 2 and sys.argv[1] == "--out":  # dry run into another folder (validation outside project/pbip)
-        MODEL = Path(sys.argv[2]) / "PillowKey.SemanticModel"
+    submission = "--submission" in sys.argv
+    args = [a for a in sys.argv if a != "--submission"]
+    if len(args) > 2 and args[1] == "--out":  # dry run into another folder (validation outside project/pbip)
+        MODEL = Path(args[2]) / "PillowKey.SemanticModel"
     if MODEL.exists():
         import shutil
         shutil.rmtree(MODEL / "definition", ignore_errors=True)
@@ -2825,14 +2939,18 @@ def main():
       f"\tlineageTag: {tag('expr.DataFile')}\n\n"
       "\tannotation PBI_ResultType = Text\n\n"
       "\tannotation PBI_NavigationStepName = Navigation\n")
-    tables = list(SHIPPED) + ["_Measures", "ProjectCashflow", "HotelOutlook", "Timeline", "PlanYear", "BridgeStep", "FolioLine", "KpiLine", "Package", "PackageProject", "PlanSelector", "ScatterView", "BuildMove", "BuildBar", "TTMove", "BuildPoint", "MoveDecision", "Finding", "WaitOption"]
-    model = ["model Model", "\tculture: en-US", "\tdefaultPowerBIDataSourceVersion: powerBI_V3", "\tsourceQueryCulture: en-US", "\tdataAccessOptions", "\t\tlegacyRedirects", "\t\treturnErrorValuesAsNull", "",
-             "queryGroup Facts", "", "\tannotation PBI_QueryGroupOrder = 0", "", "queryGroup Dimensions", "", "\tannotation PBI_QueryGroupOrder = 1", "",
-             "annotation __PBI_TimeIntelligenceEnabled = 0", "",
-             "annotation PBI_QueryOrder = [" + ",".join(f'"{t}"' for t in ["DataFile"] + list(SHIPPED) + ["_Measures"]) + "]", "",
-             'annotation PBI_ProTooling = ["DevMode"]', ""]
-    model += [f"ref table {q(t)}" for t in tables]
-    w(d / "model.tmdl", "\n".join(model) + "\n")
+    tables = list(SHIPPED) + ADDED_TABLES
+
+    def write_model(tables):
+        model = ["model Model", "\tculture: en-US", "\tdefaultPowerBIDataSourceVersion: powerBI_V3", "\tsourceQueryCulture: en-US", "\tdataAccessOptions", "\t\tlegacyRedirects", "\t\treturnErrorValuesAsNull", "",
+                 "queryGroup Facts", "", "\tannotation PBI_QueryGroupOrder = 0", "", "queryGroup Dimensions", "", "\tannotation PBI_QueryGroupOrder = 1", "",
+                 "annotation __PBI_TimeIntelligenceEnabled = 0", "",
+                 "annotation PBI_QueryOrder = [" + ",".join(f'"{t}"' for t in ["DataFile"] + list(SHIPPED) + ["_Measures"]) + "]", "",
+                 'annotation PBI_ProTooling = ["DevMode"]', ""]
+        model += [f"ref table {q(t)}" for t in tables]
+        w(d / "model.tmdl", "\n".join(model) + "\n")
+
+    write_model(tables)
 
     for name, cols in SHIPPED.items():
         text = shipped_table(name, cols)
@@ -2953,14 +3071,35 @@ def main():
         ("HotelOutlook", "HotelID", "Hotels", "HotelID"),
         ("PackageProject", "PackageID", "Package", "PackageID"), ("PackageProject", "ProjectID", "InvestmentProjects", "ProjectID"),
     ]
-    out = []
-    for ft, fc, tt, tc in rels:
-        out.append(f"relationship {tag('rel.' + ft + fc + tt + tc)}")
-        out.append(f"\tfromColumn: {q(ft)}.{q(fc)}")
-        out.append(f"\ttoColumn: {q(tt)}.{q(tc)}")
-        out.append("")
-    w(d / "relationships.tmdl", "\n".join(out))
-    print(f"model written: {len(tables)} tables, {len(MEASURES)} measures, {len(rels)} relationships")
+    def write_rels(rels):
+        out = []
+        for ft, fc, tt, tc in rels:
+            out.append(f"relationship {tag('rel.' + ft + fc + tt + tc)}")
+            out.append(f"\tfromColumn: {q(ft)}.{q(fc)}")
+            out.append(f"\ttoColumn: {q(tt)}.{q(tc)}")
+            out.append("")
+        w(d / "relationships.tmdl", "\n".join(out))
+
+    write_rels(rels)
+    measures = MEASURES
+    if submission:
+        # the prune reads the full model just written, then rewrites what it shortens (lineage tags come from names,
+        # so a kept object is byte for byte the object of the full build)
+        r = reachability(d)
+        assert not r["missing"], f"the report binds measures the model does not have: {r['missing']}"
+        measures = [x for x in MEASURES if x[0] in r["keep_measures"]]
+        dropped = [t for t in tables if t not in r["keep_tables"]]
+        tables = [t for t in tables if t in r["keep_tables"]]
+        rels = [x for x in rels if x[0] in r["keep_tables"] and x[2] in r["keep_tables"]]
+        for t in dropped:
+            (d / "tables" / f"{t}.tmdl").unlink()
+        w(d / "tables" / "_Measures.tmdl", measures_table(measures))
+        write_model(tables)
+        write_rels(rels)
+        left = reachability(d)
+        assert not left["missing"] and not left["unreachable_left"] and not left["unread_tables_left"], left
+        print(f"submission prune: {len(MEASURES) - len(measures)} unreachable measures and {len(dropped)} unread tables left out ({', '.join(dropped)})")
+    print(f"model written: {len(tables)} tables, {len(measures)} measures, {len(rels)} relationships")
 
 
 if __name__ == "__main__":
