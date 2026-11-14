@@ -28,7 +28,7 @@ GI = 'InvestmentProjects[Brand] = "Goodnight Inn", Brands[Brand] = "Goodnight In
 CONTEXT = {
     "p1-brand-review": "",
     "p2-investment-strategy": GI,
-    "p2-investment-strategy|Build with package A picked": GI + ', TREATAS ( { "Booking app", "Revenue management", "Kiosks at 20 desks" }, BuildMove[Short Name] )',
+    "p2-investment-strategy|Build with package A picked": GI + ', TREATAS ( { "Booking app & rates", "Revenue management", "Kiosks, 20 busiest" }, BuildMove[Short Name] )',
     "tt-package": 'TREATAS ( { LOOKUPVALUE ( Package[PackageID], Package[Preset], "A" ) }, Package[PackageID] )',
     "tt-year": "'Date'[Year] = 2030",
     "tt-f3-band": 'Brands[Brand] = "Goodnight Inn", Hotels[Renovation Age Sort] = 3',

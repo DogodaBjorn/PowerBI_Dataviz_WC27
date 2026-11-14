@@ -40,6 +40,7 @@
       "c_plan_t3_2",
       "c_plan_t3_3",
       "c_plan_t4",
+      "c_plan_t4_2",
       "ch_plan_bar",
       "c_plan_gate",
       "ch_plan_cum",
@@ -183,7 +184,7 @@
           },
           "c_hero_caption": {
             "singleVisual": {
-              "visualType": "textbox"
+              "visualType": "cardVisual"
             }
           },
           "img_rec_chip": {
@@ -277,6 +278,11 @@
             }
           },
           "c_plan_t4": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_t4_2": {
             "singleVisual": {
               "visualType": "cardVisual"
             }

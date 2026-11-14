@@ -31,7 +31,7 @@ table WaitOption
 	partition WaitOption = calculated
 		mode: import
 		source = ```
-				DATATABLE ( "Key", STRING, "Title", STRING, "Sort", INTEGER, { { "B", "B · Breakfast instead of kiosks", 1 }, { "T2", "Tranche 2 · Airport extensions, +80 rooms", 2 }, { "T3", "Tranche 3 · The refresh of the 10 oldest hotels (in package C)", 3 } } )
+				DATATABLE ( "Key", STRING, "Title", STRING, "Sort", INTEGER, { { "B", "B · Breakfast instead of kiosks", 1 }, { "T2", "Tranche 2 · Airport extensions, +80 rooms", 2 }, { "T3", "Tranche 3 · Refresh, 10 oldest hotels", 3 } } )
 				```
 
 	annotation PBI_ResultType = Table

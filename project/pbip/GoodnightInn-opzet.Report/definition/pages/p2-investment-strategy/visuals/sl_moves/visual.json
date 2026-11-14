@@ -698,7 +698,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Booking app'"
+                                "Value": "'Booking app & rates'"
                               }
                             }
                           ],
@@ -712,7 +712,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Kiosks at 20 desks'"
+                                "Value": "'Kiosks, 20 busiest'"
                               }
                             }
                           ]

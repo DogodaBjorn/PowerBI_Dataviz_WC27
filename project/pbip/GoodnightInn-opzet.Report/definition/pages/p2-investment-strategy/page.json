@@ -305,6 +305,11 @@
     },
     {
       "source": "tbl_hero",
+      "target": "c_plan_t4_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
       "target": "ch_plan_bar",
       "type": "NoFilter"
     },
@@ -711,6 +716,11 @@
     {
       "source": "tbl_ledger",
       "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "c_plan_t4_2",
       "type": "NoFilter"
     },
     {
@@ -1130,6 +1140,11 @@
     },
     {
       "source": "ch_plan_bar",
+      "target": "c_plan_t4_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
       "target": "c_plan_gate",
       "type": "NoFilter"
     },
@@ -1536,6 +1551,11 @@
     {
       "source": "ch_plan_cum",
       "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "c_plan_t4_2",
       "type": "NoFilter"
     },
     {
@@ -1950,6 +1970,11 @@
     },
     {
       "source": "hero_s_packages",
+      "target": "c_plan_t4_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
       "target": "ch_plan_bar",
       "type": "NoFilter"
     },
@@ -2356,6 +2381,11 @@
     {
       "source": "hero_s_packages_named",
       "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "c_plan_t4_2",
       "type": "NoFilter"
     },
     {
@@ -2770,6 +2800,11 @@
     },
     {
       "source": "hero_s_packages_letters",
+      "target": "c_plan_t4_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
       "target": "ch_plan_bar",
       "type": "NoFilter"
     },
@@ -3176,6 +3211,11 @@
     {
       "source": "tbl_waits",
       "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "c_plan_t4_2",
       "type": "NoFilter"
     },
     {
@@ -3590,6 +3630,11 @@
     },
     {
       "source": "ch_cmp_alts",
+      "target": "c_plan_t4_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
       "target": "ch_plan_bar",
       "type": "NoFilter"
     },
@@ -3996,6 +4041,11 @@
     {
       "source": "tbl_moves",
       "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "c_plan_t4_2",
       "type": "NoFilter"
     },
     {
@@ -4410,6 +4460,11 @@
     },
     {
       "source": "ch_build_bars",
+      "target": "c_plan_t4_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
       "target": "ch_plan_bar",
       "type": "NoFilter"
     },
@@ -4816,6 +4871,11 @@
     {
       "source": "ch_cmp_build",
       "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "c_plan_t4_2",
       "type": "NoFilter"
     },
     {
@@ -5230,6 +5290,11 @@
     },
     {
       "source": "hero_s_packages_hover",
+      "target": "c_plan_t4_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
       "target": "ch_plan_bar",
       "type": "NoFilter"
     },
@@ -5636,6 +5701,11 @@
     {
       "source": "hero_s_packages_build",
       "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_plan_t4_2",
       "type": "NoFilter"
     },
     {
@@ -6050,6 +6120,11 @@
     },
     {
       "source": "hero_s_packages_you",
+      "target": "c_plan_t4_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_you",
       "target": "ch_plan_bar",
       "type": "NoFilter"
     },
@@ -6456,6 +6531,11 @@
     {
       "source": "sl_moves",
       "target": "c_plan_t4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "sl_moves",
+      "target": "c_plan_t4_2",
       "type": "NoFilter"
     },
     {

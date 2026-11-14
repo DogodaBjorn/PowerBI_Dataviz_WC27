@@ -111,7 +111,7 @@
                     }
                   },
                   {
-                    "value": "  net present value: benefits minus capex and disruption through 2032, in 2025 dollars at the organisers' rate.",
+                    "value": "  net present value: benefits minus capex and disruption through 2032, in 2025 dollars at 8%.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -153,7 +153,7 @@
                     }
                   },
                   {
-                    "value": "  from that year on, the cumulative net impact, undiscounted, is above zero.",
+                    "value": "  from that year on, cumulative cash (the yearly net impact added up, not discounted) is above zero. It ends above NPV, which discounts each year at 8%.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -174,7 +174,7 @@
                     }
                   },
                   {
-                    "value": "  the operating profit a move adds in a full year once it is live, measured in 2032 (its run-rate).",
+                    "value": "  the operating profit a move adds in a full year once it is live, after its running costs, measured in 2032 (its run-rate).",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",

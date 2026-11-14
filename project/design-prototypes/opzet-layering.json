@@ -539,6 +539,18 @@
       "z": 36200,
       "tabOrder": -36201
     },
+    "c_plan_t4_2": {
+      "z": 37100,
+      "tabOrder": -37101
+    },
+    "ch_plan_cum_t1": {
+      "z": 39800,
+      "tabOrder": -39801
+    },
+    "ch_plan_cum_t2": {
+      "z": 39900,
+      "tabOrder": -39901
+    },
     "hero_s_packages_you": {
       "z": 47000,
       "tabOrder": -47001

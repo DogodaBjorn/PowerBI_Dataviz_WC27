@@ -40,7 +40,7 @@ table BuildBar
 		mode: import
 		source = ```
 				VAR Proj = FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" )
-				VAR Moves = SELECTCOLUMNS ( Proj, "ProjectID", InvestmentProjects[ProjectID], "Name", InvestmentProjects[Short Name], "Pad", BLANK (), "Name Px", SWITCH ( InvestmentProjects[Short Name], "Booking app", 87, "Revenue management", 156, "Kiosks at 20 desks", 126, "Breakfast upgrade", 126, "Gatwick +40 rooms", 137, "Toronto +40 rooms", 137, "Kingston +40 rooms", 143, "Energy programme", 135, "Boston new hotel", 120, "Refresh 10 oldest", 121, LEN ( InvestmentProjects[Short Name] ) * 7.6 ) )
+				VAR Moves = SELECTCOLUMNS ( Proj, "ProjectID", InvestmentProjects[ProjectID], "Name", InvestmentProjects[Short Name], "Pad", BLANK (), "Name Px", SWITCH ( InvestmentProjects[Short Name], "Booking app & rates", 142, "Revenue management", 156, "Kiosks, 20 busiest", 122, "Breakfast upgrade", 126, "Gatwick +40 rooms", 137, "Toronto +40 rooms", 137, "Kingston +40 rooms", 143, "Energy programme", 135, "Boston new hotel", 120, "Refresh, 10 oldest", 124, LEN ( InvestmentProjects[Short Name] ) * 7.6 ) )
 				VAR Pads = SELECTCOLUMNS ( GENERATESERIES ( 1, 4, 1 ), "ProjectID", "pad" & [Value], "Name", REPT ( UNICHAR ( 160 ), [Value] ), "Pad", [Value], "Name Px", 0 )
 				RETURN
 				    UNION ( Moves, Pads )

@@ -81,7 +81,7 @@ table InvestmentProjects
 		sourceColumn: DependsOn
 
 	/// Short label for the plan builder and the departures board (Goodnight Inn projects only).
-	column 'Short Name' = SWITCH(InvestmentProjects[ProjectID], "GI-01", "Booking app", "GI-02", "Kiosks at 20 desks", "GI-03", "Energy programme", "GI-04", "Toronto +40 rooms", "GI-05", "Gatwick +40 rooms", "GI-06", "Kingston +40 rooms", "GI-07", "Refresh 10 oldest", "GI-08", "Boston new hotel", "GI-09", "Breakfast upgrade", "GI-10", "Revenue management", InvestmentProjects[ProjectName])
+	column 'Short Name' = SWITCH(InvestmentProjects[ProjectID], "GI-01", "Booking app & rates", "GI-02", "Kiosks, 20 busiest", "GI-03", "Energy programme", "GI-04", "Toronto +40 rooms", "GI-05", "Gatwick +40 rooms", "GI-06", "Kingston +40 rooms", "GI-07", "Refresh, 10 oldest", "GI-08", "Boston new hotel", "GI-09", "Breakfast upgrade", "GI-10", "Revenue management", InvestmentProjects[ProjectName])
 		dataType: string
 		lineageTag: 81538601-0b07-5e7d-8737-df951bf1d8ff
 		summarizeBy: none

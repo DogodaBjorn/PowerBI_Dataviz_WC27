@@ -308,7 +308,7 @@ def p1_visuals():
     # F1 the margin (4.2): the margin after commissions with the commissions band stacked on it
     v += [k("c_f1_kicker", "F1 · THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)", lift=5)]
     v.append(f1_area(P1, "ch_f1_margin"))
-    v.append(note(P1, "c_f1_note", "F1 Note (text)", 3))
+    v.append(note(P1, "c_f1_note", "F1 Note (text)", 4))  # review round 2: the staff-cost sentence is its fourth line, as F2's note has four
     v.append(link_line(P1, "lnk_f1", "→ Page 2: revenue management and the kiosks."))
 
     # F2 the middleman (4.3): two lines named at their ends, no legend and no value axis; the folio under it
@@ -687,14 +687,14 @@ GLOSSARY = ((("Move", "one of the ten investments Goodnight Inn can make."),
              ("Package", "a set of moves funded together. A is the package we recommend."),
              ("Growth", "a move the dataset marks as growth; a package needs at least one."),
              ("Capex", "the one-off investment a move takes; the brand's budget caps what a package may spend."),
-             ("NPV", "net present value: benefits minus capex and disruption through 2032, in 2025 dollars at the organisers' rate."),
+             ("NPV", "net present value: benefits minus capex and disruption through 2032, in 2025 dollars at 8%."),
              ("Pays back by 2032", "the NPV through 2032 is zero or more."),
-             ("Cash positive", "from that year on, the cumulative net impact, undiscounted, is above zero."),
-             ("A year by 2032", "the operating profit a move adds in a full year once it is live, measured in 2032 (its run-rate)."),
+             ("Cash positive", "from that year on, cumulative cash (the yearly net impact added up, not discounted) is above zero. It ends above NPV, which discounts each year at 8%."),
+             ("A year by 2032", "the operating profit a move adds in a full year once it is live, after its running costs, measured in 2032 (its run-rate)."),
              ("A year on cost", "a year by 2032 divided by capex (a yield).")),
             (("Tranche", "a part of the budget, funded by one Board decision."),
              ("The 2028 gate", "the Board meeting in mid-2028 that decides on the next tranche, by the rule on page 2."),
-             ("Low, Expected, High", "the organisers' three scenarios for every move; page 2 follows the one picked under Scenario."),
+             ("Low, Expected, High", "the three cases the investment data gives for every move; page 2 follows the one picked under Scenario."),
              ("Topped 90%", "a month in which a hotel sold 90% or more of its room nights."),
              ("NPS", "net promoter score: promoters minus detractors among surveyed guests, weighted by responses."),
              ("ADR", "average daily rate: room revenue per room night sold."),
@@ -1140,10 +1140,10 @@ def p2_hero():
     s8, s0 = SLOT[P2]["lbl_hero_8"], SLOT[P2]["lbl_hero_0"]
     # the slot map carries the comp's computed x; the generator's own constants must give the same pixels
     assert s8["x"] == round(x8) and s0["x"] + s0["w"] == round(x0), (x8, x0, s8, s0)
-    lab8 = textbox("lbl_hero_8", *at(P2, "lbl_hero_8"), [[("8%: our cost of money", BODY, SPX, INK2, False)]], off_grid=True)
-    lab0 = textbox("lbl_hero_0", *at(P2, "lbl_hero_0"), [[("pays back by 2032 →", BODY, SPX, INK2, False)]], align="right", off_grid=True)
+    lab8 = textbox("lbl_hero_8", *at(P2, "lbl_hero_8"), [[("test 1: above 8%, our cost of money", BODY, SPX, INK2, False)]], off_grid=True)
+    lab0 = textbox("lbl_hero_0", *at(P2, "lbl_hero_0"), [[("test 2: pays back by 2032 →", BODY, SPX, INK2, False)]], align="right", off_grid=True)
     return [title(P2, "c_hero_title", "Hero Title (text)", lift=5), decorative(lab8, 40), decorative(lab0, 41), hero_table(),
-            tb(P2, "c_hero_caption", HERO_CAPTION)]
+            note(P2, "c_hero_caption", "Hero Caption (text)", 1)]  # review round 2: a measure (it names the moves over the budget left)
 
 
 def line_cards(page, name, measures, alt_measure, deco, colour=INK):
@@ -1159,7 +1159,7 @@ def line_cards(page, name, measures, alt_measure, deco, colour=INK):
 
 
 PLAN_FILL = (ACCENT_MARK, INK, "#717B8B", SLATE)  # tranche 1, tranche 2, tranche 3 (Night at 60 % on white), not needed (spec ch_plan_bar)
-PLAN_LINES = {1: 2, 2: 3, 3: 3, 4: 1}             # lines of each segment's label (TEXT_SLOTS)
+PLAN_LINES = {1: 2, 2: 3, 3: 3, 4: 2}             # lines of each segment's label (TEXT_SLOTS)
 # the visual rects that put Power BI's plot on the comp's (PLOT_RECT of step 5), measured on the tile render of step 7.
 # The bar: in its 32 px slot Power BI drew a 22.3 px bar, 8.2 px under the visual's top.
 # (at 42 px high it drew 32.6 px, 9.7 px under the top). The line chart: in its slot (792, 828, 1072, 148) the plot ran
@@ -1404,7 +1404,7 @@ def p2_waits():
 BUILD_HEAD = ("Build your own", "Click a move to add or remove it.")
 # The saved selection of the move selector: package A's three moves, so the state opens on A and "your plan" equals it
 # (doc 21 section 8). Short names, as BuildMove[Short Name] prints them on the tiles.
-A_MOVES = ("Booking app", "Revenue management", "Kiosks at 20 desks")
+A_MOVES = ("Booking app & rates", "Revenue management", "Kiosks, 20 busiest")
 SELECTOR_ALT = "Moves: pick a move to add it to your plan or to take it out; the table beside it gives each move's numbers"
 
 
