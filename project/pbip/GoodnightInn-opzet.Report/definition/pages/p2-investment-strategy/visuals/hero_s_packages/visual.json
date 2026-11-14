@@ -79,6 +79,36 @@
                       "Entity": "_Measures"
                     }
                   },
+                  "Property": "TT Capex (text)"
+                }
+              },
+              "queryRef": "_Measures.TT Capex (text)",
+              "nativeQueryRef": "TT Capex (text)",
+              "displayName": "Capex, exact"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "TT NPV (text)"
+                }
+              },
+              "queryRef": "_Measures.TT NPV (text)",
+              "nativeQueryRef": "TT NPV (text)",
+              "displayName": "NPV through 2032, exact"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "TT Payback (text)"
                 }
               },
@@ -226,25 +256,15 @@
             },
             "start": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter X Start"
+                "Literal": {
+                  "Value": "5000000D"
                 }
               }
             },
             "end": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter X End"
+                "Literal": {
+                  "Value": "62000000D"
                 }
               }
             }
@@ -359,25 +379,15 @@
             },
             "start": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter Y Start"
+                "Literal": {
+                  "Value": "-60000000D"
                 }
               }
             },
             "end": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter Y End"
+                "Literal": {
+                  "Value": "20000000D"
                 }
               }
             }
@@ -490,7 +500,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#8E897D'"
+                      "Value": "'#4B5466'"
                     }
                   }
                 }

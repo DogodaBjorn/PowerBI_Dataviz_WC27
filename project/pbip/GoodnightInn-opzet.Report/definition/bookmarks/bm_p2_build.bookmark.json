@@ -45,17 +45,20 @@
       "ch_plan_cum",
       "c_plan_milestones",
       "c_scatter_title_s",
+      "tag_scatter_s",
+      "c_scatter_sub",
       "hero_s_packages",
-      "hero_s_packages_named",
       "hero_s_packages_build",
+      "hero_s_packages_named",
       "hero_s_packages_hover",
+      "c_waits_head",
+      "tbl_waits",
       "ch_cmp_alts",
+      "tag_cmp_alts",
       "c_you_title",
       "c_you_nums",
       "c_you_rules",
       "ch_cmp_build",
-      "tag_scatter_s",
-      "tag_cmp_alts",
       "tag_cmp_build"
     ],
     "suppressActiveSection": true,
@@ -366,12 +369,17 @@
               "visualType": "cardVisual"
             }
           },
-          "hero_s_packages": {
+          "tag_scatter_s": {
             "singleVisual": {
-              "visualType": "scatterChart"
+              "visualType": "textbox"
             }
           },
-          "hero_s_packages_named": {
+          "c_scatter_sub": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "hero_s_packages": {
             "singleVisual": {
               "visualType": "scatterChart"
             }
@@ -381,14 +389,43 @@
               "visualType": "scatterChart"
             }
           },
+          "hero_s_packages_named": {
+            "singleVisual": {
+              "visualType": "scatterChart"
+            }
+          },
           "hero_s_packages_hover": {
             "singleVisual": {
               "visualType": "scatterChart"
             }
           },
+          "c_waits_head": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tbl_waits": {
+            "singleVisual": {
+              "visualType": "tableEx",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
           "ch_cmp_alts": {
             "singleVisual": {
               "visualType": "lineChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tag_cmp_alts": {
+            "singleVisual": {
+              "visualType": "textbox",
               "display": {
                 "mode": "hidden"
               }
@@ -412,19 +449,6 @@
           "ch_cmp_build": {
             "singleVisual": {
               "visualType": "lineChart"
-            }
-          },
-          "tag_scatter_s": {
-            "singleVisual": {
-              "visualType": "image"
-            }
-          },
-          "tag_cmp_alts": {
-            "singleVisual": {
-              "visualType": "image",
-              "display": {
-                "mode": "hidden"
-              }
             }
           },
           "tag_cmp_build": {

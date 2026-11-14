@@ -22,9 +22,10 @@ slicer, so a bookmark never changes it (fx-focus rules 1-2). Shapes not yet exer
 
 FinalV3 (doc 23, the rebuild to the comp rebuild-comp-v10.html, one step per session): P1 is rebuilt (step 5). P2 runs
 on the v10 slot map since step 6, which built the frame (p2_frame) and the decision card of Recommended
-(p2_decision_card), step 7 the hero table and the capital plan (p2_hero, p2_capital_plan); p2_pending() says what steps 8 and 9 still rebuild:
+(p2_decision_card), step 7 the hero table and the capital plan (p2_hero, p2_capital_plan), step 8 What waits (p2_proof,
+p2_waits); p2_pending() says what step 9 still rebuilds:
   rec    Recommended: A: the hero table and the capital plan (built in step 7), the decision card (built)
-  alts   What waits, and why: the small scatter, the table of what waits, the comparison with A (step 8)
+  alts   What waits, and why: the small scatter, the table of what waits, the comparison with A (built in step 8)
   build  Build your own: the native move selector, your plan, the comparison with A (step 9)
 """
 import copy
@@ -134,11 +135,17 @@ def at(page, name):
     return s["x"], s["y"], s["w"], s["h"], s["z"], s["tab"]
 
 
+# build step 8: the plan dot of the small scatter shares the stack's slot (alts and build) but is drawn in Build only
+STATE_ONLY = {"hero_s_packages_build": ("build",)}
+
+
 def states_of(page, name):
     """The states a visual is shown in (a list), or None when it is always visible. Visuals derived from a slot
     (kpi_occ_label from kpi_occ, hero_packages_hover from hero_packages) share the slot's state; card frames
     (z_card_<id>) and tiles (z_tile_<id>) read the layout's cards and tiles."""
     pg = PAGES[page]
+    if name in STATE_ONLY:
+        return list(STATE_ONLY[name])
     if name.startswith("z_card_"):
         entry = next((c for c in pg.get("cards", []) if c["id"] == name[len("z_card_"):]), {})
     elif name.startswith("z_tile_"):
@@ -844,29 +851,32 @@ def brand_row(page_name, sfx):
     return out
 
 
+# FinalV3 build step 8 (doc 21 7.1, spec charts.hero_s_packages): the proof chart's axes are the spec's, typed once. Every
+# layer carries the same ends and the same tick format (whole $M, sketch_model SUSDM0 / USDM0), so the plot areas match.
+PROOF_X, PROOF_Y = (5_000_000, 62_000_000), (-60_000_000, 20_000_000)
+# The visual rect that puts Power BI's plot on the comp's (PLOT_RECT of step 5): the comp draws the plot at x 144 to 716 and
+# y 280 to 588 of the page (x0 88, x1 w - 12, y0 8, y1 h - 52 inside the slot 56, 272, 672, 368). Measured in build step 8.
+PROOF_RECT = None
+# The A/B/C layer: the lettered discs of the comp (R-W-1, R-W-4), 22 px, the letter in white inside the dot. Doc 21 7.1 keeps
+# the tag under the dot as the fallback if the letters fall beside the dots at this size (NAMED_TAG, measured in step 8).
+NAMED_BUBBLE = -22
+NAMED_TAG = False
+
+
 def scatter_axes(objs):
-    """The scatter's axis ends from measures, shared by all layers so their plot areas match exactly."""
-    objs["categoryAxis"][0]["properties"]["start"] = mtext("Scatter X Start")
-    objs["categoryAxis"][0]["properties"]["end"] = mtext("Scatter X End")
-    objs["valueAxis"][0]["properties"]["start"] = mtext("Scatter Y Start")
-    objs["valueAxis"][0]["properties"]["end"] = mtext("Scatter Y End")
+    """The scatter's axis ends, shared by all layers so their plot areas match exactly."""
+    objs["categoryAxis"][0]["properties"].update({"start": num(PROOF_X[0]), "end": num(PROOF_X[1])})
+    objs["valueAxis"][0]["properties"].update({"start": num(PROOF_Y[0]), "end": num(PROOF_Y[1])})
     return objs
 
 
-NAMED_BUBBLE = {"full": -40, "small": -22}  # size multiplier of the A/B/C layer per stack; the dot sizes come from the Named Point Size measures.
-# Round 5, measured in Desktop: the full stack centres the letters inside its 22 px dots; the small stack puts them UNDER the dots whatever
-# their size (16, 23, 29 px) and caps the dots at 10 px when the multiplier drops to -40. So the small layer labels its dots with a tag:
-# the letter in white on a Night box under the dot (categoryLabels background).
-
-
-def scatter_stack(slot, deco_base, build_layer=False):
-    """The package scatter as layers on one plot area (same axis measures, preventOverflow off on all, so the plot
-    areas match). 1 the cloud: every package but A, B and C, Warm Grey. 2 A, B and C on top with their letters: Power
-    BI draws larger markers first, so a cloud in the same visual painted over B and C (REVIEW M2). 3 a hover layer on
-    top: all 456 packages, fully transparent markers, wired to the tooltip page, so every dot shows its own card
-    (08-verbeterplan V2). Round 4: the same stack twice, full size (hero_packages, rec state) and small
-    (hero_s_packages, alts and build), because a bookmark cannot resize a visual; the small one carries a fourth
-    layer, the plan being built, as one Tangerine dot (build state)."""
+def scatter_stack(slot, deco_base):
+    """The proof chart (R-W-1): the package scatter as layers on one plot area (same axis ends and tick formats,
+    preventOverflow off on all, so the plot areas match). 1 the cloud: every package but A, B and C, Warm Grey. 2 the plan
+    being built, one dot (Build state only; step 9 of doc 23 rebuilds it as the comp's "You"). 3 A, B and C on top with
+    their letters: Power BI draws larger markers first, so a cloud in the same visual painted over B and C (REVIEW M2).
+    4 a hover layer on top: all 456 packages, fully transparent markers, wired to the tooltip page, so every dot shows its
+    own card (08-verbeterplan V2). The band where a package pays back by 2032 is shaded and named at its right end."""
     v = []
     q = {"Category": {"projections": [proj_col("Package", "PackageID")]},
          "X": {"projections": [proj_mea("Package Capex", "Capex")]},
@@ -878,9 +888,9 @@ def scatter_stack(slot, deco_base, build_layer=False):
             "dataPoint": [{"properties": {"fill": fv("Package Point Color")}, "selector": WILD}],
             "bubbles": [{"properties": {"bubbleSize": integer(-40), "markerRangeType": enum("magnitude"), "preventOverflow": b(False)}}], "legend": legend(False),
             "categoryLabels": [{"properties": {"show": b(False)}}],
-            # The verdict line, quieter (08-verbeterplan V3): 1 px in Warm Grey. The band above it, where a package pays
-            # back by 2032, is shaded in Coffee Blue at 90 % transparency and says so at its right end.
-            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(SLATE), "transparency": num(0), "width": num(1), "style": enum("solid"),
+            # The zero line in Dusk (the comp). The band above it, where a package pays back by 2032, is shaded in Coffee
+            # Blue at 90 % transparency (Ice, the spec's #EAF2FB, on white) and says so at its right end.
+            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
                                                     "position": enum("back"), "displayName": text("Pays back by 2032"),
                                                     "dataLabelShow": b(True), "dataLabelText": text("Name"), "dataLabelColor": color(INK2),
                                                     "dataLabelHorizontalPosition": enum("right"), "dataLabelVerticalPosition": enum("above"),
@@ -888,46 +898,48 @@ def scatter_stack(slot, deco_base, build_layer=False):
                                      "selector": {"id": "1"}}]}
     scatter_axes(objs)
     x, y, w, h, z, tab = at(P2, slot)
+    if PROOF_RECT:
+        x, y, w, h = PROOF_RECT
+    place = lambda *a, **k: visual(*a, **k, off_grid=True)  # noqa: E731  (PROOF_RECT is measured, not placed by hand)
     q_cloud = {k: val for k, val in q.items() if k != "Size"}
     o_cloud = copy.deepcopy(objs)
     o_cloud["bubbles"][0]["properties"]["bubbleSize"] = integer(0)
     # The cloud is a tab stop after the A/B/C layer (pass-3 review: the package card is hover-only). Its header gives
     # 'Show as table', and the card's facts ride in its Tooltips well, so a keyboard user reads every package's
-    # payback, range and initiatives there. The hover layer stays out of the tab order (mouse only).
-    q_cloud_kb = {**q_cloud, "Tooltips": {"projections": [proj_mea("TT Payback (text)", "Payback"), proj_mea("TT Range (text)", "NPV in Low, Expected, High"),
+    # capex, NPV, payback, range and initiatives there (the axis measures print whole $M since step 8, so the exact
+    # amounts ride along as text). The hover layer stays out of the tab order (mouse only).
+    q_cloud_kb = {**q_cloud, "Tooltips": {"projections": [proj_mea("TT Capex (text)", "Capex, exact"), proj_mea("TT NPV (text)", "NPV through 2032, exact"),
+                                                          proj_mea("TT Payback (text)", "Payback"), proj_mea("TT Range (text)", "NPV in Low, Expected, High"),
                                                           proj_mea("TT Moves (text)", "Moves and their NPV"), proj_mea("TT Not Included (text)", "Not in it")]}}
-    v.append(bind_alt(visual(slot, "scatterChart", x, y, w, h, z, tab + 1, query=q_cloud_kb, objects=o_cloud, filters=[filter_in("Package", "Preset", [""], "flt_cloud")],
-                             vcos=vco(padding=0)), "Alt Scatter Cloud (text)"))
+    v.append(bind_alt(place(slot, "scatterChart", x, y, w, h, z, tab + 1, query=q_cloud_kb, objects=o_cloud, filters=[filter_in("Package", "Preset", [""], "flt_cloud")],
+                            vcos=vco(padding=0)), "Alt Scatter Cloud (text)"))
     quiet = lambda o: (o["valueAxis"][0]["properties"].__setitem__("gridlineShow", b(False)), o.pop("y1AxisReferenceLine", None), o)[-1]  # noqa: E731
-    # Round 5: the three named dots get their own, near-equal size (Named Point Size) and a multiplier per stack, so
-    # each dot is wide enough for Power BI to centre the letter inside it (at the cloud's sizes B and C were too small
-    # and their letters fell beside the dots; render 10 Nov, Björn's second look).
+    # the plan being built: one dot from the one-row BuildPoint table at (Build Capex, Build NPV), Tangerine, no letter
+    # (white on Tangerine fails 4.5:1). Blank size = no dot while empty. Shown in the Build state only (STATE_ONLY): the comp
+    # draws no "You" in What waits.
+    q4 = {"Category": {"projections": [proj_col("BuildPoint", "Label", display="Your plan")]},
+          "X": {"projections": [proj_mea("Build Capex", "Capex")]}, "Y": {"projections": [proj_mea("Build NPV (sel)", "NPV through 2032")]},
+          "Size": {"projections": [proj_mea("Build Point Size", "Marker size")]}}
+    o4 = quiet(copy.deepcopy(objs))
+    o4["dataPoint"] = [{"properties": {"fill": color(SIGNAL_MARK)}, "selector": WILD}]
+    o4["bubbles"][0]["properties"]["bubbleSize"] = integer(-20)
+    v.append(decorative(place(f"{slot}_build", "scatterChart", x, y, w, h, z + 3, 0, query=q4, objects=o4, vcos=vco(padding=0)), deco_base + 1))
+    # A, B and C: their own, equal size (Named Point Size (small)) so each dot is wide enough for its letter
     q2 = {**q, "Category": {"projections": [proj_col("Package", "Preset", display="Package")]},
-          "Size": {"projections": [proj_mea("Named Point Size (small)" if build_layer else "Named Point Size", "Marker size")]}}
+          "Size": {"projections": [proj_mea("Named Point Size (small)", "Marker size")]}}
     o2 = quiet(copy.deepcopy(objs))
     o2["categoryLabels"] = [{"properties": {"show": b(True), "fontFamily": text(DISPLAY), "fontSize": num(S), "color": color(SURFACE), "bold": b(True)}}]
     o2["dataPoint"] = [{"properties": {"fill": fv("Named Point Color")}, "selector": WILD}]
-    o2["bubbles"][0]["properties"]["bubbleSize"] = integer(NAMED_BUBBLE["small" if build_layer else "full"])
-    if build_layer:  # the tag under the dot (see NAMED_BUBBLE)
-        # Night for all three (a measure-driven box colour was not applied per point, render 10 Nov); white letter 15.8:1
+    o2["bubbles"][0]["properties"]["bubbleSize"] = integer(NAMED_BUBBLE)
+    if NAMED_TAG:  # the fallback of doc 21 7.1: the letter in white on a Night box under the dot
         o2["categoryLabels"][0]["properties"].update({"enableBackground": b(True), "backgroundColor": color(INK), "backgroundTransparency": num(0)})
-    v.append(bind_alt(visual(f"{slot}_named", "scatterChart", x, y, w, h, z + 2, tab, query=q2, objects=o2, filters=[filter_in("Package", "Preset", ["A", "B", "C"], "flt_named")],
-                             vcos=vco(padding=0)), "Alt Scatter (text)"))
-    if build_layer:
-        # the plan being built: one dot from the one-row BuildPoint table at (Build Capex, Build NPV), Tangerine, no
-        # letter (white on Tangerine fails 4.5:1); the comparer's legend names it. Blank size = no dot while empty.
-        q4 = {"Category": {"projections": [proj_col("BuildPoint", "Label", display="Your plan")]},
-              "X": {"projections": [proj_mea("Build Capex", "Capex")]}, "Y": {"projections": [proj_mea("Build NPV (sel)", "NPV through 2032")]},
-              "Size": {"projections": [proj_mea("Build Point Size", "Marker size")]}}
-        o4 = quiet(copy.deepcopy(objs))
-        o4["dataPoint"] = [{"properties": {"fill": color(SIGNAL_MARK)}, "selector": WILD}]
-        o4["bubbles"][0]["properties"]["bubbleSize"] = integer(-20)
-        v.append(decorative(visual(f"{slot}_build", "scatterChart", x, y, w, h, z + 3, 0, query=q4, objects=o4, vcos=vco(padding=0)), deco_base + 1))
+    v.append(bind_alt(place(f"{slot}_named", "scatterChart", x, y, w, h, z + 2, tab, query=q2, objects=o2, filters=[filter_in("Package", "Preset", ["A", "B", "C"], "flt_named")],
+                            vcos=vco(padding=0)), "Alt Scatter (text)"))
     o3 = quiet(copy.deepcopy(o_cloud))
     o3["markers"] = [{"properties": {"transparency": num(100), "borderShow": b(False)}}]
     hv = vco(padding=0)
     hv["visualTooltip"] = [{"properties": {"show": b(True), "type": enum("Canvas"), "section": text(TT)}}]
-    v.append(decorative(visual(f"{slot}_hover", "scatterChart", x, y, w, h, z + 4, 0, query=q_cloud, objects=o3, vcos=hv), deco_base))
+    v.append(decorative(place(f"{slot}_hover", "scatterChart", x, y, w, h, z + 4, 0, query=q_cloud, objects=o3, vcos=hv), deco_base))
     return v
 
 
@@ -1264,27 +1276,129 @@ def p2_capital_plan():
     return v
 
 
+# ---------------------------------------------------------------------- FinalV3 build step 8: What waits, and why
+PROOF_TITLE_DY = 0  # set to the tile render of step 8
+TITLE2_H = 72  # a card that shows two 14 pt lines; it centres them, the comp sets them from the top of the slot (24.9 px a line)
+
+
+def p2_proof():
+    """The proof chart's card, shared by What waits and Build (doc 21 7.1, R-W-1): the two-line title that counts the
+    packages, the hover tag, the subtitle that follows the scenario, and the scatter stack."""
+    t = dyn(P2, "c_scatter_title_s", "Proof Title (text)", size=TITLE_PT, colour=INK, font=DISPLAY)
+    t["position"]["height"] = TITLE2_H
+    t["position"]["y"] = round(SLOT[P2]["c_scatter_title_s"]["y"] + 24.9 - TITLE2_H / 2) + PROOF_TITLE_DY
+    sub = note(P2, "c_scatter_sub", "Proof Subtitle (text)", 1)
+    return [t, hover_tag_text(P2, "tag_scatter_s", "Hover a dot", 21), sub] + scatter_stack("hero_s_packages", 6)
+
+
+WAITS_COLS = (168, 224, 216, 256, 208)  # the spec's construction.tables.tbl_waits (doc 22 section 3)
+# The table rules of build step 6 ("Found", 2): every cell at the top of its row, as the comp sets them here (.pbi.wrap); a
+# ruled row is its lines x 21.28 px plus twice the padding plus 1 px for the rule, the comp's is lines x 21.28 + 12, so the
+# padding is 5.5. The native header grows with the padding (32.6 px + twice the padding, the comp's is 32), so the table
+# starts WAITS_LIFT px above its slot and the first row's rule stays on the comp's line. 2 px wider than its columns (S-2
+# point 4) and 1 px left of the slot (a native cell pads 7.7 px on the left, the comp 5), as the ledger.
+WAITS_PAD, WAITS_LIFT, WAITS_SLACK, WAITS_DX = 5.5, 12, 2, -1
+WAITS_HEAD = ("What waits, and why", "One alternative and two tranches, each weighed against A.")
+
+
+def waits_head():
+    """The panel's head (doc 21 7.2): a text box with two paragraphs, the title in 20 px semibold Night and the intro in Dusk."""
+    x, y, w, h, z, tab = at(P2, "c_waits_head")
+    return textbox("c_waits_head", x, y, w, h, z, tab, [[(WAITS_HEAD[0], DISPLAY, 20, INK, False)], [(WAITS_HEAD[1], BODY, SPX, INK2, False)]],
+                   alt=WAITS_HEAD[0] + ". " + WAITS_HEAD[1])
+
+
+def waits_table():
+    """tbl_waits (R-W-2, N-3; doc 21 7.2 with the v10 columns): a native table on WaitOption, three rows, its four text
+    measures switching on the option. Word wrap on; 'The numbers' and 'When we decide' carry their line breaks
+    (UNICHAR(10), spike S-7). The header in Dusk with a 1 px Dusk rule under it, the rows ruled in Seam, no outline. The
+    rows come in the model's order (WaitOption[Title] is sorted by Sort), so the visual carries no sort and no arrow."""
+    ms = ("Wait Numbers (text)", "Wait Why (text)", "Wait WhyNot (text)", "Wait When (text)")
+    proj = [proj_col("WaitOption", "Title", display="Option"), proj_mea(ms[0], "The numbers"), proj_mea(ms[1], "Why it's on the table"),
+            proj_mea(ms[2], "Why not now"), proj_mea(ms[3], "When we decide")]
+    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=WAITS_PAD, header_size=S)
+    objs["columnHeaders"][0]["properties"].update({"outlineStyle": enum("BottomOnly"), "outlineColor": color(INK2), "outlineWeight": num(1),
+                                                   "autoSizeColumnWidth": b(False), "wordWrap": b(False)})
+    objs["values"][0]["properties"]["wordWrap"] = b(True)
+    objs["columnWidth"] = [{"properties": {"value": num(w_)}, "selector": {"metadata": q_}}
+                           for q_, w_ in zip(("WaitOption.Title", *[mref(m_) for m_ in ms]), WAITS_COLS)]
+    x, y, w, h, z, tab = at(P2, "tbl_waits")
+    t = visual("tbl_waits", "tableEx", x + WAITS_DX, y - WAITS_LIFT, w + WAITS_SLACK, h + WAITS_LIFT, z, tab, query={"Values": {"projections": proj}}, objects=objs,
+               vcos=vco(padding=0), off_grid=True)
+    return bind_alt(t, "Alt Waits (text)")
+
+
+CMP_X_END = 2032.6  # spec ch_cmp_alts.x_axis_end: room for the end labels inside the plot, no 2033 tick
+# the visual rect that puts Power BI's plot on the comp's (PLOT_RECT of step 5), measured in build step 8: the comp draws
+# the plot at x 128 to 1856 and y 731 to 972 of the page (under a 29 px title row in the slot 56, 688, 1808, 312)
+CMP_RECT = {}
+
+
+def cmp_chart(name, lines, title_measure, alt_measure, y_prefix):
+    """A comparison chart (R-W-3, R-B; doc 21 7.3 and P-5 as doc 22 section 3 amends them): cumulative net impact by year,
+    the title inside the visual, no legend. lines, in drawing order (the last on top): (line measure, display name, colour,
+    width, dashed, end-label measure, label position, emphasised). One data label per line on the last year: the name and
+    the value from the label-safe format string, on white (the theme), above or under its line end so that two lines that
+    end together cannot put their labels on each other. The first line measure is formatted in whole $M and the end series
+    come after the lines, so the value axis prints "+$10M" in any locale (P-1 b). The value axis ends on the model's
+    whole steps ([<y_prefix> Y Start / End]): one tick below zero and 8 % of headroom above the top line. The zero line is
+    named (R-G2); a year opens the year tooltip."""
+    q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]},
+         "Y": {"projections": [proj_mea(l_[0], l_[1]) for l_ in lines] + [proj_mea(l_[5], f"{l_[1]}, last year") for l_ in lines]}}
+    ls = line_styles({mref(l_[0]): l_[3] for l_ in lines}, dashed=tuple(mref(l_[0]) for l_ in lines if l_[4]))
+    ls += [{"properties": {"strokeShow": b(False), "showMarker": b(False)}, "selector": {"metadata": mref(l_[5])}} for l_ in lines]
+    lab = {"fontFamily": text(BODY), "fontSize": num(S), "color": color(INK2), "labelDisplayUnits": integer(1),
+           "enableBackground": b(True)}  # white and opaque from the theme (compile_theme.py, lineChart labels)
+    years = HORIZON()["filter"]["Where"][0]["Condition"]["In"]["Values"]
+    first_year = int(years[0][0]["Literal"]["Value"].rstrip("L"))
+    va = axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, units=1)
+    va[0]["properties"].update({"start": mtext(f"{y_prefix} Y Start"), "end": mtext(f"{y_prefix} Y End")})
+    objs = {"categoryAxis": axis(BODY, S, INK2, start=first_year, end=CMP_X_END, extra={"labelPrecision": integer(0)}),
+            "valueAxis": va, "legend": legend(False), "seriesLabels": [{"properties": {"show": b(False)}}],
+            "labels": [{"properties": {"show": b(True), **lab}},
+                       *[{"properties": {"showSeries": b(False)}, "selector": {"metadata": mref(l_[0])}} for l_ in lines],
+                       *[{"properties": {"showSeries": b(True), "labelPosition": enum(l_[6]),
+                                         **({"color": color(ACCENT), "fontFamily": text(DISPLAY)} if l_[7] else {})},
+                          "selector": {"metadata": mref(l_[5])}} for l_ in lines]],
+            "dataPoint": series_colors({**{mref(l_[0]): l_[2] for l_ in lines}, **{mref(l_[5]): l_[2] for l_ in lines}}),
+            "lineStyles": ls,
+            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
+                                                    "position": enum("back"), "displayName": text("Cash positive above this line"), "dataLabelShow": b(True),
+                                                    "dataLabelText": enum("Name"), "dataLabelColor": color(INK2), "dataLabelHorizontalPosition": enum("left"),
+                                                    "dataLabelVerticalPosition": enum("above")}, "selector": {"id": "1"}}]}
+    v = chart(P2, name, "lineChart", q, objs, None, title_measure=title_measure, filters=[HORIZON()], alt_measure=alt_measure, tooltip_page=TT_YEAR)
+    if name in CMP_RECT:
+        plot_rect(v, CMP_RECT[name])
+    return v
+
+
+def p2_waits():
+    """FinalV3 build step 8: the What-waits state (doc 21 section 7): the panel's head and the table of the three options,
+    and the comparison of A, B and C in the bottom card with its hover tag. Reading order: head, table, chart (R-P2-9).
+    C first (Warm Grey, dashed), then B (Night), then A on top (Coffee Blue, 3 px), as the comp draws them."""
+    lines = [("Preset C Cumulative Line", "C", SLATE, 2, True, "Preset C Cumulative End (label-safe)", "Under", False),
+             ("Preset B Cumulative Net (sel)", "B", INK, 2, False, "Preset B Cumulative End (label-safe)", "Under", False),
+             ("Preset A Cumulative Net (sel)", "A, our recommendation", ACCENT_MARK, 3, False, "Preset A Cumulative End (label-safe)", "Above", True)]
+    return [waits_head(), waits_table(), cmp_chart("ch_cmp_alts", lines, "Cmp Alts Title (text)", "Alt Cmp Alts (text)", "Cmp Alts"),
+            hover_tag_text(P2, "tag_cmp_alts", "Hover a year", 23)]
+
+
 def p2_pending():
-    """What steps 7 to 9 of doc 23 still rebuild (rule 9: a state that is not rebuilt yet may show only its frame). Recommended
-    is complete since step 7 (p2_hero, p2_capital_plan). Of What waits (step 8) and Build (step 9) the old visuals that
-    still have a slot in the v10 map stay in their new rects until their step replaces them: the small scatter stack, the
-    two comparison charts with their hover tags, and the three cards of your plan. Everything else of the old page 2 is
-    gone from the files (the B and C tiles, the Deneb selector, the waterfalls, the state titles)."""
-    v = [title(P2, "c_scatter_title_s", "Scatter Title Short (text)")]
-    v += scatter_stack("hero_s_packages", 6, build_layer=True)
-    v.append(cumulative_chart("ch_cmp_alts", [("Preset A Cumulative Net (sel)", "A, our recommendation"), ("Preset B Cumulative Net (sel)", "B"), ("Preset C Cumulative Net (sel)", "C")],
-                              [ACCENT_MARK, INK, SIGNAL_MARK], [3, 2, 2], dashed=("Preset C Cumulative Net (sel)",), title_measure="Cmp Alts Title (text)", alt_measure="Alt Cmp Alts (text)"))
-    v.append(dyn(P2, "c_you_title", "Build Title (text)", size=18, colour=INK, font=DISPLAY, colour_measure="Build Title Ink", fill_measure="Build Title Fill"))
+    """What step 9 of doc 23 still rebuilds (rule 9: a state that is not rebuilt yet may show only its frame). Recommended
+    is complete since step 7 (p2_hero, p2_capital_plan), What waits since step 8 (p2_proof, p2_waits). Of Build the old
+    visuals that still have a slot in the v10 map stay in their new rects until step 9 replaces them: the three cards of
+    your plan and the comparison with A with its hover tag."""
+    v = [dyn(P2, "c_you_title", "Build Title (text)", size=18, colour=INK, font=DISPLAY, colour_measure="Build Title Ink", fill_measure="Build Title Fill")]
     v.append(nums_card("c_you_nums", ["Build Capex (text)", "Build NPV (text)", "Build Range (text)"], ["capex", "NPV through 2032", "NPV range, $M"], "Alt You Nums (text)", size=16))
     v.append(dyn(P2, "c_you_rules", "Build Valid (text)", colour_measure="Build Valid Color"))
     v.append(cumulative_chart("ch_cmp_build", [("Preset A Cumulative Net (sel)", "A, our recommendation"), ("Build Cumulative Net (sel)", "Your plan")],
                               [ACCENT_MARK, SIGNAL_MARK], [3, 3], dashed=(), title_measure="Cmp Build Title (text)", alt_measure="Alt Cmp Build (text)"))
-    v += [hover_tag(P2, "tag_scatter_s", "Dot", 21), hover_tag(P2, "tag_cmp_alts", "Year", 23), hover_tag(P2, "tag_cmp_build", "Year", 24)]
+    v.append(hover_tag(P2, "tag_cmp_build", "Year", 24))
     return v
 
 
 def p2_visuals():
-    return p2_frame() + p2_hero() + p2_decision_card() + p2_capital_plan() + p2_pending()
+    return p2_frame() + p2_hero() + p2_decision_card() + p2_capital_plan() + p2_proof() + p2_waits() + p2_pending()
 
 
 # ====================================================================== the package tooltip (08-verbeterplan V2, round 4)

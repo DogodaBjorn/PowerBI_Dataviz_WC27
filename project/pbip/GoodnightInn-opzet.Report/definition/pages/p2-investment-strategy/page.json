@@ -335,12 +335,17 @@
     },
     {
       "source": "hero_s_packages_hover",
-      "target": "hero_s_packages",
+      "target": "tag_scatter_s",
       "type": "NoFilter"
     },
     {
       "source": "hero_s_packages_hover",
-      "target": "hero_s_packages_named",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "hero_s_packages",
       "type": "NoFilter"
     },
     {
@@ -350,7 +355,27 @@
     },
     {
       "source": "hero_s_packages_hover",
+      "target": "hero_s_packages_named",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
       "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "tag_cmp_alts",
       "type": "NoFilter"
     },
     {
@@ -371,16 +396,6 @@
     {
       "source": "hero_s_packages_hover",
       "target": "ch_cmp_build",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "tag_scatter_s",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "tag_cmp_alts",
       "type": "NoFilter"
     },
     {
@@ -640,6 +655,16 @@
     },
     {
       "source": "hero_s_packages_build",
+      "target": "tag_scatter_s",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "c_scatter_sub",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
       "target": "hero_s_packages",
       "type": "NoFilter"
     },
@@ -655,7 +680,22 @@
     },
     {
       "source": "hero_s_packages_build",
+      "target": "c_waits_head",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "tbl_waits",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
       "target": "ch_cmp_alts",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "tag_cmp_alts",
       "type": "NoFilter"
     },
     {
@@ -680,16 +720,6 @@
     },
     {
       "source": "hero_s_packages_build",
-      "target": "tag_scatter_s",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
-      "target": "tag_cmp_alts",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
       "target": "tag_cmp_build",
       "type": "NoFilter"
     }
@@ -697,7 +727,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_page_projects_14",
+        "name": "flt_page_projects_15",
         "field": {
           "Column": {
             "Expression": {
@@ -751,7 +781,7 @@
         "howCreated": "User"
       },
       {
-        "name": "flt_page_brand_15",
+        "name": "flt_page_brand_16",
         "field": {
           "Column": {
             "Expression": {

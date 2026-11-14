@@ -665,6 +665,7 @@ USDM1 = r"\$#,0,,.0\M"
 # The decimal point stays in the string with nothing after it: without it the two commas do not scale and the axis
 # printed "+$20.000.000M" (build step 7, tried live in the throwaway copy)
 SUSDM0 = r"+\$#,0,,.\M;" + "−" + r"\$#,0,,.\M;\$0\M"
+USDM0 = r"\$#,0,,.\M"  # the unsigned twin, for a capex axis: "$10M" (build step 8)
 MINUS = 'UNICHAR ( 8722 )'
 
 
@@ -782,8 +783,8 @@ def pkgval(col):
     return f'VAR s = [Selected Scenario] RETURN SWITCH ( s, "Low", SUM ( Package[{col} Low] ), "High", SUM ( Package[{col} High] ), SUM ( Package[{col} Expected] ) )'
 
 
-m("Package Capex", "SUM ( Package[CapexUSD] )", USDM1, C9, "Capex of the package(s) in context.")
-m("Package NPV (sel)", pkgval("NPV"), SUSDM, C9, "Package NPV through 2032 in the selected scenario (scatter Y).")
+m("Package Capex", "SUM ( Package[CapexUSD] )", USDM0, C9, "Capex of the package(s) in context (scatter X). Whole $M: a scatter axis prints its measure's format on every tick (doc 21 P-1 b, build step 8); the exact amounts are text measures.")
+m("Package NPV (sel)", pkgval("NPV"), SUSDM0, C9, "Package NPV through 2032 in the selected scenario (scatter Y). Whole $M for the axis ticks (doc 21 P-1 b, build step 8); the exact amounts are text measures.")
 m("Package Run-rate (sel)", pkgval("RunRate"), SUSDM, C9, "Package operating-profit run-rate in 2032, selected scenario.")
 # A, B and C are fixed packages (Package[Preset], chosen on the Expected case; 07-fixgids K1, Björn 7 Nov): the
 # scenario switch changes their numbers, never their composition, so no state can be empty (REVIEW B1, M6).
@@ -1541,9 +1542,9 @@ BACT = "VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED 
 BIDS = BACT + 'VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 '
 BTREAT = "REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] )"
 m("Build Count", BIDS + "RETURN n", "0", C12, "Moves in the plan being built (0 when nothing is picked).")
-m("Build Capex", BIDS + f"RETURN IF ( n = 0, BLANK (), CALCULATE ( SUM ( InvestmentProjects[CapexUSD] ), {BTREAT} ) )", USDM1, C12, "Capex of the plan being built.")
+m("Build Capex", BIDS + f"RETURN IF ( n = 0, BLANK (), CALCULATE ( SUM ( InvestmentProjects[CapexUSD] ), {BTREAT} ) )", USDM0, C12, "Capex of the plan being built. Whole $M: its scatter layer must print the same axis ticks as the package layers (build step 8).")
 m("Build Growth", BIDS + f'RETURN IF ( n = 0, BLANK (), CALCULATE ( COUNTROWS ( InvestmentProjects ), {BTREAT}, InvestmentProjects[GrowthInitiative] = "Yes" ) + 0 )', "0", C12, "Growth initiatives in the plan being built (dataset flag).")
-m("Build NPV (sel)", BIDS + f"RETURN IF ( n = 0, BLANK (), CALCULATE ( [NPV @ 8%], {BTREAT} ) )", SUSDM, C12, "NPV through 2032 of the plan being built, scenario in view (sum of its moves: the dataset gives no interaction effects).")
+m("Build NPV (sel)", BIDS + f"RETURN IF ( n = 0, BLANK (), CALCULATE ( [NPV @ 8%], {BTREAT} ) )", SUSDM0, C12, "NPV through 2032 of the plan being built, scenario in view (sum of its moves: the dataset gives no interaction effects). Whole $M for the scatter axis (build step 8).")
 for scn in ("Low", "High"):
     m(f"Build NPV {scn}", BIDS + f'RETURN IF ( n = 0, BLANK (), CALCULATE ( [NPV @ 8%], {BTREAT}, Scenario[Scenario] = "{scn}" ) )', SUSDM, C12, f"NPV of the plan being built, {scn} scenario.")
 m("Build Live (text)", BIDS + "RETURN IF ( n = 0, BLANK (), FORMAT ( CALCULATE ( MAX ( InvestmentProjects[Completion Date] ), " + BTREAT + ' ), "mmm yyyy", "en-US" ) )', TXT, C12, "Month the last move of the plan being built goes live.")
@@ -2447,6 +2448,35 @@ m("Cmp Alts Title (text)",
   'RETURN "Cumulative net impact, $M: B " & IF ( ABS ( a32 - b32 ) < 1000000, "ends within $1M of A", IF ( b32 < a32, "trails A by ", "ends ahead of A by " ) & ' + fm("ABS ( a32 - b32 )") + f' ) & " by " & {HORIZON} '
   f'& "; C " & IF ( ISBLANK ( pbC ), "is not cash positive by " & {HORIZON}, "is cash positive from " & pbC )',
   TXT, C15, "Title of the comparison chart in What waits (R-W-3, R-G2): B against A by 2032, and whether C turns cash positive by 2032, scenario in view.")
+
+# ---- build step 8: the comparison chart's value axis (spec charts.ch_cmp_alts.y: auto, one tick below zero, 8 % headroom
+# above the top line). Power BI's own auto axis ends on the top line, so a label above that line leaves the plot (High).
+# The two ends follow the comp's niceTicks(min, max, 0.08): zero is always inside, 8 % of the span is added above, the step
+# is the first of 1, 2, 2.5, 5, 10 (times a power of ten) that gives six intervals or fewer, the ends are whole steps, and
+# an end that would be zero moves one step out.
+
+
+def nice_axis(prefix, series, what):
+    rows = ", ".join(f"ROW ( \"@v\", CALCULATE ( [{s_}], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) )" for s_ in series)
+    body = (f"VAR h = {HORIZON} VAR t = GENERATE ( SELECTCOLUMNS ( GENERATESERIES ( 2027, h, 1 ), \"@y\", [Value] ), VAR y = [@y] RETURN UNION ( {rows} ) ) "
+            "VAR mn = MIN ( MINX ( t, [@v] ), 0 ) / 1000000 VAR mx0 = MAX ( MAXX ( t, [@v] ), 0 ) / 1000000 VAR mx = mx0 + ( mx0 - mn ) * 0.08 "
+            "VAR span = IF ( mx - mn = 0, 1, mx - mn ) VAR mag = POWER ( 10, INT ( LOG10 ( span / 5 ) ) ) "
+            "VAR step = MINX ( FILTER ( { 1, 2, 2.5, 5, 10 }, span / ( [Value] * mag ) <= 6 ), [Value] ) * mag "
+            "VAR lo0 = INT ( mn / step ) * step VAR hi0 = - INT ( - mx / step ) * step ")
+    m(f"{prefix} Y Start", body + "RETURN IF ( lo0 = 0, - step, lo0 ) * 1000000", "0", C15,
+      f"Value axis start of {what}: the whole step under the lowest point of its lines (2027 to 2032, scenario in view), one step under zero when nothing is negative.")
+    m(f"{prefix} Y End", body + "RETURN IF ( hi0 = 0, step, hi0 ) * 1000000", "0", C15,
+      f"Value axis end of {what}: the whole step above the highest point of its lines plus 8 % of their span, so a label above the top line stays inside the plot.")
+
+
+nice_axis("Cmp Alts", [f"Preset {k} Cumulative Net (sel)" for k in "ABC"], "the comparison chart in What waits")
+m("Preset C Cumulative Line", "[Preset C Cumulative Net (sel)]", SUSDM0, C15,
+  "Package C's line in the comparison chart of What waits, in whole $M: it is the chart's first series (drawn under B and A), and a value axis prints its first series' format on every tick (build step 7).")
+alt_m("Waits",
+      f'"What waits, and why, " & [Selected Scenario] & " case. " & CONCATENATEX ( ALLNOBLANKROW ( WaitOption ), '
+      f'WaitOption[Title] & ": " & SUBSTITUTE ( [Wait Numbers (text)], {LF}, ", " ) & ". Why it is on the table: " & [Wait Why (text)] & " Why not now: " & [Wait WhyNot (text)] '
+      f'& " When we decide: " & SUBSTITUTE ( [Wait When (text)], {LF}, " " ), " ", WaitOption[Sort], ASC )',
+      "The What-waits table read aloud, row by row in its own order: the option, its four numbers, why it is on the table, why not now and when we decide (first version of build step 8; step 10 reviews it).")
 
 # ---- Build your own (R-B-1, R-B-2)
 m("Build Picked (text)", BIDS + f'RETURN "Picked: " & n & IF ( n = 1, " move, ", " moves, " ) & ' + fm("COALESCE ( [Build Capex], 0 )") + ' & " of " & ' + fm(BUDGET_GI),

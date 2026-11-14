@@ -1028,15 +1028,15 @@ table _Measures
 		displayFolder: 08 Brand comparison
 		lineageTag: 93d3ded8-1aa2-555d-9aaf-ef1d1d627057
 
-	/// Capex of the package(s) in context.
+	/// Capex of the package(s) in context (scatter X). Whole $M: a scatter axis prints its measure's format on every tick (doc 21 P-1 b, build step 8); the exact amounts are text measures.
 	measure 'Package Capex' = SUM ( Package[CapexUSD] )
-		formatString: \$#,0,,.0\M
+		formatString: \$#,0,,.\M
 		displayFolder: 09 Package matrix
 		lineageTag: 305768c2-ca80-5ebd-8cc9-cffc083628f2
 
-	/// Package NPV through 2032 in the selected scenario (scatter Y).
+	/// Package NPV through 2032 in the selected scenario (scatter Y). Whole $M for the axis ticks (doc 21 P-1 b, build step 8); the exact amounts are text measures.
 	measure 'Package NPV (sel)' = VAR s = [Selected Scenario] RETURN SWITCH ( s, "Low", SUM ( Package[NPV Low] ), "High", SUM ( Package[NPV High] ), SUM ( Package[NPV Expected] ) )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
 		displayFolder: 09 Package matrix
 		lineageTag: 8d5996a9-7e10-58b7-bc3c-2dd1ce3b9283
 
@@ -2291,9 +2291,9 @@ table _Measures
 		displayFolder: 12 Build your own
 		lineageTag: 5d4860a1-c8d4-5d0e-9b83-fe3231a74c43
 
-	/// Capex of the plan being built.
+	/// Capex of the plan being built. Whole $M: its scatter layer must print the same axis ticks as the package layers (build step 8).
 	measure 'Build Capex' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN IF ( n = 0, BLANK (), CALCULATE ( SUM ( InvestmentProjects[CapexUSD] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] ) ) )
-		formatString: \$#,0,,.0\M
+		formatString: \$#,0,,.\M
 		displayFolder: 12 Build your own
 		lineageTag: 3f620588-bb7a-5bff-99c2-bba7dc518eb5
 
@@ -2303,9 +2303,9 @@ table _Measures
 		displayFolder: 12 Build your own
 		lineageTag: d93cd3c8-779e-5da3-b9f2-bb37d57ff9b1
 
-	/// NPV through 2032 of the plan being built, scenario in view (sum of its moves: the dataset gives no interaction effects).
+	/// NPV through 2032 of the plan being built, scenario in view (sum of its moves: the dataset gives no interaction effects). Whole $M for the scatter axis (build step 8).
 	measure 'Build NPV (sel)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN IF ( n = 0, BLANK (), CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), TREATAS ( ids, InvestmentProjects[ProjectID] ) ) )
-		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
 		displayFolder: 12 Build your own
 		lineageTag: fd7dc5bb-efc4-57dc-8480-8e616609506a
 
@@ -3479,6 +3479,30 @@ table _Measures
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: dcc92f7c-7694-5eb4-aedb-c576027f0de8
+
+	/// Value axis start of the comparison chart in What waits: the whole step under the lowest point of its lines (2027 to 2032, scenario in view), one step under zero when nothing is negative.
+	measure 'Cmp Alts Y Start' = VAR h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) VAR t = GENERATE ( SELECTCOLUMNS ( GENERATESERIES ( 2027, h, 1 ), "@y", [Value] ), VAR y = [@y] RETURN UNION ( ROW ( "@v", CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) ), ROW ( "@v", CALCULATE ( [Preset B Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) ), ROW ( "@v", CALCULATE ( [Preset C Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) ) ) ) VAR mn = MIN ( MINX ( t, [@v] ), 0 ) / 1000000 VAR mx0 = MAX ( MAXX ( t, [@v] ), 0 ) / 1000000 VAR mx = mx0 + ( mx0 - mn ) * 0.08 VAR span = IF ( mx - mn = 0, 1, mx - mn ) VAR mag = POWER ( 10, INT ( LOG10 ( span / 5 ) ) ) VAR step = MINX ( FILTER ( { 1, 2, 2.5, 5, 10 }, span / ( [Value] * mag ) <= 6 ), [Value] ) * mag VAR lo0 = INT ( mn / step ) * step VAR hi0 = - INT ( - mx / step ) * step RETURN IF ( lo0 = 0, - step, lo0 ) * 1000000
+		formatString: 0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 5b46c290-8617-5ddc-8fb8-c36dfc6ccf3c
+
+	/// Value axis end of the comparison chart in What waits: the whole step above the highest point of its lines plus 8 % of their span, so a label above the top line stays inside the plot.
+	measure 'Cmp Alts Y End' = VAR h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) VAR t = GENERATE ( SELECTCOLUMNS ( GENERATESERIES ( 2027, h, 1 ), "@y", [Value] ), VAR y = [@y] RETURN UNION ( ROW ( "@v", CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) ), ROW ( "@v", CALCULATE ( [Preset B Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) ), ROW ( "@v", CALCULATE ( [Preset C Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) ) ) ) VAR mn = MIN ( MINX ( t, [@v] ), 0 ) / 1000000 VAR mx0 = MAX ( MAXX ( t, [@v] ), 0 ) / 1000000 VAR mx = mx0 + ( mx0 - mn ) * 0.08 VAR span = IF ( mx - mn = 0, 1, mx - mn ) VAR mag = POWER ( 10, INT ( LOG10 ( span / 5 ) ) ) VAR step = MINX ( FILTER ( { 1, 2, 2.5, 5, 10 }, span / ( [Value] * mag ) <= 6 ), [Value] ) * mag VAR lo0 = INT ( mn / step ) * step VAR hi0 = - INT ( - mx / step ) * step RETURN IF ( hi0 = 0, step, hi0 ) * 1000000
+		formatString: 0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 17847413-3b9e-54ce-bafb-d64c823756d3
+
+	/// Package C's line in the comparison chart of What waits, in whole $M: it is the chart's first series (drawn under B and A), and a value axis prints its first series' format on every tick (build step 7).
+	measure 'Preset C Cumulative Line' = [Preset C Cumulative Net (sel)]
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 661d37c2-b725-5393-8a8c-e8ddd479b14b
+
+	/// The What-waits table read aloud, row by row in its own order: the option, its four numbers, why it is on the table, why not now and when we decide (first version of build step 8; step 10 reviews it).
+	measure 'Alt Waits (text)' = "What waits, and why, " & [Selected Scenario] & " case. " & CONCATENATEX ( ALLNOBLANKROW ( WaitOption ), WaitOption[Title] & ": " & SUBSTITUTE ( [Wait Numbers (text)], UNICHAR ( 10 ), ", " ) & ". Why it is on the table: " & [Wait Why (text)] & " Why not now: " & [Wait WhyNot (text)] & " When we decide: " & SUBSTITUTE ( [Wait When (text)], UNICHAR ( 10 ), " " ), " ", WaitOption[Sort], ASC )
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: f3ac2ccf-946e-5695-867b-c63fef0ad553
 
 	/// Selector footer: how many moves are picked and their capex against the budget.
 	measure 'Build Picked (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN "Picked: " & n & IF ( n = 1, " move, ", " moves, " ) & ( VAR __v = ( COALESCE ( [Build Capex], 0 ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) & " of " & ( VAR __v = ( CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m )

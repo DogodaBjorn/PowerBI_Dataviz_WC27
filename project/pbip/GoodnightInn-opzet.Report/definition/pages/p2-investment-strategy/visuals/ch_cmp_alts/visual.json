@@ -42,12 +42,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Preset A Cumulative Net (sel)"
+                  "Property": "Preset C Cumulative Line"
                 }
               },
-              "queryRef": "_Measures.Preset A Cumulative Net (sel)",
-              "nativeQueryRef": "Preset A Cumulative Net (sel)",
-              "displayName": "A, our recommendation"
+              "queryRef": "_Measures.Preset C Cumulative Line",
+              "nativeQueryRef": "Preset C Cumulative Line",
+              "displayName": "C"
             },
             {
               "field": {
@@ -72,12 +72,57 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Preset C Cumulative Net (sel)"
+                  "Property": "Preset A Cumulative Net (sel)"
                 }
               },
-              "queryRef": "_Measures.Preset C Cumulative Net (sel)",
-              "nativeQueryRef": "Preset C Cumulative Net (sel)",
-              "displayName": "C"
+              "queryRef": "_Measures.Preset A Cumulative Net (sel)",
+              "nativeQueryRef": "Preset A Cumulative Net (sel)",
+              "displayName": "A, our recommendation"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Preset C Cumulative End (label-safe)"
+                }
+              },
+              "queryRef": "_Measures.Preset C Cumulative End (label-safe)",
+              "nativeQueryRef": "Preset C Cumulative End (label-safe)",
+              "displayName": "C, last year"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Preset B Cumulative End (label-safe)"
+                }
+              },
+              "queryRef": "_Measures.Preset B Cumulative End (label-safe)",
+              "nativeQueryRef": "Preset B Cumulative End (label-safe)",
+              "displayName": "B, last year"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Preset A Cumulative End (label-safe)"
+                }
+              },
+              "queryRef": "_Measures.Preset A Cumulative End (label-safe)",
+              "nativeQueryRef": "Preset A Cumulative End (label-safe)",
+              "displayName": "A, our recommendation, last year"
             }
           ]
         }
@@ -130,6 +175,20 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Literal": {
+                  "Value": "2027D"
+                }
+              }
+            },
+            "end": {
+              "expr": {
+                "Literal": {
+                  "Value": "2032.6D"
                 }
               }
             },
@@ -216,6 +275,30 @@
                   "Value": "1L"
                 }
               }
+            },
+            "start": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Cmp Alts Y Start"
+                }
+              }
+            },
+            "end": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Cmp Alts Y End"
+                }
+              }
             }
           }
         }
@@ -226,14 +309,33 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
-            },
-            "position": {
+            }
+          }
+        }
+      ],
+      "seriesLabels": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top'"
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -251,7 +353,7 @@
                 }
               }
             },
-            "labelColor": {
+            "color": {
               "solid": {
                 "color": {
                   "expr": {
@@ -262,20 +364,143 @@
                 }
               }
             },
-            "showTitle": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
+            },
+            "enableBackground": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
               "expr": {
                 "Literal": {
                   "Value": "false"
                 }
               }
-            },
-            "legendMarkerRendering": {
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset C Cumulative Line"
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
               "expr": {
                 "Literal": {
-                  "Value": "'lineOnly'"
+                  "Value": "false"
                 }
               }
             }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset B Cumulative Net (sel)"
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset A Cumulative Net (sel)"
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Under'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset C Cumulative End (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Under'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset B Cumulative End (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Above'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1763A8'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset A Cumulative End (label-safe)"
           }
         }
       ],
@@ -287,7 +512,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#2589D8'"
+                      "Value": "'#8E897D'"
                     }
                   }
                 }
@@ -295,7 +520,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Preset A Cumulative Net (sel)"
+            "metadata": "_Measures.Preset C Cumulative Line"
           }
         },
         {
@@ -323,7 +548,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E05A22'"
+                      "Value": "'#2589D8'"
                     }
                   }
                 }
@@ -331,7 +556,61 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Preset C Cumulative Net (sel)"
+            "metadata": "_Measures.Preset A Cumulative Net (sel)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#8E897D'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset C Cumulative End (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#12233D'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset B Cumulative End (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2589D8'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset A Cumulative End (label-safe)"
           }
         }
       ],
@@ -366,13 +645,20 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "3D"
+                  "Value": "2D"
+                }
+              }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'dashed'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "_Measures.Preset A Cumulative Net (sel)"
+            "metadata": "_Measures.Preset C Cumulative Line"
           }
         },
         {
@@ -394,33 +680,76 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
-            "lineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
+                  "Value": "3D"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "_Measures.Preset C Cumulative Net (sel)"
+            "metadata": "_Measures.Preset A Cumulative Net (sel)"
           }
-        }
-      ],
-      "seriesLabels": [
+        },
         {
           "properties": {
-            "show": {
+            "strokeShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "showMarker": {
               "expr": {
                 "Literal": {
                   "Value": "false"
                 }
               }
             }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset C Cumulative End (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "strokeShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset B Cumulative End (label-safe)"
+          }
+        },
+        {
+          "properties": {
+            "strokeShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Preset A Cumulative End (label-safe)"
           }
         }
       ],
@@ -446,7 +775,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#8E897D'"
+                      "Value": "'#4B5466'"
                     }
                   }
                 }
@@ -483,7 +812,7 @@
             "displayName": {
               "expr": {
                 "Literal": {
-                  "Value": "'Break-even'"
+                  "Value": "'Cash positive above this line'"
                 }
               }
             },
@@ -754,7 +1083,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_horizon_12",
+        "name": "flt_horizon_13",
         "field": {
           "Column": {
             "Expression": {
