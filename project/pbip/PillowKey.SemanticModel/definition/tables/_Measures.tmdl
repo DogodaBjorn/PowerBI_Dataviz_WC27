@@ -2345,6 +2345,18 @@ table _Measures
 		displayFolder: 12 Build your own
 		lineageTag: f1c18fa0-d54a-5b8c-a8f7-6955ba2bc640
 
+	/// Title of the your-plan tile while the plan is within the budget (or empty); empty over the budget, where the alarm band carries the title.
+	measure 'Build Title Plain (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( over, "", [Build Title (text)] )
+		formatString: @
+		displayFolder: 12 Build your own
+		lineageTag: a33768ec-2923-57a5-b08f-84c78311ef93
+
+	/// The alarm band of the your-plan tile: the title while the picked capex passes the budget; empty otherwise.
+	measure 'Build Title Alarm (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( over, [Build Title (text)], "" )
+		formatString: @
+		displayFolder: 12 Build your own
+		lineageTag: 7ce14136-123f-5807-9ac8-4bd75ffe1896
+
 	/// Fill of the your-plan title row: Tangerine while the picked capex passes the budget (the alarm band), white otherwise. Paired with Build Title Ink, branch for branch.
 	measure 'Build Title Fill' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( over, "#E05A22", "#FFFFFF" )
 		formatString: @
@@ -2357,20 +2369,20 @@ table _Measures
 		displayFolder: 12 Build your own
 		lineageTag: 445da63e-1ec4-5a64-83e9-2d6e763c6752
 
-	/// Capex of the plan being built as text ($0.0M when empty).
-	measure 'Build Capex (text)' = ( VAR __v = ( COALESCE ( [Build Capex], 0 ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m )
+	/// Capex of the plan being built as text; empty while nothing is picked (R-B-2: the empty state shows no numbers).
+	measure 'Build Capex (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN IF ( n = 0, "", ( VAR __v = ( [Build Capex] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) )
 		formatString: @
 		displayFolder: 12 Build your own
 		lineageTag: 6468fcdd-4359-5177-bd72-0d2ecbee7690
 
-	/// NPV of the plan being built as text.
-	measure 'Build NPV (text)' = ( VAR __v = ( COALESCE ( [Build NPV (sel)], 0 ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
+	/// NPV of the plan being built as text; empty while nothing is picked.
+	measure 'Build NPV (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN IF ( n = 0, "", ( VAR __v = ( [Build NPV (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 12 Build your own
 		lineageTag: d3d8db17-4d6f-574d-9e4e-08ccc9503ac9
 
-	/// NPV of the plan being built from the Low to the High scenario, the unit on both ends (R-G1).
-	measure 'Build Range (text)' = VAR lo = COALESCE ( [Build NPV Low], 0 ) VAR hi = COALESCE ( [Build NPV High], 0 ) RETURN ( VAR __v = ( lo ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & " to " & ( VAR __v = ( hi ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) )
+	/// NPV of the plan being built from the Low to the High scenario, the unit on both ends (R-G1); empty while nothing is picked.
+	measure 'Build Range (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR lo = [Build NPV Low] VAR hi = [Build NPV High] RETURN IF ( n = 0, "", ( VAR __v = ( lo ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & " to " & ( VAR __v = ( hi ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 12 Build your own
 		lineageTag: 2b63a2c8-8bc9-58bc-b1dc-229d2bbca79a
@@ -2381,8 +2393,8 @@ table _Measures
 		displayFolder: 12 Build your own
 		lineageTag: 345be5c8-25e5-54ef-b462-6b2667b44f7c
 
-	/// Burnt Tangerine while a rule is broken, Dusk otherwise (the sentence says which).
-	measure 'Build Valid Color' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR g = COALESCE ( [Build Growth], 0 ) VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR kiosk = "GI-02" IN ids VAR app = "GI-01" IN ids VAR broken = n > 0 && ( n < 3 || g < 1 || cap > budget || ( kiosk && NOT app ) ) RETURN IF ( broken, "#A63F0E", "#4B5466" )
+	/// Ink of the rules line: Night for the empty state's instruction, Burnt Tangerine while a rule is broken, Dusk when the plan is within the rules (the sentence says which).
+	measure 'Build Valid Color' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR g = COALESCE ( [Build Growth], 0 ) VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR kiosk = "GI-02" IN ids VAR app = "GI-01" IN ids VAR broken = n > 0 && ( n < 3 || g < 1 || cap > budget || ( kiosk && NOT app ) ) RETURN IF ( n = 0, "#12233D", IF ( broken, "#A63F0E", "#4B5466" ) )
 		formatString: @
 		displayFolder: 12 Build your own
 		lineageTag: cea0e9ba-358d-5371-b0da-b37c06f6ad89
@@ -2423,11 +2435,23 @@ table _Measures
 		displayFolder: 12 Build your own
 		lineageTag: 210d5da4-ef19-52c8-89df-b6cf080606d0
 
-	/// Marker size of the your-plan dot on the small scatter; blank (no dot) while nothing is picked.
-	measure 'Build Point Size' = IF ( ISBLANK ( [Build NPV (sel)] ), BLANK (), 7 )
-		formatString: 0
+	/// Marker colour of the plan dot in the proof chart: Night (Night is 'your plan', R-G3), Tangerine while the picked capex passes the budget.
+	measure 'Build Point Color' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( over, "#E05A22", "#12233D" )
+		formatString: @
 		displayFolder: 12 Build your own
-		lineageTag: 2aa90beb-af0f-5132-8f51-a1067e728066
+		lineageTag: 5f7886c9-0b8c-5ea6-9635-513f0c7dd351
+
+	/// Ink of the name 'You' above the plan dot: Night, Burnt Tangerine while over the budget (the text cut of Tangerine: 6.2:1 on white).
+	measure 'Build You Ink' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( over, "#A63F0E", "#12233D" )
+		formatString: @
+		displayFolder: 12 Build your own
+		lineageTag: e2b2b714-014b-5ead-acd5-4595a511cbac
+
+	/// Where the name 'You' is anchored in the proof chart, NOT a value: the plan's NPV plus a fixed lift, so that Power BI's label, which it sets under an invisible point, lands above the plan dot. Shown nowhere as a number (the layer has no tooltip and no tab stop).
+	measure 'Build You Label NPV' = [Build NPV (sel)] + 11090000
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
+		displayFolder: 12 Build your own
+		lineageTag: 3e7a169c-b1e9-51f6-80b4-3faf6b30223a
 
 	/// Title of the comparer in the build state: your plan against A by 2032 and its payback, scenario in view.
 	measure 'Cmp Build Title (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR s = [Selected Scenario] VAR a32 = CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR y32 = CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR pb = [Build Payback Year] RETURN IF ( n = 0, "Your plan against A, $M (" & s & " case)", "Your plan against A, $M (" & s & " case): yours ends " & IF ( ROUND ( ( y32 - a32 ) / 100000, 0 ) = 0, "level with A", IF ( y32 > a32, "ahead of A by ", "behind A by " ) & ( VAR __v = ( ABS ( y32 - a32 ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __v < 0 && __r2 > 0, UNICHAR ( 8722 ) & UNICHAR ( 8288 ), "" ) & __m ) ) & " in 2032" & IF ( ISBLANK ( pb ), " and is not cash positive by 2032", ", cash positive from " & pb ) )
@@ -2719,11 +2743,23 @@ table _Measures
 		displayFolder: 11 Accessibility
 		lineageTag: 56305f76-52d9-520c-adb2-7f2221673409
 
-	/// The your-plan numbers card read aloud, with the rules check.
-	measure 'Alt You Nums (text)' = "Your plan, " & [Selected Scenario] & " case: capex " & [Build Capex (text)] & ", net present value through 2032 " & [Build NPV (text)] & ", from " & [Build Range (text)] & " $M between the Low and High cases. " & [Build Valid (text)]
+	/// The your-plan numbers read aloud, with the range and the rules check (first version of build step 9; step 10 reviews it).
+	measure 'Alt You Nums (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN IF ( n = 0, "Your plan: nothing picked yet. " & [Build Valid (text)], "Your plan, " & [Selected Scenario] & " case: capex " & [Build Capex (text)] & ", net present value through 2032 " & [Build NPV (text)] & ", " & [Build Run-rate (text)] & " a year by 2032, " & [Build A Year on Cost (text)] & " a year on cost. Between the Low and High cases: " & [Build Range (text)] & ". " & [Build Valid (text)] )
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 2a6a0768-3a95-58cf-9c31-ea296ccf4cda
+
+	/// The build bar chart read aloud: each picked move with its NPV, highest first (first version of build step 9; step 10 reviews it).
+	measure 'Alt Build Bars (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR t = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) RETURN IF ( n = 0, "No moves picked yet.", "Net present value through 2032 of each picked move, " & [Selected Scenario] & " case, highest first: " & CONCATENATEX ( t, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __v = ( [@v] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), ", ", [@v], DESC ) & "." )
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 08e86ed0-9a3e-5926-b8ca-75eb96db587c
+
+	/// The moves table read aloud: each move with its capex and its NPV through 2032 (first version of build step 9; step 10 reviews it).
+	measure 'Alt Moves (text)' = "The ten moves, " & [Selected Scenario] & " case, in the order of the list beside it: " & CONCATENATEX ( ALLNOBLANKROW ( BuildMove ), BuildMove[Short Name] & " " & [Move Capex (text)] & ", net present value " & [Move NPV (text)], "; ", BuildMove[Sort], ASC ) & "."
+		formatString: @
+		displayFolder: 11 Accessibility
+		lineageTag: 31c3284f-5e52-5692-b4b0-c3791dedec66
 
 	/// The build waterfall read aloud.
 	measure 'Alt Build Waterfall (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR base = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) VAR tr = ROUND ( SUMX ( base, [@v] ) / 100000, 0 ) VAR fl = ADDCOLUMNS ( base, "@f", INT ( [@v] / 100000 ) ) VAR fr = ADDCOLUMNS ( fl, "@r", [@v] / 100000 - [@f] + VALUE ( RIGHT ( [@p], 2 ) ) * 0.000000001 ) VAR k = tr - SUMX ( fr, [@f] ) VAR adj = ADDCOLUMNS ( fr, "@s", ( [@f] + IF ( RANKX ( fr, [@r], , DESC ) <= k, 1, 0 ) ) * 100000 ) RETURN IF ( n = 0, "No moves picked yet.", "Where the net present value of your plan comes from, " & [Selected Scenario] & " case: " & CONCATENATEX ( adj, LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ) & " " & ( VAR __v = ( [@s] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), ", ", LOOKUPVALUE ( InvestmentProjects[Short Name], InvestmentProjects[ProjectID], [@p] ), ASC ) & "; together " & ( VAR __v = ( SUMX ( adj, [@s] ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & "." )
@@ -3054,6 +3090,24 @@ table _Measures
 				VAR __t = "You" RETURN """" & __t & """;""" & __t & """;""" & __t & """"
 				```
 
+	/// Build comparison chart: the cumulative net impact of the plan being built while it is within the budget (the Night line); blank over the budget and while nothing is picked.
+	measure 'Build Cumulative Line' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( NOT over, [Build Cumulative Net (sel)] )
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 83f0320b-6489-542f-8850-3980e606cc13
+
+	/// Build comparison chart: the same line while the plan is over the budget (drawn in Tangerine); blank otherwise.
+	measure 'Build Cumulative Line (over)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = CALCULATE ( SUM ( Brands[InvestmentBudgetUSD] ), REMOVEFILTERS ( Brands ), Brands[Brand] = "Goodnight Inn" ) VAR over = n > 0 && cap > budget RETURN IF ( over, [Build Cumulative Net (sel)] )
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 58435927-58d8-5bd6-8c1f-42dbcf90003c
+
+	/// Build comparison chart: package A's line, in whole $M like the plan's (the value axis prints a line's format on its ticks).
+	measure 'Preset A Cumulative Line' = [Preset A Cumulative Net (sel)]
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 2cb0b884-b09b-55e7-bffe-3ca4ea5146fd
+
 	/// F3 bars: response-weighted NPS 2025 with its label as finished text ('+6.8', a true minus), so no session locale prints a decimal comma.
 	measure 'NPS 2025 (label-safe)' = [NPS (weighted) 2025]
 		displayFolder: 15 Storytelling rebuild
@@ -3063,19 +3117,19 @@ table _Measures
 				VAR __t = ( VAR __q = ( [NPS (weighted) 2025] ) RETURN IF ( ROUND ( __q, 1 ) = 0, "0.0", IF ( __q < 0, UNICHAR ( 8722 ), "+" ) & FORMAT ( ABS ( __q ), "0.0", "en-US" ) ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
 				```
 
-	/// Build bar chart (BuildMove): the NPV through 2032 of a picked move alone, scenario in view; blank for a move that is not picked, so the chart lists the plan only.
-	measure 'Build Bar NPV' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR me = SELECTEDVALUE ( BuildMove[ProjectID] ) RETURN IF ( n > 0 && me IN ids, CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = me ) )
+	/// Build bar chart (BuildBar): the NPV through 2032 of a picked move alone, scenario in view; blank for a move that is not picked, so the chart lists the plan only. Zero on an empty row while fewer than 5 moves are picked (the row keeps the bars at the comp's pitch and shows nothing).
+	measure 'Build Bar NPV' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR me = SELECTEDVALUE ( BuildBar[ProjectID] ) VAR pad = SELECTEDVALUE ( BuildBar[Pad] ) RETURN IF ( n > 0, IF ( me IN ids, CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = me ), IF ( pad > 0 && pad <= 5 - n, 0 ) ) )
 		formatString: +\$#,0,,.0\M;−\$#,0,,.0\M;\$0.0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 8a83f685-d73a-5b44-b51c-5ab7d4d448f3
 
-	/// Build bar chart: the picked move's NPV with its label as finished text ('+$3.4M', '−$0.6M').
+	/// Build bar chart: the picked move's NPV with its label as finished text ('+$3.4M', '−$0.6M'); an empty row prints a space.
 	measure 'Build Bar NPV (label-safe)' = [Build Bar NPV]
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 106e2b5d-f778-5109-b4e7-7ac45b9b6116
 
 		formatStringDefinition = ```
-				VAR __t = ( VAR __v = ( [Build Bar NPV] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
+				VAR __t = IF ( SELECTEDVALUE ( BuildBar[Pad] ) > 0, " ", ( VAR __v = ( [Build Bar NPV] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
 				```
 
 	/// Build bar chart: Night for a move that adds NPV (Night is 'your plan'), Tangerine for one that costs NPV; the signed label carries it too (R-G3).
@@ -3083,6 +3137,24 @@ table _Measures
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 8c5cc901-0e8c-53be-8ce9-1dcc1bb4c219
+
+	/// Build bar chart, sort key (descending): a picked move's NPV, the empty rows after every move.
+	measure 'Build Bar Order' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR me = SELECTEDVALUE ( BuildBar[ProjectID] ) VAR pad = SELECTEDVALUE ( BuildBar[Pad] ) RETURN IF ( n > 0, IF ( me IN ids, CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = me ), IF ( pad > 0 && pad <= 5 - n, -1000000000000 - pad ) ) )
+		formatString: 0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 9e626e4b-9736-59e5-a99e-980dd299294b
+
+	/// Value axis start of the build bar chart (the axis is hidden): the lowest picked NPV or zero, less the room the labels need.
+	measure 'Build Bars X Start' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR t = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ), "@w", VAR p = [@p] RETURN LOOKUPVALUE ( BuildBar[Name Px], BuildBar[ProjectID], p ) ) VAR lo = MIN ( MINX ( t, [@v] ), 0 ) VAR hi = MAX ( MAXX ( t, [@v] ), 0 ) VAR lw = MIN ( 464 * 0.45, MAXX ( t, [@w] ) + 14 ) VAR d = IF ( hi - lo = 0, 1000000, hi - lo ) VAR room = d * 72 / ( 464 - lw - 2 * 72 ) RETURN IF ( n > 0, lo - room )
+		formatString: 0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: c3c81574-3155-500f-968b-adc63c92602b
+
+	/// Value axis end of the build bar chart (the axis is hidden): the highest picked NPV or zero, plus the room the labels need.
+	measure 'Build Bars X End' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 VAR t = ADDCOLUMNS ( ids, "@v", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ), "@w", VAR p = [@p] RETURN LOOKUPVALUE ( BuildBar[Name Px], BuildBar[ProjectID], p ) ) VAR lo = MIN ( MINX ( t, [@v] ), 0 ) VAR hi = MAX ( MAXX ( t, [@v] ), 0 ) VAR lw = MIN ( 464 * 0.45, MAXX ( t, [@w] ) + 14 ) VAR d = IF ( hi - lo = 0, 1000000, hi - lo ) VAR room = d * 72 / ( 464 - lw - 2 * 72 ) RETURN IF ( n > 0, hi + room )
+		formatString: 0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 45a432bd-e455-59e1-b3b5-7e6cdca29a30
 
 	/// F1 stacked area, the band on top of the margin after commissions: what the booking channels take, in points of revenue (margin before minus margin after commissions).
 	measure 'Trend Commission Take GI' = [Trend Margin before GI] - [Trend Margin after GI]
@@ -3516,17 +3588,65 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: b41a0b6c-f5f4-59fb-b1fe-26fac7495554
 
-	/// Your plan: profit a year by 2032, scenario in view; blank while nothing is picked.
-	measure 'Build Run-rate (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN IF ( n = 0, BLANK (), ( VAR __v = ( [Build Run-rate (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
+	/// Your plan: profit a year by 2032, scenario in view; empty while nothing is picked.
+	measure 'Build Run-rate (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN IF ( n = 0, "", ( VAR __v = ( [Build Run-rate (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 44d3762a-77ca-5a81-83dd-36a0a5a61caf
 
-	/// Your plan: a year on cost, scenario in view; blank while nothing is picked.
-	measure 'Build A Year on Cost (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN IF ( n = 0, BLANK (), ( VAR __p = ( [Build A Year on Cost (sel)] ) * 100 RETURN IF ( ROUND ( __p, 1 ) < 0, UNICHAR ( 8722 ), "" ) & FORMAT ( ABS ( __p ), "0.0", "en-US" ) & "%" ) )
+	/// Your plan: a year on cost, scenario in view; empty while nothing is picked.
+	measure 'Build A Year on Cost (text)' = VAR act = CALCULATE ( ISFILTERED ( BuildMove[ProjectID] ) || ISFILTERED ( BuildMove[Short Name] ) || ISFILTERED ( BuildMove[Sort] ), ALLSELECTED ( BuildMove ) ) VAR ids = SELECTCOLUMNS ( FILTER ( CALCULATETABLE ( VALUES ( BuildMove[ProjectID] ), ALLSELECTED ( BuildMove ) ), act ), "@p", BuildMove[ProjectID] ) VAR n = COUNTROWS ( ids ) + 0 RETURN IF ( n = 0, "", ( VAR __p = ( [Build A Year on Cost (sel)] ) * 100 RETURN IF ( ROUND ( __p, 1 ) < 0, UNICHAR ( 8722 ), "" ) & FORMAT ( ABS ( __p ), "0.0", "en-US" ) & "%" ) )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 164ce22c-23e1-5ed8-b46f-54a4b8f8f09a
+
+	/// Your plan: the label 'capex' under its number; empty while nothing is picked.
+	measure 'Build Label Capex (text)' = IF ( [Build Count] = 0, "", "capex" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 9a6a5911-d9d7-54d9-8462-39e20ca57090
+
+	/// Your plan: the label 'NPV through 2032' under its number; empty while nothing is picked.
+	measure 'Build Label NPV (text)' = IF ( [Build Count] = 0, "", "NPV through 2032" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 60791f39-773e-5ac2-8e2a-537818490511
+
+	/// Your plan: the label 'a year by 2032' under its number; empty while nothing is picked.
+	measure 'Build Label Run-rate (text)' = IF ( [Build Count] = 0, "", "a year by 2032" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: f02ab9c1-4170-596f-8f2b-42614436b2a0
+
+	/// Your plan: the label 'a year on cost' under its number; empty while nothing is picked.
+	measure 'Build Label A Year on Cost (text)' = IF ( [Build Count] = 0, "", "a year on cost" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: e6747959-3b29-5dc1-aefd-c2fb3abc072e
+
+	/// Ink of your plan's NPV: Burnt Tangerine below zero (as shown, one decimal), Night otherwise; the sign says it too.
+	measure 'Build NPV Ink' = IF ( ROUND ( [Build NPV (sel)] / 100000, 0 ) < 0, "#A63F0E", "#12233D" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 24eb448f-9e07-5678-8c8c-a874292c89a7
+
+	/// Ink of your plan's yearly figure: Burnt Tangerine below zero (as shown, one decimal), Night otherwise.
+	measure 'Build Run-rate Ink' = IF ( ROUND ( [Build Run-rate (sel)] / 100000, 0 ) < 0, "#A63F0E", "#12233D" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: f9a51622-ffa1-5369-be03-40739096e82d
+
+	/// Value axis start of the comparison chart in Build your own (A alone while nothing is picked): the whole step under the lowest point of its lines (2027 to 2032, scenario in view), one step under zero when nothing is negative.
+	measure 'Cmp Build Y Start' = VAR h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) VAR t = GENERATE ( SELECTCOLUMNS ( GENERATESERIES ( 2027, h, 1 ), "@y", [Value] ), VAR y = [@y] RETURN UNION ( ROW ( "@v", CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) ), ROW ( "@v", CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) ) ) ) VAR mn = MIN ( MINX ( t, [@v] ), 0 ) / 1000000 VAR mx0 = MAX ( MAXX ( t, [@v] ), 0 ) / 1000000 VAR mx = mx0 + ( mx0 - mn ) * 0.08 VAR span = IF ( mx - mn = 0, 1, mx - mn ) VAR mag = POWER ( 10, INT ( LOG10 ( span / 5 ) ) ) VAR step = MINX ( FILTER ( { 1, 2, 2.5, 5, 10 }, span / ( [Value] * mag ) <= 6 ), [Value] ) * mag VAR lo0 = INT ( mn / step ) * step VAR hi0 = - INT ( - mx / step ) * step RETURN IF ( lo0 = 0, - step, lo0 ) * 1000000
+		formatString: 0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: d69d8981-c84b-5e90-be07-e64d7464a7d0
+
+	/// Value axis end of the comparison chart in Build your own (A alone while nothing is picked): the whole step above the highest point of its lines plus 8 % of their span, so a label above the top line stays inside the plot.
+	measure 'Cmp Build Y End' = VAR h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) VAR t = GENERATE ( SELECTCOLUMNS ( GENERATESERIES ( 2027, h, 1 ), "@y", [Value] ), VAR y = [@y] RETURN UNION ( ROW ( "@v", CALCULATE ( [Preset A Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) ), ROW ( "@v", CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = y ) ) ) ) VAR mn = MIN ( MINX ( t, [@v] ), 0 ) / 1000000 VAR mx0 = MAX ( MAXX ( t, [@v] ), 0 ) / 1000000 VAR mx = mx0 + ( mx0 - mn ) * 0.08 VAR span = IF ( mx - mn = 0, 1, mx - mn ) VAR mag = POWER ( 10, INT ( LOG10 ( span / 5 ) ) ) VAR step = MINX ( FILTER ( { 1, 2, 2.5, 5, 10 }, span / ( [Value] * mag ) <= 6 ), [Value] ) * mag VAR lo0 = INT ( mn / step ) * step VAR hi0 = - INT ( - mx / step ) * step RETURN IF ( hi0 = 0, step, hi0 ) * 1000000
+		formatString: 0
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: a7b654ed-a203-5ab5-b93b-9765dafc1dd1
 
 	/// Font colour of the package tooltip's verdict line: Night (the words carry the verdict). Defined in step 4 of doc 23: the report bound this measure while the model had none (doc 21 PB defect).
 	measure 'TT Payback Color' = "#12233D"

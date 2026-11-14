@@ -49,6 +49,7 @@ ref table PackageProject
 ref table PlanSelector
 ref table ScatterView
 ref table BuildMove
+ref table BuildBar
 ref table BuildPoint
 ref table MoveDecision
 ref table Finding

@@ -6,7 +6,7 @@
     "y": 256,
     "z": 58000,
     "width": 464,
-    "height": 40,
+    "height": 32,
     "tabOrder": 750
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Build Title (text)"
+                  "Property": "Build Title Plain (text)"
                 }
               },
-              "queryRef": "_Measures.Build Title (text)",
-              "nativeQueryRef": "Build Title (text)"
+              "queryRef": "_Measures.Build Title Plain (text)",
+              "nativeQueryRef": "Build Title Plain (text)"
             }
           ]
         }
@@ -62,13 +62,8 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "_Measures"
-                        }
-                      },
-                      "Property": "Build Title Ink"
+                    "Literal": {
+                      "Value": "'#12233D'"
                     }
                   }
                 }
@@ -266,30 +261,14 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "_Measures"
-                        }
-                      },
-                      "Property": "Build Title Fill"
-                    }
-                  }
+                  "Value": "false"
                 }
               }
             },
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "100D"
                 }
               }
             }
@@ -368,14 +347,14 @@
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "0D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "0D"
                 }
               }
             }

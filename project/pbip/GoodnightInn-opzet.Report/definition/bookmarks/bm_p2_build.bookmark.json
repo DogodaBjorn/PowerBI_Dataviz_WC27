@@ -51,14 +51,29 @@
       "hero_s_packages_build",
       "hero_s_packages_named",
       "hero_s_packages_letters",
+      "hero_s_packages_you",
       "hero_s_packages_hover",
       "c_waits_head",
       "tbl_waits",
       "ch_cmp_alts",
       "tag_cmp_alts",
+      "c_build_head",
+      "sl_moves",
+      "tbl_moves",
+      "c_sel_footer",
+      "c_you_title_alarm",
       "c_you_title",
       "c_you_nums",
+      "c_you_nums_l1",
+      "c_you_nums_v2",
+      "c_you_nums_l2",
+      "c_you_nums_v3",
+      "c_you_nums_l3",
+      "c_you_nums_v4",
+      "c_you_nums_l4",
+      "c_you_range",
       "c_you_rules",
+      "ch_build_bars",
       "ch_cmp_build",
       "tag_cmp_build"
     ],
@@ -400,6 +415,11 @@
               "visualType": "scatterChart"
             }
           },
+          "hero_s_packages_you": {
+            "singleVisual": {
+              "visualType": "scatterChart"
+            }
+          },
           "hero_s_packages_hover": {
             "singleVisual": {
               "visualType": "scatterChart"
@@ -437,6 +457,31 @@
               }
             }
           },
+          "c_build_head": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "sl_moves": {
+            "singleVisual": {
+              "visualType": "advancedSlicerVisual"
+            }
+          },
+          "tbl_moves": {
+            "singleVisual": {
+              "visualType": "tableEx"
+            }
+          },
+          "c_sel_footer": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_title_alarm": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
           "c_you_title": {
             "singleVisual": {
               "visualType": "cardVisual"
@@ -447,9 +492,54 @@
               "visualType": "cardVisual"
             }
           },
-          "c_you_rules": {
+          "c_you_nums_l1": {
             "singleVisual": {
               "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_v2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_l2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_v3": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_l3": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_v4": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_l4": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_range": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_rules": {
+            "singleVisual": {
+              "visualType": "shape"
+            }
+          },
+          "ch_build_bars": {
+            "singleVisual": {
+              "visualType": "clusteredBarChart"
             }
           },
           "ch_cmp_build": {
@@ -459,7 +549,7 @@
           },
           "tag_cmp_build": {
             "singleVisual": {
-              "visualType": "image"
+              "visualType": "textbox"
             }
           }
         }

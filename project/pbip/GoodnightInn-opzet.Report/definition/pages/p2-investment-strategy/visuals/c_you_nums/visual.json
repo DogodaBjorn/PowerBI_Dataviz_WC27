@@ -3,10 +3,10 @@
   "name": "c_you_nums",
   "position": {
     "x": 1384,
-    "y": 304,
+    "y": 302,
     "z": 59000,
-    "width": 464,
-    "height": 72,
+    "width": 115,
+    "height": 32,
     "tabOrder": 760
   },
   "visual": {
@@ -28,34 +28,6 @@
               },
               "queryRef": "_Measures.Build Capex (text)",
               "nativeQueryRef": "Build Capex (text)"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Build NPV (text)"
-                }
-              },
-              "queryRef": "_Measures.Build NPV (text)",
-              "nativeQueryRef": "Build NPV (text)"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Build Range (text)"
-                }
-              },
-              "queryRef": "_Measures.Build Range (text)",
-              "nativeQueryRef": "Build Range (text)"
             }
           ]
         }
@@ -235,94 +207,13 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#4B5466'"
-                    }
-                  }
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'belowValue'"
-                }
-              }
-            },
-            "horizontalAlignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
+                  "Value": "false"
                 }
               }
             }
           },
           "selector": {
             "id": "default"
-          }
-        },
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'capex'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Build Capex (text)"
-          }
-        },
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'NPV through 2032'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Build NPV (text)"
-          }
-        },
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'NPV range, $M'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Build Range (text)"
           }
         }
       ],

@@ -1565,12 +1565,16 @@ m("Build WF Note (text)", BOVER + 'RETURN IF ( n = 0, "Pick moves on the left; y
 m("Build Title (text)", BOVER + 'RETURN IF ( n = 0, "Nothing picked yet", IF ( over, "Over the " & ' + fm("budget") + ' & " budget by " & ' + fm("cap - budget") + ', '
   '"Your plan: " & n & IF ( n = 1, " move", " moves" ) & ", live by " & [Build Live (text)] ) )', TXT, C12,
   "Title of the your-plan tile; its empty state asks for a first move; over the budget it becomes the alarm (round 5, Björn: a big alarm when the selection passes the budget).")
+# build step 9: the comp sets the title at the slot's left edge and the alarm 12 px inside its band, and a card has one
+# padding, so the tile's title is two cards: the plain title, and the alarm band (white and empty while within the budget)
+m("Build Title Plain (text)", BOVER + 'RETURN IF ( over, "", [Build Title (text)] )', TXT, C12, "Title of the your-plan tile while the plan is within the budget (or empty); empty over the budget, where the alarm band carries the title.")
+m("Build Title Alarm (text)", BOVER + 'RETURN IF ( over, [Build Title (text)], "" )', TXT, C12, "The alarm band of the your-plan tile: the title while the picked capex passes the budget; empty otherwise.")
 m("Build Title Fill", BOVER + f'RETURN IF ( over, "{SIGNAL_MARK}", "{SURFACE}" )', TXT, C12, "Fill of the your-plan title row: Tangerine while the picked capex passes the budget (the alarm band), white otherwise. Paired with Build Title Ink, branch for branch.")
 m("Build Title Ink", BOVER + f'RETURN IF ( over, "{SURFACE}", "{INK}" )', TXT, C12, "Text of the your-plan title row: white on the Tangerine alarm band (18 pt: 4.2:1, WCAG large text), Night otherwise.")
-m("Build Capex (text)", fm("COALESCE ( [Build Capex], 0 )"), TXT, C12, "Capex of the plan being built as text ($0.0M when empty).")
-m("Build NPV (text)", sfm("COALESCE ( [Build NPV (sel)], 0 )"), TXT, C12, "NPV of the plan being built as text.")
-m("Build Range (text)", "VAR lo = COALESCE ( [Build NPV Low], 0 ) VAR hi = COALESCE ( [Build NPV High], 0 ) RETURN " + sfm("lo") + ' & " to " & ' + sfm("hi"),
-  TXT, C12, "NPV of the plan being built from the Low to the High scenario, the unit on both ends (R-G1).")
+m("Build Capex (text)", BIDS + 'RETURN IF ( n = 0, "", ' + fm("[Build Capex]") + " )", TXT, C12, "Capex of the plan being built as text; empty while nothing is picked (R-B-2: the empty state shows no numbers).")
+m("Build NPV (text)", BIDS + 'RETURN IF ( n = 0, "", ' + sfm("[Build NPV (sel)]") + " )", TXT, C12, "NPV of the plan being built as text; empty while nothing is picked.")
+m("Build Range (text)", BIDS + 'VAR lo = [Build NPV Low] VAR hi = [Build NPV High] RETURN IF ( n = 0, "", ' + sfm("lo") + ' & " to " & ' + sfm("hi") + " )",
+  TXT, C12, "NPV of the plan being built from the Low to the High scenario, the unit on both ends (R-G1); empty while nothing is picked.")
 BRULES = (BIDS + f"VAR g = COALESCE ( [Build Growth], 0 ) VAR cap = COALESCE ( [Build Capex], 0 ) VAR budget = {BUDGET_GI} "
           'VAR kiosk = "GI-02" IN ids VAR app = "GI-01" IN ids VAR broken = n > 0 && ( n < 3 || g < 1 || cap > budget || ( kiosk && NOT app ) ) ')
 m("Build Valid (text)",
@@ -1579,7 +1583,8 @@ m("Build Valid (text)",
   'RETURN IF ( n = 0, "Pick at least three moves, one of them growth, within " & ' + fm("budget") + ' & ". Your plan appears here and is compared with A below.", IF ( NOT broken, "Within the rules: " & n & " moves, " & g & " growth, " & ' + fm("cap") + ' & " of " & ' + fm("budget") + ' & ".", '
   '"Not yet within the rules: " & LEFT ( issues, LEN ( issues ) - 2 ) & "." ) )',
   TXT, C12, "The contest rules against the plan being built: at least 3 moves, 1 growth, within budget, kiosks need the app.")
-m("Build Valid Color", BRULES + f'RETURN IF ( broken, "{BAD}", "{INK2}" )', TXT, C12, "Burnt Tangerine while a rule is broken, Dusk otherwise (the sentence says which).")
+m("Build Valid Color", BRULES + f'RETURN IF ( n = 0, "{INK}", IF ( broken, "{BAD}", "{INK2}" ) )', TXT, C12,
+  "Ink of the rules line: Night for the empty state's instruction, Burnt Tangerine while a rule is broken, Dusk when the plan is within the rules (the sentence says which).")
 m("Build Cumulative Net (sel)",
   BIDS + "VAR s = [Selected Scenario] VAR y = MAX ( 'Date'[Year] ) RETURN IF ( n = 0, BLANK (), CALCULATE ( SUM ( ProjectCashflow[Benefit] ) - SUM ( ProjectCashflow[Capex] ) - SUM ( ProjectCashflow[Disruption] ), "
   "REMOVEFILTERS ( 'Date' ), 'Date'[Year] <= y, ProjectCashflow[Scenario] = s, TREATAS ( ids, ProjectCashflow[ProjectID] ) ) )",
@@ -1593,7 +1598,19 @@ m("Build Project NPV (shown)", BIDS + shown_parts("[NPV @ 8%]") + "VAR me = SELE
   "Waterfall of the plan being built: each move's NPV, rounded to $0.1M so the bars add up to the shown total.")
 m("Build WF Y End", BIDS + shown_parts("[NPV @ 8%]") + "RETURN IF ( n = 0, 1000000, SUMX ( adj, IF ( [@s] > 0, [@s], 0 ) ) * 1.6 + 1000000 )", "0", C12, "Value axis end of the build waterfall (FinalV2: 1.6 and $1M headroom, the 160 px chart carries a title row and the labels sit outside the bars).")
 m("Build WF Y Start", BIDS + shown_parts("[NPV @ 8%]") + "RETURN IF ( n = 0, -1000000, SUMX ( adj, IF ( [@s] < 0, [@s], 0 ) ) * 1.6 - 1000000 )", "0", C12, "Value axis start of the build waterfall (FinalV2: 1.6 and $1M headroom).")
-m("Build Point Size", "IF ( ISBLANK ( [Build NPV (sel)] ), BLANK (), 7 )", "0", C12, "Marker size of the your-plan dot on the small scatter; blank (no dot) while nothing is picked.")
+# Build step 9 (doc 22 section 3, spec charts.hero_s_packages.you): the plan dot is Night, Tangerine while over the budget,
+# drawn under the lettered discs; its name "You" stands above it on white. Power BI sets a scatter label under an invisible
+# point (16.7 px under it on this plot, build step 8), so the name hangs from a second, invisible point that far plus the
+# comp's 26 px above the dot: 42.7 px, on a layer of its own whose plot is taller than the proof chart's (the anchor of a
+# plan near the top would leave a plot that ends at +$20M). 308 px carry $80M, so 42.7 px are $11.09M.
+YOU_LABEL_LIFT = 11_090_000
+m("Build Point Color", BOVER + f'RETURN IF ( over, "{SIGNAL_MARK}", "{INK}" )', TXT, C12,
+  "Marker colour of the plan dot in the proof chart: Night (Night is 'your plan', R-G3), Tangerine while the picked capex passes the budget.")
+m("Build You Ink", BOVER + f'RETURN IF ( over, "{BAD}", "{INK}" )', TXT, C12,
+  "Ink of the name 'You' above the plan dot: Night, Burnt Tangerine while over the budget (the text cut of Tangerine: 6.2:1 on white).")
+m("Build You Label NPV", f"[Build NPV (sel)] + {YOU_LABEL_LIFT}", SUSDM0, C12,
+  "Where the name 'You' is anchored in the proof chart, NOT a value: the plan's NPV plus a fixed lift, so that Power BI's label, which it sets under an invisible point, "
+  "lands above the plan dot. Shown nowhere as a number (the layer has no tooltip and no tab stop).")
 m("Cmp Build Title (text)",
   BIDS + f"VAR s = [Selected Scenario] VAR a32 = {CUM32('A')} VAR y32 = CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) VAR pb = [Build Payback Year] "
   'RETURN IF ( n = 0, "Your plan against A, $M (" & s & " case)", "Your plan against A, $M (" & s & " case): yours ends " & IF ( ROUND ( ( y32 - a32 ) / 100000, 0 ) = 0, "level with A", IF ( y32 > a32, "ahead of A by ", "behind A by " ) & ' + fm("ABS ( y32 - a32 )") + ' )'
@@ -1848,8 +1865,17 @@ alt_m("Cmp Alts",
       f"VAR s = [Selected Scenario] VAR a32 = {CUM32('A')} VAR b32 = {CUM32('B')} VAR c32 = {CUM32('C')} "
       'RETURN "Cumulative net impact 2027 to 2032 against A, " & s & " case, by 2032: A " & ' + sfm("a32") + ' & ", B " & ' + sfm("b32") + ' & ", C " & ' + sfm("c32") + ' & "."',
       "The alts comparer read aloud: the three 2032 end points.")
-alt_m("You Nums", '"Your plan, " & [Selected Scenario] & " case: capex " & [Build Capex (text)] & ", net present value through 2032 " & [Build NPV (text)] & ", from " & [Build Range (text)] & " $M between the Low and High cases. " & [Build Valid (text)]',
-      "The your-plan numbers card read aloud, with the rules check.")
+alt_m("You Nums", BIDS + 'RETURN IF ( n = 0, "Your plan: nothing picked yet. " & [Build Valid (text)], "Your plan, " & [Selected Scenario] & " case: capex " & [Build Capex (text)] '
+      '& ", net present value through 2032 " & [Build NPV (text)] & ", " & [Build Run-rate (text)] & " a year by 2032, " & [Build A Year on Cost (text)] & " a year on cost. Between the Low and High cases: " '
+      '& [Build Range (text)] & ". " & [Build Valid (text)] )',
+      "The your-plan numbers read aloud, with the range and the rules check (first version of build step 9; step 10 reviews it).")
+alt_m("Build Bars", BIDS + "VAR t = ADDCOLUMNS ( ids, \"@v\", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ) ) "
+      'RETURN IF ( n = 0, "No moves picked yet.", "Net present value through 2032 of each picked move, " & [Selected Scenario] & " case, highest first: " '
+      '& CONCATENATEX ( t, ' + NAME_OF.format("[@p]") + ' & " " & ' + sfm("[@v]") + ', ", ", [@v], DESC ) & "." )',
+      "The build bar chart read aloud: each picked move with its NPV, highest first (first version of build step 9; step 10 reviews it).")
+alt_m("Moves", '"The ten moves, " & [Selected Scenario] & " case, in the order of the list beside it: " & CONCATENATEX ( ALLNOBLANKROW ( BuildMove ), BuildMove[Short Name] & " " & [Move Capex (text)] '
+      '& ", net present value " & [Move NPV (text)], "; ", BuildMove[Sort], ASC ) & "."',
+      "The moves table read aloud: each move with its capex and its NPV through 2032 (first version of build step 9; step 10 reviews it).")
 alt_m("Build Waterfall", BIDS + shown_parts("[NPV @ 8%]") +
       'RETURN IF ( n = 0, "No moves picked yet.", "Where the net present value of your plan comes from, " & [Selected Scenario] & " case: " '
       '& CONCATENATEX ( adj, ' + NAME_OF.format("[@p]") + ' & " " & ' + sfm("[@s]") + ', ", ", ' + NAME_OF.format("[@p]") + ', ASC ) & "; together " & ' + sfm("SUMX ( adj, [@s] )") + ' & "." )',
@@ -2031,14 +2057,46 @@ label_safe("A Cumulative End Name (label-safe)", _YEND.format("[Preset A Cumulat
 label_safe("Build Cumulative End Name (label-safe)", _YEND.format("[Build Cumulative Net (sel)]"), '"You"', C15,
            "Build comparison chart, end label of the plan being built: the value on the horizon year only, printed as 'You'; blank while nothing is picked.")
 
+# Build step 9: the comparison chart of Build (ch_cmp_build). A line has one colour, so the plan's line is two measures:
+# Night within the budget, Tangerine over it (the comp). All three lines are in whole $M: a value axis prints the format
+# of its first series on every tick, and the first one is blank while nothing is picked or the plan is over the budget.
+m("Build Cumulative Line", BOVER + "RETURN IF ( NOT over, [Build Cumulative Net (sel)] )", SUSDM0, C15,
+  "Build comparison chart: the cumulative net impact of the plan being built while it is within the budget (the Night line); blank over the budget and while nothing is picked.")
+m("Build Cumulative Line (over)", BOVER + "RETURN IF ( over, [Build Cumulative Net (sel)] )", SUSDM0, C15,
+  "Build comparison chart: the same line while the plan is over the budget (drawn in Tangerine); blank otherwise.")
+m("Preset A Cumulative Line", "[Preset A Cumulative Net (sel)]", SUSDM0, C15, "Build comparison chart: package A's line, in whole $M like the plan's (the value axis prints a line's format on its ticks).")
+
 # ---- label-safe twins for bars (P-1)
 label_safe("NPS 2025 (label-safe)", "[NPS (weighted) 2025]", pt1("[NPS (weighted) 2025]"), C15,
            "F3 bars: response-weighted NPS 2025 with its label as finished text ('+6.8', a true minus), so no session locale prints a decimal comma.")
-m("Build Bar NPV", BIDS + "VAR me = SELECTEDVALUE ( BuildMove[ProjectID] ) RETURN IF ( n > 0 && me IN ids, CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = me ) )", SUSDM, C15,
-  "Build bar chart (BuildMove): the NPV through 2032 of a picked move alone, scenario in view; blank for a move that is not picked, so the chart lists the plan only.")
-label_safe("Build Bar NPV (label-safe)", "[Build Bar NPV]", sfm("[Build Bar NPV]"), C15, "Build bar chart: the picked move's NPV with its label as finished text ('+$3.4M', '−$0.6M').")
+# Build step 9: the bar chart of the picked moves (ch_build_bars) reads its rows from BuildBar, not BuildMove. The comp sets
+# the bars from the top of the slot at 32 px a row; a native bar chart spreads its rows over the whole plot, so three picked
+# moves would stand 56 px apart. BuildBar holds the ten moves and four empty rows (no name, value zero, no label): while
+# fewer than BARS_MIN_ROWS moves are picked the empty rows fill the chart up to that number, so the picked moves keep the
+# comp's pitch. From six moves on the rows share the plot, as in the comp.
+BARS_MIN_ROWS = 5
+BBAR = BIDS + "VAR me = SELECTEDVALUE ( BuildBar[ProjectID] ) VAR pad = SELECTEDVALUE ( BuildBar[Pad] ) "
+_BAR_NPV = "CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = me )"
+m("Build Bar NPV", BBAR + f"RETURN IF ( n > 0, IF ( me IN ids, {_BAR_NPV}, IF ( pad > 0 && pad <= {BARS_MIN_ROWS} - n, 0 ) ) )", SUSDM, C15,
+  "Build bar chart (BuildBar): the NPV through 2032 of a picked move alone, scenario in view; blank for a move that is not picked, so the chart lists the plan only. "
+  f"Zero on an empty row while fewer than {BARS_MIN_ROWS} moves are picked (the row keeps the bars at the comp's pitch and shows nothing).")
+label_safe("Build Bar NPV (label-safe)", "[Build Bar NPV]", 'IF ( SELECTEDVALUE ( BuildBar[Pad] ) > 0, " ", ' + sfm("[Build Bar NPV]") + " )", C15,
+           "Build bar chart: the picked move's NPV with its label as finished text ('+$3.4M', '−$0.6M'); an empty row prints a space.")
 m("Build Bar Color", f'VAR v = [Build Bar NPV] RETURN IF ( ISBLANK ( v ), BLANK (), IF ( ROUND ( v / 1000000, 2 ) < 0, "{SIGNAL_MARK}", "{INK}" ) )', TXT, C15,
   "Build bar chart: Night for a move that adds NPV (Night is 'your plan'), Tangerine for one that costs NPV; the signed label carries it too (R-G3).")
+m("Build Bar Order", BBAR + f"RETURN IF ( n > 0, IF ( me IN ids, {_BAR_NPV}, IF ( pad > 0 && pad <= {BARS_MIN_ROWS} - n, -1000000000000 - pad ) ) )", "0", C15,
+  "Build bar chart, sort key (descending): a picked move's NPV, the empty rows after every move.")
+# The value axis is hidden, so its two ends place the bars: the comp keeps BARS_PAD px free on both sides of the bars for
+# their labels, beside a name column as wide as the longest picked name plus 14 px (at most 45 % of the slot). The ends are
+# the lowest and the highest of the picked NPVs and zero, moved out by what BARS_PAD px are worth. Name widths: Segoe UI
+# 16 px, the comp's textW (BuildBar[Name Px]).
+BARS_W, BARS_PAD = 464, 72
+_BARS_X = (BIDS + "VAR t = ADDCOLUMNS ( ids, \"@v\", VAR p = [@p] RETURN CALCULATE ( [NPV @ 8%], REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[ProjectID] = p ), "
+           "\"@w\", VAR p = [@p] RETURN LOOKUPVALUE ( BuildBar[Name Px], BuildBar[ProjectID], p ) ) "
+           f"VAR lo = MIN ( MINX ( t, [@v] ), 0 ) VAR hi = MAX ( MAXX ( t, [@v] ), 0 ) VAR lw = MIN ( {BARS_W} * 0.45, MAXX ( t, [@w] ) + 14 ) "
+           f"VAR d = IF ( hi - lo = 0, 1000000, hi - lo ) VAR room = d * {BARS_PAD} / ( {BARS_W} - lw - 2 * {BARS_PAD} ) ")
+m("Build Bars X Start", _BARS_X + "RETURN IF ( n > 0, lo - room )", "0", C15, "Value axis start of the build bar chart (the axis is hidden): the lowest picked NPV or zero, less the room the labels need.")
+m("Build Bars X End", _BARS_X + "RETURN IF ( n > 0, hi + room )", "0", C15, "Value axis end of the build bar chart (the axis is hidden): the highest picked NPV or zero, plus the room the labels need.")
 
 # ---- page 1 numbers (doc 21 sections 4.2 to 4.5, doc 22 section 3)
 m("Trend Commission Take GI", "[Trend Margin before GI] - [Trend Margin after GI]", PCT, C15,
@@ -2490,8 +2548,18 @@ alt_m("Waits",
 # ---- Build your own (R-B-1, R-B-2)
 m("Build Picked (text)", BIDS + f'RETURN "Picked: " & n & IF ( n = 1, " move, ", " moves, " ) & ' + fm("COALESCE ( [Build Capex], 0 )") + ' & " of " & ' + fm(BUDGET_GI),
   TXT, C15, "Selector footer: how many moves are picked and their capex against the budget.")
-m("Build Run-rate (text)", BIDS + "RETURN IF ( n = 0, BLANK (), " + sfm("[Build Run-rate (sel)]") + " )", TXT, C15, "Your plan: profit a year by 2032, scenario in view; blank while nothing is picked.")
-m("Build A Year on Cost (text)", BIDS + "RETURN IF ( n = 0, BLANK (), " + pct1("[Build A Year on Cost (sel)]") + " )", TXT, C15, "Your plan: a year on cost, scenario in view; blank while nothing is picked.")
+m("Build Run-rate (text)", BIDS + 'RETURN IF ( n = 0, "", ' + sfm("[Build Run-rate (sel)]") + " )", TXT, C15, "Your plan: profit a year by 2032, scenario in view; empty while nothing is picked.")
+m("Build A Year on Cost (text)", BIDS + 'RETURN IF ( n = 0, "", ' + pct1("[Build A Year on Cost (sel)]") + " )", TXT, C15, "Your plan: a year on cost, scenario in view; empty while nothing is picked.")
+# build step 9: the four callouts of your plan are a value card and a label card each (a card cannot hide its label while
+# its value is empty), so the labels are measures too: empty while nothing is picked (R-B-2)
+YOU_LABELS = (("Capex", "capex"), ("NPV", "NPV through 2032"), ("Run-rate", "a year by 2032"), ("A Year on Cost", "a year on cost"))
+for _k, _lab in YOU_LABELS:
+    m(f"Build Label {_k} (text)", f'IF ( [Build Count] = 0, "", "{_lab}" )', TXT, C15, f"Your plan: the label '{_lab}' under its number; empty while nothing is picked.")
+m("Build NPV Ink", f'IF ( ROUND ( [Build NPV (sel)] / 100000, 0 ) < 0, "{BAD}", "{INK}" )', TXT, C15,
+  "Ink of your plan's NPV: Burnt Tangerine below zero (as shown, one decimal), Night otherwise; the sign says it too.")
+m("Build Run-rate Ink", f'IF ( ROUND ( [Build Run-rate (sel)] / 100000, 0 ) < 0, "{BAD}", "{INK}" )', TXT, C15,
+  "Ink of your plan's yearly figure: Burnt Tangerine below zero (as shown, one decimal), Night otherwise.")
+nice_axis("Cmp Build", ["Preset A Cumulative Net (sel)", "Build Cumulative Net (sel)"], "the comparison chart in Build your own (A alone while nothing is picked)")
 m("TT Payback Color", f'"{INK}"', TXT, C10,
   "Font colour of the package tooltip's verdict line: Night (the words carry the verdict). Defined in step 4 of doc 23: the report bound this measure while the model had none (doc 21 PB defect).")
 
@@ -2599,6 +2667,19 @@ RETURN
         "Answers", InvestmentProjects[Answers Finding]
     )
 """
+
+# Build step 9: BuildBar. The width of each short name in Segoe UI 16 px (PIL, segoeui.ttf; the comp's textW), typed here so
+# the generator needs no font; a name that is not listed gets a width from its length. The empty rows carry no-break spaces
+# (one to four: distinct values, and not trimmed like a space).
+MOVE_NAME_PX = {"Booking app": 87, "Revenue management": 156, "Kiosks at 20 desks": 126, "Breakfast upgrade": 126, "Gatwick +40 rooms": 137, "Toronto +40 rooms": 137,
+                "Kingston +40 rooms": 143, "Energy programme": 135, "Boston new hotel": 120, "Refresh 10 oldest": 121}
+BUILD_BAR = (
+    'VAR Proj = FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" )\n'
+    'VAR Moves = SELECTCOLUMNS ( Proj, "ProjectID", InvestmentProjects[ProjectID], "Name", InvestmentProjects[Short Name], "Pad", BLANK (), '
+    '"Name Px", SWITCH ( InvestmentProjects[Short Name], ' + ", ".join(f'"{k}", {v}' for k, v in MOVE_NAME_PX.items()) + ', LEN ( InvestmentProjects[Short Name] ) * 7.6 ) )\n'
+    'VAR Pads = SELECTCOLUMNS ( GENERATESERIES ( 1, 4, 1 ), "ProjectID", "pad" & [Value], "Name", REPT ( UNICHAR ( 160 ), [Value] ), "Pad", [Value], "Name Px", 0 )\n'
+    "RETURN\n    UNION ( Moves, Pads )\n"
+)
 
 KPI_ROWS = [  # Sort, Key, FindingLabel, Measure, Direction, Format, DeltaScale, DeltaUnit, DeltaFormat
     # Read along the brand promise "A good night. A fair price." and Keller's ladder (goodnight-inn-hanger
@@ -2806,7 +2887,7 @@ def main():
       f"\tlineageTag: {tag('expr.DataFile')}\n\n"
       "\tannotation PBI_ResultType = Text\n\n"
       "\tannotation PBI_NavigationStepName = Navigation\n")
-    tables = list(SHIPPED) + ["_Measures", "ProjectCashflow", "HotelOutlook", "Timeline", "PlanYear", "BridgeStep", "FolioLine", "KpiLine", "Package", "PackageProject", "PlanSelector", "ScatterView", "BuildMove", "BuildPoint", "MoveDecision", "Finding", "WaitOption"]
+    tables = list(SHIPPED) + ["_Measures", "ProjectCashflow", "HotelOutlook", "Timeline", "PlanYear", "BridgeStep", "FolioLine", "KpiLine", "Package", "PackageProject", "PlanSelector", "ScatterView", "BuildMove", "BuildBar", "BuildPoint", "MoveDecision", "Finding", "WaitOption"]
     model = ["model Model", "\tculture: en-US", "\tdefaultPowerBIDataSourceVersion: powerBI_V3", "\tsourceQueryCulture: en-US", "\tdataAccessOptions", "\t\tlegacyRedirects", "\t\treturnErrorValuesAsNull", "",
              "queryGroup Facts", "", "\tannotation PBI_QueryGroupOrder = 0", "", "queryGroup Dimensions", "", "\tannotation PBI_QueryGroupOrder = 1", "",
              "annotation __PBI_TimeIntelligenceEnabled = 0", "",
@@ -2865,9 +2946,14 @@ def main():
     # ends in an ellipsis; the selector and the tooltips keep the full Short Name. Both columns sort by the NPV rank.
     bm = bm.replace("\tcolumn 'Waterfall Label'\n\t\tdataType: string\n", "\tcolumn 'Waterfall Label'\n\t\tdataType: string\n\t\tsortByColumn: Sort\n")
     w(d / "tables" / "BuildMove.tmdl", bm.replace("\tcolumn 'Short Name'\n\t\tdataType: string\n", "\tcolumn 'Short Name'\n\t\tdataType: string\n\t\tsortByColumn: Sort\n"))
+    # build step 9: the row source of the build bar chart: the ten moves and the empty rows that keep the bars' pitch
+    w(d / "tables" / "BuildBar.tmdl", calc_table(
+        "BuildBar", "Row source of the build bar chart (P2, Build your own), disconnected: the ten Goodnight Inn moves by their short name, and four empty rows (a name of no-break spaces, Pad 1 to 4) "
+        "that fill the chart while fewer than five moves are picked, so the bars keep their height. Name Px: the width of the name in Segoe UI 16 px (the chart's axis ends are computed from it).",
+        [("ProjectID", "string", None), ("Name", "string", None), ("Pad", "int64", "0"), ("Name Px", "double", "0.0")], BUILD_BAR))
     w(d / "tables" / "BuildPoint.tmdl", helper_table(
-        "BuildPoint", "One row, 'Your plan': the category of the scatter layer that marks the plan being built (its X and Y are the Build Capex and Build NPV measures).",
-        [("Your plan",)], [("Label", "STRING", "string")]))
+        "BuildPoint", "One row, 'Your plan': the category of the scatter layer that marks the plan being built (its X and Y are the Build Capex and Build NPV measures). Name: 'You', the label above the dot.",
+        [("Your plan", "You")], [("Label", "STRING", "string"), ("Name", "STRING", "string")]))
     # FinalV3 (doc 21 section 10.1): the decision table and the two row sources of the ledger and the What-waits table
     w(d / "tables" / "MoveDecision.tmdl", calc_table(
         "MoveDecision",

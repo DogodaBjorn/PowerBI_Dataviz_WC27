@@ -538,6 +538,42 @@
     "c_plan_t3_3": {
       "z": 36200,
       "tabOrder": -36201
+    },
+    "hero_s_packages_you": {
+      "z": 47000,
+      "tabOrder": -47001
+    },
+    "c_you_title_alarm": {
+      "z": 57900,
+      "tabOrder": -57901
+    },
+    "c_you_nums_v2": {
+      "z": 59020,
+      "tabOrder": -59021
+    },
+    "c_you_nums_v3": {
+      "z": 59030,
+      "tabOrder": -59031
+    },
+    "c_you_nums_v4": {
+      "z": 59040,
+      "tabOrder": -59041
+    },
+    "c_you_nums_l1": {
+      "z": 59110,
+      "tabOrder": -59111
+    },
+    "c_you_nums_l2": {
+      "z": 59120,
+      "tabOrder": -59121
+    },
+    "c_you_nums_l3": {
+      "z": 59130,
+      "tabOrder": -59131
+    },
+    "c_you_nums_l4": {
+      "z": 59140,
+      "tabOrder": -59141
     }
   }
 }

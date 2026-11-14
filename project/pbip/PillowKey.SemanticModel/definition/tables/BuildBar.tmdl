@@ -1,0 +1,49 @@
+/// Row source of the build bar chart (P2, Build your own), disconnected: the ten Goodnight Inn moves by their short name, and four empty rows (a name of no-break spaces, Pad 1 to 4) that fill the chart while fewer than five moves are picked, so the bars keep their height. Name Px: the width of the name in Segoe UI 16 px (the chart's axis ends are computed from it).
+table BuildBar
+	lineageTag: 5fbe66fe-ba3d-5577-bea8-efd4f2657a66
+
+	column ProjectID
+		dataType: string
+		lineageTag: 5d9391e5-1775-5e6e-85d4-23359179c40d
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [ProjectID]
+
+	column Name
+		dataType: string
+		lineageTag: 0c220078-2950-5f1a-bfb8-c918f6fd652a
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Name]
+
+	column Pad
+		dataType: int64
+		formatString: 0
+		lineageTag: 45f4f483-5078-5907-b6dc-a82f8f41f352
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Pad]
+
+	column 'Name Px'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 2856f658-0a07-5d59-a236-8d2eb28c3e78
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Name Px]
+
+	partition BuildBar = calculated
+		mode: import
+		source = ```
+				VAR Proj = FILTER ( ALLNOBLANKROW ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" )
+				VAR Moves = SELECTCOLUMNS ( Proj, "ProjectID", InvestmentProjects[ProjectID], "Name", InvestmentProjects[Short Name], "Pad", BLANK (), "Name Px", SWITCH ( InvestmentProjects[Short Name], "Booking app", 87, "Revenue management", 156, "Kiosks at 20 desks", 126, "Breakfast upgrade", 126, "Gatwick +40 rooms", 137, "Toronto +40 rooms", 137, "Kingston +40 rooms", 143, "Energy programme", 135, "Boston new hotel", 120, "Refresh 10 oldest", 121, LEN ( InvestmentProjects[Short Name] ) * 7.6 ) )
+				VAR Pads = SELECTCOLUMNS ( GENERATESERIES ( 1, 4, 1 ), "ProjectID", "pad" & [Value], "Name", REPT ( UNICHAR ( 160 ), [Value] ), "Pad", [Value], "Name Px", 0 )
+				RETURN
+				    UNION ( Moves, Pads )
+				```
+
+	annotation PBI_ResultType = Table

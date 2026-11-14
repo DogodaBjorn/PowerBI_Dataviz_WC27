@@ -6,12 +6,10 @@ Run from the repo root, after sketch_model.py and brand_canvas_v3.py (plan 11):
     python project/tools/opzet_report.py                   # writes project/pbip/GoodnightInn-opzet.pbip + .Report
     python project/tools/opzet_report.py --out DIR         # dry run elsewhere (validation outside project/pbip)
     python project/tools/opzet_report.py --state=alts      # a throwaway copy (…-alts) that OPENS in the alts state
-    python project/tools/opzet_report.py --selector=native # the move selector as a native button slicer (fallback)
 
 Source of truth:
   positions  project/design-prototypes/opzet-layout.json (the slot map, with the state of every slot, tile and card)
   bindings   this file (one function per visual, measures from project/tools/sketch_model.py)
-  selector   project/deliverables/deneb-specs/dn_build_selector.json (written by project/tools/build_selector_spec.py)
   decisions  project/project-state/active/06-, 08-, 11- and 12-feedbackronde-4.md
 Canvas 1920x1080; brand kit goodnight-inn-wakeup 3.1, night header with the night-glow canvas (plans 10 and 11;
 theme: project/deliverables/theme.json, canvas: project/tools/brand_canvas_v3.py).
@@ -23,10 +21,11 @@ slicer, so a bookmark never changes it (fx-focus rules 1-2). Shapes not yet exer
 FinalV3 (doc 23, the rebuild to the comp rebuild-comp-v10.html, one step per session): P1 is rebuilt (step 5). P2 runs
 on the v10 slot map since step 6, which built the frame (p2_frame) and the decision card of Recommended
 (p2_decision_card), step 7 the hero table and the capital plan (p2_hero, p2_capital_plan), step 8 What waits (p2_proof,
-p2_waits); p2_pending() says what step 9 still rebuilds:
+p2_waits), step 9 Build your own (p2_build):
   rec    Recommended: A: the hero table and the capital plan (built in step 7), the decision card (built)
   alts   What waits, and why: the small scatter, the table of what waits, the comparison with A (built in step 8)
-  build  Build your own: the native move selector, your plan, the comparison with A (step 9)
+  build  Build your own: the native move selector beside the moves table, your plan, the comparison with A (built in step 9;
+         the Deneb selector and the waterfalls are gone, the report needs no custom visual)
 """
 import copy
 import json
@@ -37,7 +36,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pbir_lib import (visual, textbox, card, write_report, vco, axis, legend, labels, series_colors, line_styles,  # noqa: E402
-                      table_objects, proj_col, proj_mea, mref, filter_in, filter_measure_gt,
+                      table_objects, proj_col, proj_mea, mref, filter_in, sort_by_measure,
                       sort_by_column, b, num, integer, enum, text, color, write_json, tag, PAGE_SCHEMA)
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -52,9 +51,6 @@ OPEN_STATE = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--state
 assert OPEN_STATE in STATES, OPEN_STATE
 if OPEN_STATE != "rec":
     NAME += f"-{OPEN_STATE}"
-# the move selector: Deneb (Björn 10 Nov) or, if the Desktop spike fails, a native button slicer in the same slot
-SELECTOR = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--selector=")), "deneb")
-assert SELECTOR in ("deneb", "native"), SELECTOR
 # Build steps 5 and 6 (doc 23 rule 9): the v10 slot map is opzet-layout.json for every page; opzet-layout-v9.json is no longer read
 from slot_map import load_layout  # noqa: E402
 import sketch_model as sm  # noqa: E402  (build step 7: the hero table's geometry and the gate year, defined once beside the measures)
@@ -63,8 +59,6 @@ THEME = json.loads((ROOT / "project" / "deliverables" / "theme.json").read_text(
 THEME_FILE = "goodnight-inn-wakeup.json"
 THEME["name"] = THEME_FILE  # the registered file name (pbir_lib / pbir_detect convention)
 BG = ROOT / "project" / "deliverables" / "backgrounds"
-DENEB_SPEC = ROOT / "project" / "deliverables" / "deneb-specs" / "dn_build_selector.json"
-DENEB_GUID = "deneb7E15AEF80B9E4D4F8E12924291ECE89A"  # Deneb, AppSource edition (deneb.guide PBIR guide)
 
 # Kit goodnight-inn-wakeup 3.1 (plan 10 D1, plan 11): Goodnight Inn is Coffee Blue, the sister brands Warm Grey,
 # Tangerine only marks a signal. ACCENT is the text cut (Deep Coffee, 6.2:1 on white, white on it 6.2:1);
@@ -135,8 +129,9 @@ def at(page, name):
     return s["x"], s["y"], s["w"], s["h"], s["z"], s["tab"]
 
 
-# build step 8: the plan dot of the small scatter shares the stack's slot (alts and build) but is drawn in Build only
-STATE_ONLY = {"hero_s_packages_build": ("build",)}
+# build step 8: the plan dot of the small scatter shares the stack's slot (alts and build) but is drawn in Build only;
+# build step 9: so is its name "You"
+STATE_ONLY = {"hero_s_packages_build": ("build",), "hero_s_packages_you": ("build",)}
 
 
 def states_of(page, name):
@@ -824,18 +819,6 @@ def image_measure(page, name, measure, alt):
     return visual(name, "image", x, y, w, h, z, tab, objects=objs, vcos=vco(alt=alt, padding=0))
 
 
-def hover_tag(page, name, key, i):
-    """The hover signifier, 12 Nov, night (Björn on FinalV2: the 16 px ring-i was too small everywhere and its legend, 'hover for
-    more' in the header's top-right corner, sat far from what it explained). Still a signifier in Don Norman's sense
-    (CREDITS.md): Power BI never changes the cursor over a visual that opens a report-page tooltip. Now the mark carries its
-    own label, so nothing has to explain it elsewhere (Nielsen, recognition rather than recall; CREDITS.md): a 28 px pill in
-    the tooltips' own colours (signal tint, a filled Tangerine disc with a white i, Night words) on the card it serves, on
-    the row that has room (a kicker row, a title row, a legend row, the reading guide). Only on visuals that open a
-    report-page tooltip, so the mark keeps its meaning. Decorative: the words are an instruction to the mouse, which a
-    screen reader cannot use, and every hover target's alt text carries what the hover shows."""
-    return decorative(image_measure(page, name, f"Hover Tag {key} SVG", None), 700 + i)
-
-
 def brand_row(page_name, sfx):
     """The 3.1 lockup on the night zone and the eyebrow beside it (plan 11): first in the reading order, so a screen
     reader starts with whose report this is and which page."""
@@ -872,13 +855,38 @@ def scatter_axes(objs):
     return objs
 
 
+# Build step 9, the plan dot: 12 px (the comp's r 6). Without a size field bubbleSize -15 gives 8 px and 0 gives 11 px
+# (build step 8), so 5 gives 12.
+YOU_BUBBLE = 5
+# The name "You" above the plan dot (doc 22 section 3): a layer of its own with both axes hidden, so its plot is its visual
+# rect, and a value axis that runs YOU_HEAD above the proof chart's: the name hangs from an invisible point 42.7 px above the
+# dot (sketch_model YOU_LABEL_LIFT), and that point of a plan near the top of the chart lies above +$20M (A in the High
+# case: +$12.7M + $11.1M). Same scale as the proof chart: 308 px for $80M, so $20M more are 77 px more.
+YOU_HEAD = 20_000_000
+YOU_RECT = (144, 203, 572, 385)  # the proof chart's plot (page x 144 to 716, y 280 to 588), 77 px taller at the top
+
+
+def you_label(slot, z):
+    q = {"Category": {"projections": [proj_col("BuildPoint", "Name", display="Your plan")]},
+         "X": {"projections": [proj_mea("Build Capex", "Capex")]}, "Y": {"projections": [proj_mea("Build You Label NPV", "NPV through 2032")]}}
+    objs = {"categoryAxis": axis(BODY, S, INK2, show=False, gridlines=False, units=1, start=PROOF_X[0], end=PROOF_X[1]),
+            "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, units=1, start=PROOF_Y[0], end=PROOF_Y[1] + YOU_HEAD),
+            "bubbles": [{"properties": {"bubbleSize": integer(CLOUD_BUBBLE), "markerRangeType": enum("magnitude"), "preventOverflow": b(False)}}], "legend": legend(False),
+            "markers": [{"properties": {"transparency": num(100), "borderShow": b(False)}}],
+            "categoryLabels": [{"properties": {"show": b(True), "fontFamily": text(DISPLAY), "fontSize": num(S), "color": fv("Build You Ink"), "bold": b(True),
+                                               "enableBackground": b(True), "backgroundColor": color(SURFACE), "backgroundTransparency": num(0)}}]}
+    x, y, w, h = YOU_RECT
+    return visual(f"{slot}_you", "scatterChart", x, y, w, h, z, 0, query=q, objects=objs, vcos=vco(padding=0), off_grid=True)
+
+
 def scatter_stack(slot, deco_base):
     """The proof chart (R-W-1): the package scatter as layers on one plot area (same axis ends and tick formats,
     preventOverflow off on all, so the plot areas match). 1 the cloud: every package but A, B and C, Warm Grey. 2 the plan
-    being built, one dot (Build state only; step 9 of doc 23 rebuilds it as the comp's "You"). 3 A, B and C as 22 px discs:
-    Power BI draws larger markers first, so a cloud in the same visual painted over B and C (REVIEW M2). 4 their letters.
-    5 a hover layer on top: all 456 packages, fully transparent markers, wired to the tooltip page, so every dot shows its
-    own card (08-verbeterplan V2). The band where a package pays back by 2032 is shaded and named at its right end.
+    being built, one dot under the discs (Build state only). 3 A, B and C as 22 px discs: Power BI draws larger markers
+    first, so a cloud in the same visual painted over B and C (REVIEW M2). 4 their letters. 5 the plan's name "You" above its
+    dot (Build only; you_label()). 6 a hover layer on top: all 456 packages, fully transparent markers, wired to the tooltip
+    page, so every dot shows its own card (08-verbeterplan V2). The band where a package pays back by 2032 is shaded and
+    named at its right end.
     z and tab order of the layers: opzet-layering.json."""
     v = []
     q = {"Category": {"projections": [proj_col("Package", "PackageID")]},
@@ -917,15 +925,15 @@ def scatter_stack(slot, deco_base):
     v.append(bind_alt(place(slot, "scatterChart", x, y, w, h, z, tab + 1, query=q_cloud_kb, objects=o_cloud, filters=[filter_in("Package", "Preset", [""], "flt_cloud")],
                             vcos=vco(padding=0)), "Alt Scatter Cloud (text)"))
     quiet = lambda o: (o["valueAxis"][0]["properties"].__setitem__("gridlineShow", b(False)), o.pop("y1AxisReferenceLine", None), o)[-1]  # noqa: E731
-    # the plan being built: one dot from the one-row BuildPoint table at (Build Capex, Build NPV), Tangerine, no letter
-    # (white on Tangerine fails 4.5:1). Blank size = no dot while empty. Shown in the Build state only (STATE_ONLY): the comp
-    # draws no "You" in What waits.
+    # the plan being built (R-B-3, doc 22 section 3): one dot from the one-row BuildPoint table at (Build Capex, Build NPV),
+    # 12 px (the comp's r 6), Night, Tangerine while over the budget (Build Point Color), drawn under the discs (layering
+    # file): at the opening state it lies under A. No size field: the point is blank, so absent, while nothing is picked.
+    # Shown in the Build state only (STATE_ONLY): the comp draws no "You" in What waits.
     q4 = {"Category": {"projections": [proj_col("BuildPoint", "Label", display="Your plan")]},
-          "X": {"projections": [proj_mea("Build Capex", "Capex")]}, "Y": {"projections": [proj_mea("Build NPV (sel)", "NPV through 2032")]},
-          "Size": {"projections": [proj_mea("Build Point Size", "Marker size")]}}
+          "X": {"projections": [proj_mea("Build Capex", "Capex")]}, "Y": {"projections": [proj_mea("Build NPV (sel)", "NPV through 2032")]}}
     o4 = quiet(copy.deepcopy(objs))
-    o4["dataPoint"] = [{"properties": {"fill": color(SIGNAL_MARK)}, "selector": WILD}]
-    o4["bubbles"][0]["properties"]["bubbleSize"] = integer(-20)
+    o4["dataPoint"] = [{"properties": {"fill": fv("Build Point Color")}, "selector": WILD}]
+    o4["bubbles"][0]["properties"]["bubbleSize"] = integer(YOU_BUBBLE)
     v.append(decorative(place(f"{slot}_build", "scatterChart", x, y, w, h, z + 3, 0, query=q4, objects=o4, vcos=vco(padding=0)), deco_base + 1))
     # A, B and C: their own, equal size (Named Point Size (small)), no label of their own
     q2 = {**q, "Category": {"projections": [proj_col("Package", "Preset", display="Package")]},
@@ -945,6 +953,7 @@ def scatter_stack(slot, deco_base):
     oL["categoryLabels"] = [{"properties": {"show": b(True), "fontFamily": text(DISPLAY), "fontSize": num(S), "color": color(SURFACE), "bold": b(True)}}]
     v.append(decorative(place(f"{slot}_letters", "scatterChart", x, y, w, h, z + 3, 0, query=qL, objects=oL,
                               filters=[filter_in("Package", "Preset", ["A", "B", "C"], "flt_letters")], vcos=vco(padding=0)), deco_base + 2))
+    v.append(decorative(you_label(slot, z + 3), deco_base + 3))
     o3 = quiet(copy.deepcopy(o_cloud))
     o3["markers"] = [{"properties": {"transparency": num(100), "borderShow": b(False)}}]
     hv = vco(padding=0)
@@ -953,81 +962,12 @@ def scatter_stack(slot, deco_base):
     return v
 
 
-# Not placed since build step 6 (their slots are not in the v10 map): waterfall(), deneb_selector() and native_selector().
-# Step 9 of doc 23 removes them with the Deneb route (SELECTOR, DENEB_SPEC, DENEB_GUID, publicCustomVisuals).
-def waterfall(name, table, column, y_measure, flag_measure, y_start, y_end, alt_measure, title_measure=None, muted=False):
-    """Where the NPV comes from: one bar per initiative, the total last. No value axis: every bar carries its own
-    signed label (plan 11); the ends come from the model so the labels always have room. Plan 10 D6: an increase in
-    Coffee Blue, a decrease in Tangerine (a signal), the total in Night."""
-    q = {"Category": {"projections": [proj_col(table, column)]}, "Y": {"projections": [proj_mea(y_measure, "NPV through 2032")]}}
-    # verification 17 follow-up (12 Nov): with 8 to 10 bars Desktop rotates the labels and clips them at about 75 px;
-    # categoryAxis.maxMarginFactor (reportThemeSchema 2.143) made it worse at 40 (measured), so the axis stays at its
-    # default and the Waterfall Label column keeps every name within that width (widest: "Kingston +40")
-    objs = {"categoryAxis": axis(BODY, S, INK2, gridlines=None), "valueAxis": axis(BODY, S, INK2, show=False, gridlines=False, units=1),
-            "sentimentColors": [{"properties": {"increaseFill": color(ACCENT_MARK), "decreaseFill": color(SIGNAL_MARK), "totalFill": color(INK), "otherFill": color(SLATE)}}],
-            "labels": labels(True, BODY, S, INK, units=1, position="OutsideEnd"), "legend": legend(False)}
-    objs["valueAxis"][0]["properties"]["start"] = mtext(y_start)
-    objs["valueAxis"][0]["properties"]["end"] = mtext(y_end)
-    # round 9: a filter cannot blank the build waterfall before a move is picked: Power BI draws the total bar ($0) whatever
-    # the row filter says (render 11 Nov), so the empty state keeps its one bar and the card's title carries the state
-    return chart(P2, name, "waterfallChart", q, objs, None, title_measure=title_measure, muted=muted,
-                 filters=[filter_measure_gt(flag_measure, 0, f"flt_{name}")], alt_measure=alt_measure)
-
-
 HORIZON = lambda: filter_in("Date", "Year", [2027, 2028, 2029, 2030, 2031, 2032], "flt_horizon")  # noqa: E731
-
-
-def cumulative_chart(name, series, colours, widths, dashed, title_measure, alt_measure, dotted=()):
-    """Cumulative net impact by year: a legend that draws each line (lineOnly), a labelled break-even line, the year
-    axis shown (round 4: the chart is tall enough). series: [(measure, display)]."""
-    q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m, d) for m, d in series]}}
-    lg = legend(True, BODY, S, INK2, "Top")
-    lg[0]["properties"]["legendMarkerRendering"] = enum("lineOnly")
-    ms = [mref(m) for m, _ in series]
-    objs = {"categoryAxis": axis(BODY, S, INK2, extra={"labelPrecision": integer(0)}), "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, units=1), "legend": lg,
-            "dataPoint": series_colors(dict(zip(ms, colours))),
-            "lineStyles": line_styles(dict(zip(ms, widths)), dashed=tuple(mref(m) for m in dashed)),
-            "seriesLabels": [{"properties": {"show": b(False)}}],
-            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(SLATE), "transparency": num(0), "width": num(1), "style": enum("solid"), "position": enum("back"),
-                                                    "displayName": text("Break-even"), "dataLabelShow": b(True), "dataLabelText": text("Name"), "dataLabelColor": color(INK2),
-                                                    "dataLabelHorizontalPosition": enum("left"), "dataLabelVerticalPosition": enum("above")}, "selector": {"id": "1"}}]}
-    for m in dotted:
-        next(e for e in objs["lineStyles"] if e.get("selector", {}).get("metadata") == mref(m))["properties"]["lineStyle"] = enum("dotted")
-    return chart(P2, name, "lineChart", q, objs, None, title_measure=title_measure, filters=[HORIZON()], alt_measure=alt_measure, tooltip_page=TT_YEAR)
 
 
 def nums_card(name, measures, labels_, alt_measure, size=21):
     v = card(name, *at(P2, name), measures, DISPLAY, size, INK, BODY, S, INK2, labels=labels_)
     return bind_alt(v, alt_measure)
-
-
-SELECTOR_FIELDS = [proj_col("BuildMove", "ProjectID"), proj_col("BuildMove", "Short Name", display="Move"), proj_col("BuildMove", "Sort"),
-                   proj_mea("Move Answers (text)", "Answers"), proj_mea("Move Capex (text)", "Capex"), proj_mea("Move NPV (text)", "NPV"),
-                   proj_mea("Move NPV (num)", "NPVnum"), proj_mea("Move Case (text)", "Case"),
-                   proj_mea("Move Capex (num)", "CapexNum"), proj_mea("Move Budget (num)", "Budget")]  # the footer's running total (round 5)
-SELECTOR_ALT = "Build your own plan: the ten Goodnight Inn moves with what each costs and returns. Tap a move to add it to the plan or take it out"
-
-
-def deneb_selector():
-    """VERIFY (Desktop spike, 12-feedbackronde-4 step 4): the move selector as a Deneb visual in advanced cross-filter
-    mode. Shape after the deneb.guide PBIR guide: the spec as a single-quoted text literal in objects.vega.jsonSpec,
-    provider 'vega', enableSelection true, selectionMode 'advanced'; the data role is 'dataset'. The GUID also goes
-    into report.json publicCustomVisuals (main). Deneb by Daniel Marsh-Patrick, AppSource-certified (CREDITS.md)."""
-    spec = json.loads(DENEB_SPEC.read_text(encoding="utf-8"))
-    props = {"jsonSpec": text(json.dumps(spec, separators=(",", ":"), ensure_ascii=False)), "jsonConfig": text("{}"),
-             "provider": text("vega"), "renderMode": text("svg"), "enableSelection": b(True), "selectionMode": text("advanced"),
-             "selectionMaxDataPoints": num(50), "enableTooltips": b(False), "enableContextMenu": b(False), "enableHighlight": b(False)}
-    objs = {"vega": [{"properties": props}]}
-    x, y, w, h, z, tab = at(P2, "dn_build_selector")
-    return visual("dn_build_selector", DENEB_GUID, x, y, w, h, z, tab, query={"dataset": {"projections": SELECTOR_FIELDS}}, objects=objs,
-                  vcos=vco(alt=SELECTOR_ALT, padding=0))
-
-
-def native_selector():
-    """The fallback: a native button slicer in list layout (ten rows, multi-select without Ctrl) on BuildMove."""
-    v = button_slicer("dn_build_selector", "BuildMove", "Short Name", None, SELECTOR_ALT, 1, rows=10, multi=True)
-    v["visual"]["objects"]["selection"][0]["properties"]["selectAllCheckboxEnabled"] = b(False)
-    return v
 
 
 MIX_A = "Booking app with member rates + Revenue management + Kiosks at the 20 busiest hotels"  # R-P2-6: static, A's composition never changes
@@ -1342,7 +1282,7 @@ def waits_table():
 CMP_X_END = 2032.6  # spec ch_cmp_alts.x_axis_end: room for the end labels inside the plot, no 2033 tick
 # the visual rect that puts Power BI's plot on the comp's (PLOT_RECT of step 5), measured in build step 8: the comp draws
 # the plot at x 128 to 1856 and y 731 to 972 of the page (under a 29 px title row in the slot 56, 688, 1808, 312)
-CMP_RECT = {"ch_cmp_alts": (56, 685, 1819, 316)}
+CMP_RECT = {"ch_cmp_alts": (56, 685, 1819, 316), "ch_cmp_build": (56, 685, 1819, 316)}
 # the comp leaves 14 px between its title row and the top tick; Power BI starts the plot 3 px higher. The container's
 # "space below title" moves the plot 1 px per unit (default 2; measured at 5 and 8 in step 8), the title stays. The visual
 # starts 3 px above its slot: Power BI sets the title 2.6 px lower in its row than the comp does.
@@ -1352,16 +1292,18 @@ CMP_SPACE = 8
 def cmp_chart(name, lines, title_measure, alt_measure, y_prefix):
     """A comparison chart (R-W-3, R-B; doc 21 7.3 and P-5 as doc 22 section 3 amends them): cumulative net impact by year,
     the title inside the visual, no legend. lines, in drawing order (the last on top): (line measure, display name, colour,
-    width, dashed, end-label measure, label position, emphasised). One data label per line on the last year: the name and
+    width, dashed, end-label measure or None, label position, emphasised: True = Deep Coffee semibold, a colour = that
+    colour semibold, False = Dusk). One data label per labelled line on the last year: the name and
     the value from the label-safe format string, on white (the theme), above or under its line end so that two lines that
     end together cannot put their labels on each other. The first line measure is formatted in whole $M and the end series
     come after the lines, so the value axis prints "+$10M" in any locale (P-1 b). The value axis ends on the model's
     whole steps ([<y_prefix> Y Start / End]): one tick below zero and 8 % of headroom above the top line. The zero line is
     named (R-G2); a year opens the year tooltip."""
+    ends = [l_ for l_ in lines if l_[5]]
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]},
-         "Y": {"projections": [proj_mea(l_[0], l_[1]) for l_ in lines] + [proj_mea(l_[5], f"{l_[1]}, last year") for l_ in lines]}}
+         "Y": {"projections": [proj_mea(l_[0], l_[1]) for l_ in lines] + [proj_mea(l_[5], f"{l_[1]}, last year") for l_ in ends]}}
     ls = line_styles({mref(l_[0]): l_[3] for l_ in lines}, dashed=tuple(mref(l_[0]) for l_ in lines if l_[4]))
-    ls += [{"properties": {"strokeShow": b(False), "showMarker": b(False)}, "selector": {"metadata": mref(l_[5])}} for l_ in lines]
+    ls += [{"properties": {"strokeShow": b(False), "showMarker": b(False)}, "selector": {"metadata": mref(l_[5])}} for l_ in ends]
     lab = {"fontFamily": text(BODY), "fontSize": num(S), "color": color(INK2), "labelDisplayUnits": integer(1),
            "enableBackground": b(True)}  # white and opaque from the theme (compile_theme.py, lineChart labels)
     years = HORIZON()["filter"]["Where"][0]["Condition"]["In"]["Values"]
@@ -1373,9 +1315,9 @@ def cmp_chart(name, lines, title_measure, alt_measure, y_prefix):
             "labels": [{"properties": {"show": b(True), **lab}},
                        *[{"properties": {"showSeries": b(False)}, "selector": {"metadata": mref(l_[0])}} for l_ in lines],
                        *[{"properties": {"showSeries": b(True), "labelPosition": enum(l_[6]),
-                                         **({"color": color(ACCENT), "fontFamily": text(DISPLAY)} if l_[7] else {})},
-                          "selector": {"metadata": mref(l_[5])}} for l_ in lines]],
-            "dataPoint": series_colors({**{mref(l_[0]): l_[2] for l_ in lines}, **{mref(l_[5]): l_[2] for l_ in lines}}),
+                                         **({"color": color(ACCENT if l_[7] is True else l_[7]), "fontFamily": text(DISPLAY)} if l_[7] else {})},
+                          "selector": {"metadata": mref(l_[5])}} for l_ in ends]],
+            "dataPoint": series_colors({**{mref(l_[0]): l_[2] for l_ in lines}, **{mref(l_[5]): l_[2] for l_ in ends}}),
             "lineStyles": ls,
             "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
                                                     "position": enum("back"), "displayName": text("Cash positive above this line"), "dataLabelShow": b(True),
@@ -1400,22 +1342,201 @@ def p2_waits():
             hover_tag_text(P2, "tag_cmp_alts", "Hover a year", 23)]
 
 
-def p2_pending():
-    """What step 9 of doc 23 still rebuilds (rule 9: a state that is not rebuilt yet may show only its frame). Recommended
-    is complete since step 7 (p2_hero, p2_capital_plan), What waits since step 8 (p2_proof, p2_waits). Of Build the old
-    visuals that still have a slot in the v10 map stay in their new rects until step 9 replaces them: the three cards of
-    your plan and the comparison with A with its hover tag."""
-    v = [dyn(P2, "c_you_title", "Build Title (text)", size=18, colour=INK, font=DISPLAY, colour_measure="Build Title Ink", fill_measure="Build Title Fill")]
-    v.append(nums_card("c_you_nums", ["Build Capex (text)", "Build NPV (text)", "Build Range (text)"], ["capex", "NPV through 2032", "NPV range, $M"], "Alt You Nums (text)", size=16))
-    v.append(dyn(P2, "c_you_rules", "Build Valid (text)", colour_measure="Build Valid Color"))
-    v.append(cumulative_chart("ch_cmp_build", [("Preset A Cumulative Net (sel)", "A, our recommendation"), ("Build Cumulative Net (sel)", "Your plan")],
-                              [ACCENT_MARK, SIGNAL_MARK], [3, 3], dashed=(), title_measure="Cmp Build Title (text)", alt_measure="Alt Cmp Build (text)"))
-    v.append(hover_tag(P2, "tag_cmp_build", "Year", 24))
+# ---------------------------------------------------------------------- FinalV3 build step 9: Build your own
+BUILD_HEAD = ("Build your own", "Click a move to add or remove it.")
+# The saved selection of the move selector: package A's three moves, so the state opens on A and "your plan" equals it
+# (doc 21 section 8). Short names, as BuildMove[Short Name] prints them on the tiles.
+A_MOVES = ("Booking app", "Revenue management", "Kiosks at 20 desks")
+SELECTOR_ALT = "Moves: pick a move to add it to your plan or to take it out; the table beside it gives each move's numbers"
+
+
+def build_head():
+    """The panel's head (doc 21 section 8): a text box with two paragraphs, as the head of What waits."""
+    x, y, w, h, z, tab = at(P2, "c_build_head")
+    return textbox("c_build_head", x, y, w, h, z, tab, [[(BUILD_HEAD[0], DISPLAY, 20, INK, False)], [(BUILD_HEAD[1], BODY, SPX, INK2, False)]],
+                   alt=BUILD_HEAD[0] + ". " + BUILD_HEAD[1])
+
+
+def move_slicer():
+    """sl_moves (R-B-1, N-1; spike S-3 of step 2): the native selector, a button slicer of ten square tiles in one column
+    on BuildMove[Short Name], multi-select, the selection icon on (a Night box with a check), no outline; a tile turns Seam
+    on hover and stays white when picked (the box says it). Each tile is 32 px with a 1 px Seam rule at its foot (the accent
+    bar), the pitch of the rows of tbl_moves beside it. The saved selection is package A. Every tile is a button with a
+    toggle state: Tab moves between tiles, Space picks (S-3)."""
+    x, y, w, h, z, tab = at(P2, "sl_moves")
+    st = lambda i: {"id": i}  # noqa: E731
+    states = ("default", "interaction:hover", "interaction:press", "selection:selected")
+    objs = {
+        "shapeCustomRectangle": [{"properties": {"tileShape": enum("rectangle")}, "selector": st("default")}],
+        "layout": [{"properties": {"rowCount": integer(len(MOVES_ROWS)), "columnCount": integer(1), "maxTiles": integer(len(MOVES_ROWS)), "cellPadding": integer(0)}}],
+        "fillCustom": [{"properties": {"show": b(True), "fillColor": color(SURFACE), "transparency": num(0)}, "selector": st("default")},
+                       {"properties": {"fillColor": color(HAIR)}, "selector": st("interaction:hover")},
+                       {"properties": {"fillColor": color(HAIR)}, "selector": st("interaction:press")},
+                       {"properties": {"fillColor": color(SURFACE)}, "selector": st("selection:selected")}],
+        "outline": [{"properties": {"show": b(False)}, "selector": st("default")}],
+        "accentBar": [{"properties": {"show": b(True), "position": enum("Bottom"), "color": color(HAIR), "transparency": num(0), "width": num(1)}, "selector": st(i_)} for i_ in states],
+        "value": [{"properties": {"show": b(True), "fontFamily": text(BODY), "fontSize": num(S), "fontColor": color(INK), "bold": b(False),
+                                  "horizontalAlignment": text("left"), "verticalAlignment": text("middle")}, "selector": st("default")},
+                  *[{"properties": {"fontColor": color(INK), "bold": b(False)}, "selector": st(i_)} for i_ in states[1:]]],
+        "label": [{"properties": {"show": b(False)}, "selector": st("default")}],
+        "padding": [{"properties": {"paddingSelection": text("Custom"), "topMargin": integer(0), "bottomMargin": integer(0), "leftMargin": integer(8), "rightMargin": integer(8)},
+                     "selector": st("default")}],
+        # without the colour on the selected state the checked box is white on white (S-3)
+        "selectionIcon": [{"properties": {"show": b(True), "position": enum("Left"), "size": integer(16), "spacing": integer(8), "color": color(INK)}, "selector": st("default")},
+                          {"properties": {"color": color(INK)}, "selector": st("selection:selected")}],
+        "selection": [{"properties": {"singleSelect": b(False), "strictSingleSelect": b(False), "selectAllCheckboxEnabled": b(False)}}],
+        "general": [{"properties": {"filter": {"filter": {
+            "Version": 2, "From": [{"Name": "s", "Entity": "BuildMove", "Type": 0}],
+            "Where": [{"Condition": {"In": {"Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "s"}}, "Property": "Short Name"}}],
+                                            "Values": [[{"Literal": {"Value": f"'{m_}'"}}] for m_ in A_MOVES]}}}]}}}}],
+    }
+    return visual("sl_moves", "advancedSlicerVisual", x, y, w, h, z, tab, query={"Values": {"projections": [proj_col("BuildMove", "Short Name", display="Move")]}},
+                  objects=objs, vcos=vco(alt=SELECTOR_ALT, padding=0))
+
+
+MOVES_ROWS = range(10)  # the ten Goodnight Inn moves (BuildMove)
+# tbl_moves as spike S-3 found it (doc 23, log of step 2; doc 21 section 8): the comp's columns 92 / 64 / 72 / 116 with the
+# two corrections a native table needs ("−$27.3M" needs 74 px, the header "A year by 2032" 118) and 2 px of slack against a
+# scrollbar. A ruled row of one 12 pt line is 21.28 px + twice the padding + 1 px for its rule (build step 6), so the
+# padding is 4.86 for the selector's 32 px. The header takes the same padding and is about 42 px (the comp's 32), so the
+# table starts MOVES_LIFT px above its slot and its first row begins at y 280, beside the first tile.
+MOVES_COLS = (92, 64, 74, 118)
+MOVES_PAD, MOVES_LIFT, MOVES_SLACK = 4.86, 10, 2
+
+
+def moves_table():
+    """tbl_moves (R-B-1; doc 21 section 8): what each move answers, costs and returns, one row per tile of the selector and
+    in its order (BuildMove[Short Name] is sorted by Sort). The selector does not filter it (interactions()), so all ten
+    rows stay. The move's own name is the first column at width 0: a table needs a column of its row source, nothing shows
+    (the names are on the tiles), and a screen reader reads the name with the row. Answers in Dusk; the NPV takes its ink
+    from the model (Burnt Tangerine below zero, the sign says it too)."""
+    ms = ("Move Answers (text)", "Move Capex (text)", "Move NPV (text)", "Move Run-rate (text)")
+    proj = [proj_col("BuildMove", "Short Name", display="Move"), proj_mea(ms[0], "Answers"), proj_mea(ms[1], "Capex"), proj_mea(ms[2], "NPV"), proj_mea(ms[3], "A year by 2032")]
+    refs = ["BuildMove.Short Name", *[mref(m_) for m_ in ms]]
+    colfmt = [{"properties": {"fontColor": color(SURFACE), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": refs[0]}},
+              {"properties": {"fontColor": color(INK2), "styleHeader": b(False), "styleValues": b(True)}, "selector": {"metadata": refs[1]}},
+              *[{"properties": {"alignment": enum("Right"), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": refs[i]}} for i in (2, 3, 4)]]
+    objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=MOVES_PAD, header_size=S, column_formatting=colfmt)
+    objs["columnHeaders"][0]["properties"].update({"outlineStyle": enum("BottomOnly"), "outlineColor": color(INK2), "outlineWeight": num(1),
+                                                   "autoSizeColumnWidth": b(False), "wordWrap": b(False)})
+    # the rule under the last row (the comp rules every row): a native table rules between rows only (build step 8)
+    objs["values"][0]["properties"].update({"wordWrap": b(False), "outlineStyle": enum("BottomOnly"), "outlineColor": color(HAIR), "outlineWeight": num(1)})
+    objs["values"] += [{"properties": {"fontColor": fv("Move NPV Ink")}, "selector": {**WILD, "metadata": refs[3]}}]
+    objs["columnWidth"] = [{"properties": {"value": num(w_)}, "selector": {"metadata": q_}} for q_, w_ in zip(refs, (0, *MOVES_COLS))]
+    x, y, w, h, z, tab = at(P2, "tbl_moves")
+    t = visual("tbl_moves", "tableEx", x, y - MOVES_LIFT, sum(MOVES_COLS) + MOVES_SLACK, h + MOVES_LIFT + 2, z, tab, query={"Values": {"projections": proj}}, objects=objs,
+               vcos=vco(padding=0), off_grid=True)
+    return bind_alt(t, "Alt Moves (text)")
+
+
+def you_title():
+    """c_you_title (doc 21 section 8, the budget alarm of round 5): 18 pt semibold, set from the top of its 40 px slot (a
+    card centres its line, so the plain title's card is 32 px high). Over the budget the title is the alarm: white on a
+    Tangerine band that fills the slot, 12 px inside it. A card has one padding, so the band is a card of its own under
+    the title: white and empty within the budget. One tab stop: the plain card reads the title in every state."""
+    x, y, w, h, z, tab = at(P2, "c_you_title")
+    plain = card("c_you_title", x, y, w, 32, z, tab, ["Build Title Plain (text)"], DISPLAY, 18, INK)
+    alarm = card("c_you_title_alarm", x, y, w, h, z, tab, ["Build Title Alarm (text)"], DISPLAY, 18, SURFACE)
+    alarm["visual"]["objects"]["value"][0]["properties"]["fontColor"] = fv("Build Title Ink")
+    vc = alarm["visual"]["visualContainerObjects"]
+    vc["background"] = [{"properties": {"show": b(True), "color": fv("Build Title Fill"), "transparency": num(0)}}]
+    vc["padding"] = [{"properties": {"top": num(0), "bottom": num(8), "left": num(12), "right": num(12)}}]
+    return [decorative(alarm, 60), bind_alt(plain, "Build Title (text)")]
+
+
+# c_you_nums (doc 22 section 2: 72 px high): four callouts in 464 px, 107 px each with 12 px between them (the comp's .nums).
+# The value in 16 pt semibold on a 28.4 px line, the label under it in Dusk; "NPV through 2032" wraps to two lines. A card
+# cannot hide its label while its value is empty, and the empty state shows nothing here (R-B-2), so each callout is a value
+# card and a label card, both on measures that are empty while nothing is picked.
+YOU_NUMS = (("Build Capex (text)", "Build Label Capex (text)", 1, None), ("Build NPV (text)", "Build Label NPV (text)", 2, "Build NPV Ink"),
+            ("Build Run-rate (text)", "Build Label Run-rate (text)", 1, "Build Run-rate Ink"), ("Build A Year on Cost (text)", "Build Label A Year on Cost (text)", 1, None))
+YOU_NUM_W, YOU_NUM_STEP, YOU_VALUE_LINE = 107, 119, 28.4
+
+
+def you_nums():
+    x, y, w, h, z, tab = at(P2, "c_you_nums")
+    out = []
+    for i, (value, label, lines, ink) in enumerate(YOU_NUMS):
+        cx = x + YOU_NUM_STEP * i
+        v = card("c_you_nums" if i == 0 else f"c_you_nums_v{i + 1}", cx, round(y + YOU_VALUE_LINE / 2 - 16), YOU_NUM_W + 8, 32, z, tab, [value], DISPLAY, 16, INK, off_grid=True)
+        if ink:
+            v["visual"]["objects"]["value"][0]["properties"]["fontColor"] = fv(ink)
+        out.append(bind_alt(v, "Alt You Nums (text)") if i == 0 else decorative(v, 70 + i))
+        centre = y + YOU_VALUE_LINE + lines * 21.3 / 2 - 0.7
+        # the two-line label keeps the comp's 107 px so it wraps where the comp does; a one-line label gets the gap too
+        lab = card(f"c_you_nums_l{i + 1}", cx, round(centre - CARD_H[lines] / 2), YOU_NUM_W + (0 if lines > 1 else 8), CARD_H[lines], z, tab, [label], BODY, S, INK2, off_grid=True)
+        out.append(decorative(lab, 80 + i))
+    return out
+
+
+def top_text(page, name, measure, colour_measure, alt_measure=None):
+    """A sentence of one or two lines set from the TOP of its slot. A card centres its text in its box, which is right for
+    a known number of lines (note()); the rules line of Build is one line or two, depending on the plan. A shape sets its
+    text from the top: a rectangle without fill or outline, its text and its ink bound to measures, no margins."""
+    x, y, w, h, z, tab = at(page, name)
+    objs = {"shape": [{"properties": {"tileShape": enum("rectangle")}, "selector": {"id": "default"}}],
+            "fill": [{"properties": {"show": b(False)}}],
+            "outline": [{"properties": {"show": b(False)}}],
+            "text": [{"properties": {"show": b(True)}},
+                     {"properties": {"text": mtext(measure), "fontFamily": text(BODY), "fontSize": num(S), "fontColor": fv(colour_measure), "bold": b(False),
+                                     "horizontalAlignment": text("left"), "verticalAlignment": text("top"),
+                                     "leftMargin": integer(0), "rightMargin": integer(0), "topMargin": integer(0), "bottomMargin": integer(0)}, "selector": {"id": "default"}}]}
+    v = visual(name, "shape", x, y, w, h, z, tab, objects=objs, vcos=vco(padding=0))
+    return bind_alt(v, alt_measure or measure)
+
+
+# ch_build_bars (doc 22 section 3; spec charts.ch_build_bars): the visual rect that puts Power BI's rows and bars on the comp's
+# (PLOT_RECT of step 5). The comp sets five rows of 32 px from the top of the slot (1384, 464, 464, 168) and starts the bars
+# 14 px right of the longest name; measured in build step 9.
+BARS_RECT = (1384, 464, 464, 168)
+BARS_INNER = 40  # the comp's bar is 60 % of its row
+
+
+def build_bars():
+    """ch_build_bars (R-B, R-G3): the NPV of each picked move, sorted from the highest down, as horizontal bars: Night for a
+    move that adds NPV, Tangerine for one that costs NPV, each with its signed value outside its end (label-safe, P-1). No
+    title, no value axis; the names in Dusk on the category axis, as wide as the longest picked name. Rows from BuildBar:
+    the picked moves, and empty rows up to five so the bars keep the comp's pitch (sketch_model BARS_MIN_ROWS). The hidden
+    value axis ends on the model's two measures, which leave the labels the comp's room. The zero line in Dusk."""
+    q = {"Category": {"projections": [proj_col("BuildBar", "Name", display="Move")]},
+         "Y": {"projections": [proj_mea("Build Bar NPV (label-safe)", "NPV through 2032")]},
+         "Tooltips": {"projections": [proj_mea("Build Bar Order", "Order")]}}
+    va = axis(BODY, S, INK2, show=False, gridlines=False)
+    va[0]["properties"].update({"start": mtext("Build Bars X Start"), "end": mtext("Build Bars X End")})
+    ca = axis(BODY, S, INK2, gridlines=None, extra={"maxMarginFactor": integer(45), "innerPadding": integer(BARS_INNER), "concatenateLabels": b(False)})
+    objs = {"categoryAxis": ca, "valueAxis": va, "legend": legend(False),
+            "dataPoint": [{"properties": {"fill": fv("Build Bar Color")}, "selector": WILD}],
+            "labels": labels(True, BODY, S, INK, units=1, position="OutsideEnd"),
+            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
+                                                    "position": enum("front"), "dataLabelShow": b(False)}, "selector": {"id": "1"}}]}
+    v = chart(P2, "ch_build_bars", "clusteredBarChart", q, objs, None, sort=sort_by_measure("Build Bar Order"), alt_measure="Alt Build Bars (text)")
+    return plot_rect(v, BARS_RECT)
+
+
+def p2_build():
+    """FinalV3 build step 9: the Build state (doc 21 section 8 with the slots of doc 22 section 2). The panel: head, the
+    native selector beside the moves table, the footer that counts the picked moves; the your-plan tile (the outline frame
+    is a tile of the layout): title or budget alarm, four numbers, the range, the rules line, the bars of the picked
+    moves. The bottom card: your plan against A, with its hover tag. Reading order: head, selector, table, footer, title,
+    numbers, range, rules, bars, chart (R-P2-9). The proof chart at the left is p2_proof(), with the plan dot "You".
+    Your plan first (Night; Tangerine while over the budget), then A on top (Coffee Blue), as the comp draws them: when
+    the state opens the two lines are one."""
+    v = [build_head(), move_slicer(), moves_table(), note(P2, "c_sel_footer", "Build Picked (text)", 1)]
+    v += you_title()
+    v += you_nums()
+    v.append(note(P2, "c_you_range", "Build Range (text)", 1, colour=INK))
+    v.append(top_text(P2, "c_you_rules", "Build Valid (text)", "Build Valid Color"))
+    v.append(build_bars())
+    lines = [("Build Cumulative Line", "Your plan", INK, 3, False, "Build Cumulative End Name (label-safe)", "Under", INK),
+             ("Build Cumulative Line (over)", "Your plan, over the budget", SIGNAL_MARK, 3, False, None, None, False),
+             ("Preset A Cumulative Line", "A, our recommendation", ACCENT_MARK, 3, False, "A Cumulative End Name (label-safe)", "Above", True)]
+    v.append(cmp_chart("ch_cmp_build", lines, "Cmp Build Title (text)", "Alt Cmp Build (text)", "Cmp Build"))
+    v.append(hover_tag_text(P2, "tag_cmp_build", "Hover a year", 24))
     return v
 
 
 def p2_visuals():
-    return p2_frame() + p2_hero() + p2_decision_card() + p2_capital_plan() + p2_proof() + p2_waits() + p2_pending()
+    return p2_frame() + p2_hero() + p2_decision_card() + p2_capital_plan() + p2_proof() + p2_waits() + p2_build()
 
 
 # ====================================================================== the package tooltip (08-verbeterplan V2, round 4)
@@ -1615,22 +1736,26 @@ def bookmark(name, display, show_state, visuals):
             "explorationState": {"version": "1.3", "activeSection": P2, "sections": {P2: {"visualContainers": containers}}}}
 
 
-# the visuals the move selector may filter: everything of the plan being built; nothing else listens to it
-BUILD_TARGETS = {"c_you_title", "c_you_nums", "c_you_rules", "ch_build_waterfall", "ch_cmp_build", "hero_s_packages_build"}
+# the visuals the move selector may filter: everything of the plan being built; nothing else listens to it, and
+# tbl_moves keeps its ten rows (doc 21 section 8). The cards of the your-plan tile are named c_you_*.
+BUILD_TARGETS = {"c_sel_footer", "ch_build_bars", "ch_cmp_build", "hero_s_packages_build", "hero_s_packages_you"}
+
+
+def build_target(name):
+    return name in BUILD_TARGETS or name.startswith("c_you_")
 
 
 def interactions(v2):
     out = []
     names = {o["name"] for o in v2}
     # the hover layers only show tooltips, the build dot only marks: a click on them must not filter or dim anything
-    for src in ("hero_s_packages_hover", "hero_s_packages_build"):
+    for src in ("hero_s_packages_hover", "hero_s_packages_build", "hero_s_packages_you"):
         if src in names:
             out += [{"source": src, "target": o["name"], "type": "NoFilter"} for o in v2 if o["name"] != src]
-    # the move selector filters the plan being built (DataFilter, never a highlight) and nothing else; build step 6: the old
-    # Deneb selector has no slot in the v10 map, step 9 places the native one (sl_moves) and points this at it
-    if "dn_build_selector" in names:
-        out += [{"source": "dn_build_selector", "target": o["name"], "type": "DataFilter" if o["name"] in BUILD_TARGETS else "NoFilter"}
-                for o in v2 if o["name"] != "dn_build_selector"]
+    # the move selector (sl_moves, build step 9) filters the plan being built (DataFilter, never a highlight) and nothing else
+    assert "sl_moves" in names and all(t_ in names for t_ in BUILD_TARGETS)
+    out += [{"source": "sl_moves", "target": o["name"], "type": "DataFilter" if build_target(o["name"]) else "NoFilter"}
+            for o in v2 if o["name"] != "sl_moves"]
     return out
 
 
@@ -1661,8 +1786,6 @@ def main():
     for pk in report["resourcePackages"]:
         if pk["name"] == "RegisteredResources":
             pk["items"] += [{"name": f, "path": f, "type": "Image"} for f in files]
-    if any(v["visual"]["visualType"] == DENEB_GUID for v in v2):  # none since build step 6; step 9 removes the Deneb route
-        report["publicCustomVisuals"] = [DENEB_GUID]
     write_json(rj, report)
     bm = rep / "definition" / "bookmarks"
     for st, display in (("rec", "P2 Recommended: A"), ("alts", "P2 What waits, and why"), ("build", "P2 Build your own")):

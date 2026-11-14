@@ -377,6 +377,12 @@ for pname in pages_meta["pageOrder"]:
                                 fail(where, f"text {ic} on its own fill {fc}: {ratio(ic, fc):.2f}:1 (needs {3.0 if big else 4.5}:1)")
                         continue
                     for c in colours(pr.get(k)):
+                        if obj == "categoryLabels" and literal(pr.get("enableBackground")) == "true" and colours(pr.get("backgroundColor")):
+                            # build step 9: a category label on a background of its own (the plan's name "You" on white)
+                            for bg in colours(pr.get("backgroundColor")):
+                                if ratio(c, bg) < (3.0 if big else 4.5):
+                                    fail(where, f"label {c} on its own background {bg}: {ratio(c, bg):.2f}:1")
+                            continue
                         (on_marks if obj == "categoryLabels" else texts).append((c, big))
         if vtype not in ("actionButton", "advancedSlicerVisual", "image") and bgs:
             for c, big in texts:

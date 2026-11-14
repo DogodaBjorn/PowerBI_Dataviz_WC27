@@ -69,25 +69,6 @@
               "displayName": "NPV through 2032"
             }
           ]
-        },
-        "Size": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Build Point Size"
-                }
-              },
-              "queryRef": "_Measures.Build Point Size",
-              "nativeQueryRef": "Build Point Size",
-              "displayName": "Marker size"
-            }
-          ]
         }
       }
     },
@@ -327,8 +308,13 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Literal": {
-                      "Value": "'#E05A22'"
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Build Point Color"
                     }
                   }
                 }
@@ -352,7 +338,7 @@
             "bubbleSize": {
               "expr": {
                 "Literal": {
-                  "Value": "-20L"
+                  "Value": "5L"
                 }
               }
             },
