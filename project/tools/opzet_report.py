@@ -1255,6 +1255,9 @@ PLAN_TICK_ZERO_Y, PLAN_TICK_PX, PLAN_TICK_RIGHT, PLAN_TICK_W = 915.25, 3.4375e-6
 
 def plan_ticks():
     x, y, w, h, z, tab = at(P2, "ch_plan_cum")
+    # the layering file knows the chart, not these two: they go just under the chart (mouse_order() would put them there
+    # anyway, a chart with a tooltip lets nothing lie over it) and so over the card frame; the chart has no fill
+    z = LAYERING.get(P2, {}).get("ch_plan_cum", {}).get("z", z) - 10
     out = []
     for i, (val, label) in enumerate(PLAN_TICKS, start=1):
         line_y = PLAN_TICK_ZERO_Y - val * PLAN_TICK_PX
