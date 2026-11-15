@@ -5,6 +5,10 @@ doc 25 on top of the FinalV3 set of 14 Nov), on the submission model (26 tables,
 2.159, a throwaway copy of the project (the project itself was not opened). This is what publish 5 will show; the
 proof on the published report is `gate.py` and `walk.py` after the publish.
 
+**Later the same day:** the published report is publish 6 (`6227d6f`), three small things on from these renders: the
+buttons' bubble is gone, the year tooltip's banner reads "CUMULATIVE CASH, $M · NOT DISCOUNTED", and F1's "Before
+commissions" stands 2 px further left. The published views are in `../Committee-walkthrough-2026-11-15/`.
+
 File names and views are those of `../FinalV3/` (its README has the table). Seventeen of the twenty changed:
 
 | Files | What changed since FinalV3 |
