@@ -22,7 +22,7 @@ publish 5: say which one.
 | B | The copy round | done | 15 Nov | (this commit) | 24 of the 26 sheet lines built; engine: 142 of 142 texts equal the spec in Low, Expected, High and the empty Build state, 766 number checks, alt texts 0 flags; six views rendered. Four lines changed for fit or for a reason (see the log): the tests are named in the table's headers, the staff-cost point stands in F1's forward line, F3's note and the selector footer keep their old words. **The word target is missed on Recommended: about 2 % fewer words, not 20 %** (What waits: 14 %). Bjorn decides whether a block goes (log, open items) |
 | C | The plan chart, and the kiosk evidence | done | 15 Nov | (this commit) | The three end labels are cards right of the line ends, the chart's own labels are off; caption (sheet line 14) in the row above the plot; "Hover a year" on the chart; the complaint fact in the model and in ledger row F4 (sheet line 12). Engine: 142 of 142 texts, 776 of 776 numbers (the complaint rise against the workbook), alt texts 0 flags; Recommended rendered in Low, Expected and High. Three things to look at on publish 5 (log). Recommended carries 19 words more |
 | D | Page 1 and the hero | done | 15 Nov | (this commit) | Sheet lines 28, 30, 31 and 32 built as written (29 was done in step B); the hero's NPV bars in Coffee Blue for package A and the kit's light neutral for the rest. Engine: 142 of 142 texts, 806 of 806 numbers, alt texts 0 flags; `a11y_check` 0; the greyscale test passes in Low, Expected and High (A's bars grey 116, every other bar 196). **One item not built:** Orlando's name stays under its dot; left of the dot it touches another hotel's dot (log) |
-| E | Proof and publish 5 (Bjorn publishes) | blocked | 15 Nov | (this commit) | **Waits for Bjorn's publish.** Done before it: engine checks on the publish window's own model (142 of 142 texts, 806 of 806 numbers, alt texts 0 flags), the 17 renders that changed (`FinalV3-round2/`), the old window closed without saving, a fresh publish copy open in a freshly opened window, the keyboard walk added to `gate.py` and tried on publish 4. After the publish: `gate.py` and `walk.py` (log) |
+| E | Proof and publish 5 (Bjorn publishes) | blocked | 15 Nov | (this commit) | **Publish 5 is on the link (15 Nov 10:40 UTC) and passes the gate but for one thing: the bubble "Click here to follow" is still there. Fixed in the generators and proven in Desktop; waits for Bjorn's publish 6** (log: "after publish 5"). Done before publish 5: engine checks on the publish window's own model (142 of 142 texts, 806 of 806 numbers, alt texts 0 flags), the 17 renders that changed (`FinalV3-round2/`), the old window closed without saving, a fresh publish copy open in a freshly opened window, the keyboard walk added to `gate.py` and tried on publish 4. After the publish: `gate.py` and `walk.py` (log) |
 | F | Submission (Bjorn) | todo | | | |
 
 Status values as in doc 23: `todo`, `doing`, `done`, `blocked`.
@@ -392,8 +392,8 @@ comp: 864 and 1719), the gate line at 1121; the labels begin 6 px right of the g
 - **F1's two names (sheet line 32).** The band's own series label is off (it stood at the end of the top line and
   read as that line's name). Two typed labels: "Before commissions" right of the top line's end, level with the
   chart's own "After commissions"; "Commissions" inside the band, between the 45 % and the 40 % gridline
-  (`f1_labels()`, slots `lbl_f1_before`, `lbl_f1_band`). The series keeps the name "Commissions" in the tooltip, where
-  its value is the band's height.
+  (`f1_labels()`, slots `lbl_f1_before`, `lbl_f1_band`). *Corrected after publish 5:* this log said the series keeps
+  its name for the tooltip; the F1 chart has no tooltip (only the charts with a hover tag open one, P-7).
 - **The hero's NPV panel (DS2-04, J-VE-13).** `Move NPV Bar Color`: Coffee Blue for package A's three moves, the kit's
   light neutral (#C9C4B7, `neutral_light`: "labelled background marks only") for the other seven. The left panel and
   the Status column keep the status colours.
@@ -422,13 +422,14 @@ and the reference line is Night, so a Night bar passed whatever colour the bar h
 |---|---|---|
 | Orlando's name on the side of its own dot (DS2-12b) | unchanged: under its dot | Left of the dot the name's O stands between the dots of two hotels at 83 %, 1 to 2 px from each; in both renders it touches the lower one (render 07). The comp's own placement rule (no name on a dot) rejects the spot. Right of the dot stands "Phoenix", which has no other place: its dot has Gatwick's and Montréal's on its right |
 | "the light grey" for the other NPV bars | #C9C4B7, the kit's `neutral_light` | Warm Grey (#8E897D) is as dark as Coffee Blue in grey (137 against 116): the long bars of the refresh and Boston would still carry the panel. The light neutral is 1.7:1 on white, under the 3:1 of a mark that carries information; here each bar's value stands beside it in text and the status in its own column. **Bjorn can veto:** one constant, `NEUTRAL_LIGHT` in `sketch_model.py` |
-| "Commissions" in small grey inside the band (UX-19) | 12 pt, Night | The floor is 12 pt. The label lies under the chart (so a hover in the band still opens the year); through the band Dusk would read 4.3:1 |
+| "Commissions" in small grey inside the band (UX-19) | 12 pt, Night | The floor is 12 pt. The label lies under the chart; through the band Dusk would read 4.3:1 |
 | The comp redrawn first (rule 7) | the comp still draws the page 1 of 14 Nov | as steps B and C; the spec and both slot maps carry the change |
 
 *Open items.*
 
 1. **To look at on publish 5:** the two F1 names against their lines (set on a whole-page capture; Desktop snaps a
-   chart by up to 2 px), and that a hover inside the band, on the word "Commissions", opens the year's tooltip.
+   chart by up to 2 px). (The second point of this item, a year tooltip on the word "Commissions", was a mistake: the
+   chart has none.)
 2. Page 1 carries three words more than before (469 against 466 in the spec's text): the note's first clause.
 3. The session's screen turned from wide to tall during the step; the render method for each is in
    `tools/desktop_shots/round2d/README.txt`.
@@ -500,3 +501,57 @@ hit test, the click and band tests, nl and de against en, and the keyboard walk.
 2. The Desktop window "Goodnight Inn" is open on purpose and is the one to publish from. A `.pbix` for the submission
    (step F) comes from that window too, after the publish: File > Save as.
 3. `E:\GoodnightInn-publish4` can go once publish 5 passed the gate.
+
+**Step E, after publish 5 (Sun 15 Nov 2026).**
+
+Bjorn published at 11:10 local and again at 11:40 (the first did not reach the link within half an hour; the second
+was on it twenty minutes later: `meta` 2026-11-15T10:40:25 UTC). `gate.py` on that publish, seventeen browser runs,
+evidence in `deliverables/screenshots/PublishToWeb-2026-11-15-publish5/`.
+
+| Check | Result on publish 5 |
+|---|---|
+| The mouse at 1920 px | clear on all four views. Page 1 is new: publish 4 lost 7 % of the F4 dots' area to the title's box |
+| The mouse at 1366 px | page 1 and Recommended clear; **What waits and Build: the pills still lose 11 % and 45 %, to the bubble** |
+| A click on a mark or a row | only the clicked visual's own selection and the header icons of the visual clicked before it, as on publish 4 |
+| The band of a clicked visual | unchanged in all ten places, the plan chart's caption among them (step C's open item 1b) |
+| nl and de against en | equal to the pixel; `locale_scan` nothing to read |
+| The keyboard walk (J-AC-8, J-AC-4) | page 1 30 stops, Recommended 29, What waits 18, Build 24, **none without a name**; into the hero table and back with Enter, arrows, Esc; the selector's tiles take Space |
+| The two typed ticks | in line with Power BI's own, right edges on one x, each on its gridline |
+| The three end labels | on their line ends within 2 px in Low, Expected and High (0.5 to 2 px low) |
+| The year tooltip under the tag | opens (step C's open item 1c) |
+| F1's two names | on their lines (each 1 px under its line's end, as the chart's own label); "Before commissions" began 2 px right of "After commissions" |
+| "cash" and "not discounted" | on the three cumulative charts; none of "desks", "RMS", "dataset units", "no NPV shown", "contest" on any page |
+| The Definitions tooltip | 17 and 16 lines, inside its card (step B could not capture it) |
+
+*What publish 5 did not fix: the bubble.* `visualLink.suppressDefaultTooltip` is in the published report and the service
+ignores it. Its own code says why (`reportEmbed.min.js`, `updateVisualLinkProperties`, read from the published page):
+with the feature switch `showDefaultTooltip` on, a button's tooltip shows unless `visualLink.showDefaultTooltip` is
+false; `suppressDefaultTooltip` is read only with the switch off, and the upgrader that turns the old property into the
+new one runs for reports of an older version. The decision of 14 Nov ("overruled: there is a switch") was right about
+the switch and wrong about its name. Now both are written (`NO_BUBBLE`). **Proof before the publish:** in Desktop the
+Next button's spoken name was "... page 2, The Investment Strategy. CTRL+klik hier om volgen" with the old property and
+is "... page 2, The Investment Strategy" with the new one (`round2d/button_names.ps1` on the two publish windows).
+
+*Also in this round.*
+
+- **One name in the year tooltip (Bjorn, 15 Nov: align it).** Its banner read "CUMULATIVE NET IMPACT, $M" over charts
+  that say "cumulative cash, not discounted" since step B. Now "CUMULATIVE CASH, $M · NOT DISCOUNTED"; the four alt
+  texts that still said "cumulative net impact" (the tooltip's two cards, the two comparison charts) say "cumulative
+  cash, not discounted". The Definitions tooltip keeps "net impact" where it defines cash positive.
+- F1's "Before commissions" 2 px left (x 464).
+- The hover on the word "Commissions" left the gate's plan: it tested a tooltip the F1 chart does not have.
+
+*Verified for publish 6.* Files: `schema_check` 208 files 0 failing, `a11y_check` 0, `strip_check` 0,
+`compliance_check` 5 of 5, `validate_tmdl --strict` 0 errors, `pbir_detect` 0 unwaived. In the new publish window, on
+its own model: `build_checks.py` 142 of 142, `number_checks.py` 806 of 806, `alt_texts.py` 0 flags.
+
+*For Bjorn: publish 6.* The window "Goodnight Inn" is a new one (publish 5's was closed, not saved; the copy at
+`E:\GoodnightInn-publish` was written again from the project). Publish as before, replace the report. After it:
+`gate.py` once more; look for no bubble over a tab at 1920 and at 1366 px (`tabrest`), the pills clear in the mouse test
+at 1366 px, no "Click here to follow" in `keys2_walk.txt`, the tooltip's new banner on one line.
+
+*Open items.*
+
+1. Step E stays `blocked` until publish 6 is on the link and through the gate.
+2. `walk.py` (the committee's walkthrough) runs after publish 6, not on publish 5.
+3. The word count of Recommended: unchanged, Bjorn's call (step B's open item 1).

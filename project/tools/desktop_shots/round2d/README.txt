@@ -40,3 +40,6 @@ What the round found.
   - A strip seam (page x 480, 960, 1440) moves a chart's own labels by up to 3 px against a text box beside them: the
     two F1 names were set level on the whole-page capture, not on the strips.
   - Orlando's name left of its dot does not fit: see doc 25, step D, deviations.
+  - button_names.ps1 -ProcId <pid>: what Desktop hands a screen reader for the report's buttons. A button that still
+    carries Power BI's own tooltip ends its name in "CTRL+klik hier om volgen"; visualLink.showDefaultTooltip false
+    takes it away (suppressDefaultTooltip alone does not, in Desktop 2.159 or in the service: doc 25, step E).

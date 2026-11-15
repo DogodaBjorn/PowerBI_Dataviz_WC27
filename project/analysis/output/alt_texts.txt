@@ -200,14 +200,14 @@ stays with the group
       Pick at least three moves, one of them growth, within $60.0M. Your plan appears here and is compared with A below.
  9210 ch_build_bars (clusteredBarChart) [Alt Build Bars (text)] 20/20/20 chars
       No moves picked yet.
- 9190 ch_cmp_alts (lineChart) [Alt Cmp Alts (text)] 98/103/100 chars
-      Cumulative net impact 2027 to 2032 against A, Expected case, by 2032: A +$6.8M, B +$6.8M, C −$19.2M.
-      Low: Cumulative net impact 2027 to 2032 against A, Low case, by 2032: A −$4.6M, B −$5.8M, C −$34.1M.
-      High: Cumulative net impact 2027 to 2032 against A, High case, by 2032: A +$19.2M, B +$19.7M, C −$3.3M.
- 9180 ch_cmp_build (lineChart) [Alt Cmp Build (text)] 96/101/98 chars
-      Cumulative net impact of A 2027 to 2032, Expected case, ends at +$6.8M; pick moves to add your plan.
-      Low: Cumulative net impact of A 2027 to 2032, Low case, ends at −$4.6M; pick moves to add your plan.
-      High: Cumulative net impact of A 2027 to 2032, High case, ends at +$19.2M; pick moves to add your plan.
+ 9190 ch_cmp_alts (lineChart) [Alt Cmp Alts (text)] 109/114/111 chars
+      Cumulative cash, not discounted, 2027 to 2032 against A, Expected case, by 2032: A +$6.8M, B +$6.8M, C −$19.2M.
+      Low: Cumulative cash, not discounted, 2027 to 2032 against A, Low case, by 2032: A −$4.6M, B −$5.8M, C −$34.1M.
+      High: Cumulative cash, not discounted, 2027 to 2032 against A, High case, by 2032: A +$19.2M, B +$19.7M, C −$3.3M.
+ 9180 ch_cmp_build (lineChart) [Alt Cmp Build (text)] 107/112/109 chars
+      Cumulative cash of A, not discounted, 2027 to 2032, Expected case, ends at +$6.8M; pick moves to add your plan.
+      Low: Cumulative cash of A, not discounted, 2027 to 2032, Low case, ends at −$4.6M; pick moves to add your plan.
+      High: Cumulative cash of A, not discounted, 2027 to 2032, High case, ends at +$19.2M; pick moves to add your plan.
  1000 z_footer2 (cardVisual) [Footer P2 (text)] 134/134/134 chars
       Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.
   990 chip_def2 (cardVisual) [Alt Definitions (text)] 227/227/227 chars
@@ -228,10 +228,10 @@ stays with the group
       Net present value through 2032 of each picked move, Expected case, highest first: Booking app & rates +$3.4M, Revenue management +$0.5M, Kiosks, 20 busiest −$0.6M.
       Low: Net present value through 2032 of each picked move, Low case, highest first: Kiosks, 20 busiest −$1.2M, Revenue management −$1.5M, Booking app & rates −$2.8M.
       High: Net present value through 2032 of each picked move, High case, highest first: Booking app & rates +$9.5M, Revenue management +$3.2M, Kiosks, 20 busiest +$0.03M.
- 9180 ch_cmp_build (lineChart) [Alt Cmp Build (text)] 84/89/87 chars
-      Cumulative net impact 2027 to 2032, Expected case, by 2032: your plan +$6.8M, A +$6.8M.
-      Low: Cumulative net impact 2027 to 2032, Low case, by 2032: your plan −$4.6M, A −$4.6M.
-      High: Cumulative net impact 2027 to 2032, High case, by 2032: your plan +$19.2M, A +$19.2M.
+ 9180 ch_cmp_build (lineChart) [Alt Cmp Build (text)] 95/100/98 chars
+      Cumulative cash, not discounted, 2027 to 2032, Expected case, by 2032: your plan +$6.8M, A +$6.8M.
+      Low: Cumulative cash, not discounted, 2027 to 2032, Low case, by 2032: your plan −$4.6M, A −$4.6M.
+      High: Cumulative cash, not discounted, 2027 to 2032, High case, by 2032: your plan +$19.2M, A +$19.2M.
 
 === tt-package   (context: TREATAS ( { LOOKUPVALUE ( Package[PackageID], Package[Preset], "A" ) }, Package[PackageID] ))
  9890 tt_title (cardVisual) [TT Title (text)] 22/22/22 chars
@@ -260,16 +260,16 @@ stays with the group
       At the end of 2030
  9880 tty_a_title (textbox) [typed] 20 chars
       A in the three cases
- 9870 tty_a_nums (cardVisual) [Alt TT Year A (text)] 97/97/97 chars
-      Package A, cumulative net impact to the end of 2030: Low −$6.7M, Expected −$0.2M, High +$6.8M.
+ 9870 tty_a_nums (cardVisual) [Alt TT Year A (text)] 108/108/108 chars
+      Package A, cumulative cash, not discounted, to the end of 2030: Low −$6.7M, Expected −$0.2M, High +$6.8M.
  9860 tty_all_title (cardVisual) [TT Year All Title (text)] 37/42/38 chars
       A, B, C and your plan in the Expected case
       Low: A, B, C and your plan in the Low case
       High: A, B, C and your plan in the High case
- 9850 tty_all_nums (cardVisual) [Alt TT Year All (text)] 105/110/106 chars
-      Cumulative net impact to the end of 2030, Expected case: A −$0.2M, B −$1.1M, C −$30.1M, your plan none yet.
-      Low: Cumulative net impact to the end of 2030, Low case: A −$6.7M, B −$8.3M, C −$38.4M, your plan none yet.
-      High: Cumulative net impact to the end of 2030, High case: A +$6.8M, B +$6.3M, C −$21.3M, your plan none yet.
+ 9850 tty_all_nums (cardVisual) [Alt TT Year All (text)] 116/121/117 chars
+      Cumulative cash, not discounted, to the end of 2030, Expected case: A −$0.2M, B −$1.1M, C −$30.1M, your plan none yet.
+      Low: Cumulative cash, not discounted, to the end of 2030, Low case: A −$6.7M, B −$8.3M, C −$38.4M, your plan none yet.
+      High: Cumulative cash, not discounted, to the end of 2030, High case: A +$6.8M, B +$6.3M, C −$21.3M, your plan none yet.
 
 === tt-f3-band   (context: Brands[Brand] = "Goodnight Inn", Hotels[Renovation Age Sort] = 3)
  9895 ttd_head (cardVisual) [Band Header (text)] 40/40/40 chars
