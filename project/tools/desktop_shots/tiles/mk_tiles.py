@@ -13,7 +13,7 @@ usage: mk_tiles.py <copy .Report dir> [--page NAME] [--scenario Low|Expected|Hig
   --rows      build step 8: tile rows (default 4). A narrow Desktop window is still tall, and a tile page is fitted to its
               width, so --rows 1 gives four strips of 480 x 1080 at the same scale: no horizontal seam, and a chart or a
               table that is higher than 270 px is measured in y without a seam through it (stitch.py --rows 1).
-  --picked    build step 9: the moves picked in Build your own, as short names separated by commas ("" = nothing picked;
+  --picked    build step 9: the moves picked in Build your own, as short names separated by commas, or by semicolons when a name has a comma ("" = nothing picked;
               left out = the selection saved in sl_moves). A slicer only reaches its own page, like the scenario: a tile
               that holds sl_moves gets the slicer with that selection, every other tile gets it as a page filter on
               BuildMove[Short Name] (the Build measures read either). The source page's visual interactions are copied to
@@ -39,7 +39,8 @@ SLICER = "sl_moves"
 _sl = next((v for v in vis if v["name"] == SLICER), None)
 PICKED = opt("--picked")
 if PICKED is not None:
-    PICKED = [n for n in PICKED.split(",") if n]
+    # review round 2: two short names carry a comma ("Kiosks, 20 busiest"), so a semicolon separates the names when one is there
+    PICKED = [n for n in PICKED.split(";" if ";" in PICKED else ",") if n]
 elif _sl is not None:  # the saved selection
     PICKED = [x[0]["Literal"]["Value"].strip("'") for x in _sl["visual"]["objects"]["general"][0]["properties"]["filter"]["filter"]["Where"][0]["Condition"]["In"]["Values"]]
 PICK_VALUES = [[{"Literal": {"Value": f"'{n}'"}}] for n in (PICKED or [])]

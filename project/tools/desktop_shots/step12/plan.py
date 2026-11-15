@@ -5,6 +5,8 @@ usage: python plan.py <out dir> <run> [tag]
         p2       page 2 through the Next button: Recommended in Expected, Low, High, the package and year tooltips
         states   page 2: What waits and Build through their tabs, a selector tile, the invitation, Back
         keys     Tab from the top of page 1: what takes the focus, ten stops
+        keys2    review round 2: Tab through page 1 and page 2's three states, then Enter, arrows and Esc inside the
+                 hero table and the selector (J-AC-8); every focused element is logged
         touch    taps instead of clicks: Next, a tab, a scenario pill, a tooltip target
 Coordinates are the report's own 1920 x 1080 (slot map v10), so the same plan runs in any window size.
 """
@@ -44,11 +46,13 @@ if RUN == "p1":
     hover("p1_tt_glossary", 1816, 1058)
     hover("p1_tag_f3", 1792, 338)
     hover("p1_header_f1", 300, 520)
+    hover("p1_tt_f1_band_label", 286, 483)   # review round 2, step D: the word "Commissions" lies under the chart, the year must open on it
 elif RUN == "p2":
     click(NEXT, 7000); shot("p2_rec_expected"); steps.append({"op": "texts", "out": f("p2_rec_expected.txt")})
     hover("p2_tt_chip_a", 1132, 200)
     hover("p2_tt_hero_row", 300, 300)
     hover("p2_tt_year", 1500, 900)
+    hover("p2_tt_year_under_tag", 948, 864)   # review round 2, step C: the tag "Hover a year" lies under the chart
     hover("p2_tt_glossary", 1816, 1058)
     for s in ("Low", "High"):
         click(SCEN[s], 5000); shot(f"p2_rec_{s.lower()}"); steps.append({"op": "texts", "out": f(f"p2_rec_{s.lower()}.txt")})
@@ -95,6 +99,32 @@ elif RUN == "keys":
     for i in range(14):
         steps.append({"op": "key", "key": "Tab"}); wait(400); steps.append({"op": "focus"})
     full("p1_tab14")
+elif RUN == "keys2":
+    # Review round 2, step E (J-AC-8, J-AC-4): the whole keyboard walk in the PUBLISHED report. Tab through page 1 and
+    # through each of page 2's three states (more presses than a state has stops: the walk wraps, so every stop is met),
+    # then into the hero table and into the selector: Enter, arrows, Space, Esc, the focus logged after every key.
+    # A mark {"op":"eval","value":"walk:<label>"} opens each part of the log; gate.py prints the parts.
+    K = lambda key, **kw: {"op": "key", "key": key, **kw}
+    mark = lambda label: steps.append({"op": "eval", "js": "'walk:" + label + "'"})
+
+    def walk(label, n):
+        mark(label)
+        for i in range(n):
+            steps.append(K("Tab")); wait(350); steps.append({"op": "focus"})
+
+    def inside(label, match, keys):
+        mark(label); steps.append({"op": "tabto", "match": match, "max": 90})
+        for k in keys:
+            steps.append(k); wait(500); steps.append({"op": "focus"})
+
+    steps.append(K("Tab")); wait(400); steps.append(K("Enter", ctrl=True)); wait(800)   # into the report (the embed's own chrome first)
+    walk("page 1", 30)
+    click(NEXT, 7000); walk("page 2, Recommended", 45)
+    inside("Recommended, inside the hero table (Enter, down, down, right, Esc)", "ten moves ranked", [K("Enter"), K("ArrowDown"), K("ArrowDown"), K("ArrowRight"), K("Escape")])
+    click(TAB["alts"], 5000); walk("page 2, What waits", 35)
+    click(TAB["build"], 5000); walk("page 2, Build your own", 45)
+    inside("Build your own, inside the selector (Enter, down, Space, Space, Esc)", "pick a move", [K("Enter"), K("ArrowDown"), K(" "), K(" "), K("Escape")])
+    full("keys2_end")
 elif RUN == "touch":
     click(NEXT, 7000, "ptap"); shot("touch_p2")
     click(TAB["alts"], 5000, "ptap"); shot("touch_alts")

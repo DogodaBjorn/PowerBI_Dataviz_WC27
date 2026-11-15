@@ -12,7 +12,11 @@ The published report is checked in headless Edge, signed out, with a fresh profi
       the whole gate in one run (sixteen browser runs, four at a time, about 6 minutes) and one summary: which report
       the link shows, the mouse at 1920 and 1366 px, what a click changes, nl and de against en, the Tab order, and
       every page capture against an earlier run. The tooltips' and the pages' look is judged by eye on the captures.
-  plan.py <out dir> <run> [tag]      the step files gate.py runs (p1, p2, states, more, clicks, tips, keys, touch)
+  plan.py <out dir> <run> [tag]      the step files gate.py runs (p1, p2, states, more, clicks, tips, keys, keys2, touch)
+                                     keys2 (review round 2, J-AC-8 and J-AC-4): Tab through page 1 and page 2's three
+                                     states, then Enter, arrows and Esc inside the hero table and the selector; gate.py
+                                     prints the stops per part and how many have no spoken name (none may), the whole
+                                     list goes to <out dir>\keys2_walk.txt. Tried on publish 4 on 15 Nov: 0 nameless
   hit_test.js, hit_report.py         who gets the mouse, measured in the published page (see ..\..\strip_check.py for
                                      the same question answered from the report files, before a publish)
 

@@ -1,9 +1,11 @@
 """Review round 2, step D: one render round of a whole page in the THROWAWAY copy (never the project; doc 23 rule 6).
 
   python round.py copy  <copy dir>                           a fresh throwaway copy of project/pbip
-  python round.py view  <copy dir> [state] [scenario]        the generator's report into the copy as it is (no strips);
+  python round.py view  <copy dir> [state] [scenario] [picked]   the generator's report into the copy as it is (no strips);
                                                              state rec | alts | build opens page 2 in that state, the
-                                                             scenario (Low | Expected | High) is set in the copy's slicer
+                                                             scenario (Low | Expected | High) is set in the copy's slicer,
+                                                             picked (short names separated by semicolons, "-" = nothing)
+                                                             in the move selector
   python round.py shoot <pid> <out dir> <name> [page] [card] reload, capture the page whole at scale 3 (twice: the first
                                                              capture after a reload can miss a visual), cut it to page
                                                              pixels: <name>_2x.png (3840 x 2160) and <name>.png (1920 x 1080)
@@ -57,7 +59,17 @@ elif cmd == "view":
         cur = [s for s in ("Low", "Expected", "High") if f"'{s}'" in txt]
         assert len(cur) == 1, cur
         f.write_text(txt.replace(f"'{cur[0]}'", f"'{scen}'"), encoding="utf-8")
-    print(out.splitlines()[-1], "| state", state, "| scenario", scen or "as saved")
+    picked = sys.argv[5] if len(sys.argv) > 5 else None
+    if picked is not None:  # the move selector's saved selection (short names separated by semicolons; "-" = nothing picked)
+        f = copy / "THROWAWAY.Report" / "definition" / "pages" / "p2-investment-strategy" / "visuals" / "sl_moves" / "visual.json"
+        v = json.loads(f.read_text(encoding="utf-8"))
+        names = [] if picked == "-" else [n for n in picked.split(";") if n]
+        if names:
+            v["visual"]["objects"]["general"][0]["properties"]["filter"]["filter"]["Where"][0]["Condition"]["In"]["Values"] = [[{"Literal": {"Value": f"'{n}'"}}] for n in names]
+        else:
+            v["visual"]["objects"].pop("general", None)
+        f.write_text(json.dumps(v, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(out.splitlines()[-1], "| state", state, "| scenario", scen or "as saved", "| picked", "as saved" if picked is None else picked)
 elif cmd == "shoot":
     pid, out, name = sys.argv[2], Path(sys.argv[3]), sys.argv[4]
     page = sys.argv[5] if len(sys.argv) > 5 else "p1-brand-review"

@@ -22,7 +22,7 @@ publish 5: say which one.
 | B | The copy round | done | 15 Nov | (this commit) | 24 of the 26 sheet lines built; engine: 142 of 142 texts equal the spec in Low, Expected, High and the empty Build state, 766 number checks, alt texts 0 flags; six views rendered. Four lines changed for fit or for a reason (see the log): the tests are named in the table's headers, the staff-cost point stands in F1's forward line, F3's note and the selector footer keep their old words. **The word target is missed on Recommended: about 2 % fewer words, not 20 %** (What waits: 14 %). Bjorn decides whether a block goes (log, open items) |
 | C | The plan chart, and the kiosk evidence | done | 15 Nov | (this commit) | The three end labels are cards right of the line ends, the chart's own labels are off; caption (sheet line 14) in the row above the plot; "Hover a year" on the chart; the complaint fact in the model and in ledger row F4 (sheet line 12). Engine: 142 of 142 texts, 776 of 776 numbers (the complaint rise against the workbook), alt texts 0 flags; Recommended rendered in Low, Expected and High. Three things to look at on publish 5 (log). Recommended carries 19 words more |
 | D | Page 1 and the hero | done | 15 Nov | (this commit) | Sheet lines 28, 30, 31 and 32 built as written (29 was done in step B); the hero's NPV bars in Coffee Blue for package A and the kit's light neutral for the rest. Engine: 142 of 142 texts, 806 of 806 numbers, alt texts 0 flags; `a11y_check` 0; the greyscale test passes in Low, Expected and High (A's bars grey 116, every other bar 196). **One item not built:** Orlando's name stays under its dot; left of the dot it touches another hotel's dot (log) |
-| E | Proof and publish 5 (Bjorn publishes) | todo | | | |
+| E | Proof and publish 5 (Bjorn publishes) | blocked | 15 Nov | (this commit) | **Waits for Bjorn's publish.** Done before it: engine checks on the publish window's own model (142 of 142 texts, 806 of 806 numbers, alt texts 0 flags), the 17 renders that changed (`FinalV3-round2/`), the old window closed without saving, a fresh publish copy open in a freshly opened window, the keyboard walk added to `gate.py` and tried on publish 4. After the publish: `gate.py` and `walk.py` (log) |
 | F | Submission (Bjorn) | todo | | | |
 
 Status values as in doc 23: `todo`, `doing`, `done`, `blocked`.
@@ -433,3 +433,70 @@ and the reference line is Night, so a Night bar passed whatever colour the bar h
 3. The session's screen turned from wide to tall during the step; the render method for each is in
    `tools/desktop_shots/round2d/README.txt`.
 4. Spare items of section 6: none taken.
+
+**Step E, the part before the publish (Sun 15 Nov 2026, same session as step D).**
+
+*Done.*
+
+- **Preflight on `4d54cf8`.** A fresh run of both generators (the model with `--submission`) equals `project/pbip`
+  file for file. File checks as in step D's log.
+- **The renders that changed:** `deliverables/screenshots/FinalV3-round2/`, 17 of the 20 views of the FinalV3 set
+  under the same file names (page 1, Recommended, What waits and Build in every view of the set, the five package
+  tooltips, the Definitions tooltip). The year, band and hotel tooltips came out byte for byte equal to FinalV3 and
+  stay there. Its README says what changed per file.
+- **The old window.** "Goodnight Inn" of 14 Nov (publish 4) is closed, not saved ("Niet opslaan"). Its folder is
+  kept as `E:\GoodnightInn-publish4`, in case publish 4 must come back.
+- **The publish copy.** `E:\GoodnightInn-publish\Goodnight Inn.pbip`, written from `project/pbip` at `4d54cf8` with
+  `throwaway_copy.py --name "Goodnight Inn"`, opened in a new Desktop window (2.159) and loaded
+  (`refresh_desktop_model.ps1 -Port`, 26 tables, 6 s). **Not reloaded** (doc 23, lesson 6). Checked in that window:
+  `build_checks.py` 142 of 142, `number_checks.py` 806 of 806, `alt_texts.py` 0 flags against its own model; both
+  pages captured through the bridge, with data.
+- **The gate, extended (J-AC-8, J-AC-4).** `step12/plan.py keys2`, run by `gate.py`: Tab through page 1 and through
+  each of page 2's three states, then into the hero table (Enter, down, down, right, Esc) and into the selector
+  (Enter, down, Space, Space, Esc), the focused element logged after every key (`web.mjs` got `tabto`: Tab until a
+  name matches, and the arrow keys). The summary counts the stops without a spoken name per part. Two hovers were
+  added to the plans (the word "Commissions" in F1's band; the plot under "Hover a year") and the caption of the
+  plan chart to the band test: the open items of steps C and D that a script can settle.
+- **Tried on publish 4** (the link from a local session transcript; it is not in the repository): page 1 30 stops,
+  Recommended 29, What waits 18, Build 24, **none without a name** (the scatter's helper layers and F4's averages
+  take no focus in the published report: J-AC-4); the hero table gives its header and cells to the arrows and Esc
+  returns to the table; the selector's tiles take Space. List:
+  `PublishToWeb-2026-11-14/keys2_walk_publish4_dry-run-2026-11-15.txt`.
+
+*For Bjorn: the publish.* In the open window "Goodnight Inn": Publish (Desktop asks to save: yes, it is the copy),
+to the same workspace, **replace** the report "Goodnight Inn". The Publish to Web link stays the same. Then say so
+in a session: "publish 5 is done, read project/build-steps/round2.txt".
+
+*After the publish (the next session, about 15 minutes).*
+
+    python project\tools\desktop_shots\step12\gate.py <link> <out> --ref project\deliverables\screenshots\PublishToWeb-2026-11-14
+    python project\tools\desktop_shots\walkthrough\walk.py <link> <work> project\deliverables\screenshots\Committee-walkthrough-<date>
+
+`meta` in the gate's first lines must show a publish time after 15 Nov 10:45 local; Publish to Web serves a cached
+copy for a while (15 minutes and more on 14 Nov). Against publish 4 every page capture differs, by design; read the
+hit test, the click and band tests, nl and de against en, and the keyboard walk. Then look, on the captures:
+
+1. No bubble over a tab at 1366 px (`w1366`, `tabrest`); a button's spoken name without "Click here to follow"
+   (`keys2_walk.txt`).
+2. The two typed ticks of the plan chart in line with Power BI's own; the three end labels on the height of their
+   line ends (step C's open item 1a).
+3. The caption of the plan chart after a click on the chart (band test, new entry); the year tooltip under the tag
+   (`en_p2_tt_year_under_tag.png`).
+4. F1's two names against their lines; the year tooltip on the word "Commissions" (`en_p1_tt_f1_band_label.png`).
+5. "cash" and "not discounted" on the three cumulative charts (`texts/`); the Definitions tooltip (17 lines per
+   column: step B could not capture it).
+6. The word count of Recommended (step B's open item 1: the target of 280 is missed, a block is Bjorn's call).
+
+*Deviations.*
+
+| Planned | Done instead | Why |
+|---|---|---|
+| The FinalV3 renders replaced | a set of its own, `FinalV3-round2/`, FinalV3 untouched | FinalV3 has comp pairs and a slot sheet that belong to 14 Nov's copy; the comp was not redrawn |
+| Whole-page captures | strips, as before | The session's screen turned between wide and tall during the round. A whole-page capture needs the wide screen; the bridge of one throwaway window stopped answering captures after a turn and the window was ended (the throwaway only) |
+
+*Open items.*
+
+1. Step E is `blocked` on the publish, nothing else.
+2. The Desktop window "Goodnight Inn" is open on purpose and is the one to publish from. A `.pbix` for the submission
+   (step F) comes from that window too, after the publish: File > Save as.
+3. `E:\GoodnightInn-publish4` can go once publish 5 passed the gate.

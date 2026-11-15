@@ -47,6 +47,7 @@ JOBS = [  # name, steps file, web.mjs arguments
     ("en_states", lambda: plan("states", "en"), ["--w", "1920", "--h", "1180"]),
     ("en_more", lambda: plan("more", "en"), ["--w", "1920", "--h", "1180"]),
     ("keys", lambda: plan("keys", "en"), ["--w", "1920", "--h", "1180"]),
+    ("keys2", lambda: plan("keys2", "en"), ["--w", "1920", "--h", "1180"]),
     ("nl_p1", lambda: plan("p1", "nl"), ["--lang", "nl-NL", "--w", "1920", "--h", "1180"]),
     ("nl_p2", lambda: plan("p2", "nl"), ["--lang", "nl-NL", "--w", "1920", "--h", "1180"]),
     ("nl_more", lambda: plan("more", "nl"), ["--lang", "nl-NL", "--w", "1920", "--h", "1180"]),
@@ -116,6 +117,7 @@ if "clicks" in logs:
 BANDS = [("p1_folio_row", "the years under F2's chart", (680, 505, 1190, 543)), ("p1_f3_bar", "F3's title", (1304, 347, 1800, 391)),
          ("p1_f4_dot", "F4's title", (56, 835, 1690, 862)), ("rec_hero_row", "the hero's column labels", (574, 216, 925, 240)),
          ("rec_ledger_row", "the lines above the ledger", (1112, 310, 1800, 361)), ("rec_cum_line", "the plan bar", (792, 788, 1800, 820)),
+         ("rec_cum_line", "the plan chart's caption", (864, 820, 1380, 846)),  # review round 2, step C
          ("alts_waits_row", "the head of What waits", (792, 184, 1800, 237)), ("build_moves_row", "the head of Build", (792, 184, 1300, 237)),
          ("build_bar", "the rules line above the bars", (1384, 408, 1800, 456))]
 if "clicks" in logs:
@@ -141,6 +143,32 @@ if "keys" in logs:
     stops = [json.loads(l)["value"] for l in logs["keys"].splitlines() if l.startswith('{"op":"focus"')]
     for s in stops[2:9]:
         print("  ", (s or {}).get("role"), "|", ((s or {}).get("name") or "").strip()[:80])
+
+if "keys2" in logs:
+    # Review round 2, step E (J-AC-8, J-AC-4). Every stop of the walk has a role and a spoken name; a stop without a name
+    # is a visual that should be out of the tab order (the scatter's helper layers, the F4 averages): none may appear.
+    print("== the keyboard walk in the published report (keys2: the whole list is in keys2_walk.txt)")
+    part, parts = None, {}
+    for l in logs["keys2"].splitlines():
+        if l.startswith('{"op":"eval"') and '"walk:' in l:
+            part = json.loads(l)["value"][5:]; parts[part] = []
+        elif part and l.startswith('{"op":"focus"'):
+            parts[part].append(json.loads(l)["value"] or {})
+        elif part and l.startswith('{"op":"tabto"'):
+            t = json.loads(l); parts[part].append({"tabto": t["match"], "presses": t["presses"], **(t["value"] or {"name": None})})
+    lines = []
+    for part, stops in parts.items():
+        names = [((s.get("name") or "").strip(), s.get("role"), s.get("tag")) for s in stops if "tabto" not in s]
+        seen = list(dict.fromkeys(names))
+        nameless = [n for n in seen if not n[0]]
+        reached = next((s for s in stops if "tabto" in s), None)
+        head = f"  {part}: {len(names)} key presses, {len(seen)} different stops, {len(nameless)} without a name"
+        if reached:
+            head += f"; reached after {reached['presses']} Tab: " + (repr((reached.get('name') or '')[:60]) if reached.get("name") else "NOT REACHED")
+        print(head + (f"  <-- nameless: {nameless[:4]}" if nameless else ""))
+        lines.append(part)
+        lines += [f"    {'tabto ' + s['tabto'] + ' -> ' if 'tabto' in s else ''}{s.get('role')} | {s.get('tag')} | {(s.get('name') or '').strip()[:110]}" for s in stops]
+    (OUT / "keys2_walk.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 if REF:
     print(f"== against {REF.name} (page captures of the same view)")

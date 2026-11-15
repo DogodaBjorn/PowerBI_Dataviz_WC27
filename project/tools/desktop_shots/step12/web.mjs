@@ -7,6 +7,7 @@
 //        {"op":"pmove","lx":100,"ly":200}                   mouse to LOGICAL page coordinates (1920 x 1080 page)
 //        {"op":"pclick","lx":100,"ly":200} | {"op":"ptap","lx":100,"ly":200}  (ptap = one touch)
 //        {"op":"key","key":"Tab"} | {"op":"focus"}          focus = what holds the keyboard focus (role, name)
+//        {"op":"tabto","match":"regex","max":90}            Tab until the focused element's name matches (review round 2)
 //        {"op":"texts","out":"x.txt"}                       every visible text of the page, one per line
 import fs from "fs";
 import os from "os";
@@ -67,6 +68,7 @@ const META_JS = `(async () => { const u = performance.getEntriesByType('resource
   const r = (j.exploration || {}).report || {};
   return { report: r.displayName, lastPublished: r.lastUpdatedTime, reportId: r.objectId,
     pages: ((j.exploration || {}).sections || []).map(s => s.displayName) }; })()`;
+const VK = { Tab: 9, Enter: 13, Escape: 27, " ": 32, ArrowLeft: 37, ArrowUp: 38, ArrowRight: 39, ArrowDown: 40 };
 const FOCUS_JS =`(() => { let e = document.activeElement; while (e && e.shadowRoot && e.shadowRoot.activeElement) e = e.shadowRoot.activeElement;
   return e ? { tag: e.tagName, role: e.getAttribute('role'), name: (e.getAttribute('aria-label') || e.innerText || '').slice(0, 120) } : null; })()`;
 
@@ -108,8 +110,13 @@ try {
       case "ptap": { const [x, y] = await pt(s);
         await send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] }); await sleep(80);
         await send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] }); log({ op: "ptap", x, y }); break; }
-      case "key": { const k = { key: s.key, code: s.code ?? s.key, windowsVirtualKeyCode: s.vk ?? ({ Tab: 9, Enter: 13, Escape: 27, " ": 32 })[s.key] ?? 0, modifiers: (s.shift ? 8 : 0) | (s.ctrl ? 2 : 0) };
+      case "key": { const k = { key: s.key, code: s.code ?? s.key, windowsVirtualKeyCode: s.vk ?? VK[s.key] ?? 0, modifiers: (s.shift ? 8 : 0) | (s.ctrl ? 2 : 0) };
         await send("Input.dispatchKeyEvent", { type: "keyDown", ...k }); await send("Input.dispatchKeyEvent", { type: "keyUp", ...k }); break; }
+      // review round 2, step E (J-AC-8): Tab until the focused element's name matches, so a walk can step INTO a visual
+      case "tabto": { const re = new RegExp(s.match, "i"); const k = { key: "Tab", code: "Tab", windowsVirtualKeyCode: 9, modifiers: 0 }; let hit = null, n = 0;
+        while (n < (s.max ?? 90) && !hit) { await send("Input.dispatchKeyEvent", { type: "keyDown", ...k }); await send("Input.dispatchKeyEvent", { type: "keyUp", ...k }); n++; await sleep(350);
+          const f = await evaluate(FOCUS_JS); if (f && re.test(f.name || "")) hit = f; }
+        log({ op: "tabto", match: s.match, presses: n, value: hit }); break; }
       case "focus": log({ op: "focus", value: await evaluate(FOCUS_JS) }); break;
       case "texts": { const t = await evaluate(TEXTS_JS); fs.writeFileSync(s.out, t.join("\n"), "utf8"); log({ op: "texts", out: s.out, n: t.length }); break; }
       default: throw new Error("unknown op " + s.op);
