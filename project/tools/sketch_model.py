@@ -2175,9 +2175,7 @@ m("F1 Note (text)",
   'RETURN IF ( comm > 0 && ops > 0, "Commissions took " & FORMAT ( comm, "0.0", "en-US" ) & " of those points and running costs " & FORMAT ( ops, "0.0", "en-US" ) '
   '& " (staff " & IF ( s25 >= s23, "rose", "fell" ) & " from " & ' + pct1("s23") + ' & " to " & ' + pct1("s25") + ' & " of revenue). ", "" ) '
   '& "Room rates " & IF ( pa < 0, "fell ", "rose " ) & ' + pct1("ABS ( pa )") + ' & ", " '
-  '& IF ( pa > phi, "faster than the other brands.", IF ( pa < plo, "slower than the other brands.", "in line with the other brands, so no price premium absorbs it." ) ) '
-  # review round 2 (INV-AC-3, J-IN-7): the larger cause has no move; say so where the reader meets it
-  '& " Staff cost is an operating matter, outside the " & ' + words('CALCULATE ( COUNTROWS ( InvestmentProjects ), REMOVEFILTERS ( InvestmentProjects ), InvestmentProjects[Brand] = "Goodnight Inn" )') + ' & " moves on page 2."',
+  '& IF ( pa > phi, "faster than the other brands.", IF ( pa < plo, "slower than the other brands.", "in line with the other brands, so no price premium absorbs it." ) )',
   TXT, C15, "F1 note (R-P1-3, N-2): the 2023-2025 fall of the margin after commissions split into commissions and running costs, the staff share as the main running cost, "
             "and room-rate growth since 2023 against the sister brands (plan 09 R1).")
 _OTA, _DIR = 'BookingChannels[Channel] = "Online Travel Agencies"', 'BookingChannels[Channel] = "Direct Website & App"'
@@ -2207,7 +2205,7 @@ m("F3 Note (text)",
   "VAR o1 = " + gi_at("Occupancy %", 2025, "Hotels[Renovation Age Sort] = 1") + " VAR o2 = " + gi_at("Occupancy %", 2025, "Hotels[Renovation Age Sort] = 2") + " VAR o3 = " + gi_at("Occupancy %", 2025, "Hotels[Renovation Age Sort] = 3") + " "
   "VAR olo = MIN ( MIN ( o1, o2 ), o3 ) VAR ohi = MAX ( MAX ( o1, o2 ), o3 ) "
   'RETURN "Since 2018 Goodnight Inn spent " & ' + fm("sp") + ' & " per hotel on renovation; the other brands spent " & ' + fm("lo") + ' & " to " & ' + fm("hi") + ' & ". "'
-  ' & "No renovation has started since " & last & ". "'
+  ' & "None has started since " & last & ". "'
   # the 'not yet rooms' clause only while the bands sit within 2 points of occupancy (as since 7 Nov); the caveat always
   ' & IF ( ohi - olo <= 0.02, "Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause.", "An association, not proof of cause." )',
   TXT, C15, "F3 note (R-P1-5): renovation spend per hotel since 2018 against the sister brands, the last start, and the causality caveat (05 caveat A2).")
@@ -2229,7 +2227,7 @@ m("F4 Note (text)",
   TXT, C15, "F4 note: the next two hotels by months topped 90 %, and the one extension on offer outside them (Kingston) with its count.")
 m("Link F4 (text)",
   'VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = "GI-02" ) ) '
-  'RETURN UNICHAR ( 8594 ) & " Page 2: kiosks at the " & FORMAT ( n, "0", "en-US" ) & " busiest hotels; extensions decided at the 2028 gate."',
+  'RETURN "On page 2: kiosks at the " & FORMAT ( n, "0", "en-US" ) & " busiest hotels; extensions decided at the 2028 gate."',
   TXT, C15, "F4 forward link (R-P1-7): the move on page 2 that answers F4, with the number of hotels the kiosk move covers read from the organisers' project properties.")
 
 # ---- page 2, the shared frame (R-P2-1, R-P2-12)
@@ -2285,7 +2283,7 @@ m("Rec Line 2 (text)",
   # doc 22 section 6, question 1: when A does not pay back by 2032 in the case in view (only Low), the app is weighed on
   # the yearly figure line 1 has just given ("of that"), not on a loss it would 'carry'
   'VAR npv = [Rec NPV (sel)] '
-  'RETURN "The app carries it: " & IF ( ROUND ( npv / 100000, 0 ) < 0, ' + sfm("[App Run-rate (sel)]") + ' & " of the " & ' + sfm("[Rec Run-rate (sel)]") + ' & " a year", '
+  'RETURN "The app carries it: " & IF ( ROUND ( npv / 100000, 0 ) < 0, ' + sfm("[App Run-rate (sel)]") + ' & " of the " & ' + sfm("[Rec Run-rate (sel)]") + ', '
   + sfm("[App NPV (sel)]") + ' & " of the " & ' + sfm("npv") + ' ) & ". Every year without it leaves about " & ' + fm("[App Commission Saving (sel)]") + ' & " with the agencies."',
   TXT, C15, "Decision card, line 2 (R-P2-6, E13): how much of A the booking app carries (NPV, or the yearly figure when A does not pay back by 2032), and what each year without it leaves with the agencies.")
 m("Rec Lines (text)", f"[Rec Line 1 (text)] & {LF} & [Rec Line 2 (text)]", TXT, C15, "Decision card, both lines with a line break (alt text and tables; on the canvas two cards, spike S-7).")
@@ -2334,7 +2332,7 @@ m("Ledger Status (text)",
 # ---- Recommended: the capital plan (R-P2-7, N-5) and the one release rule (P-8 check 4)
 m("Capital Plan Title (text)",
   f'VAR k = COUNTROWS ( FILTER ( {{ [Tranche 2 Capex], [Tranche 3 Capex] }}, [Value] > 0 ) ) '
-  f'RETURN "The $" & FORMAT ( {BUDGET_GI} / 1000000, "#,0", "en-US" ) & "M plan: " & ' + fm("[Tranche 1 Capex]") + ' & " now, " & ' + fm("[Tranche 2 Capex] + [Tranche 3 Capex]") + f' & " decided at one Board meeting in {GATE_YEAR}, " & ' + fm("[Not Needed Capex]") + ' & " not needed"',
+  f'RETURN "The $" & FORMAT ( {BUDGET_GI} / 1000000, "#,0", "en-US" ) & "M plan: " & ' + fm("[Tranche 1 Capex]") + ' & " now, " & ' + fm("[Tranche 2 Capex] + [Tranche 3 Capex]") + f' & " at the {GATE_YEAR} gate, " & ' + fm("[Not Needed Capex]") + ' & " not needed"',
   TXT, C15, "Capital plan title (R-P2-7): the budget, tranche 1 now and the decisions at the gate.")
 _T1_YEAR = REC_IDS + "VAR y1 = YEAR ( CALCULATE ( MIN ( InvestmentProjects[Planned Start] ), REMOVEFILTERS ( InvestmentProjects ), TREATAS ( aIds, InvestmentProjects[ProjectID] ) ) ) "
 PLAN_LINES = {
@@ -2497,7 +2495,7 @@ alt_m("Waits",
       "The What-waits table read aloud (build step 10: shortened from the row-by-row reading of step 8, which ran to 1,300 characters): the three options and what each row holds; the cells are read inside the table.")
 
 # ---- Build your own (R-B-1, R-B-2)
-m("Build Picked (text)", BIDS + f'RETURN IF ( n = 0, "", "Picked: " & n & IF ( n = 1, " move, ", " moves, " ) & ' + fm("COALESCE ( [Build Capex], 0 )") + ' & " of " & ' + fm(BUDGET_GI) + " )",
+m("Build Picked (text)", BIDS + f'RETURN "Picked: " & n & IF ( n = 1, " move, ", " moves, " ) & ' + fm("COALESCE ( [Build Capex], 0 )") + ' & " of " & ' + fm(BUDGET_GI),
   TXT, C15, "Selector footer: how many moves are picked and their capex against the budget.")
 m("Build Run-rate (text)", BIDS + 'RETURN IF ( n = 0, "", ' + sfm("[Build Run-rate (sel)]") + " )", TXT, C15, "Your plan: profit a year by 2032, scenario in view; empty while nothing is picked.")
 m("Build A Year on Cost (text)", BIDS + 'RETURN IF ( n = 0, "", ' + pct1("[Build A Year on Cost (sel)]") + " )", TXT, C15, "Your plan: a year on cost, scenario in view; empty while nothing is picked.")

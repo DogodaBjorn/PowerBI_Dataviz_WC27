@@ -185,14 +185,14 @@ def row(cols):
     return "ROW ( " + ", ".join(f'"{n}", {e}' for n, e in cols) + " )"
 
 
-S_NUM = ["Rec A Year on Cost (sel)", "Rec NPV (sel)", "Rec Run-rate (sel)", "Rec NPV Low", "Rec Run-rate Low", "Rec Capex",
+S_NUM = ["Rec A Year on Cost (sel)", "Rec NPV (sel)", "Rec Run-rate (sel)", "Rec NPV Low", "Rec Run-rate Low", "Rec NPV Expected", "Rec Run-rate Expected", "Rec Capex",
          "Tranche 1 Capex", "Tranche 2 Capex", "Tranche 3 Capex", "Not Needed Capex", "Tranche 1 Run-rate", "Tranche 2 Run-rate", "Tranche 3 Run-rate",
          "Tranche 1 Year on Cost", "Tranche 2 Year on Cost", "Tranche 3 Year on Cost", "Dist Cost % 2025 GI", "Dist Cost % 2032 with A (sel)",
          "Margin after 2032 with A (sel)", "KPI Margin after GI", "Dist Cost Rise Undone % (sel)", "Margin Fall Recovered % (sel)",
          "App Commission Saving (sel)", "App NPV (sel)", "App Run-rate (sel)",
          "Hero Yield Domain Min", "Hero Yield Domain Max", "Hero NPV Domain Min", "Hero NPV Domain Max"]
 S_MONEY_U = ["Rec Capex", "Tranche 1 Capex", "Tranche 2 Capex", "Tranche 3 Capex", "Not Needed Capex", "App Commission Saving (sel)"]
-S_MONEY_S = ["Rec NPV (sel)", "Rec Run-rate (sel)", "Rec NPV Low", "Rec Run-rate Low", "Tranche 2 Run-rate", "Tranche 3 Run-rate", "App NPV (sel)", "App Run-rate (sel)"]
+S_MONEY_S = ["Rec NPV (sel)", "Rec Run-rate (sel)", "Rec NPV Low", "Rec Run-rate Low", "Rec NPV Expected", "Rec Run-rate Expected", "Tranche 2 Run-rate", "Tranche 3 Run-rate", "App NPV (sel)", "App Run-rate (sel)"]
 S_PCT = ["Rec A Year on Cost (sel)", "Tranche 2 Year on Cost", "Tranche 3 Year on Cost", "Dist Cost % 2025 GI", "Dist Cost % 2032 with A (sel)",
          "Margin after 2032 with A (sel)", "KPI Margin after GI"]
 ENDS = [n for n in sm.FMT_DEFS if "Cumulative End" in n]
@@ -330,8 +330,10 @@ for s in SCEN:
         check("spec: recommendation numbers (E10)", (n, s), want, clean(scal[s][n + " | txt"]))
     line1, line2 = rec["c_rec_lines"].split("\n")
     money = lambda t: re.findall(r"[+−]?\$[\d.]+M", t)  # noqa: E731
-    check("spec: worst case line (Low, always)", ("NPV", s), money(line1)[0], clean(scal[s]["Rec NPV Low | txt"]))
-    check("spec: worst case line (Low, always)", ("a year", s), money(line1)[1], clean(scal[s]["Rec Run-rate Low | txt"]))
+    # review round 2 (doc 25, DS2-09): in the Low view the tile's four numbers already show the Low case, so line 1 gives the Expected case there
+    other = "Expected" if s == "Low" else "Low"
+    check("spec: the tile's first line (the Low case; in the Low view the Expected case)", ("NPV", s), money(line1)[0], clean(scal[s][f"Rec NPV {other} | txt"]))
+    check("spec: the tile's first line (the Low case; in the Low view the Expected case)", ("a year", s), money(line1)[1], clean(scal[s][f"Rec Run-rate {other} | txt"]))
     check("spec: the app carries it", ("app", s), money(line2)[0], clean(scal[s]["App Run-rate (sel) | txt" if s == "Low" else "App NPV (sel) | txt"]))
     check("spec: the app carries it", ("leaves with the agencies", s), money(line2)[2], clean(scal[s]["App Commission Saving (sel) | txt"]))
     led = {r[0][:2]: r for r in rec["tbl_ledger"][1:]}
@@ -340,7 +342,7 @@ for s in SCEN:
     check("spec: ledger (E11)", ("F1 2025", s), led["F1"][2], clean(scal[s]["KPI Margin after GI | txt"]))
     check("spec: ledger (E11)", ("F1 2032 with A", s), led["F1"][3], clean(scal[s]["Margin after 2032 with A (sel) | txt"]))
     check("spec: plan segments", ("T1", s), rec["c_plan_t1"].split("\n")[1].split(" · ")[0], clean(scal[s]["Tranche 1 Capex | txt"]))
-    check("spec: plan segments", ("T4", s), rec["c_plan_t4"].split(" · ")[1], clean(scal[s]["Not Needed Capex | txt"]))
+    check("spec: plan segments", ("T4", s), rec["c_plan_t4"].split("\n")[0].split(" · ")[1], clean(scal[s]["Not Needed Capex | txt"]))
     for k in (2, 3):
         t = rec[f"c_plan_t{k}"].split("\n")
         check("spec: plan segments", (f"T{k} capex", s), t[1].split(" · ")[0], clean(scal[s][f"Tranche {k} Capex | txt"]))

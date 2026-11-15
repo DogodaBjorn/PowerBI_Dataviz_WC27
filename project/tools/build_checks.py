@@ -53,6 +53,7 @@ A_IDS = ["GI-01", "GI-02", "GI-10"]  # package A, the opening selection of Build
 KNOWN = []  # decided 14 Nov (Bjorn): 20.6 %, and the spec's text block says so since build step 12
 
 results = []  # (check, key, state, detail)
+SPEC_UPDATES = {}  # (view, slot) -> the model's text where it differs from the spec (written with --write-spec only)
 
 
 def record(check, key, ok, detail=""):
@@ -262,6 +263,8 @@ if not STATIC:
         state_known = diffs and all(known(view, slot, w, g) for w, g in diffs)
         detail = "" if ok else f"{len(got)} rows, spec {len(want_rows)}. "
         detail += " | ".join(f"spec {w!r} model {g!r}" for w, g in diffs[:6])
+        if ok and diffs:
+            SPEC_UPDATES[(view, slot)] = [[w if g is None else g for w, g in zip(wr, gr)] for wr, gr in zip(want_rows, got)]
         results.append(("5 text against the spec", f"{view} · {slot}", "KNOWN" if ok and state_known else ("ok" if ok and not diffs else "FAIL"), detail))
     for view, group, scn, picked in VIEWS:
         for slot, spec in sm.TEXT_SLOTS[group].items():
@@ -275,6 +278,23 @@ if not STATIC:
                 results.append(("5 text against the spec", f"{view} · {slot}", "ok", ""))
             else:
                 results.append(("5 text against the spec", f"{view} · {slot}", "KNOWN" if known(view, slot, want, got) else "FAIL", f"spec {want!r} | model {got!r}"))
+                SPEC_UPDATES[(view, slot)] = got
+    if "--write-spec" in sys.argv and SPEC_UPDATES:
+        # After an APPROVED copy change only (doc 25 section 5, review round 2): the spec's text block takes the model's
+        # strings for every slot that differs, so the spec stays the assertion target. Read the printed differences
+        # against the approved copy sheet first; this writes whatever the model says.
+        sf = ROOT / "project" / "design-prototypes" / "rebuild-v10-spec.json"
+        full = json.loads(sf.read_text(encoding="utf-8"))
+        for (view, slot), got in SPEC_UPDATES.items():
+            base, _, sub = slot.partition(".")
+            if isinstance(got, list) and got and isinstance(got[0], list):
+                full["text"][view][base][1:] = got
+            elif sub:
+                full["text"][view][base][sub] = got
+            else:
+                full["text"][view][base] = got
+        sf.write_text(json.dumps(full, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+        print(f"spec text updated: {len(SPEC_UPDATES)} slot views written to {sf.name}")
     # coverage: every slot of the spec is mapped here, typed in the report (TEXT_STATIC), or a chart's labels (number_checks.py)
     unmapped = sorted({f"{view}: {slot}" for view, group, *_ in VIEWS for slot, v in SPEC[view].items()
                        if slot not in sm.TEXT_SLOTS[group] and slot not in sm.TEXT_STATIC and not (isinstance(v, dict) and set(v) <= {"labels", "title"}

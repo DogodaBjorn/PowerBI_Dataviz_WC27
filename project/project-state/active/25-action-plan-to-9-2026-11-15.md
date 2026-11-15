@@ -19,7 +19,7 @@ publish 5: say which one.
 | Step | Title | Status | Date | Commit | Note |
 |---|---|---|---|---|---|
 | A | Copy sheet and fact check | done | 15 Nov | (this commit) | Sections 4 and 5. Three facts confirmed in the data, two placements changed for fit (D4, D5) |
-| B | The copy round | todo | | | |
+| B | The copy round | done | 15 Nov | (this commit) | 24 of the 26 sheet lines built; engine: 142 of 142 texts equal the spec in Low, Expected, High and the empty Build state, 766 number checks, alt texts 0 flags; six views rendered. Four lines changed for fit or for a reason (see the log): the tests are named in the table's headers, the staff-cost point stands in F1's forward line, F3's note and the selector footer keep their old words. **The word target is missed on Recommended: about 2 % fewer words, not 20 %** (What waits: 14 %). Bjorn decides whether a block goes (log, open items) |
 | C | The plan chart, and the kiosk evidence | todo | | | |
 | D | Page 1 and the hero | todo | | | |
 | E | Proof and publish 5 (Bjorn publishes) | todo | | | |
@@ -264,3 +264,57 @@ and the puns (checked on 14 Nov: stand).
 checked in doc 20 and the analysis outputs; the copy sheet written (section 5). Two placements differ from the plan
 Bjorn approved, both for fit and both recorded in section 3: the Energy and Boston sentence stands under the hero
 table (D4), the staff-cost line in F1's note on page 1 (D5). Nothing was built in this step.
+
+**Step B (Sun 15 Nov 2026, same session as step A).**
+
+*Built.* The copy sheet in `sketch_model.py` (25 text measures changed, 4 added: `Hero Caption (text)`, `Rec NPV
+Expected`, `Rec Run-rate Expected`, `Plan T4 L2 (text)`; 337 measures in the submission model), in `opzet_report.py`
+(the typed strings, the hero's two header names, the caption as a measure card, a second line for the fourth plan
+label, the glossary) and in `rebuild-v10-spec.json` → `text`. Three layering entries (`c_plan_t4_2` and the two typed
+ticks of 14 Nov: a visual the layering file does not know keeps its slot's z and lands behind its card).
+New in the tools: `build_checks.py --write-spec` writes the model's strings into the spec's text block for every slot
+that differs (after an approved copy change only; the differences were read against the sheet first: 50 slot views,
+all intended); `number_checks.py` follows the new first tile line and the two-line plan label.
+The gate rule's 0.6 points are now computed as the app's Expected change times the first-year ramp-up
+(FinanceParameters), which is what its new label says.
+
+*Verified.* In the engine (Desktop 2.159, a throwaway copy refreshed in 6 s): `build_checks.py` 142 of 142,
+`number_checks.py` 766 of 766, `alt_texts.py` 0 flags. Files: `schema_check` 198 files 0 failing, `a11y_check` 0,
+`strip_check` 0, `compliance_check` 5 of 5, `validate_tmdl --strict` 0 errors (13 expected warnings). Strip renders
+in `deliverables/screenshots/Round2-stepB-2026-11-15/`: Recommended in Expected and Low, What waits in Expected and
+High, Build as it opens, page 1. Every new line stands on the line count the sheet asked for; the ledger is one line
+shorter (row F4), What waits ends 85 px above its card's edge in the High case.
+
+*Deviations from the copy sheet, and why.*
+
+| Sheet line | Built instead | Why |
+|---|---|---|
+| 2 plan title | "The $60M plan: $9.4M now, $41.9M at the 2028 gate, $8.7M not needed" | four words shorter; the gate paragraph under it says what the gate is |
+| 4 gate rule | "... It releases tranche 2 if the first money worked ..." | the word "releases" stays: check 4 counts the one release rule by it |
+| 7 hero markers | the markers keep "8%: our cost of money" and "pays back by 2032 →"; the two value columns are headed "test 1" and "test 2" | "test 1: above 8%, our cost of money" is 246 px, its slot 155: it was cut off in the render |
+| 9 tile, Low | line 2 reads "The app carries it: +$0.6M of the +$1.0M. ..." | "of that" lost its referent when line 1 changed; "of the +$1.0M a year" ran into an ellipsis |
+| 18 tranche 3 | "the seven hotels last renovated in 2021"; C's make-up moved to the chart title: "C (app, revenue management, refresh)" | "last renovated" is what the data holds (no proof needed that works finished then); the numbers cell would have grown a line |
+| 22 selector footer | unchanged: "Picked: 0 moves, $0.0M of $60.0M" | empty, the card was a tab stop with no spoken text (`alt_texts.py` flagged it) |
+| 25 glossary | "A year by 2032" unchanged | with "after its running costs" the left column ran to 18 lines in a slot of 17 |
+| 26 F1 note | unchanged; the point stands in F1's forward line: "On page 2: revenue management, and the kiosks for running costs." | the note's slot holds three lines, the sentence made a fourth that ran into the line below. The kiosks are one of the two moves the data gives an operating-expense cut (section 4) |
+| 27 F3 note | unchanged: "None has started since 2020." | seven characters more pushed "an association, not proof of cause" into an ellipsis, and that sentence must not change (doc 20 §10) |
+| 29 forward lines | done here, not in step D: "On page 2: ..." on all four | they are typed beside the line of 26 |
+
+*Not done in this step:* the comp (`rebuild-comp-v10.html`) still draws the copy of 14 Nov; the spec's `_doc` says
+so. Fit was judged on the Desktop renders, which is the stricter test. The glossary could not be captured in this
+session's window (its scratch page stayed empty); its line counts were computed with the font instead (17 and 17
+lines in slots of 17): **look at the Definitions tooltip on publish 5.**
+
+*Open items.*
+
+1. **The reading load of Recommended did not come down.** Counted on the spec's text: 477 → 469 words (What waits
+   371 → 318, Build 168 → 149). The cuts of D1 (subtitle one line, shorter status words, a shorter F4 row) were paid
+   back by the lines that answer the investor and the jury (the plan title's three amounts, the caption's sentence
+   on Energy and Boston, the reason in the gate rule, "stays with the group"). With every block kept, Recommended
+   cannot lose a fifth of its words; DS2-10's own cuts were worth about 30 words, not 70. **For Bjorn:** the lever
+   that is left is a block. Candidates, cheapest first: (a) the third line of the two tranche labels ("+$1.7M a year
+   once live · 13.8% a year on cost", 18 words; both stand in What waits); (b) the mix line under the tile's title
+   (14 words; the hero's three A rows say it); (c) the tracking table (UX-18; advised against in D1).
+2. Step C can now add the complaint clause to ledger row F4: the row has a line to spare.
+3. Desktop shows its recovery banner in new windows (throwaway copies of this session that were ended, as rule 6
+   allows): dismiss it, there is nothing to recover.

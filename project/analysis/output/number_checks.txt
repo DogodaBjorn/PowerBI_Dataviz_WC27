@@ -23,7 +23,7 @@ number_checks: 766 checks, 766 ok, 0 known difference(s), 0 failed
   ok    spec: hero status: 30 ok
   ok    spec: hero answers start with the MoveDecision finding: 30 ok
   ok    spec: recommendation numbers (E10): 12 ok
-  ok    spec: worst case line (Low, always): 6 ok
+  ok    spec: the tile's first line (the Low case; in the Low view the Expected case): 6 ok
   ok    spec: the app carries it: 6 ok
   ok    spec: ledger (E11): 12 ok
   ok    spec: plan segments: 24 ok

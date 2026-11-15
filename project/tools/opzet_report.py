@@ -308,15 +308,15 @@ def p1_visuals():
     # F1 the margin (4.2): the margin after commissions with the commissions band stacked on it
     v += [k("c_f1_kicker", "F1 · THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)", lift=5)]
     v.append(f1_area(P1, "ch_f1_margin"))
-    v.append(note(P1, "c_f1_note", "F1 Note (text)", 4))  # review round 2: the staff-cost sentence is its fourth line, as F2's note has four
-    v.append(link_line(P1, "lnk_f1", "→ Page 2: revenue management and the kiosks."))
+    v.append(note(P1, "c_f1_note", "F1 Note (text)", 3))
+    v.append(link_line(P1, "lnk_f1", "On page 2: revenue management, and the kiosks for running costs."))  # review round 2 (UX-17: no arrow, it is not a link; INV-AC-3, J-IN-7: the move that acts on the larger cause)
 
     # F2 the middleman (4.3): two lines named at their ends, no legend and no value axis; the folio under it
     v += [k("c_f2_kicker", "F2 · THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)", "Alt F2 Title (text)", lift=5)]
     v.append(f2_ends(P1, "ch_f2_ota"))
     v.append(f2_folio_v10(P1, "tbl_f2_folio"))
     v.append(note(P1, "c_f2_note", "F2 Note (text)", 3))
-    v.append(link_line(P1, "lnk_f2", "→ Page 2: the booking app with member rates."))
+    v.append(link_line(P1, "lnk_f2", "On page 2: the booking app with member rates."))
 
     # F3 the fading welcome (4.4): label-safe values over the bars; a bar opens the band's detail
     v += [k("c_f3_kicker", "F3 · THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)", "Alt F3 Title (text)", lift=5)]
@@ -325,7 +325,7 @@ def p1_visuals():
     cnt["position"]["y"] -= 3  # the card centres its line 3 px under the comp's (stitched render)
     v.append(cnt)
     v.append(note(P1, "c_f3_note", "F3 Note (text)", 3))
-    v.append(link_line(P1, "lnk_f3", "→ Page 2: the refresh waits for the 2028 gate, and why."))
+    v.append(link_line(P1, "lnk_f3", "On page 2: the refresh waits for the 2028 gate, and why."))
 
     # F4 where we are full (4.5, doc 22 section 3): the note and link at the left, the three location-type rows, the
     # dot plot of the 50 hotels on the average diamonds, the seven names as text boxes
@@ -689,8 +689,8 @@ GLOSSARY = ((("Move", "one of the ten investments Goodnight Inn can make."),
              ("Capex", "the one-off investment a move takes; the brand's budget caps what a package may spend."),
              ("NPV", "net present value: benefits minus capex and disruption through 2032, in 2025 dollars at 8%."),
              ("Pays back by 2032", "the NPV through 2032 is zero or more."),
-             ("Cash positive", "from that year on, cumulative cash (the yearly net impact added up, not discounted) is above zero. It ends above NPV, which discounts each year at 8%."),
-             ("A year by 2032", "the operating profit a move adds in a full year once it is live, after its running costs, measured in 2032 (its run-rate)."),
+             ("Cash positive", "from that year on, cumulative cash (yearly net impact added up, not discounted) is above zero; it ends above NPV, which discounts at 8%."),
+             ("A year by 2032", "the operating profit a move adds in a full year once it is live, measured in 2032 (its run-rate)."),
              ("A year on cost", "a year by 2032 divided by capex (a yield).")),
             (("Tranche", "a part of the budget, funded by one Board decision."),
              ("The 2028 gate", "the Board meeting in mid-2028 that decides on the next tranche, by the rule on page 2."),
@@ -1116,7 +1116,7 @@ def hero_table():
     Status and NPV take their ink from the model (P-6: the word first, the colour second). No tooltip page."""
     ms = ("Move Answers (text)", "Move Status (text)", "Hero Yield Bar SVG", "Move Yield (text)", "Hero NPV Bar SVG", "Move NPV (text)")
     proj = [proj_col("InvestmentProjects", "Move Name", display="Move"), proj_mea(ms[0], "Answers"), proj_mea(ms[1], "Status"),
-            proj_mea(ms[2], "A year on cost"), proj_mea(ms[3], ZW), proj_mea(ms[4], "NPV through 2032"), proj_mea(ms[5], ZW * 2)]
+            proj_mea(ms[2], "A year on cost"), proj_mea(ms[3], "test 1"), proj_mea(ms[4], "NPV through 2032"), proj_mea(ms[5], "test 2")]  # review round 2 (CL-36): the two value columns name the tests the title counts; "test 1: above 8%, ..." did not fit the two marker slots
     refs = ["InvestmentProjects.Move Name", *[mref(m_) for m_ in ms]]
     colfmt = [{"properties": {"fontColor": color(INK2), "styleHeader": b(False), "styleValues": b(True)}, "selector": {"metadata": refs[1]}},
               *[{"properties": {"alignment": enum("Right"), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": refs[i]}} for i in (4, 6)]]
@@ -1140,8 +1140,8 @@ def p2_hero():
     s8, s0 = SLOT[P2]["lbl_hero_8"], SLOT[P2]["lbl_hero_0"]
     # the slot map carries the comp's computed x; the generator's own constants must give the same pixels
     assert s8["x"] == round(x8) and s0["x"] + s0["w"] == round(x0), (x8, x0, s8, s0)
-    lab8 = textbox("lbl_hero_8", *at(P2, "lbl_hero_8"), [[("test 1: above 8%, our cost of money", BODY, SPX, INK2, False)]], off_grid=True)
-    lab0 = textbox("lbl_hero_0", *at(P2, "lbl_hero_0"), [[("test 2: pays back by 2032 →", BODY, SPX, INK2, False)]], align="right", off_grid=True)
+    lab8 = textbox("lbl_hero_8", *at(P2, "lbl_hero_8"), [[("8%: our cost of money", BODY, SPX, INK2, False)]], off_grid=True)
+    lab0 = textbox("lbl_hero_0", *at(P2, "lbl_hero_0"), [[("pays back by 2032 →", BODY, SPX, INK2, False)]], align="right", off_grid=True)
     return [title(P2, "c_hero_title", "Hero Title (text)", lift=5), decorative(lab8, 40), decorative(lab0, 41), hero_table(),
             note(P2, "c_hero_caption", "Hero Caption (text)", 1)]  # review round 2: a measure (it names the moves over the budget left)
 
