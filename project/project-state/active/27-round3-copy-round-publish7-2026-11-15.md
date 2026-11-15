@@ -17,9 +17,9 @@ publishes, every Desktop window closed without saving).
 |---|---|---|---|
 | The copy round | done | 15 Nov | Seven lines, all in slots that exist. Engine: 142 of 142 texts, 809 of 809 numbers, alt texts 0 flags. Rendered in Low, Expected and High |
 | The publish copy | done | 15 Nov | `E:\GoodnightInn-publish`, open in a new window "Goodnight Inn", checked on its own model. Publish 6's copy kept as `E:\GoodnightInn-publish6` |
-| Publish 7 | Bjorn | | Replace the report "Goodnight Inn"; the link stays |
-| The gate and the walkthrough on publish 7 | after the publish | | `gate.py` against publish 6, `walk.py` |
-| The package for the last check | after the gate | | `deliverables/final-check-publish7/` |
+| Publish 7 | done (Bjorn) | 15 Nov | On the link since 2026-11-15T17:09:59 UTC |
+| The gate and the walkthrough on publish 7 | done | 15 Nov | **The gate passes on every check.** Against publish 6 only the seven lines differ; page 1 is equal to the pixel |
+| The package for the last check | done | 15 Nov | `deliverables/final-check-publish7/` (start at its README) |
 
 ---
 
@@ -138,3 +138,32 @@ link starts the gate when the new publish is on it (the cache took 20 to 25 minu
 High; no bubble over a tab; the pills clear at 1366 px; the keyboard walk without a nameless stop. Against publish 6
 only these may differ: the hero table (two headers, two status words), the tile's second line, tranche 3's label,
 the What waits table (rows B and tranche 3), the range under "Your plan".
+
+**Publish 7: the gate passed (Sun 15 Nov 2026, evening).**
+
+Bjorn published from the new window; the link served it at 18:57 local (`meta` 2026-11-15T17:09:59 UTC). `gate.py`
+with publish 6's run as the reference, the two tab-rest runs, and `walk.py`. Evidence:
+`deliverables/final-check-publish7/gate/` (the summary, the keyboard walk, eight captures) and
+`deliverables/final-check-publish7/walkthrough/` (the 23 views a judge can reach, zooms, every visible text).
+
+| Check | Publish 7 |
+|---|---|
+| The mouse at 1920 and 1366 px | clear on page 1, Recommended, What waits and Build |
+| A click on a mark or a row | only the clicked visual's own selection, as publish 6 |
+| The band of a clicked visual | unchanged in all ten places |
+| nl and de against en | equal (the three pairs listed differ by 0 pixels above the threshold, as before) |
+| The keyboard walk | page 1 30 stops, Recommended 29, What waits 18, Build 24, none without a name; the hero table and the selector by keys |
+| The bubble | none: the mouse rests on a tab at 1366 and at 1920 px and nothing lies over the pills; "Click here" occurs 0 times in the walk and in the page texts |
+| Against publish 6, pixel for pixel | **page 1 equal.** Recommended differs inside (447, 249) to (1833, 762): the status words, the two headers, the tile's second line, tranche 3's label. What waits inside (792, 290) to (1864, 586): the table. Build inside (1385, 389) to (1584, 405): the range. Nothing else |
+| The seven lines, read from the published page | all there, in Low, Expected and High, each on the line count of section 2; none of "carries it", "test 1", "test 2", "last renovated in 2021" on any view |
+| The words of earlier rounds | none of "desks", "RMS", "dataset units", "no NPV shown", "contest" on any page |
+
+*Left for Bjorn (step F of doc 25).*
+
+1. The `.pbix`: in the open window "Goodnight Inn" (the one publish 7 came from), File > Save as. The repository's
+   state of that publish is `30d23be` (the project files; later commits add documents only).
+2. A look on a phone (press and hold on a dot), the description (`final-check-publish7/DESCRIPTION-draft.md`) and the
+   cover image.
+3. The last check by Bjorn's own agent: `deliverables/final-check-publish7/README.md`. The link is not in the
+   repository; Bjorn gives it.
+4. `E:\GoodnightInn-publish4` and `E:\GoodnightInn-publish6` can go once the entry is submitted.

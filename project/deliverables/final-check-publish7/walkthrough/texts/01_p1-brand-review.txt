@@ -1,0 +1,315 @@
+Show keyboard shortcuts
+Show screen reader tips
+Skip to main content
+1 / 2 · THE WAKE-UP CALL
+· THE BRAND REVIEW
+Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome is fading.
+Goodnight Inn in 2025, against the three other Pillow & Key Group brands. For the Board: what is wrong, before page 2 says what to fund.
+Occupancy
+Operating margin after commissions
+Room revenue booked through online agencies
+Guest quality: net promoter score (−100 to +100)
+79.4%
+33.7%
+50.0%
++3.3
+best of 4, the others 64.7% to 72.9%
+2nd of 4, −2.8 pt since 2023
+highest of 4, 33.0% in 2021
+still positive, but falling every year, last of 4
+ⓘ
+Hover a bar
+F1
+· THE MARGIN
+F2
+· THE MIDDLEMAN
+F3
+· THE FADING WELCOME
+After commissions, the margin fell 2.8 points since 2023
+Online agencies now book 50% of room revenue, up from 33%
+Hotels last renovated 10 years or more ago score NPS −4.9
+30%
+35%
+40%
+45%
+50%
+2021
+2022
+2023
+2024
+2025
+After commissions
+5 years or less
+6 to 9 years
+10 years or more
++6.8
++3.8
+−4.9
+2021
+2022
+2023
+2024
+2025
+33%
+50%
+27%
+Goodnight Inn
+The other three brands
+Before commissions
+Commissions
+Scroll up
+Scroll down
+Scroll left
+Scroll right
+Row Selection
+One room night, 2025
+Via an online agency
+Direct, web and app
+Select Row
+The guest pays
+$109.31
+$111.56
+Select Row
+Commission and fees
+−$19.68
+−$4.46
+Select Row
+Goodnight Inn keeps
+$89.63
+$107.10
+44 of 50 hotels; 6 have no renovation date.
+Since 2018 Goodnight Inn spent $1.0M per hotel on renovation; the other brands spent $5.9M to $7.9M. None has started since 2020. Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause.
+Commissions took 1.0 of those points and running costs 1.8 (staff rose from 26.9% to 28.3% of revenue). Room rates rose 2.7%, in line with the other brands, so no price premium absorbs it.
+Booked direct, the guest pays $2.25 more and we keep $17.47 more. Nothing rewards the guest for booking direct; member rates change that. At the 2021 channel mix, 2025 commissions would be $4.8M lower.
+On page 2: revenue management, and the kiosks for running costs.
+On page 2: the booking app with member rates.
+On page 2: the refresh waits for the 2028 gate, and why.
+ⓘ
+Hover a hotel
+F4
+· WHERE WE ARE FULL
+Our airports run fullest: five of the seven fullest hotels are airports
+60%
+65%
+70%
+75%
+80%
+85%
+90%
+95%
+90%
+60%
+65%
+70%
+75%
+80%
+85%
+90%
+95%
+Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none.
+Airport ◆
+82.0%
+Phoenix
+Toronto
+Orlando
+Gatwick, Montréal
+City ◆
+79.1%
+Kuala Lumpur
+On page 2: kiosks at the 20 busiest hotels; extensions decided at the 2028 gate.
+Kansas City
+Highway ◆
+77.5%
+Kingston
+Source: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Guest scores weighted by survey responses; 2021 is a depressed base year.
+Next: what we fund, and why →
+ⓘ Definitions
+-
++
+100%
+Microsoft Power BI
+1
+of
+2
+M
+Report Zoomed To 100%
+aria: The Brand Review
+aria: Show keyboard shortcuts
+aria: Show screen reader tips (opens in new tab)
+aria: Skip to main content
+aria: Power BI Report
+aria: Power BI Report
+aria:  Goodnight Inn
+aria:  Page 1 of 2, the wake-up call: the brand review
+aria:  Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome is fading.
+aria: Card
+aria: Headline P1 (text), Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome is fading. card
+aria:  Goodnight Inn in 2025, against the three other Pillow & Key Group brands. For the Board: what is wrong, before page 2 says what to fund.
+aria: Card
+aria: Subtitle P1 Briefing (text), Goodnight Inn in 2025, against the three other Pillow & Key Group brands. For the Board: what is wrong, before page 2 says what to fund. card
+aria:  Goodnight Inn occupancy in 2025: 79.4%, best of 4, the others 64.7% to 72.9%.
+aria: Card
+aria: KPI Occupancy GI (text), 79.4% card
+aria:  Goodnight Inn operating margin after commissions in 2025: 33.7%, 2nd of 4, −2.8 pt since 2023.
+aria: Card
+aria: KPI Margin after GI (text), 33.7% card
+aria:  Share of Goodnight Inn room revenue booked through online agencies in 2025: 50.0%, highest of 4, 33.0% in 2021.
+aria: Card
+aria: KPI OTA GI (text), 50.0% card
+aria:  Guest quality: Goodnight Inn net promoter score in 2025: +3.3, still positive, but falling every year, last of 4, from +8.5 in 2021; the others +14.7 to +31.9.
+aria: Card
+aria: KPI NPS GI (text), +3.3 card
+aria: Card
+aria: KPI Occupancy Context (text), best of 4, the others 64.7% to 72.9% card
+aria: Card
+aria: KPI Margin after Context (text), 2nd of 4, −2.8 pt since 2023 card
+aria: Card
+aria: KPI OTA Context (text), highest of 4, 33.0% in 2021 card
+aria: Card
+aria: KPI NPS Context (text), still positive, but falling every year, last of 4 card
+aria:  F1, the margin. After commissions, the margin fell 2.8 points since 2023
+aria: Card
+aria: F1 Title (text), After commissions, the margin fell 2.8 points since 2023 card
+aria:  F2, the middleman. Online agencies now book 50% of room revenue, up from 33%
+aria: Card
+aria: F2 Title (text), Online agencies now book 50% of room revenue, up from 33% card
+aria:  F3, the fading welcome. Hotels last renovated 10 years or more ago score NPS −4.9
+aria: Card
+aria: F3 Title (text), Hotels last renovated 10 years or more ago score NPS −4.9 card
+aria:  After commissions, Goodnight Inn's operating margin rose from 32.5% in 2021 to 36.5% in 2023 and fell back to 33.7% in 2025. The gap to the margin before commissions grew from 8.4 to 10.6 points.
+aria: 30%
+aria: 35%
+aria: 40%
+aria: 45%
+aria: 50%
+aria: Year
+aria: Forecast area
+aria: Plot area
+aria: 2021 32%.
+aria: Series labels
+aria:  Goodnight Inn's 2025 net promoter score by years since the last renovation: 5 years or less +6.8, 6 to 9 years +3.8, 10 years or more −4.9. Hovering a bar shows that band's occupancy, revenue per room, its NPS since 2021 and its weakest guest scores.
+aria: Years since the last renovation
+aria: Plot area
+aria: NPS 2025
+aria: 6.7547715999111535
+aria: 3.7858372575826618
+aria: -4.887166138524221
+aria: Series labels
+aria:  Online agencies booked 50.0% of Goodnight Inn's room revenue in 2025, up from 33.0% in 2021. The other brands in 2025: Maison d'Or 23.2%, P&K Select 24.2%, Pebble & Pine 35.9%.
+aria: Year
+aria: Forecast area
+aria: Plot area
+aria: 2021 33%.
+aria: Series labels
+aria:  One Goodnight Inn room night in 2025. Via an online agency the guest pays $109.31, fees take $19.68, the inn keeps $89.63. Booked direct: $111.56, fees $4.46, the inn keeps $107.10.
+aria: Can be sorted
+aria: Can be sorted
+aria: Can be sorted
+aria:  44 of 50 hotels; 6 have no renovation date.
+aria: Card
+aria: F3 Count (text), 44 of 50 hotels; 6 have no renovation date. card
+aria:  Since 2018 Goodnight Inn spent $1.0M per hotel on renovation; the other brands spent $5.9M to $7.9M. None has started since 2020. Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause.
+aria: Card
+aria: F3 Note (text), Since 2018 Goodnight Inn spent $1.0M per hotel on renovation; the other brands spent $5.9M to $7.9M. None has started since 2020. Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause. card
+aria:  Commissions took 1.0 of those points and running costs 1.8 (staff rose from 26.9% to 28.3% of revenue). Room rates rose 2.7%, in line with the other brands, so no price premium absorbs it.
+aria: Card
+aria: F1 Note (text), Commissions took 1.0 of those points and running costs 1.8 (staff rose from 26.9% to 28.3% of revenue). Room rates rose 2.7%, in line with the other brands, so no price premium absorbs it. card
+aria:  Booked direct, the guest pays $2.25 more and we keep $17.47 more. Nothing rewards the guest for booking direct; member rates change that. At the 2021 channel mix, 2025 commissions would be $4.8M lower.
+aria: Card
+aria: F2 Note (text), Booked direct, the guest pays $2.25 more and we keep $17.47 more. Nothing rewards the guest for booking direct; member rates change that. At the 2021 channel mix, 2025 commissions would be $4.8M lower. card
+aria:  On page 2: revenue management, and the kiosks for running costs.
+aria:  On page 2: the booking app with member rates.
+aria:  On page 2: the refresh waits for the 2028 gate, and why.
+aria:  F4, where we are full. Our airports run fullest: five of the seven fullest hotels are airports
+aria: Card
+aria: F4 Title (text), Our airports run fullest: five of the seven fullest hotels are airports card
+aria: Plot area
+aria: (0.8198958656170582, 3)
+aria: (0.7911167558740815, 2)
+aria: (0.7745646411850677, 1)
+aria: Series labels
+aria:  The 7 fullest Goodnight Inn hotels in 2025, 5 of them airports: Toronto Pearson Airport 91.9%, London Gatwick Airport 90.4%, Montréal-Trudeau Airport 90.2%, Phoenix Airport 88.5%, Kansas City 87.4%, Kuala Lumpur 86.5%, Orlando Airport 85.2%.
+aria: Plot area
+aria: (0.6384528605962934, 0.7)
+aria: (0.8334507501630789, 2.7)
+aria: (0.8172519717725197, 2.7)
+aria: (0.7825653798256538, 1.3)
+aria: (0.7799279019466474, 0.7)
+aria: (0.7891019786910198, 0.7)
+aria: (0.778513906185139, 2)
+aria: (0.8163861709067188, 0.7)
+aria: (0.777662100456621, 2.7)
+aria: (0.7526276463262764, 0.7)
+aria: (0.7715525114155252, 1.3)
+aria: (0.7572602739726028, 3.3)
+aria: (0.7497135740971358, 2.7)
+aria: (0.8046932698034545, 3)
+aria: (0.6348554033485541, 1.3)
+aria: (0.8405251141552511, 1.3)
+aria: (0.8741813437703848, 1)
+aria: (0.6122540473225405, 1)
+aria: (0.7925280199252802, 1.7)
+aria: (0.8645988258317026, 2)
+aria: (0.8179310344827586, 1.3)
+aria: (0.8261969993476843, 1.7)
+aria: (0.9037842465753425, 2.7)
+aria: (0.803429076447194, 0.7)
+aria: (0.8246286950252343, 0.7)
+aria: (0.7600210748155953, 2.7)
+aria: (0.7493239063190456, 1.3)
+aria: (0.7641946150212565, 1.3)
+aria: (0.9024834290764472, 3.3)
+aria: (0.7529041095890411, 2.7)
+aria: (0.8099867432611577, 0.7)
+aria: (0.7656454960564549, 0.7)
+aria: (0.8522291407222914, 3)
+aria: (0.8139081385979049, 1.7)
+aria: (0.711917808219178, 2)
+aria: (0.8156413449564135, 3.3)
+aria: (0.8007827788649706, 2.3)
+aria: (0.8853549190535492, 3)
+aria: (0.766807804068078, 2.3)
+aria: (0.7548387096774194, 2.3)
+aria: (0.8195068493150685, 2.3)
+aria: (0.7645053272450533, 1.7)
+aria: (0.808310502283105, 1.3)
+aria: (0.8480697384806973, 0.7)
+aria: (0.789634703196347, 1.3)
+aria: (0.7688219178082192, 3.3)
+aria: (0.8325636007827789, 3.3)
+aria: (0.7524592302674494, 3.3)
+aria: (0.9188127853881278, 3)
+aria: (0.8162557077625571, 1.3)
+aria: Series labels
+aria:  Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none.
+aria: Card
+aria: F4 Note (text), Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none. card
+aria:  Goodnight Inn occupancy in 2025 by location type: airport hotels 82.0%, city hotels 79.1%, highway hotels 77.5%.
+aria: Card
+aria: Occupancy Airport GI (text), 82.0% card
+aria: Card
+aria: Occupancy City GI (text), 79.1% card
+aria:  On page 2: kiosks at the 20 busiest hotels; extensions decided at the 2028 gate.
+aria: Card
+aria: Link F4 (text), On page 2: kiosks at the 20 busiest hotels; extensions decided at the 2028 gate. card
+aria: Card
+aria: Occupancy Highway GI (text), 77.5% card
+aria:  Source: Pillow & Key Group dataset. Guest scores weighted by survey responses; 2021 is a depressed base year.
+aria: Page navigation  Next what we fund and why: page 2, The Investment Strategy
+aria:  Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a move adds in a full year. A year on cost: that profit over capex. Tranche: a part of the budget, one Board decision.
+aria: Card
+aria: Chip Definitions (text), ⓘ Definitions card
+aria: Zoom Out
+aria: Zoom In
+aria: Zoom level. Click to open the Zoom dialog box
+aria: Fit to page
+aria: Microsoft Power BI (Opens in new tab)
+aria: Previous Page
+aria: Next Page
+aria: The Brand Review
+aria: The Investment Strategy
+aria: Share via Facebook
+aria: Share via Twitter
+aria: Share via LinkedIn
+aria: Share
+aria: Open in full-screen mode

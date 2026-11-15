@@ -3,9 +3,9 @@
 **For:** the agent (or person) Bjorn asks to check his contest entry one last time. You need nothing but this folder
 and, if Bjorn gives it to you, the public link of the report.
 
-**Status of this folder: waiting for publish 7.** The report's seventh publish is prepared and checked in Power BI
-Desktop; Bjorn has to publish it. Until `walkthrough/` and `gate/` exist in this folder, the evidence of publish 7 is
-not here yet and the check cannot start.
+**Status of this folder: complete (15 Nov 2026, evening).** Publish 7 is on the public link since
+2026-11-15T17:09:59 UTC and passed the technical gate on every check (`gate/gate-summary.txt`). It is the version
+that will be submitted. What is still open is in "What nobody has checked yet" below.
 
 ## What this is
 
@@ -40,9 +40,21 @@ Check that the published report is what it should be, and tell Bjorn **go** or *
 | `CHANGES-publish7.md` | The seven lines, before and after, per scenario; and what was left on purpose |
 | `REVIEWS-round3.md` | Where the five reviewers stood on publish 6, in one page, with links to their full reviews |
 | `DESCRIPTION-draft.md` | A draft of the gallery post's description, for Bjorn to edit |
-| `walkthrough/` | *(after the publish)* The published report as a judge gets it: 23 captures in click order, zooms, and every visible text and alt text per view. Its README lists the views |
-| `gate/` | *(after the publish)* The technical check of the published link: mouse, keyboard, clicks, Dutch and German browsers, and a pixel comparison with publish 6 |
+| `walkthrough/` | The published report as a judge gets it: 23 captures in click order, zooms, and every visible text and alt text per view. Its README lists the views |
+| `gate/` | The technical check of the published link: mouse, keyboard, clicks, Dutch and German browsers, and a pixel comparison with publish 6 |
 | `checks/` | The three check reports of the build: every text against the approved wording, every number against the organisers' workbook, every alt text |
+
+## What nobody has checked yet
+
+These are the places where your check adds most, because no reviewer and no script has seen them:
+
+- **The live report in a real browser.** Every review read captures; the gate drove a headless browser.
+- **Touch.** On a phone or tablet a tooltip opens on press and hold, not on a tap.
+- **A real screen reader.** Only the text handed to one was checked (`walkthrough/texts/`, the lines starting `aria:`).
+- **The scenario pills by keyboard**, and whether Tab reaches "Next: what we fund, and why" and "Definitions" on
+  page 1 (the scripted walk stops after 30 key presses).
+- **The package tooltip on B**, and combinations in Build your own beyond the five captured.
+- **The submission post itself:** image, description, link or `.pbix`, contest tag.
 
 ## Where the rest is (same repository, branch `rebuild-finalv3`)
 
