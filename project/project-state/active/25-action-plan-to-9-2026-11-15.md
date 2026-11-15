@@ -22,7 +22,7 @@ publish 5: say which one.
 | B | The copy round | done | 15 Nov | (this commit) | 24 of the 26 sheet lines built; engine: 142 of 142 texts equal the spec in Low, Expected, High and the empty Build state, 766 number checks, alt texts 0 flags; six views rendered. Four lines changed for fit or for a reason (see the log): the tests are named in the table's headers, the staff-cost point stands in F1's forward line, F3's note and the selector footer keep their old words. **The word target is missed on Recommended: about 2 % fewer words, not 20 %** (What waits: 14 %). Bjorn decides whether a block goes (log, open items) |
 | C | The plan chart, and the kiosk evidence | done | 15 Nov | (this commit) | The three end labels are cards right of the line ends, the chart's own labels are off; caption (sheet line 14) in the row above the plot; "Hover a year" on the chart; the complaint fact in the model and in ledger row F4 (sheet line 12). Engine: 142 of 142 texts, 776 of 776 numbers (the complaint rise against the workbook), alt texts 0 flags; Recommended rendered in Low, Expected and High. Three things to look at on publish 5 (log). Recommended carries 19 words more |
 | D | Page 1 and the hero | done | 15 Nov | (this commit) | Sheet lines 28, 30, 31 and 32 built as written (29 was done in step B); the hero's NPV bars in Coffee Blue for package A and the kit's light neutral for the rest. Engine: 142 of 142 texts, 806 of 806 numbers, alt texts 0 flags; `a11y_check` 0; the greyscale test passes in Low, Expected and High (A's bars grey 116, every other bar 196). **One item not built:** Orlando's name stays under its dot; left of the dot it touches another hotel's dot (log) |
-| E | Proof and publish 5 (Bjorn publishes) | blocked | 15 Nov | (this commit) | **Publish 5 is on the link (15 Nov 10:40 UTC) and passes the gate but for one thing: the bubble "Click here to follow" is still there. Fixed in the generators and proven in Desktop; waits for Bjorn's publish 6** (log: "after publish 5"). Done before publish 5: engine checks on the publish window's own model (142 of 142 texts, 806 of 806 numbers, alt texts 0 flags), the 17 renders that changed (`FinalV3-round2/`), the old window closed without saving, a fresh publish copy open in a freshly opened window, the keyboard walk added to `gate.py` and tried on publish 4. After the publish: `gate.py` and `walk.py` (log) |
+| E | Proof and publish 5 (Bjorn publishes) | done | 15 Nov | (this commit) | **Publish 6 is the published report (15 Nov 12:37 UTC) and passes the gate on every check.** Publish 5 passed all but one (the bubble "Click here to follow"); publish 6 carries its fix, the year tooltip's new banner and a 2 px move of one label. The mouse is clear at 1920 and at 1366 px on all four views, no stop of the keyboard walk is without a name, no button's name ends in "Click here to follow". Evidence: `PublishToWeb-2026-11-15-publish6/`, `Committee-walkthrough-2026-11-15/` |
 | F | Submission (Bjorn) | todo | | | |
 
 Status values as in doc 23: `todo`, `doing`, `done`, `blocked`.
@@ -555,3 +555,36 @@ at 1366 px, no "Click here to follow" in `keys2_walk.txt`, the tooltip's new ban
 1. Step E stays `blocked` until publish 6 is on the link and through the gate.
 2. `walk.py` (the committee's walkthrough) runs after publish 6, not on publish 5.
 3. The word count of Recommended: unchanged, Bjorn's call (step B's open item 1).
+
+**Step E, publish 6: the gate passed (Sun 15 Nov 2026).**
+
+Bjorn published at 13:47 local from the new window; the link served it 25 minutes later (`meta`
+2026-11-15T12:37:45 UTC). `gate.py` with publish 5's run as the reference, the tab-rest captures at 1366 and 1920 px,
+and `walk.py`. Evidence: `deliverables/screenshots/PublishToWeb-2026-11-15-publish6/` (the gate's summary, the
+keyboard walk, seven captures) and `deliverables/screenshots/Committee-walkthrough-2026-11-15/` (the 23 views a judge
+can reach, zooms, every visible text).
+
+| Check | Publish 6 |
+|---|---|
+| The bubble | **gone.** With the mouse resting on a tab after the click, nothing lies over the pills at 1366 px or above the tab at 1920 px (captures 05 and 06) |
+| The mouse at 1920 and 1366 px | clear on page 1, Recommended, What waits and Build: for the first time on every view at both sizes |
+| A button's spoken name | none of the 24 link stops of the walk ends in "Click here to follow" (publish 5: 21 did) |
+| The keyboard walk | page 1 30 stops, Recommended 29, What waits 18, Build 24, none without a name; the hero table and the selector as on publish 5 |
+| Click and band tests, nl and de against en | as publish 5: pass |
+| Against publish 5, pixel for pixel | Recommended in Low, Expected and High, Build with a tile clicked, the 1366 px view: **equal**. Different, and meant to be: page 1 in the 142 x 12 px of "Before commissions", and the strip above a tab where the bubble stood |
+| The year tooltip | "CUMULATIVE CASH, $M · NOT DISCOUNTED" on one line (capture 07) |
+
+*Done-when of step E:* the gate passes; no bubble over a tab at 1366 px; the two typed ticks in line with Power BI's
+own; "cash" and "not discounted" on every cumulative chart: all met. **Not met: Recommended at or under 280 words**
+(step B's open item 1: with every block kept the copy round took about 2 % off, and steps C and D added the caption
+and the complaint clause; a block is Bjorn's call and none was cut).
+
+*Left for step F (Bjorn).*
+
+1. The `.pbix`: in the open window "Goodnight Inn" (the one publish 6 came from), File > Save as. The repository's
+   state of that publish is `6227d6f`.
+2. A look on a phone (press and hold on a dot: the touch emulation cannot show it), the description ("best viewed
+   full screen") and the cover image with the 456-package chart (J-CI-4).
+3. Still open to a veto before the submission: the light neutral of the NPV panel's other bars (`NEUTRAL_LIGHT`), and
+   a block out of Recommended.
+4. `E:\GoodnightInn-publish4` (publish 4's copy) can go.
