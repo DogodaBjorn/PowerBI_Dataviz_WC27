@@ -402,7 +402,13 @@ def chip_native(page, name, text_measure, tooltip_page, alt_measure):
 # with an action ("Click here to follow", in the browser's language; at 1366 px it hung over the scenario pills after a
 # click on a tab). The Action card has a switch for it, "No tooltips": visualLink.suppressDefaultTooltip (boolean, in
 # visualConfiguration 2.6.0 and in reportThemeSchema 2.159 under that title). Every button carries it.
-NO_BUBBLE = {"suppressDefaultTooltip": b(True)}
+# Publish 5 (15 Nov) still showed the bubble. The service's own code (reportEmbed.min.js, updateVisualLinkProperties)
+# reads it this way: with its feature switch showDefaultTooltip on, the tooltip shows when visualLink.showDefaultTooltip
+# is not false (default on), and suppressDefaultTooltip is only read with the switch off (an upgrader turns the old
+# property into the new one for reports of an older version, not for ours). So both are written: showDefaultTooltip
+# false for the service as it is, suppressDefaultTooltip true for a renderer without the switch. Both are in
+# visualConfiguration 2.6.0 (VisualLink) and in the 2.159 theme schema ("Show tooltips", "No tooltips").
+NO_BUBBLE = {"suppressDefaultTooltip": b(True), "showDefaultTooltip": b(False)}
 
 
 def nav_button(page, name, label, target, alt):
@@ -447,7 +453,7 @@ def f1_area(page, slot):
             "labels": [{"properties": {"show": b(False)}}],
             # review round 2, step D (sheet line 32; UX-19, CL-18): the band's own series label stood at the end of the top
             # line and read as that line's name ("commissions are 45 %?"). It is off; f1_labels() names the top line and
-            # the band. The series keeps its name "Commissions" for the tooltip, where the value is the band's height.
+            # the band. (The chart has no tooltip: only the charts with a hover tag open one, P-7.)
             "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2),
                                              "textSize": num(S), "seriesFontFamily": text(BODY), "enableBackground": b(False), "leaderLines": b(False)}},
                              {"properties": {"show": b(False)}, "selector": {"metadata": mref(ms[1])}}],
@@ -463,9 +469,9 @@ def f1_labels(page):
     """Review round 2, step D (sheet line 32): the two typed names of the F1 chart. "Before commissions" stands at the right
     end of the top line, in Dusk like the chart's own "After commissions"; "Commissions" stands inside the band. Static
     text boxes (P1 does not follow the scenario, so the lines never move), decorative and out of the tab order: the
-    chart's alt text names both. They lie inside the chart's rect, so mouse_order() puts them under the chart (the chart has
-    no fill; a hover anywhere in the plot still opens the year). The band is Warm Grey at 30 % over the label, so
-    "Commissions" is Night: under the band it reads #37424F on #DDDBD8, 7.4:1 (Dusk would be 4.3:1)."""
+    chart's alt text names both. They lie inside the chart's rect and under the chart in z (the layering file; the chart
+    has no fill and, like every chart without a hover tag, no tooltip). The band is Warm Grey at 30 % over the label, so
+    "Commissions" is Night: under the band it reads #384151 on #DDDBD8, 7.4:1 as drawn (Dusk would be 4.3:1)."""
     spec = json.loads((ROOT / "project" / "design-prototypes" / "rebuild-v10-spec.json").read_text(encoding="utf-8"))["text"]["P1"]
     assert all(spec[name] == words_ for name, words_, _ in F1_LABELS), "the F1 labels are typed here and in the spec: keep them equal"
     out = []
@@ -756,7 +762,7 @@ def year_page_visuals():
              labels=["Low case", "Expected case", "High case"])
     al = card("tty_all_nums", *at(pg, "tty_all_nums"), ["TT Year A (text)", "TT Year B (text)", "TT Year C (text)", "TT Year Plan (text)"], DISPLAY, 18, INK, BODY, S, INK2,
               labels=["A", "B", "C", "Your plan"])
-    return [night_kicker(pg, "tty_kicker", "CUMULATIVE NET IMPACT, $M"),
+    return [night_kicker(pg, "tty_kicker", "CUMULATIVE CASH, $M · NOT DISCOUNTED"),  # 15 Nov, Bjorn: one name with the three charts it opens on (DS2-01)
             dyn(pg, "tty_title", "TT Year Title (text)", size=TITLE_PT, colour=TT_TITLE, font=DISPLAY),
             tb(pg, "tty_a_title", "A in the three cases", font=DISPLAY, size=SPX, colour=INK),
             bind_alt(a, "Alt TT Year A (text)"),

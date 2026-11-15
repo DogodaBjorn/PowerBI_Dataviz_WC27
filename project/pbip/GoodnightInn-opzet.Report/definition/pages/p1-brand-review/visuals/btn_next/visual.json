@@ -432,6 +432,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "showDefaultTooltip": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         }

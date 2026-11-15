@@ -46,7 +46,6 @@ if RUN == "p1":
     hover("p1_tt_glossary", 1816, 1058)
     hover("p1_tag_f3", 1792, 338)
     hover("p1_header_f1", 300, 520)
-    hover("p1_tt_f1_band_label", 286, 483)   # review round 2, step D: the word "Commissions" lies under the chart, the year must open on it
 elif RUN == "p2":
     click(NEXT, 7000); shot("p2_rec_expected"); steps.append({"op": "texts", "out": f("p2_rec_expected.txt")})
     hover("p2_tt_chip_a", 1132, 200)

@@ -1532,9 +1532,9 @@ m("TT Year Plan (text)", 'IF ( [Build Count] = 0, "none yet", ' + sfm("[Build Cu
   "Year tooltip: the plan being built, cumulative net impact to the end of the hovered year, case in view; 'none yet' before a move is picked.")
 m("TT Year Title (text)", "VAR y = MAX ( 'Date'[Year] ) RETURN \"At the end of \" & y", TXT, C9, "Year tooltip title: the hovered year.")
 m("TT Year All Title (text)", 'VAR s = [Selected Scenario] RETURN "A, B, C and your plan in the " & s & " case"', TXT, C9, "Year tooltip, second card's title: the case in view.")
-alt_m("TT Year A", 'VAR y = MAX ( \'Date\'[Year] ) RETURN "Package A, cumulative net impact to the end of " & y & ": Low " & [TT Year A Low (text)] & ", Expected " & [TT Year A Expected (text)] & ", High " & [TT Year A High (text)] & "."',
+alt_m("TT Year A", 'VAR y = MAX ( \'Date\'[Year] ) RETURN "Package A, cumulative cash, not discounted, to the end of " & y & ": Low " & [TT Year A Low (text)] & ", Expected " & [TT Year A Expected (text)] & ", High " & [TT Year A High (text)] & "."',
       "The year tooltip's first card read aloud.")
-alt_m("TT Year All", 'VAR y = MAX ( \'Date\'[Year] ) VAR s = [Selected Scenario] RETURN "Cumulative net impact to the end of " & y & ", " & s & " case: A " & [TT Year A (text)] & ", B " & [TT Year B (text)] & ", C " & [TT Year C (text)] & ", your plan " & [TT Year Plan (text)] & "."',
+alt_m("TT Year All", 'VAR y = MAX ( \'Date\'[Year] ) VAR s = [Selected Scenario] RETURN "Cumulative cash, not discounted, to the end of " & y & ", " & s & " case: A " & [TT Year A (text)] & ", B " & [TT Year B (text)] & ", C " & [TT Year C (text)] & ", your plan " & [TT Year Plan (text)] & "."',
       "The year tooltip's second card read aloud.")
 for k in "BC":
     m(f"Preset {k} Payback (text)", f'VAR f = [Preset {k} Package] VAR pb = [Preset {k} Payback Year] RETURN IF ( ISBLANK ( f ), BLANK (), IF ( ISBLANK ( pb ), "Not cash positive by 2032 in the ", "Cash positive from " & pb & " in the " ) & [Selected Scenario] & " case" )',
@@ -1792,7 +1792,7 @@ for k in "BC":
           f"Package {k}'s waterfall read aloud.")
 alt_m("Cmp Alts",
       f"VAR s = [Selected Scenario] VAR a32 = {CUM32('A')} VAR b32 = {CUM32('B')} VAR c32 = {CUM32('C')} "
-      'RETURN "Cumulative net impact 2027 to 2032 against A, " & s & " case, by 2032: A " & ' + sfm("a32") + ' & ", B " & ' + sfm("b32") + ' & ", C " & ' + sfm("c32") + ' & "."',
+      'RETURN "Cumulative cash, not discounted, 2027 to 2032 against A, " & s & " case, by 2032: A " & ' + sfm("a32") + ' & ", B " & ' + sfm("b32") + ' & ", C " & ' + sfm("c32") + ' & "."',
       "The alts comparer read aloud: the three 2032 end points.")
 alt_m("You Nums", BIDS + 'RETURN IF ( n = 0, "Your plan: nothing picked yet. " & [Build Valid (text)], "Your plan, " & [Selected Scenario] & " case: capex " & [Build Capex (text)] '
       '& ", net present value through 2032 " & [Build NPV (text)] & ", " & [Build Run-rate (text)] & " a year by 2032, " & [Build A Year on Cost (text)] & " a year on cost. Between the Low and High cases: " '
@@ -1812,8 +1812,8 @@ alt_m("Build Waterfall", BIDS + shown_parts("[NPV @ 8%]") +
       "The build waterfall read aloud.")
 alt_m("Cmp Build",
       BIDS + f"VAR s = [Selected Scenario] VAR a32 = {CUM32('A')} VAR y32 = CALCULATE ( [Build Cumulative Net (sel)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2032 ) "
-      'RETURN IF ( n = 0, "Cumulative net impact of A 2027 to 2032, " & s & " case, ends at " & ' + sfm("a32") + ' & "; pick moves to add your plan.", '
-      '"Cumulative net impact 2027 to 2032, " & s & " case, by 2032: your plan " & ' + sfm("y32") + ' & ", A " & ' + sfm("a32") + ' & "." )',
+      'RETURN IF ( n = 0, "Cumulative cash of A, not discounted, 2027 to 2032, " & s & " case, ends at " & ' + sfm("a32") + ' & "; pick moves to add your plan.", '
+      '"Cumulative cash, not discounted, 2027 to 2032, " & s & " case, by 2032: your plan " & ' + sfm("y32") + ' & ", A " & ' + sfm("a32") + ' & "." )',
       "The build comparer read aloud.")
 
 # ================================================================ FinalV3 storytelling rebuild: model foundations
