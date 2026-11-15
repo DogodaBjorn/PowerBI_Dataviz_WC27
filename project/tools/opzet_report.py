@@ -297,17 +297,19 @@ def p1_visuals():
          dyn(P1, "c_subtitle", "Subtitle P1 Briefing (text)", size=S, colour=ZONE_MUTED)]
 
     # the KPI band: four cells in one card; values are text measures, one formatter with the context line (REVIEW M7).
-    # R-P1-2: each label leads with the code of the finding it belongs to.
-    v += kpi_cell("kpi_occ", "Occupancy", "KPI Occupancy GI (text)", "KPI Occupancy Context (text)", "Alt KPI Occupancy (text)", "KPI Occupancy Context Color", "F4")
-    v += kpi_cell("kpi_margin", "Operating margin after commissions", "KPI Margin after GI (text)", "KPI Margin after Context (text)", "Alt KPI Margin after (text)", "KPI Margin after Context Color", "F1")
-    v += kpi_cell("kpi_ota", "Room revenue booked through online agencies", "KPI OTA GI (text)", "KPI OTA Context (text)", "Alt KPI OTA (text)", "KPI OTA Context Color", "F2")
+    # Review round 2, step D (sheet line 28, D6): the labels no longer lead with a finding's code (the row read F4, F1, F2,
+    # F3 above cards that count F1 to F4: UX-22, J-IN-10, CL-32); the words and the cards below map them.
+    v += kpi_cell("kpi_occ", "Occupancy", "KPI Occupancy GI (text)", "KPI Occupancy Context (text)", "Alt KPI Occupancy (text)", "KPI Occupancy Context Color")
+    v += kpi_cell("kpi_margin", "Operating margin after commissions", "KPI Margin after GI (text)", "KPI Margin after Context (text)", "Alt KPI Margin after (text)", "KPI Margin after Context Color")
+    v += kpi_cell("kpi_ota", "Room revenue booked through online agencies", "KPI OTA GI (text)", "KPI OTA Context (text)", "Alt KPI OTA (text)", "KPI OTA Context Color")
     # plan 09 R2: NPS as a guest-quality signal, not the brand's one number (Keiningham et al. 2007; CREDITS.md).
-    v += kpi_cell("kpi_nps", "Guest quality: net promoter score (−100 to +100)", "KPI NPS GI (text)", "KPI NPS Context (text)", "Alt KPI NPS (text)", "KPI NPS Context Color", "F3")
+    v += kpi_cell("kpi_nps", "Guest quality: net promoter score (−100 to +100)", "KPI NPS GI (text)", "KPI NPS Context (text)", "Alt KPI NPS (text)", "KPI NPS Context Color")
 
     k = lambda name, txt: kicker(P1, name, txt, code_colour=INK, sep=" · ")  # noqa: E731  (R-G3: the code in Night)
     # F1 the margin (4.2): the margin after commissions with the commissions band stacked on it
     v += [k("c_f1_kicker", "F1 · THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)", lift=5)]
     v.append(f1_area(P1, "ch_f1_margin"))
+    v += f1_labels(P1)
     v.append(note(P1, "c_f1_note", "F1 Note (text)", 3))
     v.append(link_line(P1, "lnk_f1", "On page 2: revenue management, and the kiosks for running costs."))  # review round 2 (UX-17: no arrow, it is not a link; INV-AC-3, J-IN-7: the move that acts on the larger cause)
 
@@ -330,7 +332,9 @@ def p1_visuals():
     # F4 where we are full (4.5, doc 22 section 3): the note and link at the left, the three location-type rows, the
     # dot plot of the 50 hotels on the average diamonds, the seven names as text boxes
     v += [k("c_f4_kicker", "F4 · WHERE WE ARE FULL"), title(P1, "c_f4_title", "F4 Title (text)", "Alt F4 Title (text)", lift=5)]
-    v.append(note(P1, "c_f4_note", "F4 Note (text)", 2))
+    # review round 2, step D (sheet line 30): the note leads with Toronto's months and takes a third line; the forward line
+    # under it stands 24 px lower in the slot map
+    v.append(note(P1, "c_f4_note", "F4 Note (text)", 3))
     # the number of kiosk hotels comes from the model (a11y_check: no typed number but a year), so this link is a card
     v.append(note(P1, "lnk_f4", "Link F4 (text)", 2, colour=INK))
     v += f4_rows(P1, "c_f4_rows")
@@ -441,11 +445,34 @@ def f1_area(page, slot):
             "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, start=0.3, end=0.5, extra={"labelPrecision": integer(0)}),
             "legend": legend(False),
             "labels": [{"properties": {"show": b(False)}}],
+            # review round 2, step D (sheet line 32; UX-19, CL-18): the band's own series label stood at the end of the top
+            # line and read as that line's name ("commissions are 45 %?"). It is off; f1_labels() names the top line and
+            # the band. The series keeps its name "Commissions" for the tooltip, where the value is the band's height.
             "seriesLabels": [{"properties": {"show": b(True), "seriesPosition": enum("Right"), "seriesMatchColor": b(False), "seriesColor": color(INK2),
-                                             "textSize": num(S), "seriesFontFamily": text(BODY), "enableBackground": b(False), "leaderLines": b(False)}}],
+                                             "textSize": num(S), "seriesFontFamily": text(BODY), "enableBackground": b(False), "leaderLines": b(False)}},
+                             {"properties": {"show": b(False)}, "selector": {"metadata": mref(ms[1])}}],
             "dataPoint": [{"properties": {"transparency": num(70)}}] + series_colors({mref(ms[0]): ACCENT_MARK, mref(ms[1]): SLATE}),
             "lineStyles": ls}
     return plot_rect(chart(page, slot, "stackedAreaChart", q, objs, None, filters=[YEARS()], alt_measure="Alt F1 Chart (text)"), PLOT_RECT[slot])
+
+
+F1_LABELS = (("lbl_f1_before", "Before commissions", INK2), ("lbl_f1_band", "Commissions", INK))
+
+
+def f1_labels(page):
+    """Review round 2, step D (sheet line 32): the two typed names of the F1 chart. "Before commissions" stands at the right
+    end of the top line, in Dusk like the chart's own "After commissions"; "Commissions" stands inside the band. Static
+    text boxes (P1 does not follow the scenario, so the lines never move), decorative and out of the tab order: the
+    chart's alt text names both. They lie inside the chart's rect, so mouse_order() puts them under the chart (the chart has
+    no fill; a hover anywhere in the plot still opens the year). The band is Warm Grey at 30 % over the label, so
+    "Commissions" is Night: under the band it reads #37424F on #DDDBD8, 7.4:1 (Dusk would be 4.3:1)."""
+    spec = json.loads((ROOT / "project" / "design-prototypes" / "rebuild-v10-spec.json").read_text(encoding="utf-8"))["text"]["P1"]
+    assert all(spec[name] == words_ for name, words_, _ in F1_LABELS), "the F1 labels are typed here and in the spec: keep them equal"
+    out = []
+    for i, (name, words_, ink) in enumerate(F1_LABELS):
+        x, y, w, h, z, tab = at(page, name)
+        out.append(decorative(textbox(name, x, y, w, h, z, tab, [[(words_, BODY, SPX, ink, False)]], off_grid=True), 180 + i))
+    return out
 
 
 def f2_ends(page, slot):
@@ -511,19 +538,25 @@ F4_ROWS = (("airport", "Airport", "Occupancy Airport GI (text)"), ("city", "City
 # where each value starts after its label in the 160 px slot: the label's width at 16 px Segoe UI plus a space (4.4 px),
 # from `powerbi-report-author text measure` (49.5 / 27.0 / 61.2 px); set to the render in build step 5
 F4_VALUE_DX = {"airport": 54, "city": 31, "highway": 66}
+# Review round 2, step D (sheet line 31; UX-21, CL-42, J-VE-11): the diamonds of the dot plot had no key. Each row label
+# now carries the mark itself, "Airport ◆ 82.0%": the diamond in Dusk, the colour it has in the plot, between the type
+# and its average. " ◆" is 14.7 px at 16 px Segoe UI (text measure), so the value starts that much further right.
+F4_MARK, F4_MARK_DX = " ◆", 15
 
 
 def f4_rows(page, slot):
-    """'Airport 82.0%', 'City 79.1%', 'Highway 77.5%' as three rows of 40 px in the slot (the comp's part(i * 40, 40)): per
-    row a text box with the type in Dusk and a card with the value in Night semibold beside it (a card's label can only
-    sit above or below its value). One tab stop: the first value card reads the three (Alt F4 Types (text))."""
+    """'Airport ◆ 82.0%', 'City ◆ 79.1%', 'Highway ◆ 77.5%' as three rows of 40 px in the slot (the comp's part(i * 40, 40)):
+    per row a text box with the type and the average's mark in Dusk and a card with the value in Night semibold beside it
+    (a card's label can only sit above or below its value). One tab stop: the first value card reads the three
+    (Alt F4 Types (text))."""
     x, y, w, h, z, tab = at(page, slot)
     out = []
     for i, (key, label, measure) in enumerate(F4_ROWS):
         ry = y + 40 * i + 8
-        lab = textbox(f"{slot}_lab_{key}", x, ry, 72, 24, z, 0, [[(label, BODY, SPX, INK2, False)]])
+        lab = textbox(f"{slot}_lab_{key}", x, ry, 72 + F4_MARK_DX, 24, z, 0, [[(label + F4_MARK, BODY, SPX, INK2, False)]], off_grid=True)
         name = slot if i == 0 else f"{slot}_{key}"
-        val = card(name, x + F4_VALUE_DX[key], ry, w - F4_VALUE_DX[key], 24, z, tab, [measure], DISPLAY, S, INK, off_grid=True)
+        dx = F4_VALUE_DX[key] + F4_MARK_DX
+        val = card(name, x + dx, ry, w - dx, 24, z, tab, [measure], DISPLAY, S, INK, off_grid=True)
         out.append(decorative(lab, 140 + i))
         out.append(bind_alt(val, "Alt F4 Types (text)") if i == 0 else decorative(val, 150 + i))
     return out

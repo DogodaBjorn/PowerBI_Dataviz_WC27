@@ -1,5 +1,5 @@
 {
- "_doc": "Build spec v10.1 of 2026-11-13 (v10 plus the four closed questions of doc 22), exported from rebuild-comp-v10.html (the approved comp, doc 21 section 12). Positions live in opzet-layout-v10.json; this file holds what a slot map cannot: table column widths and row heights, hero bar domains, chart axis ends and end-label positions, the F4 name boxes, the number formatters, and under 'text' the exact visible strings of every slot in every view (P1; P2 Recommended, What waits and Build in Low, Expected and High; Build with nothing picked). Build views use the opening selection (package A's three moves). Strings are given without the U+2060 word joiner the formatters put between the sign and the $. Table cells are lists of rows; a line break inside a cell is \\n (UNICHAR(10)). Use the strings as DAX assertion targets for the text measures. Review round 2 (15 Nov, doc 25 section 5): the text block carries the approved copy sheet, written from the model with build_checks.py --write-spec; the comp itself still draws the copy of 14 Nov. Reasons and rules: project-state/active/22-rebuild-comp-v10-handoff-2026-11-13.md.",
+ "_doc": "Build spec v10.1 of 2026-11-13 (v10 plus the four closed questions of doc 22), exported from rebuild-comp-v10.html (the approved comp, doc 21 section 12). Positions live in opzet-layout-v10.json; this file holds what a slot map cannot: table column widths and row heights, hero bar domains, chart axis ends and end-label positions, the F4 name boxes, the number formatters, and under 'text' the exact visible strings of every slot in every view (P1; P2 Recommended, What waits and Build in Low, Expected and High; Build with nothing picked). Build views use the opening selection (package A's three moves). Strings are given without the U+2060 word joiner the formatters put between the sign and the $. Table cells are lists of rows; a line break inside a cell is \\n (UNICHAR(10)). Use the strings as DAX assertion targets for the text measures. Review round 2 (15 Nov, doc 25 section 5): the text block carries the approved copy sheet, written from the model with build_checks.py --write-spec; the comp itself still draws the copy of 14 Nov. Step D of that round (page 1 and the hero): the KPI labels without codes, F4's title, note, row labels and Orlando's name slot, the F1 chart's typed labels and the NPV panel's fills are written here by hand from the sheet; the comp draws them too. Reasons and rules: project-state/active/22-rebuild-comp-v10-handoff-2026-11-13.md.",
  "construction": {
   "text_metrics": {
    "font": "Segoe UI 400 and Segoe UI Semibold 600",
@@ -47,7 +47,7 @@
      "inset_px": 4,
      "bar_y": 8,
      "bar_h": 18,
-     "fill": "Move Status Color: A #2589D8, 2028 gate #12233D, not now #8E897D",
+     "fill": "A year on cost: Move Status Color (A #2589D8, 2028 gate #12233D, not now #8E897D). NPV through 2032: Move NPV Bar Color (A #2589D8, every other move #C9C4B7, the kit's neutral_light; review round 2, step D: DS2-04, J-VE-13)",
      "ref_line": "1 px #12233D, full height"
     },
     "yield_domain": [
@@ -206,13 +206,13 @@
      },
      "lbl_f4_orlando": {
       "rect": [
-       1483,
-       899,
+       1443,
+       880,
        62,
        24
       ],
       "text": "Orlando",
-      "side": "below"
+      "side": "left"
      },
      "lbl_f4_kuala_lumpur": {
       "rect": [
@@ -264,7 +264,8 @@
       "text": "Toronto",
       "side": "right"
      }
-    }
+    },
+    "row_labels": "review round 2, step D: 'Airport ◆ 82.0%': the type and the diamond (the average's own mark in the plot) in Dusk, the value in Night semibold"
    },
    "ch_build_bars": {
     "orientation": "horizontal",
@@ -288,6 +289,34 @@
     "band": "0 to +20, #EAF2FB, \"Pays back by 2032\"",
     "discs": "A #2589D8, B and C #12233D, r 11, white letter",
     "you": "Night marker r 6 (Tangerine over budget) drawn under the discs; \"You\" label above it on white"
+   },
+   "ch_f1_margin": {
+    "series_labels": "the base series names itself at its right end (\"After commissions\"); the band's own series label is off",
+    "typed_labels": {
+     "lbl_f1_before": {
+      "rect": [
+       462,
+       450,
+       148,
+       24
+      ],
+      "text": "Before commissions",
+      "ink": "Dusk",
+      "where": "right of the top line's end"
+     },
+     "lbl_f1_band": {
+      "rect": [
+       236,
+       486,
+       100,
+       24
+      ],
+      "text": "Commissions",
+      "ink": "Night, under the band (7.4:1 through the 30 % Warm Grey)",
+      "where": "inside the band, on 2023"
+     }
+    },
+    "why": "review round 2, step D (doc 25 sheet line 32; UX-19, CL-18): \"Commissions\" at the end of the top line read as that line's name"
    }
   }
  },
@@ -296,18 +325,19 @@
    "z_eyebrow": "1 / 2 · THE WAKE-UP CALL · THE BRAND REVIEW",
    "z_headline": "Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome is fading.",
    "c_subtitle": "Goodnight Inn in 2025, against the three other Pillow & Key Group brands. For the Board: what is wrong, before page 2 says what to fund.",
-   "kpi_occ": "F4 · Occupancy\n79.4%\nbest of 4, the others 64.7% to 72.9%",
-   "kpi_margin": "F1 · Operating margin after commissions\n33.7%\n2nd of 4, −2.8 pt since 2023",
-   "kpi_ota": "F2 · Room revenue booked through online agencies\n50.0%\nhighest of 4, 33.0% in 2021",
-   "kpi_nps": "F3 · Guest quality: net promoter score (−100 to +100)\n+3.3\nstill positive, but falling every year, last of 4",
+   "kpi_occ": "Occupancy\n79.4%\nbest of 4, the others 64.7% to 72.9%",
+   "kpi_margin": "Operating margin after commissions\n33.7%\n2nd of 4, −2.8 pt since 2023",
+   "kpi_ota": "Room revenue booked through online agencies\n50.0%\nhighest of 4, 33.0% in 2021",
+   "kpi_nps": "Guest quality: net promoter score (−100 to +100)\n+3.3\nstill positive, but falling every year, last of 4",
    "c_f1_kicker": "F1 · THE MARGIN",
    "c_f1_title": "After commissions, the margin fell 2.8 points since 2023",
    "ch_f1_margin": {
     "labels": [
-     "After commissions",
-     "Commissions"
+     "After commissions"
     ]
    },
+   "lbl_f1_before": "Before commissions",
+   "lbl_f1_band": "Commissions",
    "c_f1_note": "Commissions took 1.0 of those points and running costs 1.8 (staff rose from 26.9% to 28.3% of revenue). Room rates rose 2.7%, in line with the other brands, so no price premium absorbs it.",
    "lnk_f1": "On page 2: revenue management, and the kiosks for running costs.",
    "c_f2_kicker": "F2 · THE MIDDLEMAN",
@@ -363,10 +393,10 @@
    "lnk_f3": "On page 2: the refresh waits for the 2028 gate, and why.",
    "c_f4_kicker": "F4 · WHERE WE ARE FULL",
    "tag_f4": "ⓘ Hover a hotel",
-   "c_f4_title": "Our airports run full: Toronto topped 90% occupancy in 17 of the last 24 months",
-   "c_f4_note": "Gatwick did in 14, Montréal in 13; Kingston, the third extension on offer, in none.",
+   "c_f4_title": "Our airports run fullest: five of the seven fullest hotels are airports",
+   "c_f4_note": "Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none.",
    "lnk_f4": "On page 2: kiosks at the 20 busiest hotels; extensions decided at the 2028 gate.",
-   "c_f4_rows": "Airport 82.0%\nCity 79.1%\nHighway 77.5%",
+   "c_f4_rows": "Airport ◆ 82.0%\nCity ◆ 79.1%\nHighway ◆ 77.5%",
    "ch_f4_avg": {
     "labels": [
      "90%"

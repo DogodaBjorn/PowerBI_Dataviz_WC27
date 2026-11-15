@@ -1845,6 +1845,14 @@ m("Move Run-rate (num)", MOVE_P + "RETURN IF ( ISBLANK ( p ), BLANK (), CALCULAT
 MOVE_ST = "LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) )"
 m("Move Status Color", f'VAR st = {MOVE_ST} RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( st, "A", "{ACCENT_MARK}", "2028 gate", "{INK}", "{SLATE}" ) )', TXT, C15,
   "Mark colour of a move by its decision status (MoveDecision): Coffee Blue for package A, Night for the 2028 gate, Warm Grey for not now. A mark colour (3.5:1 at the lightest): the status word carries the state.")
+# Review round 2, step D (doc 25; DS2-04, J-VE-13): in the hero's NPV panel the status colours added weight without
+# information (the refresh's long Night bar was the darkest mark of the decision page, on the move we do not fund). There
+# package A's bars are Coffee Blue and every other bar the kit's light neutral (brand.yaml neutral_light: "labelled
+# background marks only"; each bar's value stands in the column beside it). The status stays in the Status column and in
+# the bars of the left panel.
+NEUTRAL_LIGHT = "#C9C4B7"
+m("Move NPV Bar Color", f'VAR st = {MOVE_ST} RETURN IF ( ISBLANK ( st ), BLANK (), IF ( st = "A", "{ACCENT_MARK}", "{NEUTRAL_LIGHT}" ) )', TXT, C15,
+  "Hero table, NPV panel: Coffee Blue for the moves of package A, the light neutral for every other move (a labelled background mark: the value stands beside the bar, the status in its own column).")
 
 # ---- the hero table's bar cells (doc 21 P-4, spike S-2 of 13 Nov). Geometry and domains come from the build spec the
 # comp exported; opzet_report.py places lbl_hero_8 / lbl_hero_0 with hero_ref_x() from the same constants.
@@ -1903,8 +1911,8 @@ def bar_cell(name, value_expr, dom, ref, fill_expr, w, doc):
 bar_cell("Hero Yield Bar SVG", "[A Year on Cost]", HERO_YDOM, HERO_YREF, "[Move Status Color]", HERO_SPEC_COLS[3],
          "Hero table, bar cell of 'a year on cost' for the move in the row (scenario in view): a bar from 0 in the move's status colour and the 8 % line (our cost of money). "
          "Fixed domain -10 % to 90 %. Decorative: the value stands in the column beside it.")
-bar_cell("Hero NPV Bar SVG", "[NPV @ 8%]", HERO_NDOM, HERO_NREF, "[Move Status Color]", HERO_SPEC_COLS[5],
-         "Hero table, bar cell of the NPV through 2032 for the move in the row (scenario in view): a bar from 0 in the move's status colour and the zero line (pays back by 2032 to its right). "
+bar_cell("Hero NPV Bar SVG", "[NPV @ 8%]", HERO_NDOM, HERO_NREF, "[Move NPV Bar Color]", HERO_SPEC_COLS[5],
+         "Hero table, bar cell of the NPV through 2032 for the move in the row (scenario in view): a bar from 0, Coffee Blue for package A's moves and the light neutral for the rest, and the zero line (pays back by 2032 to its right). "
          "Fixed domain -$32M to +$12M. Decorative: the value stands in the column beside it.")
 # the domains re-derived from the data (P-4: minimum and maximum over the ten moves and the three scenarios, rounded
 # outward: to 10 points for the yield, to $4M for the NPV, as the comp does). number_checks.py asserts they equal
@@ -2212,11 +2220,14 @@ m("F3 Note (text)",
   ' & IF ( ohi - olo <= 0.02, "Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause.", "An association, not proof of cause." )',
   TXT, C15, "F3 note (R-P1-5): renovation spend per hotel since 2018 against the sister brands, the last start, and the causality caveat (05 caveat A2).")
 m("F4 Title (text)",
-  GI_HOTEL_T + "VAR th = MAXX ( TOPN ( 1, hs, [@m], DESC, [@o], DESC ), Hotels[HotelID] ) VAR tm = MAXX ( FILTER ( hs, Hotels[HotelID] = th ), [@m] ) "
+  # Review round 2, step D (sheet line 30, DS2-03): the title says what the chart shows (the seven named dots, how many
+  # of them airports); the months above 90 %, which the chart cannot show, moved to the note
+  GI_HOTEL_T + 'VAR t7 = TOPN ( 7, hs, [@o], DESC ) '
+  'VAR na = COUNTROWS ( FILTER ( t7, LOOKUPVALUE ( Hotels[LocationType], Hotels[HotelID], Hotels[HotelID] ) = "Airport" ) ) + 0 '
   "VAR air = [Occupancy Airport GI] VAR best = MAX ( [Occupancy City GI], [Occupancy Highway GI] ) "
-  'RETURN IF ( air >= best && LOOKUPVALUE ( Hotels[LocationType], Hotels[HotelID], th ) = "Airport", "Our airports run full: ", "" ) & ' + COPY_NAME.format("th")
-  + ' & " topped 90% occupancy in " & tm & " of the last 24 months"',
-  TXT, C15, "F4 title (R-P1-6): the hotel that topped 90 % occupancy in the most of the last 24 months; 'our airports run full' while the airports are the fullest location type and it is one.")
+  'VAR w = ' + words("na") + ' & " of the " & ' + words("COUNTROWS ( t7 )") + ' & " fullest hotels are airports" '
+  'RETURN IF ( air >= best, "Our airports run fullest: " & w, UPPER ( LEFT ( w, 1 ) ) & MID ( w, 2, LEN ( w ) ) )',
+  TXT, C15, "F4 title (R-P1-6, review round 2): how many of the seven fullest hotels of 2025 are airports, which the dot plot shows; 'our airports run fullest' while the airports are the fullest location type.")
 m("F4 Note (text)",
   GI_HOTEL_T + "VAR t3 = TOPN ( 3, hs, [@m], DESC, [@o], DESC ) VAR h1 = MAXX ( TOPN ( 1, t3, [@m], DESC, [@o], DESC ), Hotels[HotelID] ) "
   "VAR r2 = FILTER ( t3, Hotels[HotelID] <> h1 ) VAR h2 = MAXX ( TOPN ( 1, r2, [@m], DESC, [@o], DESC ), Hotels[HotelID] ) VAR h3 = MAXX ( FILTER ( r2, Hotels[HotelID] <> h2 ), Hotels[HotelID] ) "
@@ -2224,9 +2235,11 @@ m("F4 Note (text)",
   "VAR ext = " + _EXT +
   'VAR eh =ADDCOLUMNS ( ext, "@h", VAR p = [@p] RETURN ' + HOTEL_OF.format("p") + " ) "
   "VAR other = FILTER ( eh, NOT ( [@h] IN { h1, h2, h3 } ) ) VAR kh = MAXX ( other, [@h] ) VAR km = MAXX ( FILTER ( hs, Hotels[HotelID] = kh ), [@m] ) "
-  'RETURN ' + COPY_NAME.format("h2") + ' & " did in " & MAXX ( FILTER ( hs, Hotels[HotelID] = h2 ), [@m] ) & ", " & ' + COPY_NAME.format("h3") + ' & " in " & MAXX ( FILTER ( hs, Hotels[HotelID] = h3 ), [@m] ) '
+  # review round 2, step D (sheet line 30): the hotel with the most months leads the note, with the window it is counted over
+  'RETURN ' + COPY_NAME.format("h1") + ' & " topped 90% in " & MAXX ( FILTER ( hs, Hotels[HotelID] = h1 ), [@m] ) & " of the last 24 months, " & '
+  + COPY_NAME.format("h2") + ' & " in " & MAXX ( FILTER ( hs, Hotels[HotelID] = h2 ), [@m] ) & ", " & ' + COPY_NAME.format("h3") + ' & " in " & MAXX ( FILTER ( hs, Hotels[HotelID] = h3 ), [@m] ) '
   '& IF ( COUNTROWS ( other ) = 1, "; " & ' + COPY_NAME.format("kh") + ' & ", the " & ' + ordinal("COUNTROWS ( ext )") + ' & " extension on offer, in " & IF ( km = 0, "none", FORMAT ( km, "0", "en-US" ) ), "" ) & "."',
-  TXT, C15, "F4 note: the next two hotels by months topped 90 %, and the one extension on offer outside them (Kingston) with its count.")
+  TXT, C15, "F4 note: the three hotels with the most months at or above 90 % occupancy in the last 24, and the one extension on offer outside them (Kingston) with its count.")
 m("Link F4 (text)",
   'VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = "GI-02" ) ) '
   'RETURN "On page 2: kiosks at the " & FORMAT ( n, "0", "en-US" ) & " busiest hotels; extensions decided at the 2028 gate."',
@@ -2533,22 +2546,24 @@ m("TT Payback Color", f'"{INK}"', TXT, C10,
 # step that builds them; build_checks.py reports them as not checked here.
 
 
-def _kpi(code, label, kp):
-    return [f"={code} · {label}", f"KPI {kp} GI (text)", f"KPI {kp} Context (text)"]
+def _kpi(label, kp):
+    """Review round 2, step D (sheet line 28, D6): the finding codes left the KPI row (they ran F4, F1, F2, F3)."""
+    return [f"={label}", f"KPI {kp} GI (text)", f"KPI {kp} Context (text)"]
 
 
 _P2_FRAME = {"z_headline2": "Headline P2 (text)", "c_subtitle2": "Subtitle P2 (text)", "z_footer2": "Footer P2 (text)"}
 TEXT_SLOTS = {
     "P1": {
         "z_headline": "Headline P1 (text)", "c_subtitle": "Subtitle P1 Briefing (text)",
-        "kpi_occ": _kpi("F4", "Occupancy", "Occupancy"), "kpi_margin": _kpi("F1", "Operating margin after commissions", "Margin after"),
-        "kpi_ota": _kpi("F2", "Room revenue booked through online agencies", "OTA"), "kpi_nps": _kpi("F3", "Guest quality: net promoter score (−100 to +100)", "NPS"),
+        "kpi_occ": _kpi("Occupancy", "Occupancy"), "kpi_margin": _kpi("Operating margin after commissions", "Margin after"),
+        "kpi_ota": _kpi("Room revenue booked through online agencies", "OTA"), "kpi_nps": _kpi("Guest quality: net promoter score (−100 to +100)", "NPS"),
         "c_f1_title": "F1 Title (text)", "c_f1_note": "F1 Note (text)",
         "c_f2_title": "F2 Title (text)", "c_f2_note": "F2 Note (text)",
         "tbl_f2_folio": {"rows": "FolioLine[Line]", "sort": "FolioLine[Sort]", "cols": ["FolioLine[Line]", "Folio OTA Guest (text)", "Folio Direct Guest (text)"]},
         "c_f3_title": "F3 Title (text)", "c_f3_count": "F3 Count (text)", "c_f3_note": "F3 Note (text)",
         "c_f4_title": "F4 Title (text)", "c_f4_note": "F4 Note (text)", "lnk_f4": "Link F4 (text)",
-        "c_f4_rows": [["=Airport ", "Occupancy Airport GI (text)"], ["=City ", "Occupancy City GI (text)"], ["=Highway ", "Occupancy Highway GI (text)"]],
+        # review round 2, step D (sheet line 31): the diamond after the type is the average's own mark in the dot plot
+        "c_f4_rows": [["=Airport ◆ ", "Occupancy Airport GI (text)"], ["=City ◆ ", "Occupancy City GI (text)"], ["=Highway ◆ ", "Occupancy Highway GI (text)"]],
         "chip_def": "Chip Definitions (text)",
     },
     "rec": dict(_P2_FRAME, **{
@@ -2591,6 +2606,7 @@ TEXT_STATIC = {  # slot -> where the text is typed (checked against the spec by 
     **{s: "opzet_report.py, step 8" for s in ("tag_scatter_s", "c_waits_head", "tag_cmp_alts")},
     **{s: "opzet_report.py, step 9" for s in ("c_build_head", "sl_moves", "tag_cmp_build")},
     "ch_plan_cum_cap": "opzet_report.py, review round 2 step C (PLAN_CAPTION)",
+    **{s: "opzet_report.py, review round 2 step D (f1_labels)" for s in ("lbl_f1_before", "lbl_f1_band")},
 }
 
 

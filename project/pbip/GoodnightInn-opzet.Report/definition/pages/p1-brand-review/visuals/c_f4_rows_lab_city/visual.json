@@ -5,7 +5,7 @@
     "x": 496,
     "y": 920,
     "z": 37610,
-    "width": 72,
+    "width": 87,
     "height": 24,
     "tabOrder": -17202
   },
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "City",
+                    "value": "City ◆",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",

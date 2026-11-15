@@ -309,6 +309,20 @@
               }
             }
           }
+        },
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Trend Commission Take GI"
+          }
         }
       ],
       "dataPoint": [

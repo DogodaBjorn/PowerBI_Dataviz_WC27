@@ -13,6 +13,14 @@
       "z": 24000,
       "tabOrder": 310
     },
+    "lbl_f1_before": {
+      "z": 24400,
+      "tabOrder": -14101
+    },
+    "lbl_f1_band": {
+      "z": 24600,
+      "tabOrder": -14102
+    },
     "c_f2_kicker": {
       "z": 27000,
       "tabOrder": -15001

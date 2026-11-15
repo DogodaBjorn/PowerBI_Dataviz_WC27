@@ -412,7 +412,7 @@ check("spec: F3 bar labels", "bands", [x for x in p1["ch_f3_age"]["labels"] if x
 check("spec: F2 end labels", "33%, 50%, 27%", p1["ch_f2_ota"]["labels"][:3],
       [r["ota_txt"] for r in sorted(trend, key=lambda r: r.get("Date[Year]", r.get("Year"))) if r["ota"] is not None]
       + [r["sis_txt"] for r in trend if r["sis"] is not None])
-rows_txt = dict(x.rsplit(" ", 1) for x in p1["c_f4_rows"].split("\n"))
+rows_txt = {x.split(" ", 1)[0]: x.rsplit(" ", 1)[1] for x in p1["c_f4_rows"].split("\n")}  # "Airport ◆ 82.0%" (review round 2, step D: the diamond between the type and its average)
 for r in f4t:
     t = r.get("Hotels[LocationType]", r.get("LocationType"))
     check("spec: F4 row averages", t, rows_txt[t], f"{half_up(r['avg'] * 100, 1):.1f}%")
