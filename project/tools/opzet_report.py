@@ -1219,6 +1219,7 @@ PLAN_END_X = 1719                   # page x of the last year, where the three l
 PLAN_END_GAP = 14                   # from the line's end to its label's card: the comp has 8, but the gridlines run 9 px
 #                                     past the last year and the label must not touch their ends
 PLAN_CAPTION = "Package A, cumulative cash, $M (not discounted, so it ends above NPV)"  # doc 25 sheet line 14 (DS2-01, J-AQ-8, J-VE-12)
+PLAN_TAG_X = 1256
 GATE_LINES = 4                      # lines of the gate rule at 12 pt in 704 px (the comp)
 
 
@@ -1360,6 +1361,7 @@ def p2_capital_plan():
     # line runs in any case; 2 px off the grid so it stands clear of the gridlines at +$20M and +$10M
     tag = hover_tag_text(P2, "tag_plan_cum", "Hover a year", 22)
     tag["position"]["y"] += 2
+    tag["position"]["x"] = PLAN_TAG_X
     v = [title(P2, "c_plan_title", "Capital Plan Title (text)", lift=5), tag]
     for k, n in PLAN_LINES.items():
         v += line_cards(P2, f"c_plan_t{k}", [f"Plan T{k} L{i} (text)" for i in range(1, n + 1)], f"Plan T{k} (text)", 50 + 10 * k)
@@ -1644,8 +1646,9 @@ def top_text(page, name, measure, colour_measure, alt_measure=None):
 # low (Power BI keeps 8 px above its plot and an outer padding of its own); with outer padding 0 and this rect five rows
 # are 32 px apart from y 464. x and width: the strip render moves by about 3 px for 1 px of rect (Desktop snaps a visual to
 # its device pixels at that zoom), so the two edges were settled from two renders one px apart (doc 23, log of step 9).
-BARS_RECT = (1379, 462, 467, 157)
+BARS_RECT = (1379, 462, 467, 172)
 BARS_INNER = 40  # the comp's bar is 60 % of its row (measured: 16.8 px in a 32 px row, the comp's 18)
+BARS_MIN_ROW = 16
 
 
 def build_bars():
@@ -1659,7 +1662,8 @@ def build_bars():
          "Tooltips": {"projections": [proj_mea("Build Bar Order", "Order")]}}
     va = axis(BODY, S, INK2, show=False, gridlines=False)
     va[0]["properties"].update({"start": mtext("Build Bars X Start"), "end": mtext("Build Bars X End")})
-    ca = axis(BODY, S, INK2, gridlines=None, extra={"maxMarginFactor": integer(45), "innerPadding": integer(BARS_INNER), "outerPadding": integer(0), "concatenateLabels": b(False)})
+    ca = axis(BODY, S, INK2, gridlines=None, extra={"maxMarginFactor": integer(45), "innerPadding": integer(BARS_INNER), "outerPadding": integer(0), "concatenateLabels": b(False),
+                                                   "preferredCategoryWidth": num(BARS_MIN_ROW)})
     objs = {"categoryAxis": ca, "valueAxis": va, "legend": legend(False),
             "dataPoint": [{"properties": {"fill": fv("Build Bar Color")}, "selector": WILD}],
             "labels": labels(True, BODY, S, INK, units=1, position="OutsideEnd"),
