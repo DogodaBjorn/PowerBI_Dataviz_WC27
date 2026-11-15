@@ -154,10 +154,10 @@ stays with the group
       How the $60M budget is planned: tranche 1, package A, $9.4M now; tranche 2, $12.4M, and tranche 3, $29.5M, wait for the 2028 gate; $8.7M is not needed.
  9530 c_plan_gate (cardVisual) [Gate Rule (text)] 342/342/342 chars   <-- long (342)
       The 2028 gate, one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track by then) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032 and the oldest hotels' NPS. A rule, not a forecast.
- 9520 ch_plan_cum (lineChart) [Alt Plan Cum (text)] 219/222/218 chars
-      Package A, cumulative net impact by year to 2032 in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Expected case A is cash positive from 2031. The Board decides on the rest at the 2028 gate.
-      Low: Package A, cumulative net impact by year to 2032 in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Low case A is not cash positive by 2032. The Board decides on the rest at the 2028 gate.
-      High: Package A, cumulative net impact by year to 2032 in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the High case A is cash positive from 2029. The Board decides on the rest at the 2028 gate.
+ 9520 ch_plan_cum (lineChart) [Alt Plan Cum (text)] 230/233/229 chars
+      Package A, cumulative cash by year to 2032, not discounted, in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Expected case A is cash positive from 2031. The Board decides on the rest at the 2028 gate.
+      Low: Package A, cumulative cash by year to 2032, not discounted, in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Low case A is not cash positive by 2032. The Board decides on the rest at the 2028 gate.
+      High: Package A, cumulative cash by year to 2032, not discounted, in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the High case A is cash positive from 2029. The Board decides on the rest at the 2028 gate.
  9510 c_plan_milestones (cardVisual) [Milestones (text)] 129/134/130 chars
       Revenue management live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Cash positive during 2031 (Expected)
       Low: Revenue management live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Not cash positive by 2032 (Low)

@@ -135,9 +135,11 @@
      2027,
      2032
     ],
-    "x_axis_end": 2032.8,
+    "x_axis_end": 2032,
     "gate_line": 2028.5,
-    "end_labels": "one data label on 2032 per line, text \"Low −$4.6M\" from the label-safe format string, position Right, white background; selected case #1763A8 semibold"
+    "end_labels": "review round 2 (doc 25 step C): no data labels; one card right of each line's end, 8 px from it, centred on the height the line ends, text \"Low −$4.6M\" from a text measure; the case in view #1763A8 semibold, the other two Dusk regular",
+    "caption": "a text line in the row between the plan bar and the plot, from the plot's left edge, 12 pt Dusk (text: ch_plan_cum_cap)",
+    "hover_tag": "tag_plan_cum in the plot's top row, left of the gate line (UX-20)"
    },
    "ch_cmp_alts": {
     "y": "auto, one tick below zero, 8% headroom above the top line",
@@ -523,7 +525,7 @@
     ],
     [
      "F4 Where we are full",
-     "self check-in at the 20 busiest hotels\nkiosks live Apr 2028",
+     "self check-in at the 20 busiest hotels\nkiosks live Apr 2028; check-in complaints there up 43% since 2021",
      "0",
      "20",
      "rooms: at the 2028 gate"
@@ -540,6 +542,7 @@
    "btn_build_invite": "Think you can beat A? Build your own →",
    "c_plan_title": "The $60M plan: $9.4M now, $41.9M at the 2028 gate, $8.7M not needed",
    "tag_plan_cum": "ⓘ Hover a year",
+   "ch_plan_cum_cap": "Package A, cumulative cash, $M (not discounted, so it ends above NPV)",
    "c_plan_t1": "Tranche 1 · package A\n$9.4M · 2027",
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.5M a year once live · 11.7% a year on cost",
    "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate\n+$1.3M a year once live · 4.5% a year on cost",
@@ -700,7 +703,7 @@
     ],
     [
      "F4 Where we are full",
-     "self check-in at the 20 busiest hotels\nkiosks live Apr 2028",
+     "self check-in at the 20 busiest hotels\nkiosks live Apr 2028; check-in complaints there up 43% since 2021",
      "0",
      "20",
      "rooms: at the 2028 gate"
@@ -717,6 +720,7 @@
    "btn_build_invite": "Think you can beat A? Build your own →",
    "c_plan_title": "The $60M plan: $9.4M now, $41.9M at the 2028 gate, $8.7M not needed",
    "tag_plan_cum": "ⓘ Hover a year",
+   "ch_plan_cum_cap": "Package A, cumulative cash, $M (not discounted, so it ends above NPV)",
    "c_plan_t1": "Tranche 1 · package A\n$9.4M · 2027",
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.7M a year once live · 13.8% a year on cost",
    "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate\n+$2.3M a year once live · 7.9% a year on cost",
@@ -877,7 +881,7 @@
     ],
     [
      "F4 Where we are full",
-     "self check-in at the 20 busiest hotels\nkiosks live Apr 2028",
+     "self check-in at the 20 busiest hotels\nkiosks live Apr 2028; check-in complaints there up 43% since 2021",
      "0",
      "20",
      "rooms: at the 2028 gate"
@@ -894,6 +898,7 @@
    "btn_build_invite": "Think you can beat A? Build your own →",
    "c_plan_title": "The $60M plan: $9.4M now, $41.9M at the 2028 gate, $8.7M not needed",
    "tag_plan_cum": "ⓘ Hover a year",
+   "ch_plan_cum_cap": "Package A, cumulative cash, $M (not discounted, so it ends above NPV)",
    "c_plan_t1": "Tranche 1 · package A\n$9.4M · 2027",
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.8M a year once live · 14.8% a year on cost",
    "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate\n+$3.4M a year once live · 11.5% a year on cost",

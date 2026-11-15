@@ -2590,6 +2590,7 @@ TEXT_STATIC = {  # slot -> where the text is typed (checked against the spec by 
     **{s: "opzet_report.py, step 7" for s in ("lbl_hero_8", "lbl_hero_0", "tag_plan_cum")},
     **{s: "opzet_report.py, step 8" for s in ("tag_scatter_s", "c_waits_head", "tag_cmp_alts")},
     **{s: "opzet_report.py, step 9" for s in ("c_build_head", "sl_moves", "tag_cmp_build")},
+    "ch_plan_cum_cap": "opzet_report.py, review round 2 step C (PLAN_CAPTION)",
 }
 
 

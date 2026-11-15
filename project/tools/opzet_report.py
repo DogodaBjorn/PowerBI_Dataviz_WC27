@@ -1170,11 +1170,14 @@ PLAN_LINES = {1: 2, 2: 3, 3: 3, 4: 2}             # lines of each segment's labe
 # High and the Low line. The chart's rect keeps its left edge, its top and its height (the typed ticks of plan_ticks()
 # hang on them); only its right edge moved in. Measured on the scratch page of the spike (tools/desktop_shots/round2c).
 PLAN_X_END = 2032                   # the plot ends on the last year
-PLAN_CUM_W = 940                    # the visual's width that keeps the comp's 171 px a year with the axis ending at 2032
+PLAN_CUM_W = 943                    # the visual's width that keeps the comp's 171 px a year with the axis ending at 2032:
+#                                     at 940 the years stood 170.5 px apart (2027 at 864.1, 2032 at 1716.4); Power BI
+#                                     draws its gridlines 9 px past the first and the last year
 PLAN_RECT = {"ch_plan_bar": (56, 780, 1808, 40), "ch_plan_cum": (792, 834, PLAN_CUM_W, 146)}
 PLAN_Y = (-10_000_000, 20_000_000)  # spec ch_plan_cum.y: −10 to +20 $M, ticks at −10, 0, +10, +20
 PLAN_END_X = 1719                   # page x of the last year, where the three lines end (the comp's X(2032))
-PLAN_END_GAP = 8                    # from the line's end to its label (the comp)
+PLAN_END_GAP = 14                   # from the line's end to its label's card: the comp has 8, but the gridlines run 9 px
+#                                     past the last year and the label must not touch their ends
 PLAN_CAPTION = "Package A, cumulative cash, $M (not discounted, so it ends above NPV)"  # doc 25 sheet line 14 (DS2-01, J-AQ-8, J-VE-12)
 GATE_LINES = 4                      # lines of the gate rule at 12 pt in 704 px (the comp)
 
@@ -1300,6 +1303,8 @@ def plan_caption():
     chart keeps in its header strip does not paint over it. Out of the tab order: the chart's alt text opens with the
     same words."""
     _, _, _, _, z, tab = at(P2, "ch_plan_cum")
+    spec = json.loads((ROOT / "project" / "design-prototypes" / "rebuild-v10-spec.json").read_text(encoding="utf-8"))["text"]
+    assert all(spec[f"P2 rec {c}"]["ch_plan_cum_cap"] == PLAN_CAPTION for c in ("Low", "Expected", "High")), "the caption is typed here and in the spec: keep them equal"
     x = SLOT[P2]["ch_plan_cum"]["x"] + 72  # the plot's left edge (the comp's x0)
     v = textbox("ch_plan_cum_cap", x, PLAN_RECT["ch_plan_cum"][1] + SLIVER - 24, PLAN_END_X - x, 24, z, tab,
                 [[(PLAN_CAPTION, BODY, SPX, INK2, False)]], off_grid=True)

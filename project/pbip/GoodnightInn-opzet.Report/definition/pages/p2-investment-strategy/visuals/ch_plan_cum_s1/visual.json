@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_plan_cum_s1",
   "position": {
-    "x": 1727,
+    "x": 1733,
     "y": 919,
     "z": 39750,
-    "width": 137,
+    "width": 131,
     "height": 24,
     "tabOrder": -39751
   },

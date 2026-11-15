@@ -1,14 +1,16 @@
-number_checks: 766 checks, 766 ok, 0 known difference(s), 0 failed
+number_checks: 776 checks, 776 ok, 0 known difference(s), 0 failed
 
   ok    workbook: a year on cost per move (E9): 30 ok
   ok    workbook: profit a year per move: 30 ok
   ok    workbook: selector row run-rate: 30 ok
   ok    workbook: Hero Sort order: 1 ok
   ok    workbook: package A, tranches and the 2032 ledger (E9, E11): 66 ok
+  ok    workbook: check-in complaints at the kiosk hotels, 2021 to 2025 (E2): 3 ok
   ok    workbook: plan segments add up to the budget: 3 ok
   ok    workbook: Build state with package A picked: 12 ok
   ok    model: Build with A picked equals the recommendation: 3 ok
   ok    hero domain equals the spec constants: 12 ok
+  ok    workbook: the kiosk hotels' check-in complaints per 1,000 room nights as storytelling_checks.txt has them: 1 ok
   ok    workbook: hero yield domain covers the data: 1 ok
   ok    workbook: F4 Row Y per hotel (the comp's rule): 50 ok
   ok    workbook: F4 Dot Color (Night = the seven fullest): 50 ok
@@ -28,6 +30,8 @@ number_checks: 766 checks, 766 ok, 0 known difference(s), 0 failed
   ok    spec: ledger (E11): 12 ok
   ok    spec: plan segments: 24 ok
   ok    spec: capital plan end labels: 3 ok
+  ok    model: the case in view takes the emphasised end card, the other two the quiet one: 3 ok
+  ok    spec: ledger F4, the rise in check-in complaints at the kiosk hotels (E2): 3 ok
   ok    model: the case in view has no thin line: 3 ok
   ok    spec: comparison end labels (A, B, C): 3 ok
   ok    spec: build comparison end labels: 3 ok

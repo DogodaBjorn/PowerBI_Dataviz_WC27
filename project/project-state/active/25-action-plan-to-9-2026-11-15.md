@@ -20,7 +20,7 @@ publish 5: say which one.
 |---|---|---|---|---|---|
 | A | Copy sheet and fact check | done | 15 Nov | (this commit) | Sections 4 and 5. Three facts confirmed in the data, two placements changed for fit (D4, D5) |
 | B | The copy round | done | 15 Nov | (this commit) | 24 of the 26 sheet lines built; engine: 142 of 142 texts equal the spec in Low, Expected, High and the empty Build state, 766 number checks, alt texts 0 flags; six views rendered. Four lines changed for fit or for a reason (see the log): the tests are named in the table's headers, the staff-cost point stands in F1's forward line, F3's note and the selector footer keep their old words. **The word target is missed on Recommended: about 2 % fewer words, not 20 %** (What waits: 14 %). Bjorn decides whether a block goes (log, open items) |
-| C | The plan chart, and the kiosk evidence | todo | | | |
+| C | The plan chart, and the kiosk evidence | done | 15 Nov | (this commit) | The three end labels are cards right of the line ends, the chart's own labels are off; caption (sheet line 14) in the row above the plot; "Hover a year" on the chart; the complaint fact in the model and in ledger row F4 (sheet line 12). Engine: 142 of 142 texts, 776 of 776 numbers (the complaint rise against the workbook), alt texts 0 flags; Recommended rendered in Low, Expected and High. Three things to look at on publish 5 (log). Recommended carries 19 words more |
 | D | Page 1 and the hero | todo | | | |
 | E | Proof and publish 5 (Bjorn publishes) | todo | | | |
 | F | Submission (Bjorn) | todo | | | |
@@ -318,3 +318,60 @@ lines in slots of 17): **look at the Definitions tooltip on publish 5.**
 2. Step C can now add the complaint clause to ledger row F4: the row has a line to spare.
 3. Desktop shows its recovery banner in new windows (throwaway copies of this session that were ended, as rule 6
    allows): dismiss it, there is nothing to recover.
+
+**Step C (Sun 15 Nov 2026).**
+
+*Built.*
+
+- **The end labels (DS2-08).** `ch_plan_cum` ends on 2032 and has no data labels. Each line is named by a card right
+  of its end: `ch_plan_cum_e1..e3` in Dusk, `ch_plan_cum_s1..s3` in Deep Coffee semibold for the case in view, two
+  cards on one spot because a card has one font. They read six new text measures (`Plan End <case> (text)`,
+  `Plan End Sel <case> (text)`; one of each pair is empty). The six end series of steps 3 and 7
+  (`A Cumulative End ... (label-safe)`) left the model. The cards' heights are computed from the spec's end labels and
+  the published zero line (`plan_end_values()`, `PLAN_TICK_ZERO_Y`), so they follow the data.
+- **The caption (sheet line 14).** "Package A, cumulative cash, $M (not discounted, so it ends above NPV)" as a text
+  line in the row between the plan bar and the plot, from the plot's left edge (`plan_caption()`, typed; the generator
+  asserts it equals the spec).
+- **"Hover a year" (UX-20).** The tag stands in the plot's top row, left of the gate line (slot `tag_plan_cum` at
+  872, 848 in both slot maps; 2 px lower in the generator, between two gridlines).
+- **The kiosk evidence (sheet line 12, D8).** `Kiosk Check-in Complaints Rise %`: complaints about check-in and
+  waiting per 1,000 room nights sold at the hotels the kiosk move covers, 2021 against 2025. Ledger row F4 now reads
+  "kiosks live Apr 2028; check-in complaints there up 43% since 2021". `GuestComplaints` is back in the submission
+  model through the trim's own rule (it is read again): 26 tables, 338 measures, 17 relationships.
+- **Files.** `sketch_model.py`, `opzet_report.py`, `number_checks.py` (the end cards, and the complaint rise re-derived
+  from the workbook), `opzet-layering.json` (seven entries), both slot maps, `rebuild-v10-spec.json` (the chart's
+  construction block, the caption's text, the ledger cell through `build_checks.py --write-spec`: three slot views,
+  the clause of the sheet and nothing else). The round as scripts: `tools/desktop_shots/round2c/`.
+
+*Verified.* In the engine (Desktop 2.159, a throwaway copy on its own port, refreshed in 6 s): `build_checks.py` 142
+of 142, `number_checks.py` 776 of 776 (new: the complaint rise equals the workbook's to nine digits, the two rates
+are 0.88 and 1.26 as `storytelling_checks.txt` has them, the ledger prints 43 %, the case in view takes the
+emphasised card and the other two the quiet one), `alt_texts.py` 0 flags. Files: `schema_check` 206 files 0 failing,
+`a11y_check` 0, `strip_check` 0, `compliance_check` 5 of 5 (13 tables read the organisers' workbook),
+`validate_tmdl --strict` 0 errors (7 expected warnings), `pbir_detect` 0 unwaived. Strip renders in
+`deliverables/screenshots/Round2-stepC-2026-11-15/`: Recommended in Low, Expected and High, and one sheet of the chart
+in the three cases. In all three the lines visibly reach 2032, no label box lies on a line, the caption names the
+measure, and ledger row F4 stays three lines. Measured (`plan_measure.py`): 2027 at x 864.1, 2032 at 1719.7 (the
+comp: 864 and 1719), the gate line at 1121; the labels begin 6 px right of the gridlines' ends, the widest ("Expected
++$6.8M", semibold) ends at 1858, inside the card's 1864.
+
+*Deviations, and why.*
+
+| Planned | Built instead | Why |
+|---|---|---|
+| Labels 8 px right of the line ends (the comp) | 14 px | Power BI draws its gridlines 9 px past the last year; at 8 px the first letter touched the end of the +$20M gridline |
+| The tag right-aligned at the chart's right edge, or under the x axis (UX-20's two places) | the plot's top row, at the left | the right end of the top row is where the High line ends and its label stands; under the axis the milestone line runs to x 1748 |
+| The caption as a tab stop | out of the tab order; the chart's alt text now opens "Package A, cumulative cash by year to 2032, not discounted, in the three cases" (was "cumulative net impact") | one reading of the same words, not two; the alt text is not on the copy sheet, the wording is the sheet's |
+| The comp redrawn first (rule 7) | the comp (`rebuild-comp-v10.html`) still draws the copy and the plan chart of 14 Nov, as after step B | the spec's construction block and both slot maps carry the change; fit was judged on the Desktop renders |
+
+*Open items.*
+
+1. **To look at on publish 5** (not provable in Desktop): (a) the three labels on the height of their line ends. The
+   strip render snaps the chart 2 px up (zero line at 913.2 against 915.25 on the fourth publish), so the labels read
+   2 px low there; they are computed for the published position. (b) Click the plan chart, then look at the caption:
+   the band a clicked chart keeps must not cover it (it lies over the chart for that reason). (c) Hover the plot under
+   the tag: the year tooltip must open there too (the tag lies under the chart).
+2. **The reading load of Recommended went up, not down:** 19 words more than after step B (the caption 12, the
+   complaint clause 7). Step B's open item 1 stands as it was: the lever that is left is a block, and Bjorn decides.
+3. `CLAUDE.md` has an uncommitted row for doc 24 from an earlier session; this step left it alone.
+4. The Desktop window "Goodnight Inn" (the fourth publish) is still open and was not touched; step E closes it.
