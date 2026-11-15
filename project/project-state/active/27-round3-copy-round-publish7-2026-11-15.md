@@ -16,7 +16,7 @@ publishes, every Desktop window closed without saving).
 | Step | Status | Date | Note |
 |---|---|---|---|
 | The copy round | done | 15 Nov | Seven lines, all in slots that exist. Engine: 142 of 142 texts, 809 of 809 numbers, alt texts 0 flags. Rendered in Low, Expected and High |
-| The publish copy | see the log | 15 Nov | |
+| The publish copy | done | 15 Nov | `E:\GoodnightInn-publish`, open in a new window "Goodnight Inn", checked on its own model. Publish 6's copy kept as `E:\GoodnightInn-publish6` |
 | Publish 7 | Bjorn | | Replace the report "Goodnight Inn"; the link stays |
 | The gate and the walkthrough on publish 7 | after the publish | | `gate.py` against publish 6, `walk.py` |
 | The package for the last check | after the gate | | `deliverables/final-check-publish7/` |
@@ -116,4 +116,25 @@ has started since 2020" and this line now say the same thing from both ends.
 
 ## 6 · Log
 
-*(the publish copy, the publish, the gate and the package: written as they happen)*
+**The publish copy (Sun 15 Nov 2026, about 18:00 local).**
+
+- The throwaway window of the render round is closed, not saved.
+- **The window of publish 6 is closed, not saved** ("Niet opslaan"). Its folder is kept as `E:\GoodnightInn-publish6`
+  (the state Desktop saved at the publish of 13:47), in case publish 6 must come back. No `.pbix` was in that folder:
+  the `.pbix` for the submission comes from the new window, after publish 7.
+- **The new publish copy:** `E:\GoodnightInn-publish\Goodnight Inn.pbip`, written from `project/pbip` at `30d23be`
+  with `throwaway_copy.py --name "Goodnight Inn"` and compared file for file with the project (no difference in the
+  report or the model). Opened in a new Desktop window "Goodnight Inn" and loaded (`refresh_desktop_model.ps1 -Port`,
+  26 tables, 8 s). **Not reloaded.** Checked in that window, on its own model: `build_checks.py` 142 of 142,
+  `number_checks.py` 809 of 809, `alt_texts.py` 0 flags. Both pages captured through the bridge, with data and the
+  new lines.
+
+*For Bjorn: publish 7.* In the open window "Goodnight Inn": Publish (Desktop asks to save: yes, it is the copy), to
+the same workspace, **replace** the report "Goodnight Inn". The Publish to Web link stays the same. A watcher on the
+link starts the gate when the new publish is on it (the cache took 20 to 25 minutes on 15 Nov).
+
+*After the publish.* `gate.py <link> <out> --ref ...PublishToWeb-2026-11-15-publish6` and `walk.py`, both written into
+`deliverables/final-check-publish7/`. To look at on the captures: the seven lines of section 2 in Low, Expected and
+High; no bubble over a tab; the pills clear at 1366 px; the keyboard walk without a nameless stop. Against publish 6
+only these may differ: the hero table (two headers, two status words), the tile's second line, tranche 3's label,
+the What waits table (rows B and tranche 3), the range under "Your plan".
