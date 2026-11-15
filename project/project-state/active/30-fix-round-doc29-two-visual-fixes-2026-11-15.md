@@ -197,3 +197,17 @@ Nothing here is done; each step waits for his word.
   the model is equal to `a86e4ef`. All checks green (section 3). The throwaway window closed without saving; the
   window "Goodnight Inn" (publish 7) was not touched. Committed and pushed on the fix branch. No merge, no pull
   request, no publish.
+- **15 Nov, late: Bjorn takes the fixes ("Yes I want this version") and asks for one final name.**
+  `fix/publish7-visual-fixes` merged into `rebuild-finalv3` (fast-forward, `811c953`, pushed). Not on `main`.
+  **The names.** Project and entry: **The Wake-up Call** (page 1's own masthead, "1 / 2 · THE WAKE-UP CALL"; the
+  brand kit carries the same name). Report and file: **Goodnight Inn - The Wake-up Call** (the brand first: the
+  post has to name it). Inside the repository nothing is renamed (`GoodnightInn-opzet.Report`, `PillowKey`: the
+  tools read those names).
+  **The final copy:** `E:\Goodnight Inn - The Wake-up Call\Goodnight Inn - The Wake-up Call.pbip`, written from
+  `project/pbip` at `811c953`, open in a window of that name, data loaded. Its report definition is equal to the
+  project's file for file; on its own model: texts 142 of 142, numbers 809 of 809, alt texts 0 flags.
+  **A new name is a new report in the service, so a new public link.** Publish 7 ("Goodnight Inn") stays on its
+  old link, untouched, until the new one has passed the gate: the fallback. The old window "Goodnight Inn" did not
+  answer a close request and was left open; it is publish 7, do not publish from it.
+  **Left for Bjorn:** publish from the new window, create the Publish to Web link for the new report, hand the link
+  over for the gate; then File > Save as `Goodnight Inn - The Wake-up Call.pbix`.
