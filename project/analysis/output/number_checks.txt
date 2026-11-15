@@ -1,4 +1,4 @@
-number_checks: 806 checks, 806 ok, 0 known difference(s), 0 failed
+number_checks: 809 checks, 809 ok, 0 known difference(s), 0 failed
 
   ok    workbook: a year on cost per move (E9): 30 ok
   ok    workbook: profit a year per move: 30 ok
@@ -26,7 +26,7 @@ number_checks: 806 checks, 806 ok, 0 known difference(s), 0 failed
   ok    spec: hero answers start with the MoveDecision finding: 30 ok
   ok    spec: recommendation numbers (E10): 12 ok
   ok    spec: the tile's first line (the Low case; in the Low view the Expected case): 6 ok
-  ok    spec: the app carries it: 6 ok
+  ok    spec: the app alone: 9 ok
   ok    spec: ledger (E11): 12 ok
   ok    spec: plan segments: 24 ok
   ok    spec: capital plan end labels: 3 ok

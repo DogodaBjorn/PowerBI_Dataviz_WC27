@@ -433,9 +433,9 @@
      "Answers",
      "Status",
      "A year on cost",
-     "test 1",
+     "≥ 8%",
      "NPV through 2032",
-     "test 2"
+     "≥ $0"
     ],
     [
      "Booking app & member rates",
@@ -467,7 +467,7 @@
     [
      "Breakfast upgrade",
      "F3 · growth",
-     "not now",
+     "package B",
      "",
      "9.9%",
      "",
@@ -503,7 +503,7 @@
     [
      "Kingston +40 rooms",
      "F4 · growth",
-     "not now",
+     "not full",
      "",
      "−2.6%",
      "",
@@ -531,7 +531,7 @@
    "c_hero_caption": "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Not now: Energy and Boston exceed the $8.7M left.",
    "c_rec_head": "Our recommendation: package A\nBooking app with member rates + Revenue management + Kiosks at the 20 busiest hotels",
    "c_rec_nums": "$9.4M\ncapex\n−$5.5M\nNPV through 2032\n+$1.0M\na year by 2032\n11.1%\na year on cost",
-   "c_rec_lines": "Expected case: +$3.3M through 2032 and +$3.5M a year by 2032.\nThe app carries it: +$0.6M of the +$1.0M. Every year without it leaves about $1.2M with the agencies.",
+   "c_rec_lines": "Expected case: +$3.3M through 2032 and +$3.5M a year by 2032.\nThe app alone: +$0.6M a year by 2032. Every year without it leaves about $1.2M with the agencies.",
    "tbl_ledger": [
     [
      "Finding",
@@ -576,7 +576,7 @@
    "ch_plan_cum_cap": "Package A, cumulative cash, $M (not discounted, so it ends above NPV)",
    "c_plan_t1": "Tranche 1 · package A\n$9.4M · 2027",
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.5M a year once live · 11.7% a year on cost",
-   "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate\n+$1.3M a year once live · 4.5% a year on cost",
+   "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$1.3M a year once live · 4.5% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
    "c_plan_gate": "The 2028 gate, one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track by then) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032 and the oldest hotels' NPS. A rule, not a forecast.",
    "ch_plan_cum": {
@@ -611,9 +611,9 @@
      "Answers",
      "Status",
      "A year on cost",
-     "test 1",
+     "≥ 8%",
      "NPV through 2032",
-     "test 2"
+     "≥ $0"
     ],
     [
      "Booking app & member rates",
@@ -645,7 +645,7 @@
     [
      "Breakfast upgrade",
      "F3 · growth",
-     "not now",
+     "package B",
      "",
      "19.8%",
      "",
@@ -681,7 +681,7 @@
     [
      "Kingston +40 rooms",
      "F4 · growth",
-     "not now",
+     "not full",
      "",
      "8.2%",
      "",
@@ -709,7 +709,7 @@
    "c_hero_caption": "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Not now: Energy and Boston exceed the $8.7M left.",
    "c_rec_head": "Our recommendation: package A\nBooking app with member rates + Revenue management + Kiosks at the 20 busiest hotels",
    "c_rec_nums": "$9.4M\ncapex\n+$3.3M\nNPV through 2032\n+$3.5M\na year by 2032\n37.5%\na year on cost",
-   "c_rec_lines": "Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.\nThe app carries it: +$3.4M of the +$3.3M. Every year without it leaves about $2.4M with the agencies.",
+   "c_rec_lines": "Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.\nThe app alone: +$3.4M through 2032. Every year without it leaves about $2.4M with the agencies.",
    "tbl_ledger": [
     [
      "Finding",
@@ -754,7 +754,7 @@
    "ch_plan_cum_cap": "Package A, cumulative cash, $M (not discounted, so it ends above NPV)",
    "c_plan_t1": "Tranche 1 · package A\n$9.4M · 2027",
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.7M a year once live · 13.8% a year on cost",
-   "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate\n+$2.3M a year once live · 7.9% a year on cost",
+   "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$2.3M a year once live · 7.9% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
    "c_plan_gate": "The 2028 gate, one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track by then) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032 and the oldest hotels' NPS. A rule, not a forecast.",
    "ch_plan_cum": {
@@ -789,9 +789,9 @@
      "Answers",
      "Status",
      "A year on cost",
-     "test 1",
+     "≥ 8%",
      "NPV through 2032",
-     "test 2"
+     "≥ $0"
     ],
     [
      "Booking app & member rates",
@@ -823,7 +823,7 @@
     [
      "Breakfast upgrade",
      "F3 · growth",
-     "not now",
+     "package B",
      "",
      "26.4%",
      "",
@@ -859,7 +859,7 @@
     [
      "Kingston +40 rooms",
      "F4 · growth",
-     "not now",
+     "not full",
      "",
      "8.9%",
      "",
@@ -887,7 +887,7 @@
    "c_hero_caption": "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Not now: Energy and Boston exceed the $8.7M left.",
    "c_rec_head": "Our recommendation: package A\nBooking app with member rates + Revenue management + Kiosks at the 20 busiest hotels",
    "c_rec_nums": "$9.4M\ncapex\n+$12.7M\nNPV through 2032\n+$6.2M\na year by 2032\n66.0%\na year on cost",
-   "c_rec_lines": "Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.\nThe app carries it: +$9.5M of the +$12.7M. Every year without it leaves about $3.6M with the agencies.",
+   "c_rec_lines": "Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.\nThe app alone: +$9.5M through 2032. Every year without it leaves about $3.6M with the agencies.",
    "tbl_ledger": [
     [
      "Finding",
@@ -932,7 +932,7 @@
    "ch_plan_cum_cap": "Package A, cumulative cash, $M (not discounted, so it ends above NPV)",
    "c_plan_t1": "Tranche 1 · package A\n$9.4M · 2027",
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.8M a year once live · 14.8% a year on cost",
-   "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate\n+$3.4M a year once live · 11.5% a year on cost",
+   "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$3.4M a year once live · 11.5% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
    "c_plan_gate": "The 2028 gate, one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track by then) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032 and the oldest hotels' NPS. A rule, not a forecast.",
    "ch_plan_cum": {
@@ -977,9 +977,9 @@
     ],
     [
      "B · Breakfast instead of kiosks",
-     "$11.7M capex\n−$6.9M NPV through 2032\n+$1.3M a year by 2032\n−$6.9M to +$12.6M",
+     "$11.7M capex\n−$6.9M NPV through 2032\n+$1.3M a year by 2032\nLow −$6.9M · High +$12.6M",
      "Lifts guest scores in all 50 hotels, not 20.",
-     "$2.3M more than A for $1.4M less through 2032, and the queues at the 20 busiest hotels stay.",
+     "$2.3M more than A for $0.3M more a year: 10.8% a year on cost against A's 11.1%, and $1.4M less through 2032. The queues at the 20 busiest hotels stay.",
      "Not planned."
     ],
     [
@@ -992,7 +992,7 @@
     [
      "Tranche 3 · Refresh, 10 oldest hotels",
      "$29.5M capex\n+$1.3M a year once live\n4.5% a year on cost\nin package C: −$34.8M through 2032",
-     "Renovation works: the seven hotels last renovated in 2021 held NPS near +6 while the rest fell to +2.7.",
+     "Renovation works: the seven hotels whose renovation finished in 2021 held NPS near +6 while the rest fell to +2.7.",
      "4.5% a year on cost, under our 8%. The data cannot price the cost of waiting, so this case is understated.",
      "2028 gate, with a case beyond 2032."
     ]
@@ -1039,9 +1039,9 @@
     ],
     [
      "B · Breakfast instead of kiosks",
-     "$11.7M capex\n+$2.7M NPV through 2032\n+$4.0M a year by 2032\n−$6.9M to +$12.6M",
+     "$11.7M capex\n+$2.7M NPV through 2032\n+$4.0M a year by 2032\nLow −$6.9M · High +$12.6M",
      "Lifts guest scores in all 50 hotels, not 20.",
-     "$2.3M more than A for $0.6M less through 2032, and the queues at the 20 busiest hotels stay.",
+     "$2.3M more than A for $0.5M more a year: 34.0% a year on cost against A's 37.5%, and $0.6M less through 2032. The queues at the 20 busiest hotels stay.",
      "Not planned."
     ],
     [
@@ -1054,7 +1054,7 @@
     [
      "Tranche 3 · Refresh, 10 oldest hotels",
      "$29.5M capex\n+$2.3M a year once live\n7.9% a year on cost\nin package C: −$23.4M through 2032",
-     "Renovation works: the seven hotels last renovated in 2021 held NPS near +6 while the rest fell to +2.7.",
+     "Renovation works: the seven hotels whose renovation finished in 2021 held NPS near +6 while the rest fell to +2.7.",
      "7.9% a year on cost, just under our 8%. The data cannot price the cost of waiting, so this case is understated.",
      "2028 gate, with a case beyond 2032."
     ]
@@ -1101,9 +1101,9 @@
     ],
     [
      "B · Breakfast instead of kiosks",
-     "$11.7M capex\n+$12.6M NPV through 2032\n+$6.7M a year by 2032\n−$6.9M to +$12.6M",
+     "$11.7M capex\n+$12.6M NPV through 2032\n+$6.7M a year by 2032\nLow −$6.9M · High +$12.6M",
      "Lifts guest scores in all 50 hotels, not 20.",
-     "$2.3M more than A for $0.1M less through 2032, and the queues at the 20 busiest hotels stay.",
+     "$2.3M more than A for $0.5M more a year: 57.6% a year on cost against A's 66.0%, and $0.1M less through 2032. The queues at the 20 busiest hotels stay.",
      "Not planned."
     ],
     [
@@ -1116,7 +1116,7 @@
     [
      "Tranche 3 · Refresh, 10 oldest hotels",
      "$29.5M capex\n+$3.4M a year once live\n11.5% a year on cost\nin package C: −$11.4M through 2032",
-     "Renovation works: the seven hotels last renovated in 2021 held NPS near +6 while the rest fell to +2.7.",
+     "Renovation works: the seven hotels whose renovation finished in 2021 held NPS near +6 while the rest fell to +2.7.",
      "11.5% a year on cost but does not pay back by 2032 (−$24.1M). The data cannot price the cost of waiting, so this case is understated.",
      "2028 gate, with a case beyond 2032."
     ]
@@ -1226,7 +1226,7 @@
    "c_sel_footer": "Picked: 3 moves, $9.4M of $60.0M",
    "c_you_title": "Your plan: 3 moves, live by Apr 2028",
    "c_you_nums": "$9.4M\ncapex\n−$5.5M\nNPV through 2032\n+$1.0M\na year by 2032\n11.1%\na year on cost",
-   "c_you_range": "−$5.5M to +$12.7M",
+   "c_you_range": "Low −$5.5M · High +$12.7M",
    "c_you_rules": "Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.",
    "ch_build_bars": {
     "labels": [
@@ -1342,7 +1342,7 @@
    "c_sel_footer": "Picked: 3 moves, $9.4M of $60.0M",
    "c_you_title": "Your plan: 3 moves, live by Apr 2028",
    "c_you_nums": "$9.4M\ncapex\n+$3.3M\nNPV through 2032\n+$3.5M\na year by 2032\n37.5%\na year on cost",
-   "c_you_range": "−$5.5M to +$12.7M",
+   "c_you_range": "Low −$5.5M · High +$12.7M",
    "c_you_rules": "Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.",
    "ch_build_bars": {
     "labels": [
@@ -1458,7 +1458,7 @@
    "c_sel_footer": "Picked: 3 moves, $9.4M of $60.0M",
    "c_you_title": "Your plan: 3 moves, live by Apr 2028",
    "c_you_nums": "$9.4M\ncapex\n+$12.7M\nNPV through 2032\n+$6.2M\na year by 2032\n66.0%\na year on cost",
-   "c_you_range": "−$5.5M to +$12.7M",
+   "c_you_range": "Low −$5.5M · High +$12.7M",
    "c_you_rules": "Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.",
    "ch_build_bars": {
     "labels": [

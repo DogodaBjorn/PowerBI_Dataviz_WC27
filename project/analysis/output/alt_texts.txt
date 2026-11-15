@@ -107,13 +107,13 @@ alt_texts: 137 visuals in the tab order, 109 on a measure, 0 flag(s)
       Package A, Expected case: capex $9.4M, net present value through 2032 +$3.3M, +$3.5M a year by 2032, 37.5% a year on cost.
       Low: Package A, Low case: capex $9.4M, net present value through 2032 −$5.5M, +$1.0M a year by 2032, 11.1% a year on cost.
       High: Package A, High case: capex $9.4M, net present value through 2032 +$12.7M, +$6.2M a year by 2032, 66.0% a year on cost.
- 9670 c_rec_lines (cardVisual) [Rec Lines (text)] 167/177/178 chars
+ 9670 c_rec_lines (cardVisual) [Rec Lines (text)] 162/170/170 chars
       Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.
-The app carries it: +$3.4M of the +$3.3M. Every year without it leaves about $2.4M with the agencies.
+The app alone: +$3.4M through 2032. Every year without it leaves about $2.4M with the agencies.
       Low: Expected case: +$3.3M through 2032 and +$3.5M a year by 2032.
-The app carries it: +$0.6M of the +$1.0M. Every year without it leaves about $1.2M with the agencies.
+The app alone: +$0.6M a year by 2032. Every year without it leaves about $1.2M with the agencies.
       High: Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.
-The app carries it: +$9.5M of the +$12.7M. Every year without it leaves about $3.6M with the agencies.
+The app alone: +$9.5M through 2032. Every year without it leaves about $3.6M with the agencies.
  9660 tbl_ledger (tableEx) [Alt Ledger (text)] 296/286/298 chars   <-- long (298)
       What package A changes for each finding by 2032, Expected case. F2 The middleman: half the rise undone; F1 The margin: half the fall recovered; F4 Where we are full: rooms: at the 2028 gate; F3 The fading welcome: decided at the 2028 gate. The table gives what we track and both values.
       Low: What package A changes for each finding by 2032, Low case. F2 The middleman: a quarter of the rise undone; F1 The margin: a little of the fall recovered; F4 Where we are full: rooms: at the 2028 gate; F3 The fading welcome: decided at the 2028 gate. The table gives what we track and both values.
@@ -137,15 +137,15 @@ $12.4M · 2028 gate
       High: Tranche 2 · Gatwick and Toronto +40 rooms
 $12.4M · 2028 gate
 +$1.8M a year once live · 14.8% a year on cost
- 9560 c_plan_t3 (cardVisual) [Plan T3 (text)] 89/89/90 chars
+ 9560 c_plan_t3 (cardVisual) [Plan T3 (text)] 119/119/120 chars
       Tranche 3 · the refresh
-$29.5M · 2028 gate
+$29.5M · 2028 gate, only with a case beyond 2032
 +$2.3M a year once live · 7.9% a year on cost
       Low: Tranche 3 · the refresh
-$29.5M · 2028 gate
+$29.5M · 2028 gate, only with a case beyond 2032
 +$1.3M a year once live · 4.5% a year on cost
       High: Tranche 3 · the refresh
-$29.5M · 2028 gate
+$29.5M · 2028 gate, only with a case beyond 2032
 +$3.4M a year once live · 11.5% a year on cost
  9550 c_plan_t4 (cardVisual) [Plan T4 (text)] 39/39/39 chars
       Not needed · $8.7M
@@ -218,10 +218,10 @@ stays with the group
       Picked: 3 moves, $9.4M of $60.0M
  9250 c_you_title (cardVisual) [Build Title (text)] 36/36/36 chars
       Your plan: 3 moves, live by Apr 2028
- 9240 c_you_nums (cardVisual) [Alt You Nums (text)] 226/231/228 chars
-      Your plan, Expected case: capex $9.4M, net present value through 2032 +$3.3M, +$3.5M a year by 2032, 37.5% a year on cost. Between the Low and High cases: −$5.5M to +$12.7M. Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
-      Low: Your plan, Low case: capex $9.4M, net present value through 2032 −$5.5M, +$1.0M a year by 2032, 11.1% a year on cost. Between the Low and High cases: −$5.5M to +$12.7M. Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
-      High: Your plan, High case: capex $9.4M, net present value through 2032 +$12.7M, +$6.2M a year by 2032, 66.0% a year on cost. Between the Low and High cases: −$5.5M to +$12.7M. Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
+ 9240 c_you_nums (cardVisual) [Alt You Nums (text)] 215/220/217 chars
+      Your plan, Expected case: capex $9.4M, net present value through 2032 +$3.3M, +$3.5M a year by 2032, 37.5% a year on cost. NPV by case: Low −$5.5M · High +$12.7M. Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
+      Low: Your plan, Low case: capex $9.4M, net present value through 2032 −$5.5M, +$1.0M a year by 2032, 11.1% a year on cost. NPV by case: Low −$5.5M · High +$12.7M. Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
+      High: Your plan, High case: capex $9.4M, net present value through 2032 +$12.7M, +$6.2M a year by 2032, 66.0% a year on cost. NPV by case: Low −$5.5M · High +$12.7M. Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
  9220 c_you_rules (shape) [Build Valid (text)] 53/53/53 chars
       Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
  9210 ch_build_bars (clusteredBarChart) [Alt Build Bars (text)] 161/166/163 chars
