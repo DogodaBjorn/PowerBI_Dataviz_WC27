@@ -17,16 +17,16 @@ alt_texts: 137 visuals in the tab order, 109 on a measure, 0 flag(s)
       Share of Goodnight Inn room revenue booked through online agencies in 2025: 50.0%, highest of 4, 33.0% in 2021.
  9769 kpi_nps (cardVisual) [Alt KPI NPS (text)] 159/159/159 chars
       Guest quality: Goodnight Inn net promoter score in 2025: +3.3, still positive, but falling every year, last of 4, from +8.5 in 2021; the others +14.7 to +31.9.
- 9690 c_f1_title (cardVisual) [Alt F1 Title (text)] 72/72/72 chars
-      F1, the margin. After commissions, the margin fell 2.8 points since 2023
+ 9690 c_f1_title (cardVisual) [Alt F1 Title (text)] 79/79/79 chars
+      Finding I, the margin. After commissions, the margin fell 2.8 points since 2023
  9680 ch_f1_margin (stackedAreaChart) [Alt F1 Chart (text)] 195/195/195 chars
       After commissions, Goodnight Inn's operating margin rose from 32.5% in 2021 to 36.5% in 2023 and fell back to 33.7% in 2025. The gap to the margin before commissions grew from 8.4 to 10.6 points.
  9670 c_f1_note (cardVisual) [F1 Note (text)] 188/188/188 chars
       Commissions took 1.0 of those points and running costs 1.8 (staff rose from 26.9% to 28.3% of revenue). Room rates rose 2.7%, in line with the other brands, so no price premium absorbs it.
  9660 lnk_f1 (textbox) [typed] 64 chars
       On page 2: revenue management, and the kiosks for running costs.
- 9590 c_f2_title (cardVisual) [Alt F2 Title (text)] 76/76/76 chars
-      F2, the middleman. Online agencies now book 50% of room revenue, up from 33%
+ 9590 c_f2_title (cardVisual) [Alt F2 Title (text)] 84/84/84 chars
+      Finding II, the middleman. Online agencies now book 50% of room revenue, up from 33%
  9580 ch_f2_ota (lineChart) [Alt F2 Chart (text)] 176/176/176 chars
       Online agencies booked 50.0% of Goodnight Inn's room revenue in 2025, up from 33.0% in 2021. The other brands in 2025: Maison d'Or 23.2%, P&K Select 24.2%, Pebble & Pine 35.9%.
  9570 tbl_f2_folio (tableEx) [Alt F2 Folio (text)] 181/181/181 chars
@@ -35,8 +35,8 @@ alt_texts: 137 visuals in the tab order, 109 on a measure, 0 flag(s)
       Booked direct, the guest pays $2.25 more and we keep $17.47 more. Nothing rewards the guest for booking direct; member rates change that. At the 2021 channel mix, 2025 commissions would be $4.8M lower.
  9550 lnk_f2 (textbox) [typed] 45 chars
       On page 2: the booking app with member rates.
- 9490 c_f3_title (cardVisual) [Alt F3 Title (text)] 81/81/81 chars
-      F3, the fading welcome. Hotels last renovated 10 years or more ago score NPS −4.9
+ 9490 c_f3_title (cardVisual) [Alt F3 Title (text)] 90/90/90 chars
+      Finding III, the fading welcome. Hotels last renovated 10 years or more ago score NPS −4.9
  9480 ch_f3_age (clusteredColumnChart) [Alt F3 Chart (text)] 250/250/250 chars
       Goodnight Inn's 2025 net promoter score by years since the last renovation: 5 years or less +6.8, 6 to 9 years +3.8, 10 years or more −4.9. Hovering a bar shows that band's occupancy, revenue per room, its NPS since 2021 and its weakest guest scores.
  9475 c_f3_count (cardVisual) [F3 Count (text)] 43/43/43 chars
@@ -45,8 +45,8 @@ alt_texts: 137 visuals in the tab order, 109 on a measure, 0 flag(s)
       Since 2018 Goodnight Inn spent $1.0M per hotel on renovation; the other brands spent $5.9M to $7.9M. None has started since 2020. Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause.
  9460 lnk_f3 (textbox) [typed] 56 chars
       On page 2: the refresh waits for the 2028 gate, and why.
- 9390 c_f4_title (cardVisual) [Alt F4 Title (text)] 94/94/94 chars
-      F4, where we are full. Our airports run fullest: five of the seven fullest hotels are airports
+ 9390 c_f4_title (cardVisual) [Alt F4 Title (text)] 102/102/102 chars
+      Finding IV, where we are full. Our airports run fullest: five of the seven fullest hotels are airports
  9380 c_f4_note (cardVisual) [F4 Note (text)] 127/127/127 chars
       Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none.
  9375 c_f4_rows (cardVisual) [Alt F4 Types (text)] 112/112/112 chars
@@ -115,9 +115,9 @@ The app alone: +$0.6M a year by 2032. Every year without it leaves about $1.2M w
       High: Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.
 The app alone: +$9.5M through 2032. Every year without it leaves about $3.6M with the agencies.
  9660 tbl_ledger (tableEx) [Alt Ledger (text)] 296/286/298 chars   <-- long (298)
-      What package A changes for each finding by 2032, Expected case. F2 The middleman: half the rise undone; F1 The margin: half the fall recovered; F4 Where we are full: rooms: at the 2028 gate; F3 The fading welcome: decided at the 2028 gate. The table gives what we track and both values.
-      Low: What package A changes for each finding by 2032, Low case. F2 The middleman: a quarter of the rise undone; F1 The margin: a little of the fall recovered; F4 Where we are full: rooms: at the 2028 gate; F3 The fading welcome: decided at the 2028 gate. The table gives what we track and both values.
-      High: What package A changes for each finding by 2032, High case. F2 The middleman: three quarters of the rise undone; F1 The margin: most of the fall recovered; F4 Where we are full: rooms: at the 2028 gate; F3 The fading welcome: decided at the 2028 gate. The table gives what we track and both values.
+      What package A changes for each finding by 2032, Expected case. II The middleman: half the rise undone; I The margin: half the fall recovered; IV Where we are full: rooms: at the 2028 gate; III The fading welcome: decided at the 2028 gate. The table gives what we track and both values.
+      Low: What package A changes for each finding by 2032, Low case. II The middleman: a quarter of the rise undone; I The margin: a little of the fall recovered; IV Where we are full: rooms: at the 2028 gate; III The fading welcome: decided at the 2028 gate. The table gives what we track and both values.
+      High: What package A changes for each finding by 2032, High case. II The middleman: three quarters of the rise undone; I The margin: most of the fall recovered; IV Where we are full: rooms: at the 2028 gate; III The fading welcome: decided at the 2028 gate. The table gives what we track and both values.
  9650 c_ledger_caption (textbox) [typed] 56 chars
       2025 brand plus A's full yearly effect, in 2025 dollars.
  9640 btn_build_invite (actionButton) [typed] 101 chars

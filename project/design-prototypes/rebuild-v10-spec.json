@@ -331,7 +331,7 @@
    "kpi_margin": "Operating margin after commissions\n33.7%\n2nd of 4, −2.8 pt since 2023",
    "kpi_ota": "Room revenue booked through online agencies\n50.0%\nhighest of 4, 33.0% in 2021",
    "kpi_nps": "Guest quality: net promoter score (−100 to +100)\n+3.3\nstill positive, but falling every year, last of 4",
-   "c_f1_kicker": "F1 · THE MARGIN",
+   "c_f1_kicker": "I · THE MARGIN",
    "c_f1_title": "After commissions, the margin fell 2.8 points since 2023",
    "ch_f1_margin": {
     "labels": [
@@ -342,7 +342,7 @@
    "lbl_f1_band": "Commissions",
    "c_f1_note": "Commissions took 1.0 of those points and running costs 1.8 (staff rose from 26.9% to 28.3% of revenue). Room rates rose 2.7%, in line with the other brands, so no price premium absorbs it.",
    "lnk_f1": "On page 2: revenue management, and the kiosks for running costs.",
-   "c_f2_kicker": "F2 · THE MIDDLEMAN",
+   "c_f2_kicker": "II · THE MIDDLEMAN",
    "c_f2_title": "Online agencies now book 50% of room revenue, up from 33%",
    "ch_f2_ota": {
     "labels": [
@@ -377,7 +377,7 @@
    ],
    "c_f2_note": "Booked direct, the guest pays $2.25 more and we keep $17.47 more. Nothing rewards the guest for booking direct; member rates change that. At the 2021 channel mix, 2025 commissions would be $4.8M lower.",
    "lnk_f2": "On page 2: the booking app with member rates.",
-   "c_f3_kicker": "F3 · THE FADING WELCOME",
+   "c_f3_kicker": "III · THE FADING WELCOME",
    "tag_f3": "ⓘ Hover a bar",
    "c_f3_title": "Hotels last renovated 10 years or more ago score NPS −4.9",
    "ch_f3_age": {
@@ -393,7 +393,7 @@
    "c_f3_count": "44 of 50 hotels; 6 have no renovation date.",
    "c_f3_note": "Since 2018 Goodnight Inn spent $1.0M per hotel on renovation; the other brands spent $5.9M to $7.9M. None has started since 2020. Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause.",
    "lnk_f3": "On page 2: the refresh waits for the 2028 gate, and why.",
-   "c_f4_kicker": "F4 · WHERE WE ARE FULL",
+   "c_f4_kicker": "IV · WHERE WE ARE FULL",
    "tag_f4": "ⓘ Hover a hotel",
    "c_f4_title": "Our airports run fullest: five of the seven fullest hotels are airports",
    "c_f4_note": "Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none.",
@@ -440,7 +440,7 @@
     ],
     [
      "Booking app & member rates",
-     "F2 · growth",
+     "II · growth",
      "A",
      "",
      "12.1%",
@@ -449,7 +449,7 @@
     ],
     [
      "Revenue management",
-     "F1 · growth",
+     "I · growth",
      "A",
      "",
      "9.8%",
@@ -458,7 +458,7 @@
     ],
     [
      "Kiosks at the 20 busiest hotels",
-     "F4",
+     "IV",
      "A",
      "",
      "10.3%",
@@ -467,7 +467,7 @@
     ],
     [
      "Breakfast upgrade",
-     "F3 · growth",
+     "III · growth",
      "package B",
      "",
      "9.9%",
@@ -476,7 +476,7 @@
     ],
     [
      "Gatwick +40 rooms",
-     "F4 · growth",
+     "IV · growth",
      "2028 gate",
      "",
      "13.3%",
@@ -485,7 +485,7 @@
     ],
     [
      "Energy programme",
-     "F1",
+     "I",
      "not now",
      "",
      "7.9%",
@@ -494,7 +494,7 @@
     ],
     [
      "Toronto +40 rooms",
-     "F4 · growth",
+     "IV · growth",
      "2028 gate",
      "",
      "9.9%",
@@ -503,7 +503,7 @@
     ],
     [
      "Kingston +40 rooms",
-     "F4 · growth",
+     "IV · growth",
      "not full",
      "",
      "−2.6%",
@@ -512,7 +512,7 @@
     ],
     [
      "Boston new hotel",
-     "F4 · growth",
+     "IV · growth",
      "not now",
      "",
      "6.6%",
@@ -521,7 +521,7 @@
     ],
     [
      "Refresh, 10 oldest hotels",
-     "F3",
+     "III",
      "2028 gate",
      "",
      "4.5%",
@@ -542,28 +542,28 @@
      "Status"
     ],
     [
-     "F2 The middleman",
+     "II The middleman",
      "distribution cost, % of room revenue\nbooking app with member rates",
      "11.3%",
      "10.7%",
      "a quarter of the rise undone"
     ],
     [
-     "F1 The margin",
+     "I The margin",
      "operating margin after commissions\napp + revenue management + kiosks",
      "33.7%",
      "34.1%",
      "a little of the fall recovered"
     ],
     [
-     "F4 Where we are full",
+     "IV Where we are full",
      "self check-in at the 20 busiest hotels\nkiosks live Apr 2028; check-in complaints there up 43% since 2021",
      "0",
      "20",
      "rooms: at the 2028 gate"
     ],
     [
-     "F3 The fading welcome",
+     "III The fading welcome",
      "NPS, hotels renovated 10+ years ago\nthe refresh: see What waits, and why",
      "−4.9",
      "not in A",
@@ -618,7 +618,7 @@
     ],
     [
      "Booking app & member rates",
-     "F2 · growth",
+     "II · growth",
      "A",
      "",
      "47.0%",
@@ -627,7 +627,7 @@
     ],
     [
      "Revenue management",
-     "F1 · growth",
+     "I · growth",
      "A",
      "",
      "32.0%",
@@ -636,7 +636,7 @@
     ],
     [
      "Kiosks at the 20 busiest hotels",
-     "F4",
+     "IV",
      "A",
      "",
      "20.6%",
@@ -645,7 +645,7 @@
     ],
     [
      "Breakfast upgrade",
-     "F3 · growth",
+     "III · growth",
      "package B",
      "",
      "19.8%",
@@ -654,7 +654,7 @@
     ],
     [
      "Gatwick +40 rooms",
-     "F4 · growth",
+     "IV · growth",
      "2028 gate",
      "",
      "15.8%",
@@ -663,7 +663,7 @@
     ],
     [
      "Energy programme",
-     "F1",
+     "I",
      "not now",
      "",
      "11.8%",
@@ -672,7 +672,7 @@
     ],
     [
      "Toronto +40 rooms",
-     "F4 · growth",
+     "IV · growth",
      "2028 gate",
      "",
      "11.5%",
@@ -681,7 +681,7 @@
     ],
     [
      "Kingston +40 rooms",
-     "F4 · growth",
+     "IV · growth",
      "not full",
      "",
      "8.2%",
@@ -690,7 +690,7 @@
     ],
     [
      "Boston new hotel",
-     "F4 · growth",
+     "IV · growth",
      "not now",
      "",
      "8.1%",
@@ -699,7 +699,7 @@
     ],
     [
      "Refresh, 10 oldest hotels",
-     "F3",
+     "III",
      "2028 gate",
      "",
      "7.9%",
@@ -720,28 +720,28 @@
      "Status"
     ],
     [
-     "F2 The middleman",
+     "II The middleman",
      "distribution cost, % of room revenue\nbooking app with member rates",
      "11.3%",
      "10.1%",
      "half the rise undone"
     ],
     [
-     "F1 The margin",
+     "I The margin",
      "operating margin after commissions\napp + revenue management + kiosks",
      "33.7%",
      "35.1%",
      "half the fall recovered"
     ],
     [
-     "F4 Where we are full",
+     "IV Where we are full",
      "self check-in at the 20 busiest hotels\nkiosks live Apr 2028; check-in complaints there up 43% since 2021",
      "0",
      "20",
      "rooms: at the 2028 gate"
     ],
     [
-     "F3 The fading welcome",
+     "III The fading welcome",
      "NPS, hotels renovated 10+ years ago\nthe refresh: see What waits, and why",
      "−4.9",
      "not in A",
@@ -796,7 +796,7 @@
     ],
     [
      "Booking app & member rates",
-     "F2 · growth",
+     "II · growth",
      "A",
      "",
      "82.1%",
@@ -805,7 +805,7 @@
     ],
     [
      "Revenue management",
-     "F1 · growth",
+     "I · growth",
      "A",
      "",
      "61.7%",
@@ -814,7 +814,7 @@
     ],
     [
      "Kiosks at the 20 busiest hotels",
-     "F4",
+     "IV",
      "A",
      "",
      "30.9%",
@@ -823,7 +823,7 @@
     ],
     [
      "Breakfast upgrade",
-     "F3 · growth",
+     "III · growth",
      "package B",
      "",
      "26.4%",
@@ -832,7 +832,7 @@
     ],
     [
      "Gatwick +40 rooms",
-     "F4 · growth",
+     "IV · growth",
      "2028 gate",
      "",
      "16.9%",
@@ -841,7 +841,7 @@
     ],
     [
      "Energy programme",
-     "F1",
+     "I",
      "not now",
      "",
      "15.8%",
@@ -850,7 +850,7 @@
     ],
     [
      "Toronto +40 rooms",
-     "F4 · growth",
+     "IV · growth",
      "2028 gate",
      "",
      "12.3%",
@@ -859,7 +859,7 @@
     ],
     [
      "Kingston +40 rooms",
-     "F4 · growth",
+     "IV · growth",
      "not full",
      "",
      "8.9%",
@@ -868,7 +868,7 @@
     ],
     [
      "Boston new hotel",
-     "F4 · growth",
+     "IV · growth",
      "not now",
      "",
      "9.0%",
@@ -877,7 +877,7 @@
     ],
     [
      "Refresh, 10 oldest hotels",
-     "F3",
+     "III",
      "2028 gate",
      "",
      "11.5%",
@@ -898,28 +898,28 @@
      "Status"
     ],
     [
-     "F2 The middleman",
+     "II The middleman",
      "distribution cost, % of room revenue\nbooking app with member rates",
      "11.3%",
      "9.5%",
      "three quarters of the rise undone"
     ],
     [
-     "F1 The margin",
+     "I The margin",
      "operating margin after commissions\napp + revenue management + kiosks",
      "33.7%",
      "36.1%",
      "most of the fall recovered"
     ],
     [
-     "F4 Where we are full",
+     "IV Where we are full",
      "self check-in at the 20 busiest hotels\nkiosks live Apr 2028; check-in complaints there up 43% since 2021",
      "0",
      "20",
      "rooms: at the 2028 gate"
     ],
     [
-     "F3 The fading welcome",
+     "III The fading welcome",
      "NPS, hotels renovated 10+ years ago\nthe refresh: see What waits, and why",
      "−4.9",
      "not in A",
@@ -1164,61 +1164,61 @@
      "A year by 2032"
     ],
     [
-     "F2 · growth",
+     "II · growth",
      "$5.0M",
      "−$2.8M",
      "+$0.6M"
     ],
     [
-     "F1 · growth",
+     "I · growth",
      "$2.4M",
      "−$1.5M",
      "+$0.2M"
     ],
     [
-     "F4",
+     "IV",
      "$2.0M",
      "−$1.2M",
      "+$0.2M"
     ],
     [
-     "F3 · growth",
+     "III · growth",
      "$4.3M",
      "−$2.6M",
      "+$0.4M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$6.6M",
      "−$4.0M",
      "+$0.9M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$5.8M",
      "−$4.0M",
      "+$0.6M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$5.4M",
      "−$5.7M",
      "−$0.1M"
     ],
     [
-     "F1",
+     "I",
      "$15.0M",
      "−$13.9M",
      "+$1.2M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$24.8M",
      "−$19.1M",
      "+$1.6M"
     ],
     [
-     "F3",
+     "III",
      "$29.5M",
      "−$30.5M",
      "+$1.3M"
@@ -1280,61 +1280,61 @@
      "A year by 2032"
     ],
     [
-     "F2 · growth",
+     "II · growth",
      "$5.0M",
      "+$3.4M",
      "+$2.4M"
     ],
     [
-     "F1 · growth",
+     "I · growth",
      "$2.4M",
      "+$0.5M",
      "+$0.8M"
     ],
     [
-     "F4",
+     "IV",
      "$2.0M",
      "−$0.6M",
      "+$0.4M"
     ],
     [
-     "F3 · growth",
+     "III · growth",
      "$4.3M",
      "−$1.1M",
      "+$0.8M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$6.6M",
      "−$3.5M",
      "+$1.0M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$5.8M",
      "−$3.7M",
      "+$0.7M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$5.4M",
      "−$3.9M",
      "+$0.4M"
     ],
     [
-     "F1",
+     "I",
      "$15.0M",
      "−$12.2M",
      "+$1.8M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$24.8M",
      "−$18.3M",
      "+$2.0M"
     ],
     [
-     "F3",
+     "III",
      "$29.5M",
      "−$27.3M",
      "+$2.3M"
@@ -1396,61 +1396,61 @@
      "A year by 2032"
     ],
     [
-     "F2 · growth",
+     "II · growth",
      "$5.0M",
      "+$9.5M",
      "+$4.1M"
     ],
     [
-     "F1 · growth",
+     "I · growth",
      "$2.4M",
      "+$3.2M",
      "+$1.5M"
     ],
     [
-     "F4",
+     "IV",
      "$2.0M",
      "+$0.03M",
      "+$0.6M"
     ],
     [
-     "F3 · growth",
+     "III · growth",
      "$4.3M",
      "−$0.1M",
      "+$1.1M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$6.6M",
      "−$3.3M",
      "+$1.1M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$5.8M",
      "−$3.6M",
      "+$0.7M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$5.4M",
      "−$3.8M",
      "+$0.5M"
     ],
     [
-     "F1",
+     "I",
      "$15.0M",
      "−$10.5M",
      "+$2.4M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$24.8M",
      "−$17.8M",
      "+$2.2M"
     ],
     [
-     "F3",
+     "III",
      "$29.5M",
      "−$24.1M",
      "+$3.4M"
@@ -1511,61 +1511,61 @@
      "A year by 2032"
     ],
     [
-     "F2 · growth",
+     "II · growth",
      "$5.0M",
      "+$3.4M",
      "+$2.4M"
     ],
     [
-     "F1 · growth",
+     "I · growth",
      "$2.4M",
      "+$0.5M",
      "+$0.8M"
     ],
     [
-     "F4",
+     "IV",
      "$2.0M",
      "−$0.6M",
      "+$0.4M"
     ],
     [
-     "F3 · growth",
+     "III · growth",
      "$4.3M",
      "−$1.1M",
      "+$0.8M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$6.6M",
      "−$3.5M",
      "+$1.0M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$5.8M",
      "−$3.7M",
      "+$0.7M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$5.4M",
      "−$3.9M",
      "+$0.4M"
     ],
     [
-     "F1",
+     "I",
      "$15.0M",
      "−$12.2M",
      "+$1.8M"
     ],
     [
-     "F4 · growth",
+     "IV · growth",
      "$24.8M",
      "−$18.3M",
      "+$2.0M"
     ],
     [
-     "F3",
+     "III",
      "$29.5M",
      "−$27.3M",
      "+$2.3M"

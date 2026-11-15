@@ -211,3 +211,28 @@ Nothing here is done; each step waits for his word.
   answer a close request and was left open; it is publish 7, do not publish from it.
   **Left for Bjorn:** publish from the new window, create the Publish to Web link for the new report, hand the link
   over for the gate; then File > Save as `Goodnight Inn - The Wake-up Call.pbix`.
+- **16 Nov, just after midnight: Bjorn confirms the name and asks for two more things.** "The wake up call it is.
+  Also give the pages these respective names and ... replace [F1 to F4] with I II III and IV. Roman numbers
+  everywhere."
+  **The pages** are now named "The Wake-up Call" and "Room to Invest" (the names Power BI shows in its page
+  navigation). The masthead still reads "1 / 2 · THE WAKE-UP CALL · THE BRAND REVIEW" and "2 / 2 · ROOM TO INVEST ·
+  THE INVESTMENT STRATEGY", and the back button still says "← The Brand Review": the brief asks for a Brand Review
+  and an Investment Strategy, and both words stay on the page.
+  **The findings are I, II, III and IV** wherever the report prints or speaks them: page 1's four kickers, the two
+  tooltip kickers, the "Answers" column (hero table, Build's table, the package tooltip), the "Finding" column of
+  "What we track", three sentences of What waits and the tooltips, and the alt texts (the four card titles now open
+  "Finding I, the margin." so a screen reader does not say the letter I on its own). In the model the codes
+  themselves are the numerals (`MOVE_FINDING`, `FINDINGS`, the measures that switch on them); the measures keep
+  their names (`F1 Title (text)` ...), which only someone who opens the model in the `.pbix` sees, and a field with
+  such a name is handed to the page under a display name with the numeral (`pbir_lib.proj_mea`).
+  **Checked:** no F1 to F4 left in any text or display name of the generated report, in any string of the model's
+  expressions, in the approved wording (`rebuild-v10-spec.json`, rewritten: only these codes changed) or in any alt
+  text. Texts 142 of 142, numbers 809 of 809, alt texts 0 flags, a11y 0 failures, strip 0, schema 207 files 0
+  failing. Rendered and looked at: page 1, Recommended, the two finding tooltips. The widths were measured first:
+  every numeral label is narrower than the code it replaces, so no line wraps differently.
+  **One thing to know:** a lone "I" in the Answers column (Revenue management reads "I · growth", the Energy
+  programme just "I") is a thin mark; it is what was asked for and it reads correctly beside the others.
+  **The final copy is not yet replaced.** The window "Goodnight Inn - The Wake-up Call" (saved at 23:22, so Bjorn
+  has used it) did not close on request and is not a throwaway, so it was left alone. It holds the build with the
+  two fixes but still F1 to F4 and the old page names. Once it is closed, the folder is written again from
+  `project/pbip` and opened.
