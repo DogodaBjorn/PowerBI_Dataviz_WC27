@@ -236,3 +236,9 @@ Nothing here is done; each step waits for his word.
   has used it) did not close on request and is not a throwaway, so it was left alone. It holds the build with the
   two fixes but still F1 to F4 and the old page names. Once it is closed, the folder is written again from
   `project/pbip` and opened.
+- **16 Nov, 00:45: the final copy.** Bjorn closed both old windows unsaved. `E:\Goodnight Inn - The Wake-up
+  Call\Goodnight Inn - The Wake-up Call.pbip` written from `project/pbip` at `7b84bfa`, open in a window of that
+  name, data loaded. Equal to the build file for file (report and model); pages named "The Wake-up Call" and "Room
+  to Invest"; no F1 to F4 in its texts. On its own model: texts 142 of 142, numbers 809 of 809, alt texts 0 flags.
+  **Left for Bjorn:** publish, the public link, then the gate; after the gate File > Save as
+  `Goodnight Inn - The Wake-up Call.pbix`.
