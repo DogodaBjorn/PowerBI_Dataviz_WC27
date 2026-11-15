@@ -45,10 +45,10 @@ alt_texts: 137 visuals in the tab order, 109 on a measure, 0 flag(s)
       Since 2018 Goodnight Inn spent $1.0M per hotel on renovation; the other brands spent $5.9M to $7.9M. None has started since 2020. Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause.
  9460 lnk_f3 (textbox) [typed] 56 chars
       On page 2: the refresh waits for the 2028 gate, and why.
- 9390 c_f4_title (cardVisual) [Alt F4 Title (text)] 102/102/102 chars
-      F4, where we are full. Our airports run full: Toronto topped 90% occupancy in 17 of the last 24 months
- 9380 c_f4_note (cardVisual) [F4 Note (text)] 83/83/83 chars
-      Gatwick did in 14, Montréal in 13; Kingston, the third extension on offer, in none.
+ 9390 c_f4_title (cardVisual) [Alt F4 Title (text)] 94/94/94 chars
+      F4, where we are full. Our airports run fullest: five of the seven fullest hotels are airports
+ 9380 c_f4_note (cardVisual) [F4 Note (text)] 127/127/127 chars
+      Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none.
  9375 c_f4_rows (cardVisual) [Alt F4 Types (text)] 112/112/112 chars
       Goodnight Inn occupancy in 2025 by location type: airport hotels 82.0%, city hotels 79.1%, highway hotels 77.5%.
  9370 lnk_f4 (cardVisual) [Link F4 (text)] 80/80/80 chars

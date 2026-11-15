@@ -1,5 +1,5 @@
 {
- "_doc": "Build spec v10.1 of 2026-11-13 (v10 plus the four closed questions of doc 22), exported from rebuild-comp-v10.html (the approved comp, doc 21 section 12). Positions live in opzet-layout-v10.json; this file holds what a slot map cannot: table column widths and row heights, hero bar domains, chart axis ends and end-label positions, the F4 name boxes, the number formatters, and under 'text' the exact visible strings of every slot in every view (P1; P2 Recommended, What waits and Build in Low, Expected and High; Build with nothing picked). Build views use the opening selection (package A's three moves). Strings are given without the U+2060 word joiner the formatters put between the sign and the $. Table cells are lists of rows; a line break inside a cell is \\n (UNICHAR(10)). Use the strings as DAX assertion targets for the text measures. Review round 2 (15 Nov, doc 25 section 5): the text block carries the approved copy sheet, written from the model with build_checks.py --write-spec; the comp itself still draws the copy of 14 Nov. Step D of that round (page 1 and the hero): the KPI labels without codes, F4's title, note, row labels and Orlando's name slot, the F1 chart's typed labels and the NPV panel's fills are written here by hand from the sheet; the comp draws them too. Reasons and rules: project-state/active/22-rebuild-comp-v10-handoff-2026-11-13.md.",
+ "_doc": "Build spec v10.1 of 2026-11-13 (v10 plus the four closed questions of doc 22), exported from rebuild-comp-v10.html (the approved comp, doc 21 section 12). Positions live in opzet-layout-v10.json; this file holds what a slot map cannot: table column widths and row heights, hero bar domains, chart axis ends and end-label positions, the F4 name boxes, the number formatters, and under 'text' the exact visible strings of every slot in every view (P1; P2 Recommended, What waits and Build in Low, Expected and High; Build with nothing picked). Build views use the opening selection (package A's three moves). Strings are given without the U+2060 word joiner the formatters put between the sign and the $. Table cells are lists of rows; a line break inside a cell is \\n (UNICHAR(10)). Use the strings as DAX assertion targets for the text measures. Review round 2 (15 Nov, doc 25 section 5): the text block carries the approved copy sheet, written from the model with build_checks.py --write-spec; the comp itself still draws the copy of 14 Nov. Step D of that round (page 1 and the hero): the KPI labels without codes, F4's title, note and row labels, the F1 chart's typed labels and the NPV panel's fills are written here by hand from the sheet (the model is then checked against them); the comp still draws the page 1 of 14 Nov. Reasons and rules: project-state/active/22-rebuild-comp-v10-handoff-2026-11-13.md.",
  "construction": {
   "text_metrics": {
    "font": "Segoe UI 400 and Segoe UI Semibold 600",
@@ -206,13 +206,13 @@
      },
      "lbl_f4_orlando": {
       "rect": [
-       1443,
-       880,
+       1483,
+       899,
        62,
        24
       ],
       "text": "Orlando",
-      "side": "left"
+      "side": "below"
      },
      "lbl_f4_kuala_lumpur": {
       "rect": [
@@ -265,7 +265,8 @@
       "side": "right"
      }
     },
-    "row_labels": "review round 2, step D: 'Airport ◆ 82.0%': the type and the diamond (the average's own mark in the plot) in Dusk, the value in Night semibold"
+    "row_labels": "review round 2, step D: 'Airport ◆ 82.0%': the type and the diamond (the average's own mark in the plot) in Dusk, the value in Night semibold",
+    "orlando": "review round 2, step D (DS2-12b) tried the name left of its dot (rect 1443, 880): the O then stands between the dots of two hotels at 83 % that sit 0.3 off the row, 1 to 2 px from each and touching the lower one in the render; the comp's placement rule (no name on a dot) rejects the spot for that reason. The name stays below its dot"
    },
    "ch_build_bars": {
     "orientation": "horizontal",
@@ -295,8 +296,8 @@
     "typed_labels": {
      "lbl_f1_before": {
       "rect": [
-       462,
-       450,
+       466,
+       452,
        148,
        24
       ],
@@ -307,7 +308,7 @@
      "lbl_f1_band": {
       "rect": [
        236,
-       486,
+       471,
        100,
        24
       ],

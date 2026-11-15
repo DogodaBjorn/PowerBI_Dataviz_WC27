@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_f4_rows_city",
   "position": {
-    "x": 542,
+    "x": 544,
     "y": 920,
     "z": 37710,
-    "width": 114,
+    "width": 112,
     "height": 24,
     "tabOrder": -17211
   },

@@ -540,8 +540,9 @@ F4_ROWS = (("airport", "Airport", "Occupancy Airport GI (text)"), ("city", "City
 F4_VALUE_DX = {"airport": 54, "city": 31, "highway": 66}
 # Review round 2, step D (sheet line 31; UX-21, CL-42, J-VE-11): the diamonds of the dot plot had no key. Each row label
 # now carries the mark itself, "Airport ◆ 82.0%": the diamond in Dusk, the colour it has in the plot, between the type
-# and its average. " ◆" is 14.7 px at 16 px Segoe UI (text measure), so the value starts that much further right.
-F4_MARK, F4_MARK_DX = " ◆", 15
+# and its average. " ◆" is 14.7 px at 16 px Segoe UI by its font metrics; Desktop draws the diamond 10 px wide and close to
+# the value, so the value starts 17 px further right (render of step D: 4.5 to 6 px between the mark and the number).
+F4_MARK, F4_MARK_DX = " ◆", 17
 
 
 def f4_rows(page, slot):

@@ -219,7 +219,7 @@ q.append("EVALUATE GENERATE ( CROSSJOIN ( SELECTCOLUMNS ( FILTER ( ALL ( Investm
          + SCEN_T + " ), VAR p = [p] VAR s = [s] RETURN " + row([
              ("yield", calc("[A Year on Cost]", PF, SF)), ("npv", calc("[NPV @ 8%]", PF, SF)), ("rr", calc("[2032 Run-rate]", PF, SF)),
              ("yield_txt", calc(sm.pct1("[A Year on Cost]"), PF, SF)), ("npv_txt", calc(sm.sfm("[NPV @ 8%]"), PF, SF)),
-             ("color", calc("[Move Status Color]", PF)), ("ybar", calc("[Hero Yield Bar SVG]", PF, SF)), ("nbar", calc("[Hero NPV Bar SVG]", PF, SF)),
+             ("color", calc("[Move Status Color]", PF)), ("ncolor", calc("[Move NPV Bar Color]", PF)), ("ybar", calc("[Hero Yield Bar SVG]", PF, SF)), ("nbar", calc("[Hero NPV Bar SVG]", PF, SF)),
              ("name", calc("SELECTEDVALUE ( InvestmentProjects[Move Name] )", PF)), ("hsort", calc("SELECTEDVALUE ( InvestmentProjects[Hero Sort] )", PF)),
              ("status", "LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], p )"), ("finding", "LOOKUPVALUE ( MoveDecision[Finding], MoveDecision[ProjectID], p )"),
              ("tranche", "LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], p )"),
@@ -420,14 +420,20 @@ names = {r.get("Hotels[HotelID]", r.get("HotelID")): r.get("Hotels[HotelName]", 
 for part, n in (("Toronto", 17), ("Gatwick", 14), ("Trudeau", 13), ("Kingston", 0)):
     h = [k for k, v in names.items() if part in v][0]
     check("doc 20 E5: months at or above 90 %", part, n, int([r for r in f4h if r.get("Hotels[HotelID]", r.get("HotelID")) == h][0]["m90"]))
-# the hero bar cells: one image width, the reference line at the constant x, a rect per bar
+# the hero bar cells: one image width, the reference line at the constant x, a rect per bar. Review round 2, step D
+# (DS2-04): the bar's own fill is read from its rect (the reference line is Night too, so "the colour is in the SVG" passed
+# for a Night bar whatever the bar had); the yield panel keeps the status colours, the NPV panel is Coffee Blue for
+# package A's moves and the kit's light neutral for every other move
 for (p, s), r in moves.items():
-    for col, ref, dom, w in (("ybar", sm.HERO_YREF, sm.HERO_YDOM, sm.HERO_SPEC_COLS[3]), ("nbar", sm.HERO_NREF, sm.HERO_NDOM, sm.HERO_SPEC_COLS[5])):
+    check("model: hero NPV bar colour (Coffee Blue for package A, the light neutral for every other move)", (p, s),
+          sm.ACCENT_MARK if r["status"] == "A" else sm.NEUTRAL_LIGHT, r["ncolor"])
+    for col, ref, dom, w, fill in (("ybar", sm.HERO_YREF, sm.HERO_YDOM, sm.HERO_SPEC_COLS[3], r["color"]), ("nbar", sm.HERO_NREF, sm.HERO_NDOM, sm.HERO_SPEC_COLS[5], r["ncolor"])):
         svg = r[col]
+        bar = svg.split("<rect", 2)[1] if svg.count("<rect") == 2 else ""
         xr = sm.bar_x(ref, dom, w) - sm.HERO_IMG_PAD - 0.5
         ok = svg.startswith("data:image/svg+xml;utf8,<svg") and f"width='{sm.HERO_IMG_W}' height='{sm.HERO_ROW_H}'" in svg and f"<rect x='{xr:.2f}' y='0' width='1'" in svg \
-            and "," not in svg.split("utf8,", 1)[1] and r["color"].replace("#", "%23") in svg
-        check("model: hero bar cell is a well-formed SVG with the reference line at its constant x", (p, s, col), True, ok)
+            and "," not in svg.split("utf8,", 1)[1] and f"fill='{fill.replace('#', '%23')}'" in bar
+        check("model: hero bar cell is a well-formed SVG with the reference line at its constant x and the bar in its fill", (p, s, col), True, ok)
 
 # ---------------------------------------------------------------- 4 · report
 fails = [r for r in results if r[4] == "FAIL"]

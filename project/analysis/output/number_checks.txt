@@ -1,4 +1,4 @@
-number_checks: 776 checks, 776 ok, 0 known difference(s), 0 failed
+number_checks: 806 checks, 806 ok, 0 known difference(s), 0 failed
 
   ok    workbook: a year on cost per move (E9): 30 ok
   ok    workbook: profit a year per move: 30 ok
@@ -47,7 +47,8 @@ number_checks: 776 checks, 776 ok, 0 known difference(s), 0 failed
   ok    spec: F2 end labels: 1 ok
   ok    spec: F4 row averages: 3 ok
   ok    doc 20 E5: months at or above 90 %: 4 ok
-  ok    model: hero bar cell is a well-formed SVG with the reference line at its constant x: 60 ok
+  ok    model: hero NPV bar colour (Coffee Blue for package A, the light neutral for every other move): 30 ok
+  ok    model: hero bar cell is a well-formed SVG with the reference line at its constant x and the bar in its fill: 60 ok
 
 Values (model, as its formatters print them):
   Low      A: capex $9.4M, NPV −$5.5M, a year +$1.0M, a year on cost 11.1% | ledger: distribution cost 11.3% -> 10.7%, margin after commissions 33.7% -> 34.1%, app saves $1.2M a year | tranche 2 11.7%, tranche 3 4.5% | rise undone 0.251, fall recovered 0.145

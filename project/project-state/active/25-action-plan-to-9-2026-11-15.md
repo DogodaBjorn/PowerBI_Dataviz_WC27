@@ -21,7 +21,7 @@ publish 5: say which one.
 | A | Copy sheet and fact check | done | 15 Nov | (this commit) | Sections 4 and 5. Three facts confirmed in the data, two placements changed for fit (D4, D5) |
 | B | The copy round | done | 15 Nov | (this commit) | 24 of the 26 sheet lines built; engine: 142 of 142 texts equal the spec in Low, Expected, High and the empty Build state, 766 number checks, alt texts 0 flags; six views rendered. Four lines changed for fit or for a reason (see the log): the tests are named in the table's headers, the staff-cost point stands in F1's forward line, F3's note and the selector footer keep their old words. **The word target is missed on Recommended: about 2 % fewer words, not 20 %** (What waits: 14 %). Bjorn decides whether a block goes (log, open items) |
 | C | The plan chart, and the kiosk evidence | done | 15 Nov | (this commit) | The three end labels are cards right of the line ends, the chart's own labels are off; caption (sheet line 14) in the row above the plot; "Hover a year" on the chart; the complaint fact in the model and in ledger row F4 (sheet line 12). Engine: 142 of 142 texts, 776 of 776 numbers (the complaint rise against the workbook), alt texts 0 flags; Recommended rendered in Low, Expected and High. Three things to look at on publish 5 (log). Recommended carries 19 words more |
-| D | Page 1 and the hero | todo | | | |
+| D | Page 1 and the hero | done | 15 Nov | (this commit) | Sheet lines 28, 30, 31 and 32 built as written (29 was done in step B); the hero's NPV bars in Coffee Blue for package A and the kit's light neutral for the rest. Engine: 142 of 142 texts, 806 of 806 numbers, alt texts 0 flags; `a11y_check` 0; the greyscale test passes in Low, Expected and High (A's bars grey 116, every other bar 196). **One item not built:** Orlando's name stays under its dot; left of the dot it touches another hotel's dot (log) |
 | E | Proof and publish 5 (Bjorn publishes) | todo | | | |
 | F | Submission (Bjorn) | todo | | | |
 
@@ -375,3 +375,61 @@ comp: 864 and 1719), the gate line at 1121; the labels begin 6 px right of the g
    complaint clause 7). Step B's open item 1 stands as it was: the lever that is left is a block, and Bjorn decides.
 3. `CLAUDE.md` has an uncommitted row for doc 24 from an earlier session; this step left it alone.
 4. The Desktop window "Goodnight Inn" (the fourth publish) is still open and was not touched; step E closes it.
+
+**Step D (Sun 15 Nov 2026).**
+
+*Built.*
+
+- **KPI labels (sheet line 28, D6).** The four labels stand without a finding's code: "Occupancy", "Operating margin
+  after commissions", "Room revenue booked through online agencies", "Guest quality: net promoter score (−100 to
+  +100)". The cards below keep F1 to F4.
+- **F4 title and note (sheet line 30, DS2-03).** Title: "Our airports run fullest: five of the seven fullest hotels are
+  airports", counted in the model from the seven fullest hotels of 2025 (the seven named dots). Note: "Toronto topped
+  90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none."
+  It takes a third line; the forward line stands 24 px lower (`lnk_f4` at y 960) and ends 21 px above the card's edge.
+- **The diamond's key (sheet line 31).** "Airport ◆ 82.0%", "City ◆ 79.1%", "Highway ◆ 77.5%": the type and the mark
+  in Dusk, the mark's colour in the plot, the average in Night semibold.
+- **F1's two names (sheet line 32).** The band's own series label is off (it stood at the end of the top line and
+  read as that line's name). Two typed labels: "Before commissions" right of the top line's end, level with the
+  chart's own "After commissions"; "Commissions" inside the band, between the 45 % and the 40 % gridline
+  (`f1_labels()`, slots `lbl_f1_before`, `lbl_f1_band`). The series keeps the name "Commissions" in the tooltip, where
+  its value is the band's height.
+- **The hero's NPV panel (DS2-04, J-VE-13).** `Move NPV Bar Color`: Coffee Blue for package A's three moves, the kit's
+  light neutral (#C9C4B7, `neutral_light`: "labelled background marks only") for the other seven. The left panel and
+  the Status column keep the status colours.
+- **Files.** `sketch_model.py` (three text measures, one colour measure; 339 measures in the submission model),
+  `opzet_report.py`, `number_checks.py`, both slot maps, `opzet-layering.json` (two entries), `rebuild-v10-spec.json`
+  (written by hand from the sheet, so the engine check tests the model against the sheet). Scripts of the round:
+  `tools/desktop_shots/round2d/`.
+
+*Verified.* In the engine (Desktop 2.159, a throwaway copy on its own port, refreshed in 6 s): `build_checks.py` 142 of
+142, `number_checks.py` 806 of 806, `alt_texts.py` 0 flags. Files: `schema_check` 208 files 0 failing, `a11y_check` 0,
+`strip_check` 0, `compliance_check` 5 of 5, `validate_tmdl --strict` 0 errors (7 expected warnings), `pbir_detect` 0
+unwaived. Renders in `deliverables/screenshots/Round2-stepD-2026-11-15/`.
+
+| Done-when | Result |
+|---|---|
+| Page 1 on the comp with the new lines | `slot_sheet.py` against the FinalV3 comp: the 24 text slots that did not change read as on 14 Nov, and so do the five charts and the table (their figures equal the FinalV3 sheet's to the decimal). The 15 that differ are the lines of steps B and D, plus the six the FinalV3 sheet already lists. Every new line has the sheet's line count |
+| The diamond and the band label keep 4.5:1 | Measured on the render (`contrast_probe.py`): the diamonds #4B5466 on white, 7.6:1; "Commissions" under the band #384151 on #DDDBD8, 7.4:1 |
+| In grey, the three A rows are the darkest marks of the NPV panel | `hero_grey.py` on Low, Expected and High: A's bars grey 116, every other bar 196 (render 05) |
+
+`number_checks.py` had a blind spot that this step closed: it looked for the bar's colour anywhere in the cell's SVG,
+and the reference line is Night, so a Night bar passed whatever colour the bar had. It now reads the bar's own fill.
+
+*Deviations, and why.*
+
+| Planned | Built instead | Why |
+|---|---|---|
+| Orlando's name on the side of its own dot (DS2-12b) | unchanged: under its dot | Left of the dot the name's O stands between the dots of two hotels at 83 %, 1 to 2 px from each; in both renders it touches the lower one (render 07). The comp's own placement rule (no name on a dot) rejects the spot. Right of the dot stands "Phoenix", which has no other place: its dot has Gatwick's and Montréal's on its right |
+| "the light grey" for the other NPV bars | #C9C4B7, the kit's `neutral_light` | Warm Grey (#8E897D) is as dark as Coffee Blue in grey (137 against 116): the long bars of the refresh and Boston would still carry the panel. The light neutral is 1.7:1 on white, under the 3:1 of a mark that carries information; here each bar's value stands beside it in text and the status in its own column. **Bjorn can veto:** one constant, `NEUTRAL_LIGHT` in `sketch_model.py` |
+| "Commissions" in small grey inside the band (UX-19) | 12 pt, Night | The floor is 12 pt. The label lies under the chart (so a hover in the band still opens the year); through the band Dusk would read 4.3:1 |
+| The comp redrawn first (rule 7) | the comp still draws the page 1 of 14 Nov | as steps B and C; the spec and both slot maps carry the change |
+
+*Open items.*
+
+1. **To look at on publish 5:** the two F1 names against their lines (set on a whole-page capture; Desktop snaps a
+   chart by up to 2 px), and that a hover inside the band, on the word "Commissions", opens the year's tooltip.
+2. Page 1 carries three words more than before (469 against 466 in the spec's text): the note's first clause.
+3. The session's screen turned from wide to tall during the step; the render method for each is in
+   `tools/desktop_shots/round2d/README.txt`.
+4. Spare items of section 6: none taken.

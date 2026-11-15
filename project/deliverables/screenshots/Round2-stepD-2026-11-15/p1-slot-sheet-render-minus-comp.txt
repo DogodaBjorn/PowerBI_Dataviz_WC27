@@ -1,0 +1,23 @@
+text slots within 2 px: 24; outside: 15
+  kpi_occ                    rows 3/3  max dy  2.5  left   1  right  30
+  kpi_margin                 rows 3/3  max dy  2.3  left   1  right  28
+  kpi_ota                    rows 3/3  max dy  2.3  left   1  right  31
+  kpi_nps                    rows 3/3  max dy  2.3  left   1  right  31
+  lbl_f1_before              rows 1/1  max dy  0.8  left   6  right  40
+  lbl_f1_band                rows 1/0  max dy  0.0  left   0  right   0
+  lnk_f1                     rows 1/1  max dy  0.3  left   1  right 135
+  lnk_f2                     rows 1/1  max dy  0.8  left   1  right   7
+  c_f3_note                  rows 3/3  max dy  2.4  left   1  right   1
+  lnk_f3                     rows 1/1  max dy  0.8  left   1  right   7
+  c_f4_title                 rows 1/1  max dy  1.2  left   0  right 119
+  c_f4_note                  rows 3/3  max dy 11.5  left   1  right 269
+  lnk_f4                     rows 2/1  max dy  3.9  left   0  right 195
+  c_f4_rows                  rows 3/3  max dy  1.1  left   1  right  18
+  lbl_f4_phoenix             rows 1/1  max dy  2.1  left   1  right   1
+charts, tables, selector (indicative):
+  ch_f1_margin               rows 4/4  max dy  5.5  left   8  right 368
+  ch_f2_ota                  rows 5/5  max dy  2.7  left   1  right  11
+  tbl_f2_folio               rows 4/4  max dy  5.8  left   0  right   3
+  ch_f3_age                  rows 4/4  max dy  4.4  left   5  right   5
+  ch_f4_avg                  rows 2/2  max dy  0.7  left  35  right  42
+  ch_f4_dots                 rows 2/2  max dy  0.7  left  35  right  42

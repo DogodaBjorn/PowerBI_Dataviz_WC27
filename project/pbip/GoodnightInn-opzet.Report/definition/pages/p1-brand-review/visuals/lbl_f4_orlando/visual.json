@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "lbl_f4_orlando",
   "position": {
-    "x": 1443,
-    "y": 880,
+    "x": 1483,
+    "y": 899,
     "z": 40605,
     "width": 62,
     "height": 24,
