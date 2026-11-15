@@ -374,11 +374,11 @@ for s in SCEN:
     check("spec: the app alone", ("app", s), money(line2)[0], clean(scal[s]["App Run-rate (sel) | txt" if s == "Low" else "App NPV (sel) | txt"]))
     check("spec: the app alone", ("its measure is named", s), True, line2.split(". ")[0].endswith("a year by 2032" if s == "Low" else "through 2032"))
     check("spec: the app alone", ("leaves with the agencies", s), money(line2)[1], clean(scal[s]["App Commission Saving (sel) | txt"]))
-    led = {r[0][:2]: r for r in rec["tbl_ledger"][1:]}
-    check("spec: ledger (E11)", ("F2 2025", s), led["F2"][2], clean(scal[s]["Dist Cost % 2025 GI | txt"]))
-    check("spec: ledger (E11)", ("F2 2032 with A", s), led["F2"][3], clean(scal[s]["Dist Cost % 2032 with A (sel) | txt"]))
-    check("spec: ledger (E11)", ("F1 2025", s), led["F1"][2], clean(scal[s]["KPI Margin after GI | txt"]))
-    check("spec: ledger (E11)", ("F1 2032 with A", s), led["F1"][3], clean(scal[s]["Margin after 2032 with A (sel) | txt"]))
+    led = {r[0].split(" ")[0]: r for r in rec["tbl_ledger"][1:]}  # the finding's numeral: I, II, III, IV
+    check("spec: ledger (E11)", ("F2 2025", s), led["II"][2], clean(scal[s]["Dist Cost % 2025 GI | txt"]))
+    check("spec: ledger (E11)", ("F2 2032 with A", s), led["II"][3], clean(scal[s]["Dist Cost % 2032 with A (sel) | txt"]))
+    check("spec: ledger (E11)", ("F1 2025", s), led["I"][2], clean(scal[s]["KPI Margin after GI | txt"]))
+    check("spec: ledger (E11)", ("F1 2032 with A", s), led["I"][3], clean(scal[s]["Margin after 2032 with A (sel) | txt"]))
     check("spec: plan segments", ("T1", s), rec["c_plan_t1"].split("\n")[1].split(" · ")[0], clean(scal[s]["Tranche 1 Capex | txt"]))
     check("spec: plan segments", ("T4", s), rec["c_plan_t4"].split("\n")[0].split(" · ")[1], clean(scal[s]["Not Needed Capex | txt"]))
     for k in (2, 3):
@@ -395,7 +395,7 @@ for s in SCEN:
     check("model: the case in view takes the emphasised end card, the other two the quiet one", s, [c == s for c in SCEN],
           [bool(b) and not a for a, b in cards.values()])
     check("spec: ledger F4, the rise in check-in complaints at the kiosk hotels (E2)", s, f"check-in complaints there up {half_up(W['kiosk complaints rise'] * 100, 0):.0f}% since {sm.KIOSK_COMPLAINT_YEARS[0]}",
-          led["F4"][1].split("; ")[-1])
+          led["IV"][1].split("; ")[-1])
     check("model: the case in view has no thin line", s, None, e32[f"A line {s}"])
     shown = sorted(lit(e32[f"Preset {k} Cumulative End (label-safe) | fmt"]) for k in "ABC")
     check("spec: comparison end labels (A, B, C)", s, sorted(x for x in alts["ch_cmp_alts"]["labels"] if x[:2] in ("A ", "B ", "C ")), shown)

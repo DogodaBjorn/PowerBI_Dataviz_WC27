@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F3 Note (text)",
-              "nativeQueryRef": "F3 Note (text)"
+              "nativeQueryRef": "F3 Note (text)",
+              "displayName": "III Note (text)"
             }
           ]
         }

@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F3 Count (text)",
-              "nativeQueryRef": "F3 Count (text)"
+              "nativeQueryRef": "F3 Count (text)",
+              "displayName": "III Count (text)"
             }
           ]
         }

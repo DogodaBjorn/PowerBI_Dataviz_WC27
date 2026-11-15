@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.Link F4 (text)",
-              "nativeQueryRef": "Link F4 (text)"
+              "nativeQueryRef": "Link F4 (text)",
+              "displayName": "Link IV (text)"
             }
           ]
         }

@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F2 Note (text)",
-              "nativeQueryRef": "F2 Note (text)"
+              "nativeQueryRef": "F2 Note (text)",
+              "displayName": "II Note (text)"
             }
           ]
         }

@@ -101,7 +101,7 @@ table InvestmentProjects
 		summarizeBy: none
 		isDataTypeInferred
 	/// Decision data, not source data: the Brand Review finding (F1 to F4 on page 1) the initiative answers; Goodnight Inn projects only. One mapping with MoveDecision[Finding] (doc 20 D4, 13 Nov: the kiosks answer F4).
-	column 'Answers Finding' = SWITCH ( InvestmentProjects[ProjectID], "GI-01", "F2", "GI-02", "F4", "GI-03", "F1", "GI-04", "F4", "GI-05", "F4", "GI-06", "F4", "GI-07", "F3", "GI-08", "F4", "GI-09", "F3", "GI-10", "F1", BLANK () )
+	column 'Answers Finding' = SWITCH ( InvestmentProjects[ProjectID], "GI-01", "II", "GI-02", "IV", "GI-03", "I", "GI-04", "IV", "GI-05", "IV", "GI-06", "IV", "GI-07", "III", "GI-08", "IV", "GI-09", "III", "GI-10", "I", BLANK () )
 		dataType: string
 		lineageTag: 8e9d65ba-97d8-539a-b76d-606ffd64d7a9
 		summarizeBy: none

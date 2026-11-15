@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F4 Note (text)",
-              "nativeQueryRef": "F4 Note (text)"
+              "nativeQueryRef": "F4 Note (text)",
+              "displayName": "IV Note (text)"
             }
           ]
         }

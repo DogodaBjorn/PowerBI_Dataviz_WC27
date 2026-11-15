@@ -70,8 +70,16 @@ def proj_col(table, name, active=None, display=None):
     return p
 
 
+_ROMAN = {"F1": "I", "F2": "II", "F3": "III", "F4": "IV"}
+
+
 def proj_mea(name, display=None):
     p = {"field": mea(name), "queryRef": f"{MEAS}.{name}", "nativeQueryRef": name}
+    # 15 Nov (Bjorn): the findings are I to IV everywhere on the report. The model's measures keep their names (F1 Title
+    # ...), so a field without a display name of its own gets one with the Roman numeral: it is what Power BI hands a
+    # screen reader for a card.
+    if not display and any(f" {c} " in f" {name} " for c in _ROMAN):
+        display = " ".join(_ROMAN.get(w, w) for w in name.split(" "))
     if display:
         p["displayName"] = display
     return p

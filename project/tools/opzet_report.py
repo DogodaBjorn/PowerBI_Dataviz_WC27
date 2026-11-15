@@ -307,21 +307,21 @@ def p1_visuals():
 
     k = lambda name, txt: kicker(P1, name, txt, code_colour=INK, sep=" · ")  # noqa: E731  (R-G3: the code in Night)
     # F1 the margin (4.2): the margin after commissions with the commissions band stacked on it
-    v += [k("c_f1_kicker", "F1 · THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)", lift=5)]
+    v += [k("c_f1_kicker", "I · THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)", lift=5)]
     v.append(f1_area(P1, "ch_f1_margin"))
     v += f1_labels(P1)
     v.append(note(P1, "c_f1_note", "F1 Note (text)", 3))
     v.append(link_line(P1, "lnk_f1", "On page 2: revenue management, and the kiosks for running costs."))  # review round 2 (UX-17: no arrow, it is not a link; INV-AC-3, J-IN-7: the move that acts on the larger cause)
 
     # F2 the middleman (4.3): two lines named at their ends, no legend and no value axis; the folio under it
-    v += [k("c_f2_kicker", "F2 · THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)", "Alt F2 Title (text)", lift=5)]
+    v += [k("c_f2_kicker", "II · THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)", "Alt F2 Title (text)", lift=5)]
     v.append(f2_ends(P1, "ch_f2_ota"))
     v.append(f2_folio_v10(P1, "tbl_f2_folio"))
     v.append(note(P1, "c_f2_note", "F2 Note (text)", 3))
     v.append(link_line(P1, "lnk_f2", "On page 2: the booking app with member rates."))
 
     # F3 the fading welcome (4.4): label-safe values over the bars; a bar opens the band's detail
-    v += [k("c_f3_kicker", "F3 · THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)", "Alt F3 Title (text)", lift=5)]
+    v += [k("c_f3_kicker", "III · THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)", "Alt F3 Title (text)", lift=5)]
     v.append(f3_chart(P1, "ch_f3_age", tooltip_page=TT_F3, measure="NPS 2025 (label-safe)", v10=True))
     cnt = dyn(P1, "c_f3_count", "F3 Count (text)")
     cnt["position"]["y"] -= 3  # the card centres its line 3 px under the comp's (stitched render)
@@ -331,7 +331,7 @@ def p1_visuals():
 
     # F4 where we are full (4.5, doc 22 section 3): the note and link at the left, the three location-type rows, the
     # dot plot of the 50 hotels on the average diamonds, the seven names as text boxes
-    v += [k("c_f4_kicker", "F4 · WHERE WE ARE FULL"), title(P1, "c_f4_title", "F4 Title (text)", "Alt F4 Title (text)", lift=5)]
+    v += [k("c_f4_kicker", "IV · WHERE WE ARE FULL"), title(P1, "c_f4_title", "F4 Title (text)", "Alt F4 Title (text)", lift=5)]
     # review round 2, step D (sheet line 30): the note leads with Toronto's months and takes a third line; the forward line
     # under it stands 24 px lower in the slot map
     v.append(note(P1, "c_f4_note", "F4 Note (text)", 3))
@@ -693,7 +693,7 @@ def detail_page_visuals(which):
         # round 7: month letters on the axis (a 496 px chart rotated the three-letter names)
         ch = line_pair(which, "ttd_chart", "Date", "Month Letter", "Occupancy Hotel (line)", "Occupancy Brand (line)", "This hotel", "Goodnight Inn",
                        [filter_in("Date", "Year", [2025], "flt_2025")], sort=sort_by_column("Date", "Month Letter"), alt_measure="Alt Occupancy Hotel Line (text)", start=0.5, end=1.0, categorical=False)
-    v = [night_kicker(which, "ttd_kicker", "F3  ·  THE FADING WELCOME" if which == TT_F3 else "F4  ·  WHERE WE ARE FULL"),
+    v = [night_kicker(which, "ttd_kicker", "III  ·  THE FADING WELCOME" if which == TT_F3 else "IV  ·  WHERE WE ARE FULL"),
          dyn(which, "ttd_head", head, size=TITLE_PT, colour=TT_TITLE, font=DISPLAY)]
     n = card("ttd_nums", *at(which, "ttd_nums"), nums, DISPLAY, 18, INK, BODY, S, INK2, labels=labels_)
     v.append(bind_alt(n, alt_nums))
@@ -2096,8 +2096,8 @@ def main():
     v1 = mouse_order(P1, finish(layered(P1, no_card_fill(scene_visual(P1) + card_frames(P1) + brand_row(P1, "") + p1_visuals()))))
     v2 = mouse_order(P2, finish(layered(P2, no_card_fill(scene_visual(P2) + card_frames(P2) + brand_row(P2, "2") + p2_visuals()))))
     vt = finish(no_card_fill(scene_visual(TT) + card_frames(TT) + tt_visuals()))
-    pages = [page(P1, "The Brand Review", v1, interactions=no_cross_filter(v1)),
-             page(P2, "The Investment Strategy", v2,
+    pages = [page(P1, "The Wake-up Call", v1, interactions=no_cross_filter(v1)),
+             page(P2, "Room to Invest", v2,
                   filters=[filter_in("InvestmentProjects", "Brand", ["Goodnight Inn"], "flt_page_projects"), filter_in("Brands", "Brand", ["Goodnight Inn"], "flt_page_brand")],
                   interactions=interactions(v2)),
              page(TT, TT, vt, tooltip=True)] + extra_tooltip_pages()

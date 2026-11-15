@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F1 Title (text)",
-              "nativeQueryRef": "F1 Title (text)"
+              "nativeQueryRef": "F1 Title (text)",
+              "displayName": "I Title (text)"
             }
           ]
         }

@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F4 Title (text)",
-              "nativeQueryRef": "F4 Title (text)"
+              "nativeQueryRef": "F4 Title (text)",
+              "displayName": "IV Title (text)"
             }
           ]
         }
