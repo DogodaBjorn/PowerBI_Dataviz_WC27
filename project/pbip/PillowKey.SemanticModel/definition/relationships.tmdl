@@ -42,6 +42,14 @@ relationship 0942c54c-0e76-5efe-b8e7-cc4791ea3261
 	fromColumn: GuestExperience.Month
 	toColumn: Date.Date
 
+relationship e066a3e4-6d47-59ad-a463-6a1a0a65a966
+	fromColumn: GuestComplaints.HotelID
+	toColumn: Hotels.HotelID
+
+relationship d9c86c3b-ccda-592b-beed-8b8c7827720f
+	fromColumn: GuestComplaints.Month
+	toColumn: Date.Date
+
 relationship ada3ec6f-bfea-50e5-9f88-cc14112244d8
 	fromColumn: ProjectCashflow.ProjectID
 	toColumn: InvestmentProjects.ProjectID

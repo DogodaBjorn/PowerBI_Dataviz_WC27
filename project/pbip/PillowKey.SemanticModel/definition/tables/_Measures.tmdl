@@ -1373,29 +1373,11 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 38ce4fc2-e908-5a0f-b9de-2d7d24de29e0
 
-	/// Capital plan chart, end label of the Low line: its value on the horizon year only, printed as 'Low' and the amount.
-	measure 'A Cumulative End Low (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [A Cumulative Line (Low)] )
-		displayFolder: 15 Storytelling rebuild
-		lineageTag: 1ca6a89b-8255-51b2-bd4b-3cb903c74ba1
-
-		formatStringDefinition = ```
-				VAR __t = "Low " & ( VAR __v = ( [A Cumulative Line (Low)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
-				```
-
 	/// Capital plan chart: package A's cumulative net impact in the Expected case; blank when Expected is the case in view (the emphasised line draws it). Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).
 	measure 'A Cumulative Line (Expected)' = IF ( [Selected Scenario] = "Expected", BLANK (), [TT Year A (Expected)] )
 		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: e7ad6fe0-deae-599b-8e7b-f3b983255638
-
-	/// Capital plan chart, end label of the Expected line: its value on the horizon year only, printed as 'Expected' and the amount.
-	measure 'A Cumulative End Expected (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [A Cumulative Line (Expected)] )
-		displayFolder: 15 Storytelling rebuild
-		lineageTag: 69ee3127-8064-5d0e-9f62-260e454447f7
-
-		formatStringDefinition = ```
-				VAR __t = "Expected " & ( VAR __v = ( [A Cumulative Line (Expected)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
-				```
 
 	/// Capital plan chart: package A's cumulative net impact in the High case; blank when High is the case in view (the emphasised line draws it). Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).
 	measure 'A Cumulative Line (High)' = IF ( [Selected Scenario] = "High", BLANK (), [TT Year A (High)] )
@@ -1403,41 +1385,41 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: c4590e9d-fc4c-580a-a703-234395bfa73f
 
-	/// Capital plan chart, end label of the High line: its value on the horizon year only, printed as 'High' and the amount.
-	measure 'A Cumulative End High (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [A Cumulative Line (High)] )
+	/// Capital plan chart, end label of the Low line as a card right of the line's end: 'Low' and package A's cumulative cash in the horizon year; empty while Low is the case in view.
+	measure 'Plan End Low (text)' = IF ( [Selected Scenario] = "Low", "", VAR hz = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Low " & ( VAR __v = ( CALCULATE ( [TT Year A (Low)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
+		formatString: @
 		displayFolder: 15 Storytelling rebuild
-		lineageTag: 37a1c993-eb7c-522b-9931-41ebcd48f631
+		lineageTag: d1231fff-203a-5a30-8edc-399bc26717e7
 
-		formatStringDefinition = ```
-				VAR __t = "High " & ( VAR __v = ( [A Cumulative Line (High)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
-				```
-
-	/// Capital plan chart, end label of the emphasised line when Low is the case in view: its value on the horizon year only, printed as 'Low' and the amount; blank in the other cases.
-	measure 'A Cumulative End Sel Low (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, IF ( [Selected Scenario] = "Low", [Preset A Cumulative Net (sel)] ) )
+	/// Capital plan chart, end label of the emphasised line when Low is the case in view: 'Low' and the amount; empty in the other cases.
+	measure 'Plan End Sel Low (text)' = IF ( [Selected Scenario] = "Low", VAR hz = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Low " & ( VAR __v = ( CALCULATE ( [TT Year A (Low)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), "" )
+		formatString: @
 		displayFolder: 15 Storytelling rebuild
-		lineageTag: e9e56be7-ffe2-5a97-b3f9-12e946bb1b10
+		lineageTag: 1c88bfad-b6d6-52e1-81de-8bae42f56c5c
 
-		formatStringDefinition = ```
-				VAR __t = "Low " & ( VAR __v = ( [Preset A Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
-				```
-
-	/// Capital plan chart, end label of the emphasised line when Expected is the case in view: its value on the horizon year only, printed as 'Expected' and the amount; blank in the other cases.
-	measure 'A Cumulative End Sel Expected (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, IF ( [Selected Scenario] = "Expected", [Preset A Cumulative Net (sel)] ) )
+	/// Capital plan chart, end label of the Expected line as a card right of the line's end: 'Expected' and package A's cumulative cash in the horizon year; empty while Expected is the case in view.
+	measure 'Plan End Expected (text)' = IF ( [Selected Scenario] = "Expected", "", VAR hz = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Expected " & ( VAR __v = ( CALCULATE ( [TT Year A (Expected)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
+		formatString: @
 		displayFolder: 15 Storytelling rebuild
-		lineageTag: 2fa6bec1-ad39-55dc-ab33-9d0721ab7319
+		lineageTag: b80edac9-9244-56b5-acdb-3cbe1c29892b
 
-		formatStringDefinition = ```
-				VAR __t = "Expected " & ( VAR __v = ( [Preset A Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
-				```
-
-	/// Capital plan chart, end label of the emphasised line when High is the case in view: its value on the horizon year only, printed as 'High' and the amount; blank in the other cases.
-	measure 'A Cumulative End Sel High (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, IF ( [Selected Scenario] = "High", [Preset A Cumulative Net (sel)] ) )
+	/// Capital plan chart, end label of the emphasised line when Expected is the case in view: 'Expected' and the amount; empty in the other cases.
+	measure 'Plan End Sel Expected (text)' = IF ( [Selected Scenario] = "Expected", VAR hz = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Expected " & ( VAR __v = ( CALCULATE ( [TT Year A (Expected)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), "" )
+		formatString: @
 		displayFolder: 15 Storytelling rebuild
-		lineageTag: 8dbb398f-658d-54f3-aea9-4c5efb421da4
+		lineageTag: 8b5064ae-3f9f-5e40-8cc0-c4349b18696f
 
-		formatStringDefinition = ```
-				VAR __t = "High " & ( VAR __v = ( [Preset A Cumulative Net (sel)] ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) RETURN """" & __t & """;""" & __t & """;""" & __t & """"
-				```
+	/// Capital plan chart, end label of the High line as a card right of the line's end: 'High' and package A's cumulative cash in the horizon year; empty while High is the case in view.
+	measure 'Plan End High (text)' = IF ( [Selected Scenario] = "High", "", VAR hz = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "High " & ( VAR __v = ( CALCULATE ( [TT Year A (High)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 655d2cf3-ec12-5d92-a0dd-aee134414803
+
+	/// Capital plan chart, end label of the emphasised line when High is the case in view: 'High' and the amount; empty in the other cases.
+	measure 'Plan End Sel High (text)' = IF ( [Selected Scenario] = "High", VAR hz = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "High " & ( VAR __v = ( CALCULATE ( [TT Year A (High)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ), "" )
+		formatString: @
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: a40b1cb7-b1f7-5ce0-bb81-30d63dd00fd6
 
 	/// Comparison chart, end label of package A: its cumulative net impact on the horizon year only, printed as 'A' and the amount, scenario in view.
 	measure 'Preset A Cumulative End (label-safe)' = VAR __y = MAX ( 'Date'[Year] ) VAR __h = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN IF ( __y = __h, [Preset A Cumulative Net (sel)] )
@@ -1760,8 +1742,14 @@ table _Measures
 		displayFolder: 11 Accessibility
 		lineageTag: 9db36d62-5c11-58b2-916a-f529d2d8542e
 
-	/// Ledger, 'What we track' (R-P2-5, doc 22 section 4; review round 2: DS2-07, INV-RK-6): the measure, a line break, the move(s) that act on it. F4 tracks one thing, the kiosk hotels; F3 tracks the NPS of the hotels last renovated ten or more years ago, the number the refresh is about.
-	measure 'Ledger Measure (text)' = VAR c = SELECTEDVALUE ( Finding[Code] ) VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR kp = MAXX ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Status] = "A" && MoveDecision[Finding] = "F4" ), MoveDecision[ProjectID] ) VAR rp = MAXX ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Finding] = "F3" && MoveDecision[Tranche] = 3 ), MoveDecision[ProjectID] ) VAR s = [Selected Scenario] RETURN SWITCH ( c, "F2", "distribution cost, % of room revenue" & UNICHAR ( 10 ) & "booking app with member rates", "F1", "operating margin after commissions" & UNICHAR ( 10 ) & "app + revenue management + kiosks", "F4", "self check-in at the " & COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = kp ) ) & " busiest hotels" & UNICHAR ( 10 ) & "kiosks live " & FORMAT ( LOOKUPVALUE ( InvestmentProjects[Completion Date], InvestmentProjects[ProjectID], kp ), "mmm yyyy", "en-US" ), "F3", "NPS, hotels renovated 10+ years ago" & UNICHAR ( 10 ) & "the refresh: see What waits, and why" )
+	/// Ledger F4: the rise in check-in and waiting complaints per 1,000 room nights sold at the hotels the kiosk move of package A covers, 2021 to 2025 (the organisers' GuestComplaints sheet).
+	measure 'Kiosk Check-in Complaints Rise %' = VAR kp = MAXX ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Status] = "A" && MoveDecision[Finding] = "F4" ), MoveDecision[ProjectID] ) VAR kh = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = kp ), "@h", InvestmentProjectProperties[HotelID] ) VAR r0 = CALCULATE ( DIVIDE ( CALCULATE ( SUM ( GuestComplaints[Complaints] ), GuestComplaints[Category] = "Check-in & waiting times" ), [Rooms Sold] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2021, REMOVEFILTERS ( Hotels ), TREATAS ( kh, Hotels[HotelID] ) ) VAR r1 = CALCULATE ( DIVIDE ( CALCULATE ( SUM ( GuestComplaints[Complaints] ), GuestComplaints[Category] = "Check-in & waiting times" ), [Rooms Sold] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = 2025, REMOVEFILTERS ( Hotels ), TREATAS ( kh, Hotels[HotelID] ) ) RETURN DIVIDE ( r1, r0 ) - 1
+		formatString: 0%
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: b6fdb216-876a-5093-be40-37b8cd19817a
+
+	/// Ledger, 'What we track' (R-P2-5, doc 22 section 4; review round 2: DS2-07, INV-RK-6, J-AQ-9): the measure, a line break, the move(s) that act on it. F4 tracks one thing, the kiosk hotels, and says why they get kiosks (check-in complaints there); F3 tracks the NPS of the hotels last renovated ten or more years ago, the number the refresh is about.
+	measure 'Ledger Measure (text)' = VAR c = SELECTEDVALUE ( Finding[Code] ) VAR a = [Recommended Package] VAR aIds = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = a ), "@p", PackageProject[ProjectID] ) VAR kp = MAXX ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Status] = "A" && MoveDecision[Finding] = "F4" ), MoveDecision[ProjectID] ) VAR rp = MAXX ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Finding] = "F3" && MoveDecision[Tranche] = 3 ), MoveDecision[ProjectID] ) VAR s = [Selected Scenario] RETURN SWITCH ( c, "F2", "distribution cost, % of room revenue" & UNICHAR ( 10 ) & "booking app with member rates", "F1", "operating margin after commissions" & UNICHAR ( 10 ) & "app + revenue management + kiosks", "F4", "self check-in at the " & COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = kp ) ) & " busiest hotels" & UNICHAR ( 10 ) & "kiosks live " & FORMAT ( LOOKUPVALUE ( InvestmentProjects[Completion Date], InvestmentProjects[ProjectID], kp ), "mmm yyyy", "en-US" ) & "; check-in complaints there up " & FORMAT ( [Kiosk Check-in Complaints Rise %], "0%", "en-US" ) & " since 2021", "F3", "NPS, hotels renovated 10+ years ago" & UNICHAR ( 10 ) & "the refresh: see What waits, and why" )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 2131a4db-d79d-5d43-87c7-0137bb08f416
@@ -1917,7 +1905,7 @@ table _Measures
 		lineageTag: 4eb48b17-da97-53b1-9e84-d5889ccde30d
 
 	/// The capital plan's cumulative chart read aloud: the three end points, the cash-positive year in the case in view, and the gate.
-	measure 'Alt Plan Cum (text)' = VAR pb = [Preset A Payback Year] VAR s = [Selected Scenario] VAR hz = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Package A, cumulative net impact by year to " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & " in the three cases. By " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ": Low " & ( VAR __v = ( CALCULATE ( [TT Year A (Low)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", Expected " & ( VAR __v = ( CALCULATE ( [TT Year A (Expected)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", High " & ( VAR __v = ( CALCULATE ( [TT Year A (High)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". In the " & s & " case " & IF ( ISBLANK ( pb ), "A is not cash positive by " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ), "A is cash positive from " & pb ) & ". The Board decides on the rest at the 2028 gate."
+	measure 'Alt Plan Cum (text)' = VAR pb = [Preset A Payback Year] VAR s = [Selected Scenario] VAR hz = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Package A, cumulative cash by year to " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ", not discounted, in the three cases. By " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) & ": Low " & ( VAR __v = ( CALCULATE ( [TT Year A (Low)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", Expected " & ( VAR __v = ( CALCULATE ( [TT Year A (Expected)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ", High " & ( VAR __v = ( CALCULATE ( [TT Year A (High)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) & ". In the " & s & " case " & IF ( ISBLANK ( pb ), "A is not cash positive by " & LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ), "A is cash positive from " & pb ) & ". The Board decides on the rest at the 2028 gate."
 		formatString: @
 		displayFolder: 11 Accessibility
 		lineageTag: 0cceffcb-c65f-5fa9-9f6a-b186c9218717

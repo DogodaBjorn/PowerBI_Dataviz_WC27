@@ -171,6 +171,20 @@ def ota(df, y):
 ota_gi = {y: ota(BG, y) for y in (2021, 2025)}
 ota_sis = ota(Ball[~Ball.HotelID.isin(ids)], 2025)
 
+# review round 2, step C (doc 20 E2; analysis/50_storytelling_checks.py section 2): complaints about check-in and waiting
+# per 1,000 room nights sold at the hotels the kiosk move covers, first against last year of the data
+kiosk_h = set(sheet("InvestmentProjectProperties").query("ProjectID == 'GI-02'").HotelID)
+CG = year(sheet("GuestComplaints"))
+CG = CG[CG.HotelID.isin(kiosk_h) & (CG.Category == sm.KIOSK_COMPLAINT_CAT)]
+
+
+def kiosk_rate(y):
+    return float(CG[CG.Year == y].Complaints.sum() / MG[(MG.Year == y) & MG.HotelID.isin(kiosk_h)].RoomsSold.sum() * 1000)
+
+
+W["kiosk complaints rise"] = kiosk_rate(sm.KIOSK_COMPLAINT_YEARS[1]) / kiosk_rate(sm.KIOSK_COMPLAINT_YEARS[0]) - 1
+W["kiosk complaints rates"] = [round(kiosk_rate(y), 2) for y in sm.KIOSK_COMPLAINT_YEARS]
+
 # ---------------------------------------------------------------- 2 · the model, asked through DAX
 GI_IDS = "{ " + ", ".join(f'"{p}"' for p in A) + " }"
 SCEN_T = 'SELECTCOLUMNS ( ALL ( Scenario[Scenario] ), "s", Scenario[Scenario] )'
@@ -189,7 +203,8 @@ S_NUM = ["Rec A Year on Cost (sel)", "Rec NPV (sel)", "Rec Run-rate (sel)", "Rec
          "Tranche 1 Capex", "Tranche 2 Capex", "Tranche 3 Capex", "Not Needed Capex", "Tranche 1 Run-rate", "Tranche 2 Run-rate", "Tranche 3 Run-rate",
          "Tranche 1 Year on Cost", "Tranche 2 Year on Cost", "Tranche 3 Year on Cost", "Dist Cost % 2025 GI", "Dist Cost % 2032 with A (sel)",
          "Margin after 2032 with A (sel)", "KPI Margin after GI", "Dist Cost Rise Undone % (sel)", "Margin Fall Recovered % (sel)",
-         "App Commission Saving (sel)", "App NPV (sel)", "App Run-rate (sel)",
+         "App Commission Saving (sel)", "App NPV (sel)", "App Run-rate (sel)", "Kiosk Check-in Complaints Rise %",
+         *[f"Plan End {c} (text)" for c in SCEN], *[f"Plan End Sel {c} (text)" for c in SCEN],
          "Hero Yield Domain Min", "Hero Yield Domain Max", "Hero NPV Domain Min", "Hero NPV Domain Max"]
 S_MONEY_U = ["Rec Capex", "Tranche 1 Capex", "Tranche 2 Capex", "Tranche 3 Capex", "Not Needed Capex", "App Commission Saving (sel)"]
 S_MONEY_S = ["Rec NPV (sel)", "Rec Run-rate (sel)", "Rec NPV Low", "Rec Run-rate Low", "Rec NPV Expected", "Rec Run-rate Expected", "Tranche 2 Run-rate", "Tranche 3 Run-rate", "App NPV (sel)", "App Run-rate (sel)"]
@@ -285,6 +300,7 @@ for s in SCEN:
               "Dist Cost % 2025 GI", "Dist Cost % 2032 with A (sel)", "Margin after 2032 with A (sel)", "KPI Margin after GI", "Dist Cost Rise Undone % (sel)",
               "Margin Fall Recovered % (sel)", "App Commission Saving (sel)", "App Run-rate (sel)"):
         check("workbook: package A, tranches and the 2032 ledger (E9, E11)", (n, s), W[n, s], scal[s][n], 1e-9)
+    check("workbook: check-in complaints at the kiosk hotels, 2021 to 2025 (E2)", ("rise", s), W["kiosk complaints rise"], scal[s]["Kiosk Check-in Complaints Rise %"], 1e-9)
     check("workbook: plan segments add up to the budget", s, BUDGET, sum(scal[s][f"Tranche {k} Capex"] for k in (1, 2, 3)) + scal[s]["Not Needed Capex"], 1e-12)
     for n in ("Build Run-rate (sel)", "Build A Year on Cost (sel)", "Build Capex"):
         check("workbook: Build state with package A picked", (n, s), W[n, s], build[s][n], 1e-9)
@@ -295,6 +311,7 @@ for s in SCEN:
     check("hero domain equals the spec constants", ("yield max", s), sm.HERO_YDOM[1], scal[s]["Hero Yield Domain Max"], 1e-12)
     check("hero domain equals the spec constants", ("npv min", s), sm.HERO_NDOM[0], scal[s]["Hero NPV Domain Min"], 1e-12)
     check("hero domain equals the spec constants", ("npv max", s), sm.HERO_NDOM[1], scal[s]["Hero NPV Domain Max"], 1e-12)
+check("workbook: the kiosk hotels' check-in complaints per 1,000 room nights as storytelling_checks.txt has them", sm.KIOSK_COMPLAINT_YEARS, [0.88, 1.26], W["kiosk complaints rates"])
 check("workbook: hero yield domain covers the data", "min", True, sm.HERO_YDOM[0] <= min(ally) and max(ally) <= sm.HERO_YDOM[1])
 for r in f4h:
     h = r["Hotels[HotelID]"] if "Hotels[HotelID]" in r else r["HotelID"]
@@ -351,8 +368,13 @@ for s in SCEN:
     # cumulative end labels: on 2032 the literal the label prints, on 2031 nothing
     e32, e31 = ends[s, 2032], ends[s, 2031]
     lit = lambda v: None if v is None else clean(v).split(";")[0].strip('"')  # noqa: E731
-    shown = sorted(lit(e32[n + " | fmt"]) for n in ENDS if n.startswith("A Cumulative End") and "Name" not in n and e32[n] is not None)
-    check("spec: capital plan end labels", s, sorted(x for x in rec["ch_plan_cum"]["labels"] if x.split(" ")[0] in SCEN), shown)
+    # review round 2, step C: the plan chart's end labels are cards (Plan End ... (text)); one of each pair is empty
+    cards = {c: (clean(scal[s][f"Plan End {c} (text)"]), clean(scal[s][f"Plan End Sel {c} (text)"])) for c in SCEN}
+    check("spec: capital plan end labels", s, sorted(x for x in rec["ch_plan_cum"]["labels"] if x.split(" ")[0] in SCEN), sorted(a or b for a, b in cards.values()))
+    check("model: the case in view takes the emphasised end card, the other two the quiet one", s, [c == s for c in SCEN],
+          [bool(b) and not a for a, b in cards.values()])
+    check("spec: ledger F4, the rise in check-in complaints at the kiosk hotels (E2)", s, f"check-in complaints there up {half_up(W['kiosk complaints rise'] * 100, 0):.0f}% since {sm.KIOSK_COMPLAINT_YEARS[0]}",
+          led["F4"][1].split("; ")[-1])
     check("model: the case in view has no thin line", s, None, e32[f"A line {s}"])
     shown = sorted(lit(e32[f"Preset {k} Cumulative End (label-safe) | fmt"]) for k in "ABC")
     check("spec: comparison end labels (A, B, C)", s, sorted(x for x in alts["ch_cmp_alts"]["labels"] if x[:2] in ("A ", "B ", "C ")), shown)

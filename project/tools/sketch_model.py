@@ -1972,15 +1972,17 @@ for scn in ("Low", "Expected", "High"):
     m(f"A Cumulative Line ({scn})", f'IF ( [Selected Scenario] = "{scn}", BLANK (), [TT Year A ({scn})] )', SUSDM0, C15,
       f"Capital plan chart: package A's cumulative net impact in the {scn} case; blank when {scn} is the case in view (the emphasised line draws it). "
       "Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).")
-    label_safe(f"A Cumulative End {scn} (label-safe)", _YEND.format(f"[A Cumulative Line ({scn})]"), f'"{scn} " & ' + sfm(f"[A Cumulative Line ({scn})]"), C15,
-               f"Capital plan chart, end label of the {scn} line: its value on the horizon year only, printed as '{scn}' and the amount.")
-# build step 7: a line chart sets a data label above or under its point and nowhere else, and one series has one position.
-# The Low line ends under the zero line (its label goes under it), the other two end above it (label above), so the
-# emphasised line's label is one series per case, blank unless that case is in view (they replace the one end series of step 3).
+# Review round 2, step C (doc 25; DS2-08): the plan chart's end labels are cards right of the line ends, not data labels.
+# A line chart sets a data label above or under its point and nowhere else, and its white box hid the last stretch of
+# the High and the Low line. Two text measures per case, because a card has one font: the quiet one is empty while its
+# case is in view, the emphasised one (Deep Coffee semibold in the report) is empty in the other two cases. They replace
+# the six end series of steps 3 and 7 (A Cumulative End ... (label-safe)).
 for scn in ("Low", "Expected", "High"):
-    label_safe(f"A Cumulative End Sel {scn} (label-safe)", _YEND.format(f'IF ( [Selected Scenario] = "{scn}", [Preset A Cumulative Net (sel)] )'),
-               f'"{scn} " & ' + sfm("[Preset A Cumulative Net (sel)]"), C15,
-               f"Capital plan chart, end label of the emphasised line when {scn} is the case in view: its value on the horizon year only, printed as '{scn}' and the amount; blank in the other cases.")
+    _end = f'VAR hz = {HORIZON} RETURN "{scn} " & ' + sfm(f"CALCULATE ( [TT Year A ({scn})], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz )")
+    m(f"Plan End {scn} (text)", f'IF ( [Selected Scenario] = "{scn}", "", {_end} )', TXT, C15,
+      f"Capital plan chart, end label of the {scn} line as a card right of the line's end: '{scn}' and package A's cumulative cash in the horizon year; empty while {scn} is the case in view.")
+    m(f"Plan End Sel {scn} (text)", f'IF ( [Selected Scenario] = "{scn}", {_end}, "" )', TXT, C15,
+      f"Capital plan chart, end label of the emphasised line when {scn} is the case in view: '{scn}' and the amount; empty in the other cases.")
 for k in "ABC":
     label_safe(f"Preset {k} Cumulative End (label-safe)", _YEND.format(f"[Preset {k} Cumulative Net (sel)]"), f'"{k} " & ' + sfm(f"[Preset {k} Cumulative Net (sel)]"), C15,
                f"Comparison chart, end label of package {k}: its cumulative net impact on the horizon year only, printed as '{k}' and the amount, scenario in view.")
@@ -2307,12 +2309,23 @@ _KHOTELS = "COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), 
 _REFRESH = 'VAR rp = MAXX ( FILTER ( ALLNOBLANKROW ( MoveDecision ), MoveDecision[Finding] = "F3" && MoveDecision[Tranche] = 3 ), MoveDecision[ProjectID] ) '
 _CODE = "VAR c = SELECTEDVALUE ( Finding[Code] ) "
 _LM2, _LM1 = LEDGER_MOVES["F2"], LEDGER_MOVES["F1"]
+# Review round 2, step C (doc 25 sheet line 12, D8; J-AQ-9, INV-DE-2): the evidence for the kiosks. Complaints about
+# check-in and waiting per 1,000 room nights sold at the hotels the kiosk move covers (InvestmentProjectProperties),
+# first against last year of the data: 0.88 -> 1.26, +43 % (doc 20 E2; analysis/50_storytelling_checks.py section 2).
+KIOSK_COMPLAINT_CAT, KIOSK_COMPLAINT_YEARS = "Check-in & waiting times", (2021, 2025)
+_KRATE = ("CALCULATE ( DIVIDE ( CALCULATE ( SUM ( GuestComplaints[Complaints] ), GuestComplaints[Category] = \"" + KIOSK_COMPLAINT_CAT + "\" ), [Rooms Sold] ), "
+          "REMOVEFILTERS ( 'Date' ), 'Date'[Year] = {0}, REMOVEFILTERS ( Hotels ), TREATAS ( kh, Hotels[HotelID] ) )")
+m("Kiosk Check-in Complaints Rise %",
+  _KIOSK + 'VAR kh = SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = kp ), "@h", InvestmentProjectProperties[HotelID] ) '
+  + f"VAR r0 = {_KRATE.format(KIOSK_COMPLAINT_YEARS[0])} VAR r1 = {_KRATE.format(KIOSK_COMPLAINT_YEARS[1])} RETURN DIVIDE ( r1, r0 ) - 1", "0%", C15,
+  "Ledger F4: the rise in check-in and waiting complaints per 1,000 room nights sold at the hotels the kiosk move of package A covers, 2021 to 2025 (the organisers' GuestComplaints sheet).")
 m("Ledger Measure (text)",
   _CODE + REC_IDS + _KIOSK + _REFRESH + "VAR s = [Selected Scenario] "
   f'RETURN SWITCH ( c, "F2", "distribution cost, % of room revenue" & {LF} & "{_LM2}", "F1", "operating margin after commissions" & {LF} & "{_LM1}", '
-  f'"F4", "self check-in at the " & {_KHOTELS} & " busiest hotels" & {LF} & "kiosks live " & ' + month("LOOKUPVALUE ( InvestmentProjects[Completion Date], InvestmentProjects[ProjectID], kp )") + ', '
+  f'"F4", "self check-in at the " & {_KHOTELS} & " busiest hotels" & {LF} & "kiosks live " & ' + month("LOOKUPVALUE ( InvestmentProjects[Completion Date], InvestmentProjects[ProjectID], kp )")
+  + f' & "; check-in complaints there up " & FORMAT ( [Kiosk Check-in Complaints Rise %], "0%", "en-US" ) & " since {KIOSK_COMPLAINT_YEARS[0]}", '
   f'"F3", "NPS, hotels renovated 10+ years ago" & {LF} & "the refresh: see What waits, and why" )',
-  TXT, C15, "Ledger, 'What we track' (R-P2-5, doc 22 section 4; review round 2: DS2-07, INV-RK-6): the measure, a line break, the move(s) that act on it. F4 tracks one thing, the kiosk hotels; F3 tracks the NPS of the hotels last renovated ten or more years ago, the number the refresh is about.")
+  TXT, C15, "Ledger, 'What we track' (R-P2-5, doc 22 section 4; review round 2: DS2-07, INV-RK-6, J-AQ-9): the measure, a line break, the move(s) that act on it. F4 tracks one thing, the kiosk hotels, and says why they get kiosks (check-in complaints there); F3 tracks the NPS of the hotels last renovated ten or more years ago, the number the refresh is about.")
 m("Ledger 2025 (text)",
   _CODE + _KIOSK + "VAR v3 = " + gi_at("NPS (weighted)", 2025, "Hotels[Renovation Age Sort] = 3") + " "
   + 'RETURN SWITCH ( c, "F2", ' + pct1("[Dist Cost % 2025 GI]") + ', "F1", ' + pct1("[KPI Margin after GI]") + ', "F4", "0", "F3", ' + pt1("v3") + ' )',
@@ -2389,7 +2402,7 @@ alt_m("Plan Bar",
       "The capital plan bar read aloud (build step 10: the message and the four amounts; each segment's own label is a tab stop above the bar).")
 alt_m("Plan Cum",
       "VAR pb = [Preset A Payback Year] VAR s = [Selected Scenario] VAR hz = " + HORIZON + " "
-      'RETURN "Package A, cumulative net impact by year to " & ' + HORIZON + ' & " in the three cases. By " & ' + HORIZON + ' & ": Low " & ' + sfm(_A32.format("Low"))
+      'RETURN "Package A, cumulative cash by year to " & ' + HORIZON + ' & ", not discounted, in the three cases. By " & ' + HORIZON + ' & ": Low " & ' + sfm(_A32.format("Low"))
       + ' & ", Expected " & ' + sfm(_A32.format("Expected")) + ' & ", High " & ' + sfm(_A32.format("High"))
       + ' & ". In the " & s & " case " & IF ( ISBLANK ( pb ), "A is not cash positive by " & ' + HORIZON + ', "A is cash positive from " & pb ) & '
       + f'". The Board decides on the rest at the {GATE_YEAR} gate."',

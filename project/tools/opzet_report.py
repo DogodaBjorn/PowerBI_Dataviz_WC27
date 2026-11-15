@@ -1164,12 +1164,18 @@ PLAN_LINES = {1: 2, 2: 3, 3: 3, 4: 2}             # lines of each segment's labe
 # The bar: in its 32 px slot Power BI drew a 22.3 px bar, 8.2 px under the visual's top.
 # (at 42 px high it drew 32.6 px, 9.7 px under the top). The line chart: in its slot (792, 828, 1072, 148) the plot ran
 # x 864.2 to 1851.4 and y 841.9 (+$20M) to 946.0 (-$10M); the comp's runs 864 to 1856 and 846 to 948.
-PLAN_RECT = {"ch_plan_bar": (56, 780, 1808, 40), "ch_plan_cum": (792, 834, 1077, 146)}
-PLAN_X_END = 2032.8                 # spec ch_plan_cum.x_axis_end: room for the end labels inside the plot, no 2033 tick
+# Review round 2, step C (doc 25; DS2-08): the plot ends at the last year and the end labels stand right of it as cards
+# (plan_ends()), as the comp draws them. Until then the axis ran to 2032.8 with the labels inside the plot, as data
+# labels above or under their point (a line chart knows no Right), and their white boxes hid the last stretch of the
+# High and the Low line. The chart's rect keeps its left edge, its top and its height (the typed ticks of plan_ticks()
+# hang on them); only its right edge moved in. Measured on the scratch page of the spike (tools/desktop_shots/round2c).
+PLAN_X_END = 2032                   # the plot ends on the last year
+PLAN_CUM_W = 940                    # the visual's width that keeps the comp's 171 px a year with the axis ending at 2032
+PLAN_RECT = {"ch_plan_bar": (56, 780, 1808, 40), "ch_plan_cum": (792, 834, PLAN_CUM_W, 146)}
 PLAN_Y = (-10_000_000, 20_000_000)  # spec ch_plan_cum.y: −10 to +20 $M, ticks at −10, 0, +10, +20
-# doc 22 section 3 asks for Right; a line chart knows Above and Under only (the catalog, the theme schema and Microsoft's
-# validator agree). Low ends under the zero line, so its label goes under the line; Expected and High go above theirs.
-PLAN_LABEL_POS = ("Under", "Above", "Above")
+PLAN_END_X = 1719                   # page x of the last year, where the three lines end (the comp's X(2032))
+PLAN_END_GAP = 8                    # from the line's end to its label (the comp)
+PLAN_CAPTION = "Package A, cumulative cash, $M (not discounted, so it ends above NPV)"  # doc 25 sheet line 14 (DS2-01, J-AQ-8, J-VE-12)
 GATE_LINES = 4                      # lines of the gate rule at 12 pt in 704 px (the comp)
 
 
@@ -1198,33 +1204,23 @@ def plan_bar():
 def plan_cum():
     """ch_plan_cum (R-P2-7, doc 21 6.3 and P-5 as doc 22 section 3 amends them): package A's cumulative net impact in the
     three cases. The case in view is the 3 px Coffee Blue line; the other two are 1.5 px Warm Grey, Low dashed and High
-    dotted (A Cumulative Line (...) is blank for the case in view). One data label per line on the last year: the name and
-    the value from the label-safe format string, on white; the case in view in Deep Coffee semibold (one end series per
-    case for it, because a series has one label position: PLAN_LABEL_POS). The end series come
-    after the lines and the first line is formatted in whole $M, so the value axis prints "+$10M" in any locale (P-1 b).
+    dotted (A Cumulative Line (...) is blank for the case in view). No data labels: each line is named at its end by a
+    card right of the plot (plan_ends(), review round 2), so all three lines visibly reach the last year. The first line
+    is formatted in whole $M, so the value axis prints "+$10M" in any locale (P-1 b).
     Zero line named (R-G2), the gate as a dashed line at mid-2028; a year opens the year tooltip."""
     sel = "Preset A Cumulative Net (sel)"
     thin = [(f"A Cumulative Line ({c})", f"{c} case") for c in ("Low", "Expected", "High")]
-    ends = [(f"A Cumulative End {c} (label-safe)", f"{c} case, last year") for c in ("Low", "Expected", "High")]
-    ends_sel = [(f"A Cumulative End Sel {c} (label-safe)", f"{c} case in view, last year") for c in ("Low", "Expected", "High")]
-    series = thin + [(sel, "The case in view")] + ends + ends_sel
+    series = thin + [(sel, "The case in view")]
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m_, d_) for m_, d_ in series]}}
     ls = line_styles({**{mref(m_): 1.5 for m_, _ in thin}, mref(sel): 3}, dashed=(mref(thin[0][0]),))
     next(e for e in ls if e.get("selector", {}).get("metadata") == mref(thin[2][0]))["properties"]["lineStyle"] = enum("dotted")
-    ls += [{"properties": {"strokeShow": b(False), "showMarker": b(False)}, "selector": {"metadata": mref(m_)}} for m_, _ in ends + ends_sel]
-    lab = {"fontFamily": text(BODY), "fontSize": num(S), "color": color(INK2), "labelDisplayUnits": integer(1),
-           "enableBackground": b(True)}  # white and opaque from the theme (compile_theme.py, lineChart labels)
     years = HORIZON()["filter"]["Where"][0]["Condition"]["In"]["Values"]
     first_year = int(years[0][0]["Literal"]["Value"].rstrip("L"))
     objs = {"categoryAxis": axis(BODY, S, INK2, start=first_year, end=PLAN_X_END, extra={"labelPrecision": integer(0)}),
             "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, units=1, start=PLAN_Y[0], end=PLAN_Y[1]),
             "legend": legend(False), "seriesLabels": [{"properties": {"show": b(False)}}],
-            "labels": [{"properties": {"show": b(True), **lab}},
-                       *[{"properties": {"showSeries": b(False)}, "selector": {"metadata": mref(m_)}} for m_, _ in thin + [(sel, "")]],
-                       *[{"properties": {"showSeries": b(True), "labelPosition": enum(pos)}, "selector": {"metadata": mref(m_)}} for (m_, _), pos in zip(ends, PLAN_LABEL_POS)],
-                       *[{"properties": {"showSeries": b(True), "labelPosition": enum(pos), "color": color(ACCENT), "fontFamily": text(DISPLAY)},
-                          "selector": {"metadata": mref(m_)}} for (m_, _), pos in zip(ends_sel, PLAN_LABEL_POS)]],
-            "dataPoint": series_colors({**{mref(m_): SLATE for m_, _ in thin + ends}, mref(sel): ACCENT_MARK, **{mref(m_): ACCENT_MARK for m_, _ in ends_sel}}),
+            "labels": [{"properties": {"show": b(False)}}],
+            "dataPoint": series_colors({**{mref(m_): SLATE for m_, _ in thin}, mref(sel): ACCENT_MARK}),
             "lineStyles": ls,
             "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
                                                     "position": enum("back"), "displayName": text("Cash positive above this line"), "dataLabelShow": b(True),
@@ -1267,19 +1263,69 @@ def plan_ticks():
     return out
 
 
+def plan_end_values():
+    """Package A's cumulative cash in the last year, $M, per case: read from the approved text of the spec (its end
+    labels, which number_checks.py holds against the model), so a label card stands at the height its line ends."""
+    spec = json.loads((ROOT / "project" / "design-prototypes" / "rebuild-v10-spec.json").read_text(encoding="utf-8"))["text"]
+    out = {}
+    for lab in spec["P2 rec Expected"]["ch_plan_cum"]["labels"]:
+        case, _, amount = lab.partition(" ")
+        if case in ("Low", "Expected", "High"):
+            out[case] = float(amount.replace("−", "-").replace("+", "").replace("$", "").replace("M", ""))
+    assert set(out) == {"Low", "Expected", "High"}, out
+    return out
+
+
+def plan_ends():
+    """The three end labels of ch_plan_cum (review round 2, step C; DS2-08): a card right of each line's end, as the comp
+    sets them, bound to the end measures. Two cards per case on one spot, because a card has one font: Dusk for a case
+    that is not in view, Deep Coffee semibold for the one that is; the measure of the other is empty (sketch_model,
+    Plan End ...). Out of the tab order: the chart's alt text reads the three amounts."""
+    _, _, _, _, z, tab = at(P2, "ch_plan_cum")
+    x = PLAN_END_X + PLAN_END_GAP
+    w = SLOT[P2]["ch_plan_cum"]["x"] + SLOT[P2]["ch_plan_cum"]["w"] - x
+    out = []
+    for i, (case, val) in enumerate(plan_end_values().items()):
+        y = round(PLAN_TICK_ZERO_Y - val * 1e6 * PLAN_TICK_PX - CARD_H[1] / 2)
+        quiet = card(f"ch_plan_cum_e{i + 1}", x, y, w, CARD_H[1], z, tab, [f"Plan End {case} (text)"], BODY, S, INK2, off_grid=True)
+        loud = card(f"ch_plan_cum_s{i + 1}", x, y, w, CARD_H[1], z, tab, [f"Plan End Sel {case} (text)"], DISPLAY, S, ACCENT, off_grid=True)
+        out += [decorative(quiet, 110 + i), decorative(loud, 120 + i)]
+    return out
+
+
+def plan_caption():
+    """Doc 25 sheet line 14 (DS2-01, J-AQ-8, J-VE-12): the plan chart says what it draws, in the row between the bar and
+    the plot, from the plot's left edge. A text box of 24 px sets its baseline 17 px under its top (plan_ticks()); it
+    ends 8 px into the chart's rect, which mouse_order() still counts as standing above the chart, so the band a clicked
+    chart keeps in its header strip does not paint over it. Out of the tab order: the chart's alt text opens with the
+    same words."""
+    _, _, _, _, z, tab = at(P2, "ch_plan_cum")
+    x = SLOT[P2]["ch_plan_cum"]["x"] + 72  # the plot's left edge (the comp's x0)
+    v = textbox("ch_plan_cum_cap", x, PLAN_RECT["ch_plan_cum"][1] + SLIVER - 24, PLAN_END_X - x, 24, z, tab,
+                [[(PLAN_CAPTION, BODY, SPX, INK2, False)]], off_grid=True)
+    return decorative(v, 98)
+
+
 def p2_capital_plan():
-    """The capital plan in the bottom card of Recommended (doc 21 6.3, N-5; slots of doc 22 section 2): title, hover tag,
-    the four segment labels above their segments, the plan bar, the gate rule, A's cumulative chart and the milestone
-    line. Reading order: title, segments left to right, bar, gate, chart, milestones (R-P2-9)."""
-    v = [title(P2, "c_plan_title", "Capital Plan Title (text)", lift=5), hover_tag_text(P2, "tag_plan_cum", "Hover a year", 22)]
+    """The capital plan in the bottom card of Recommended (doc 21 6.3, N-5; slots of doc 22 section 2): title, the four
+    segment labels above their segments, the plan bar, the gate rule, A's cumulative chart with its caption, its hover
+    tag and its end labels, and the milestone line. Reading order: title, segments left to right, bar, gate, chart,
+    milestones (R-P2-9)."""
+    # UX-20 (review round 2): the tag stands on the chart it speaks of, in the plot's top row left of the gate, where no
+    # line runs in any case; 2 px off the grid so it stands clear of the gridlines at +$20M and +$10M
+    tag = hover_tag_text(P2, "tag_plan_cum", "Hover a year", 22)
+    tag["position"]["y"] += 2
+    v = [title(P2, "c_plan_title", "Capital Plan Title (text)", lift=5), tag]
     for k, n in PLAN_LINES.items():
         v += line_cards(P2, f"c_plan_t{k}", [f"Plan T{k} L{i} (text)" for i in range(1, n + 1)], f"Plan T{k} (text)", 50 + 10 * k)
     v.append(plan_bar())
     gate = note(P2, "c_plan_gate", "Gate Rule (text)", GATE_LINES, colour=INK)
     gate["position"]["y"] += 2  # the four lines sat 1.8 px above the comp's on the tile render
     v.append(gate)
+    v.append(plan_caption())
     v.append(plan_cum())
     v += plan_ticks()
+    v += plan_ends()
     v.append(note(P2, "c_plan_milestones", "Milestones (text)", 1))
     return v
 

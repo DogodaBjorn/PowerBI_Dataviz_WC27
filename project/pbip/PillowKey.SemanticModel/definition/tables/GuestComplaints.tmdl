@@ -1,0 +1,49 @@
+/// Grain: one row per hotel, month and complaint category.
+table GuestComplaints
+	lineageTag: d565b128-6ded-5a77-8294-7a024f3b9ac5
+
+	column HotelID
+		dataType: string
+		isHidden
+		lineageTag: f0e72718-5b1c-576e-90f3-24601c51a95b
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	column Month
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 26cd4014-60d5-542a-a3b1-b4dcff672b4e
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Category
+		dataType: string
+		lineageTag: efc99055-3547-5b0b-b323-a59b37d416c2
+		summarizeBy: none
+		sourceColumn: Category
+
+	column Complaints
+		dataType: int64
+		formatString: 0
+		lineageTag: 83c65a4a-b7b7-50c1-8589-e2be908f7bc3
+		summarizeBy: none
+		sourceColumn: Complaints
+
+
+	partition GuestComplaints = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="GuestComplaints",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"Category", type text}, {"Complaints", Int64.Type}})
+				in
+				    Typed
+
+
+	annotation PBI_ResultType = Table

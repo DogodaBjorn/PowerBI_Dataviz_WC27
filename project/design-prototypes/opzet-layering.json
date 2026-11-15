@@ -586,6 +586,34 @@
     "c_you_nums_l4": {
       "z": 59140,
       "tabOrder": -59141
+    },
+    "ch_plan_cum_cap": {
+      "z": 39700,
+      "tabOrder": -39701
+    },
+    "ch_plan_cum_e1": {
+      "z": 39710,
+      "tabOrder": -39711
+    },
+    "ch_plan_cum_e2": {
+      "z": 39720,
+      "tabOrder": -39721
+    },
+    "ch_plan_cum_e3": {
+      "z": 39730,
+      "tabOrder": -39731
+    },
+    "ch_plan_cum_s1": {
+      "z": 39750,
+      "tabOrder": -39751
+    },
+    "ch_plan_cum_s2": {
+      "z": 39760,
+      "tabOrder": -39761
+    },
+    "ch_plan_cum_s3": {
+      "z": 39770,
+      "tabOrder": -39771
     }
   }
 }

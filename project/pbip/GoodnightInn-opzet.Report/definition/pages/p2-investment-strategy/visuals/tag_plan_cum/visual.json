@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "tag_plan_cum",
   "position": {
-    "x": 1712,
-    "y": 692,
+    "x": 872,
+    "y": 850,
     "z": 42000,
     "width": 152,
     "height": 28,

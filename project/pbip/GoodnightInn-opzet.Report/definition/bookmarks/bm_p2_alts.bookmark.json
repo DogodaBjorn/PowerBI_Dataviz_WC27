@@ -43,9 +43,16 @@
       "c_plan_t4_2",
       "ch_plan_bar",
       "c_plan_gate",
+      "ch_plan_cum_cap",
       "ch_plan_cum",
       "ch_plan_cum_t1",
       "ch_plan_cum_t2",
+      "ch_plan_cum_e1",
+      "ch_plan_cum_s1",
+      "ch_plan_cum_e2",
+      "ch_plan_cum_s2",
+      "ch_plan_cum_e3",
+      "ch_plan_cum_s3",
       "c_plan_milestones",
       "c_scatter_title_s",
       "tag_scatter_s",
@@ -378,6 +385,14 @@
               }
             }
           },
+          "ch_plan_cum_cap": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
           "ch_plan_cum": {
             "singleVisual": {
               "visualType": "lineChart",
@@ -397,6 +412,54 @@
           "ch_plan_cum_t2": {
             "singleVisual": {
               "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_cum_e1": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_cum_s1": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_cum_e2": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_cum_s2": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_cum_e3": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_cum_s3": {
+            "singleVisual": {
+              "visualType": "cardVisual",
               "display": {
                 "mode": "hidden"
               }
