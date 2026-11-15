@@ -1,0 +1,32 @@
+File checks on branch fix/publish7-visual-fixes, 15 Nov 2026 (the report and the model as the generators wrote them)
+
+== a11y_check.py
+a11y_check: 0 failure(s), 0 note(s) over GoodnightInn-opzet.Report
+
+== strip_check.py
+p2-investment-strategy · bm_p2_alts: 8 live visuals, 0 blinded
+p2-investment-strategy · bm_p2_build: 9 live visuals, 0 blinded
+p2-investment-strategy · bm_p2_rec: 8 live visuals, 0 blinded
+strip_check: 0 failure(s), 0 note(s) at a strip of 36 page px over GoodnightInn-opzet.Report
+
+== compliance_check.py
+compliance_check (R-X-2, files only): 5 checks, 0 failed
+
+  ok    two visible pages, the rest hidden tooltip pages: visible: The Brand Review, The Investment Strategy; hidden tooltip pages: tt-package, tt-f3-band, tt-f4-hotel, tt-year, tt-glossary
+  ok    four or more built-in visual types on the two pages, no custom visual: area: stackedAreaChart x1; bar: barChart x1, clusteredBarChart x1; column: clusteredColumnChart x1; line: lineChart x4; scatter: scatterChart x8; table: tableEx x5
+  ok    built-in fonts only: arial (67 files), helvetica (67 files), sans-serif (67 files), segoe ui (56 files), segoe ui semibold (18 files), wf_segoe-ui_normal (55 files), wf_segoe-ui_semibold (17 files)
+  ok    embedded images only: 7 registered images in the report (canvas-night.jpg, canvas-tt-tt-f3-band.jpg, canvas-tt-tt-f4-hotel.jpg, canvas-tt-tt-glossary.jpg, canvas-tt-tt-package.jpg, canvas-tt-tt-year.jpg, gi-lockup-reversed@2x.png); web addresses in the report: 0; in the model: 0
+  ok    provided data only: 13 tables read the organisers' workbook through the DataFile parameter; 12 tables are calculated in the model: BuildBar, BuildMove, BuildPoint (typed labels or decision data), Finding (typed labels or decision data), FolioLine (typed labels or decision data), MoveDecision (typed labels or decision data), Package, PackageProject, PlanSelector (typed labels or decision data), ProjectCashflow, TTMove, WaitOption (typed labels or decision data)
+
+
+== schema_check.py (the report's definition)
+schema_check: 207 files, 0 failing
+
+== scripts/pbir_detect.py --waivers project/project-state/pbir-detect-waivers.yaml
+pbir_detect: 15 finding(s) across 4 report(s) — 0 unwaived, 15 waived -> PASS
+
+== scripts/validate_tmdl.py --strict
+validate_tmdl: 30 file(s), 0 error(s), 7 warning(s) [strict]
+
+== the model against a86e4ef (publish 7's build)
+(no line above this one: no difference)

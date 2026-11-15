@@ -139,7 +139,7 @@
     "gate_line": 2028.5,
     "end_labels": "review round 2 (doc 25 step C): no data labels; one card right of each line's end, 8 px from it, centred on the height the line ends, text \"Low −$4.6M\" from a text measure; the case in view #1763A8 semibold, the other two Dusk regular",
     "caption": "a text line in the row between the plan bar and the plot, from the plot's left edge, 12 pt Dusk (text: ch_plan_cum_cap)",
-    "hover_tag": "tag_plan_cum in the plot's top row, left of the gate line (UX-20)"
+    "hover_tag": "tag_plan_cum in the plot's top row (UX-20), right of the gate line's name since the fix round of 15 Nov (doc 29): left of the gate it stood right above the zero line's name"
    },
    "ch_cmp_alts": {
     "y": "auto, one tick below zero, 8% headroom above the top line",
@@ -274,6 +274,7 @@
     "fill": "positive #12233D, negative #E05A22",
     "value_axis": false,
     "category_axis": "auto width",
+    "rows": "fix round of 15 Nov (doc 29): up to ten rows without a scrollbar. Power BI draws a bar row no lower than 20 px, so the your-plan tile starts 64 px higher (level with the panel's head) and the chart is 234 px high",
     "labels": "P-1 label-safe, outside end"
    },
    "hero_s_packages": {

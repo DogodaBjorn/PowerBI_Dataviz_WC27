@@ -1219,7 +1219,6 @@ PLAN_END_X = 1719                   # page x of the last year, where the three l
 PLAN_END_GAP = 14                   # from the line's end to its label's card: the comp has 8, but the gridlines run 9 px
 #                                     past the last year and the label must not touch their ends
 PLAN_CAPTION = "Package A, cumulative cash, $M (not discounted, so it ends above NPV)"  # doc 25 sheet line 14 (DS2-01, J-AQ-8, J-VE-12)
-PLAN_TAG_X = 1256
 GATE_LINES = 4                      # lines of the gate rule at 12 pt in 704 px (the comp)
 
 
@@ -1357,11 +1356,15 @@ def p2_capital_plan():
     segment labels above their segments, the plan bar, the gate rule, A's cumulative chart with its caption, its hover
     tag and its end labels, and the milestone line. Reading order: title, segments left to right, bar, gate, chart,
     milestones (R-P2-9)."""
-    # UX-20 (review round 2): the tag stands on the chart it speaks of, in the plot's top row left of the gate, where no
-    # line runs in any case; 2 px off the grid so it stands clear of the gridlines at +$20M and +$10M
+    # UX-20 (review round 2): the tag stands on the chart it speaks of, in the plot's top row, where no line runs in any
+    # case; 2 px off the grid so it stands clear of the gridlines at +$20M and +$10M
+    # Fix round of 15 Nov (doc 29, point 2): left of the gate the tag stood right above the zero line's name, "Cash
+    # positive above this line", and between the gridlines at +$20M and +$10M there is no room to lift it. It moves along
+    # its row to the right of the gate's name, 28 px from it (the slot map's x, 1260): no line reaches that spot either,
+    # the High line passes 9 px under the tag's right end when High is the case in view (3 px wide), 10 px otherwise
+    # (measured on the renders of that round).
     tag = hover_tag_text(P2, "tag_plan_cum", "Hover a year", 22)
     tag["position"]["y"] += 2
-    tag["position"]["x"] = PLAN_TAG_X
     v = [title(P2, "c_plan_title", "Capital Plan Title (text)", lift=5), tag]
     for k, n in PLAN_LINES.items():
         v += line_cards(P2, f"c_plan_t{k}", [f"Plan T{k} L{i} (text)" for i in range(1, n + 1)], f"Plan T{k} (text)", 50 + 10 * k)
@@ -1499,6 +1502,15 @@ BUILD_HEAD = ("Build your own", "Click a move to add or remove it.")
 # (doc 21 section 8). Short names, as BuildMove[Short Name] prints them on the tiles.
 A_MOVES = ("Booking app & rates", "Revenue management", "Kiosks, 20 busiest")
 SELECTOR_ALT = "Moves: pick a move to add it to your plan or to take it out; the table beside it gives each move's numbers"
+
+
+# Fix round of 15 Nov (doc 29, point 1): with eight moves picked the bars of "Your plan" scrolled and the eighth row was out
+# of sight. Power BI draws a bar row no lower than 20 px (categoryAxis.preferredCategoryWidth, "Minimum category width":
+# 16 was tried and ignored, the rows stayed 21 px and the scrollbar came back), so ten rows need 200 px of plot and the
+# slot gave 157. The room is found above the tile: the panel's head has its text at the left and nothing beside it, so
+# in the slot map the your-plan tile starts 64 px higher, level with the head (16 px under the card's top edge, as at
+# its foot), its title, numbers, range and rules line move up by as much, the head's slot ends 16 px left of the tile,
+# and the bars take the height that comes free (BARS_RECT).
 
 
 def build_head():
@@ -1646,9 +1658,16 @@ def top_text(page, name, measure, colour_measure, alt_measure=None):
 # low (Power BI keeps 8 px above its plot and an outer padding of its own); with outer padding 0 and this rect five rows
 # are 32 px apart from y 464. x and width: the strip render moves by about 3 px for 1 px of rect (Desktop snaps a visual to
 # its device pixels at that zoom), so the two edges were settled from two renders one px apart (doc 23, log of step 9).
-BARS_RECT = (1379, 462, 467, 172)
-BARS_INNER = 40  # the comp's bar is 60 % of its row (measured: 16.8 px in a 32 px row, the comp's 18)
-BARS_MIN_ROW = 16
+#
+# Fix round of 15 Nov (doc 29, point 1; see build_head() above): the rect starts where the rules line's slot ends and is 234 px
+# high, the room ten rows need. Measured on the strip renders of that round: Power BI keeps 7.4 px above the rows and
+# lets them fill the rest, so three to five moves stand 45.2 px apart, eight 28.2 px and ten 22.6 px (the floor is
+# 20 px: under it the chart scrolls). With outer padding 0 the first bar began and the last bar ended on the plot's
+# edge, and the rect cut the last name's descenders ("Energy programme", already so on publish 7); a quarter row of
+# outer padding puts every bar in the middle of a row of its own, so the last name ends 5 px inside the rect. The bar
+# is half its row: 20 px for up to five moves (the comp's 18), 13 px for eight, 11 px for ten.
+BARS_RECT = (1379, 392, 467, 234)
+BARS_INNER, BARS_OUTER = 50, 25
 
 
 def build_bars():
@@ -1662,8 +1681,7 @@ def build_bars():
          "Tooltips": {"projections": [proj_mea("Build Bar Order", "Order")]}}
     va = axis(BODY, S, INK2, show=False, gridlines=False)
     va[0]["properties"].update({"start": mtext("Build Bars X Start"), "end": mtext("Build Bars X End")})
-    ca = axis(BODY, S, INK2, gridlines=None, extra={"maxMarginFactor": integer(45), "innerPadding": integer(BARS_INNER), "outerPadding": integer(0), "concatenateLabels": b(False),
-                                                   "preferredCategoryWidth": num(BARS_MIN_ROW)})
+    ca = axis(BODY, S, INK2, gridlines=None, extra={"maxMarginFactor": integer(45), "innerPadding": integer(BARS_INNER), "outerPadding": integer(BARS_OUTER), "concatenateLabels": b(False)})
     objs = {"categoryAxis": ca, "valueAxis": va, "legend": legend(False),
             "dataPoint": [{"properties": {"fill": fv("Build Bar Color")}, "selector": WILD}],
             "labels": labels(True, BODY, S, INK, units=1, position="OutsideEnd"),

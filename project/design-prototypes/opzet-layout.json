@@ -1,5 +1,5 @@
 {
- "_doc": "Slot map v10 of 2026-11-13, copied from project/design-prototypes/rebuild-comp-v10.html (the comp of doc 21 section 12). Slots and names of doc 21 sections 4 to 8; same shape as v9. Cards: P1 ids unchanged, P2 ids hero, decision (rec), scatter_s, panel_w (alts, build) and bottom (all states, never a bookmark target); tile you (outline, build). state: absent = always visible; a list = shown only in those states (bm_p2_rec / bm_p2_alts / bm_p2_build). z and tab: v9 values where the name existed; new slots carry proposed values in reading order (negative tab = decorative); opzet-layering.json decides (doc 21 11.2). hero_s_packages is the rect of the whole small stack (_named, _build, _hover derive from it); ch_f4_avg and ch_f4_dots share one rect. lbl_hero_8 and lbl_hero_0: x computed from the hero column widths and bar domains (P-4). New in v10: lbl_f4_* (P1), seven text boxes with the names of the seven fullest hotels and Kingston beside their dots, replacing the scatter category labels of doc 21 4.5 (they collided in the comp); Gatwick and Montreal share one label. Table column widths, chart axis ends, label positions and the exact text per view: rebuild-v10-spec.json; rules and reasons: project-state/active/22-rebuild-comp-v10-handoff-2026-11-13.md. Changed against doc 21: lbl_hero_8 574,220,176,20 -> 574,216,176,24 (12 pt needs a 21 px line; 20 px clipped it. Up 4 px, still clear of the hero title (184 to 216)); lbl_hero_0 757,220,168,20 -> 757,216,168,24 (same as lbl_hero_8); c_ledger_caption 1112,616,440,24 -> 1112,616,408,24 (gives 32 px to the invitation button; the caption needs 368 px); btn_build_invite 1560,612,304,28 -> 1528,612,336,28 (the label wraps in 304 px (needs about 310 with the button padding)); c_plan_t1 56,724,275,60 -> 56,720,275,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_plan_t2 339,724,366,60 -> 339,720,366,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_plan_t3 713,724,881,60 -> 713,720,881,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_plan_t4 1602,724,262,60 -> 1602,720,262,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_you_nums 1384,304,464,56 -> 1384,304,464,72 (four callouts in 464 px: \"NPV through 2032\" wraps to two lines, so the card needs 72); c_you_range 1384,368,464,24 -> 1384,384,464,24 (follows c_you_nums down 16 px); c_you_rules 1384,392,464,40 -> 1384,408,464,48 (follows c_you_nums down 16 px, and 8 px taller: the R-B-2 sentence of the empty state takes two lines (43 px)); ch_build_bars 1384,440,464,192 -> 1384,464,464,168 (follows c_you_rules down 24 px; still ends at 632 inside the tile); c_rec_head 1160,184,704,56 -> 1160,184,704,48 (two paragraphs need 48 px (20 px head + one 12 pt line); frees 8 px for the ledger); c_rec_nums 1112,248,752,64 -> 1112,240,752,64 (follows c_rec_head up 8 px); c_rec_lines 1112,320,752,72 -> 1112,312,752,48 (its two lines need 43 px; 72 left 29 px empty); tbl_ledger 1112,400,752,208 -> 1112,368,752,240 (the ledger needs 227 px with the v10 columns and copy (header 28, rows 45 / 45 / 64 / 45); still ends at 608). Tooltip pages: carried over from v9 unchanged, except tt-f1 to tt-f4, deleted (N-4); the tt-package changes of doc 21 section 9 are the builder's.",
+ "_doc": "Slot map v10 of 2026-11-13, copied from project/design-prototypes/rebuild-comp-v10.html (the comp of doc 21 section 12). Slots and names of doc 21 sections 4 to 8; same shape as v9. Cards: P1 ids unchanged, P2 ids hero, decision (rec), scatter_s, panel_w (alts, build) and bottom (all states, never a bookmark target); tile you (outline, build). state: absent = always visible; a list = shown only in those states (bm_p2_rec / bm_p2_alts / bm_p2_build). z and tab: v9 values where the name existed; new slots carry proposed values in reading order (negative tab = decorative); opzet-layering.json decides (doc 21 11.2). hero_s_packages is the rect of the whole small stack (_named, _build, _hover derive from it); ch_f4_avg and ch_f4_dots share one rect. lbl_hero_8 and lbl_hero_0: x computed from the hero column widths and bar domains (P-4). New in v10: lbl_f4_* (P1), seven text boxes with the names of the seven fullest hotels and Kingston beside their dots, replacing the scatter category labels of doc 21 4.5 (they collided in the comp); Gatwick and Montreal share one label. Table column widths, chart axis ends, label positions and the exact text per view: rebuild-v10-spec.json; rules and reasons: project-state/active/22-rebuild-comp-v10-handoff-2026-11-13.md. Changed against doc 21: lbl_hero_8 574,220,176,20 -> 574,216,176,24 (12 pt needs a 21 px line; 20 px clipped it. Up 4 px, still clear of the hero title (184 to 216)); lbl_hero_0 757,220,168,20 -> 757,216,168,24 (same as lbl_hero_8); c_ledger_caption 1112,616,440,24 -> 1112,616,408,24 (gives 32 px to the invitation button; the caption needs 368 px); btn_build_invite 1560,612,304,28 -> 1528,612,336,28 (the label wraps in 304 px (needs about 310 with the button padding)); c_plan_t1 56,724,275,60 -> 56,720,275,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_plan_t2 339,724,366,60 -> 339,720,366,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_plan_t3 713,724,881,60 -> 713,720,881,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_plan_t4 1602,724,262,60 -> 1602,720,262,64 (three lines of 12 pt need 64 px; 60 clipped tranche 2 and 3. The row moves up 4 px to stay clear of the bar at 788); c_you_nums 1384,304,464,56 -> 1384,304,464,72 (four callouts in 464 px: \"NPV through 2032\" wraps to two lines, so the card needs 72); c_you_range 1384,368,464,24 -> 1384,384,464,24 (follows c_you_nums down 16 px); c_you_rules 1384,392,464,40 -> 1384,408,464,48 (follows c_you_nums down 16 px, and 8 px taller: the R-B-2 sentence of the empty state takes two lines (43 px)); ch_build_bars 1384,440,464,192 -> 1384,464,464,168 (follows c_you_rules down 24 px; still ends at 632 inside the tile); c_rec_head 1160,184,704,56 -> 1160,184,704,48 (two paragraphs need 48 px (20 px head + one 12 pt line); frees 8 px for the ledger); c_rec_nums 1112,248,752,64 -> 1112,240,752,64 (follows c_rec_head up 8 px); c_rec_lines 1112,320,752,72 -> 1112,312,752,48 (its two lines need 43 px; 72 left 29 px empty); tbl_ledger 1112,400,752,208 -> 1112,368,752,240 (the ledger needs 227 px with the v10 columns and copy (header 28, rows 45 / 45 / 64 / 45); still ends at 608). Tooltip pages: carried over from v9 unchanged, except tt-f1 to tt-f4, deleted (N-4); the tt-package changes of doc 21 section 9 are the builder's. Fix round of 15 Nov (doc 29), page 2 only and no longer as the comp: the your-plan tile of Build starts 64 px higher (y 184, level with the panel's head, whose slot now ends 16 px left of the tile), c_you_title, c_you_nums, c_you_range and c_you_rules move up by 64 px and ch_build_bars takes the height (ten rows without a scrollbar); tag_plan_cum stands right of the gate line's name (x 1260, was 872). opzet-layout-v10.json keeps the comp's values.",
  "canvas": {
   "w": 1920,
   "h": 1080
@@ -809,7 +809,7 @@
     },
     {
      "name": "tag_plan_cum",
-     "x": 872,
+     "x": 1260,
      "y": 848,
      "w": 152,
      "h": 28,
@@ -1019,7 +1019,7 @@
      "name": "c_build_head",
      "x": 792,
      "y": 184,
-     "w": 1072,
+     "w": 560,
      "h": 56,
      "z": 1043,
      "tab": 530,
@@ -1066,7 +1066,7 @@
     {
      "name": "c_you_title",
      "x": 1384,
-     "y": 256,
+     "y": 192,
      "w": 464,
      "h": 40,
      "z": 1073,
@@ -1078,7 +1078,7 @@
     {
      "name": "c_you_nums",
      "x": 1384,
-     "y": 304,
+     "y": 240,
      "w": 464,
      "h": 72,
      "z": 1074,
@@ -1090,7 +1090,7 @@
     {
      "name": "c_you_range",
      "x": 1384,
-     "y": 384,
+     "y": 320,
      "w": 464,
      "h": 24,
      "z": 1049,
@@ -1102,7 +1102,7 @@
     {
      "name": "c_you_rules",
      "x": 1384,
-     "y": 408,
+     "y": 344,
      "w": 464,
      "h": 48,
      "z": 1075,
@@ -1114,9 +1114,9 @@
     {
      "name": "ch_build_bars",
      "x": 1384,
-     "y": 464,
+     "y": 400,
      "w": 464,
-     "h": 168,
+     "h": 232,
      "z": 1051,
      "tab": 610,
      "state": [
@@ -1170,9 +1170,9 @@
     {
      "id": "you",
      "x": 1368,
-     "y": 248,
+     "y": 184,
      "w": 496,
-     "h": 392,
+     "h": 456,
      "state": [
       "build"
      ],

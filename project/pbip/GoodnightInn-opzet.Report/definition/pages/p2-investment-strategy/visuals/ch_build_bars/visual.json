@@ -3,10 +3,10 @@
   "name": "ch_build_bars",
   "position": {
     "x": 1379,
-    "y": 462,
+    "y": 392,
     "z": 64036,
     "width": 467,
-    "height": 157,
+    "height": 234,
     "tabOrder": 9210
   },
   "visual": {
@@ -143,14 +143,14 @@
             "innerPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "40L"
+                  "Value": "50L"
                 }
               }
             },
             "outerPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "0L"
+                  "Value": "25L"
                 }
               }
             },
