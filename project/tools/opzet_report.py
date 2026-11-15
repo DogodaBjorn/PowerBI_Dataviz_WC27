@@ -1156,7 +1156,7 @@ def hero_table():
     Status and NPV take their ink from the model (P-6: the word first, the colour second). No tooltip page."""
     ms = ("Move Answers (text)", "Move Status (text)", "Hero Yield Bar SVG", "Move Yield (text)", "Hero NPV Bar SVG", "Move NPV (text)")
     proj = [proj_col("InvestmentProjects", "Move Name", display="Move"), proj_mea(ms[0], "Answers"), proj_mea(ms[1], "Status"),
-            proj_mea(ms[2], "A year on cost"), proj_mea(ms[3], "test 1"), proj_mea(ms[4], "NPV through 2032"), proj_mea(ms[5], "test 2")]  # review round 2 (CL-36): the two value columns name the tests the title counts; "test 1: above 8%, ..." did not fit the two marker slots
+            proj_mea(ms[2], "A year on cost"), proj_mea(ms[3], "≥ 8%"), proj_mea(ms[4], "NPV through 2032"), proj_mea(ms[5], "≥ $0")]  # review round 2 (CL-36): the two value columns name the tests the title counts. Review round 3 (UX3-04, CL3-09, DS3-07): by their thresholds, not by a number ("test 1", "test 2"); "test: 8%" is 54 px in a column that gives its header 54
     refs = ["InvestmentProjects.Move Name", *[mref(m_) for m_ in ms]]
     colfmt = [{"properties": {"fontColor": color(INK2), "styleHeader": b(False), "styleValues": b(True)}, "selector": {"metadata": refs[1]}},
               *[{"properties": {"alignment": enum("Right"), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": refs[i]}} for i in (4, 6)]]

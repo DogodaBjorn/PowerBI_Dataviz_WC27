@@ -88,7 +88,7 @@
               },
               "queryRef": "_Measures.Move Yield (text)",
               "nativeQueryRef": "Move Yield (text)",
-              "displayName": "test 1"
+              "displayName": "≥ 8%"
             },
             {
               "field": {
@@ -118,7 +118,7 @@
               },
               "queryRef": "_Measures.Move NPV (text)",
               "nativeQueryRef": "Move NPV (text)",
-              "displayName": "test 2"
+              "displayName": "≥ $0"
             }
           ]
         }

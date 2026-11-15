@@ -223,6 +223,8 @@ q.append("EVALUATE GENERATE ( CROSSJOIN ( SELECTCOLUMNS ( FILTER ( ALL ( Investm
              ("name", calc("SELECTEDVALUE ( InvestmentProjects[Move Name] )", PF)), ("hsort", calc("SELECTEDVALUE ( InvestmentProjects[Hero Sort] )", PF)),
              ("status", "LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], p )"), ("finding", "LOOKUPVALUE ( MoveDecision[Finding], MoveDecision[ProjectID], p )"),
              ("tranche", "LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], p )"),
+             # review round 3: the hero's status word names package B and "not full" (Move Status (text)); B's moves from the engine
+             ("inb", '( VAR b = [Preset B Package] RETURN IF ( p IN SELECTCOLUMNS ( FILTER ( ALLNOBLANKROW ( PackageProject ), PackageProject[PackageID] = b ), "@p", PackageProject[ProjectID] ), 1, 0 ) )'),
              ("bsort", "LOOKUPVALUE ( BuildMove[Sort], BuildMove[ProjectID], p )"), ("short", "LOOKUPVALUE ( BuildMove[Short Name], BuildMove[ProjectID], p )"),
              ("move_rr", calc("[Move Run-rate (num)]", "BuildMove[ProjectID] = p", SF)), ("move_rr_txt", calc(sm.sfm("[Move Run-rate (num)]"), "BuildMove[ProjectID] = p", SF)),
              ("move_npv_txt", calc(sm.sfm("[Move NPV (num)]"), "BuildMove[ProjectID] = p", SF)),
@@ -286,6 +288,23 @@ empty = T[4][0]
 bars = dict(zip(SCEN, T[5:8]))
 f4h, f4t, trend, f3 = T[8], T[9], T[10], T[11]
 
+PP = sheet("InvestmentProjectProperties")
+
+
+def shown_status(p, s):
+    """The hero's status word (review round 3): a move marked not now reads "package B" when the alternative holds it and A
+    does not, "not full" when it is an extension whose hotel topped 90 % in none of the last 24 months (the workbook)."""
+    st = moves[p, s]["status"]
+    if st != "not now":
+        return st
+    if int(moves[p, s]["inb"]) and p not in A:
+        return "package B"
+    hs = list(PP[PP.ProjectID == p].HotelID)
+    if P.loc[p, "Category"] == "Expansion" and len(hs) == 1 and int(m90.get(hs[0], 0)) == 0:
+        return "not full"
+    return st
+
+
 # ---------------------------------------------------------------- 3 · compare
 # 3a · against the workbook (full precision)
 for p in P.index:
@@ -340,7 +359,7 @@ for s in SCEN:
         p = name_of[r[0]]
         check("hero yield", (p, s), r[4], clean(moves[p, s]["yield_txt"]))
         check("spec: hero NPV through 2032 (E10)", (p, s), r[6], clean(moves[p, s]["npv_txt"]))
-        check("spec: hero status", (p, s), r[2], moves[p, s]["status"])
+        check("spec: hero status", (p, s), r[2], shown_status(p, s))
         check("spec: hero answers start with the MoveDecision finding", (p, s), r[1].split(" ")[0], moves[p, s]["finding"])
     nums = rec["c_rec_nums"].split("\n")
     for want, n in ((nums[0], "Rec Capex"), (nums[2], "Rec NPV (sel)"), (nums[4], "Rec Run-rate (sel)"), (nums[6], "Rec A Year on Cost (sel)")):
@@ -351,8 +370,10 @@ for s in SCEN:
     other = "Expected" if s == "Low" else "Low"
     check("spec: the tile's first line (the Low case; in the Low view the Expected case)", ("NPV", s), money(line1)[0], clean(scal[s][f"Rec NPV {other} | txt"]))
     check("spec: the tile's first line (the Low case; in the Low view the Expected case)", ("a year", s), money(line1)[1], clean(scal[s][f"Rec Run-rate {other} | txt"]))
-    check("spec: the app carries it", ("app", s), money(line2)[0], clean(scal[s]["App Run-rate (sel) | txt" if s == "Low" else "App NPV (sel) | txt"]))
-    check("spec: the app carries it", ("leaves with the agencies", s), money(line2)[2], clean(scal[s]["App Commission Saving (sel) | txt"]))
+    # review round 3: "The app alone: +$3.4M through 2032." (Low: "... a year by 2032."), then what a year without it leaves
+    check("spec: the app alone", ("app", s), money(line2)[0], clean(scal[s]["App Run-rate (sel) | txt" if s == "Low" else "App NPV (sel) | txt"]))
+    check("spec: the app alone", ("its measure is named", s), True, line2.split(". ")[0].endswith("a year by 2032" if s == "Low" else "through 2032"))
+    check("spec: the app alone", ("leaves with the agencies", s), money(line2)[1], clean(scal[s]["App Commission Saving (sel) | txt"]))
     led = {r[0][:2]: r for r in rec["tbl_ledger"][1:]}
     check("spec: ledger (E11)", ("F2 2025", s), led["F2"][2], clean(scal[s]["Dist Cost % 2025 GI | txt"]))
     check("spec: ledger (E11)", ("F2 2032 with A", s), led["F2"][3], clean(scal[s]["Dist Cost % 2032 with A (sel) | txt"]))
