@@ -74,3 +74,9 @@ the colours changed since, so the new text says "WCAG AA", which is what `a11y_c
 
 - 16 Nov evening: requirements gathered (the community site refused the reader; brief, rules and search results
   used); three covers drawn and checked at tile size; texts written; committed and pushed.
+- 16 Nov 20:45: Bjorn saved the final copy in Desktop again. Read against the repo value by value: the eyebrow of both
+  pages moved left (page 1 x 1280 to 1200; page 2 x 1440 to 1400, its box 478 x 24.3), so it no longer ends at the
+  page edge; nine other files differ in Desktop's serialization only; the cash chart of doc 34 is in the save as
+  built; the model is equal (340 measures). Taken into `GoodnightInn-final.Report` untouched. File checks on it:
+  a11y 0 failures, strip check 0, `pbir_detect` 0 unwaived. `report-page1.png` and `report-page2.png` in `gallery/`
+  and the pages inside `cover-b.png` still show the eyebrows where they were.
