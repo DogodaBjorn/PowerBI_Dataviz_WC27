@@ -36,19 +36,19 @@
                   }
                 }
               },
-              "scaling": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'Fit'"
-                  }
-                }
-              },
               "url": {
                 "expr": {
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
                     "ItemName": "canvas-night.jpg"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
                   }
                 }
               }
@@ -265,11 +265,6 @@
     },
     {
       "source": "ch_f1_margin",
-      "target": "c_f3_count",
-      "type": "NoFilter"
-    },
-    {
-      "source": "ch_f1_margin",
       "target": "c_f3_note",
       "type": "NoFilter"
     },
@@ -576,11 +571,6 @@
     {
       "source": "ch_f2_ota",
       "target": "ch_f3_age",
-      "type": "NoFilter"
-    },
-    {
-      "source": "ch_f2_ota",
-      "target": "c_f3_count",
       "type": "NoFilter"
     },
     {
@@ -895,11 +885,6 @@
     },
     {
       "source": "tbl_f2_folio",
-      "target": "c_f3_count",
-      "type": "NoFilter"
-    },
-    {
-      "source": "tbl_f2_folio",
       "target": "c_f3_note",
       "type": "NoFilter"
     },
@@ -1206,11 +1191,6 @@
     {
       "source": "ch_f3_age",
       "target": "c_f3_title",
-      "type": "NoFilter"
-    },
-    {
-      "source": "ch_f3_age",
-      "target": "c_f3_count",
       "type": "NoFilter"
     },
     {
@@ -1530,11 +1510,6 @@
     },
     {
       "source": "ch_f4_avg",
-      "target": "c_f3_count",
-      "type": "NoFilter"
-    },
-    {
-      "source": "ch_f4_avg",
       "target": "c_f3_note",
       "type": "NoFilter"
     },
@@ -1841,11 +1816,6 @@
     {
       "source": "ch_f4_dots",
       "target": "ch_f3_age",
-      "type": "NoFilter"
-    },
-    {
-      "source": "ch_f4_dots",
-      "target": "c_f3_count",
       "type": "NoFilter"
     },
     {

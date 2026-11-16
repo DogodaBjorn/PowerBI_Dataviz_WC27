@@ -27,7 +27,23 @@
                     }
                   },
                   {
-                    "value": " · THE INVESTMENT STRATEGY",
+                    "value": " ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "16px",
+                      "color": "#c9d0dc"
+                    }
+                  },
+                  {
+                    "value": "·",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "16px",
+                      "color": "#e05a22"
+                    }
+                  },
+                  {
+                    "value": " THE INVESTMENT STRATEGY",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "16px",
