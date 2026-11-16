@@ -30,7 +30,7 @@ Alt text for the thumbnail, if the form asks for it:
 >
 > Built with 100% native Power BI visuals: no custom visuals, nothing to install.
 
-## The description (about 690 words)
+## The description (about 850 words)
 
 > **Goodnight Inn has the fullest hotels in the Pillow & Key Group. So why is its margin slipping?**
 >
