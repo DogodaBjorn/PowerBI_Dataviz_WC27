@@ -7154,6 +7154,166 @@
       "source": "sl_moves",
       "target": "tag_cmp_build",
       "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_build_bars",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_alts",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_cmp_build",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_bar",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_plan_cum",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_build",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_hover",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_letters",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_named",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_you",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "hero_s_packages_you",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "sl_moves",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "sl_moves",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_hero",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_ledger",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_moves",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "cover_hero_yield",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_waits",
+      "target": "cover_hero_npv",
+      "type": "NoFilter"
     }
   ]
 }

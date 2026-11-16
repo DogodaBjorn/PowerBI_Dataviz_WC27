@@ -82,7 +82,9 @@
       "c_you_rules",
       "ch_build_bars",
       "ch_cmp_build",
-      "tag_cmp_build"
+      "tag_cmp_build",
+      "cover_hero_yield",
+      "cover_hero_npv"
     ],
     "suppressActiveSection": true,
     "suppressData": true
@@ -664,6 +666,22 @@
           "tag_cmp_build": {
             "singleVisual": {
               "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "cover_hero_yield": {
+            "singleVisual": {
+              "visualType": "shape",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "cover_hero_npv": {
+            "singleVisual": {
+              "visualType": "shape",
               "display": {
                 "mode": "hidden"
               }
