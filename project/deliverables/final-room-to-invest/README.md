@@ -73,3 +73,11 @@ on both pages. `hover-align/` shows the result: `page1.png` and `page2.png` (thr
 `final-copy-page2.png` (the final copy), and the check reports in `hover-align/checks/`. The account is
 `project/project-state/active/33-hover-text-and-bottom-card-2026-11-16.md`. `last-edit/` shows the state before his
 second pass.
+
+## The cash chart by case (16 Nov, afternoon)
+
+Bjorn found the cash chart at the foot of page 2 too grey. Each case now has its own colour (Low Burnt Tangerine,
+Expected Coffee Blue, High Night), the case in view is the thick line, and the zero line is Night with a light shade
+under it. `plan-chart/` shows it: `chart-before.png`, `chart-expected.png`, `chart-low.png`, `chart-high.png`
+(throwaway copy), `final-copy-page2.png` (the final copy) and the check reports in `plan-chart/checks/`. The account is
+`project/project-state/active/34-plan-chart-by-case-2026-11-16.md`.
