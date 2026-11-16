@@ -60,3 +60,9 @@ Candidates a, b and c of doc 35 stay in the folder; `cover-final.png` is the one
 
 - 16 Nov night: the visual types counted again; the cover redesigned and rendered in 16:9 and 4:3; the texts
   rewritten around the claim; committed and pushed.
+- 16 Nov late: Bjorn published and posted the entry. His screenshot of the gallery showed his tile without an image,
+  and what a tile does with a cover: 538 x 225 px, a band of 2.39:1 from the image's middle. `cover_tile.py` draws
+  `cover-tile.png` (and `.jpg`): the same design with logo, headline and a larger badge inside that band;
+  `cover-tile-as-shown.png` is the band at tile size. The community site cannot be read from here (403), so why his
+  image did not show could not be looked up; the likely causes were given to him. The Publish to Web link has not
+  been given yet: the gate is still open.

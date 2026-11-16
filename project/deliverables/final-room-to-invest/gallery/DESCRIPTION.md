@@ -8,7 +8,7 @@ Everything Bjorn pastes into the Contests Gallery form. Every number below is on
 | Field | What goes in |
 |---|---|
 | Title | `Goodnight Inn: Room to Invest` (long form, if the field takes it: `Goodnight Inn: Room to Invest. 456 ways to spend $60M, built with 100% native Power BI visuals`) |
-| Thumbnail image | `cover-final.png`; `cover-final-1920x1440.png` if the form wants 4:3 |
+| Thumbnail image | `cover-tile.png` (or `cover-tile.jpg` if the form refuses the PNG): the gallery's tile shows a band of 2.39:1 from the image's middle, and this cover keeps logo, headline and badge inside it. `cover-tile-as-shown.png` is what the tile shows |
 | Description | "The description" below; the first image in it `report-page1.png`, the second `report-page2.png` |
 | Publish to Web URL | the link of the last publish (not stored in this repository) |
 | PBIX | `Goodnight Inn - Room to Invest.pbix`, saved from the Desktop window after the gate |
@@ -162,3 +162,12 @@ with its tags intact, the page carries the GA4 tag (G-TVT7VS528L, behind the coo
 
 In GA4: Reports > Acquisition > Traffic acquisition, dimension "Session campaign", value DataVizWC27. Only visitors
 who accept the cookie notice are counted there; the site's own tracker counts every visit.
+
+## What the gallery showed after posting (16 Nov, late)
+
+- A tile shows the cover 538 x 225 px: a band of 2.39:1 from the image's middle. `cover-final.png` loses its logo to
+  that cut, so `cover-tile.png` replaces it.
+- A tile shows the title and the first 45 characters or so of the description. With the informal introduction first,
+  the tile reads "Hey all,..."; the two other Goodnight Inn entries open with "Brand: Goodnight Inn (...".
+- The other entries carry the labels COMMUNITY CONTEST and DATAVIZ WORLD CHAMPIONSHIP... under their tile, with the
+  author and the time. Bjorn's tile showed none of these when he looked: to check on the post itself.
