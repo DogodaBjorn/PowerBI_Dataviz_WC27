@@ -111,3 +111,10 @@ Bjorn chose clay as the third accent: step 3 is clay in the plan bar and in the 
 in the table, and the grounds over the plan bar of the round before are gone. `step3-accent/` shows it: `options.png`
 (the sketch he chose from), `page2-before.png`, `page2-recommended-clay.png` and the check reports. The account is
 `project/project-state/active/38-step-3-in-clay-2026-11-16.md`.
+
+## The table's text in the middle of its row (16 Nov, night)
+
+A native table has no vertical alignment; row padding puts text and bar in the middle of the row. The two reference
+lines are a stroke per row now, a dashed line. `rows-centred/` shows it: `table-before.png`, `table-after.png`,
+`table-tried-unbroken-line.png` (dropped), `page2-recommended.png` and the check reports. The account is
+`project/project-state/active/39-hero-table-rows-centred-2026-11-16.md`.

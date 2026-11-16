@@ -3,9 +3,9 @@
   "name": "tbl_hero",
   "position": {
     "x": 56,
-    "y": 224,
+    "y": 219.5,
     "z": 19000,
-    "height": 374,
+    "height": 378,
     "width": 1000,
     "tabOrder": 31000
   },
@@ -585,7 +585,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "5D"
                 }
               }
             },
@@ -599,7 +599,7 @@
             "imageHeight": {
               "expr": {
                 "Literal": {
-                  "Value": "34D"
+                  "Value": "23D"
                 }
               }
             },
