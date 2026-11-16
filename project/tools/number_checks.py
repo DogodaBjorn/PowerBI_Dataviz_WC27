@@ -458,7 +458,7 @@ for (p, s), r in moves.items():
         svg = r[col]
         bar = svg.split("<rect", 2)[1] if svg.count("<rect") == 2 else ""
         xr = sm.bar_x(ref, dom, w) - sm.HERO_IMG_PAD - 0.5
-        ok = svg.startswith("data:image/svg+xml;utf8,<svg") and f"width='{sm.HERO_IMG_W}' height='{sm.HERO_ROW_H}'" in svg and f"<rect x='{xr:.2f}' y='0' width='1'" in svg \
+        ok = svg.startswith("data:image/svg+xml;utf8,<svg") and f"width='{sm.HERO_IMG_W}' height='{sm.HERO_IMG_H}'" in svg and f"<rect x='{xr:.2f}' y='0' width='1' height='{sm.HERO_IMG_H}'" in svg and f"y='{sm.HERO_BAR_Y}' " in bar \
             and "," not in svg.split("utf8,", 1)[1] and f"fill='{fill.replace('#', '%23')}'" in bar
         check("model: hero bar cell is a well-formed SVG with the reference line at its constant x and the bar in its fill", (p, s, col), True, ok)
 

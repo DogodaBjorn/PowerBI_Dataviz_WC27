@@ -1871,7 +1871,13 @@ HERO_INSET, HERO_BAR_H = _HERO["bar_cell"]["inset_px"], _HERO["bar_cell"]["bar_h
 # moves up by the same 5 px inside its image (y 3 instead of the spec's 8) and the whole table moves down (HERO_DY in
 # opzet_report.py): text and bars then sit on the comp's, each on its own row's text line.
 HERO_TEXT_LIFT = 5
-HERO_BAR_Y = _HERO["bar_cell"]["bar_y"] - HERO_TEXT_LIFT
+# 16 Nov night (doc 39): a native table has no vertical alignment, so the row gets a padding of 5 px above and under its
+# text: the text then stands in the middle of a row of 33 px (it was 34, with the text on the row's top). The image can be
+# 23 px high at most (row minus padding), so the reference line no longer runs unbroken down the rows: each row carries its
+# own stroke of 23 px, 10 px apart, a dashed line. It stays inside the image, so it cannot drift from the bars at any zoom
+# (two rectangles over the table were tried: Desktop snaps a shape to whole screen pixels).
+HERO_PAD, HERO_IMG_H = 5, 23
+HERO_BAR_Y = (HERO_IMG_H - HERO_BAR_H) / 2
 HERO_IMG_PAD = 7                                   # Desktop draws an image 7 px into its cell (measured in S-2, not a setting)
 HERO_IMG_W = HERO_SPEC_COLS[5] - HERO_IMG_PAD      # grid.imageWidth is one value per table: the narrow bar column minus the padding
 HERO_YDOM, HERO_YREF = tuple(float(v) for v in _HERO["yield_domain"]), float(_HERO["yield_ref"])
@@ -1890,7 +1896,8 @@ def hero_ref_x():
 
 
 def bar_cell(name, value_expr, dom, ref, fill_expr, w, doc):
-    """P-4: a measure that returns an SVG data URI with one bar from zero and one full-height reference line.
+    """P-4: a measure that returns an SVG data URI with one bar from zero and one reference line as high as the image
+    (since doc 39 the image is the row minus its padding, so the line reads as one dashed line down the table).
     Fixed pixel width and a fixed domain, so the reference line has the same x in every row and every scenario and
     reads as one line down the table (row padding 0, image height = row height). The value is not in the SVG: it sits
     in its own text column. Numbers go through FORMAT ( x, "0.0", "en-US" ), '#' is written as %23 (Kerry Kolosko's
@@ -1906,9 +1913,9 @@ def bar_cell(name, value_expr, dom, ref, fill_expr, w, doc):
       f"VAR x0 = {x0!r} "
       f'VAR fill = SUBSTITUTE ( {fill_expr}, "#", "%23" ) '
       "RETURN IF ( ISBLANK ( SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) || ISBLANK ( v ), BLANK (), "
-      f"\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='{HERO_IMG_W}' height='{HERO_ROW_H}' viewBox='0 0 {HERO_IMG_W} {HERO_ROW_H}'>"
+      f"\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='{HERO_IMG_W}' height='{HERO_IMG_H}' viewBox='0 0 {HERO_IMG_W} {HERO_IMG_H}'>"
       f"<rect x='\" & {f.format('MIN ( x0, xv )')} & \"' y='{HERO_BAR_Y}' width='\" & {f.format('ABS ( xv - x0 )')} & \"' height='{HERO_BAR_H}' fill='\" & fill & \"'/>"
-      f"<rect x='{xr - 0.5:.2f}' y='0' width='1' height='{HERO_ROW_H}' fill='%2312233D' shape-rendering='crispEdges'/></svg>\" )",
+      f"<rect x='{xr - 0.5:.2f}' y='0' width='1' height='{HERO_IMG_H}' fill='%2312233D' shape-rendering='crispEdges'/></svg>\" )",
       TXT, C15, doc)
     IMAGE_MEASURES.add(name)
 

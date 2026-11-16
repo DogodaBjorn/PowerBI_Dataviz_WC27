@@ -1197,7 +1197,7 @@ def hero_table():
     colfmt = [{"properties": {"fontColor": color(INK2), "styleHeader": b(False), "styleValues": b(True)}, "selector": {"metadata": refs[1]}},
               *[{"properties": {"alignment": enum("Right"), "styleHeader": b(True), "styleValues": b(True)}, "selector": {"metadata": refs[i]}} for i in (4, 6)]]
     objs = table_objects(BODY, S, INK, SURFACE, SURFACE, SURFACE, INK2, HAIR, row_padding=0, header_size=S, column_formatting=colfmt)
-    objs["grid"][0]["properties"].update({"gridHorizontal": b(False), "imageHeight": num(sm.HERO_ROW_H), "imageWidth": num(sm.HERO_IMG_W)})
+    objs["grid"][0]["properties"].update({"gridHorizontal": b(False), "rowPadding": num(sm.HERO_PAD), "imageHeight": num(sm.HERO_IMG_H), "imageWidth": num(sm.HERO_IMG_W)})
     objs["columnHeaders"][0]["properties"].update({"outlineStyle": enum("BottomOnly"), "outlineColor": color(INK2), "outlineWeight": num(1),
                                                    "autoSizeColumnWidth": b(False), "wordWrap": b(False)})
     objs["values"][0]["properties"].update({"wordWrap": b(False), "urlIcon": b(False)})
