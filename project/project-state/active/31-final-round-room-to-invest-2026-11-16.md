@@ -130,3 +130,8 @@ counts 138 results now, not 142: the four views of Build your own each lost the 
 ## Log
 
 - 16 Nov: plan approved; branch; layout, text and tools; checks green; renders read; evidence written.
+- 16 Nov: branch pushed, `rebuild-finalv3` moved forward to it (`18f0122`). The final copy written from that build to
+  `E:\Goodnight Inn - Room to Invest\Goodnight Inn - Room to Invest.pbip`, opened and refreshed; on its own model texts
+  138 of 138, numbers 809 of 809, alt texts 0 flags; its report and model files equal `project/pbip` file for file; page
+  names "The Wake-up Call" and "Room to Invest". The window stays open for Bjorn (publish, later Save as). The older
+  window "Goodnight Inn - The Wake-up Call" is Bjorn's to close; its folder is left alone.
