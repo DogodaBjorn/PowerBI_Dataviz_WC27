@@ -30,7 +30,7 @@ Alt text for the thumbnail, if the form asks for it:
 >
 > Built with 100% native Power BI visuals: no custom visuals, nothing to install.
 
-## The description (about 850 words)
+## The description (about 880 words)
 
 > **Goodnight Inn has the fullest hotels in the Pillow & Key Group. So why is its margin slipping?**
 >
@@ -38,7 +38,8 @@ Alt text for the thumbnail, if the form asks for it:
 > investment packages the rules allow. Six pay back by 2032. The best one spends $9.4M. Think you can beat it? Page 2
 > lets you build your own.
 >
-> Built with 100% native Power BI visuals: no custom visuals, nothing to install.
+> **How I built it.** About 75% from my mobile phone with Claude, 20% with Claude on my laptop and 5% fine-tuning by
+> hand. 100% native Power BI visuals, and even more passion to build something beautiful.
 >
 > **Page 1 · The Wake-up Call: where the brand stands**
 >
@@ -106,19 +107,16 @@ Alt text for the thumbnail, if the form asks for it:
 >
 > Data: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Thank you to the organisers and the Contest
 > Advisory Committee.
+>
+> Enjoy reading! Questions, remarks and feedback are always more than welcome.
+>
+> Cheers,
+> TrainerBjorn
 
 ## A shorter description, if the form limits the length (about 330 words)
 
 Take the teaser, the two page sections without their bullet lists and without the paragraph on the risk, "Three
 things to try" and the first two sentences of "100% native Power BI visuals".
-
-## Optional line: how it was made (Bjorn decides)
-
-> **How it was made.** I built the report as a Power BI Project (PBIR and TMDL), with an AI coding agent doing the
-> file work under my direction. 765 automated checks compare the numbers on the pages with the workbook.
-
-The starter file allows AI-assisted design tools. The line is true and speaks to Creativity and Innovation; whether it
-goes in is Bjorn's choice.
 
 ## Lines to add if a reviewer asks (still true)
 
@@ -126,6 +124,7 @@ goes in is Bjorn's choice.
   less on its cost (34.0% against 37.5%) and $0.6M less through 2032.
 - **Why the refresh keeps a step.** It does not pay back by 2032 and earns just under our 8%. It stays at the gate
   because it is the one move that answers the fading welcome, and the data cannot price what waiting costs.
+- **How the numbers were checked.** 765 automated checks compare the numbers on the pages with the workbook.
 - **When it goes live.** Revenue management in July 2027, the app in October 2027, the kiosks in April 2028; package A
   is cash positive during 2031 in the Expected case.
 
