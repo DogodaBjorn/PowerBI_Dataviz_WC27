@@ -81,3 +81,5 @@ the reload both pages of the window were compared with the captures of doc 33: n
 
 - 16 Nov afternoon: the design tried on the throwaway copy in the three cases; generators brought in line; applied to
   the final copy and to the open window's model; checks on its own model; pushed.
+- 16 Nov evening: Bjorn keeps it as built ("yes I like this, this is great, let's keep it"). The dashed and dotted thick
+  line in the Low and High view and the shade stay as they are.

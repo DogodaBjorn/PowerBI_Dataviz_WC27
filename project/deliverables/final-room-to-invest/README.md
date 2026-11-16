@@ -81,3 +81,11 @@ Expected Coffee Blue, High Night), the case in view is the thick line, and the z
 under it. `plan-chart/` shows it: `chart-before.png`, `chart-expected.png`, `chart-low.png`, `chart-high.png`
 (throwaway copy), `final-copy-page2.png` (the final copy) and the check reports in `plan-chart/checks/`. The account is
 `project/project-state/active/34-plan-chart-by-case-2026-11-16.md`.
+
+## The gallery post (16 Nov, evening)
+
+`gallery/` holds what goes into the Contests Gallery form: three cover candidates for the gallery tile (`cover-a.png`,
+recommended: the 456 packages; `cover-b.png`: the two pages; `cover-c.png`: one room night), `cover-a-1920x1440.png`
+for a 4:3 tile, the two pages as they stand (`report-page1.png`, `report-page2.png`) and `DESCRIPTION.md` with the
+title, the teaser, the description and the alt text. The account is
+`project/project-state/active/35-gallery-post-cover-and-description-2026-11-16.md`.
