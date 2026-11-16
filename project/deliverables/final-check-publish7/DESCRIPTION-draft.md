@@ -7,9 +7,11 @@ short description that identifies the brand, the PBIX file or the Publish to Web
 This is a draft. Every number in it is on the published report; the checklist asks the checker to confirm each one.
 Bjorn edits and posts it himself.
 
+**Title of the entry (16 Nov): Room to Invest.** The report and the file are "Goodnight Inn - Room to Invest".
+
 ## Short version (about 130 words)
 
-> **Goodnight Inn: full rooms, a slipping margin.**
+> **Room to Invest. Goodnight Inn: full rooms, a slipping margin.**
 >
 > My brand is Goodnight Inn, Pillow & Key's budget brand of 50 hotels. Page 1 gives the Board four findings: the
 > fullest hotels of the group, a margin that slips, half the room revenue booked through online agencies, and a welcome

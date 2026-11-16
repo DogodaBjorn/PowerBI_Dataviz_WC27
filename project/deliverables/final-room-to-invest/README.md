@@ -1,0 +1,58 @@
+# Room to Invest: the final round (16 Nov 2026)
+
+**For:** Bjorn, and whoever checks the entry after him.
+**What this is:** the evidence of the last round on the report: the entry's name, less text, the header higher on the
+banner and even gaps between the cards. Branch `final/room-to-invest`, moved into `rebuild-finalv3`. The account of
+the round is `project/project-state/active/31-final-round-room-to-invest-2026-11-16.md`.
+
+**Status: not published.** The public link still shows publish 7. Bjorn publishes "Goodnight Inn - Room to Invest"
+himself; the check of the link in a browser (the gate) comes after that.
+
+## What changed
+
+1. **The name.** Entry, report and file are "Goodnight Inn - Room to Invest". The pages keep their names: "The
+   Wake-up Call" and "Room to Invest".
+2. **Text.** 28 wordings changed or left; all of them, before and after, are in `TEXT-before-after.md`. Page 1's
+   notes, link lines and subtitle went from 211 to 161 words; page 1 as a whole from 469 to 413. Page 2's Recommended
+   view went from 639 to 608 words: its long lines are the ones the reviewers asked for in publish 7, and they kept
+   their content. One line is gone altogether: "Picked: 3 moves, $9.4M of $60.0M" under the list in Build your own.
+3. **Layout.** Headline, subtitle and tabs 12 px higher, the Scenario row 16 px; the first row of cards starts at
+   y 148 (was 168); 24 px between the rows, above the footer row and under it (was 24, 24, 20, 8 on page 1 and 16,
+   28, 8 on page 2). Page 2's subtitle stands level with page 1's (it stood 9 px lower). On page 1 the three notes
+   are two lines and stand on one line across the cards, as do the three "Page 2: ..." lines; the charts took the
+   room (I 248 to 280 px high, II 144 to 160, III 216 to 256).
+
+## The files
+
+| File | What it shows |
+|---|---|
+| `before-after_page1.png`, `before-after_page2.png` | Publish 7 above, this build under it |
+| `renders/page1.png` | Page 1 |
+| `renders/page2-recommended-Expected.png`, `-Low`, `-High` | Recommended: A, per case |
+| `renders/page2-what-waits-Expected.png` | What waits, and why |
+| `renders/page2-build-03-moves.png`, `-10-moves`, `-nothing-picked` | Build your own: as it opens, all ten moves (the alarm), the empty state |
+| `TEXT-before-after.md` | Every changed text |
+| `checks/` | The check reports of this build: texts (138 of 138), numbers (809 of 809), alt texts (0 flags), the file checks, and the card edges measured on the renders |
+
+## How to read the renders
+
+They are Power BI Desktop renders of a throwaway copy, one px per page px, taken in four strips
+(`project/tools/desktop_shots/fix29/shoot.py`). They show what is drawn where. Two things they do not show:
+
+- **The banner as a host draws it.** The banner is the page's background picture, and each host places that picture
+  itself. In the renders it is drawn as a plain dark band down to y 232, where the picture's banner ends in the file,
+  so the cards hang 84 px into it. Measured on publish 7, a full-screen browser shows the banner's end about 16 px
+  higher and a 1366 px window about 25 px higher; Desktop shifts it by its window's shape, 14 to 40 px on a normal
+  screen. So expect the cards to hang about 68 px into the banner in a browser, less in Desktop. Only the published
+  link shows it as the judges get it.
+- **The night-glow artwork** of the banner (the gradient and the hanger). It is unchanged.
+
+The seams of the strips are at page x 480, 960 and 1440; a mark next to a seam can stand 1 to 2 px off.
+
+## Left as it is, on purpose
+
+- The gap between cards that stand side by side stays 16 px; the card widths hang on it.
+- In Build your own the list of moves now ends 56 px above its card's lower edge, where the "Picked" line stood.
+- Under the three lines of the 2028 gate the plan card is empty on the left; the cash chart keeps its size.
+- The banner is not drawn by a visual on the page (that would be exact in every host). Bjorn took that visual out in
+  round 10; it stays out unless he asks for it.

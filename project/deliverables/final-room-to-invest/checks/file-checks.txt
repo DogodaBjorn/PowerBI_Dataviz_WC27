@@ -1,0 +1,29 @@
+File checks on the build of branch final/room-to-invest (16 Nov 2026)
+
+== a11y_check.py
+a11y_check: 0 failure(s), 0 note(s) over GoodnightInn-opzet.Report
+== strip_check.py
+strip_check: 0 failure(s), 0 note(s) at a strip of 36 page px over GoodnightInn-opzet.Report
+== compliance_check.py
+5 lines ok
+compliance_check (R-X-2, files only): 5 checks, 0 failed
+== schema_check.py (report definition)
+schema_check: 206 files, 0 failing
+== pbir_detect.py
+pbir_detect: 15 finding(s) across 1 report(s) — 0 unwaived, 15 waived -> PASS
+== validate_tmdl.py --strict
+validate_tmdl: 30 file(s), 0 error(s), 7 warning(s) [strict]
+
+== card edges measured on the renders (gaps.py; a card's lower edge reads 1 to 2 px early, its shadow starts there)
+page1
+x 46: cards 148 to 266, 291 to 754, 781 to 1004 | gaps [25, 27] | under the last card 76
+x 1874: cards 148 to 266, 291 to 754, 781 to 1004 | gaps [25, 27] | under the last card 76
+page2-recommended-Expected
+x 46: cards 148 to 635, 660 to 1003 | gaps [25] | under the last card 77
+x 1874: cards 148 to 635, 660 to 1003 | gaps [25] | under the last card 77
+page2-what-waits-Expected
+x 46: cards 148 to 635, 660 to 1003 | gaps [25] | under the last card 77
+x 1874: cards 148 to 635, 660 to 1003 | gaps [25] | under the last card 77
+page2-build-03-moves
+x 46: cards 148 to 635, 660 to 1003 | gaps [25] | under the last card 77
+x 1874: cards 148 to 635, 660 to 1003 | gaps [25] | under the last card 77
