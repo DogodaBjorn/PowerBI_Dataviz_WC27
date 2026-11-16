@@ -64,3 +64,12 @@ location type. `last-edit/` shows the result, captured from the final copy: `pag
 `card-III.png`, `page2-recommended-Expected.png`, and the check reports in `last-edit/checks/`. The account is
 `project/project-state/active/32-last-edit-card-IV-by-location-type-2026-11-16.md`. The renders and the text file
 above show the state before his own pass: the positions differ, and the link lines now start "Investment Option:".
+
+## After Bjorn's second pass (16 Nov, afternoon)
+
+Bjorn saved again at 13:18 (headline higher, eyebrow top right, Back in the footer row, Highway darker) and asked for
+two things on that version: no raw SVG text on hover in the hero table, and the bottom card ending at the same height
+on both pages. `hover-align/` shows the result: `page1.png` and `page2.png` (throwaway copy), `final-copy-page1.png` and
+`final-copy-page2.png` (the final copy), and the check reports in `hover-align/checks/`. The account is
+`project/project-state/active/33-hover-text-and-bottom-card-2026-11-16.md`. `last-edit/` shows the state before his
+second pass.
