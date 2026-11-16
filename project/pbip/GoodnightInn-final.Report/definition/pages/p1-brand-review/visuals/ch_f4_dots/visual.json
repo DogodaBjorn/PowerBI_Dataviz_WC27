@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ch_f4_dots",
   "position": {
-    "x": 654.2865272241959,
-    "y": 831.0006503507852,
+    "x": 654.28652722419588,
+    "y": 831.00065035078524,
     "z": 63500,
     "height": 161,
     "width": 1200,
@@ -30,6 +30,25 @@
               "nativeQueryRef": "Hotel Short Name",
               "active": true,
               "displayName": "Hotel"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hotels"
+                    }
+                  },
+                  "Property": "LocationType"
+                }
+              },
+              "queryRef": "Hotels.LocationType",
+              "nativeQueryRef": "LocationType",
+              "displayName": "Location type"
             }
           ]
         },
@@ -69,25 +88,6 @@
               "queryRef": "_Measures.F4 Row Y",
               "nativeQueryRef": "F4 Row Y",
               "displayName": "Row"
-            }
-          ]
-        },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Hotels"
-                    }
-                  },
-                  "Property": "LocationType"
-                }
-              },
-              "queryRef": "Hotels.LocationType",
-              "nativeQueryRef": "LocationType",
-              "displayName": "Location type"
             }
           ]
         }
@@ -513,8 +513,9 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Literal": {
-                      "Value": "'#FF783D'"
+                    "ThemeDataColor": {
+                      "ColorId": 4,
+                      "Percent": -0.25
                     }
                   }
                 }

@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "c_f4_rows_city",
   "position": {
-    "x": 481.9999999999997,
-    "y": 907.1428571428572,
+    "x": 481.99999999999972,
+    "y": 907.14285714285722,
     "z": 46000,
     "height": 24,
     "width": 112,

@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "z_eyebrow",
   "position": {
-    "x": 248,
-    "y": 20,
+    "x": 1280.4545454545455,
+    "y": 0,
     "z": 8000,
     "height": 24,
     "width": 640,
@@ -21,21 +21,21 @@
                   {
                     "value": "1 / 2 · THE WAKE-UP CALL",
                     "textStyle": {
-                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontFamily": "Segoe UI Semibold",
                       "fontSize": "16px",
-                      "color": "#A9CDF0"
+                      "color": "#a9cdf0"
                     }
                   },
                   {
                     "value": " · THE BRAND REVIEW",
                     "textStyle": {
-                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontFamily": "Segoe UI Semibold",
                       "fontSize": "16px",
-                      "color": "#C9D0DC"
+                      "color": "#c9d0dc"
                     }
                   }
                 ],
-                "horizontalTextAlignment": "left"
+                "horizontalTextAlignment": "right"
               }
             ]
           }

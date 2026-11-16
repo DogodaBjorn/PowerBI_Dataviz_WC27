@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "c_f1_note",
   "position": {
-    "x": 56,
-    "y": 649,
+    "x": 55.909090909090914,
+    "y": 662.72727272727275,
     "z": 26000,
-    "height": 64,
-    "width": 560,
+    "height": 64.0909090909091,
+    "width": 560.4545454545455,
     "tabOrder": 9670
   },
   "visual": {
@@ -88,6 +88,13 @@
               "expr": {
                 "Literal": {
                   "Value": "1L"
+                }
+              }
+            },
+            "italic": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
