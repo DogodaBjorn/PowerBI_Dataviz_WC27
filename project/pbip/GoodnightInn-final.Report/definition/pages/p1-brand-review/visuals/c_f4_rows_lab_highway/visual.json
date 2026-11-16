@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "c_f4_rows_lab_highway",
   "position": {
-    "x": 445.99999999999972,
-    "y": 947.14285714285722,
+    "x": 445.9999999999997,
+    "y": 947.1428571428572,
     "z": 44000,
     "height": 24,
     "width": 89,
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Highway ◆",
+                    "value": "Highway",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",

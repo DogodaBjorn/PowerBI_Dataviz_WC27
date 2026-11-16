@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ch_f4_avg",
   "position": {
-    "x": 654.28652722419588,
-    "y": 831.00065035078524,
+    "x": 654.2865272241959,
+    "y": 831.0006503507852,
     "z": 53000,
     "height": 161,
     "width": 1200,
@@ -108,6 +108,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
                 }
               }
             }

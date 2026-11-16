@@ -1,4 +1,4 @@
-number_checks: 809 checks, 809 ok, 0 known difference(s), 0 failed
+number_checks: 759 checks, 759 ok, 0 known difference(s), 0 failed
 
   ok    workbook: a year on cost per move (E9): 30 ok
   ok    workbook: profit a year per move: 30 ok
@@ -13,7 +13,6 @@ number_checks: 809 checks, 809 ok, 0 known difference(s), 0 failed
   ok    workbook: the kiosk hotels' check-in complaints per 1,000 room nights as storytelling_checks.txt has them: 1 ok
   ok    workbook: hero yield domain covers the data: 1 ok
   ok    workbook: F4 Row Y per hotel (the comp's rule): 50 ok
-  ok    workbook: F4 Dot Color (Night = the seven fullest): 50 ok
   ok    workbook: months at or above 90 % in the last 24 (E5): 50 ok
   ok    workbook: F4 has 50 hotels: 1 ok
   ok    workbook: F4 row and average per location type: 6 ok

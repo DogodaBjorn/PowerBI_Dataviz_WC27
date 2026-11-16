@@ -18,6 +18,10 @@ does not add). What it sets:
   Age Band Color   (model) the bar of the oldest hotels in card III in Burnt Tangerine, was Tangerine.
   F4 Dot Color     (model) removed: nothing binds it any more.
   sl_scenario  opens on Expected again (the save of 11:32 carried High, the case that was clicked last).
+  lnk_f1..3    their alt text says what the line shows ("Investment Option: ..."; it still read "Page 2: ...").
+  ch_f4_dots   one layer above the title's box, which its top now lies under (the top row of hotels keeps its tooltip).
+  page 1       "no filter" entries from every chart to the three new marks.
+  bookmarks    the two visuals Bjorn took out in Desktop no longer stand in the three bookmarks' target lists.
 """
 import json
 import re
@@ -116,6 +120,54 @@ for i, (t, (colour, _, shape, dx)) in enumerate(TYPES.items()):
     d.mkdir(exist_ok=True)
     (d / "visual.json").write_text(json.dumps(mark(d.name, pos, shape, colour, i), indent=2, ensure_ascii=False), encoding="utf-8", newline=chr(13) + chr(10))
 edit(P2 / "sl_scenario" / "visual.json", scenario)
+
+
+def alt_is_text(v):
+    """The three typed link lines were reworded in Desktop ("Investment Option: ..."); their alt text still read "Page 2: ..."."""
+    shown = "".join(r["value"] for r in v["visual"]["objects"]["general"][0]["properties"]["paragraphs"][0]["textRuns"])
+    v["visual"]["visualContainerObjects"]["general"][0]["properties"]["altText"] = lit("'" + shown.replace("'", "''") + "'")
+
+
+for n in ("lnk_f1", "lnk_f2", "lnk_f3"):
+    edit(P1 / n / "visual.json", alt_is_text)
+
+
+def above(name):
+    """The hotels must stay the top layer where they lie: Bjorn moved the plot 12 px up, under the title's box (1640 px wide,
+    its words end before the plot), and a box on top takes the mouse, so the top row of hotels would lose its tooltip."""
+    top = json.loads((P1 / name / "visual.json").read_text(encoding="utf-8-sig"))["position"]["z"]
+
+    def fn(v):
+        v["position"]["z"] = top + 500
+    return fn
+
+
+edit(P1 / "ch_f4_dots" / "visual.json", above("c_f4_title"))
+edit(P1 / "tag_f4" / "visual.json", above("ch_f4_dots"))  # the "Hover a hotel" chip stays above the plot, as it was: a click in the plot paints a band in its header strip
+
+
+def no_filter(page):
+    """A click in a chart must not filter the three new marks either (strip_check: every pair has its entry)."""
+    marks = [f"c_f4_rows_mark_{t.lower()}" for t in TYPES]
+    have = {(i["source"], i["target"]) for i in page["visualInteractions"]}
+    for src in sorted({i["source"] for i in page["visualInteractions"]}):
+        page["visualInteractions"] += [{"source": src, "target": m_, "type": "NoFilter"} for m_ in marks if (src, m_) not in have]
+
+
+edit(P1.parent / "page.json", no_filter)
+
+
+def live_targets(bm):
+    """Bjorn took c_rec_lines and c_ledger_caption out in Desktop; the three bookmarks still named them as targets."""
+    here = {d.name for pg in (REPORT / "definition" / "pages").iterdir() if (pg / "visuals").is_dir() for d in (pg / "visuals").iterdir()}
+    o = bm.get("options", {})
+    if "targetVisualNames" in o:
+        o["targetVisualNames"] = [n for n in o["targetVisualNames"] if n in here]
+
+
+for f in sorted((REPORT / "definition" / "bookmarks").glob("*.bookmark.json")):
+    edit(f, live_targets)
+
 
 # the model: one colour, one measure out
 F = MODEL / "definition" / "tables" / "_Measures.tmdl"

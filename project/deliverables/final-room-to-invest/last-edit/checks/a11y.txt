@@ -1,0 +1,2 @@
+FAIL  p1-brand-review/ch_f4_dots: mark #FF783D on white: 2.62:1 (needs 3:1)
+a11y_check: 1 failure(s), 0 note(s) over GoodnightInn-final.Report

@@ -35,6 +35,16 @@ MEASURES_TMDL = ROOT / "project" / "pbip" / "PillowKey.SemanticModel" / "definit
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from slot_map import load_layout  # noqa: E402  (build step 5: P1 from v10, P2 from v9 until step 6)
 LAYOUT = load_layout()
+# 16 Nov (doc 32): the cards and tiles are where the REPORT has their frames (z_card_<id>, z_tile_<id>), not where the slot map
+# put them: the hand-finished report (GoodnightInn-final.Report) has frames Bjorn resized in Desktop, and a visual he moved
+# to the foot of a taller card must still count as inside it. For the generator's own report the two are the same.
+for _p in LAYOUT["pages"]:
+    for _kind, _pre in (("cards", "z_card_"), ("tiles", "z_tile_")):
+        for _c in _p.get(_kind, []):
+            _f = REPORT / "definition" / "pages" / _p["name"] / "visuals" / f"{_pre}{_c['id']}" / "visual.json"
+            if _f.exists():
+                _pos = json.loads(_f.read_text(encoding="utf-8-sig"))["position"]
+                _c.update(x=_pos["x"], y=_pos["y"], w=_pos["width"], h=_pos["height"])
 CANVAS = ROOT / "project" / "deliverables" / "backgrounds" / "canvas-night.jpg"
 SURFACE = "#FFFFFF"
 # what a tile paints under its visuals (opzet_report.TILE_KIND): glow and outline are white, tint is Ice, night is Night

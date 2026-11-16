@@ -56,3 +56,11 @@ The seams of the strips are at page x 480, 960 and 1440; a mark next to a seam c
 - Under the three lines of the 2028 gate the plan card is empty on the left; the cash chart keeps its size.
 - The banner is not drawn by a visual on the page (that would be exact in every host). Bjorn took that visual out in
   round 10; it stays out unless he asks for it.
+
+## After this round: the report as it is submitted (16 Nov, later)
+
+Bjorn finished the layout himself in Desktop (saved 11:32) and asked for one more edit on that version: card IV by
+location type. `last-edit/` shows the result, captured from the final copy: `page1.png`, `card-IV.png`,
+`card-III.png`, `page2-recommended-Expected.png`, and the check reports in `last-edit/checks/`. The account is
+`project/project-state/active/32-last-edit-card-IV-by-location-type-2026-11-16.md`. The renders and the text file
+above show the state before his own pass: the positions differ, and the link lines now start "Investment Option:".
