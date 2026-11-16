@@ -79,4 +79,4 @@ the colours changed since, so the new text says "WCAG AA", which is what `a11y_c
   page edge; nine other files differ in Desktop's serialization only; the cash chart of doc 34 is in the save as
   built; the model is equal (340 measures). Taken into `GoodnightInn-final.Report` untouched. File checks on it:
   a11y 0 failures, strip check 0, `pbir_detect` 0 unwaived. `report-page1.png` and `report-page2.png` in `gallery/`
-  and the pages inside `cover-b.png` still show the eyebrows where they were.
+  were captured again from the open final copy after this save, and `cover-b.png` was drawn again from them.

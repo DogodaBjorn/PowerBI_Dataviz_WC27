@@ -26,8 +26,7 @@ ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 OUT = ROOT / "project" / "deliverables" / "final-room-to-invest" / "gallery"
 ASSETS = ROOT / "design" / "brand-kits" / "goodnight-inn-wakeup" / "assets"
-PAGE1 = ROOT / "project" / "deliverables" / "final-room-to-invest" / "hover-align" / "page1.png"
-PAGE2 = ROOT / "project" / "deliverables" / "final-room-to-invest" / "plan-chart" / "final-copy-page2.png"
+PAGE1, PAGE2 = OUT / "report-page1.png", OUT / "report-page2.png"  # the two pages as last saved (captured from the final copy)
 EDGE = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 NIGHT, COFFEE_BLUE, SKY, OAT, GREY, ORANGE = "#12233D", "#2589D8", "#5AAEF0", "#F5E7DC", "#B9B2A3", "#FF783D"
