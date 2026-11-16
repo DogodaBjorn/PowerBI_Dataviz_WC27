@@ -1252,13 +1252,13 @@ table _Measures
 		lineageTag: e42f9d6e-9b04-5238-8f15-9515076ba125
 
 	/// Mark colour of a move by its decision status (MoveDecision): Coffee Blue for package A, Night for the 2028 gate, Warm Grey for not now. A mark colour (3.5:1 at the lightest): the status word carries the state.
-	measure 'Move Status Color' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "#2589D8", tr = 3, "#717B8B", st = "2028 gate", "#12233D", "#8E897D" ) )
+	measure 'Move Status Color' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "#2589D8", tr = 3, "#BC6F4A", st = "2028 gate", "#12233D", "#C9C4B7" ) )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 89662495-368d-5a7a-a5db-d8073d45c822
 
 	/// Hero table, NPV panel: Coffee Blue for the moves of package A, the light neutral for every other move (a labelled background mark: the value stands beside the bar, the status in its own column).
-	measure 'Move NPV Bar Color' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "#2589D8", tr = 2, "#12233D", tr = 3, "#717B8B", "#C9C4B7" ) )
+	measure 'Move NPV Bar Color' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "#2589D8", tr = 2, "#12233D", tr = 3, "#BC6F4A", "#C9C4B7" ) )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 1965f6c5-9131-534d-b776-be43d2dbc98d
@@ -1898,14 +1898,14 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: a041666e-4a3a-5c48-993c-84f2fba3a944
 
-	/// Hero row: the text colour of the status word (Deep Coffee for package A, Night for step 2, Dusk for step 3 and for not now). The bars keep the mark colours (Move Status Color).
-	measure 'Move Status Ink' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "#1763A8", tr = 3, "#4B5466", st = "2028 gate", "#12233D", "#4B5466" ) )
+	/// Hero row: the text colour of the status word (Deep Coffee for package A, Night for step 2, Burnt Tangerine for step 3, Dusk for a move that is not in the plan). The bars keep the mark colours (Move Status Color).
+	measure 'Move Status Ink' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "#1763A8", tr = 3, "#A63F0E", st = "2028 gate", "#12233D", "#4B5466" ) )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: c19569d0-ba81-5495-bba8-177ec1b61a85
 
-	/// Hero row: the ground of a row that is in the plan (docs 36 and 37): light blue for package A, a light Night for step 2, a light slate for step 3, as the grounds of their labels over the plan bar. Blank for a move that is not in the plan.
-	measure 'Move Row Tint' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN SWITCH ( TRUE (), st = "A", "#EAF2FB", tr = 2, "#DEE0E4", tr = 3, "#E8EAEC" )
+	/// Hero row: the ground of a row that is in the plan (docs 36 and 37): light blue for package A, a light Night for step 2, a light clay for step 3. Blank for a move that is not in the plan.
+	measure 'Move Row Tint' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN SWITCH ( TRUE (), st = "A", "#EAF2FB", tr = 2, "#DEE0E4", tr = 3, "#F3E5DE" )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: ceab591e-33d1-533d-aa0d-4d3c47de962c

@@ -73,8 +73,8 @@ waivers:
   plan-bar-tranche-3:
     rule: theme-color-drift
     path: "pages/*/visuals/ch_plan_bar/visual.json"
-    reason: "Bjorn 14 Nov. #717B8B is Night at 60 % on white, the comp's colour for tranche 3 (rebuild-v10-spec.json, ch_plan_bar): 4.3:1 on the white card and 3.7:1 beside tranche 2. Beside 'not needed' (#8E897D) it is only 1.2:1, so the segments got a white seam of 3 px (stackedGapSize) and each keeps its label above its left edge; with that the colour is not the only carrier."
-    date: 2026-11-14
+    reason: "Bjorn 16 Nov (doc 38): step 3 of the plan is clay #BC6F4A, Burnt Tangerine at 75 % on white, his choice from the sketch of options; it replaces the slate #717B8B of 14 Nov. 3.8:1 on the white card, 4.1:1 beside step 2 and 2.2:1 beside 'not needed' (the theme's light neutral); the segments keep their white seam of 3 px and each its label above its left edge, so the colour is not the only carrier."
+    date: 2026-11-16
   f4-highway-bright-tangerine:
     rule: theme-color-drift
     path: "pages/p1-brand-review/visuals/c*f4*/visual.json"
@@ -84,9 +84,4 @@ waivers:
     rule: accent-lock
     path: "report"
     reason: "Bjorn, 16 Nov 2026 (doc 32): the logo's bright Tangerine #FF783D for the Highway hotels of card IV, his choice for the last edit; the same hue as the kit's Tangerine, one step brighter."
-    date: 2026-11-16
-  plan-step-grounds:
-    rule: theme-color-drift
-    path: "pages/p2-investment-strategy/visuals/plan_tint_*/visual.json"
-    reason: "Bjorn 16 Nov asked for the grounds of the table rows behind the labels over the plan bar (doc 37). #EAF2FB, #DEE0E4 and #E8EAEC are the values of the measure Move Row Tint (the kit's tint, Night at 14 % and the plan's slate at 16 % on white); a shape has no row to read the measure from. Text on them is 4.8:1 or more. Entered by the agent under Bjorn's rule of 14 Nov (a waiver only where quality and accessibility are not at stake); his to confirm."
     date: 2026-11-16
