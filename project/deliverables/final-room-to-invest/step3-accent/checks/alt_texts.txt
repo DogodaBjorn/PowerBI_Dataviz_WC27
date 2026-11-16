@@ -1,0 +1,2 @@
+alt_texts: 135 visuals in the tab order, 107 on a measure, 0 flag(s)
+written: E:\PowerBI_Dataviz_WC27\project\analysis\output\alt_texts.txt

@@ -73,7 +73,7 @@ waivers:
   plan-bar-tranche-3:
     rule: theme-color-drift
     path: "pages/*/visuals/ch_plan_bar/visual.json"
-    reason: "Bjorn 16 Nov (doc 38): step 3 of the plan is clay #BC6F4A, Burnt Tangerine at 75 % on white, his choice from the sketch of options; it replaces the slate #717B8B of 14 Nov. 3.8:1 on the white card, 4.1:1 beside step 2 and 2.2:1 beside 'not needed' (the theme's light neutral); the segments keep their white seam of 3 px and each its label above its left edge, so the colour is not the only carrier."
+    reason: "Bjorn 16 Nov (doc 38): step 3 of the plan is clay #BC6F4A, Burnt Tangerine at 75 % on white, his choice from the sketch of options; it replaces the slate #717B8B of 14 Nov. 3.8:1 on the white card, 4.1:1 beside step 2; beside 'not needed' (Warm Grey #8E897D) the two are equally dark (1.1:1) and differ by hue; the segments keep their white seam of 3 px and each its label above its left edge, so the colour is not the only carrier."
     date: 2026-11-16
   f4-highway-bright-tangerine:
     rule: theme-color-drift

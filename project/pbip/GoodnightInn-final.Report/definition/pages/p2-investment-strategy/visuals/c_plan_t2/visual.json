@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "c_plan_t2",
   "position": {
-    "x": 350.3,
+    "x": 339,
     "y": 706,
     "z": 32000,
     "height": 24,
-    "width": 357.3,
+    "width": 366,
     "tabOrder": 23000
   },
   "visual": {

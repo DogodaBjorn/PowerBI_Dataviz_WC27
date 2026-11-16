@@ -104,3 +104,10 @@ On Bjorn's save of 21:48. The rows of step 2 and step 3 in the table have a ligh
 same three grounds stand behind the labels over the plan bar. `step-tints/` shows it: `page2-before.png`,
 `page2-recommended.png`, `page2-what-waits.png`, `page2-build-your-own.png`, `page1-as-saved-21h48.png` and the check
 reports. The account is `project/project-state/active/37-step-grounds-table-and-plan-bar-2026-11-16.md`.
+
+## Step 3 in clay (16 Nov, night)
+
+Bjorn chose clay as the third accent: step 3 is clay in the plan bar and in the table, the three plans stay highlighted
+in the table, and the grounds over the plan bar of the round before are gone. `step3-accent/` shows it: `options.png`
+(the sketch he chose from), `page2-before.png`, `page2-recommended-clay.png` and the check reports. The account is
+`project/project-state/active/38-step-3-in-clay-2026-11-16.md`.

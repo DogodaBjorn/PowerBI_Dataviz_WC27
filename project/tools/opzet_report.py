@@ -1241,7 +1241,7 @@ def line_cards(page, name, measures, alt_measure, deco, colour=INK):
     return out
 
 
-PLAN_FILL = (ACCENT_MARK, INK, sm.STEP3, sm.NEUTRAL_LIGHT)  # step 1, step 2, step 3 (clay since 16 Nov night, doc 38), not needed (the light neutral)
+PLAN_FILL = (ACCENT_MARK, INK, sm.STEP3, SLATE)  # step 1, step 2, step 3 (clay since 16 Nov night, doc 38), not needed (Warm Grey)
 PLAN_LINES = {1: 2, 2: 3, 3: 3, 4: 2}             # lines of each segment's label (TEXT_SLOTS)
 # the visual rects that put Power BI's plot on the comp's (PLOT_RECT of step 5), measured on the tile render of step 7.
 # The bar: in its 32 px slot Power BI drew a 22.3 px bar, 8.2 px under the visual's top.

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "c_plan_t3",
   "position": {
-    "x": 725.8,
+    "x": 713,
     "y": 706,
     "z": 33000,
     "height": 24,
-    "width": 874.1,
+    "width": 881,
     "tabOrder": 22000
   },
   "visual": {
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#12233D'"
+                      "Value": "'#A63F0E'"
                     }
                   }
                 }

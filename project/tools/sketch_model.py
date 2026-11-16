@@ -1848,8 +1848,8 @@ MOVE_TR = "LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTE
 STEP3 = "#BC6F4A"  # step 3 (the refresh): clay, Burnt Tangerine at 75 % on white (Bjorn, 16 Nov night, doc 38; slate #717B8B until then): the
 #                    plan bar's third segment and the refresh's bars in the hero table. 3.8:1 on white, 3.2:1 on its own ground
 STEP2_TINT, STEP3_TINT = "#DEE0E4", "#F3E5DE"  # Night at 14 % and clay at 18 % on white: the grounds of the rows of step 2 and step 3 (docs 37, 38)
-NEUTRAL_LIGHT = "#C9C4B7"  # the kit's light neutral (labelled background marks only): every bar of a move that is not in the plan (doc 38)
-m("Move Status Color", f'VAR st = {MOVE_ST} VAR tr = {MOVE_TR} RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "{ACCENT_MARK}", tr = 3, "{STEP3}", st = "2028 gate", "{INK}", "{NEUTRAL_LIGHT}" ) )', TXT, C15,
+NEUTRAL_LIGHT = "#C9C4B7"  # the kit's light neutral (labelled background marks only): the NPV bar of a move that is not in the plan
+m("Move Status Color", f'VAR st = {MOVE_ST} VAR tr = {MOVE_TR} RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "{ACCENT_MARK}", tr = 3, "{STEP3}", st = "2028 gate", "{INK}", "{SLATE}" ) )', TXT, C15,
   "Mark colour of a move by its decision status (MoveDecision): Coffee Blue for package A, Night for the 2028 gate, Warm Grey for not now. A mark colour (3.5:1 at the lightest): the status word carries the state.")
 # Review round 2, step D (doc 25; DS2-04, J-VE-13): in the hero's NPV panel the status colours added weight without
 # information (the refresh's long Night bar was the darkest mark of the decision page, on the move we do not fund). There

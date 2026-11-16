@@ -7,9 +7,8 @@ highlight the plans in the top left visual but do not update the bar chart below
 saved report in place and can be run again (it sets, it does not add). What it sets:
 
   the model     every measure as the generator's model has it: step 3 is clay (Burnt Tangerine at 75 % on white) in the
-                table's two bars, its row stands on a light clay, its status word is Burnt Tangerine; the bars of a move
-                that is not in the plan are the kit's light neutral.
-  ch_plan_bar   the third segment clay, "not needed" the light neutral.
+                table's two bars, its row stands on a light clay, its status word is Burnt Tangerine.
+  ch_plan_bar   the third segment clay ("not needed" stays Warm Grey).
   c_plan_t3     "Step 3 · the refresh" in Burnt Tangerine, as step 1's label is Deep Coffee.
   plan_tint_1..3   (doc 37) removed, with their bookmark states and their "no filter" entries.
   c_plan_t1.._t3_3   back on their segment's left edge, where Bjorn's save of 21:48 had them.
@@ -25,8 +24,8 @@ from model_sync import sync_measures  # noqa: E402
 REPORT, MODEL = Path(sys.argv[1]), Path(sys.argv[2])
 P2 = REPORT / "definition" / "pages" / "p2-investment-strategy"
 
-CLAY, LIGHT, BURNT = "#BC6F4A", "#C9C4B7", "#A63F0E"  # sketch_model.STEP3, NEUTRAL_LIGHT, BAD
-FILLS = {"_Measures.Tranche 3 Capex": CLAY, "_Measures.Not Needed Capex": LIGHT}
+CLAY, WARM_GREY, BURNT = "#BC6F4A", "#8E897D", "#A63F0E"  # sketch_model.STEP3, SLATE (Warm Grey), BAD
+FILLS = {"_Measures.Tranche 3 Capex": CLAY, "_Measures.Not Needed Capex": WARM_GREY}  # "not needed" stays Warm Grey: the light neutral is 1.7:1 on the card (a11y_check)
 TINTS = [f"plan_tint_{k}" for k in (1, 2, 3)]
 # the labels' x and width in the save of 21:48 (commit 7569ef6)
 LABELS = {"c_plan_t1": (56, 275), "c_plan_t1_2": (55.713526971702926, 275),

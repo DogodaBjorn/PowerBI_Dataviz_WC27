@@ -1252,7 +1252,7 @@ table _Measures
 		lineageTag: e42f9d6e-9b04-5238-8f15-9515076ba125
 
 	/// Mark colour of a move by its decision status (MoveDecision): Coffee Blue for package A, Night for the 2028 gate, Warm Grey for not now. A mark colour (3.5:1 at the lightest): the status word carries the state.
-	measure 'Move Status Color' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "#2589D8", tr = 3, "#BC6F4A", st = "2028 gate", "#12233D", "#C9C4B7" ) )
+	measure 'Move Status Color' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "#2589D8", tr = 3, "#BC6F4A", st = "2028 gate", "#12233D", "#8E897D" ) )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 89662495-368d-5a7a-a5db-d8073d45c822

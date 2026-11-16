@@ -84,10 +84,7 @@
       "ch_cmp_build",
       "tag_cmp_build",
       "cover_hero_yield",
-      "cover_hero_npv",
-      "plan_tint_1",
-      "plan_tint_2",
-      "plan_tint_3"
+      "cover_hero_npv"
     ],
     "suppressActiveSection": true,
     "suppressData": true
@@ -683,30 +680,6 @@
             }
           },
           "cover_hero_npv": {
-            "singleVisual": {
-              "visualType": "shape",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "plan_tint_1": {
-            "singleVisual": {
-              "visualType": "shape",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "plan_tint_2": {
-            "singleVisual": {
-              "visualType": "shape",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "plan_tint_3": {
             "singleVisual": {
               "visualType": "shape",
               "display": {
