@@ -20,7 +20,7 @@ Alt text for the thumbnail, if the form asks for it:
 > Under it a badge: 100% native Power BI visuals. Beside it two views of the report's second page: the 456 investment
 > packages as a cloud of dots, and the recommended plan with its ten moves in a table and the $60M budget as one bar.
 
-## The teaser (first lines, about 75 words)
+## A short summary, if the form has a separate field for one (about 75 words)
 
 > **Goodnight Inn has the fullest hotels in the Pillow & Key Group. So why is its margin slipping?**
 >
@@ -30,16 +30,28 @@ Alt text for the thumbnail, if the form asks for it:
 >
 > Built with 100% native Power BI visuals: no custom visuals, nothing to install.
 
-## The description (about 880 words)
+## The description (about 900 words)
 
+> Hey all,
+>
+> This is my entry for Round 1: **Room to Invest**, a Board report for Goodnight Inn, the budget brand of the Pillow &
+> Key Group.
+>
+> I built it about 75% from my mobile phone with Claude, 20% with Claude on my laptop and 5% fine-tuning by hand. 100%
+> native Power BI visuals, and even more passion to build something beautiful.
+>
+> Enjoy reading! Questions, remarks and feedback are always more than welcome.
+>
+> Cheers,
+> TrainerBjorn
+>
+> ---
+>
 > **Goodnight Inn has the fullest hotels in the Pillow & Key Group. So why is its margin slipping?**
 >
 > My brand is Goodnight Inn, the group's budget brand of 50 hotels. The Board has $60M for it. I computed all 456
 > investment packages the rules allow. Six pay back by 2032. The best one spends $9.4M. Think you can beat it? Page 2
 > lets you build your own.
->
-> **How I built it.** About 75% from my mobile phone with Claude, 20% with Claude on my laptop and 5% fine-tuning by
-> hand. 100% native Power BI visuals, and even more passion to build something beautiful.
 >
 > **Page 1 · The Wake-up Call: where the brand stands**
 >
@@ -107,11 +119,6 @@ Alt text for the thumbnail, if the form asks for it:
 >
 > Data: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Thank you to the organisers and the Contest
 > Advisory Committee.
->
-> Enjoy reading! Questions, remarks and feedback are always more than welcome.
->
-> Cheers,
-> TrainerBjorn
 
 ## A shorter description, if the form limits the length (about 330 words)
 
