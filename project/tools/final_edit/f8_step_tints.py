@@ -15,6 +15,7 @@ edits the saved report in place and can be run again (it sets, it does not add).
                 standing on it, in the ground of its rows in the table. Shown with the plan bar (hidden in the two other
                 views), out of the tab order, under the labels.
   c_plan_t1.._t3_3   the labels of the three steps 10 px inside their ground (they stood on the segment's left edge).
+  page.json     "no filter" from every chart to the three grounds, as every other visual of the page has.
 """
 import json
 import sys
@@ -102,4 +103,14 @@ def with_the_bar(bm):
 
 for f in sorted((REPORT / "definition" / "bookmarks").glob("*.bookmark.json")):
     edit(f, with_the_bar)
+
+
+def no_filter(page):
+    """No chart filters a ground (strip_check.py: every source has an entry for every visual on the page)."""
+    have = {(i["source"], i["target"]) for i in page["visualInteractions"]}
+    for src in sorted({i["source"] for i in page["visualInteractions"]}):
+        page["visualInteractions"] += [{"source": src, "target": n, "type": "NoFilter"} for n in NAMES if (src, n) not in have]
+
+
+edit(P2 / "page.json", no_filter)
 print(f"f8_step_tints: grounds for step 2 and step 3 in the table, three grounds over the plan bar; model: {len(changed)} set {changed}, {len(added)} added {added}")

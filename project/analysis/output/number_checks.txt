@@ -48,7 +48,7 @@ number_checks: 765 checks, 765 ok, 0 known difference(s), 0 failed
   ok    spec: F2 end labels: 1 ok
   ok    spec: F4 row averages: 3 ok
   ok    doc 20 E5: months at or above 90 %: 4 ok
-  ok    model: hero NPV bar colour (Coffee Blue for package A, the light neutral for every other move): 30 ok
+  ok    model: hero NPV bar colour (Coffee Blue for package A, Night for step 2, slate for step 3, the light neutral for a move not in the plan): 30 ok
   ok    model: hero bar cell is a well-formed SVG with the reference line at its constant x and the bar in its fill: 60 ok
 
 Values (model, as its formatters print them):

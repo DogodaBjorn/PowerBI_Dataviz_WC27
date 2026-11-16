@@ -85,3 +85,8 @@ waivers:
     path: "report"
     reason: "Bjorn, 16 Nov 2026 (doc 32): the logo's bright Tangerine #FF783D for the Highway hotels of card IV, his choice for the last edit; the same hue as the kit's Tangerine, one step brighter."
     date: 2026-11-16
+  plan-step-grounds:
+    rule: theme-color-drift
+    path: "pages/p2-investment-strategy/visuals/plan_tint_*/visual.json"
+    reason: "Bjorn 16 Nov asked for the grounds of the table rows behind the labels over the plan bar (doc 37). #EAF2FB, #DEE0E4 and #E8EAEC are the values of the measure Move Row Tint (the kit's tint, Night at 14 % and the plan's slate at 16 % on white); a shape has no row to read the measure from. Text on them is 4.8:1 or more. Entered by the agent under Bjorn's rule of 14 Nov (a waiver only where quality and accessibility are not at stake); his to confirm."
+    date: 2026-11-16

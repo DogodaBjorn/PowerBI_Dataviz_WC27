@@ -97,3 +97,10 @@ the recommendation card has a Coffee Blue outline, every decision has one colour
 a tranche is called a step. `package-a/` shows it: `page2-before.png`, `page2-after-outline.png`,
 `page2-variant-tinted-card.png` (not chosen), `final-copy-page2.png` and the check reports. The account is
 `project/project-state/active/36-package-a-at-a-glance-2026-11-16.md`.
+
+## Grounds for step 2 and step 3 (16 Nov, night)
+
+On Bjorn's save of 21:48. The rows of step 2 and step 3 in the table have a light ground in their own colour, and the
+same three grounds stand behind the labels over the plan bar. `step-tints/` shows it: `page2-before.png`,
+`page2-recommended.png`, `page2-what-waits.png`, `page2-build-your-own.png`, `page1-as-saved-21h48.png` and the check
+reports. The account is `project/project-state/active/37-step-grounds-table-and-plan-bar-2026-11-16.md`.

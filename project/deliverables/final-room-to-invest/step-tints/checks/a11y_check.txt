@@ -1,0 +1,5 @@
+FAIL  p1-brand-review/z_eyebrow: text #E05A22 on #153860: 3.20:1 (needs 4.5:1)
+FAIL  p1-brand-review/z_eyebrow: text #E05A22 on #26517C: 2.22:1 (needs 4.5:1)
+FAIL  p2-investment-strategy/z_eyebrow2: text #E05A22 on #153860: 3.20:1 (needs 4.5:1)
+FAIL  p2-investment-strategy/z_eyebrow2: text #E05A22 on #26517C: 2.22:1 (needs 4.5:1)
+a11y_check: 4 failure(s), 0 note(s) over GoodnightInn-final.Report

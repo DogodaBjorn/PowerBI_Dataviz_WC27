@@ -451,8 +451,9 @@ for part, n in (("Toronto", 17), ("Gatwick", 14), ("Trudeau", 13), ("Kingston", 
 # for a Night bar whatever the bar had); the yield panel keeps the status colours, the NPV panel is Coffee Blue for
 # package A's moves and the kit's light neutral for every other move
 for (p, s), r in moves.items():
-    check("model: hero NPV bar colour (Coffee Blue for package A, the light neutral for every other move)", (p, s),
-          sm.ACCENT_MARK if r["status"] == "A" else sm.NEUTRAL_LIGHT, r["ncolor"])
+    # 16 Nov night (doc 37): a step's NPV bar has its step's colour, as its bar of 'a year on cost' has
+    check("model: hero NPV bar colour (Coffee Blue for package A, Night for step 2, slate for step 3, the light neutral for a move not in the plan)", (p, s),
+          sm.ACCENT_MARK if r["status"] == "A" else {2: sm.INK, 3: sm.STEP3}.get(int(r["tranche"] or 0), sm.NEUTRAL_LIGHT), r["ncolor"])
     for col, ref, dom, w, fill in (("ybar", sm.HERO_YREF, sm.HERO_YDOM, sm.HERO_SPEC_COLS[3], r["color"]), ("nbar", sm.HERO_NREF, sm.HERO_NDOM, sm.HERO_SPEC_COLS[5], r["ncolor"])):
         svg = r[col]
         bar = svg.split("<rect", 2)[1] if svg.count("<rect") == 2 else ""
