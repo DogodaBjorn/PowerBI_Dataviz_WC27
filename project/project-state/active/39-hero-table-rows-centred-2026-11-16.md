@@ -82,3 +82,9 @@ seen on the throwaway copy, which holds the same files.
 - 16 Nov night: the catalog read; row padding tried on a throwaway copy; an unbroken line over the table tried,
   measured and dropped; the dashed line inside the images built, applied to the final copy and the open window's
   model; checks; pushed.
+- 16 Nov 22:42: Bjorn's window had gone strange again (the canvas loose in the window, without its frame), this time
+  with no capture of his window at all: it follows a `powerbi-desktop reload` of a window whose files were edited
+  under it. On his request the window was closed with Opslaan (`project/tools/desktop_shots/close_with_save.ps1`)
+  and the final copy opened again. The save equals the repo value for value (the active page is page 1 again);
+  taken into `GoodnightInn-final.Report` untouched. The reopened window's model answers as built.
+  **From here on: no reload of Bjorn's window. After an edit on the files, close it with his leave and open it again.**
