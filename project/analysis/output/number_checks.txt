@@ -1,4 +1,4 @@
-number_checks: 759 checks, 759 ok, 0 known difference(s), 0 failed
+number_checks: 765 checks, 765 ok, 0 known difference(s), 0 failed
 
   ok    workbook: a year on cost per move (E9): 30 ok
   ok    workbook: profit a year per move: 30 ok
@@ -32,6 +32,8 @@ number_checks: 759 checks, 759 ok, 0 known difference(s), 0 failed
   ok    model: the case in view takes the emphasised end card, the other two the quiet one: 3 ok
   ok    spec: ledger F4, the rise in check-in complaints at the kiosk hotels (E2): 3 ok
   ok    model: the case in view has no thin line: 3 ok
+  ok    model: the case in view has the thick line, at A's cumulative cash in that case: 3 ok
+  ok    model: the other two cases have no thick line: 3 ok
   ok    spec: comparison end labels (A, B, C): 3 ok
   ok    spec: build comparison end labels: 3 ok
   ok    model: end series are blank before the horizon year: 3 ok

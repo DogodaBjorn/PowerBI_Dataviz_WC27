@@ -237,7 +237,8 @@ q.append("EVALUATE GENERATE ( " + SCEN_T + ", VAR s = [s] RETURN " + row(
 # T2 · cumulative end series on 2031 and 2032, value and dynamic format string; package A picked in the Build selector
 q.append("EVALUATE CALCULATETABLE ( GENERATE ( CROSSJOIN ( " + SCEN_T + ", SELECTCOLUMNS ( { 2031, 2032 }, \"y\", [Value] ) ), VAR s = [s] VAR y = [y] RETURN " + row(
     [(n, calc(f"[{n}]", SF, "'Date'[Year] = y")) for n in ENDS] + [(n + " | fmt", calc("( " + sm.FMT_DEFS[n] + " )", SF, "'Date'[Year] = y")) for n in ENDS]
-    + [("A line " + c, calc(f"[A Cumulative Line ({c})]", SF, "'Date'[Year] = y")) for c in SCEN]) + f" ), BuildMove[ProjectID] IN {GI_IDS} )")
+    + [("A line " + c, calc(f"[A Cumulative Line ({c})]", SF, "'Date'[Year] = y")) for c in SCEN]
+    + [("A in view " + c, calc(f"[A Cumulative In View ({c})]", SF, "'Date'[Year] = y")) for c in SCEN]) + f" ), BuildMove[ProjectID] IN {GI_IDS} )")
 # T3 · the Build state with package A picked; T4 · with nothing picked
 q.append("EVALUATE CALCULATETABLE ( GENERATE ( " + SCEN_T + ", VAR s = [s] RETURN " + row([(n, calc(f"[{n}]", SF)) for n in B_NUM]
          + [("yoc_txt", calc(sm.pct1("[Build A Year on Cost (sel)]"), SF)), ("rr_txt", calc(sm.sfm("[Build Run-rate (sel)]"), SF))]) + f" ), BuildMove[ProjectID] IN {GI_IDS} )")
@@ -396,6 +397,9 @@ for s in SCEN:
     check("spec: ledger F4, the rise in check-in complaints at the kiosk hotels (E2)", s, f"check-in complaints there up {half_up(W['kiosk complaints rise'] * 100, 0):.0f}% since {sm.KIOSK_COMPLAINT_YEARS[0]}",
           led["IV"][1].split("; ")[-1])
     check("model: the case in view has no thin line", s, None, e32[f"A line {s}"])
+    # 16 Nov, doc 34: the thick line is one series per case (each case has its own colour in the plan chart)
+    check("model: the case in view has the thick line, at A's cumulative cash in that case", s, e32["Preset A Cumulative End (label-safe)"], e32[f"A in view {s}"], tol=1e-9)
+    check("model: the other two cases have no thick line", s, [None, None], [e32[f"A in view {c}"] for c in SCEN if c != s])
     shown = sorted(lit(e32[f"Preset {k} Cumulative End (label-safe) | fmt"]) for k in "ABC")
     check("spec: comparison end labels (A, B, C)", s, sorted(x for x in alts["ch_cmp_alts"]["labels"] if x[:2] in ("A ", "B ", "C ")), shown)
     check("spec: build comparison end labels", s, sorted(x for x in bld["ch_cmp_build"]["labels"] if x in ("A", "You")),

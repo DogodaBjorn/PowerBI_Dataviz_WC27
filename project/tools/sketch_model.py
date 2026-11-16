@@ -1981,6 +1981,13 @@ for scn in ("Low", "Expected", "High"):
     m(f"A Cumulative Line ({scn})", f'IF ( [Selected Scenario] = "{scn}", BLANK (), [TT Year A ({scn})] )', SUSDM0, C15,
       f"Capital plan chart: package A's cumulative net impact in the {scn} case; blank when {scn} is the case in view (the emphasised line draws it). "
       "Whole $M: the first of these is the chart's first series, and a value axis prints its first series' format on every tick (build step 7).")
+# 16 Nov, doc 34: each case has its own colour in the plan chart (Low Burnt Tangerine, Expected Coffee Blue, High Night), so
+# the emphasised line is one series per case too: a series has one colour. Blank unless its case is in view. They replace
+# Preset A Cumulative Net (sel) in that chart only.
+for scn in ("Low", "Expected", "High"):
+    m(f"A Cumulative In View ({scn})", f'IF ( [Selected Scenario] = "{scn}", [TT Year A ({scn})] )', SUSDM0, C15,
+      f"Capital plan chart: package A's cumulative net impact in the {scn} case while {scn} is the case in view, blank otherwise: "
+      "the thick line, in the case's own colour (16 Nov, doc 34). Whole $M, as the three thin lines.")
 # Review round 2, step C (doc 25; DS2-08): the plan chart's end labels are cards right of the line ends, not data labels.
 # A line chart sets a data label above or under its point and nowhere else, and its white box hid the last stretch of
 # the High and the Low line. Two text measures per case, because a card has one font: the quiet one is empty while its

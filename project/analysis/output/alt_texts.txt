@@ -23,8 +23,8 @@ alt_texts: 135 visuals in the tab order, 107 on a measure, 0 flag(s)
       After commissions, Goodnight Inn's operating margin rose from 32.5% in 2021 to 36.5% in 2023 and fell back to 33.7% in 2025. The gap to the margin before commissions grew from 8.4 to 10.6 points.
  9670 c_f1_note (cardVisual) [F1 Note (text)] 136/136/136 chars
       Commissions took 1.0 point, running costs 1.8 (staff: 26.9% to 28.3% of revenue). Room rates rose 2.7%, no faster than the other brands.
- 9660 lnk_f1 (textbox) [typed] 57 chars
-      Page 2: revenue management, and kiosks for running costs.
+ 9660 lnk_f1 (textbox) [typed] 68 chars
+      Investment Option: revenue management, and kiosks for running costs.
  9590 c_f2_title (cardVisual) [Alt F2 Title (text)] 84/84/84 chars
       Finding II, the middleman. Online agencies now book 50% of room revenue, up from 33%
  9580 ch_f2_ota (lineChart) [Alt F2 Chart (text)] 176/176/176 chars
@@ -33,8 +33,8 @@ alt_texts: 135 visuals in the tab order, 107 on a measure, 0 flag(s)
       One Goodnight Inn room night in 2025. Via an online agency the guest pays $109.31, fees take $19.68, the inn keeps $89.63. Booked direct: $111.56, fees $4.46, the inn keeps $107.10.
  9560 c_f2_note (cardVisual) [F2 Note (text)] 149/149/149 chars
       Booked direct, the guest pays $2.25 more and we keep $17.47 more; nothing rewards it. At the 2021 channel mix, 2025 commissions would be $4.8M lower.
- 9550 lnk_f2 (textbox) [typed] 42 chars
-      Page 2: the booking app with member rates.
+ 9550 lnk_f2 (textbox) [typed] 53 chars
+      Investment Option: the booking app with member rates.
  9490 c_f3_title (cardVisual) [Alt F3 Title (text)] 90/90/90 chars
       Finding III, the fading welcome. Hotels last renovated 10 years or more ago score NPS −4.9
  9480 ch_f3_age (clusteredColumnChart) [Alt F3 Chart (text)] 250/250/250 chars
@@ -43,16 +43,16 @@ alt_texts: 135 visuals in the tab order, 107 on a measure, 0 flag(s)
       44 of 50 hotels; 6 have no renovation date.
  9470 c_f3_note (cardVisual) [F3 Note (text)] 144/144/144 chars
       Since 2018 we spent $1.0M per hotel on renovation, the other brands $5.9M to $7.9M; none started since 2020. An association, not proof of cause.
- 9460 lnk_f3 (textbox) [typed] 48 chars
-      Page 2: why the refresh waits for the 2028 gate.
+ 9460 lnk_f3 (textbox) [typed] 59 chars
+      Investment Option: why the refresh waits for the 2028 gate.
  9390 c_f4_title (cardVisual) [Alt F4 Title (text)] 102/102/102 chars
       Finding IV, where we are full. Our airports run fullest: five of the seven fullest hotels are airports
  9380 c_f4_note (cardVisual) [F4 Note (text)] 127/127/127 chars
       Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none.
  9375 c_f4_rows (cardVisual) [Alt F4 Types (text)] 112/112/112 chars
       Goodnight Inn occupancy in 2025 by location type: airport hotels 82.0%, city hotels 79.1%, highway hotels 77.5%.
- 9370 lnk_f4 (cardVisual) [Link F4 (text)] 75/75/75 chars
-      Page 2: kiosks at the 20 busiest hotels; extensions wait for the 2028 gate.
+ 9370 lnk_f4 (cardVisual) [Link F4 (text)] 86/86/86 chars
+      Investment Option: kiosks at the 20 busiest hotels; extensions wait for the 2028 gate.
  9350 ch_f4_dots (scatterChart) [Alt F4 Chart (text)] 241/241/241 chars
       The 7 fullest Goodnight Inn hotels in 2025, 5 of them airports: Toronto Pearson Airport 91.9%, London Gatwick Airport 90.4%, Montréal-Trudeau Airport 90.2%, Phoenix Airport 88.5%, Kansas City 87.4%, Kuala Lumpur 86.5%, Orlando Airport 85.2%.
  1000 z_footer (textbox) [typed] 109 chars

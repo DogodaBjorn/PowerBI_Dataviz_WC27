@@ -87,12 +87,42 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Preset A Cumulative Net (sel)"
+                  "Property": "A Cumulative In View (Low)"
                 }
               },
-              "queryRef": "_Measures.Preset A Cumulative Net (sel)",
-              "nativeQueryRef": "Preset A Cumulative Net (sel)",
-              "displayName": "The case in view"
+              "queryRef": "_Measures.A Cumulative In View (Low)",
+              "nativeQueryRef": "A Cumulative In View (Low)",
+              "displayName": "Low case, in view"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "A Cumulative In View (Expected)"
+                }
+              },
+              "queryRef": "_Measures.A Cumulative In View (Expected)",
+              "nativeQueryRef": "A Cumulative In View (Expected)",
+              "displayName": "Expected case, in view"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "A Cumulative In View (High)"
+                }
+              },
+              "queryRef": "_Measures.A Cumulative In View (High)",
+              "nativeQueryRef": "A Cumulative In View (High)",
+              "displayName": "High case, in view"
             }
           ]
         }
@@ -310,7 +340,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#8E897D'"
+                      "Value": "'#A63F0E'"
                     }
                   }
                 }
@@ -328,7 +358,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#8E897D'"
+                      "Value": "'#2589D8'"
                     }
                   }
                 }
@@ -346,7 +376,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#8E897D'"
+                      "Value": "'#12233D'"
                     }
                   }
                 }
@@ -364,6 +394,24 @@
                 "color": {
                   "expr": {
                     "Literal": {
+                      "Value": "'#A63F0E'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.A Cumulative In View (Low)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
                       "Value": "'#2589D8'"
                     }
                   }
@@ -372,7 +420,25 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Preset A Cumulative Net (sel)"
+            "metadata": "_Measures.A Cumulative In View (Expected)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#12233D'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.A Cumulative In View (High)"
           }
         }
       ],
@@ -407,7 +473,7 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "1.5D"
+                  "Value": "2D"
                 }
               }
             },
@@ -428,7 +494,14 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "1.5D"
+                  "Value": "2D"
+                }
+              }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'solid'"
                 }
               }
             }
@@ -442,7 +515,7 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "1.5D"
+                  "Value": "2D"
                 }
               }
             },
@@ -463,13 +536,62 @@
             "strokeWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "3D"
+                  "Value": "3.5D"
+                }
+              }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'dashed'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "_Measures.Preset A Cumulative Net (sel)"
+            "metadata": "_Measures.A Cumulative In View (Low)"
+          }
+        },
+        {
+          "properties": {
+            "strokeWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "3.5D"
+                }
+              }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'solid'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.A Cumulative In View (Expected)"
+          }
+        },
+        {
+          "properties": {
+            "strokeWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "3.5D"
+                }
+              }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'dotted'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.A Cumulative In View (High)"
           }
         }
       ],
@@ -495,7 +617,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#4B5466'"
+                      "Value": "'#12233D'"
                     }
                   }
                 }
@@ -511,7 +633,7 @@
             "width": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "1.5D"
                 }
               }
             },
@@ -555,7 +677,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#4B5466'"
+                      "Value": "'#12233D'"
                     }
                   }
                 }
@@ -572,6 +694,38 @@
               "expr": {
                 "Literal": {
                   "Value": "'above'"
+                }
+              }
+            },
+            "shadeShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "shadeRegion": {
+              "expr": {
+                "Literal": {
+                  "Value": "'before'"
+                }
+              }
+            },
+            "shadeColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E05A22'"
+                    }
+                  }
+                }
+              }
+            },
+            "shadeTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "93D"
                 }
               }
             }

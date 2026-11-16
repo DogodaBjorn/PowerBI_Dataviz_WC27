@@ -1391,6 +1391,24 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: c4590e9d-fc4c-580a-a703-234395bfa73f
 
+	/// Capital plan chart: package A's cumulative net impact in the Low case while Low is the case in view, blank otherwise: the thick line, in the case's own colour (16 Nov, doc 34). Whole $M, as the three thin lines.
+	measure 'A Cumulative In View (Low)' = IF ( [Selected Scenario] = "Low", [TT Year A (Low)] )
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 23c435f4-687a-5c55-ac5a-6fc11692b12b
+
+	/// Capital plan chart: package A's cumulative net impact in the Expected case while Expected is the case in view, blank otherwise: the thick line, in the case's own colour (16 Nov, doc 34). Whole $M, as the three thin lines.
+	measure 'A Cumulative In View (Expected)' = IF ( [Selected Scenario] = "Expected", [TT Year A (Expected)] )
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: 4f53e494-28b1-5e12-bb89-0f008a68b35a
+
+	/// Capital plan chart: package A's cumulative net impact in the High case while High is the case in view, blank otherwise: the thick line, in the case's own colour (16 Nov, doc 34). Whole $M, as the three thin lines.
+	measure 'A Cumulative In View (High)' = IF ( [Selected Scenario] = "High", [TT Year A (High)] )
+		formatString: +\$#,0,,.\M;−\$#,0,,.\M;\$0\M
+		displayFolder: 15 Storytelling rebuild
+		lineageTag: de8958c9-fce7-549e-a4b8-a69359af6a84
+
 	/// Capital plan chart, end label of the Low line as a card right of the line's end: 'Low' and package A's cumulative cash in the horizon year; empty while Low is the case in view.
 	measure 'Plan End Low (text)' = IF ( [Selected Scenario] = "Low", "", VAR hz = LOOKUPVALUE ( FinanceParameters[Value], FinanceParameters[Parameter], "Impact horizon" ) RETURN "Low " & ( VAR __v = ( CALCULATE ( [TT Year A (Low)], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = hz ) ) / 1000000 VAR __a = ABS ( __v ) + 0 VAR __r1 = ROUND ( __a, 1 ) VAR __r2 = ROUND ( __a, 2 ) VAR __m = "$" & IF ( __r1 = 0 && __r2 > 0, FORMAT ( __r2, "0.00", "en-US" ), FORMAT ( __r1, "#,0.0", "en-US" ) ) & "M" RETURN IF ( __r2 = 0, "$0.0M", IF ( __v < 0, UNICHAR ( 8722 ), "+" ) & UNICHAR ( 8288 ) & __m ) ) )
 		formatString: @

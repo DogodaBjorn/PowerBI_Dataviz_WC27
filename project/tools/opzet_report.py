@@ -1281,31 +1281,42 @@ def plan_bar():
     return plot_rect(v, PLAN_RECT["ch_plan_bar"]) if "ch_plan_bar" in PLAN_RECT else v
 
 
+# the plan chart's cases (16 Nov, doc 34): the line's colour, its end label's colour, its dash. Low is the report's colour for
+# "bad" (the one line that ends under zero); the dash is the second signal, so no reader needs the colour.
+PLAN_CASE = {"Low": (BAD, BAD, "dashed"), "Expected": (ACCENT_MARK, ACCENT, "solid"), "High": (INK, INK, "dotted")}
+PLAN_SHADE = ("#E05A22", 93)  # Tangerine, 93 % transparent: the area under the zero line
+
+
 def plan_cum():
     """ch_plan_cum (R-P2-7, doc 21 6.3 and P-5 as doc 22 section 3 amends them): package A's cumulative net impact in the
-    three cases. The case in view is the 3 px Coffee Blue line; the other two are 1.5 px Warm Grey, Low dashed and High
-    dotted (A Cumulative Line (...) is blank for the case in view). No data labels: each line is named at its end by a
+    three cases. Each case has its own colour, in view or not (16 Nov, doc 34): Low Burnt Tangerine and dashed, Expected
+    Coffee Blue and solid, High Night and dotted. The case in view is the 3.5 px line (A Cumulative In View (...)), the other
+    two 2 px (A Cumulative Line (...) is blank for the case in view). No data labels: each line is named at its end by a
     card right of the plot (plan_ends(), review round 2), so all three lines visibly reach the last year. The first line
     is formatted in whole $M, so the value axis prints "+$10M" in any locale (P-1 b).
-    Zero line named (R-G2), the gate as a dashed line at mid-2028; a year opens the year tooltip."""
-    sel = "Preset A Cumulative Net (sel)"
-    thin = [(f"A Cumulative Line ({c})", f"{c} case") for c in ("Low", "Expected", "High")]
-    series = thin + [(sel, "The case in view")]
+    Zero line named (R-G2) in Night, 1.5 px, with the area under it lightly shaded; the gate as a dashed line at mid-2028;
+    a year opens the year tooltip."""
+    thin = [(f"A Cumulative Line ({c})", f"{c} case") for c in PLAN_CASE]
+    thick = [(f"A Cumulative In View ({c})", f"{c} case, in view") for c in PLAN_CASE]
+    series = thin + thick
     q = {"Category": {"projections": [proj_col("Date", "Year", active=True)]}, "Y": {"projections": [proj_mea(m_, d_) for m_, d_ in series]}}
-    ls = line_styles({**{mref(m_): 1.5 for m_, _ in thin}, mref(sel): 3}, dashed=(mref(thin[0][0]),))
-    next(e for e in ls if e.get("selector", {}).get("metadata") == mref(thin[2][0]))["properties"]["lineStyle"] = enum("dotted")
+    ls = line_styles({**{mref(m_): 2 for m_, _ in thin}, **{mref(m_): 3.5 for m_, _ in thick}})
+    for group in (thin, thick):
+        for (m_, _), (_, _, dash) in zip(group, PLAN_CASE.values()):
+            next(e for e in ls if e.get("selector", {}).get("metadata") == mref(m_))["properties"]["lineStyle"] = enum(dash)
     years = HORIZON()["filter"]["Where"][0]["Condition"]["In"]["Values"]
     first_year = int(years[0][0]["Literal"]["Value"].rstrip("L"))
     objs = {"categoryAxis": axis(BODY, S, INK2, start=first_year, end=PLAN_X_END, extra={"labelPrecision": integer(0)}),
             "valueAxis": axis(BODY, S, INK2, gridlines=True, grid_color=HAIR, units=1, start=PLAN_Y[0], end=PLAN_Y[1]),
             "legend": legend(False), "seriesLabels": [{"properties": {"show": b(False)}}],
             "labels": [{"properties": {"show": b(False)}}],
-            "dataPoint": series_colors({**{mref(m_): SLATE for m_, _ in thin}, mref(sel): ACCENT_MARK}),
+            "dataPoint": series_colors({mref(m_): col for group in (thin, thick) for (m_, _), (col, _, _) in zip(group, PLAN_CASE.values())}),
             "lineStyles": ls,
-            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("solid"),
+            "y1AxisReferenceLine": [{"properties": {"show": b(True), "value": num(0), "lineColor": color(INK), "transparency": num(0), "width": num(1.5), "style": enum("solid"),
                                                     "position": enum("back"), "displayName": text("Cash positive above this line"), "dataLabelShow": b(True),
-                                                    "dataLabelText": enum("Name"), "dataLabelColor": color(INK2), "dataLabelHorizontalPosition": enum("left"),
-                                                    "dataLabelVerticalPosition": enum("above")}, "selector": {"id": "1"}},
+                                                    "dataLabelText": enum("Name"), "dataLabelColor": color(INK), "dataLabelHorizontalPosition": enum("left"),
+                                                    "dataLabelVerticalPosition": enum("above"), "shadeShow": b(True), "shadeRegion": enum("before"),
+                                                    "shadeColor": color(PLAN_SHADE[0]), "shadeTransparency": num(PLAN_SHADE[1])}, "selector": {"id": "1"}},
                                     # the two gridlines Power BI leaves out (plan_ticks()): the same hairline, no label
                                     *[{"properties": {"show": b(True), "value": num(val), "lineColor": color(HAIR), "transparency": num(0), "width": num(1), "style": enum("solid"),
                                                       "position": enum("back"), "displayName": text(f"Gridline {i}"), "dataLabelShow": b(False)}, "selector": {"id": str(i)}}
@@ -1359,8 +1370,8 @@ def plan_end_values():
 
 def plan_ends():
     """The three end labels of ch_plan_cum (review round 2, step C; DS2-08): a card right of each line's end, as the comp
-    sets them, bound to the end measures. Two cards per case on one spot, because a card has one font: Dusk for a case
-    that is not in view, Deep Coffee semibold for the one that is; the measure of the other is empty (sketch_model,
+    sets them, bound to the end measures. Two cards per case on one spot, because a card has one font: regular for a case
+    that is not in view, semibold for the one that is, both in the colour of their line (PLAN_CASE); the measure of the other is empty (sketch_model,
     Plan End ...). Out of the tab order: the chart's alt text reads the three amounts."""
     _, _, _, _, z, tab = at(P2, "ch_plan_cum")
     x = PLAN_END_X + PLAN_END_GAP
@@ -1368,8 +1379,8 @@ def plan_ends():
     out = []
     for i, (case, val) in enumerate(plan_end_values().items()):
         y = round(PLAN_TICK_ZERO_Y - val * 1e6 * PLAN_TICK_PX - CARD_H[1] / 2)
-        quiet = card(f"ch_plan_cum_e{i + 1}", x, y, w, CARD_H[1], z, tab, [f"Plan End {case} (text)"], BODY, S, INK2, off_grid=True)
-        loud = card(f"ch_plan_cum_s{i + 1}", x, y, w, CARD_H[1], z, tab, [f"Plan End Sel {case} (text)"], DISPLAY, S, ACCENT, off_grid=True)
+        quiet = card(f"ch_plan_cum_e{i + 1}", x, y, w, CARD_H[1], z, tab, [f"Plan End {case} (text)"], BODY, S, PLAN_CASE[case][1], off_grid=True)
+        loud = card(f"ch_plan_cum_s{i + 1}", x, y, w, CARD_H[1], z, tab, [f"Plan End Sel {case} (text)"], DISPLAY, S, PLAN_CASE[case][1], off_grid=True)
         out += [decorative(quiet, 110 + i), decorative(loud, 120 + i)]
     return out
 
