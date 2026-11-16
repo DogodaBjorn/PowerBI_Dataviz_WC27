@@ -322,14 +322,14 @@ def p1_visuals():
     v.append(f1_area(P1, "ch_f1_margin"))
     v += f1_labels(P1)
     v.append(note(P1, "c_f1_note", "F1 Note (text)", 2))
-    v.append(link_line(P1, "lnk_f1", "Page 2: revenue management, and kiosks for running costs."))  # review round 2 (UX-17: no arrow, it is not a link; INV-AC-3, J-IN-7: the move that acts on the larger cause)
+    v.append(link_line(P1, "lnk_f1", "Investment Option: revenue management, and kiosks for running costs."))  # review round 2 (UX-17: no arrow, it is not a link; INV-AC-3, J-IN-7: the move that acts on the larger cause)
 
     # F2 the middleman (4.3): two lines named at their ends, no legend and no value axis; the folio under it
     v += [k("c_f2_kicker", "II · THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)", "Alt F2 Title (text)", lift=5)]
     v.append(f2_ends(P1, "ch_f2_ota"))
     v.append(f2_folio_v10(P1, "tbl_f2_folio"))
     v.append(note(P1, "c_f2_note", "F2 Note (text)", 2))
-    v.append(link_line(P1, "lnk_f2", "Page 2: the booking app with member rates."))
+    v.append(link_line(P1, "lnk_f2", "Investment Option: the booking app with member rates."))
 
     # F3 the fading welcome (4.4): label-safe values over the bars; a bar opens the band's detail
     v += [k("c_f3_kicker", "III · THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)", "Alt F3 Title (text)", lift=5)]
@@ -338,7 +338,7 @@ def p1_visuals():
     cnt["position"]["y"] -= 3  # the card centres its line 3 px under the comp's (stitched render)
     v.append(cnt)
     v.append(note(P1, "c_f3_note", "F3 Note (text)", 2))
-    v.append(link_line(P1, "lnk_f3", "Page 2: why the refresh waits for the 2028 gate."))
+    v.append(link_line(P1, "lnk_f3", "Investment Option: why the refresh waits for the 2028 gate."))
 
     # F4 where we are full (4.5, doc 22 section 3): the note and link at the left, the three location-type rows, the
     # dot plot of the 50 hotels on the average diamonds, the seven names as text boxes
@@ -562,7 +562,14 @@ F4_VALUE_DX = {"airport": 54, "city": 31, "highway": 66}
 # now carries the mark itself, "Airport ◆ 82.0%": the diamond in Dusk, the colour it has in the plot, between the type
 # and its average. " ◆" is 14.7 px at 16 px Segoe UI by its font metrics; Desktop draws the diamond 10 px wide and close to
 # the value, so the value starts 17 px further right (render of step D: 4.5 to 6 px between the mark and the number).
-F4_MARK, F4_MARK_DX = " ◆", 17
+# 16 Nov (doc 32, Bjorn): the key did not look like the plot. Each location type now has one colour and one mark, the same
+# before its name and on its hotels: Airport a Coffee Blue circle, City a Warm Grey square, Highway a triangle in the logo's
+# bright Tangerine (#FF783D, the full stop behind "goodnight inn"; 2.7:1 on white, so the mark's shape and the row carry
+# the type too). The average diamonds are no longer drawn; the row's number is the average.
+F4_TYPES = {"airport": ("Airport", ACCENT_MARK, "circle", "oval"), "city": ("City", SLATE, "square", "rectangle"),
+            "highway": ("Highway", "#FF783D", "triangle", "triangleIsoc")}
+F4_KEY, F4_KEY_GAP, F4_KEY_DY, F4_VALUE_GAP = 10, 6, 8, 5  # the mark's side, its distance to the name, its top under the row's top, the space before the value
+F4_MARKER_SIZE = -5  # the scatter's size multiplier (was -10): a square and a triangle need a little more than a dot to read as one
 
 
 def f4_rows(page, slot):
@@ -574,11 +581,18 @@ def f4_rows(page, slot):
     out = []
     for i, (key, label, measure) in enumerate(F4_ROWS):
         ry = y + 40 * i + 8
-        lab = textbox(f"{slot}_lab_{key}", x, ry, 72 + F4_MARK_DX, 24, z, 0, [[(label + F4_MARK, BODY, SPX, INK2, False)]], off_grid=True)
+        lab = textbox(f"{slot}_lab_{key}", x, ry, 89, 24, z, 0, [[(label, BODY, SPX, INK2, False)]], off_grid=True)
         name = slot if i == 0 else f"{slot}_{key}"
-        dx = F4_VALUE_DX[key] + F4_MARK_DX
+        dx = F4_VALUE_DX[key] + F4_VALUE_GAP
         val = card(name, x + dx, ry, w - dx, 24, z, tab, [measure], DISPLAY, S, INK, off_grid=True)
+        _, colour, _, shape = F4_TYPES[key]
+        # the shape is taken without a selector (tried in Desktop 2.159: with {"id": "default"} every mark stays a rectangle)
+        key_objs = {"shape": [{"properties": {"tileShape": enum(shape)}}],
+                    "fill": [{"properties": {"show": b(True)}}, {"properties": {"fillColor": color(colour), "transparency": num(0)}, "selector": {"id": "default"}}],
+                    "outline": [{"properties": {"show": b(False)}}], "text": [{"properties": {"show": b(False)}}]}
+        mark = visual(f"{slot}_mark_{key}", "shape", x - F4_KEY - F4_KEY_GAP, ry + F4_KEY_DY, F4_KEY, F4_KEY, z + 1, 0, objects=key_objs, vcos=vco(padding=0), off_grid=True)
         out.append(decorative(lab, 140 + i))
+        out.append(decorative(mark, 145 + i))
         out.append(bind_alt(val, "Alt F4 Types (text)") if i == 0 else decorative(val, 150 + i))
     return out
 
@@ -605,6 +619,7 @@ def f4_dot_plot(page, tooltip_page=None):
           "X": {"projections": [proj_mea("F4 Type Avg", "Occupancy 2025")]}, "Y": {"projections": [proj_mea("F4 Row Y", "Row")]}}
     oa = f4_axes(copy.deepcopy(base), INK2)
     oa["bubbles"][0]["properties"].update({"markerShape": enum("diamond"), "bubbleSize": integer(0)})
+    oa["markers"][0]["properties"]["transparency"] = num(100)  # 16 Nov: the three averages are not drawn; the layer stays for the gridlines and the 90 % line
     oa["dataPoint"] = [{"properties": {"fill": color(INK2)}, "selector": WILD}]
     _, _, _, _, za, ta = at(page, "ch_f4_avg")
     # top layer: the hotels
@@ -614,7 +629,13 @@ def f4_dot_plot(page, tooltip_page=None):
     # dot has no tooltip in the published report). So this layer draws dots and axis words only; the gridlines and the
     # 90 % line are the bottom layer's, where the name boxes' white fill still covers them behind a name.
     od = f4_axes(copy.deepcopy(base), INK2, gridlines=False)
-    od["dataPoint"] = [{"properties": {"fill": fv("F4 Dot Color")}, "selector": WILD}]
+    # 16 Nov: the location type as the series, so each type has its own colour and its own mark
+    qd["Series"] = {"projections": [proj_col("Hotels", "LocationType", display="Location type")]}
+    f4_series = lambda t: {"data": [{"scopeId": {"Comparison": {"ComparisonKind": 0, "Left": {"Column": {"Expression": {"SourceRef": {"Entity": "Hotels"}}, "Property": "LocationType"}},  # noqa: E731
+                                                                "Right": {"Literal": {"Value": f"'{t}'"}}}}}]}
+    od["dataPoint"] = [{"properties": {"fill": color(c)}, "selector": f4_series(t)} for t, c, _, _ in F4_TYPES.values()]
+    od["bubbles"][0]["properties"].update({"bubbleSize": integer(F4_MARKER_SIZE), "showSeries": b(True)})
+    od["bubbles"] += [{"properties": {"markerShape": enum(m_)}, "selector": f4_series(t)} for t, _, m_, _ in F4_TYPES.values()]
     oa["xAxisReferenceLine"] = [{"properties": {"show": b(True), "value": num(0.9), "lineColor": color(INK2), "transparency": num(0), "width": num(1), "style": enum("dashed"),
                                                 "position": enum("back"), "displayName": text("90%"), "dataLabelShow": b(True), "dataLabelText": enum("Name"),
                                                 "dataLabelColor": color(INK), "dataLabelHorizontalPosition": enum("right"), "dataLabelVerticalPosition": enum("under")},

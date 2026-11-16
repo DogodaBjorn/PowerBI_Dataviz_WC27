@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "City ◆",
+                    "value": "City",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",

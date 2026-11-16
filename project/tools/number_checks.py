@@ -249,7 +249,7 @@ for s in SCEN:
              '"v", [Build Bar NPV], "ls", [Build Bar NPV (label-safe)], "fmt", ' + sm.FMT_DEFS["Build Bar NPV (label-safe)"] + ', "color", [Build Bar Color] )')
 # T8 · F4 per hotel; T9 · F4 per location type; T10 · the trend years; T11 · the F3 bands
 GI_H = 'TREATAS ( { "Goodnight Inn" }, Hotels[Brand] )'
-q.append(f'EVALUATE SUMMARIZECOLUMNS ( Hotels[HotelID], Hotels[HotelName], Hotels[LocationType], {GI_H}, "y", [F4 Row Y], "color", [F4 Dot Color], "occ", [Occupancy % 2025], "m90", [Months Topped 90% (last 24)] )')
+q.append(f'EVALUATE SUMMARIZECOLUMNS ( Hotels[HotelID], Hotels[HotelName], Hotels[LocationType], {GI_H}, "y", [F4 Row Y], "occ", [Occupancy % 2025], "m90", [Months Topped 90% (last 24)] )')
 q.append(f'EVALUATE SUMMARIZECOLUMNS ( Hotels[LocationType], {GI_H}, "y", [F4 Row Y], "avg", [F4 Type Avg] )')
 q.append("EVALUATE SUMMARIZECOLUMNS ( 'Date'[Year], \"take\", [Trend Commission Take GI], \"ota\", [Trend OTA GI (ends)], \"sis\", [Trend OTA Sisters (end)], "
          "\"ota_txt\", FORMAT ( [Trend OTA GI (ends)], \"0%\", \"en-US\" ), \"sis_txt\", FORMAT ( [Trend OTA Sisters (end)], \"0%\", \"en-US\" ) )")
@@ -335,7 +335,6 @@ check("workbook: hero yield domain covers the data", "min", True, sm.HERO_YDOM[0
 for r in f4h:
     h = r["Hotels[HotelID]"] if "Hotels[HotelID]" in r else r["HotelID"]
     check("workbook: F4 Row Y per hotel (the comp's rule)", h, round(f4y[h], 6), round(float(r["y"]), 6))
-    check("workbook: F4 Dot Color (Night = the seven fullest)", h, sm.INK if h in top7 else sm.SLATE, r["color"])
     check("workbook: months at or above 90 % in the last 24 (E5)", h, int(m90.get(h, 0)), int(r["m90"]))
 check("workbook: F4 has 50 hotels", "count", len(ids), len(f4h))
 for r in f4t:
@@ -433,7 +432,7 @@ check("spec: F3 bar labels", "bands", [x for x in p1["ch_f3_age"]["labels"] if x
 check("spec: F2 end labels", "33%, 50%, 27%", p1["ch_f2_ota"]["labels"][:3],
       [r["ota_txt"] for r in sorted(trend, key=lambda r: r.get("Date[Year]", r.get("Year"))) if r["ota"] is not None]
       + [r["sis_txt"] for r in trend if r["sis"] is not None])
-rows_txt = {x.split(" ", 1)[0]: x.rsplit(" ", 1)[1] for x in p1["c_f4_rows"].split("\n")}  # "Airport ◆ 82.0%" (review round 2, step D: the diamond between the type and its average)
+rows_txt = {x.split(" ", 1)[0]: x.rsplit(" ", 1)[1] for x in p1["c_f4_rows"].split("\n")}  # "Airport 82.0%" (16 Nov: the type's mark is a shape before its name, no character between the two)
 for r in f4t:
     t = r.get("Hotels[LocationType]", r.get("LocationType"))
     check("spec: F4 row averages", t, rows_txt[t], f"{half_up(r['avg'] * 100, 1):.1f}%")

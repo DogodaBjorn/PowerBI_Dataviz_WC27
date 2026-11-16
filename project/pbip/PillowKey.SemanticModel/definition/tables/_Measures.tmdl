@@ -531,8 +531,8 @@ table _Measures
 		displayFolder: 08 Brand comparison
 		lineageTag: 53398b16-6664-51da-9887-f13521070e6a
 
-	/// Tangerine for the oldest band (a risk signal: the only negative NPS), Warm Grey for the others; the axis label and the signed value carry it too.
-	measure 'Age Band Color' = IF ( SELECTEDVALUE ( Hotels[Renovation Age Sort] ) = 3, "#E05A22", "#8E897D" )
+	/// Burnt Tangerine for the oldest band (a risk signal: the only negative NPS), Warm Grey for the others; the axis label and the signed value carry it too.
+	measure 'Age Band Color' = IF ( SELECTEDVALUE ( Hotels[Renovation Age Sort] ) = 3, "#A63F0E", "#8E897D" )
 		formatString: @
 		displayFolder: 08 Brand comparison
 		lineageTag: 2efdec81-1469-55f7-b6b8-6b8e9f94fc01
@@ -1568,12 +1568,6 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 943df758-9e97-5d65-88ee-599f1e8a17d3
 
-	/// F4 dot plot: Night for the seven fullest hotels of the brand in 2025, Warm Grey for the rest (R-G3: no blue on page 1's marks). The seven are named beside their dots.
-	measure 'F4 Dot Color' = VAR me = SELECTEDVALUE ( Hotels[HotelID] ) VAR br = SELECTEDVALUE ( Hotels[Brand] ) VAR t7 = TOPN ( 7, ADDCOLUMNS ( CALCULATETABLE ( VALUES ( Hotels[HotelID] ), REMOVEFILTERS ( Hotels ), Hotels[Brand] = br ), "@o", VAR hid = Hotels[HotelID] RETURN CALCULATE ( [Occupancy % 2025], REMOVEFILTERS ( Hotels ), Hotels[HotelID] = hid ) ), [@o], DESC ) RETURN IF ( ISBLANK ( me ), BLANK (), IF ( COUNTROWS ( FILTER ( t7, Hotels[HotelID] = me ) ) > 0, "#12233D", "#8E897D" ) )
-		formatString: @
-		displayFolder: 15 Storytelling rebuild
-		lineageTag: c67f418d-da2a-5885-824a-18f287ff91a0
-
 	/// F4 dot plot, the average markers: 2025 occupancy of the location type in context (rooms sold over rooms available, not an average of hotel percentages).
 	measure 'F4 Type Avg' = [Occupancy % 2025]
 		formatString: 0.0%
@@ -1647,7 +1641,7 @@ table _Measures
 		lineageTag: ba103e85-65ac-5f63-a5f2-c2b65ae81a6b
 
 	/// F4 forward link (R-P1-7): the move on page 2 that answers F4, with the number of hotels the kiosk move covers read from the organisers' project properties.
-	measure 'Link F4 (text)' = VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = "GI-02" ) ) RETURN "Page 2: kiosks at the " & FORMAT ( n, "0", "en-US" ) & " busiest hotels; extensions wait for the 2028 gate."
+	measure 'Link F4 (text)' = VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = "GI-02" ) ) RETURN "Investment Option: kiosks at the " & FORMAT ( n, "0", "en-US" ) & " busiest hotels; extensions wait for the 2028 gate."
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 5bd58532-1b8e-5d64-9ae8-acc8f35c4f10

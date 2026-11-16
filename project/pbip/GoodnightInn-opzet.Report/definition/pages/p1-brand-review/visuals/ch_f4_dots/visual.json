@@ -69,6 +69,25 @@
               "displayName": "Row"
             }
           ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hotels"
+                    }
+                  },
+                  "Property": "LocationType"
+                }
+              },
+              "queryRef": "Hotels.LocationType",
+              "nativeQueryRef": "LocationType",
+              "displayName": "Location type"
+            }
+          ]
         }
       }
     },
@@ -118,7 +137,7 @@
             "bubbleSize": {
               "expr": {
                 "Literal": {
-                  "Value": "-10L"
+                  "Value": "-5L"
                 }
               }
             },
@@ -135,7 +154,125 @@
                   "Value": "false"
                 }
               }
+            },
+            "showSeries": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
+          }
+        },
+        {
+          "properties": {
+            "markerShape": {
+              "expr": {
+                "Literal": {
+                  "Value": "'circle'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Hotels"
+                          }
+                        },
+                        "Property": "LocationType"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Airport'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "markerShape": {
+              "expr": {
+                "Literal": {
+                  "Value": "'square'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Hotels"
+                          }
+                        },
+                        "Property": "LocationType"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'City'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "markerShape": {
+              "expr": {
+                "Literal": {
+                  "Value": "'triangle'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Hotels"
+                          }
+                        },
+                        "Property": "LocationType"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Highway'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
           }
         }
       ],
@@ -292,13 +429,8 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "_Measures"
-                        }
-                      },
-                      "Property": "F4 Dot Color"
+                    "Literal": {
+                      "Value": "'#2589D8'"
                     }
                   }
                 }
@@ -308,8 +440,107 @@
           "selector": {
             "data": [
               {
-                "dataViewWildcard": {
-                  "matchingOption": 1
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Hotels"
+                          }
+                        },
+                        "Property": "LocationType"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Airport'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#8E897D'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Hotels"
+                          }
+                        },
+                        "Property": "LocationType"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'City'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FF783D'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Hotels"
+                          }
+                        },
+                        "Property": "LocationType"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Highway'"
+                      }
+                    }
+                  }
                 }
               }
             ]

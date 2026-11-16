@@ -341,7 +341,7 @@
    "lbl_f1_before": "Before commissions",
    "lbl_f1_band": "Commissions",
    "c_f1_note": "Commissions took 1.0 point, running costs 1.8 (staff: 26.9% to 28.3% of revenue). Room rates rose 2.7%, no faster than the other brands.",
-   "lnk_f1": "Page 2: revenue management, and kiosks for running costs.",
+   "lnk_f1": "Investment Option: revenue management, and kiosks for running costs.",
    "c_f2_kicker": "II · THE MIDDLEMAN",
    "c_f2_title": "Online agencies now book 50% of room revenue, up from 33%",
    "ch_f2_ota": {
@@ -376,7 +376,7 @@
     ]
    ],
    "c_f2_note": "Booked direct, the guest pays $2.25 more and we keep $17.47 more; nothing rewards it. At the 2021 channel mix, 2025 commissions would be $4.8M lower.",
-   "lnk_f2": "Page 2: the booking app with member rates.",
+   "lnk_f2": "Investment Option: the booking app with member rates.",
    "c_f3_kicker": "III · THE FADING WELCOME",
    "tag_f3": "ⓘ Hover a bar",
    "c_f3_title": "Hotels last renovated 10 years or more ago score NPS −4.9",
@@ -392,13 +392,13 @@
    },
    "c_f3_count": "44 of 50 hotels; 6 have no renovation date.",
    "c_f3_note": "Since 2018 we spent $1.0M per hotel on renovation, the other brands $5.9M to $7.9M; none started since 2020. An association, not proof of cause.",
-   "lnk_f3": "Page 2: why the refresh waits for the 2028 gate.",
+   "lnk_f3": "Investment Option: why the refresh waits for the 2028 gate.",
    "c_f4_kicker": "IV · WHERE WE ARE FULL",
    "tag_f4": "ⓘ Hover a hotel",
    "c_f4_title": "Our airports run fullest: five of the seven fullest hotels are airports",
    "c_f4_note": "Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none.",
-   "lnk_f4": "Page 2: kiosks at the 20 busiest hotels; extensions wait for the 2028 gate.",
-   "c_f4_rows": "Airport ◆ 82.0%\nCity ◆ 79.1%\nHighway ◆ 77.5%",
+   "lnk_f4": "Investment Option: kiosks at the 20 busiest hotels; extensions wait for the 2028 gate.",
+   "c_f4_rows": "Airport 82.0%\nCity 79.1%\nHighway 77.5%",
    "ch_f4_avg": {
     "labels": [
      "90%"

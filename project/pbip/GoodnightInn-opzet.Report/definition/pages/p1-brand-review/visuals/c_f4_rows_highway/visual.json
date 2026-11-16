@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c_f4_rows_highway",
   "position": {
-    "x": 579,
+    "x": 567,
     "y": 940,
     "z": 37720,
-    "width": 77,
+    "width": 89,
     "height": 24,
     "tabOrder": -17212
   },

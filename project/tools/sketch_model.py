@@ -1194,7 +1194,7 @@ m("F2 Title (text)",
 
 # P1 F3 the fading welcome (Hotels[Renovation Age Sort]: dated hotels only)
 m("NPS 2025 (signed)", "[NPS (weighted) 2025]", SIGNED1, C8, "Response-weighted NPS 2025 with a true minus, for chart labels.")
-m("Age Band Color", f'IF ( SELECTEDVALUE ( Hotels[Renovation Age Sort] ) = 3, "{SIGNAL_MARK}", "{SLATE}" )', TXT, C8, "Tangerine for the oldest band (a risk signal: the only negative NPS), Warm Grey for the others; the axis label and the signed value carry it too.")
+m("Age Band Color", f'IF ( SELECTEDVALUE ( Hotels[Renovation Age Sort] ) = 3, "{BAD}", "{SLATE}" )', TXT, C8, "Burnt Tangerine for the oldest band (a risk signal: the only negative NPS), Warm Grey for the others; the axis label and the signed value carry it too.")
 m("F3 Title (text)",
   "VAR v = " + gi_at("NPS (weighted)", 2025, "Hotels[Renovation Age Sort] = 3") + ' RETURN "Hotels last renovated 10 years or more ago score NPS " & ' + pt1("v"),
   TXT, C8, "F3 title: NPS 2025 of the Goodnight Inn hotels last renovated 10 or more years ago.")
@@ -2066,11 +2066,8 @@ m("F4 Row Y",
   "0.0", C15,
   "F4 dot plot, the hotel's row: Airport 3, City 2, Highway 1. A hotel within one point of occupancy of another in its row steps 0.3 off the row, alternately below and above "
   "in order of 2025 occupancy (Gatwick below, Montréal above), so close dots stay apart. For a location type (the average markers) the row itself. A layout value, not a metric.")
-m("F4 Dot Color",
-  "VAR me = SELECTEDVALUE ( Hotels[HotelID] ) VAR br = SELECTEDVALUE ( Hotels[Brand] ) "
-  f'VAR t7 = TOPN ( 7, ADDCOLUMNS ( CALCULATETABLE ( VALUES ( Hotels[HotelID] ), REMOVEFILTERS ( Hotels ), Hotels[Brand] = br ), "@o", {_F4_OCC} ), [@o], DESC ) '
-  f'RETURN IF ( ISBLANK ( me ), BLANK (), IF ( COUNTROWS ( FILTER ( t7, Hotels[HotelID] = me ) ) > 0, "{INK}", "{SLATE}" ) )', TXT, C15,
-  "F4 dot plot: Night for the seven fullest hotels of the brand in 2025, Warm Grey for the rest (R-G3: no blue on page 1's marks). The seven are named beside their dots.")
+# 16 Nov (doc 32): F4 Dot Color is gone. The hotels are coloured by location type in the report itself (the series'
+# own colour and mark: Airport a Coffee Blue circle, City a Warm Grey square, Highway a bright Tangerine triangle).
 m("F4 Type Avg", "[Occupancy % 2025]", PCT, C15, "F4 dot plot, the average markers: 2025 occupancy of the location type in context (rooms sold over rooms available, not an average of hotel percentages).")
 m("Months Topped 90% (last 24)",
   "VAR d1 = CALCULATE ( MAX ( MonthlyPerformance[Month] ), REMOVEFILTERS () ) VAR d0 = EDATE ( d1, -23 ) "
@@ -2242,7 +2239,7 @@ m("F4 Note (text)",
   TXT, C15, "F4 note: the three hotels with the most months at or above 90 % occupancy in the last 24, and the one extension on offer outside them (Kingston) with its count.")
 m("Link F4 (text)",
   'VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( InvestmentProjectProperties ), InvestmentProjectProperties[ProjectID] = "GI-02" ) ) '
-  'RETURN "Page 2: kiosks at the " & FORMAT ( n, "0", "en-US" ) & " busiest hotels; extensions wait for the 2028 gate."',
+  'RETURN "Investment Option: kiosks at the " & FORMAT ( n, "0", "en-US" ) & " busiest hotels; extensions wait for the 2028 gate."',
   TXT, C15, "F4 forward link (R-P1-7): the move on page 2 that answers F4, with the number of hotels the kiosk move covers read from the organisers' project properties.")
 
 # ---- page 2, the shared frame (R-P2-1, R-P2-12)
@@ -2582,7 +2579,7 @@ TEXT_SLOTS = {
         "c_f3_title": "F3 Title (text)", "c_f3_count": "F3 Count (text)", "c_f3_note": "F3 Note (text)",
         "c_f4_title": "F4 Title (text)", "c_f4_note": "F4 Note (text)", "lnk_f4": "Link F4 (text)",
         # review round 2, step D (sheet line 31): the diamond after the type is the average's own mark in the dot plot
-        "c_f4_rows": [["=Airport ◆ ", "Occupancy Airport GI (text)"], ["=City ◆ ", "Occupancy City GI (text)"], ["=Highway ◆ ", "Occupancy Highway GI (text)"]],
+        "c_f4_rows": [["=Airport ", "Occupancy Airport GI (text)"], ["=City ", "Occupancy City GI (text)"], ["=Highway ", "Occupancy Highway GI (text)"]],
         "chip_def": "Chip Definitions (text)",
     },
     "rec": dict(_P2_FRAME, **{

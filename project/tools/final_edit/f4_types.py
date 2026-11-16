@@ -11,7 +11,10 @@ does not add). What it sets:
                Warm Grey for the rest, all circles.
   ch_f4_avg    its three average diamonds are no longer drawn (markers 100 % transparent): the row's label carries the
                average as a number. The layer stays for the gridlines and the 90 % line.
-  c_f4_rows_lab_*  "Airport ●", "City ■", "Highway ▲": the row's own mark in its own colour, where the Dusk ◆ stood.
+  c_f4_rows_lab_*  the row's name alone ("Airport"); the Dusk ◆ behind it is gone.
+  c_f4_rows_mark_* new: the row's own mark before its name, a shape visual of 10 x 10 px (oval, rectangle, triangle) in the
+               row's colour: the same shape and colour as its hotels in the plot, whatever font the reader has.
+  c_f4_rows*   the three values stand one space behind their name (they stood behind the ◆).
   Age Band Color   (model) the bar of the oldest hotels in card III in Burnt Tangerine, was Tangerine.
   F4 Dot Color     (model) removed: nothing binds it any more.
   sl_scenario  opens on Expected again (the save of 11:32 carried High, the case that was clicked last).
@@ -26,8 +29,9 @@ P1 = REPORT / "definition" / "pages" / "p1-brand-review" / "visuals"
 P2 = REPORT / "definition" / "pages" / "p2-investment-strategy" / "visuals"
 
 COFFEE_BLUE, WARM_GREY, TANGERINE_BRIGHT, BURNT, TANGERINE, DUSK = "#2589D8", "#8E897D", "#FF783D", "#A63F0E", "#E05A22", "#4B5466"
-# location type: (colour, the scatter's marker shape, the same mark as a character, its size in the label in px)
-TYPES = {"Airport": (COFFEE_BLUE, "circle", "●", 16), "City": (WARM_GREY, "square", "■", 16), "Highway": (TANGERINE_BRIGHT, "triangle", "▲", 16)}
+# location type: (colour, the scatter's marker shape, the same shape as a shape visual, where the value starts after the name in px)
+TYPES = {"Airport": (COFFEE_BLUE, "circle", "oval", 54), "City": (WARM_GREY, "square", "rectangle", 31), "Highway": (TANGERINE_BRIGHT, "triangle", "triangleIsoc", 66)}
+MARK, MARK_GAP, MARK_DY, VALUE_GAP = 10, 6, 8, 5  # the mark's side, its distance to the name, its top under the row's top, the space before the value
 MARKER_SIZE = -5  # the scatter's size multiplier (was -10): a square and a triangle need a little more than a dot to read as one
 
 
@@ -70,13 +74,31 @@ def avg(v):
     v["visual"]["objects"]["markers"][0]["properties"]["transparency"] = lit("100D")
 
 
-def label(name, mark, colour, px):
+def label(name, pos):
     def fn(v):
         par = v["visual"]["objects"]["general"][0]["properties"]["paragraphs"][0]
-        style = dict(par["textRuns"][0]["textStyle"])
-        par["textRuns"] = [{"value": name + " ", "textStyle": dict(style, color=DUSK)},
-                           {"value": mark, "textStyle": dict(style, color=colour, fontSize=f"{px}px")}]
+        par["textRuns"] = [{"value": name, "textStyle": dict(par["textRuns"][0]["textStyle"])}]
+        pos.update(v["position"])
     return fn
+
+
+def value(pos, dx):
+    def fn(v):
+        v["position"]["x"] = pos["x"] + dx + VALUE_GAP
+    return fn
+
+
+def mark(name, pos, shape, colour, i):
+    off = {"properties": {"show": lit("false")}}
+    return {"$schema": SCHEMA, "name": name,
+            "position": {"x": pos["x"] - MARK - MARK_GAP, "y": pos["y"] + MARK_DY, "z": pos["z"] + 500, "height": MARK, "width": MARK, "tabOrder": -27001 - i},
+            "visual": {"visualType": "shape",
+                       # tried in Desktop 2.159: the shape is taken without a selector; with {"id": "default"} every mark stays a rectangle
+                       "objects": {"shape": [{"properties": {"tileShape": lit(f"'{shape}'")}}],
+                                   "fill": [{"properties": {"show": lit("true")}}, {"properties": {"fillColor": solid(colour), "transparency": lit("0D")}, "selector": {"id": "default"}}],
+                                   "outline": [off], "text": [off]},
+                       "visualContainerObjects": {k: [off] for k in ("title", "background", "border", "dropShadow", "visualHeader", "subTitle", "visualTooltip")}
+                       | {"padding": [{"properties": {s_: lit("0D") for s_ in ("top", "bottom", "left", "right")}}]}}}
 
 
 def scenario(v):
@@ -85,8 +107,14 @@ def scenario(v):
 
 edit(P1 / "ch_f4_dots" / "visual.json", dots)
 edit(P1 / "ch_f4_avg" / "visual.json", avg)
-for t, (colour, _, mark, px) in TYPES.items():
-    edit(P1 / f"c_f4_rows_lab_{t.lower()}" / "visual.json", label(t, mark, colour, px))
+SCHEMA = json.loads((P1 / "ch_f4_dots" / "visual.json").read_text(encoding="utf-8-sig"))["$schema"]
+for i, (t, (colour, _, shape, dx)) in enumerate(TYPES.items()):
+    key, pos = t.lower(), {}
+    edit(P1 / f"c_f4_rows_lab_{key}" / "visual.json", label(t, pos))
+    edit(P1 / ("c_f4_rows" if i == 0 else f"c_f4_rows_{key}") / "visual.json", value(pos, dx))
+    d = P1 / f"c_f4_rows_mark_{key}"
+    d.mkdir(exist_ok=True)
+    (d / "visual.json").write_text(json.dumps(mark(d.name, pos, shape, colour, i), indent=2, ensure_ascii=False), encoding="utf-8", newline=chr(13) + chr(10))
 edit(P2 / "sl_scenario" / "visual.json", scenario)
 
 # the model: one colour, one measure out
