@@ -66,3 +66,8 @@ Candidates a, b and c of doc 35 stay in the folder; `cover-final.png` is the one
   `cover-tile-as-shown.png` is the band at tile size. The community site cannot be read from here (403), so why his
   image did not show could not be looked up; the likely causes were given to him. The Publish to Web link has not
   been given yet: the gate is still open.
+- 17 Nov, just after midnight: for LinkedIn, a film of 16 seconds (1080 x 1350, no sound) and an English post.
+  `project/tools/gallery/promo_video.py` draws the film frame by frame from the report's two pages and the 456
+  packages (Pillow, encoded with the ffmpeg of imageio_ffmpeg in Python 3.14); Bjorn offered the Runway credits of
+  the Hugo's repository "if need be": not needed, not used. Files in
+  `project/deliverables/final-room-to-invest/linkedin/` (`room-to-invest-linkedin.mp4`, `poster.png`, `POST.md`).

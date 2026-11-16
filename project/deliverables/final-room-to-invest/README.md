@@ -125,3 +125,9 @@ lines are a stroke per row now, a dashed line. `rows-centred/` shows it: `table-
 candidate a, the badge "100% native Power BI visuals" and the report itself. `gallery/DESCRIPTION.md` carries the same
 claim in the teaser and in a section of its own. The account is
 `project/project-state/active/40-final-cover-and-native-visuals-2026-11-16.md`.
+
+## The LinkedIn post (17 Nov)
+
+`linkedin/` holds a film of 16 seconds about the entry (`room-to-invest-linkedin.mp4`, 4:5, no sound), a still
+(`poster.png`) and the English post with its first comment (`POST.md`). The film is drawn by
+`project/tools/gallery/promo_video.py` from the report's own pages and the 456 packages.
