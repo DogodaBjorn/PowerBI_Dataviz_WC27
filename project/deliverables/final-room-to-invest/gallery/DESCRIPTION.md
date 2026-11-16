@@ -146,3 +146,19 @@ things to try" and the first two sentences of "100% native Power BI visuals".
   through 2032 in the Low, the Expected and the High case.
 - **"Body text" in the accessibility paragraph** is deliberate: the orange dot between the two parts of the page
   label is 3.2:1 on the banner.
+
+## The link to trainerbjorn.nl, tagged for GA4 (16 Nov night)
+
+Bjorn wants visits from this entry to show in GA4 as the campaign **DataVizWC27**. No change to the site is needed:
+GA4 reads the campaign from the link. Checked on 16 Nov: the link opens the English home page without a redirect and
+with its tags intact, the page carries the GA4 tag (G-TVT7VS528L, behind the cookie notice) and its canonical stays
+`/en/`; the site's own tracker keeps the same tags.
+
+| Where the link stands | The link |
+|---|---|
+| The gallery post (behind the name in the sign-off) | `https://www.trainerbjorn.nl/en/?utm_source=fabric-community&utm_medium=referral&utm_campaign=DataVizWC27` |
+| A LinkedIn post about the entry | `https://www.trainerbjorn.nl/en/?utm_source=linkedin&utm_medium=social&utm_campaign=DataVizWC27` |
+| Anywhere else | the same link with its own `utm_source` (lower case, no spaces) and `utm_medium`; `utm_campaign=DataVizWC27` exactly, capitals included |
+
+In GA4: Reports > Acquisition > Traffic acquisition, dimension "Session campaign", value DataVizWC27. Only visitors
+who accept the cookie notice are counted there; the site's own tracker counts every visit.
