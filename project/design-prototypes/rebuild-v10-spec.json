@@ -340,7 +340,7 @@
    },
    "lbl_f1_before": "Before commissions",
    "lbl_f1_band": "Commissions",
-   "c_f1_note": "Commissions took 1.0 point, running costs 1.8 (staff: 26.9% to 28.3% of revenue). Room rates rose 2.7%, like the other brands: no price premium absorbs it.",
+   "c_f1_note": "Commissions took 1.0 point, running costs 1.8 (staff: 26.9% to 28.3% of revenue). Room rates rose 2.7%, no faster than the other brands.",
    "lnk_f1": "Page 2: revenue management, and kiosks for running costs.",
    "c_f2_kicker": "II · THE MIDDLEMAN",
    "c_f2_title": "Online agencies now book 50% of room revenue, up from 33%",
@@ -579,7 +579,7 @@
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.5M a year once live · 11.7% a year on cost",
    "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$1.3M a year once live · 4.5% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
-   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032. A rule, not a forecast.",
+   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.",
    "ch_plan_cum": {
     "labels": [
      "Cash positive above this line",
@@ -757,7 +757,7 @@
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.7M a year once live · 13.8% a year on cost",
    "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$2.3M a year once live · 7.9% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
-   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032. A rule, not a forecast.",
+   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.",
    "ch_plan_cum": {
     "labels": [
      "Cash positive above this line",
@@ -935,7 +935,7 @@
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.8M a year once live · 14.8% a year on cost",
    "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$3.4M a year once live · 11.5% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
-   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032. A rule, not a forecast.",
+   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.",
    "ch_plan_cum": {
     "labels": [
      "Cash positive above this line",

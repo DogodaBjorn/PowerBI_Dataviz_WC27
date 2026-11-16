@@ -3,7 +3,7 @@
 
   python shoot.py <pid> <copy dir> <out dir> <name> <state> <scenario> [picked] [--only 1920,1366]
 
-state rec | alts | build; scenario Low | Expected | High; picked: the moves of Build your own as short names separated
+state rec | alts | build (page 2) or p1 (page 1, scenario "-"); scenario Low | Expected | High; picked: the moves of Build your own as short names separated
 by semicolons, "-" for nothing picked, left out for the saved selection (package A).
 
 What it writes, per view:
@@ -62,7 +62,10 @@ def coarse(work, c):
 pid, copy, out, name, state, scen = sys.argv[1], sys.argv[2], Path(sys.argv[3]), sys.argv[4], sys.argv[5], sys.argv[6]
 picked = sys.argv[7:8]
 out.mkdir(parents=True, exist_ok=True)
-run(PY, SHOTS / "step9" / "round.py", "view", copy, state, scen, *picked)
+if state == "p1":  # final round of 16 Nov: page 1 the same way (it follows no scenario and has one state; give "-" for the scenario)
+    run(PY, SHOTS / "tiles" / "mk_tiles.py", Path(copy) / "THROWAWAY.Report", "--page", "p1-brand-review", "--mast", "232", "--rows", "1")
+else:
+    run(PY, SHOTS / "step9" / "round.py", "view", copy, state, scen, *picked)
 run("powerbi-desktop.cmd", "reload", "--pid", pid)
 time.sleep(15)
 works = {tag: out / "_strips" / f"{name}_{tag}" for tag, _ in SCALES}

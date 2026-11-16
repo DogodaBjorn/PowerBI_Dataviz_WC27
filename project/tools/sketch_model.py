@@ -2186,7 +2186,7 @@ m("F1 Note (text)",
   'RETURN IF ( comm > 0 && ops > 0, "Commissions took " & FORMAT ( comm, "0.0", "en-US" ) & IF ( comm = 1, " point", " points" ) & ", running costs " & FORMAT ( ops, "0.0", "en-US" ) '
   '& " (staff: " & ' + pct1("s23") + ' & " to " & ' + pct1("s25") + ' & " of revenue). ", "" ) '
   '& "Room rates " & IF ( pa < 0, "fell ", "rose " ) & ' + pct1("ABS ( pa )") + ' & ", " '
-  '& IF ( pa > phi, "faster than the other brands.", IF ( pa < plo, "slower than the other brands.", "like the other brands: no price premium absorbs it." ) )',
+  '& IF ( pa > phi, "faster than the other brands.", IF ( pa < plo, "slower than the other brands.", "no faster than the other brands." ) )',
   TXT, C15, "F1 note (R-P1-3, N-2): the 2023-2025 fall of the margin after commissions split into commissions and running costs, the staff share as the main running cost, "
             "and room-rate growth since 2023 against the sister brands (plan 09 R1).")
 _OTA, _DIR = 'BookingChannels[Channel] = "Online Travel Agencies"', 'BookingChannels[Channel] = "Direct Website & App"'
@@ -2392,7 +2392,7 @@ m("Gate Rule (text)",
   REC_IDS + APP_IDS + tranche_t(2)
   + f'VAR pts = - CALCULATE ( SUM ( InvestmentScenarios[DistributionCostChangePts] ), {APP_T}, InvestmentScenarios[Scenario] = "Expected" ) * {FP.format("Ramp-up - first year after completion")} * 100 '
   f'RETURN "The {GATE_YEAR} gate: one Board meeting once all " & ' + words("COUNTROWS ( aIds )") + ' & " moves are live. It releases tranche 2 if the first money worked (distribution cost down " & FORMAT ( pts, "0.0", "en-US" ) '
-  '& " points or more, the Expected track) and " & ' + T2_NAMES + f' & " topped 90% in 6 of the last 12 months. The refresh returns with a case beyond " & {HORIZON} & ". A rule, not a forecast."',
+  '& " points or more, the Expected track) and " & ' + T2_NAMES + ' & " topped 90% in 6 of the last 12 months. A rule, not a forecast."',
   TXT, C15, "The gate rule (R-P2-7; review round 2: INV-CA-6, INV-RK-5, INV-RK-6), the one release rule of the report. The 0.6 points are the app's Expected-case change in distribution cost at the first-year ramp-up (FinanceParameters): where the Expected case stands at a mid-2028 meeting.")
 m("Gate Rule Short (text)", f'"{GATE_YEAR} gate: if the first money worked and both stay full."', TXT, C15,
   "The gate in one line for the What-waits table (When we decide); the full rule is Gate Rule (text).")

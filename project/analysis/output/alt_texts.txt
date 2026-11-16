@@ -21,8 +21,8 @@ alt_texts: 135 visuals in the tab order, 107 on a measure, 0 flag(s)
       Finding I, the margin. After commissions, the margin fell 2.8 points since 2023
  9680 ch_f1_margin (stackedAreaChart) [Alt F1 Chart (text)] 195/195/195 chars
       After commissions, Goodnight Inn's operating margin rose from 32.5% in 2021 to 36.5% in 2023 and fell back to 33.7% in 2025. The gap to the margin before commissions grew from 8.4 to 10.6 points.
- 9670 c_f1_note (cardVisual) [F1 Note (text)] 155/155/155 chars
-      Commissions took 1.0 point, running costs 1.8 (staff: 26.9% to 28.3% of revenue). Room rates rose 2.7%, like the other brands: no price premium absorbs it.
+ 9670 c_f1_note (cardVisual) [F1 Note (text)] 136/136/136 chars
+      Commissions took 1.0 point, running costs 1.8 (staff: 26.9% to 28.3% of revenue). Room rates rose 2.7%, no faster than the other brands.
  9660 lnk_f1 (textbox) [typed] 57 chars
       Page 2: revenue management, and kiosks for running costs.
  9590 c_f2_title (cardVisual) [Alt F2 Title (text)] 84/84/84 chars
@@ -152,8 +152,8 @@ $29.5M · 2028 gate, only with a case beyond 2032
 stays with the group
  9540 ch_plan_bar (barChart) [Alt Plan Bar (text)] 151/151/151 chars
       How the $60M budget is planned: tranche 1, package A, $9.4M now; tranche 2, $12.4M, and tranche 3, $29.5M, wait for the 2028 gate; $8.7M is not needed.
- 9530 c_plan_gate (cardVisual) [Gate Rule (text)] 307/307/307 chars   <-- long (307)
-      The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032. A rule, not a forecast.
+ 9530 c_plan_gate (cardVisual) [Gate Rule (text)] 262/262/262 chars   <-- long (262)
+      The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.
  9520 ch_plan_cum (lineChart) [Alt Plan Cum (text)] 230/233/229 chars
       Package A, cumulative cash by year to 2032, not discounted, in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Expected case A is cash positive from 2031. The Board decides on the rest at the 2028 gate.
       Low: Package A, cumulative cash by year to 2032, not discounted, in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Low case A is not cash positive by 2032. The Board decides on the rest at the 2028 gate.

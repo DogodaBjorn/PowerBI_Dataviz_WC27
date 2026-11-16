@@ -23,6 +23,11 @@ SHOTS = HERE.parent
 ROOT = HERE.parents[3]
 PY = sys.executable
 PAGE = "p2-investment-strategy"
+# the Night zone drawn under the strips: to where the banner picture ends, the first card row + 84 px (brand_canvas_v3.py;
+# 168 until the final round of 16 Nov, when the cards started at the banner's end in the strips)
+import json  # noqa: E402
+MAST = str(min(c["y"] for p in json.loads((ROOT / "project" / "design-prototypes" / "opzet-layout.json").read_text(encoding="utf-8"))["pages"]
+               if p["name"] == PAGE for c in p["cards"]) + 84)
 
 
 def run(*a, **k):
@@ -48,7 +53,7 @@ elif cmd == "view":
         dst = copy / "THROWAWAY.Report" / part
         shutil.rmtree(dst)
         shutil.copytree(rep / part, dst)
-    args = [PY, SHOTS / "tiles" / "mk_tiles.py", copy / "THROWAWAY.Report", "--page", PAGE, "--scenario", scen, "--mast", "168", "--rows", "1"]
+    args = [PY, SHOTS / "tiles" / "mk_tiles.py", copy / "THROWAWAY.Report", "--page", PAGE, "--scenario", scen, "--mast", MAST, "--rows", "1"]
     if picked is not None:
         args += ["--picked", "" if picked == "-" else picked]
     print(out.splitlines()[-1])

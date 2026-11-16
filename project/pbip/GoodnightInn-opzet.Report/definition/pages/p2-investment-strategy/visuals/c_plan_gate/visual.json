@@ -3,10 +3,10 @@
   "name": "c_plan_gate",
   "position": {
     "x": 56,
-    "y": 808,
+    "y": 811,
     "z": 39000,
     "width": 704,
-    "height": 120,
+    "height": 92,
     "tabOrder": 9530
   },
   "visual": {

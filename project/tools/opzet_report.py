@@ -1234,7 +1234,8 @@ PLAN_END_X = 1719                   # page x of the last year, where the three l
 PLAN_END_GAP = 14                   # from the line's end to its label's card: the comp has 8, but the gridlines run 9 px
 #                                     past the last year and the label must not touch their ends
 PLAN_CAPTION = "Package A, cumulative cash, $M (not discounted, so it ends above NPV)"  # doc 25 sheet line 14 (DS2-01, J-AQ-8, J-VE-12)
-GATE_LINES = 4                      # lines of the gate rule at 12 pt in 704 px (the comp)
+GATE_LINES = 3                      # lines of the gate rule at 12 pt in 704 px (the comp)
+# final round (16 Nov): three lines, the sentence about the refresh left (tranche 3's label above says it)
 
 
 def plan_bar():
