@@ -3,10 +3,10 @@
   "name": "ch_f2_ota",
   "position": {
     "x": 700,
-    "y": 397,
+    "y": 377,
     "z": 30001,
     "width": 505,
-    "height": 144,
+    "height": 160,
     "tabOrder": 9580
   },
   "visual": {

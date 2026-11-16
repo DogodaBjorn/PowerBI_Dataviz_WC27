@@ -455,11 +455,6 @@
     },
     {
       "source": "tbl_hero",
-      "target": "c_sel_footer",
-      "type": "NoFilter"
-    },
-    {
-      "source": "tbl_hero",
       "target": "c_you_title_alarm",
       "type": "NoFilter"
     },
@@ -901,11 +896,6 @@
     {
       "source": "tbl_ledger",
       "target": "tbl_moves",
-      "type": "NoFilter"
-    },
-    {
-      "source": "tbl_ledger",
-      "target": "c_sel_footer",
       "type": "NoFilter"
     },
     {
@@ -1355,11 +1345,6 @@
     },
     {
       "source": "ch_plan_bar",
-      "target": "c_sel_footer",
-      "type": "NoFilter"
-    },
-    {
-      "source": "ch_plan_bar",
       "target": "c_you_title_alarm",
       "type": "NoFilter"
     },
@@ -1801,11 +1786,6 @@
     {
       "source": "ch_plan_cum",
       "target": "tbl_moves",
-      "type": "NoFilter"
-    },
-    {
-      "source": "ch_plan_cum",
-      "target": "c_sel_footer",
       "type": "NoFilter"
     },
     {
@@ -2255,11 +2235,6 @@
     },
     {
       "source": "hero_s_packages",
-      "target": "c_sel_footer",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages",
       "target": "c_you_title_alarm",
       "type": "NoFilter"
     },
@@ -2701,11 +2676,6 @@
     {
       "source": "hero_s_packages_named",
       "target": "tbl_moves",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_named",
-      "target": "c_sel_footer",
       "type": "NoFilter"
     },
     {
@@ -3155,11 +3125,6 @@
     },
     {
       "source": "hero_s_packages_letters",
-      "target": "c_sel_footer",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_letters",
       "target": "c_you_title_alarm",
       "type": "NoFilter"
     },
@@ -3601,11 +3566,6 @@
     {
       "source": "tbl_waits",
       "target": "tbl_moves",
-      "type": "NoFilter"
-    },
-    {
-      "source": "tbl_waits",
-      "target": "c_sel_footer",
       "type": "NoFilter"
     },
     {
@@ -4055,11 +4015,6 @@
     },
     {
       "source": "ch_cmp_alts",
-      "target": "c_sel_footer",
-      "type": "NoFilter"
-    },
-    {
-      "source": "ch_cmp_alts",
       "target": "c_you_title_alarm",
       "type": "NoFilter"
     },
@@ -4501,11 +4456,6 @@
     {
       "source": "tbl_moves",
       "target": "sl_moves",
-      "type": "NoFilter"
-    },
-    {
-      "source": "tbl_moves",
-      "target": "c_sel_footer",
       "type": "NoFilter"
     },
     {
@@ -4960,11 +4910,6 @@
     },
     {
       "source": "ch_build_bars",
-      "target": "c_sel_footer",
-      "type": "NoFilter"
-    },
-    {
-      "source": "ch_build_bars",
       "target": "c_you_title_alarm",
       "type": "NoFilter"
     },
@@ -5410,11 +5355,6 @@
     },
     {
       "source": "ch_cmp_build",
-      "target": "c_sel_footer",
-      "type": "NoFilter"
-    },
-    {
-      "source": "ch_cmp_build",
       "target": "c_you_title_alarm",
       "type": "NoFilter"
     },
@@ -5851,11 +5791,6 @@
     {
       "source": "hero_s_packages_hover",
       "target": "tbl_moves",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_hover",
-      "target": "c_sel_footer",
       "type": "NoFilter"
     },
     {
@@ -6305,11 +6240,6 @@
     },
     {
       "source": "hero_s_packages_build",
-      "target": "c_sel_footer",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_build",
       "target": "c_you_title_alarm",
       "type": "NoFilter"
     },
@@ -6751,11 +6681,6 @@
     {
       "source": "hero_s_packages_you",
       "target": "tbl_moves",
-      "type": "NoFilter"
-    },
-    {
-      "source": "hero_s_packages_you",
-      "target": "c_sel_footer",
       "type": "NoFilter"
     },
     {
@@ -7202,11 +7127,6 @@
       "source": "sl_moves",
       "target": "tbl_moves",
       "type": "NoFilter"
-    },
-    {
-      "source": "sl_moves",
-      "target": "c_sel_footer",
-      "type": "DataFilter"
     },
     {
       "source": "sl_moves",

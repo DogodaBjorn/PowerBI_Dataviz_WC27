@@ -289,7 +289,7 @@
     },
     "c_subtitle2": {
       "z": 8000,
-      "tabOrder": 110
+      "tabOrder": 127
     },
     "z_logo": {
       "z": 9000,
@@ -486,10 +486,6 @@
     "tbl_moves": {
       "z": 56000,
       "tabOrder": 730
-    },
-    "c_sel_footer": {
-      "z": 57000,
-      "tabOrder": 740
     },
     "c_you_title": {
       "z": 58000,

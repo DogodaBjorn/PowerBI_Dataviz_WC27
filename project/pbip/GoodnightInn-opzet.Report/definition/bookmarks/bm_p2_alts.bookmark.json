@@ -70,7 +70,6 @@
       "c_build_head",
       "sl_moves",
       "tbl_moves",
-      "c_sel_footer",
       "c_you_title_alarm",
       "c_you_title",
       "c_you_nums",
@@ -563,14 +562,6 @@
           "tbl_moves": {
             "singleVisual": {
               "visualType": "tableEx",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_sel_footer": {
-            "singleVisual": {
-              "visualType": "cardVisual",
               "display": {
                 "mode": "hidden"
               }

@@ -3,10 +3,10 @@
   "name": "ch_f1_margin",
   "position": {
     "x": 68,
-    "y": 392,
+    "y": 372,
     "z": 25000,
     "width": 526,
-    "height": 248,
+    "height": 280,
     "tabOrder": 9680
   },
   "visual": {

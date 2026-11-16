@@ -3,7 +3,7 @@
   "name": "lnk_f2",
   "position": {
     "x": 680,
-    "y": 736,
+    "y": 716,
     "z": 31500,
     "width": 560,
     "height": 24,
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "On page 2: the booking app with member rates.",
+                    "value": "Page 2: the booking app with member rates.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -153,7 +153,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'On page 2: the booking app with member rates.'"
+                  "Value": "'Page 2: the booking app with member rates.'"
                 }
               }
             }

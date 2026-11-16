@@ -27,7 +27,7 @@
                     }
                   },
                   {
-                    "value": "  one of the ten investments Goodnight Inn can make.",
+                    "value": "  one of the ten investments on offer.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -48,7 +48,7 @@
                     }
                   },
                   {
-                    "value": "  a set of moves funded together. A is the package we recommend.",
+                    "value": "  a set of moves funded together; A is our recommendation.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -90,7 +90,7 @@
                     }
                   },
                   {
-                    "value": "  the one-off investment a move takes; the brand's budget caps what a package may spend.",
+                    "value": "  a move's one-off investment; the brand's budget caps a package.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -132,7 +132,7 @@
                     }
                   },
                   {
-                    "value": "  the NPV through 2032 is zero or more.",
+                    "value": "  NPV through 2032 is zero or more.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -153,7 +153,7 @@
                     }
                   },
                   {
-                    "value": "  from that year on, cumulative cash (yearly net impact added up, not discounted) is above zero; it ends above NPV, which discounts at 8%.",
+                    "value": "  cumulative cash (not discounted) is above zero from that year on; it ends above NPV, which discounts at 8%.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -174,7 +174,7 @@
                     }
                   },
                   {
-                    "value": "  the operating profit a move adds in a full year once it is live, measured in 2032 (its run-rate).",
+                    "value": "  the operating profit a move adds in a full year once live, measured in 2032.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",

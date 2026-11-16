@@ -3,7 +3,7 @@
   "name": "lnk_f3",
   "position": {
     "x": 1304,
-    "y": 736,
+    "y": 716,
     "z": 35500,
     "width": 560,
     "height": 24,
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "On page 2: the refresh waits for the 2028 gate, and why.",
+                    "value": "Page 2: why the refresh waits for the 2028 gate.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -153,7 +153,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'On page 2: the refresh waits for the 2028 gate, and why.'"
+                  "Value": "'Page 2: why the refresh waits for the 2028 gate.'"
                 }
               }
             }

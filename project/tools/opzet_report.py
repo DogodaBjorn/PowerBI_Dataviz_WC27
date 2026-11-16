@@ -112,6 +112,17 @@ def layered(page_name, visuals):
             v["position"]["z"], v["position"]["tabOrder"] = o["z"], o["tabOrder"]
     return visuals
 PAGES = {p["name"]: p for p in LAYOUT["pages"]}
+# Final round (16 Nov, doc 31): the card rows moved up (the first row to y 148, 24 px between the rows). The measured
+# rects further down (PLOT_RECT, F4_RECT, PROOF_RECT, YOU_RECT, PLAN_RECT, CMP_RECT, BARS_RECT) are typed as they were
+# measured, with the card standing at the y below; moved() shifts a rect by what its card has moved since, so a row that
+# moves in the slot map takes its measured rects along and no rect is retyped.
+MEASURED_AT = {"p1-brand-review": {"card_f1": 312, "card_f4": 800},
+               "p2-investment-strategy": {"scatter_s": 168, "panel_w": 168, "bottom": 672}}
+
+
+def moved(rect, page, card):
+    x, y, w, h = rect
+    return (x, y + next(c["y"] for c in PAGES[page]["cards"] if c["id"] == card) - MEASURED_AT[page][card], w, h)
 
 
 def fv(measure):
@@ -301,24 +312,24 @@ def p1_visuals():
     # F3 above cards that count F1 to F4: UX-22, J-IN-10, CL-32); the words and the cards below map them.
     v += kpi_cell("kpi_occ", "Occupancy", "KPI Occupancy GI (text)", "KPI Occupancy Context (text)", "Alt KPI Occupancy (text)", "KPI Occupancy Context Color")
     v += kpi_cell("kpi_margin", "Operating margin after commissions", "KPI Margin after GI (text)", "KPI Margin after Context (text)", "Alt KPI Margin after (text)", "KPI Margin after Context Color")
-    v += kpi_cell("kpi_ota", "Room revenue booked through online agencies", "KPI OTA GI (text)", "KPI OTA Context (text)", "Alt KPI OTA (text)", "KPI OTA Context Color")
+    v += kpi_cell("kpi_ota", "Room revenue through online agencies", "KPI OTA GI (text)", "KPI OTA Context (text)", "Alt KPI OTA (text)", "KPI OTA Context Color")
     # plan 09 R2: NPS as a guest-quality signal, not the brand's one number (Keiningham et al. 2007; CREDITS.md).
-    v += kpi_cell("kpi_nps", "Guest quality: net promoter score (−100 to +100)", "KPI NPS GI (text)", "KPI NPS Context (text)", "Alt KPI NPS (text)", "KPI NPS Context Color")
+    v += kpi_cell("kpi_nps", "Net promoter score (−100 to +100)", "KPI NPS GI (text)", "KPI NPS Context (text)", "Alt KPI NPS (text)", "KPI NPS Context Color")
 
     k = lambda name, txt: kicker(P1, name, txt, code_colour=INK, sep=" · ")  # noqa: E731  (R-G3: the code in Night)
     # F1 the margin (4.2): the margin after commissions with the commissions band stacked on it
     v += [k("c_f1_kicker", "I · THE MARGIN"), title(P1, "c_f1_title", "F1 Title (text)", "Alt F1 Title (text)", lift=5)]
     v.append(f1_area(P1, "ch_f1_margin"))
     v += f1_labels(P1)
-    v.append(note(P1, "c_f1_note", "F1 Note (text)", 3))
-    v.append(link_line(P1, "lnk_f1", "On page 2: revenue management, and the kiosks for running costs."))  # review round 2 (UX-17: no arrow, it is not a link; INV-AC-3, J-IN-7: the move that acts on the larger cause)
+    v.append(note(P1, "c_f1_note", "F1 Note (text)", 2))
+    v.append(link_line(P1, "lnk_f1", "Page 2: revenue management, and kiosks for running costs."))  # review round 2 (UX-17: no arrow, it is not a link; INV-AC-3, J-IN-7: the move that acts on the larger cause)
 
     # F2 the middleman (4.3): two lines named at their ends, no legend and no value axis; the folio under it
     v += [k("c_f2_kicker", "II · THE MIDDLEMAN"), title(P1, "c_f2_title", "F2 Title (text)", "Alt F2 Title (text)", lift=5)]
     v.append(f2_ends(P1, "ch_f2_ota"))
     v.append(f2_folio_v10(P1, "tbl_f2_folio"))
-    v.append(note(P1, "c_f2_note", "F2 Note (text)", 3))
-    v.append(link_line(P1, "lnk_f2", "On page 2: the booking app with member rates."))
+    v.append(note(P1, "c_f2_note", "F2 Note (text)", 2))
+    v.append(link_line(P1, "lnk_f2", "Page 2: the booking app with member rates."))
 
     # F3 the fading welcome (4.4): label-safe values over the bars; a bar opens the band's detail
     v += [k("c_f3_kicker", "III · THE FADING WELCOME"), title(P1, "c_f3_title", "F3 Title (text)", "Alt F3 Title (text)", lift=5)]
@@ -326,8 +337,8 @@ def p1_visuals():
     cnt = dyn(P1, "c_f3_count", "F3 Count (text)")
     cnt["position"]["y"] -= 3  # the card centres its line 3 px under the comp's (stitched render)
     v.append(cnt)
-    v.append(note(P1, "c_f3_note", "F3 Note (text)", 3))
-    v.append(link_line(P1, "lnk_f3", "On page 2: the refresh waits for the 2028 gate, and why."))
+    v.append(note(P1, "c_f3_note", "F3 Note (text)", 2))
+    v.append(link_line(P1, "lnk_f3", "Page 2: why the refresh waits for the 2028 gate."))
 
     # F4 where we are full (4.5, doc 22 section 3): the note and link at the left, the three location-type rows, the
     # dot plot of the 50 hotels on the average diamonds, the seven names as text boxes
@@ -354,7 +365,10 @@ def p1_visuals():
 # A chart's slot is where the comp draws the chart; Power BI lays its plot area out inside the visual with margins of its
 # own (axis labels, series names). PLOT_RECT is the visual rect that puts Power BI's plot where the comp has it, measured on
 # the stitched page render of step 5 (tools/desktop_shots/tiles). The slot map keeps the comp's rects.
-PLOT_RECT = {"ch_f1_margin": (68, 392, 526, 248), "ch_f2_ota": (700, 397, 505, 144), "ch_f3_age": (1310, 392, 560, 221)}
+# Final round (16 Nov): the notes under the charts are two lines, not three, and stand on one line in the three cards; the
+# charts take the room: I 248 -> 280 px, II 144 -> 160, III 221 -> 261 (their slots 280, 160 and 256).
+PLOT_RECT = {"ch_f1_margin": moved((68, 392, 526, 280), P1, "card_f1"), "ch_f2_ota": moved((700, 397, 505, 160), P1, "card_f1"),
+             "ch_f3_age": moved((1310, 392, 560, 261), P1, "card_f1")}
 
 
 def plot_rect(v, rect):
@@ -539,7 +553,7 @@ F4_X, F4_Y = (0.6, 0.95), (0.5, 3.5)
 # runs x 672.7 to 1848.7 and y 881.1 to 988 (margins 16.7 / 15.3 / 9.1 / 28); the comp's runs 672 to 1840 and 872 to 992. The two
 # layers take the rect that puts Power BI's plot on the comp's, so the dots land where the comp has them and the seven name
 # boxes keep the spec's positions (a shift alone cannot do it: the scale differed by 0.7 %).
-F4_RECT = (655, 863, 1200, 161)
+F4_RECT = moved((655, 863, 1200, 161), P1, "card_f4")
 F4_ROWS = (("airport", "Airport", "Occupancy Airport GI (text)"), ("city", "City", "Occupancy City GI (text)"), ("highway", "Highway", "Occupancy Highway GI (text)"))
 # where each value starts after its label in the 160 px slot: the label's width at 16 px Segoe UI plus a space (4.4 px),
 # from `powerbi-report-author text measure` (49.5 / 27.0 / 61.2 px); set to the render in build step 5
@@ -723,18 +737,18 @@ def extra_tooltip_pages():
 # typed figures: the rate and the budget live in the model and on the pages.
 # Build step 10 (R-TT-3): the report's own words (R-G2), "Case in view" gone; two columns, the decision words of page 2 at
 # the left, the scenarios and the measures of page 1 at the right. "Run-rate" and "yield" appear here and nowhere else.
-GLOSSARY = ((("Move", "one of the ten investments Goodnight Inn can make."),
-             ("Package", "a set of moves funded together. A is the package we recommend."),
+GLOSSARY = ((("Move", "one of the ten investments on offer."),
+             ("Package", "a set of moves funded together; A is our recommendation."),
              ("Growth", "a move the dataset marks as growth; a package needs at least one."),
-             ("Capex", "the one-off investment a move takes; the brand's budget caps what a package may spend."),
+             ("Capex", "a move's one-off investment; the brand's budget caps a package."),
              ("NPV", "net present value: benefits minus capex and disruption through 2032, in 2025 dollars at 8%."),
-             ("Pays back by 2032", "the NPV through 2032 is zero or more."),
-             ("Cash positive", "from that year on, cumulative cash (yearly net impact added up, not discounted) is above zero; it ends above NPV, which discounts at 8%."),
-             ("A year by 2032", "the operating profit a move adds in a full year once it is live, measured in 2032 (its run-rate)."),
+             ("Pays back by 2032", "NPV through 2032 is zero or more."),
+             ("Cash positive", "cumulative cash (not discounted) is above zero from that year on; it ends above NPV, which discounts at 8%."),
+             ("A year by 2032", "the operating profit a move adds in a full year once live, measured in 2032."),
              ("A year on cost", "a year by 2032 divided by capex (a yield).")),
             (("Tranche", "a part of the budget, funded by one Board decision."),
-             ("The 2028 gate", "the Board meeting in mid-2028 that decides on the next tranche, by the rule on page 2."),
-             ("Low, Expected, High", "the three cases the investment data gives for every move; page 2 follows the one picked under Scenario."),
+             ("The 2028 gate", "the mid-2028 Board meeting that decides on the next tranche, by the rule on page 2."),
+             ("Low, Expected, High", "the three cases the data gives for every move; page 2 follows the Scenario pill."),
              ("Topped 90%", "a month in which a hotel sold 90% or more of its room nights."),
              ("NPS", "net promoter score: promoters minus detractors among surveyed guests, weighted by responses."),
              ("ADR", "average daily rate: room revenue per room night sold."),
@@ -902,7 +916,7 @@ def brand_row(page_name, sfx):
 PROOF_X, PROOF_Y = (5_000_000, 62_000_000), (-60_000_000, 20_000_000)
 # The visual rect that puts Power BI's plot on the comp's (PLOT_RECT of step 5): the comp draws the plot at x 144 to 716 and
 # y 280 to 588 of the page (x0 88, x1 w - 12, y0 8, y1 h - 52 inside the slot 56, 272, 672, 368). Measured in build step 8.
-PROOF_RECT = (56, 268, 682, 369)
+PROOF_RECT = moved((56, 268, 682, 369), P2, "scatter_s")
 # The A/B/C layer: the lettered discs of the comp (R-W-1, R-W-4), 22 px (Named Point Size (small) at this multiplier). On a
 # sized dot Power BI sets the category label under the dot at this plot size (measured again in step 8), so the letters are a
 # layer of their own (sketch_model PROOF_LETTER_LIFT): the tag under the dot, doc 21 7.1's fallback, is not needed.
@@ -928,7 +942,7 @@ YOU_BUBBLE = 2
 YOU_HEAD = 20_000_000
 # the proof chart's plot (page x 144 to 716, y 280 to 588), 77 px taller at the top, and 8 px higher: at (144, 203) the name
 # stood 7.4 px under the comp's (strip render of step 9); at 195 it is within 1.5 px in Low, Expected and High
-YOU_RECT = (144, 195, 572, 385)
+YOU_RECT = moved((144, 195, 572, 385), P2, "scatter_s")
 
 
 def you_label(slot, z):
@@ -1106,7 +1120,8 @@ def p2_frame():
     brand_row(), the five cards from card_frames()."""
     v = [ctl_button(P2, "btn_back", "← The Brand Review", "night_off", ("PageNavigation", P1), "Back to The Brand Review, page 1"),
          headline(P2, "z_headline2", "Headline P2 (text)"),
-         note(P2, "c_subtitle2", "Subtitle P2 (text)", 2, colour=ZONE_MUTED)]
+         # final round (16 Nov): one line in a 24 px slot, built like page 1's (as a two-line note its line stood 9 px lower)
+         dyn(P2, "c_subtitle2", "Subtitle P2 (text)", size=S, colour=ZONE_MUTED)]
     v += tab_bar()
     # the label beside the scenario pills is in the slicer's alt text, so it leaves the tab order (plan 11); the comp sets
     # it 5 px under the top of its slot, on the pills' text line
@@ -1213,7 +1228,7 @@ PLAN_X_END = 2032                   # the plot ends on the last year
 PLAN_CUM_W = 943                    # the visual's width that keeps the comp's 171 px a year with the axis ending at 2032:
 #                                     at 940 the years stood 170.5 px apart (2027 at 864.1, 2032 at 1716.4); Power BI
 #                                     draws its gridlines 9 px past the first and the last year
-PLAN_RECT = {"ch_plan_bar": (56, 780, 1808, 40), "ch_plan_cum": (792, 834, PLAN_CUM_W, 146)}
+PLAN_RECT = {"ch_plan_bar": moved((56, 780, 1808, 40), P2, "bottom"), "ch_plan_cum": moved((792, 834, PLAN_CUM_W, 146), P2, "bottom")}
 PLAN_Y = (-10_000_000, 20_000_000)  # spec ch_plan_cum.y: −10 to +20 $M, ticks at −10, 0, +10, +20
 PLAN_END_X = 1719                   # page x of the last year, where the three lines end (the comp's X(2032))
 PLAN_END_GAP = 14                   # from the line's end to its label's card: the comp has 8, but the gridlines run 9 px
@@ -1290,6 +1305,7 @@ def plan_cum():
 # their gridline; a 16 px text box sets its baseline 17 px under its top.
 PLAN_TICKS = ((10_000_000, "+$10M"), (-10_000_000, "−$10M"))
 PLAN_TICK_ZERO_Y, PLAN_TICK_PX, PLAN_TICK_RIGHT, PLAN_TICK_W = 915.25, 3.4375e-6, 843, 56
+PLAN_TICK_ZERO_Y += PLAN_RECT["ch_plan_cum"][1] - 834  # measured with the chart's rect at y 834; the zero line moves with the chart (final round, 16 Nov)
 
 
 def plan_ticks():
@@ -1436,7 +1452,7 @@ def waits_table():
 CMP_X_END = 2032.6  # spec ch_cmp_alts.x_axis_end: room for the end labels inside the plot, no 2033 tick
 # the visual rect that puts Power BI's plot on the comp's (PLOT_RECT of step 5), measured in build step 8: the comp draws
 # the plot at x 128 to 1856 and y 731 to 972 of the page (under a 29 px title row in the slot 56, 688, 1808, 312)
-CMP_RECT = {"ch_cmp_alts": (56, 685, 1819, 316), "ch_cmp_build": (56, 685, 1819, 316)}
+CMP_RECT = {"ch_cmp_alts": moved((56, 685, 1819, 316), P2, "bottom"), "ch_cmp_build": moved((56, 685, 1819, 316), P2, "bottom")}
 # the comp leaves 14 px between its title row and the top tick; Power BI starts the plot 3 px higher. The container's
 # "space below title" moves the plot 1 px per unit (default 2; measured at 5 and 8 in step 8), the title stays. The visual
 # starts 3 px above its slot: Power BI sets the title 2.6 px lower in its row than the comp does.
@@ -1666,7 +1682,7 @@ def top_text(page, name, measure, colour_measure, alt_measure=None):
 # edge, and the rect cut the last name's descenders ("Energy programme", already so on publish 7); a quarter row of
 # outer padding puts every bar in the middle of a row of its own, so the last name ends 5 px inside the rect. The bar
 # is half its row: 20 px for up to five moves (the comp's 18), 13 px for eight, 11 px for ten.
-BARS_RECT = (1379, 392, 467, 234)
+BARS_RECT = moved((1379, 392, 467, 234), P2, "panel_w")
 BARS_INNER, BARS_OUTER = 50, 25
 
 
@@ -1700,7 +1716,8 @@ def p2_build():
     numbers, range, rules, bars, chart (R-P2-9). The proof chart at the left is p2_proof(), with the plan dot "You".
     Your plan first (Night; Tangerine while over the budget), then A on top (Coffee Blue), as the comp draws them: when
     the state opens the two lines are one."""
-    v = [build_head(), move_slicer(), moves_table(), note(P2, "c_sel_footer", "Build Picked (text)", 1)]
+    # final round (16 Nov): the footer "Picked: 3 moves, $9.4M of $60.0M" under the list is gone; the tile says it
+    v = [build_head(), move_slicer(), moves_table()]
     v += you_title()
     v += you_nums()
     # build step 10: out of the tab order. The card is empty while nothing is picked (a stop that says nothing), and the
@@ -1958,7 +1975,7 @@ def bookmark(name, display, show_state, visuals):
 
 # the visuals the move selector may filter: everything of the plan being built; nothing else listens to it, and
 # tbl_moves keeps its ten rows (doc 21 section 8). The cards of the your-plan tile are named c_you_*.
-BUILD_TARGETS = {"c_sel_footer", "ch_build_bars", "ch_cmp_build", "hero_s_packages_build", "hero_s_packages_you"}
+BUILD_TARGETS = {"ch_build_bars", "ch_cmp_build", "hero_s_packages_build", "hero_s_packages_you"}
 
 
 def build_target(name):
