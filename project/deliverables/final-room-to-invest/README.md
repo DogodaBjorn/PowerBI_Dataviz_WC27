@@ -118,3 +118,10 @@ A native table has no vertical alignment; row padding puts text and bar in the m
 lines are a stroke per row now, a dashed line. `rows-centred/` shows it: `table-before.png`, `table-after.png`,
 `table-tried-unbroken-line.png` (dropped), `page2-recommended.png` and the check reports. The account is
 `project/project-state/active/39-hero-table-rows-centred-2026-11-16.md`.
+
+## The final cover (16 Nov, night)
+
+`gallery/cover-final.png` is the cover for the form (`cover-final-1920x1440.png` for a 4:3 tile): the headline of
+candidate a, the badge "100% native Power BI visuals" and the report itself. `gallery/DESCRIPTION.md` carries the same
+claim in the teaser and in a section of its own. The account is
+`project/project-state/active/40-final-cover-and-native-visuals-2026-11-16.md`.
