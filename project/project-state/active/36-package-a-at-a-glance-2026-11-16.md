@@ -92,3 +92,9 @@ the captures taken after his last save: nothing unsaved was showing (he had only
 - 16 Nov late evening: the 20:50 save read and committed as it was; generators edited and the model regenerated; the
   edit tried on a throwaway copy in two variants; applied to the final copy and to the open window's model; checks on
   its own model; pushed.
+- 16 Nov 21:30: Bjorn keeps the outlined version ("I like the looks of it so let's make that one definitive"). His
+  Desktop window had gone strange (the canvas zoomed in, after the edits on disk and the reloads), and he asked for a
+  save and a restart: the window was closed with Opslaan in its save dialog (the dialog is an embedded browser control;
+  read and clicked through its HTML document), and the final copy opened again. The save equals the repo value for value;
+  only the active page differs (page 2; the landing page is still page 1). Taken into `GoodnightInn-final.Report`
+  untouched. The reopened window's model answers with the new words (Step 2, Step 3, package A's tint, 456 packages).
