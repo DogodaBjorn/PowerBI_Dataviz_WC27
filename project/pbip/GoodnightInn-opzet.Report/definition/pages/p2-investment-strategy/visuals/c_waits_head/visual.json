@@ -32,7 +32,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "One alternative and two tranches, each weighed against A.",
+                    "value": "One alternative and two later steps, each weighed against A.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -166,7 +166,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'What waits, and why. One alternative and two tranches, each weighed against A.'"
+                  "Value": "'What waits, and why. One alternative and two later steps, each weighed against A.'"
                 }
               }
             }

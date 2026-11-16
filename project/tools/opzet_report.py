@@ -767,8 +767,8 @@ GLOSSARY = ((("Move", "one of the ten investments on offer."),
              ("Cash positive", "cumulative cash (not discounted) is above zero from that year on; it ends above NPV, which discounts at 8%."),
              ("A year by 2032", "the operating profit a move adds in a full year once live, measured in 2032."),
              ("A year on cost", "a year by 2032 divided by capex (a yield).")),
-            (("Tranche", "a part of the budget, funded by one Board decision."),
-             ("The 2028 gate", "the mid-2028 Board meeting that decides on the next tranche, by the rule on page 2."),
+            (("Step", "a part of the budget, funded by one Board decision."),
+             ("The 2028 gate", "the mid-2028 Board meeting that decides on the next step, by the rule on page 2."),
              ("Low, Expected, High", "the three cases the data gives for every move; page 2 follows the Scenario pill."),
              ("Topped 90%", "a month in which a hotel sold 90% or more of its room nights."),
              ("NPS", "net promoter score: promoters minus detractors among surveyed guests, weighted by responses."),
@@ -1202,6 +1202,13 @@ def hero_table():
                                                    "autoSizeColumnWidth": b(False), "wordWrap": b(False)})
     objs["values"][0]["properties"].update({"wordWrap": b(False), "urlIcon": b(False)})
     objs["values"] += [{"properties": {"fontColor": fv(ink)}, "selector": {**WILD, "metadata": refs[i]}} for i, ink in ((2, "Move Status Ink"), (6, "Move NPV Ink"))]
+    # 16 Nov evening (doc 36): the three rows of package A stand on a light blue ground, in every column
+    for r_ in refs:
+        e = next((e for e in objs["values"] if e.get("selector", {}).get("metadata") == r_), None)
+        if e is None:
+            e = {"properties": {}, "selector": {**WILD, "metadata": r_}}
+            objs["values"].append(e)
+        e["properties"]["backColor"] = fv("Move Row Tint")
     objs["columnWidth"] = [{"properties": {"value": num(w_)}, "selector": {"metadata": q_}} for q_, w_ in zip(refs, sm.HERO_COLS)]
     x, y, w, h, z, tab = at(P2, "tbl_hero")
     t = visual("tbl_hero", "tableEx", x, y + HERO_DY, sum(sm.HERO_COLS) + HERO_SLACK, h + HERO_DH, z, tab, query={"Values": {"projections": proj}}, objects=objs,
@@ -1266,7 +1273,7 @@ def plan_bar():
     ms = ["Tranche 1 Capex", "Tranche 2 Capex", "Tranche 3 Capex", "Not Needed Capex"]
     # a bar chart needs a category: the brand, one value under the page's brand filter, so one bar
     q = {"Category": {"projections": [proj_col("Brands", "Brand", active=True)]},
-         "Y": {"projections": [proj_mea(ms[0], "Tranche 1"), proj_mea(ms[1], "Tranche 2"), proj_mea(ms[2], "Tranche 3"), proj_mea(ms[3], "Not needed")]}}
+         "Y": {"projections": [proj_mea(ms[0], "Step 1"), proj_mea(ms[1], "Step 2"), proj_mea(ms[2], "Step 3"), proj_mea(ms[3], "Not needed")]}}
     va = axis(BODY, S, INK2, show=False, gridlines=False, start=0)
     va[0]["properties"]["end"] = mtext("Move Budget (num)")
     ca = axis(BODY, S, INK2, show=False)
@@ -1451,7 +1458,7 @@ WAITS_COLS = (168, 224, 216, 256, 208)  # the spec's construction.tables.tbl_wai
 # starts WAITS_LIFT px above its slot and the first row's rule stays on the comp's line. 2 px wider than its columns (S-2
 # point 4) and 1 px left of the slot (a native cell pads 7.7 px on the left, the comp 5), as the ledger.
 WAITS_PAD, WAITS_LIFT, WAITS_SLACK, WAITS_DX = 4.9, 10, 2, -1
-WAITS_HEAD = ("What waits, and why", "One alternative and two tranches, each weighed against A.")
+WAITS_HEAD = ("What waits, and why", "One alternative and two later steps, each weighed against A.")
 
 
 def waits_head():

@@ -47,7 +47,7 @@
               },
               "queryRef": "_Measures.Tranche 1 Capex",
               "nativeQueryRef": "Tranche 1 Capex",
-              "displayName": "Tranche 1"
+              "displayName": "Step 1"
             },
             {
               "field": {
@@ -62,7 +62,7 @@
               },
               "queryRef": "_Measures.Tranche 2 Capex",
               "nativeQueryRef": "Tranche 2 Capex",
-              "displayName": "Tranche 2"
+              "displayName": "Step 2"
             },
             {
               "field": {
@@ -77,7 +77,7 @@
               },
               "queryRef": "_Measures.Tranche 3 Capex",
               "nativeQueryRef": "Tranche 3 Capex",
-              "displayName": "Tranche 3"
+              "displayName": "Step 3"
             },
             {
               "field": {
