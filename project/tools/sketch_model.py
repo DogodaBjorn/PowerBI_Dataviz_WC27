@@ -2575,7 +2575,7 @@ TEXT_SLOTS = {
     "P1": {
         "z_headline": "Headline P1 (text)", "c_subtitle": "Subtitle P1 Briefing (text)",
         "kpi_occ": _kpi("Occupancy", "Occupancy"), "kpi_margin": _kpi("Operating margin after commissions", "Margin after"),
-        "kpi_ota": _kpi("Room revenue booked through online agencies", "OTA"), "kpi_nps": _kpi("Guest quality: net promoter score (−100 to +100)", "NPS"),
+        "kpi_ota": _kpi("Room revenue through online agencies", "OTA"), "kpi_nps": _kpi("Net promoter score (−100 to +100)", "NPS"),
         "c_f1_title": "F1 Title (text)", "c_f1_note": "F1 Note (text)",
         "c_f2_title": "F2 Title (text)", "c_f2_note": "F2 Note (text)",
         "tbl_f2_folio": {"rows": "FolioLine[Line]", "sort": "FolioLine[Sort]", "cols": ["FolioLine[Line]", "Folio OTA Guest (text)", "Folio Direct Guest (text)"]},

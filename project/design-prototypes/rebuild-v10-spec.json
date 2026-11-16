@@ -326,11 +326,11 @@
   "P1": {
    "z_eyebrow": "1 / 2 · THE WAKE-UP CALL · THE BRAND REVIEW",
    "z_headline": "Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome is fading.",
-   "c_subtitle": "Goodnight Inn in 2025, against the three other Pillow & Key Group brands. For the Board: what is wrong, before page 2 says what to fund.",
+   "c_subtitle": "Goodnight Inn in 2025, against the other three Pillow & Key Group brands.",
    "kpi_occ": "Occupancy\n79.4%\nbest of 4, the others 64.7% to 72.9%",
    "kpi_margin": "Operating margin after commissions\n33.7%\n2nd of 4, −2.8 pt since 2023",
-   "kpi_ota": "Room revenue booked through online agencies\n50.0%\nhighest of 4, 33.0% in 2021",
-   "kpi_nps": "Guest quality: net promoter score (−100 to +100)\n+3.3\nstill positive, but falling every year, last of 4",
+   "kpi_ota": "Room revenue through online agencies\n50.0%\nhighest of 4, 33.0% in 2021",
+   "kpi_nps": "Net promoter score (−100 to +100)\n+3.3\nlast of 4, falling every year",
    "c_f1_kicker": "I · THE MARGIN",
    "c_f1_title": "After commissions, the margin fell 2.8 points since 2023",
    "ch_f1_margin": {
@@ -340,8 +340,8 @@
    },
    "lbl_f1_before": "Before commissions",
    "lbl_f1_band": "Commissions",
-   "c_f1_note": "Commissions took 1.0 of those points and running costs 1.8 (staff rose from 26.9% to 28.3% of revenue). Room rates rose 2.7%, in line with the other brands, so no price premium absorbs it.",
-   "lnk_f1": "On page 2: revenue management, and the kiosks for running costs.",
+   "c_f1_note": "Commissions took 1.0 point, running costs 1.8 (staff: 26.9% to 28.3% of revenue). Room rates rose 2.7%, like the other brands: no price premium absorbs it.",
+   "lnk_f1": "Page 2: revenue management, and kiosks for running costs.",
    "c_f2_kicker": "II · THE MIDDLEMAN",
    "c_f2_title": "Online agencies now book 50% of room revenue, up from 33%",
    "ch_f2_ota": {
@@ -375,8 +375,8 @@
      "$107.10"
     ]
    ],
-   "c_f2_note": "Booked direct, the guest pays $2.25 more and we keep $17.47 more. Nothing rewards the guest for booking direct; member rates change that. At the 2021 channel mix, 2025 commissions would be $4.8M lower.",
-   "lnk_f2": "On page 2: the booking app with member rates.",
+   "c_f2_note": "Booked direct, the guest pays $2.25 more and we keep $17.47 more; nothing rewards it. At the 2021 channel mix, 2025 commissions would be $4.8M lower.",
+   "lnk_f2": "Page 2: the booking app with member rates.",
    "c_f3_kicker": "III · THE FADING WELCOME",
    "tag_f3": "ⓘ Hover a bar",
    "c_f3_title": "Hotels last renovated 10 years or more ago score NPS −4.9",
@@ -391,13 +391,13 @@
     ]
    },
    "c_f3_count": "44 of 50 hotels; 6 have no renovation date.",
-   "c_f3_note": "Since 2018 Goodnight Inn spent $1.0M per hotel on renovation; the other brands spent $5.9M to $7.9M. None has started since 2020. Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause.",
-   "lnk_f3": "On page 2: the refresh waits for the 2028 gate, and why.",
+   "c_f3_note": "Since 2018 we spent $1.0M per hotel on renovation, the other brands $5.9M to $7.9M; none started since 2020. An association, not proof of cause.",
+   "lnk_f3": "Page 2: why the refresh waits for the 2028 gate.",
    "c_f4_kicker": "IV · WHERE WE ARE FULL",
    "tag_f4": "ⓘ Hover a hotel",
    "c_f4_title": "Our airports run fullest: five of the seven fullest hotels are airports",
    "c_f4_note": "Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension on offer, in none.",
-   "lnk_f4": "On page 2: kiosks at the 20 busiest hotels; extensions decided at the 2028 gate.",
+   "lnk_f4": "Page 2: kiosks at the 20 busiest hotels; extensions wait for the 2028 gate.",
    "c_f4_rows": "Airport ◆ 82.0%\nCity ◆ 79.1%\nHighway ◆ 77.5%",
    "ch_f4_avg": {
     "labels": [
@@ -419,7 +419,7 @@
    "z_eyebrow2": "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY",
    "btn_back": "← The Brand Review",
    "z_headline2": "Fix the middleman first: $9.4M now earns $1.0M a year by 2032.",
-   "c_subtitle2": "The rest waits for one Board meeting in mid-2028. Low case. NPV counts nothing after 2032, so we also show what each move earns a year once live.",
+   "c_subtitle2": "The rest waits for the Board in mid-2028. Low case. NPV counts nothing after 2032, so we also show what each move earns a year.",
    "tab_rec_on": "Recommended: A",
    "tab_alts_off": "What waits, and why",
    "tab_build_off": "Build your own",
@@ -529,7 +529,7 @@
      "−$30.5M"
     ]
    ],
-   "c_hero_caption": "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Not now: Energy and Boston exceed the $8.7M left.",
+   "c_hero_caption": "A year on cost = operating profit added in 2032 ÷ capex. Not now: Energy and Boston exceed the $8.7M left.",
    "c_rec_head": "Our recommendation: package A\nBooking app with member rates + Revenue management + Kiosks at the 20 busiest hotels",
    "c_rec_nums": "$9.4M\ncapex\n−$5.5M\nNPV through 2032\n+$1.0M\na year by 2032\n11.1%\na year on cost",
    "c_rec_lines": "Expected case: +$3.3M through 2032 and +$3.5M a year by 2032.\nThe app alone: +$0.6M a year by 2032. Every year without it leaves about $1.2M with the agencies.",
@@ -557,7 +557,7 @@
     ],
     [
      "IV Where we are full",
-     "self check-in at the 20 busiest hotels\nkiosks live Apr 2028; check-in complaints there up 43% since 2021",
+     "self check-in at the 20 busiest hotels\nkiosks; check-in complaints there up 43% since 2021",
      "0",
      "20",
      "rooms: at the 2028 gate"
@@ -579,7 +579,7 @@
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.5M a year once live · 11.7% a year on cost",
    "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$1.3M a year once live · 4.5% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
-   "c_plan_gate": "The 2028 gate, one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track by then) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032 and the oldest hotels' NPS. A rule, not a forecast.",
+   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032. A rule, not a forecast.",
    "ch_plan_cum": {
     "labels": [
      "Cash positive above this line",
@@ -589,7 +589,7 @@
      "Low −$4.6M"
     ]
    },
-   "c_plan_milestones": "Revenue management live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Not cash positive by 2032 (Low)",
+   "c_plan_milestones": "Live: revenue management Jul 2027 · app Oct 2027 · kiosks Apr 2028 (they need the app) · Not cash positive by 2032 (Low)",
    "z_footer2": "Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.",
    "chip_def2": "ⓘ Definitions"
   },
@@ -597,7 +597,7 @@
    "z_eyebrow2": "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY",
    "btn_back": "← The Brand Review",
    "z_headline2": "Fix the middleman first: $9.4M now earns $3.5M a year by 2032.",
-   "c_subtitle2": "The rest waits for one Board meeting in mid-2028. Expected case. NPV counts nothing after 2032, so we also show what each move earns a year once live.",
+   "c_subtitle2": "The rest waits for the Board in mid-2028. Expected case. NPV counts nothing after 2032, so we also show what each move earns a year.",
    "tab_rec_on": "Recommended: A",
    "tab_alts_off": "What waits, and why",
    "tab_build_off": "Build your own",
@@ -707,10 +707,10 @@
      "−$27.3M"
     ]
    ],
-   "c_hero_caption": "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Not now: Energy and Boston exceed the $8.7M left.",
+   "c_hero_caption": "A year on cost = operating profit added in 2032 ÷ capex. Not now: Energy and Boston exceed the $8.7M left.",
    "c_rec_head": "Our recommendation: package A\nBooking app with member rates + Revenue management + Kiosks at the 20 busiest hotels",
    "c_rec_nums": "$9.4M\ncapex\n+$3.3M\nNPV through 2032\n+$3.5M\na year by 2032\n37.5%\na year on cost",
-   "c_rec_lines": "Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.\nThe app alone: +$3.4M through 2032. Every year without it leaves about $2.4M with the agencies.",
+   "c_rec_lines": "Low case: −$5.5M through 2032, still +$1.0M a year by 2032.\nThe app alone: +$3.4M through 2032. Every year without it leaves about $2.4M with the agencies.",
    "tbl_ledger": [
     [
      "Finding",
@@ -735,7 +735,7 @@
     ],
     [
      "IV Where we are full",
-     "self check-in at the 20 busiest hotels\nkiosks live Apr 2028; check-in complaints there up 43% since 2021",
+     "self check-in at the 20 busiest hotels\nkiosks; check-in complaints there up 43% since 2021",
      "0",
      "20",
      "rooms: at the 2028 gate"
@@ -757,7 +757,7 @@
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.7M a year once live · 13.8% a year on cost",
    "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$2.3M a year once live · 7.9% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
-   "c_plan_gate": "The 2028 gate, one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track by then) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032 and the oldest hotels' NPS. A rule, not a forecast.",
+   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032. A rule, not a forecast.",
    "ch_plan_cum": {
     "labels": [
      "Cash positive above this line",
@@ -767,7 +767,7 @@
      "Expected +$6.8M"
     ]
    },
-   "c_plan_milestones": "Revenue management live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Cash positive during 2031 (Expected)",
+   "c_plan_milestones": "Live: revenue management Jul 2027 · app Oct 2027 · kiosks Apr 2028 (they need the app) · Cash positive during 2031 (Expected)",
    "z_footer2": "Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.",
    "chip_def2": "ⓘ Definitions"
   },
@@ -775,7 +775,7 @@
    "z_eyebrow2": "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY",
    "btn_back": "← The Brand Review",
    "z_headline2": "Fix the middleman first: $9.4M now earns $6.2M a year by 2032.",
-   "c_subtitle2": "The rest waits for one Board meeting in mid-2028. High case. NPV counts nothing after 2032, so we also show what each move earns a year once live.",
+   "c_subtitle2": "The rest waits for the Board in mid-2028. High case. NPV counts nothing after 2032, so we also show what each move earns a year.",
    "tab_rec_on": "Recommended: A",
    "tab_alts_off": "What waits, and why",
    "tab_build_off": "Build your own",
@@ -885,10 +885,10 @@
      "−$24.1M"
     ]
    ],
-   "c_hero_caption": "A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Not now: Energy and Boston exceed the $8.7M left.",
+   "c_hero_caption": "A year on cost = operating profit added in 2032 ÷ capex. Not now: Energy and Boston exceed the $8.7M left.",
    "c_rec_head": "Our recommendation: package A\nBooking app with member rates + Revenue management + Kiosks at the 20 busiest hotels",
    "c_rec_nums": "$9.4M\ncapex\n+$12.7M\nNPV through 2032\n+$6.2M\na year by 2032\n66.0%\na year on cost",
-   "c_rec_lines": "Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032.\nThe app alone: +$9.5M through 2032. Every year without it leaves about $3.6M with the agencies.",
+   "c_rec_lines": "Low case: −$5.5M through 2032, still +$1.0M a year by 2032.\nThe app alone: +$9.5M through 2032. Every year without it leaves about $3.6M with the agencies.",
    "tbl_ledger": [
     [
      "Finding",
@@ -913,7 +913,7 @@
     ],
     [
      "IV Where we are full",
-     "self check-in at the 20 busiest hotels\nkiosks live Apr 2028; check-in complaints there up 43% since 2021",
+     "self check-in at the 20 busiest hotels\nkiosks; check-in complaints there up 43% since 2021",
      "0",
      "20",
      "rooms: at the 2028 gate"
@@ -935,7 +935,7 @@
    "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.8M a year once live · 14.8% a year on cost",
    "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$3.4M a year once live · 11.5% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
-   "c_plan_gate": "The 2028 gate, one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track by then) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032 and the oldest hotels' NPS. A rule, not a forecast.",
+   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. The refresh returns with a case beyond 2032. A rule, not a forecast.",
    "ch_plan_cum": {
     "labels": [
      "Cash positive above this line",
@@ -945,7 +945,7 @@
      "High +$19.2M"
     ]
    },
-   "c_plan_milestones": "Revenue management live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Cash positive during 2029 (High)",
+   "c_plan_milestones": "Live: revenue management Jul 2027 · app Oct 2027 · kiosks Apr 2028 (they need the app) · Cash positive during 2029 (High)",
    "z_footer2": "Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.",
    "chip_def2": "ⓘ Definitions"
   },
@@ -953,7 +953,7 @@
    "z_eyebrow2": "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY",
    "btn_back": "← The Brand Review",
    "z_headline2": "Fix the middleman first: $9.4M now earns $1.0M a year by 2032.",
-   "c_subtitle2": "The rest waits for one Board meeting in mid-2028. Low case. NPV counts nothing after 2032, so we also show what each move earns a year once live.",
+   "c_subtitle2": "The rest waits for the Board in mid-2028. Low case. NPV counts nothing after 2032, so we also show what each move earns a year.",
    "tab_rec_off": "Recommended: A",
    "tab_alts_on": "What waits, and why",
    "tab_build_off": "Build your own",
@@ -1015,7 +1015,7 @@
    "z_eyebrow2": "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY",
    "btn_back": "← The Brand Review",
    "z_headline2": "Fix the middleman first: $9.4M now earns $3.5M a year by 2032.",
-   "c_subtitle2": "The rest waits for one Board meeting in mid-2028. Expected case. NPV counts nothing after 2032, so we also show what each move earns a year once live.",
+   "c_subtitle2": "The rest waits for the Board in mid-2028. Expected case. NPV counts nothing after 2032, so we also show what each move earns a year.",
    "tab_rec_off": "Recommended: A",
    "tab_alts_on": "What waits, and why",
    "tab_build_off": "Build your own",
@@ -1077,7 +1077,7 @@
    "z_eyebrow2": "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY",
    "btn_back": "← The Brand Review",
    "z_headline2": "Fix the middleman first: $9.4M now earns $6.2M a year by 2032.",
-   "c_subtitle2": "The rest waits for one Board meeting in mid-2028. High case. NPV counts nothing after 2032, so we also show what each move earns a year once live.",
+   "c_subtitle2": "The rest waits for the Board in mid-2028. High case. NPV counts nothing after 2032, so we also show what each move earns a year.",
    "tab_rec_off": "Recommended: A",
    "tab_alts_on": "What waits, and why",
    "tab_build_off": "Build your own",
@@ -1139,7 +1139,7 @@
    "z_eyebrow2": "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY",
    "btn_back": "← The Brand Review",
    "z_headline2": "Fix the middleman first: $9.4M now earns $1.0M a year by 2032.",
-   "c_subtitle2": "The rest waits for one Board meeting in mid-2028. Low case. NPV counts nothing after 2032, so we also show what each move earns a year once live.",
+   "c_subtitle2": "The rest waits for the Board in mid-2028. Low case. NPV counts nothing after 2032, so we also show what each move earns a year.",
    "tab_rec_off": "Recommended: A",
    "tab_alts_off": "What waits, and why",
    "tab_build_on": "Build your own",
@@ -1224,7 +1224,6 @@
      "+$1.3M"
     ]
    ],
-   "c_sel_footer": "Picked: 3 moves, $9.4M of $60.0M",
    "c_you_title": "Your plan: 3 moves, live by Apr 2028",
    "c_you_nums": "$9.4M\ncapex\n−$5.5M\nNPV through 2032\n+$1.0M\na year by 2032\n11.1%\na year on cost",
    "c_you_range": "Low −$5.5M · High +$12.7M",
@@ -1240,7 +1239,7 @@
     ]
    },
    "ch_cmp_build": {
-    "title": "Your plan against A, cumulative cash, not discounted, $M (Low case): yours ends level with A in 2032 and is not cash positive by 2032",
+    "title": "Your plan against A, cumulative cash, not discounted, $M (Low): level with A in 2032, not cash positive by 2032",
     "labels": [
      "Cash positive above this line",
      "You",
@@ -1255,7 +1254,7 @@
    "z_eyebrow2": "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY",
    "btn_back": "← The Brand Review",
    "z_headline2": "Fix the middleman first: $9.4M now earns $3.5M a year by 2032.",
-   "c_subtitle2": "The rest waits for one Board meeting in mid-2028. Expected case. NPV counts nothing after 2032, so we also show what each move earns a year once live.",
+   "c_subtitle2": "The rest waits for the Board in mid-2028. Expected case. NPV counts nothing after 2032, so we also show what each move earns a year.",
    "tab_rec_off": "Recommended: A",
    "tab_alts_off": "What waits, and why",
    "tab_build_on": "Build your own",
@@ -1340,7 +1339,6 @@
      "+$2.3M"
     ]
    ],
-   "c_sel_footer": "Picked: 3 moves, $9.4M of $60.0M",
    "c_you_title": "Your plan: 3 moves, live by Apr 2028",
    "c_you_nums": "$9.4M\ncapex\n+$3.3M\nNPV through 2032\n+$3.5M\na year by 2032\n37.5%\na year on cost",
    "c_you_range": "Low −$5.5M · High +$12.7M",
@@ -1356,7 +1354,7 @@
     ]
    },
    "ch_cmp_build": {
-    "title": "Your plan against A, cumulative cash, not discounted, $M (Expected case): yours ends level with A in 2032, cash positive from 2031",
+    "title": "Your plan against A, cumulative cash, not discounted, $M (Expected): level with A in 2032, cash positive from 2031",
     "labels": [
      "Cash positive above this line",
      "You",
@@ -1371,7 +1369,7 @@
    "z_eyebrow2": "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY",
    "btn_back": "← The Brand Review",
    "z_headline2": "Fix the middleman first: $9.4M now earns $6.2M a year by 2032.",
-   "c_subtitle2": "The rest waits for one Board meeting in mid-2028. High case. NPV counts nothing after 2032, so we also show what each move earns a year once live.",
+   "c_subtitle2": "The rest waits for the Board in mid-2028. High case. NPV counts nothing after 2032, so we also show what each move earns a year.",
    "tab_rec_off": "Recommended: A",
    "tab_alts_off": "What waits, and why",
    "tab_build_on": "Build your own",
@@ -1456,7 +1454,6 @@
      "+$3.4M"
     ]
    ],
-   "c_sel_footer": "Picked: 3 moves, $9.4M of $60.0M",
    "c_you_title": "Your plan: 3 moves, live by Apr 2028",
    "c_you_nums": "$9.4M\ncapex\n+$12.7M\nNPV through 2032\n+$6.2M\na year by 2032\n66.0%\na year on cost",
    "c_you_range": "Low −$5.5M · High +$12.7M",
@@ -1472,7 +1469,7 @@
     ]
    },
    "ch_cmp_build": {
-    "title": "Your plan against A, cumulative cash, not discounted, $M (High case): yours ends level with A in 2032, cash positive from 2029",
+    "title": "Your plan against A, cumulative cash, not discounted, $M (High): level with A in 2032, cash positive from 2029",
     "labels": [
      "Cash positive above this line",
      "You",
@@ -1487,7 +1484,7 @@
    "z_eyebrow2": "2 / 2 · ROOM TO INVEST · THE INVESTMENT STRATEGY",
    "btn_back": "← The Brand Review",
    "z_headline2": "Fix the middleman first: $9.4M now earns $3.5M a year by 2032.",
-   "c_subtitle2": "The rest waits for one Board meeting in mid-2028. Expected case. NPV counts nothing after 2032, so we also show what each move earns a year once live.",
+   "c_subtitle2": "The rest waits for the Board in mid-2028. Expected case. NPV counts nothing after 2032, so we also show what each move earns a year.",
    "tab_rec_off": "Recommended: A",
    "tab_alts_off": "What waits, and why",
    "tab_build_on": "Build your own",
@@ -1571,11 +1568,10 @@
      "+$2.3M"
     ]
    ],
-   "c_sel_footer": "Picked: 0 moves, $0.0M of $60.0M",
    "c_you_title": "Nothing picked yet",
-   "c_you_rules": "Pick at least three moves, one of them growth, within $60.0M. Your plan appears here and is compared with A below.",
+   "c_you_rules": "Pick at least three moves, one of them growth, within $60.0M. Your plan appears here, against A below.",
    "ch_cmp_build": {
-    "title": "Your plan against A, cumulative cash, not discounted, $M (Expected case)",
+    "title": "Your plan against A, cumulative cash, not discounted, $M (Expected)",
     "labels": [
      "Cash positive above this line",
      "A"
