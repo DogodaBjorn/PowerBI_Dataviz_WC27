@@ -1258,7 +1258,7 @@ table _Measures
 		lineageTag: 89662495-368d-5a7a-a5db-d8073d45c822
 
 	/// Hero table, NPV panel: Coffee Blue for the moves of package A, the light neutral for every other move (a labelled background mark: the value stands beside the bar, the status in its own column).
-	measure 'Move NPV Bar Color' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), IF ( st = "A", "#2589D8", "#C9C4B7" ) )
+	measure 'Move NPV Bar Color' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "#2589D8", tr = 2, "#12233D", tr = 3, "#717B8B", "#C9C4B7" ) )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: 1965f6c5-9131-534d-b776-be43d2dbc98d
@@ -1904,8 +1904,8 @@ table _Measures
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: c19569d0-ba81-5495-bba8-177ec1b61a85
 
-	/// Hero row: the light blue ground of the three rows of package A (16 Nov evening, doc 36): the recommendation reads as one block. Blank for every other row.
-	measure 'Move Row Tint' = IF ( LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) = "A", "#EAF2FB" )
+	/// Hero row: the ground of a row that is in the plan (docs 36 and 37): light blue for package A, a light Night for step 2, a light slate for step 3, as the grounds of their labels over the plan bar. Blank for a move that is not in the plan.
+	measure 'Move Row Tint' = VAR st = LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) VAR tr = LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) ) RETURN SWITCH ( TRUE (), st = "A", "#EAF2FB", tr = 2, "#DEE0E4", tr = 3, "#E8EAEC" )
 		formatString: @
 		displayFolder: 15 Storytelling rebuild
 		lineageTag: ceab591e-33d1-533d-aa0d-4d3c47de962c

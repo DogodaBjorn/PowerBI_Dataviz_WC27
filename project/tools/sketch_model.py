@@ -1846,6 +1846,7 @@ m("Move Run-rate (num)", MOVE_P + "RETURN IF ( ISBLANK ( p ), BLANK (), CALCULAT
 MOVE_ST = "LOOKUPVALUE ( MoveDecision[Status], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) )"
 MOVE_TR = "LOOKUPVALUE ( MoveDecision[Tranche], MoveDecision[ProjectID], SELECTEDVALUE ( InvestmentProjects[ProjectID] ) )"
 STEP3 = "#717B8B"  # step 3 (the refresh): the plan bar's third segment, and since 16 Nov evening its row in the hero table too
+STEP2_TINT, STEP3_TINT = "#DEE0E4", "#E8EAEC"  # Night at 14 % and slate at 16 % on white: the grounds of the rows of step 2 and step 3 (doc 37)
 m("Move Status Color", f'VAR st = {MOVE_ST} VAR tr = {MOVE_TR} RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "{ACCENT_MARK}", tr = 3, "{STEP3}", st = "2028 gate", "{INK}", "{SLATE}" ) )', TXT, C15,
   "Mark colour of a move by its decision status (MoveDecision): Coffee Blue for package A, Night for the 2028 gate, Warm Grey for not now. A mark colour (3.5:1 at the lightest): the status word carries the state.")
 # Review round 2, step D (doc 25; DS2-04, J-VE-13): in the hero's NPV panel the status colours added weight without
@@ -1854,7 +1855,7 @@ m("Move Status Color", f'VAR st = {MOVE_ST} VAR tr = {MOVE_TR} RETURN IF ( ISBLA
 # background marks only"; each bar's value stands in the column beside it). The status stays in the Status column and in
 # the bars of the left panel.
 NEUTRAL_LIGHT = "#C9C4B7"
-m("Move NPV Bar Color", f'VAR st = {MOVE_ST} RETURN IF ( ISBLANK ( st ), BLANK (), IF ( st = "A", "{ACCENT_MARK}", "{NEUTRAL_LIGHT}" ) )', TXT, C15,
+m("Move NPV Bar Color", f'VAR st = {MOVE_ST} VAR tr = {MOVE_TR} RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "{ACCENT_MARK}", tr = 2, "{INK}", tr = 3, "{STEP3}", "{NEUTRAL_LIGHT}" ) )', TXT, C15,
   "Hero table, NPV panel: Coffee Blue for the moves of package A, the light neutral for every other move (a labelled background mark: the value stands beside the bar, the status in its own column).")
 
 # ---- the hero table's bar cells (doc 21 P-4, spike S-2 of 13 Nov). Geometry and domains come from the build spec the
@@ -2417,8 +2418,8 @@ m("Milestones (text)",
 # in Burnt Tangerine below zero, on the shown value
 m("Move Status Ink", f'VAR st = {MOVE_ST} VAR tr = {MOVE_TR} RETURN IF ( ISBLANK ( st ), BLANK (), SWITCH ( TRUE (), st = "A", "{ACCENT}", tr = 3, "{INK2}", st = "2028 gate", "{INK}", "{INK2}" ) )', TXT, C15,
   "Hero row: the text colour of the status word (Deep Coffee for package A, Night for step 2, Dusk for step 3 and for not now). The bars keep the mark colours (Move Status Color).")
-m("Move Row Tint", f'IF ( {MOVE_ST} = "A", "{TINT}" )', TXT, C15,
-  "Hero row: the light blue ground of the three rows of package A (16 Nov evening, doc 36): the recommendation reads as one block. Blank for every other row.")
+m("Move Row Tint", f'VAR st = {MOVE_ST} VAR tr = {MOVE_TR} RETURN SWITCH ( TRUE (), st = "A", "{TINT}", tr = 2, "{STEP2_TINT}", tr = 3, "{STEP3_TINT}" )', TXT, C15,
+  "Hero row: the ground of a row that is in the plan (docs 36 and 37): light blue for package A, a light Night for step 2, a light slate for step 3, as the grounds of their labels over the plan bar. Blank for a move that is not in the plan.")
 m("Move NPV Ink", f'VAR v = [Move NPV (num)] RETURN IF ( ROUND ( v / 10000, 0 ) < 0, "{BAD}", "{INK}" )', TXT, C15,
   "Hero row: the ink of the move's NPV, Burnt Tangerine when the shown value is below zero (the sign carries it too), Night otherwise.")
 # build step 10: the horizon through a variable. LOOKUPVALUE inside the filter argument is an engine error ("in een
