@@ -105,12 +105,19 @@ def plan_bar(v):
 
 
 def reword(pairs):
+    """In the text runs, and in the alt text that repeats them."""
     def fn(v):
         for para in v["visual"]["objects"]["general"][0]["properties"]["paragraphs"]:
             for run in para["textRuns"]:
                 for a, b in pairs:
                     if run["value"] == a or (len(a) > 12 and a in run["value"]):
                         run["value"] = run["value"].replace(a, b)
+        for e in v["visual"].get("visualContainerObjects", {}).get("general", []):
+            alt = e.get("properties", {}).get("altText", {}).get("expr", {}).get("Literal")
+            if alt:
+                for a, b in pairs:
+                    if len(a) > 12:
+                        alt["Value"] = alt["Value"].replace(a, b)
     return fn
 
 
@@ -119,7 +126,7 @@ edit(P2 / "z_card_decision" / "visual.json", decision_card)
 edit(P2 / "c_rec_head" / "visual.json", rec_head)
 edit(P2 / "c_plan_t1" / "visual.json", plan_t1)
 edit(P2 / "ch_plan_bar" / "visual.json", plan_bar)
-edit(P2 / "c_waits_head" / "visual.json", reword([("One alternative and two tranches, each weighed against A.", "One alternative and two later steps, each weighed against A.")]))
+edit(P2 / "c_waits_head" / "visual.json", reword([("One alternative and two tranches, each weighed against A.", "One alternative and two later steps, each weighed against A."), ("One alternative and two tranches", "One alternative and two later steps")]))
 edit(GLOSSARY / "ttg_list2" / "visual.json", reword([("Tranche", "Step"), ("decides on the next tranche, by the rule", "decides on the next step, by the rule")]))
 left = [str(f.relative_to(REPORT)) for f in REPORT.rglob("*.json") if ".pbi" not in f.parts and re.search(r"[Tt]ranche(?! \d Capex)", f.read_text(encoding="utf-8-sig"))]
 assert not left, f"the word is still in {left}"

@@ -59,8 +59,8 @@ alt_texts: 135 visuals in the tab order, 107 on a measure, 0 flag(s)
       Source: Pillow & Key Group dataset. Guest scores weighted by survey responses; 2021 is a depressed base year.
   995 btn_next (actionButton) [typed] 58 chars
       Next what we fund and why: page 2, The Investment Strategy
-  990 chip_def (cardVisual) [Alt Definitions (text)] 227/227/227 chars
-      Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a move adds in a full year. A year on cost: that profit over capex. Tranche: a part of the budget, one Board decision.
+  990 chip_def (cardVisual) [Alt Definitions (text)] 224/224/224 chars
+      Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a move adds in a full year. A year on cost: that profit over capex. Step: a part of the budget, one Board decision.
 
 === p2-investment-strategy   (context: InvestmentProjects[Brand] = "Goodnight Inn", Brands[Brand] = "Goodnight Inn")
  9990 z_logo (image) [typed] 13 chars
@@ -124,36 +124,36 @@ The app alone: +$9.5M through 2032. Every year without it leaves about $3.6M wit
       Think you can beat A Build your own: show the state where you pick moves and compare your plan with A
  9590 c_plan_title (cardVisual) [Capital Plan Title (text)] 67/67/67 chars
       The $60M plan: $9.4M now, $41.9M at the 2028 gate, $8.7M not needed
- 9580 c_plan_t1 (cardVisual) [Plan T1 (text)] 34/34/34 chars
-      Tranche 1 · package A
+ 9580 c_plan_t1 (cardVisual) [Plan T1 (text)] 31/31/31 chars
+      Step 1 · package A
 $9.4M · 2027
- 9570 c_plan_t2 (cardVisual) [Plan T2 (text)] 108/108/108 chars
-      Tranche 2 · Gatwick and Toronto +40 rooms
+ 9570 c_plan_t2 (cardVisual) [Plan T2 (text)] 105/105/105 chars
+      Step 2 · Gatwick and Toronto +40 rooms
 $12.4M · 2028 gate
 +$1.7M a year once live · 13.8% a year on cost
-      Low: Tranche 2 · Gatwick and Toronto +40 rooms
+      Low: Step 2 · Gatwick and Toronto +40 rooms
 $12.4M · 2028 gate
 +$1.5M a year once live · 11.7% a year on cost
-      High: Tranche 2 · Gatwick and Toronto +40 rooms
+      High: Step 2 · Gatwick and Toronto +40 rooms
 $12.4M · 2028 gate
 +$1.8M a year once live · 14.8% a year on cost
- 9560 c_plan_t3 (cardVisual) [Plan T3 (text)] 119/119/120 chars
-      Tranche 3 · the refresh
+ 9560 c_plan_t3 (cardVisual) [Plan T3 (text)] 116/116/117 chars
+      Step 3 · the refresh
 $29.5M · 2028 gate, only with a case beyond 2032
 +$2.3M a year once live · 7.9% a year on cost
-      Low: Tranche 3 · the refresh
+      Low: Step 3 · the refresh
 $29.5M · 2028 gate, only with a case beyond 2032
 +$1.3M a year once live · 4.5% a year on cost
-      High: Tranche 3 · the refresh
+      High: Step 3 · the refresh
 $29.5M · 2028 gate, only with a case beyond 2032
 +$3.4M a year once live · 11.5% a year on cost
  9550 c_plan_t4 (cardVisual) [Plan T4 (text)] 39/39/39 chars
       Not needed · $8.7M
 stays with the group
- 9540 ch_plan_bar (barChart) [Alt Plan Bar (text)] 151/151/151 chars
-      How the $60M budget is planned: tranche 1, package A, $9.4M now; tranche 2, $12.4M, and tranche 3, $29.5M, wait for the 2028 gate; $8.7M is not needed.
- 9530 c_plan_gate (cardVisual) [Gate Rule (text)] 262/262/262 chars   <-- long (262)
-      The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.
+ 9540 ch_plan_bar (barChart) [Alt Plan Bar (text)] 142/142/142 chars
+      How the $60M budget is planned: step 1, package A, $9.4M now; step 2, $12.4M, and step 3, $29.5M, wait for the 2028 gate; $8.7M is not needed.
+ 9530 c_plan_gate (cardVisual) [Gate Rule (text)] 259/259/259 chars   <-- long (259)
+      The 2028 gate: one Board meeting once all three moves are live. It releases step 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.
  9520 ch_plan_cum (lineChart) [Alt Plan Cum (text)] 230/233/229 chars
       Package A, cumulative cash by year to 2032, not discounted, in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Expected case A is cash positive from 2031. The Board decides on the rest at the 2028 gate.
       Low: Package A, cumulative cash by year to 2032, not discounted, in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Low case A is not cash positive by 2032. The Board decides on the rest at the 2028 gate.
@@ -176,12 +176,12 @@ stays with the group
       All 456 packages the rules allow, each with its capex, its net present value through 2032 (Expected case), the three cases, whether it pays back, and its moves. Show as a table lists them.
       Low: All 456 packages the rules allow, each with its capex, its net present value through 2032 (Low case), the three cases, whether it pays back, and its moves. Show as a table lists them.
       High: All 456 packages the rules allow, each with its capex, its net present value through 2032 (High case), the three cases, whether it pays back, and its moves. Show as a table lists them.
- 9390 c_waits_head (textbox) [typed] 78 chars
-      What waits, and why. One alternative and two tranches, each weighed against A.
- 9380 tbl_waits (tableEx) [Alt Waits (text)] 236/241/237 chars
-      Three options weighed against A, Expected case: B · Breakfast instead of kiosks; Tranche 2 · Airport extensions, +80 rooms; Tranche 3 · Refresh, 10 oldest hotels. For each: its numbers, why it is on the table, why not now and when we decide.
-      Low: Three options weighed against A, Low case: B · Breakfast instead of kiosks; Tranche 2 · Airport extensions, +80 rooms; Tranche 3 · Refresh, 10 oldest hotels. For each: its numbers, why it is on the table, why not now and when we decide.
-      High: Three options weighed against A, High case: B · Breakfast instead of kiosks; Tranche 2 · Airport extensions, +80 rooms; Tranche 3 · Refresh, 10 oldest hotels. For each: its numbers, why it is on the table, why not now and when we decide.
+ 9390 c_waits_head (textbox) [typed] 81 chars
+      What waits, and why. One alternative and two later steps, each weighed against A.
+ 9380 tbl_waits (tableEx) [Alt Waits (text)] 230/235/231 chars
+      Three options weighed against A, Expected case: B · Breakfast instead of kiosks; Step 2 · Airport extensions, +80 rooms; Step 3 · Refresh, 10 oldest hotels. For each: its numbers, why it is on the table, why not now and when we decide.
+      Low: Three options weighed against A, Low case: B · Breakfast instead of kiosks; Step 2 · Airport extensions, +80 rooms; Step 3 · Refresh, 10 oldest hotels. For each: its numbers, why it is on the table, why not now and when we decide.
+      High: Three options weighed against A, High case: B · Breakfast instead of kiosks; Step 2 · Airport extensions, +80 rooms; Step 3 · Refresh, 10 oldest hotels. For each: its numbers, why it is on the table, why not now and when we decide.
  9290 c_build_head (textbox) [typed] 49 chars
       Build your own. Click a move to add or remove it.
  9280 sl_moves (advancedSlicerVisual) [typed] 106 chars
@@ -208,8 +208,8 @@ stays with the group
       High: Cumulative cash of A, not discounted, 2027 to 2032, High case, ends at +$19.2M; pick moves to add your plan.
  1000 z_footer2 (cardVisual) [Footer P2 (text)] 134/134/134 chars
       Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.
-  990 chip_def2 (cardVisual) [Alt Definitions (text)] 227/227/227 chars
-      Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a move adds in a full year. A year on cost: that profit over capex. Tranche: a part of the budget, one Board decision.
+  990 chip_def2 (cardVisual) [Alt Definitions (text)] 224/224/224 chars
+      Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a move adds in a full year. A year on cost: that profit over capex. Step: a part of the budget, one Board decision.
 
 === p2-investment-strategy|Build with package A picked   (context: InvestmentProjects[Brand] = "Goodnight Inn", Brands[Brand] = "Goodnight Inn", TREATAS ( { "Booking app & rates", "Revenue management", "Kiosks, 20 busiest" }, BuildMove[Short Name] ))
  9250 c_you_title (cardVisual) [Build Title (text)] 36/36/36 chars

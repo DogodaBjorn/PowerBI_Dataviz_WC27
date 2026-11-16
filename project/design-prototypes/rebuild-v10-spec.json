@@ -441,7 +441,7 @@
     [
      "Booking app & member rates",
      "II · growth",
-     "A",
+     "package A",
      "",
      "12.1%",
      "",
@@ -450,7 +450,7 @@
     [
      "Revenue management",
      "I · growth",
-     "A",
+     "package A",
      "",
      "9.8%",
      "",
@@ -459,7 +459,7 @@
     [
      "Kiosks at the 20 busiest hotels",
      "IV",
-     "A",
+     "package A",
      "",
      "10.3%",
      "",
@@ -477,7 +477,7 @@
     [
      "Gatwick +40 rooms",
      "IV · growth",
-     "2028 gate",
+     "step 2 · 2028",
      "",
      "13.3%",
      "",
@@ -495,7 +495,7 @@
     [
      "Toronto +40 rooms",
      "IV · growth",
-     "2028 gate",
+     "step 2 · 2028",
      "",
      "9.9%",
      "",
@@ -522,7 +522,7 @@
     [
      "Refresh, 10 oldest hotels",
      "III",
-     "2028 gate",
+     "step 3 · 2028",
      "",
      "4.5%",
      "",
@@ -575,11 +575,11 @@
    "c_plan_title": "The $60M plan: $9.4M now, $41.9M at the 2028 gate, $8.7M not needed",
    "tag_plan_cum": "ⓘ Hover a year",
    "ch_plan_cum_cap": "Package A, cumulative cash, $M (not discounted, so it ends above NPV)",
-   "c_plan_t1": "Tranche 1 · package A\n$9.4M · 2027",
-   "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.5M a year once live · 11.7% a year on cost",
-   "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$1.3M a year once live · 4.5% a year on cost",
+   "c_plan_t1": "Step 1 · package A\n$9.4M · 2027",
+   "c_plan_t2": "Step 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.5M a year once live · 11.7% a year on cost",
+   "c_plan_t3": "Step 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$1.3M a year once live · 4.5% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
-   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.",
+   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases step 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.",
    "ch_plan_cum": {
     "labels": [
      "Cash positive above this line",
@@ -619,7 +619,7 @@
     [
      "Booking app & member rates",
      "II · growth",
-     "A",
+     "package A",
      "",
      "47.0%",
      "",
@@ -628,7 +628,7 @@
     [
      "Revenue management",
      "I · growth",
-     "A",
+     "package A",
      "",
      "32.0%",
      "",
@@ -637,7 +637,7 @@
     [
      "Kiosks at the 20 busiest hotels",
      "IV",
-     "A",
+     "package A",
      "",
      "20.6%",
      "",
@@ -655,7 +655,7 @@
     [
      "Gatwick +40 rooms",
      "IV · growth",
-     "2028 gate",
+     "step 2 · 2028",
      "",
      "15.8%",
      "",
@@ -673,7 +673,7 @@
     [
      "Toronto +40 rooms",
      "IV · growth",
-     "2028 gate",
+     "step 2 · 2028",
      "",
      "11.5%",
      "",
@@ -700,7 +700,7 @@
     [
      "Refresh, 10 oldest hotels",
      "III",
-     "2028 gate",
+     "step 3 · 2028",
      "",
      "7.9%",
      "",
@@ -753,11 +753,11 @@
    "c_plan_title": "The $60M plan: $9.4M now, $41.9M at the 2028 gate, $8.7M not needed",
    "tag_plan_cum": "ⓘ Hover a year",
    "ch_plan_cum_cap": "Package A, cumulative cash, $M (not discounted, so it ends above NPV)",
-   "c_plan_t1": "Tranche 1 · package A\n$9.4M · 2027",
-   "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.7M a year once live · 13.8% a year on cost",
-   "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$2.3M a year once live · 7.9% a year on cost",
+   "c_plan_t1": "Step 1 · package A\n$9.4M · 2027",
+   "c_plan_t2": "Step 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.7M a year once live · 13.8% a year on cost",
+   "c_plan_t3": "Step 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$2.3M a year once live · 7.9% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
-   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.",
+   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases step 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.",
    "ch_plan_cum": {
     "labels": [
      "Cash positive above this line",
@@ -797,7 +797,7 @@
     [
      "Booking app & member rates",
      "II · growth",
-     "A",
+     "package A",
      "",
      "82.1%",
      "",
@@ -806,7 +806,7 @@
     [
      "Revenue management",
      "I · growth",
-     "A",
+     "package A",
      "",
      "61.7%",
      "",
@@ -815,7 +815,7 @@
     [
      "Kiosks at the 20 busiest hotels",
      "IV",
-     "A",
+     "package A",
      "",
      "30.9%",
      "",
@@ -833,7 +833,7 @@
     [
      "Gatwick +40 rooms",
      "IV · growth",
-     "2028 gate",
+     "step 2 · 2028",
      "",
      "16.9%",
      "",
@@ -851,7 +851,7 @@
     [
      "Toronto +40 rooms",
      "IV · growth",
-     "2028 gate",
+     "step 2 · 2028",
      "",
      "12.3%",
      "",
@@ -878,7 +878,7 @@
     [
      "Refresh, 10 oldest hotels",
      "III",
-     "2028 gate",
+     "step 3 · 2028",
      "",
      "11.5%",
      "",
@@ -931,11 +931,11 @@
    "c_plan_title": "The $60M plan: $9.4M now, $41.9M at the 2028 gate, $8.7M not needed",
    "tag_plan_cum": "ⓘ Hover a year",
    "ch_plan_cum_cap": "Package A, cumulative cash, $M (not discounted, so it ends above NPV)",
-   "c_plan_t1": "Tranche 1 · package A\n$9.4M · 2027",
-   "c_plan_t2": "Tranche 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.8M a year once live · 14.8% a year on cost",
-   "c_plan_t3": "Tranche 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$3.4M a year once live · 11.5% a year on cost",
+   "c_plan_t1": "Step 1 · package A\n$9.4M · 2027",
+   "c_plan_t2": "Step 2 · Gatwick and Toronto +40 rooms\n$12.4M · 2028 gate\n+$1.8M a year once live · 14.8% a year on cost",
+   "c_plan_t3": "Step 3 · the refresh\n$29.5M · 2028 gate, only with a case beyond 2032\n+$3.4M a year once live · 11.5% a year on cost",
    "c_plan_t4": "Not needed · $8.7M\nstays with the group",
-   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases tranche 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.",
+   "c_plan_gate": "The 2028 gate: one Board meeting once all three moves are live. It releases step 2 if the first money worked (distribution cost down 0.6 points or more, the Expected track) and Gatwick and Toronto topped 90% in 6 of the last 12 months. A rule, not a forecast.",
    "ch_plan_cum": {
     "labels": [
      "Cash positive above this line",
@@ -984,14 +984,14 @@
      "Not planned."
     ],
     [
-     "Tranche 2 · Airport extensions, +80 rooms",
+     "Step 2 · Airport extensions, +80 rooms",
      "$12.4M capex\n+$1.5M a year once live\n11.7% a year on cost",
      "Toronto topped 90% in 17 of the last 24 months, Gatwick in 14.",
      "Neither pays back by 2032 (−$4.0M, −$4.0M). Kingston (61% full) is not on the list.",
      "2028 gate: if the first money worked and both stay full."
     ],
     [
-     "Tranche 3 · Refresh, 10 oldest hotels",
+     "Step 3 · Refresh, 10 oldest hotels",
      "$29.5M capex\n+$1.3M a year once live\n4.5% a year on cost\nin package C: −$34.8M through 2032",
      "Renovation works: the seven hotels whose renovation finished in 2021 held NPS near +6 while the rest fell to +2.7.",
      "4.5% a year on cost, under our 8%. The data cannot price the cost of waiting, so this case is understated.",
@@ -1046,14 +1046,14 @@
      "Not planned."
     ],
     [
-     "Tranche 2 · Airport extensions, +80 rooms",
+     "Step 2 · Airport extensions, +80 rooms",
      "$12.4M capex\n+$1.7M a year once live\n13.8% a year on cost",
      "Toronto topped 90% in 17 of the last 24 months, Gatwick in 14.",
      "Neither pays back by 2032 (−$3.7M, −$3.5M). Kingston (61% full) is not on the list.",
      "2028 gate: if the first money worked and both stay full."
     ],
     [
-     "Tranche 3 · Refresh, 10 oldest hotels",
+     "Step 3 · Refresh, 10 oldest hotels",
      "$29.5M capex\n+$2.3M a year once live\n7.9% a year on cost\nin package C: −$23.4M through 2032",
      "Renovation works: the seven hotels whose renovation finished in 2021 held NPS near +6 while the rest fell to +2.7.",
      "7.9% a year on cost, just under our 8%. The data cannot price the cost of waiting, so this case is understated.",
@@ -1108,14 +1108,14 @@
      "Not planned."
     ],
     [
-     "Tranche 2 · Airport extensions, +80 rooms",
+     "Step 2 · Airport extensions, +80 rooms",
      "$12.4M capex\n+$1.8M a year once live\n14.8% a year on cost",
      "Toronto topped 90% in 17 of the last 24 months, Gatwick in 14.",
      "Neither pays back by 2032 (−$3.6M, −$3.3M). Kingston (61% full) is not on the list.",
      "2028 gate: if the first money worked and both stay full."
     ],
     [
-     "Tranche 3 · Refresh, 10 oldest hotels",
+     "Step 3 · Refresh, 10 oldest hotels",
      "$29.5M capex\n+$3.4M a year once live\n11.5% a year on cost\nin package C: −$11.4M through 2032",
      "Renovation works: the seven hotels whose renovation finished in 2021 held NPS near +6 while the rest fell to +2.7.",
      "11.5% a year on cost but does not pay back by 2032 (−$24.1M). The data cannot price the cost of waiting, so this case is understated.",

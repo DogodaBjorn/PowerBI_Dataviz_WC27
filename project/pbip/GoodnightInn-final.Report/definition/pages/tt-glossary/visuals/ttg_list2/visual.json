@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Tranche",
+                    "value": "Step",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
@@ -48,7 +48,7 @@
                     }
                   },
                   {
-                    "value": "  the mid-2028 Board meeting that decides on the next tranche, by the rule on page 2.",
+                    "value": "  the mid-2028 Board meeting that decides on the next step, by the rule on page 2.",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",

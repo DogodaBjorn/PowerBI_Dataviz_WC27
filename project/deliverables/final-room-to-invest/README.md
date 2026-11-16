@@ -89,3 +89,11 @@ recommended: the 456 packages; `cover-b.png`: the two pages; `cover-c.png`: one 
 for a 4:3 tile, the two pages as they stand (`report-page1.png`, `report-page2.png`) and `DESCRIPTION.md` with the
 title, the teaser, the description and the alt text. The account is
 `project/project-state/active/35-gallery-post-cover-and-description-2026-11-16.md`.
+
+## Package A at a glance (16 Nov, late evening)
+
+Bjorn could not see at one glance what package A is. Its three rows in the table now stand on a light blue ground,
+the recommendation card has a Coffee Blue outline, every decision has one colour in the table and in the plan bar, and
+a tranche is called a step. `package-a/` shows it: `page2-before.png`, `page2-after-outline.png`,
+`page2-variant-tinted-card.png` (not chosen), `final-copy-page2.png` and the check reports. The account is
+`project/project-state/active/36-package-a-at-a-glance-2026-11-16.md`.

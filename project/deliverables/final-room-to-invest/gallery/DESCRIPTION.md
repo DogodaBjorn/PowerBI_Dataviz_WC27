@@ -94,5 +94,5 @@ goes in is Bjorn's choice.
 - **Why A and not B.** The alternative with the breakfast upgrade instead of the kiosks earns $0.5M more a year, but
   less on its cost (34.0% against 37.5%) and $0.6M less through 2032.
 - **The worst case.** In the Low case package A ends 2032 at −$5.5M and is still the best of the 456.
-- **Why the refresh keeps a tranche.** It does not pay back by 2032 and earns just under our 8%. It stays at the gate
+- **Why the refresh keeps a step.** It does not pay back by 2032 and earns just under our 8%. It stays at the gate
   because it is the one move that answers the fading welcome, and the data cannot price what waiting costs.

@@ -296,8 +296,10 @@ def shown_status(p, s):
     """The hero's status word (review round 3): a move marked not now reads "package B" when the alternative holds it and A
     does not, "not full" when it is an extension whose hotel topped 90 % in none of the last 24 months (the workbook)."""
     st = moves[p, s]["status"]
-    if st != "not now":
-        return st
+    if st == "A":  # 16 Nov evening (doc 36): package A by its name, a gated move by its step and the gate's year
+        return "package A"
+    if st == "2028 gate":
+        return f"step {int(moves[p, s]['tranche'])} · 2028"
     if int(moves[p, s]["inb"]) and p not in A:
         return "package B"
     hs = list(PP[PP.ProjectID == p].HotelID)

@@ -19,11 +19,19 @@
               {
                 "textRuns": [
                   {
-                    "value": "Our recommendation: package A",
+                    "value": "Our recommendation: ",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "20px",
                       "color": "#12233D"
+                    }
+                  },
+                  {
+                    "value": "package A",
+                    "textStyle": {
+                      "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
+                      "fontSize": "20px",
+                      "color": "#1763A8"
                     }
                   }
                 ],
