@@ -1,4 +1,4 @@
-# The gallery post: texts and images (16 Nov 2026, night: the final cover and the native-visuals line)
+# The gallery post: texts and images (16 Nov 2026, night: the final cover, the native-visuals line, the fuller story)
 
 Everything Bjorn pastes into the Contests Gallery form. Every number below is on the report as it stands
 (`rebuild-finalv3`, the copy in `E:\Goodnight Inn - Room to Invest`). The account is in docs 35 and 40.
@@ -30,7 +30,7 @@ Alt text for the thumbnail, if the form asks for it:
 >
 > Built with 100% native Power BI visuals: no custom visuals, nothing to install.
 
-## The description (about 510 words)
+## The description (about 690 words)
 
 > **Goodnight Inn has the fullest hotels in the Pillow & Key Group. So why is its margin slipping?**
 >
@@ -42,23 +42,36 @@ Alt text for the thumbnail, if the form asks for it:
 >
 > **Page 1 · The Wake-up Call: where the brand stands**
 >
-> Four findings, each ending in the investment option it leads to.
+> Four numbers open the page: occupancy of 79.4%, the best of the four brands; an operating margin after commissions
+> of 33.7%, down 2.8 points since 2023; half the room revenue arriving through online agencies; and a net promoter
+> score of +3.3, the lowest of the four and falling every year. Four findings explain them, each ending in the
+> investment option it leads to.
 >
-> - **I. The margin.** Occupancy is 79.4%, the best of the four brands. The operating margin after commissions still
->   fell 2.8 points since 2023.
-> - **II. The middleman.** Online agencies now book 50% of room revenue, up from 33% in 2021. Same room, same night:
->   Goodnight Inn keeps $17.47 more when the guest books direct.
-> - **III. The fading welcome.** Hotels last renovated ten or more years ago score an NPS of −4.9, and no renovation
->   has started since 2020.
-> - **IV. Where we are full.** Five of the seven fullest hotels are airports.
+> - **I. The margin.** Of the 2.8 points, commissions took 1.0 and running costs 1.8. Room rates rose no faster than
+>   at the sister brands, so price does not absorb it.
+> - **II. The middleman.** Online agencies book 50% of room revenue, up from 33% in 2021. Same room, same night: the
+>   guest pays $2.25 more when booking direct and Goodnight Inn keeps $17.47 more. Nothing rewards the guest for it.
+> - **III. The fading welcome.** Since 2018 the brand spent $1.0M per hotel on renovation, the other brands $5.9M to
+>   $7.9M. Hotels last renovated ten or more years ago score an NPS of −4.9. An association, not proof of cause, and
+>   the page says so.
+> - **IV. Where we are full.** Five of the seven fullest hotels are airports. Toronto topped 90% occupancy in 17 of
+>   the last 24 months.
 >
 > **Page 2 · Room to Invest: where the money goes, and why**
 >
-> One recommendation: fix the middleman first. $9.4M now pays for a booking app with member rates, revenue management
-> and self check-in kiosks at the 20 busiest hotels. Together they add $3.5M a year to operating profit by 2032
-> (NPV +$3.3M through 2032). The rest waits for one Board meeting in mid-2028, with the rule written down: $12.4M for
-> 40 extra rooms each at Gatwick and Toronto if the first money worked, and $29.5M for a refresh of the ten oldest
-> hotels only with a case beyond 2032. $8.7M is not needed and stays with the group.
+> Ten moves are on offer. Each gets two tests: does it earn more a year than our 8% cost of money, and does it pay
+> back by 2032? The recommendation, package A, is the three moves that earn most on their cost: a booking app with
+> member rates (47.0% a year), revenue management (32.0%) and self check-in kiosks at the 20 busiest hotels (20.6%).
+>
+> $9.4M now adds $3.5M a year to operating profit by 2032 and undoes half of what went wrong: distribution cost falls
+> from 11.3% to 10.1% of room revenue, and the margin climbs back from 33.7% to 35.1%.
+>
+> The rest of the $60M waits for one Board meeting in mid-2028, with the rule written down. Step 2: $12.4M for 40
+> extra rooms each at Gatwick and Toronto, if the first money worked and both hotels stay full. Step 3: $29.5M for a
+> refresh of the ten oldest hotels, only with a case beyond 2032. $8.7M is not needed and stays with the group.
+>
+> The risk is on the page too. In the Low case package A ends 2032 at −$5.5M and still earns $1.0M a year by then.
+> It is the best of the 456 packages in all three cases.
 >
 > **Three things to try**
 >
@@ -79,8 +92,8 @@ Alt text for the thumbnail, if the form asks for it:
 >
 > - Only the provided data. The three cases are the dataset's own Low, Expected and High assumptions.
 > - Every title states its finding. Each finding names the move that answers it, and each move names its finding.
-> - Two yardsticks: NPV through 2032 at 8% in 2025 dollars, and "a year on cost" (operating profit added in 2032
->   divided by capex), because NPV counts nothing after 2032.
+> - NPV through 2032 at 8%, in 2025 dollars, is the challenge's yardstick. It counts nothing after 2032, so every
+>   move also shows what it earns a year on its cost.
 > - One colour per decision: blue for what we fund now, dark blue and clay for the two later steps.
 >
 > **Accessibility**
@@ -94,6 +107,11 @@ Alt text for the thumbnail, if the form asks for it:
 > Data: Pillow & Key Group dataset, Power BI Dataviz World Champs 2027. Thank you to the organisers and the Contest
 > Advisory Committee.
 
+## A shorter description, if the form limits the length (about 330 words)
+
+Take the teaser, the two page sections without their bullet lists and without the paragraph on the risk, "Three
+things to try" and the first two sentences of "100% native Power BI visuals".
+
 ## Optional line: how it was made (Bjorn decides)
 
 > **How it was made.** I built the report as a Power BI Project (PBIR and TMDL), with an AI coding agent doing the
@@ -102,17 +120,23 @@ Alt text for the thumbnail, if the form asks for it:
 The starter file allows AI-assisted design tools. The line is true and speaks to Creativity and Innovation; whether it
 goes in is Bjorn's choice.
 
-## Lines to add if a reviewer asks (from the draft of 15 Nov, still true)
+## Lines to add if a reviewer asks (still true)
 
 - **Why A and not B.** The alternative with the breakfast upgrade instead of the kiosks earns $0.5M more a year, but
   less on its cost (34.0% against 37.5%) and $0.6M less through 2032.
-- **The worst case.** In the Low case package A ends 2032 at −$5.5M and is still the best of the 456.
 - **Why the refresh keeps a step.** It does not pay back by 2032 and earns just under our 8%. It stays at the gate
   because it is the one move that answers the fading welcome, and the data cannot price what waiting costs.
+- **When it goes live.** Revenue management in July 2027, the app in October 2027, the kiosks in April 2028; package A
+  is cash positive during 2031 in the Expected case.
 
-## What "100% native" rests on (for whoever is asked)
+## What the claims rest on (for whoever is asked)
 
-Read from the report's files on 16 Nov after the save of 22:42: 194 visuals, every `visualType` one of Power BI's own
-(81 cards, 69 text boxes, 9 buttons, 8 scatter charts, 6 line charts, 6 tables, 6 shapes, 3 images, 2 slicers, 3 bar
-and column charts, 1 area chart); no `publicCustomVisuals`, no custom visual package. The "body text" wording in the
-accessibility paragraph is deliberate: the orange dot between the two parts of the page label is 3.2:1 on the banner.
+- **100% native.** Read from the report's files on 16 Nov after the save of 22:42: 194 visuals, every `visualType` one
+  of Power BI's own (81 cards, 69 text boxes, 9 buttons, 8 scatter charts, 6 line charts, 6 tables, 6 shapes, 3 images,
+  2 slicers, 3 bar and column charts, 1 area chart); no `publicCustomVisuals`, no custom visual package.
+- **"The three moves that earn most on their cost".** The first three rows of the table, ranked by "a year on cost"
+  in the Expected case (47.0%, 32.0%, 20.6%; the fourth is 19.8%).
+- **"Best of the 456 in all three cases".** Read from the model's Package table: package A has the highest NPV
+  through 2032 in the Low, the Expected and the High case.
+- **"Body text" in the accessibility paragraph** is deliberate: the orange dot between the two parts of the page
+  label is 3.2:1 on the banner.
