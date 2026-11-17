@@ -24,9 +24,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
-OUT = ROOT / "project" / "deliverables" / "final-room-to-invest" / "gallery"
+GAL = ROOT / "project" / "deliverables" / "final-room-to-invest" / "gallery"
+OUT = GAL / "earlier"  # candidates a, b and c were superseded by cover-tile.png (doc 41): they are kept, out of the way
 ASSETS = ROOT / "design" / "brand-kits" / "goodnight-inn-wakeup" / "assets"
-PAGE1, PAGE2 = OUT / "report-page1.png", OUT / "report-page2.png"  # the two pages as last saved (captured from the final copy)
+PAGE1, PAGE2 = GAL / "report-page1.png", GAL / "report-page2.png"  # the two pages as last saved (captured from the final copy)
 EDGE = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 NIGHT, COFFEE_BLUE, SKY, OAT, GREY, ORANGE = "#12233D", "#2589D8", "#5AAEF0", "#F5E7DC", "#B9B2A3", "#FF783D"

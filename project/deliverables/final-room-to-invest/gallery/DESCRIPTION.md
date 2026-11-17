@@ -171,3 +171,8 @@ who accept the cookie notice are counted there; the site's own tracker counts ev
   the tile reads "Hey all,..."; the two other Goodnight Inn entries open with "Brand: Goodnight Inn (...".
 - The other entries carry the labels COMMUNITY CONTEST and DATAVIZ WORLD CHAMPIONSHIP... under their tile, with the
   author and the time. Bjorn's tile showed none of these when he looked: to check on the post itself.
+
+## Where the earlier covers went (17 Nov)
+
+`earlier/` holds the three candidates of doc 35 (`cover-a`, `cover-b`, `cover-c`), `cover-final` of doc 40 and the
+`.html` each was drawn from. `cover-tile.png` (or `.jpg`) is the cover for the gallery.

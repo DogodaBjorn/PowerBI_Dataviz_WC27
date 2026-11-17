@@ -64,7 +64,7 @@ h1 .hot{{color:{ORANGE}}}
 <div class='foot'>Room to Invest &nbsp;·&nbsp; Power BI Dataviz World Champs 2027 &nbsp;·&nbsp; Round 1</div>
 </body></html>"""
 
-page, png = OUT / "cover-tile.html", OUT / "cover-tile.png"
+page, png = OUT / "earlier" / "cover-tile.html", OUT / "cover-tile.png"
 page.write_text(html, encoding="utf-8")
 png.unlink(missing_ok=True)
 subprocess.run([EDGE, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=1", f"--window-size={W},{H}",

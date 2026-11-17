@@ -19,9 +19,10 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-OUT = ROOT / "project" / "deliverables" / "final-room-to-invest" / "gallery"
+GAL = ROOT / "project" / "deliverables" / "final-room-to-invest" / "gallery"
+OUT = GAL / "earlier"  # superseded by cover-tile.png, which survives the crop of the gallery tile (doc 41)
 ASSETS = ROOT / "design" / "brand-kits" / "goodnight-inn-wakeup" / "assets"
-FRONT = OUT / "report-page2.png"                                                              # Recommended: A, as last saved
+FRONT = GAL / "report-page2.png"                                                              # Recommended: A, as last saved
 BACK = ROOT / "project" / "deliverables" / "final-room-to-invest" / "step-tints" / "page2-what-waits.png"  # What waits, and why
 EDGE = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
