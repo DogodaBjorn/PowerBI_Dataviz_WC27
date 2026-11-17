@@ -36,7 +36,12 @@ The report is hand-finished. It is never regenerated; an edit goes through a scr
 - **Temporary files removed:** this session's scratch folder (437 MB: nine throwaway copies of the report, captures,
   one-off scripts, and a file with the Publish to Web link of an earlier publication), the Edge profile of the cover
   renders, a downloaded package file.
+- **Left over from the gate runs of 14 Nov:** two headless Edge processes still running after three days, and three
+  profile folders `%LOCALAPPDATA%\Temp\p2w-*` of 1.4 GB together. Stopped (after reading their command lines) and
+  removed. `step12/gate.py` leaves these behind: clear them at the end of a gate run.
 - **No Desktop window was open**; nothing was closed.
+- **The agent's notes** (outside the repository): the index line of this project went from 7,028 to 474 characters,
+  the closing state stands on top of the project note, and the rule about Bjorn's own Desktop window is written down.
 
 ## 3 · Not done, and why
 
