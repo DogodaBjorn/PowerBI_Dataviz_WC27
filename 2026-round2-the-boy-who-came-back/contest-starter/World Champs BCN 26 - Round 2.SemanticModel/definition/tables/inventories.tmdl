@@ -1,0 +1,70 @@
+table inventories
+	lineageTag: 6a592965-5ac9-4e90-84a3-e17719e9fcb8
+
+	column version
+		dataType: double
+		formatString: 0
+		lineageTag: bd418d21-2853-41a3-955f-9a38b823352a
+		summarizeBy: none
+		sourceColumn: version
+
+		annotation SummarizationSetBy = User
+
+	column set_num
+		dataType: string
+		isHidden
+		lineageTag: 9ce7bf99-7ebf-4713-a0d6-266d86e2895b
+		summarizeBy: none
+		sourceColumn: set_num
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column inventory_id
+		dataType: double
+		isHidden
+		lineageTag: 93ae9af4-6aad-4b3e-bf14-a829da6fc6c4
+		summarizeBy: none
+		sourceColumn: inventory_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'version rev'
+		dataType: double
+		isHidden
+		lineageTag: 8c86251e-e1d1-47f4-8667-63449ebcadd9
+		summarizeBy: sum
+		sourceColumn: version rev
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition inventories = m
+		mode: import
+		source = ```
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\shlindsay\Microsoft\DataCommunity - Growth\Engagement\Contests\Community Contests\Power BI\PBIDVWC - Barcelona 26\World Champs Round 2 Data\inventories.csv"),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"version", Int64.Type}, {"set_num", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"id", "inventory_id"}}),
+				    #"Grouped Rows" = Table.Group(#"Renamed Columns", {"set_num"}, {{"AllRowsGrouped", each Table.AddIndexColumn(
+				        Table.Sort(_,{{"version", 
+				        Order.Descending}}), "version rev",1,1), type table [inventory_id=nullable number, version=nullable number, set_num=nullable text,
+				        version rev=nullable number]}}),
+				    #"Expanded AllRowsGrouped" = Table.ExpandTableColumn(#"Grouped Rows", "AllRowsGrouped", {"inventory_id", "version", "version rev"}, {"inventory_id", "version", "version rev"})
+				in
+				    #"Expanded AllRowsGrouped"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

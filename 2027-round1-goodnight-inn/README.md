@@ -6,13 +6,13 @@ brand, **Goodnight Inn**, and proposes how its $60 M investment budget should be
 through 2032. Built on the [pbi-atelier](https://github.com/DogodaBjorn/pbi-atelier)
 lifecycle (template copied 2026-11-05). Client alias: `fabric-contest` · Language: `en`.
 
-**Deadline: November 18, 2026** (submission planned November 17).
-
 ## Status
 
-`project/project-state/status.yaml` — stage 0 (intake), nothing gated yet.
-Open the repo in Claude Code and paste the kickoff prompt at the bottom of
-`project/MISSION-goodnight-inn.md`; from then on `/next` routes the lifecycle.
+**Entered on 16 November 2026** as "Goodnight Inn - Room to Invest" (published to web, posted in the Contests
+Gallery). The report as entered: `Goodnight Inn - Room to Invest/Goodnight Inn - Room to Invest.pbip`.
+What was entered, what is still open and how to work on the report:
+`project/project-state/active/41-closing-state-and-cleanup-2026-11-17.md`. Everything that led up to it is in
+`project/archive/round1/`. The rest of this page is the project as it started on 5 November.
 
 ## Where things are
 
@@ -22,7 +22,7 @@ Open the repo in Claude Code and paste the kickoff prompt at the bottom of
 | `project/SCOUT-pillowkey-round1.md` | Rules digest, dataset mechanics (the organisers' impact rules decoded), all four brands compared |
 | `project/PITCH-goodnight-inn-directions.md` | Three creative directions (Wake-up call · Fifty keys · Two futures) scored on the seven G5 passes, plus the dataset codex and 18 idea seeds |
 | `project/creative-direction.draft.yaml` | Pre-filled stage-5 contract; `/s5-design` finishes it (`user_decided: false`) |
-| `project/deliverables/pitch/` | The browsable pitch page (`goodnight-inn-three-ways.html`, also published as a Claude artifact), its template and data |
+| `project/archive/round1/deliverables/pitch/` | The browsable pitch page (`goodnight-inn-three-ways.html`, also published as a Claude artifact), its template and data |
 | `project/analysis/` | The reproducible evidence pipeline: decode the starter `.pbix`, export tables, every analysis behind the numbers in the mission and pitch, with outputs |
 | `project/contest/` | The Round 1 blog post as text, and its links (starter file, dataset, rules PDF, gallery) |
 | `project/data/` | Local only (gitignored): the starter `.pbix`, the saved blog page. The dataset loads from the organisers' public blob through the model's `DataFile` parameter |

@@ -1,5 +1,9 @@
 # wc-round-3: World Champs round 3 build
 
+> **Since 18 Nov 2026 this project is the folder `2026-round3-movies/` of the repository `PowerBI_Dataviz_WC27`** (one
+> folder per contest round; see the `README.md` one level up). It came from the repository `wc-round-3`, branch
+> `main`, with its history. This folder is the project root: every path below is relative to it.
+
 Entry of Björn Kats (DoGoDa) for the Power BI Dataviz World Champs BCN 26, round 3, built on the pbi-atelier lifecycle. Status: `project/project-state/status.yaml` (stage 6 held on 2026-08-05, pending validator waivers). Mission brief: `MISSION-wc-round-3.md`. Contest data stays local. Below is the pbi-atelier template README that this project was started from.
 
 ---

@@ -1,0 +1,55 @@
+table inventory_minifigs
+	isHidden
+	lineageTag: cf9a1f82-fd18-444c-b3ac-a978d047894c
+
+	column inventory_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2946721e-b745-491f-9b6c-c0d2414a3fd1
+		summarizeBy: none
+		sourceColumn: inventory_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fig_num
+		dataType: string
+		isHidden
+		lineageTag: c8dc771d-ae1e-434a-811b-e7b66b4b0930
+		summarizeBy: none
+		sourceColumn: fig_num
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b999621d-e2eb-4712-9f77-4d812d87b5cf
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition inventory_minifigs = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\shlindsay\Microsoft\DataCommunity - Growth\Engagement\Contests\Community Contests\Power BI\PBIDVWC - Barcelona 26\World Champs Round 2 Data\inventory_minifigs.csv"),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"inventory_id", Int64.Type}, {"fig_num", type text}, {"quantity", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

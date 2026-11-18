@@ -1,0 +1,87 @@
+table themes
+	lineageTag: 16363cc8-c06a-4107-8e9c-3ecc7908791e
+
+	column theme_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ce07f67d-6a3b-477f-b3a3-3bbd3a489d8d
+		summarizeBy: none
+		sourceColumn: theme_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Theme
+		dataType: string
+		lineageTag: 6f83c0b7-5558-4102-87bf-a4656435d338
+		summarizeBy: none
+		sourceColumn: Theme
+
+		annotation SummarizationSetBy = Automatic
+
+	column parent_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a0f973a3-0e19-4ee8-a664-85fa9d19441f
+		summarizeBy: none
+		sourceColumn: parent_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Path = PATH(themes[theme_id],themes[parent_id])
+		isHidden
+		lineageTag: 866564ba-42a7-4833-af32-a69918382732
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Path Length' = PATHLENGTH(themes[Path])
+		isHidden
+		formatString: 0
+		lineageTag: 0b269668-a9b1-425c-abcc-290d8fbfe330
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Theme Level 1' = LOOKUPVALUE(themes[Theme], themes[theme_id], PATHITEM(themes[Path], 1, INTEGER))
+		lineageTag: f3c147b9-6a3e-456a-a659-674e0b8ae74a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Theme Level 2' = LOOKUPVALUE(themes[Theme], themes[theme_id], PATHITEM(themes[Path], 2, INTEGER))
+		lineageTag: 80994dfb-b1b4-4c1e-8922-84959653c7aa
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Theme Level 3' = LOOKUPVALUE(themes[Theme], themes[theme_id], PATHITEM(themes[Path], 3, INTEGER))
+		lineageTag: c62af028-7004-43ad-abd1-a483a6c9eccb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition themes = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\shlindsay\Microsoft\DataCommunity - Growth\Engagement\Contests\Community Contests\Power BI\PBIDVWC - Barcelona 26\World Champs Round 2 Data\themes.csv"),[Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"name", type text}, {"parent_id", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"id", "theme_id"}, {"name", "Theme"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "World Champs BCN 26 - Round 2"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "97664d4e-e320-40b1-b420-bcdca4f9745f"
+  }
+}

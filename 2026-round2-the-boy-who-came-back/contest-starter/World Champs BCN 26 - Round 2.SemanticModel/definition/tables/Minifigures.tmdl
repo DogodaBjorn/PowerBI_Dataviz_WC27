@@ -1,0 +1,55 @@
+table Minifigures
+	lineageTag: c981c053-8a3e-4a8d-be10-7ece70267602
+
+	column 'Figure Number'
+		dataType: string
+		lineageTag: ef508c66-d09a-4ae5-a4bf-9057a5a7c6b1
+		summarizeBy: none
+		sourceColumn: Figure Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Minifigure Name'
+		dataType: string
+		lineageTag: 5dead116-cfd9-4972-881e-5d41a5bbf07c
+		summarizeBy: none
+		sourceColumn: Minifigure Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column num_parts
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: dfbb2c20-5bb2-4743-90d3-cccc3c4f93ef
+		summarizeBy: none
+		sourceColumn: num_parts
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column img_url
+		dataType: string
+		lineageTag: aa9ec0f5-924f-4cc3-99f2-54bc765f730a
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: img_url
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Minifigures = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\shlindsay\Microsoft\DataCommunity - Growth\Engagement\Contests\Community Contests\Power BI\PBIDVWC - Barcelona 26\World Champs Round 2 Data\minifigs.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"fig_num", type text}, {"name", type text}, {"num_parts", Int64.Type}, {"img_url", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"name", "Minifigure Name"}, {"fig_num", "Figure Number"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

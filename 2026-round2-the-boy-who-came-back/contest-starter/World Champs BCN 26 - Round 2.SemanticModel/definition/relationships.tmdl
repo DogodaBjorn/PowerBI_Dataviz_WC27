@@ -1,0 +1,31 @@
+relationship AutoDetected_0ede0624-5d41-48a7-920f-a9a81ef9004f
+	crossFilteringBehavior: bothDirections
+	fromColumn: inventories.set_num
+	toColumn: sets.'Set Number'
+
+relationship AutoDetected_bc964d7b-e63f-4e08-9e18-f34c4ff9a96d
+	fromColumn: sets.theme_id
+	toColumn: themes.theme_id
+
+relationship AutoDetected_876e0ff2-0e46-4a41-bae7-070fb45d8291
+	fromColumn: inventory_parts.part_num
+	toColumn: parts.'Part Number'
+
+relationship AutoDetected_7ecd3efb-6d0c-46ba-ac7d-e5096025086c
+	fromColumn: inventory_parts.color_id
+	toColumn: colors.color_id
+
+relationship AutoDetected_5cd96acf-2a09-40b2-ad03-b2382fcbc19c
+	fromColumn: inventory_minifigs.fig_num
+	toColumn: Minifigures.'Figure Number'
+
+relationship 9ff3bf55-bf20-dfb6-0c70-516b20263be0
+	crossFilteringBehavior: bothDirections
+	fromColumn: inventory_parts.inventory_id
+	toColumn: inventories.inventory_id
+
+relationship ad4c6c35-f931-ae89-624c-59c4d3c2bae8
+	crossFilteringBehavior: bothDirections
+	fromColumn: inventory_minifigs.inventory_id
+	toColumn: inventories.inventory_id
+

@@ -1,0 +1,109 @@
+table colors
+	lineageTag: 73c2be08-b6e7-4d29-9706-b9e8bdabe661
+
+	measure 'Color code' = IF(HASONEVALUE(colors[rgb]), "#" & MIN(colors[rgb]))
+		lineageTag: 91b76d86-e2ac-4a98-8d96-077e345e219e
+
+	column color_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9b51ac1c-879b-4b11-9703-a281989a4feb
+		summarizeBy: none
+		sourceColumn: color_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Color
+		dataType: string
+		lineageTag: 34d5e23f-3f22-469e-b57e-840b01401b79
+		summarizeBy: none
+		sourceColumn: Color
+
+		annotation SummarizationSetBy = Automatic
+
+	column rgb
+		dataType: string
+		isHidden
+		lineageTag: 67d6af8d-91a1-481e-a588-b04385c97853
+		summarizeBy: none
+		sourceColumn: rgb
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is transparent'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a3363563-394a-4e91-8af1-7aecbb52c55f
+		summarizeBy: none
+		sourceColumn: Is transparent
+
+		annotation SummarizationSetBy = Automatic
+
+	column num_parts
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3871c41e-5a02-43c2-ab48-6341f5335cad
+		summarizeBy: none
+		sourceColumn: num_parts
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column num_sets
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6e42b3c2-5519-48cd-bec1-5cec76c21843
+		summarizeBy: none
+		sourceColumn: num_sets
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column y1
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f8eb16a2-d54c-4637-a632-06a36d445048
+		summarizeBy: none
+		sourceColumn: y1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column y2
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5c10cb39-e9f5-443a-b394-cd2b56ff896c
+		summarizeBy: none
+		sourceColumn: y2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition colors = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\shlindsay\Microsoft\DataCommunity - Growth\Engagement\Contests\Community Contests\Power BI\PBIDVWC - Barcelona 26\World Champs Round 2 Data\colors.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"name", type text}, {"rgb", type text}, {"is_trans", type logical}, {"num_parts", Int64.Type}, {"num_sets", Int64.Type}, {"y1", Int64.Type}, {"y2", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"id", "color_id"}, {"name", "Color"}, {"is_trans", "Is transparent"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

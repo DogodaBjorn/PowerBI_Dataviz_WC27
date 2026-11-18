@@ -1,0 +1,83 @@
+table inventory_parts
+	lineageTag: e604fe79-9dc7-4c52-b15d-ea198ec2aae7
+
+	column inventory_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 030efc0c-ee29-47a6-8327-332f68e926a0
+		summarizeBy: none
+		sourceColumn: inventory_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column part_num
+		dataType: string
+		isHidden
+		lineageTag: 51ee79ac-0ac2-47d4-8aa3-9043dcf55e36
+		summarizeBy: none
+		sourceColumn: part_num
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column color_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f33ccfde-ae3d-4bbe-b942-36ecafd4ea94
+		summarizeBy: none
+		sourceColumn: color_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b3c42669-2214-49a7-8aa0-d002e53bd910
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is spare'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: faa36843-d6d4-4253-a053-b5bf7a48de7c
+		summarizeBy: none
+		sourceColumn: Is spare
+
+		annotation SummarizationSetBy = Automatic
+
+	column img_url
+		dataType: string
+		lineageTag: d32b1ab0-2e72-4fc5-8201-c8e1b96d70c5
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: img_url
+
+		annotation SummarizationSetBy = Automatic
+
+	partition inventory_parts = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\shlindsay\Microsoft\DataCommunity - Growth\Engagement\Contests\Community Contests\Power BI\PBIDVWC - Barcelona 26\World Champs Round 2 Data\inventory_parts.csv"),[Delimiter=",", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"inventory_id", Int64.Type}, {"part_num", type text}, {"color_id", Int64.Type}, {"quantity", Int64.Type}, {"is_spare", type logical}, {"img_url", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"is_spare", "Is spare"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

@@ -1,0 +1,86 @@
+table sets
+	lineageTag: 50594643-22ec-41ae-a3d6-1628c80f9aaf
+
+	column 'Set Number'
+		dataType: string
+		lineageTag: b4ccd786-ba4e-4e3a-b642-d99addae46bc
+		summarizeBy: none
+		sourceColumn: Set Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Set
+		dataType: string
+		lineageTag: 97d6af3e-2375-4415-9e50-bb25df0be508
+		summarizeBy: none
+		sourceColumn: Set
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: adfb1829-394f-4c81-bbf0-33eab163458b
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = User
+
+	column theme_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5fb171bb-4dbc-4987-a5f9-06e1962579b6
+		summarizeBy: none
+		sourceColumn: theme_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'number of parts'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 87fd03be-b47b-4d9c-aaa6-cc5f2edf7d07
+		summarizeBy: sum
+		sourceColumn: number of parts
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column img_url
+		dataType: string
+		lineageTag: 2d8b7342-921b-4fca-9ff4-466ba6ab7397
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: img_url
+
+		annotation SummarizationSetBy = Automatic
+
+	column Decade
+		dataType: string
+		lineageTag: ae98eae5-30b2-4e39-be86-a08074026099
+		summarizeBy: none
+		sourceColumn: Decade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sets = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\shlindsay\Microsoft\DataCommunity - Growth\Engagement\Contests\Community Contests\Power BI\PBIDVWC - Barcelona 26\World Champs Round 2 Data\sets.csv"),[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"set_num", type text}, {"name", type text}, {"year", Int64.Type}, {"theme_id", Int64.Type}, {"num_parts", Int64.Type}, {"img_url", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"name", "Set"}, {"num_parts", "number of parts"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "Decade", each Number.ToText(Number.IntegerDivide([year], 10) * 10) & "s", type text),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"set_num", "Set Number"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

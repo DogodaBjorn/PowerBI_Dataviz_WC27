@@ -1,0 +1,64 @@
+table parts
+	lineageTag: 12152f8d-9bb6-4283-aa2b-eb7fec4d53da
+
+	column 'Part Number'
+		dataType: string
+		lineageTag: bd702e2c-9d78-4f1a-a040-2048de181735
+		summarizeBy: none
+		sourceColumn: Part Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Part Name'
+		dataType: string
+		lineageTag: 1a3e139c-c7f0-4c77-b635-2eb1ac3bbec1
+		summarizeBy: none
+		sourceColumn: Part Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column part_cat_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8d7014bb-c144-49b5-9aeb-260f15d085e1
+		summarizeBy: none
+		sourceColumn: part_cat_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Part Material'
+		dataType: string
+		lineageTag: 0aa0b59b-6962-4625-8e5c-4fe1a022f097
+		summarizeBy: none
+		sourceColumn: Part Material
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Part Category'
+		dataType: string
+		lineageTag: d71c58d4-bb87-46bf-ba20-4140fffd5121
+		summarizeBy: none
+		sourceColumn: Part Category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition parts = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\shlindsay\Microsoft\DataCommunity - Growth\Engagement\Contests\Community Contests\Power BI\PBIDVWC - Barcelona 26\World Champs Round 2 Data\parts.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"part_num", type text}, {"name", type text}, {"part_cat_id", Int64.Type}, {"part_material", type text}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"part_cat_id"}, part_categories, {"part_cat_id"}, "part_categories", JoinKind.LeftOuter),
+				    #"Expanded part_categories" = Table.ExpandTableColumn(#"Merged Queries", "part_categories", {"Part Category"}, {"Part Category"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded part_categories",{{"part_material", "Part Material"}, {"name", "Part Name"}, {"part_num", "Part Number"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

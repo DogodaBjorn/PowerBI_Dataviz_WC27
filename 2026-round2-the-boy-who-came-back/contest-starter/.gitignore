@@ -1,0 +1,5 @@
+# Brondata (130 MB csv) en Power BI-cache blijven lokaal
+World Champs Round 2 Data/
+*.pbix
+**/.pbi/cache.abf
+**/.pbi/localSettings.json

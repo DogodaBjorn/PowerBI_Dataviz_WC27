@@ -3,7 +3,7 @@
 **For:** Bjorn, and the agent that opens this project next.
 **Asked by Bjorn on 17 Nov:** "can you do a full on cleanup after all the work now that we have published the final
 version?"
-**State:** the entry is published and posted. Since 18 Nov the entry is `main` (one branch); the entered state is tag `round1-entry-2026-11-16`. Section 6 is the second cleanup, of 18 Nov; where it differs from sections 2 and 3, section 6 holds.
+**State:** the entry is published and posted. Since 18 Nov the entry is `main` (one branch); the entered state is tag `round1-entry-2026-11-16`. Sections 6 and 7 are the cleanups of 18 Nov; where they differ from what stands above them, the later section holds. **Paths in this document are relative to the entry folder** `2027-round1-goodnight-inn/`.
 
 ---
 
@@ -11,7 +11,7 @@ version?"
 
 | What | Where |
 |---|---|
-| The report | `E:\Goodnight Inn - Room to Invest\Goodnight Inn - Room to Invest.pbip` = `project/pbip/GoodnightInn-final.Report` (equal value for value; his last save is of 16 Nov 23:17) |
+| The report | `Goodnight Inn - Room to Invest/Goodnight Inn - Room to Invest.pbip` in this entry folder (until 18 Nov: `E:\Goodnight Inn - Room to Invest`) = `project/pbip/GoodnightInn-final.Report` (equal value for value; his last save is of 16 Nov 23:17) |
 | The model | `project/pbip/PillowKey.SemanticModel`, 341 measures, equal to the final copy's measure for measure |
 | The gallery post | title "The goodnight inn: Room to invest"; texts in `project/deliverables/final-room-to-invest/gallery/DESCRIPTION.md`; cover `gallery/cover-tile.png` |
 | The LinkedIn post | `project/deliverables/final-room-to-invest/linkedin/` (film, still, `POST.md`) |
@@ -111,8 +111,38 @@ all ok, `build_checks.py --static` all ok, `a11y_check.py` the same four (the or
 - Left alone because they are of the 2026 contest, not of this entry: `E:\World Champs R2`, and in Downloads the
   `World Champs BCN 26` files (three of them the same 51 MB file) and three `PowerBI_Setup_DatavizWC` zips.
 
+## 7 · One repository, a folder per entry (18 Nov 2026, later)
+
+**Asked by Bjorn:** "put everything in the same PowerBI Data Viz folder and repository, also older entries..
+migrate everything into own entry folders ... I don't want any separate folders on my E anymore". On the two
+choices put to him: move both 2026 build repositories in with their history; starter files in, duplicates out.
+
+| What | Done |
+|---|---|
+| This project (everything that stood at the repository's root) | moved as it was into `2027-round1-goodnight-inn/`; history kept. The tools find their root from their own place; six one-off helpers with a typed path were repointed |
+| `E:\Goodnight Inn - Room to Invest` (Bjorn's own copy) | moved into this entry folder under the same name and tracked in git; `save_diff.py` reads it there. This supersedes the first bullet under "Still with Bjorn" in section 6 |
+| The 2026 Round 2 build, repository `hp-world-champs` (`E:\PowerBI Set-up\hp-world-champs`) | merged with its 67 commits into `2026-round2-the-boy-who-came-back/`; its files outside git (data, the `.pbix`, caches, `node_modules`) moved along; the old folder to the Recycle Bin |
+| The 2026 Round 3 build, repository `wc-round-3` (`E:\PowerBI Set-up\wc-round-3`) | the same, 42 commits, into `2026-round3-movies/` |
+| `E:\World Champs R2` (repository `world-champs-r2`) | its files into `2026-round2-the-boy-who-came-back/contest-starter/`. It was labelled the Round 2 deliverable; it is the organisers' package, file for file (equal to their zip and to the starter kept in `E:\PowerBI Set-up\_archive`) |
+| Loose files | the Round 1 starter of 2026 from Downloads into `2026-round1/contest/`; three copies of the Round 3 starter in Downloads (equal to the one in the project) to the Recycle Bin; on the OneDrive Desktop the copy of the Round 2 package (76 of 76 files equal) to the Recycle Bin and its zip into `contest-starter/` |
+
+**Checked after the move**, from this entry folder: `save_diff.py` 0 differences between Bjorn's copy and
+`project/pbip/GoodnightInn-final.Report` (341 measures both sides); `strip_check.py`, `compliance_check.py`,
+`build_checks.py --static` and `a11y_check.py` give the same output as before the first move, to the byte. For the
+two 2026 projects the tree in this repository equals the tree of the old repository's last commit.
+
+**How to work here now:** open `2027-round1-goodnight-inn/` as the working directory. Bjorn opens the report from
+`Goodnight Inn - Room to Invest/` in this folder; a save of his shows in `git status`, and `save_diff.py --take`
+still carries it into `project/pbip/GoodnightInn-final.Report`.
+
+**Still with Bjorn:** the three older repositories on GitHub (`hp-world-champs`, public and pinned; `wc-round-3`;
+`world-champs-r2`) still exist: archive or delete them when he wants. The older reports in the Power BI service and
+section 4 are unchanged. Not moved: `E:\PowerBI Set-up\_archive` (a backup zip of `hp-world-champs` and the
+Round 2 starter) and three `PowerBI_Setup_DatavizWC` zips in Downloads: they are of the set-up, not of an entry.
+
 ## Log
 
 - 17 Nov: the 23:17 save taken in; tools saved; gallery folder ordered; merged local branches removed; tag set;
   temporary files removed; this document.
 - 18 Nov: the second cleanup (section 6): old copies on E: to the Recycle Bin, scratch folders removed, stashes and branches dropped, `rebuild-finalv3` merged into `main`, old parts and steps moved to `project/archive/round1/`.
+- 18 Nov, later: one repository with a folder per entry (section 7): this project into `2027-round1-goodnight-inn/`, Bjorn's copy into it, the two 2026 builds merged in with their history.

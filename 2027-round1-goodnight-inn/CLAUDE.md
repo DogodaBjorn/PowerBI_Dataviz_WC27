@@ -7,8 +7,13 @@ exists, and all work serves the Power BI Dataviz World Champs 2027 entry for
 - **Where things stand:** `project/project-state/active/41-closing-state-and-cleanup-2026-11-17.md`
   (what was entered, what is open, the rules for working on the report). Read it first.
 - **The entry** is `project/pbip/GoodnightInn-final.Report` with `project/pbip/PillowKey.SemanticModel`;
-  Bjorn's own copy is `E:\Goodnight Inn - Room to Invest`. The report is hand-finished: never
+  Bjorn's own copy, the one he opens and publishes from, is the folder `Goodnight Inn - Room to Invest/`
+  beside this file (it was `E:\Goodnight Inn - Room to Invest` until 18 Nov). The report is hand-finished: never
   regenerate over it; an edit is a script in `project/tools/final_edit/`, after `save_diff.py`.
+- **This folder is one entry** in the repository `PowerBI_Dataviz_WC27` (one folder per contest round, see the
+  `README.md` one level up). It is the project root: every path in this file, in the documents and in the scripts
+  is relative to this folder, and work on it starts with this folder as the working directory. In documents
+  written before 18 Nov, "the repository root" means this folder.
 - **One branch:** `main` is the entry (since 18 Nov 2026); the entered state is tag
   `round1-entry-2026-11-16`.
 - **Everything older** (round documents 00 to 40, every render set, the step prompts, the D1-D3

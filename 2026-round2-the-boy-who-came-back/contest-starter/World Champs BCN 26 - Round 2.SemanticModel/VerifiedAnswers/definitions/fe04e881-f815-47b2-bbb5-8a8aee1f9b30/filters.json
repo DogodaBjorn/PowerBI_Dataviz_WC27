@@ -1,0 +1,21 @@
+{
+  "filters": [
+    {
+      "name": "783a6faae808885e2aa3",
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Minifigures"
+            }
+          },
+          "Property": "Minifigure Name"
+        }
+      },
+      "type": "Categorical",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true
+    }
+  ],
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/filterConfiguration/1.3.0/schema.json"
+}

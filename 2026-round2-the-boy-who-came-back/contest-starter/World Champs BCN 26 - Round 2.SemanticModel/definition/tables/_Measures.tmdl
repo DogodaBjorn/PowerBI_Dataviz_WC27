@@ -1,0 +1,56 @@
+table _Measures
+	lineageTag: 3ee311af-b225-4e80-9ba9-593a395047f0
+
+	measure Sets = COUNTROWS(sets)
+		formatString: #,0
+		lineageTag: 669525d6-39c6-46da-9a97-217ade3deda2
+
+	measure Parts = ```
+			CALCULATE(SUM(inventory_parts[quantity]), inventories[version rev] = 1)    
+			```
+		formatString: #,0
+		lineageTag: 2afca814-aed8-4921-a51c-def274d63f63
+
+	measure Minifigures = SUM(inventory_minifigs[quantity])
+		formatString: #,0
+		lineageTag: 8e5bd9f9-a3c8-42e2-b4b5-770a95f0f89f
+
+	measure Versions = COUNTROWS(inventories)
+		formatString: 0
+		lineageTag: 940897e2-6818-4a46-9a78-68a8ee82731a
+
+	measure 'Parts all' = SUM(inventory_parts[quantity])
+		formatString: #,0
+		isHidden
+		lineageTag: 22c95859-bed4-4654-9352-6c4a66fd5fae
+
+	/// Counts the distinct non-blank part numbers in the inventory_parts table to show the number of unique parts.
+	measure 'Unique Parts' = DISTINCTCOUNTNOBLANK(inventory_parts[part_num])
+		formatString: #,0
+		lineageTag: f09cf38c-def4-469e-bc95-33d500aa48c9
+
+	measure 'Unique Minifigures' = DISTINCTCOUNTNOBLANK(inventory_minifigs[fig_num])
+		formatString: #,0
+		lineageTag: cd37e649-e4ad-4fdc-b74d-cfbb4f75efc3
+
+	/// Calculates the average number of parts per set by averaging the Parts-to-Sets ratio across all rows in the inventories table.
+	measure 'Average Parts per Set' = AVERAGEX(inventories, DIVIDE([Parts], [Sets]))
+		formatString: #,0.00
+		lineageTag: 0150277f-1f36-43f9-a966-2b65e94bf427
+
+	column Value
+		isHidden
+		formatString: 0
+		lineageTag: 9536d1f3-e247-4a87-9192-8cbab3d8930b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = { BLANK() }
+
+	annotation PBI_Id = 376588de630949899750b5f427626314
+

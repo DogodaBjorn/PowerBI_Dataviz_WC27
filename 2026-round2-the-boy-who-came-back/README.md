@@ -1,5 +1,12 @@
 # hp-world-champs: World Champs round 2 build
 
+> **Since 18 Nov 2026 this project is the folder `2026-round2-the-boy-who-came-back/` of the repository `PowerBI_Dataviz_WC27`** (one
+> folder per contest round; see the `README.md` one level up). It came from the repository `hp-world-champs`, branch
+> `v3-refinement`, with its history. This folder is the project root: every path below is relative to it.
+> `contest-starter/` holds the organisers' Round 2 package (it was the repository `world-champs-r2`, which a
+> line below calls the submitted PBIP; it is the starter, file for file). The report as built is
+> `project/The Boy who came back.pbix` (on this machine only) and `project/pbip/`.
+
 Entry of Björn Kats (DoGoDa) for the Power BI Dataviz World Champs BCN 26, round 2, built on the pbi-atelier lifecycle. Status: `project/project-state/status.yaml` (stage 6, report build, July 2026). The submitted PBIP lives in [world-champs-r2](https://github.com/DogodaBjorn/world-champs-r2). Below is the pbi-atelier template README that this project was started from.
 
 ---

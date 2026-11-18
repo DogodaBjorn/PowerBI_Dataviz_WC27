@@ -1,0 +1,27 @@
+expression inventory_sets =
+		let
+		    Source = Csv.Document(File.Contents("C:\Users\shlindsay\Microsoft\DataCommunity - Growth\Engagement\Contests\Community Contests\Power BI\PBIDVWC - Barcelona 26\World Champs Round 2 Data\inventory_sets.csv"),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"inventory_id", Int64.Type}, {"set_num", type text}, {"quantity", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 552459f2-1bf7-43d5-a969-82033803e817
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression part_categories =
+		let
+		    Source = Csv.Document(File.Contents("C:\Users\shlindsay\Microsoft\DataCommunity - Growth\Engagement\Contests\Community Contests\Power BI\PBIDVWC - Barcelona 26\World Champs Round 2 Data\part_categories.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"name", type text}}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"id", "part_cat_id"}, {"name", "Part Category"}})
+		in
+		    #"Renamed Columns"
+	lineageTag: 077bd4d4-3b7e-417b-b52d-bd1ac6f407e9
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

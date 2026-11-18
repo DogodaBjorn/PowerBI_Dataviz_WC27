@@ -1,0 +1,26 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["inventories","inventory_sets","sets","themes","inventory_parts","parts","colors","part_categories","inventory_minifigs","Minifigures"]
+
+annotation PBI_ProTooling = ["CopilotTooling","Copilot","CopilotMeasureDescriptions","DevMode"]
+
+ref table inventories
+ref table sets
+ref table themes
+ref table inventory_parts
+ref table parts
+ref table colors
+ref table inventory_minifigs
+ref table Minifigures
+ref table _Measures
+
+ref cultureInfo en-US
+
