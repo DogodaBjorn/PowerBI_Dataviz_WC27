@@ -1,0 +1,87 @@
+/// Hotel dimension as shipped, plus refresh-age and capacity flags derived in the model.
+table Hotels
+	lineageTag: 9f6b3b0c-e135-5093-a8de-6ca456a9359e
+
+	column HotelID
+		dataType: string
+		lineageTag: 69e53df1-2be6-57d0-a285-671c04629856
+		summarizeBy: none
+		sourceColumn: HotelID
+
+	column HotelName
+		dataType: string
+		lineageTag: 4edc4f1c-fa00-50e2-9be0-cb5a1456a988
+		summarizeBy: none
+		sourceColumn: HotelName
+
+	column Brand
+		dataType: string
+		lineageTag: 77a0b5f7-05cd-56f7-a8cf-abcf6d29731e
+		summarizeBy: none
+		sourceColumn: Brand
+
+	column City
+		dataType: string
+		lineageTag: f9887a73-1206-5e5c-b0b7-c054adb409e4
+		summarizeBy: none
+		sourceColumn: City
+
+	column LocationType
+		dataType: string
+		lineageTag: e3ce4dd6-4d9f-5646-bfbc-6a2040e38dec
+		summarizeBy: none
+		sourceColumn: LocationType
+
+	column Rooms
+		dataType: int64
+		formatString: 0
+		lineageTag: 8e2ec8f6-90e4-5f6a-923a-7c96fe864aa4
+		summarizeBy: none
+		sourceColumn: Rooms
+
+	column LastRenovationDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 24206335-fa71-5829-9f1c-ba8e4f5a932c
+		summarizeBy: none
+		sourceColumn: LastRenovationDate
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Hotel name without the brand prefix, for dense walls and tables.
+	column 'Hotel Short Name' = TRIM(SUBSTITUTE(Hotels[HotelName], Hotels[Brand] & " ", ""))
+		lineageTag: 89acea06-0df5-550e-ab00-d8598f64a77e
+		summarizeBy: none
+
+	/// The hotel's name in running copy: its city, or the airport's name where the copy uses that (London Gatwick: Gatwick).
+	column 'Copy Name' = SWITCH ( Hotels[HotelID], "GI027", "Gatwick", Hotels[City] )
+		lineageTag: 07a6342f-b303-53df-a64f-83e94d64bd06
+		summarizeBy: none
+
+	/// 1, 2 or 3 for 5 years or less, 6 to 9 and 10 or more years since the last renovation (2025); blank when never renovated.
+	column 'Renovation Age Sort' = VAR y = 2025 - YEAR ( Hotels[LastRenovationDate] ) RETURN IF ( ISBLANK ( Hotels[LastRenovationDate] ), BLANK (), SWITCH ( TRUE (), y <= 5, 1, y <= 9, 2, 3 ) )
+		formatString: 0
+		lineageTag: b7d349c6-4bfe-5243-b980-0543a84fa6bb
+		summarizeBy: none
+
+	/// Axis label of the fading-welcome chart: the age band and how many of the brand's hotels sit in it.
+	column 'Renovation Age Label' = VAR s = Hotels[Renovation Age Sort] VAR br = Hotels[Brand] VAR n = COUNTROWS ( FILTER ( ALLNOBLANKROW ( Hotels[HotelID], Hotels[Brand], Hotels[Renovation Age Sort] ), Hotels[Brand] = br && Hotels[Renovation Age Sort] = s ) ) RETURN IF ( ISBLANK ( s ) || n = 0, BLANK (), SWITCH ( s, 1, "5 years or less", 2, "6 to 9 years", "10 years or more" ) )
+		lineageTag: 13dee0f0-1d4b-522c-b8dc-0866d6fe65dc
+		summarizeBy: none
+		sortByColumn: 'Renovation Age Sort'
+
+	partition Hotels = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="Hotels",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Selected = Table.SelectColumns(Promoted, {"HotelID", "HotelName", "Brand", "City", "LocationType", "Rooms", "LastRenovationDate"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"HotelID", type text}, {"HotelName", type text}, {"Brand", type text}, {"City", type text}, {"LocationType", type text}, {"Rooms", Int64.Type}, {"LastRenovationDate", type date}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

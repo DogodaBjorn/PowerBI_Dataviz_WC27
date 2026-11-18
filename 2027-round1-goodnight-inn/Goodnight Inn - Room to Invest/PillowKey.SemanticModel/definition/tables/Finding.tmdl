@@ -1,0 +1,37 @@
+/// The four findings of The Brand Review page, in the order of the 2032 ledger (F2, F1, F4, F3). Disconnected row source of the ledger table: its measures switch on Code.
+table Finding
+	lineageTag: dfe04e4a-87cb-5513-b7b8-78afbcd3e027
+
+	column Code
+		lineageTag: 7db9fd8f-826c-540f-a703-f90de3eee4c3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Code]
+		sortByColumn: 'Ledger Sort'
+
+	column Label
+		lineageTag: a68c845d-19fb-52cf-ac85-06055cbf2b47
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Label]
+		sortByColumn: 'Ledger Sort'
+
+	column 'Ledger Sort'
+		formatString: 0
+		lineageTag: 5aa83395-e2a4-51f5-9b35-fb7fba3fb7e8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Ledger Sort]
+
+	partition Finding = calculated
+		mode: import
+		source =
+				SELECTCOLUMNS (
+					(
+					DATATABLE ( "Code", STRING, "Name", STRING, "Label", STRING, "Ledger Sort", INTEGER, { { "II", "The middleman", "II The middleman", 1 }, { "I", "The margin", "I The margin", 2 }, { "IV", "Where we are full", "IV Where we are full", 3 }, { "III", "The fading welcome", "III The fading welcome", 4 } } )
+					),
+					"Code", [Code], "Label", [Label], "Ledger Sort", [Ledger Sort]
+				)
+
+	annotation PBI_ResultType = Table
+

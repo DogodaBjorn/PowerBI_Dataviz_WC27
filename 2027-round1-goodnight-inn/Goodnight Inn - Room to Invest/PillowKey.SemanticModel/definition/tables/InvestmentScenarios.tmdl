@@ -1,0 +1,58 @@
+/// Grain: one row per project and scenario (Low / Expected / High), organisers' annual impacts in 2025 dollars.
+table InvestmentScenarios
+	lineageTag: b473dfc2-fc47-5e8d-b80e-e38b22615614
+
+	column ProjectID
+		dataType: string
+		isHidden
+		lineageTag: eb6df782-7524-5708-a3a0-d730cf4ccc9b
+		summarizeBy: none
+		sourceColumn: ProjectID
+
+	column Scenario
+		dataType: string
+		lineageTag: 52432b7e-9c98-5950-af8d-b9dc199f9a0e
+		summarizeBy: none
+		sourceColumn: Scenario
+
+	column DistributionCostChangePts
+		dataType: double
+		lineageTag: 273f37da-e545-521b-b6ba-2c6d4649eb43
+		summarizeBy: none
+		sourceColumn: DistributionCostChangePts
+
+	column SatisfactionChangePts
+		dataType: double
+		lineageTag: dd7d617d-ba58-5b7f-9b6b-24b57d066b19
+		summarizeBy: none
+		sourceColumn: SatisfactionChangePts
+
+	column AnnualRevenueImpactUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 562b4381-b8b1-5eb9-921c-19b94aeed1dc
+		summarizeBy: none
+		sourceColumn: AnnualRevenueImpactUSD
+
+	column AnnualOperatingProfitImpactUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ebfbc94-d86e-5e12-b728-258bf5365b40
+		summarizeBy: none
+		sourceColumn: AnnualOperatingProfitImpactUSD
+
+	partition InvestmentScenarios = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="InvestmentScenarios",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Selected = Table.SelectColumns(Promoted, {"ProjectID", "Scenario", "DistributionCostChangePts", "SatisfactionChangePts", "AnnualRevenueImpactUSD", "AnnualOperatingProfitImpactUSD"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"ProjectID", type text}, {"Scenario", type text}, {"DistributionCostChangePts", type number}, {"SatisfactionChangePts", type number}, {"AnnualRevenueImpactUSD", Int64.Type}, {"AnnualOperatingProfitImpactUSD", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

@@ -1,39 +1,16 @@
+# One repository, one folder per contest entry. Each entry folder keeps its own
+# .gitignore for what is particular to it; this file holds what goes for all.
+
 # --- OS / editor noise ---
 Thumbs.db
 .DS_Store
-*.swp
+desktop.ini
 
-# --- Python ---
+# --- Power BI Desktop's local state (never commit) ---
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
+
+# --- Build leftovers ---
+node_modules/
 __pycache__/
 *.pyc
-.venv/
-venv/
-
-# --- Node (custom-visual-studio module) ---
-node_modules/
-dist/
-.tmp/
-
-# --- Power BI local state (never commit) ---
-**/.pbi/localSettings.json
-**/.pbi/cache.abf
-*.pbix
-
-# --- Project data (sample extracts stay local) ---
-project/data-samples/*
-!project/data-samples/.gitkeep
-
-# --- Claude Code local settings ---
-.claude/settings.local.json
-
-# --- Contest data and pages (local only) ---
-project/data/*
-!project/data/README.md
-*.mht
-project/analysis/data/
-
-# --- Power BI Desktop's own folder state (editorSettings etc.), always discarded ---
-**/.pbi/
-
-# --- Render working sheets from the Desktop capture scripts (deliverable renders live in project/deliverables/screenshots) ---
-project/tools/desktop_shots/*.png

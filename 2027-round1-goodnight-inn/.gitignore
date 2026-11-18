@@ -1,0 +1,39 @@
+# --- OS / editor noise ---
+Thumbs.db
+.DS_Store
+*.swp
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- Node (custom-visual-studio module) ---
+node_modules/
+dist/
+.tmp/
+
+# --- Power BI local state (never commit) ---
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+*.pbix
+
+# --- Project data (sample extracts stay local) ---
+project/data-samples/*
+!project/data-samples/.gitkeep
+
+# --- Claude Code local settings ---
+.claude/settings.local.json
+
+# --- Contest data and pages (local only) ---
+project/data/*
+!project/data/README.md
+*.mht
+project/analysis/data/
+
+# --- Power BI Desktop's own folder state (editorSettings etc.), always discarded ---
+**/.pbi/
+
+# --- Render working sheets from the Desktop capture scripts (deliverable renders live in project/deliverables/screenshots) ---
+project/tools/desktop_shots/*.png

@@ -1,0 +1,131 @@
+/// Project dimension as shipped, plus the recommended-plan grouping (Move) used by the plan builder.
+table InvestmentProjects
+	lineageTag: 6d130973-8812-5200-b052-9dded4643640
+
+	column ProjectID
+		dataType: string
+		lineageTag: a563b1f0-46da-540d-9ec9-b30b37b91ee0
+		summarizeBy: none
+		sourceColumn: ProjectID
+
+	column Brand
+		dataType: string
+		lineageTag: bb69145f-ffcc-5417-9f64-4476ca519eff
+		summarizeBy: none
+		sourceColumn: Brand
+
+	column ProjectName
+		dataType: string
+		lineageTag: 7aaaf263-8002-59ae-8fb2-48118380dfe3
+		summarizeBy: none
+		sourceColumn: ProjectName
+
+	column Category
+		dataType: string
+		lineageTag: 3c308a68-e9a2-5faa-ad6f-5c0aba661636
+		summarizeBy: none
+		sourceColumn: Category
+
+	column Scope
+		dataType: string
+		lineageTag: 84ee9755-b0d6-5bcb-94db-dce9d43591f1
+		summarizeBy: none
+		sourceColumn: Scope
+
+	column GrowthInitiative
+		dataType: string
+		lineageTag: 6559ae53-db35-544e-82e7-8c7c5eb1f9f1
+		summarizeBy: none
+		sourceColumn: GrowthInitiative
+
+	column CapexUSD
+		dataType: int64
+		formatString: 0
+		lineageTag: 622e5854-148a-5d3f-b555-5c5befbfa6d0
+		summarizeBy: none
+		sourceColumn: CapexUSD
+
+	column EarliestStart
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b897178f-227c-58c5-9a13-3c5a1219b22e
+		summarizeBy: none
+		sourceColumn: EarliestStart
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DurationMonths
+		dataType: int64
+		formatString: 0
+		lineageTag: a5066bbf-4110-5e8d-91c9-30e419511a43
+		summarizeBy: none
+		sourceColumn: DurationMonths
+
+	column RoomsOutOfServicePct
+		dataType: double
+		lineageTag: b4695fd0-1d15-5967-bfbb-8ef4539b2c87
+		summarizeBy: none
+		sourceColumn: RoomsOutOfServicePct
+
+	column AddedRooms
+		dataType: int64
+		formatString: 0
+		lineageTag: 9cd0faea-d827-5a91-8bd6-2d64a5a21ce6
+		summarizeBy: none
+		sourceColumn: AddedRooms
+
+	column DependsOn
+		dataType: string
+		lineageTag: 7ff131d7-4d78-5cd7-a9a3-42c01b1699a1
+		summarizeBy: none
+		sourceColumn: DependsOn
+
+	/// Short label for the plan builder and the departures board (Goodnight Inn projects only).
+	column 'Short Name' = SWITCH(InvestmentProjects[ProjectID], "GI-01", "Booking app & rates", "GI-02", "Kiosks, 20 busiest", "GI-03", "Energy programme", "GI-04", "Toronto +40 rooms", "GI-05", "Gatwick +40 rooms", "GI-06", "Kingston +40 rooms", "GI-07", "Refresh, 10 oldest", "GI-08", "Boston new hotel", "GI-09", "Breakfast upgrade", "GI-10", "Revenue management", InvestmentProjects[ProjectName])
+		lineageTag: 81538601-0b07-5e7d-8737-df951bf1d8ff
+		summarizeBy: none
+
+	/// Earliest start, or the month the prerequisite (DependsOn) goes live if that is later: GI-02 kiosks start when the GI-01 app is live.
+	column 'Planned Start' = VAR dep = InvestmentProjects[DependsOn] VAR own = InvestmentProjects[EarliestStart] RETURN IF ( dep = "", own, MAX ( own, EDATE ( LOOKUPVALUE ( InvestmentProjects[EarliestStart], InvestmentProjects[ProjectID], dep ), LOOKUPVALUE ( InvestmentProjects[DurationMonths], InvestmentProjects[ProjectID], dep ) ) ) )
+		formatString: Short Date
+		lineageTag: a7272cc5-f01c-5f35-983c-6178c01093d7
+		summarizeBy: none
+
+	/// Planned start plus duration: the month the project goes live.
+	column 'Completion Date' = EDATE(InvestmentProjects[Planned Start], InvestmentProjects[DurationMonths])
+		formatString: Short Date
+		lineageTag: 71192867-f11b-5bad-9ab5-3ee230af5912
+		summarizeBy: none
+
+	/// Decision data, not source data: the Brand Review finding (F1 to F4 on page 1) the initiative answers; Goodnight Inn projects only. One mapping with MoveDecision[Finding] (doc 20 D4, 13 Nov: the kiosks answer F4).
+	column 'Answers Finding' = SWITCH ( InvestmentProjects[ProjectID], "GI-01", "II", "GI-02", "IV", "GI-03", "I", "GI-04", "IV", "GI-05", "IV", "GI-06", "IV", "GI-07", "III", "GI-08", "IV", "GI-09", "III", "GI-10", "I", BLANK () )
+		lineageTag: 8e9d65ba-97d8-539a-b76d-606ffd64d7a9
+		summarizeBy: none
+
+	/// Rank of the move by its Expected 'a year on cost' (profit a year by 2032 over capex) within Goodnight Inn, 1 = highest; fixed at refresh, so the hero table's order never follows the scenario. 99 for other brands.
+	column 'Hero Sort' = VAR myp = InvestmentProjects[ProjectID] VAR myc = InvestmentProjects[CapexUSD] VAR myb = InvestmentProjects[Brand] VAR gi = FILTER ( ALL ( InvestmentProjects[ProjectID], InvestmentProjects[CapexUSD], InvestmentProjects[Brand] ), InvestmentProjects[Brand] = "Goodnight Inn" ) VAR me = DIVIDE ( SUMX ( FILTER ( InvestmentScenarios, InvestmentScenarios[ProjectID] = myp && InvestmentScenarios[Scenario] = "Expected" ), InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), myc ) RETURN IF ( myb = "Goodnight Inn", COUNTROWS ( FILTER ( gi, VAR p = InvestmentProjects[ProjectID] VAR c = InvestmentProjects[CapexUSD] RETURN DIVIDE ( SUMX ( FILTER ( InvestmentScenarios, InvestmentScenarios[ProjectID] = p && InvestmentScenarios[Scenario] = "Expected" ), InvestmentScenarios[AnnualOperatingProfitImpactUSD] ), c ) > me ) ) + 1, 99 )
+		formatString: 0
+		lineageTag: bbb8ef07-8fc5-5ed2-a1ab-27e301c04883
+		summarizeBy: none
+
+	/// The move's full name as the Investment Strategy page says it (R-P2-3); the organisers' project name for other brands. Sorted by Hero Sort.
+	column 'Move Name' = SWITCH ( InvestmentProjects[ProjectID], "GI-01", "Booking app & member rates", "GI-02", "Kiosks at the 20 busiest hotels", "GI-03", "Energy programme", "GI-04", "Toronto +40 rooms", "GI-05", "Gatwick +40 rooms", "GI-06", "Kingston +40 rooms", "GI-07", "Refresh, 10 oldest hotels", "GI-08", "Boston new hotel", "GI-09", "Breakfast upgrade", "GI-10", "Revenue management", InvestmentProjects[ProjectName] )
+		lineageTag: ebf7bfad-b5bc-5742-b8be-b577fcd36004
+		summarizeBy: none
+		sortByColumn: 'Hero Sort'
+
+	partition InvestmentProjects = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
+				    Sheet = Source{[Item="InvestmentProjects",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Selected = Table.SelectColumns(Promoted, {"ProjectID", "Brand", "ProjectName", "Category", "Scope", "GrowthInitiative", "CapexUSD", "EarliestStart", "DurationMonths", "RoomsOutOfServicePct", "AddedRooms", "DependsOn"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"ProjectID", type text}, {"Brand", type text}, {"ProjectName", type text}, {"Category", type text}, {"Scope", type text}, {"GrowthInitiative", type text}, {"CapexUSD", Int64.Type}, {"EarliestStart", type date}, {"DurationMonths", Int64.Type}, {"RoomsOutOfServicePct", type number}, {"AddedRooms", Int64.Type}, {"DependsOn", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+
