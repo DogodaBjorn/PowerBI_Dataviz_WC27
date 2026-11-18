@@ -1,0 +1,91 @@
+table 'Genre Bridge'
+	isHidden
+	lineageTag: 6baada0e-8f06-4952-9107-fdc99d47c52f
+
+	column 'Movie ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2668739a-6c07-412b-b5eb-1c36245ff408
+		summarizeBy: none
+		sourceColumn: Movie ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Genre ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6ad7b4e3-6e1b-4e4b-82bc-281fee28e7b3
+		summarizeBy: none
+		sourceColumn: Genre ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Genre Bridge' = m
+		mode: import
+		queryGroup: 'Bridge Tables'
+		source =
+				let
+				    Source = Source,
+				
+				    MovieGenres =
+				        Table.SelectColumns(Source, {"id", "genres"}),
+				
+				    SplitGenres =
+				        Table.SelectRows(
+				            Table.ExpandListColumn(
+				                Table.TransformColumns(
+				                    MovieGenres,
+				                    {
+				                        {
+				                            "genres",
+				                            each List.Transform(
+				                                Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_),
+				                                each Text.Clean(Text.Trim(_))
+				                            ),
+				                            type {text}
+				                        }
+				                    }
+				                ),
+				                "genres"
+				            ),
+				            each [genres] <> null and [genres] <> ""
+				        ),
+				
+				    MergeGenres =
+				        Table.NestedJoin(
+				            SplitGenres,
+				            {"genres"},
+				            Genres,
+				            {"Genre"},
+				            "GenreLookup",
+				            JoinKind.LeftOuter
+				        ),
+				
+				    BridgeMovieGenre =
+				        Table.RenameColumns(
+				            Table.RemoveColumns(
+				                Table.ExpandTableColumn(
+				                    MergeGenres,
+				                    "GenreLookup",
+				                    {"Genre ID"},
+				                    {"Genre ID"}
+				                ),
+				                {"genres"}
+				            ),
+				            {{"id", "Movie ID"}}
+				        )
+				in
+				    BridgeMovieGenre
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

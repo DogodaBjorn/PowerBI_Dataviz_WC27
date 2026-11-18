@@ -1,0 +1,141 @@
+# Model blueprint contract — filled at stage 3, one per project.
+# Purpose: the star schema on paper before it exists on disk. Grain first.
+
+contract: model-blueprint
+project: "wc-round-3"
+date: "2026-08-04"
+
+facts:
+  - name: "Movies"
+    grain: "ONE ROW MEANS: one TMDB movie listing from the starter's load, which keeps only rows with budget > 0 (starter M filter; 85,394 rows). Movie ID NOT unique (verified s4: 85,293 distinct, 101 dup-ID rows); 2.0% duplicate (Title, Release Date) pairs -> say 'listings'."
+    source: "Kaggle TMDB Movies Dataset v11 CSV via shared expression 'Source' — to be parameterized through SourceRoot (currently a machine path: validator error)"
+    date_keys: ["Release Date", "Release Year Key (ADD)"]
+    expected_rows: "~85k (exactly 85,394 at Q2)"
+  - name: "Genre Bridge"
+    grain: "ONE ROW MEANS: one (movie listing, genre) assignment parsed from the raw CSV genres field. Factless bridge; built from the UNFILTERED Source, so it carries Movie IDs absent from Movies."
+    source: "same CSV via 'Source' expression"
+    date_keys: []
+    expected_rows: "1,237,679 (verified s4 via MCP)"
+  - name: "Keyword Bridge"
+    grain: "ONE ROW MEANS: one (movie listing, keyword) assignment; same construction and unfiltered-source caveat."
+    source: "same CSV via 'Source' expression"
+    date_keys: []
+    expected_rows: "1,155,522 (verified s4 via MCP)"
+  - name: "Production Company Bridge"
+    grain: "ONE ROW MEANS: one (movie listing, production company) credit; same construction and caveat."
+    source: "same CSV via 'Source' expression"
+    date_keys: []
+    expected_rows: "876,581 (verified s4 via MCP)"
+
+dimensions:
+  - name: "Genres"
+    grain: "one row means one distinct genre string (parsed from unfiltered source; may carry members with zero loaded movies)"
+    source: "same CSV via 'Source' expression"
+    attributes: ["Genre", "Genre ID (hidden key)"]
+  - name: "Keyword"
+    grain: "one row means one distinct keyword string"
+    source: "same CSV via 'Source' expression"
+    attributes: ["Keyword", "Keyword ID (hidden key)"]
+  - name: "Production Company"
+    grain: "one row means one distinct production-company string"
+    source: "same CSV via 'Source' expression"
+    attributes: ["Production Company", "Production Company ID (hidden key)"]
+  - name: "Release Year (ADD)"
+    grain: "one row means one release-year bucket, including one explicit 'No date on record' member (Year Key = -1); covers all years in data incl. future"
+    source: "generated (M), anchored to data min/max release year"
+    attributes: ["Year Key (-1 = unknown)", "Year Label", "Year Sort", "Year Status (Past/Current/Future/No date vs snapshot 2026-07-24)"]
+
+date_dimension:
+  marked: true   # REQUIRED state — currently NOT marked (CHANGE at s4; exact TMDL syntax verified per research-first)
+  range: "1800-01-01 through 2099-12-31 (verified s4 min/max, both sentinel-suspect — kept, they are part of the data-health story) — deterministic, covers all future-dated rows; replaces the starter's 1937-01-01..DateTime.LocalNow() drift. Contiguous via List.Dates."
+  business_flags: ["Month Name sorted by Month Number (fix)", "future/unknown handling deliberately NOT on Date: Movies[Is Future Release] (fact-side, anchor 2026-07-24) + Release Year unknown member (-1) carry it, because a marked contiguous date column cannot host a labeled unknown row"]
+
+relationships:
+  - from: "Production Company Bridge[Production Company ID]"
+    to: "Production Company[Production Company ID]"
+    cardinality: many-to-one
+    cross_filter: single
+    justification: "KEEP (starter; dimension filters bridge)"
+  - from: "Genre Bridge[Genre ID]"
+    to: "Genres[Genre ID]"
+    cardinality: many-to-one
+    cross_filter: single
+    justification: "KEEP (starter)"
+  - from: "Keyword Bridge[Keyword ID]"
+    to: "Keyword[Keyword ID]"
+    cardinality: many-to-one
+    cross_filter: single
+    justification: "KEEP (starter)"
+  - from: "Movies[Movie ID]"
+    to: "Genre Bridge[Movie ID]"
+    cardinality: many-to-many   # weak; verified: toCardinality: many, fromCardinality default many
+    cross_filter: single        # one-direction flows To->From: bridge filters Movies
+    justification: "KEEP. No bidirectional filter anywhere. m:m weak discards Movie ID's known uniqueness; the pure alternative (1:* + bidirectional bridge leg, Kimball/SQLBI bridge pattern) is filter-equivalent for every M-metric. Only fact->dimension propagation is lost, which nothing planned needs. Rebuilding working starter relationships pre-deadline is risk without benefit."
+  - from: "Movies[Movie ID]"
+    to: "Keyword Bridge[Movie ID]"
+    cardinality: many-to-many
+    cross_filter: single
+    justification: "KEEP — same justification as Genre Bridge leg."
+  - from: "Movies[Movie ID]"
+    to: "Production Company Bridge[Movie ID]"
+    cardinality: many-to-many
+    cross_filter: single
+    justification: "KEEP — same justification as Genre Bridge leg."
+  - from: "Movies[Release Date]"
+    to: "Date[Date]"
+    cardinality: many-to-one
+    cross_filter: single
+    justification: "KEEP path; Date table itself CHANGEs (range/mark). After the range fix the blank bucket = exactly the 26,166 dateless rows."
+  - from: "Movies[Release Year Key]"
+    to: "Release Year[Year Key]"
+    cardinality: many-to-one
+    cross_filter: single
+    justification: "ADD — the labeled year axis where 'No date on record' is a first-class member (entrant's over-time seed, F5). Parallel coarser-grain dimension, own single path — not a snowflake."
+
+measure_table:
+  name: "_Measures"
+  folder_taxonomy: "01 Core / 02 Lie 1 · Financials (subfolder: Trap — kept as exhibit) / 03 Lie 2 · Ratings / 04 Lie 3 · Popularity / 05 Data health · Time / 06 Display"
+
+metric_map:
+  - metric_id: "M-001"
+    path: "_Measures[Movies] = COUNTROWS(Movies); dup caveat via [Duplicate listings] = [Movies] - COUNTROWS(SUMMARIZE(Movies, Title, Release Date))"
+  - metric_id: "M-002"
+    path: "_Measures[Financial coverage %] = DIVIDE([Movies (credible financials)], [Movies]); credible = CALCULATE([Movies], Movies[Budget] >= 10000, Movies[Revenue] > 0) — signed $10k floor; excludes the one negative-Revenue row"
+  - metric_id: "M-003"
+    path: "starter measure KEPT byte-identical, renamed _Measures[Profit (naive)] = SUM(Movies[Revenue]) - SUM(Movies[Budget]); trap docstring + Trap subfolder; never shown unaccompanied"
+  - metric_id: "M-004"
+    path: "_Measures[Median profit (credible)] = CALCULATE(MEDIANX(Movies, Movies[Revenue] - Movies[Budget]), Movies[Budget] >= 10000, Movies[Revenue] > 0); [Mean profit (credible)] beside it as outlier-drag evidence"
+  - metric_id: "M-005"
+    path: "_Measures[Rating (raw)] = DIVIDE(SUMX(Movies, Movies[Vote Average] * Movies[Vote Count]), SUM(Movies[Vote Count])) — vote-weighted at every grain; BLANK at 0 votes; plain AVERAGE forbidden"
+  - metric_id: "M-006"
+    path: "_Measures[Rating (evidence-weighted)] = IF(votes = 0, BLANK(), (v/(v+m))*[Rating (raw)] + (m/(v+m))*[Rating C]) with [Rating m (disclosed)] = 100, [Rating C (disclosed)] = 6.96 — both signed, disclosed constants"
+  - metric_id: "M-007"
+    path: "_Measures[Popularity (as-is)] = IF(HASONEVALUE(Movies[Movie ID]), MAX(Movies[Popularity])) — never aggregated, never good/bad-colored; divergence via [Rank · Popularity] vs [Rank · Rating (weighted)] vs [Rank · Revenue] (RANKX over ALLSELECTED)"
+
+not_available:
+  - metric_or_field: "Popularity's meaning or derivation"
+    reason: "TMDB does not publish the formula"
+    nearest_honest_proxy: "none — display value + rank only, with the 'definition not published' marker (M-007)"
+  - metric_or_field: "Inflation- or currency-normalized Budget/Revenue"
+    reason: "no currency or CPI fields; normalization unverifiable"
+    nearest_honest_proxy: "nominal values 'as recorded (USD assumed)' with caveat on every financial visual"
+  - metric_or_field: "True profitability (marketing, distribution splits)"
+    reason: "not in the dataset"
+    nearest_honest_proxy: "Revenue - Budget labeled 'gross gap, not P&L'"
+  - metric_or_field: "Verified correctness of the credible-financials subset"
+    reason: "no external ground truth to validate against"
+    nearest_honest_proxy: "$10k floor heuristic, disclosed, robustness shown (13.1% at $10k vs 11.9% at $100k)"
+  - metric_or_field: "Claims about the full TMDB catalogue (~930k movies)"
+    reason: "starter partition filters budget > 0 before import; 85,394 rows loaded"
+    nearest_honest_proxy: "claims scoped to 'listings with a populated budget field', disclosed on the method panel"
+  - metric_or_field: "Distinct-film count"
+    reason: "2.0% duplicate (Title, Release Date) pairs across distinct TMDB IDs; no reliable dedup key"
+    nearest_honest_proxy: "row count labeled 'listings'; duplicate share shown (M-001)"
+  - metric_or_field: "Representative movie-economics claims"
+    reason: "credible-financials rows self-select big-studio / US / recent"
+    nearest_honest_proxy: "claim scoping on-canvas: 'credible' is not 'representative' (M-004)"
+
+gate_g3:
+  every_metric_mapped: true
+  grains_declared_first: true
+  user_accepted: true   # entrant accepted 2026-08-04 in-session: blueprint incl. not-available list, snapshot anchor 2026-07-24, report-level Adult filter

@@ -1,0 +1,53 @@
+# Waivers for scripts/pbir_detect.py (the PBIR taste-lint).
+#
+# ============================================================================
+# STATUS: DRAFT - PREPARED BY pbir-operator 2026-08-05, AWAITING THE ENTRANT'S
+# SIGN-OFF. A GATE MAY BE WAIVED ONLY BY THE USER.
+#
+# These entries are argued, not assumed. Nothing here is signed until the
+# entrant says so in their own words; until then G6 stays HELD even though the
+# detector reads PASS with this file in place. To sign: reply approving the
+# entries below, and record the approval in status.yaml's s6 gate_note.
+# To reject any single entry: delete it and the underlying finding comes back.
+# ============================================================================
+#
+# A waiver is a recorded design decision, not an escape hatch: every entry
+# MUST carry a non-empty reason (ideally naming the design handoff or user
+# decision that sanctioned it) - reasonless waivers are rejected and waive
+# nothing. Unwaived findings fail the G6/G7 gates.
+#
+# Format (miniyaml subset - mappings only, no list-of-mapping syntax):
+#   
+
+# ---------------------------------------------------------------------------
+# 2026-08-05 (rebuild ckpt 5): THE OLD BUILD WAS DELETED, AND SO WERE ITS
+# WAIVERS. The 13 entries that covered p0-box-office, p1-act-i-profit,
+# p2-act-ii-ratings, p3-act-iii-corrected-cut, p9-end-credits and
+# tt-movie-poster (12 ai-dash-emoji + 6 grid-8px) matched pages that no longer
+# exist on disk. A waiver for a deleted page is not a decision, it is debris -
+# so they are removed rather than left to rot. What remains is four entries,
+# one per rebuild page, each covering a single 1-2 px separator rule.
+# ---------------------------------------------------------------------------
+
+waivers:
+
+  grid-p1-the-answer-hairline:
+    rule: grid-8px
+    path: "pages/p1-the-answer"
+    reason: "DRAFT - one object: z_rule_answer, a 1 px separator, sub-grid by nature. Its x/y/width are all on the 8 px grid (24, 216, 1232); only its 1 px height is not, and an 8 px separator would be a slab, not a rule. Every other rect on the page is on-grid after the checkpoint-2 snap. Entrant sign-off pending."
+    date: 2026-08-05
+  grid-p2-money-hairline:
+    rule: grid-8px
+    path: "pages/p2-money"
+    reason: "DRAFT - two objects, both sub-grid by nature. z_p2_rule is the 2 px indigo answer/evidence separator (x/y/width 24, 120, 1232 all on-grid; only its 2 px height is not). z_p2_strike is the 2 px trap-red strike THROUGH the naive profit number: its y=180 is the vertical middle of the 28 pt numeral it withdraws, not a layout position - moving it to an 8 px pitch would move it off the number and destroy the non-colour carrier that hard rule 3 requires beside the word MISREAD. Every other rect on the page is on-grid. Entrant sign-off pending."
+    date: 2026-08-05
+  grid-p3-evidence-hairline:
+    rule: grid-8px
+    path: "pages/p3-evidence"
+    reason: "DRAFT - one object: z_p3_rule, the 2 px brass answer/evidence separator, sub-grid by nature. Its x/y/width are on the 8 px grid (24, 120, 1232); only its 2 px height is not. Every other rect on the page is on-grid. Entrant sign-off pending."
+    date: 2026-08-05
+  grid-p4-both-hairline:
+    rule: grid-8px
+    path: "pages/p4-both"
+    reason: "DRAFT - one object: z_p4_rule, a 2 px separator in the plum act tint, sub-grid by nature. Its x/y/width are on the 8 px grid (24, 120, 1232); only its 2 px height is not. The 2 px weight (against p1's 1 px) is the act-tint rule the design uses to mark a payoff page, and an 8 px bar would read as a filled band. Every other rect on the page is on-grid. Entrant sign-off pending."
+    date: 2026-08-05

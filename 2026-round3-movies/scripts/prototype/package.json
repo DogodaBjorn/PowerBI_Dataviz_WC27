@@ -1,0 +1,9 @@
+{
+  "name": "pbi-atelier-prototype-tools",
+  "version": "1.0.0",
+  "description": "Playwright tooling for the px-prototype module: measure HTML design comps and capture reference screenshots",
+  "private": true,
+  "devDependencies": {
+    "playwright": "1.61.1"
+  }
+}

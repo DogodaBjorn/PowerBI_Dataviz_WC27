@@ -1,0 +1,40 @@
+expression Source = ```
+		let
+		    // Data downloaded on 7/24/2026 from: https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies?resource=download
+		    // 
+		    Source = Csv.Document(File.Contents(SourceRoot & "\TMDB_movie_dataset_v11.csv"),[Delimiter=",", Columns=24, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"title", type text}, {"vote_average", type number}, {"vote_count", Int64.Type}, {"status", type text}, {"release_date", type date}, {"revenue", Int64.Type}, {"runtime", Int64.Type}, {"adult", type logical}, {"backdrop_path", type text}, {"budget", Int64.Type}, {"homepage", type text}, {"imdb_id", type text}, {"original_language", type text}, {"original_title", type text}, {"overview", type text}, {"popularity", type number}, {"poster_path", type text}, {"tagline", type text}, {"genres", type text}, {"production_companies", type text}, {"production_countries", type text}, {"spoken_languages", type text}, {"keywords", type text}})
+		in
+		    #"Changed Type"
+		```
+	lineageTag: 2b9203bd-6638-46ee-999d-544f9469ed8a
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Schema = ```
+		let
+		    // Data downloaded on 7/24/2026 from: https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies?resource=download
+		    // 
+		    Source = Csv.Document(File.Contents(SourceRoot & "\TMDB_movie_dataset_v11.csv"),[Delimiter=",", Columns=24, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Kept First Rows" = Table.FirstN(Source,2),
+		    #"Transposed Table" = Table.Transpose(#"Kept First Rows"),
+		    #"Renamed Columns" = Table.RenameColumns(#"Transposed Table",{{"Column1", "Column"}, {"Column2", "Sample Entry"}})
+		in
+		    #"Renamed Columns"
+		```
+	lineageTag: 3990a5ac-6646-4400-b69b-aee185ca7899
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression SourceRoot = "E:\PowerBI Set-up\wc-round-3\project\data\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 640e4229-9fce-4c45-adeb-0e472ca2a495
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigatie
+

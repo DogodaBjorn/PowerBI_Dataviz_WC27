@@ -1,0 +1,8 @@
+# Module manifest (miniyaml subset)
+name: fg-figma
+version: 1
+description: Figma as an optional design surface - publish the three s5 direction comps as side-by-side Figma pages for clients who review in Figma, run mechanism-mapped showpiece explorations, and pull an approved exploration back into the px-prototype pipeline.
+provides: per-project Figma review pages for s5 directions, showpiece exploration pages that never touch project state, and the exploration-to-comp pull-back path
+skills:
+  - fg-figma
+requires: Figma MCP connected in the session (degrades gracefully with a one-line note when absent); px-prototype recommended for the pull-back path

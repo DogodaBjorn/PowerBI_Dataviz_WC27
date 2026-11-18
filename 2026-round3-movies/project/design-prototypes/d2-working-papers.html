@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>D2 · The Working Papers · 1280×720 comp</title>
+<style>
+  /* ============================================================
+     D2 — "The Working Papers"
+     Auditor's file on paper. 0px radius everywhere, no shadows,
+     no gradients, no animation. Solid fills + 1/2px rules only.
+     ============================================================ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --paper:   #F7F5F0;
+    --card:    #FFFFFF;
+    --hair:    #E3E0D8;
+    --ink:     #1C1917;
+    --ink2:    #57534E;
+    --blue:    #1D4ED8;
+    --green:   #1E7F4F;
+    --red:     #B3402E;
+    --neutral: #78716C;
+    --serif: Georgia, 'Times New Roman', serif;
+    --sans:  'Segoe UI', Arial, sans-serif;
+    --mono:  Consolas, 'Courier New', monospace;
+  }
+
+  body {
+    background: #333333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 0 48px;
+    font-family: var(--sans);
+  }
+
+  .page-cap {
+    font: 10pt var(--mono);
+    color: #A8A29E;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .canvas {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    background: var(--paper);
+    overflow: hidden;
+    flex: none;
+  }
+
+  .abs { position: absolute; }
+
+  /* ---- shared vocabulary (VARIANCE strict) ---- */
+  .kicker {
+    font: 10pt var(--mono);
+    color: var(--ink2);
+    letter-spacing: 0.08em;
+    line-height: 14px;
+    white-space: nowrap;
+  }
+  .tag {
+    font: 10pt var(--mono);
+    letter-spacing: 0.04em;
+    line-height: 14px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+  }
+  .tag.bad  { color: var(--red); }
+  .tag.good { color: var(--green); }
+  .lbl {
+    font: 10pt var(--mono);
+    color: var(--ink2);
+    line-height: 14px;
+    margin-bottom: 8px;
+    white-space: nowrap;
+  }
+  .cap {
+    font: 10pt var(--mono);
+    color: var(--ink2);
+    line-height: 14px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--hair);
+    padding: 10px 16px;
+  }
+  .ok  { color: var(--green); }
+  .bad { color: var(--red); }
+
+  /* red-pencil strike: 2px rule through the figure */
+  .strike {
+    position: relative;
+    display: inline-block;
+  }
+  .strike::after {
+    content: "";
+    position: absolute;
+    left: -3px;
+    right: -3px;
+    top: 50%;
+    margin-top: -1px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  /* ---- masthead ---- */
+  .masthead h1 {
+    font: bold 28pt var(--serif);
+    color: var(--ink);
+    line-height: 40px;
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+    margin: 6px 0 5px;
+  }
+  .legend { font: 10pt var(--mono); color: var(--ink2); line-height: 14px; }
+
+  /* ---- hero / opinion ---- */
+  .hero {
+    border-top: 2px solid var(--blue);
+    padding-top: 4px;
+  }
+  .hero .toprow {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .hero .opinion {
+    font: 10pt var(--mono);
+    color: var(--blue);
+    letter-spacing: 0.08em;
+    line-height: 14px;
+  }
+  .hero .signature {
+    font: 10pt var(--mono);
+    color: var(--ink2);
+    line-height: 14px;
+  }
+  .hero .quote {
+    font: 12pt var(--serif);
+    color: var(--ink);
+    line-height: 18px;
+    margin-top: 4px;
+  }
+
+  /* ---- schedule rows ---- */
+  .claim {
+    border-top: 1px solid var(--hair);
+    padding-top: 10px;
+  }
+  .claim .q {
+    font: italic 20pt var(--serif);
+    color: var(--ink);
+    line-height: 34px;
+    margin-top: 10px;
+  }
+  .fig {
+    font: 20pt var(--mono);
+    color: var(--ink);
+    line-height: 28px;
+    margin-bottom: 8px;
+    white-space: nowrap;
+  }
+  .title12 {
+    font: 600 12pt var(--sans);
+    color: var(--ink);
+    line-height: 16px;
+    margin-bottom: 8px;
+    white-space: nowrap;
+  }
+  .mono12 {
+    font: 12pt var(--mono);
+    color: var(--ink);
+    line-height: 19px;
+    margin-bottom: 4px;
+  }
+
+  /* trap mini-table (row 2) */
+  .mrow {
+    display: flex;
+    align-items: center;
+    height: 25px;
+    font: 12pt var(--mono);
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .mrow + .mrow { border-top: 1px solid var(--hair); }
+  .mrow .mname { flex: 1; }
+  .mrow .mrate { margin-right: 12px; }
+  .mrow.more { color: var(--ink2); }
+
+  /* fall table (row 2 honest, right pane) */
+  .fall { width: 252px; }
+  .frow {
+    display: flex;
+    align-items: center;
+    height: 25px;
+    white-space: nowrap;
+  }
+  .frow + .frow { border-top: 1px solid var(--hair); }
+  .frow .flbl {
+    width: 64px;
+    font: 10pt var(--mono);
+    color: var(--ink2);
+    flex: none;
+  }
+  .frow .fbar { flex: 1; }
+  .frow .fbar i {
+    display: block;
+    height: 4px;
+    background: var(--blue);
+  }
+  .frow .fval {
+    margin-left: auto;
+    font: 12pt var(--mono);
+    color: var(--ink);
+    text-align: right;
+  }
+
+  /* rank table (row 3 honest) */
+  .rtable {
+    display: grid;
+    grid-template-columns: 180px 180px 180px;
+    column-gap: 6px;
+  }
+  .rhead {
+    font: 10pt var(--mono);
+    color: var(--ink2);
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--hair);
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+    white-space: nowrap;
+  }
+  .rcell {
+    height: 16px;
+    line-height: 16px;
+    white-space: nowrap;
+  }
+  .rcell .rk {
+    font: 12pt var(--mono);
+    color: var(--ink);
+    margin-right: 4px;
+  }
+  .rcell .fname {
+    font: 10pt var(--mono);
+    color: var(--ink2);
+  }
+  .rcell .div {
+    font: 10pt var(--mono);
+    color: var(--red);
+    margin-left: 4px;
+  }
+
+  /* footer reconciliation */
+  .footer {
+    border-top: 1px solid var(--hair);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer .recon {
+    font: 10pt var(--mono);
+    color: var(--ink2);
+    line-height: 15px;
+  }
+  .footer .btns { display: flex; gap: 8px; flex: none; }
+  .footer .btn {
+    display: block;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    font: 10pt var(--mono);
+    letter-spacing: 0.04em;
+    line-height: 13px;
+    padding: 7px 12px;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-cap">D2 · The Working Papers · 1280×720 comp</div>
+
+<div class="canvas">
+
+  <!-- ================= z_masthead 24,24,600,80 ================= -->
+  <div class="abs masthead" style="left:24px; top:24px; width:600px; height:80px;">
+    <div class="kicker">INDEPENDENT REVIEW · TMDB SNAPSHOT 2026-07-24 · BASIS 84,036 LISTINGS</div>
+    <h1>Three Seductive Lies About the Movies</h1>
+    <div class="legend"><span class="bad">✕</span> misstated&nbsp;&nbsp;·&nbsp;&nbsp;<span class="ok">✓</span> agreed to underlying records</div>
+  </div>
+
+  <!-- ================= hero_takeaway 640,24,616,80 ================= -->
+  <div class="abs hero" style="left:640px; top:24px; width:616px; height:80px;">
+    <div class="toprow">
+      <span class="opinion">OPINION</span>
+      <span class="signature">Prepared responsibly — floor $10,000 · m = 100 · C = 6.96</span>
+    </div>
+    <div class="quote">The data is not wrong — the reading is. 87% of 85,394 listings have no credible financials, the median listing has zero votes, and ‘popularity’ has no published formula. Every honest number here states what it excludes.</div>
+  </div>
+
+  <!-- ============================================================
+       ROW 1 — SCHEDULE 1 · FINANCIALS · y=120
+       ============================================================ -->
+  <div class="abs claim" style="left:24px; top:120px; width:280px; height:160px;">
+    <div class="kicker">SCHEDULE 1 — FINANCIALS</div>
+    <div class="q">“The movie business loses money.”</div>
+  </div>
+
+  <div class="abs card" style="left:320px; top:120px; width:336px; height:160px;">
+    <div class="tag bad">[✕ UNVERIFIED]</div>
+    <div class="lbl">Profit, all 85,394 listings (naive)</div>
+    <div class="fig"><span class="strike">$ —,———,———</span></div>
+    <div class="cap">computed at build · counts 67,436 unknown revenues (79.0%) as $0 · Budget never 0 — junk minimum $1, median $2,800</div>
+  </div>
+
+  <div class="abs card" style="left:672px; top:120px; width:584px; height:160px;">
+    <div class="tag good">[✓ AGREED TO SOURCE]</div>
+    <div class="title12">Financial coverage — Budget ≥ $10k AND Revenue &gt; 0</div>
+    <svg width="540" height="32" viewBox="0 0 540 32" style="display:block; margin-bottom:8px;" role="img" aria-label="Financial coverage: 13.1 percent credible, 86.9 percent no credible financials">
+      <rect x="0"  y="0" width="71"  height="32" fill="#1D4ED8"/>
+      <rect x="71" y="0" width="469" height="32" fill="#E3E0D8"/>
+      <text x="79"  y="20.5" font-family="Consolas, 'Courier New', monospace" font-size="13.3" fill="#1D4ED8">13.1% credible</text>
+      <text x="532" y="20.5" font-family="Consolas, 'Courier New', monospace" font-size="13.3" fill="#57534E" text-anchor="end">86.9% — no credible financials</text>
+    </svg>
+    <div class="mono12">median profit (credible) $ ——,——— <span class="ok">✓</span> ·<br>mean $ ———,———,——— (dragged by blockbusters)</div>
+    <div class="cap">USD as recorded · not inflation-adjusted · gross gap, not P&amp;L</div>
+  </div>
+
+  <!-- ============================================================
+       ROW 2 — SCHEDULE 2 · RATINGS · y=296
+       ============================================================ -->
+  <div class="abs claim" style="left:24px; top:296px; width:280px; height:160px;">
+    <div class="kicker">SCHEDULE 2 — RATINGS</div>
+    <div class="q">“This obscure film beats The Godfather.”</div>
+  </div>
+
+  <div class="abs card" style="left:320px; top:296px; width:336px; height:160px;">
+    <div class="tag bad">[✕ UNVERIFIED]</div>
+    <div class="lbl">Raw rating leaderboard (naive)</div>
+    <div class="mrow">
+      <span class="mname">Las mujeres deciden</span>
+      <span class="mrate"><span class="strike">10.0</span></span>
+      <span>2 votes <span class="bad">✕</span></span>
+    </div>
+    <div class="mrow">
+      <span class="mname">Logos</span>
+      <span class="mrate"><span class="strike">10.0</span></span>
+      <span>3 votes <span class="bad">✕</span></span>
+    </div>
+    <div class="mrow more">
+      <span>+ 18 more perfect 10s on 2–3 votes</span>
+    </div>
+  </div>
+
+  <div class="abs card" style="left:672px; top:296px; width:584px; height:160px;">
+    <div class="tag good">[✓ AGREED TO SOURCE]</div>
+    <div style="display:flex; gap:12px; margin-bottom:4px;">
+      <svg width="288" height="100" viewBox="0 0 288 100" style="display:block; flex:none;" role="img" aria-label="Scatter of rating versus votes on a log scale: ratings funnel toward 7 as votes grow; reference line at C equals 6.96; one red-circled 10.0 on 2 votes">
+        <!-- axes -->
+        <line x1="20" y1="8"  x2="20"  y2="84" stroke="#E3E0D8" stroke-width="1"/>
+        <line x1="20" y1="84" x2="282" y2="84" stroke="#E3E0D8" stroke-width="1"/>
+        <text x="16" y="14" font-family="Consolas, 'Courier New', monospace" font-size="13.3" fill="#57534E" text-anchor="end">10</text>
+        <text x="16" y="84" font-family="Consolas, 'Courier New', monospace" font-size="13.3" fill="#57534E" text-anchor="end">0</text>
+        <text x="20" y="97" font-family="Consolas, 'Courier New', monospace" font-size="13.3" fill="#57534E" text-anchor="middle">1</text>
+        <text x="151" y="97" font-family="Consolas, 'Courier New', monospace" font-size="13.3" fill="#57534E" text-anchor="middle">100</text>
+        <text x="282" y="97" font-family="Consolas, 'Courier New', monospace" font-size="13.3" fill="#57534E" text-anchor="end">10k</text>
+        <!-- reference line C = 6.96 -->
+        <line x1="20" y1="30" x2="282" y2="30" stroke="#1D4ED8" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="282" y="25" font-family="Consolas, 'Courier New', monospace" font-size="13.3" fill="#1D4ED8" text-anchor="end">C = 6.96</text>
+        <!-- dots: funnel toward 7 as votes grow -->
+        <g fill="#78716C">
+          <circle cx="25.2"  cy="64.9" r="2.5"/><circle cx="27.9"  cy="12.3" r="2.5"/>
+          <circle cx="33.1"  cy="49.8" r="2.5"/><circle cx="35.7"  cy="21.7" r="2.5"/>
+          <circle cx="43.6"  cy="57.7" r="2.5"/><circle cx="48.8"  cy="36.1" r="2.5"/>
+          <circle cx="54.1"  cy="16.6" r="2.5"/><circle cx="59.3"  cy="60.6" r="2.5"/>
+          <circle cx="64.5"  cy="42.6" r="2.5"/><circle cx="72.4"  cy="23.1" r="2.5"/>
+          <circle cx="80.3"  cy="46.2" r="2.5"/><circle cx="88.1"  cy="30.3" r="2.5"/>
+          <circle cx="96.0"  cy="20.2" r="2.5"/><circle cx="103.8" cy="39.7" r="2.5"/>
+          <circle cx="114.3" cy="26.0" r="2.5"/><circle cx="124.8" cy="35.4" r="2.5"/>
+          <circle cx="135.3" cy="23.1" r="2.5"/><circle cx="145.8" cy="33.2" r="2.5"/>
+          <circle cx="156.2" cy="27.4" r="2.5"/><circle cx="166.7" cy="36.1" r="2.5"/>
+          <circle cx="177.2" cy="26.0" r="2.5"/><circle cx="187.7" cy="31.8" r="2.5"/>
+          <circle cx="198.2" cy="28.2" r="2.5"/><circle cx="208.6" cy="33.2" r="2.5"/>
+          <circle cx="219.1" cy="27.4" r="2.5"/><circle cx="229.6" cy="30.3" r="2.5"/>
+          <circle cx="242.7" cy="28.9" r="2.5"/><circle cx="255.8" cy="31.0" r="2.5"/>
+          <circle cx="268.9" cy="29.6" r="2.5"/>
+        </g>
+        <!-- the seductive outlier: 10.0 on 2 votes, red-circled -->
+        <circle cx="39.7" cy="8" r="2.5" fill="#78716C"/>
+        <circle cx="39.7" cy="8" r="6.5" fill="none" stroke="#B3402E" stroke-width="2"/>
+      </svg>
+      <div class="fall">
+        <div class="frow">
+          <span class="flbl">raw rating</span>
+          <span class="fbar"><i style="width:96px;"></i></span>
+          <span class="fval">10.0</span>
+        </div>
+        <div class="frow">
+          <span class="flbl">votes</span>
+          <span class="fbar"><i style="width:2px;"></i></span>
+          <span class="fval">2</span>
+        </div>
+        <div class="frow">
+          <span class="flbl">weighted</span>
+          <span class="fbar"><i style="width:67px;"></i></span>
+          <span class="fval">7.02 <span class="ok">✓</span></span>
+        </div>
+        <div class="frow">
+          <span class="flbl">rank</span>
+          <span class="fval">raw #1 → weighted #——</span>
+        </div>
+      </div>
+    </div>
+    <div class="cap">m = 100 disclosed · zero-vote listings (65.5%) have no rating at all</div>
+  </div>
+
+  <!-- ============================================================
+       ROW 3 — SCHEDULE 3 · POPULARITY · y=472
+       ============================================================ -->
+  <div class="abs claim" style="left:24px; top:472px; width:280px; height:160px;">
+    <div class="kicker">SCHEDULE 3 — POPULARITY</div>
+    <div class="q">“Popularity says what’s good.”</div>
+  </div>
+
+  <div class="abs card" style="left:320px; top:472px; width:336px; height:160px;">
+    <div class="tag bad">[✕ UNVERIFIED]</div>
+    <div class="lbl">Popularity, top film (naive)</div>
+    <div class="fig"><span class="strike">———·—</span> †</div>
+    <div class="cap">† formula not published — TMDB does not define this number</div>
+  </div>
+
+  <div class="abs card" style="left:672px; top:472px; width:584px; height:160px;">
+    <div class="tag good">[✓ AGREED TO SOURCE]</div>
+    <div class="rtable">
+      <div class="rhead">Popularity†</div>
+      <div class="rhead">Rating (weighted)</div>
+      <div class="rhead">Revenue</div>
+
+      <div class="rcell"><span class="rk">1</span><span class="fname">— computed at build —</span></div>
+      <div class="rcell"><span class="rk">2</span><span class="fname">— computed at build —</span></div>
+      <div class="rcell"><span class="rk">4</span><span class="fname">— computed at build —</span><span class="div">✕</span></div>
+
+      <div class="rcell"><span class="rk">2</span><span class="fname">— computed at build —</span></div>
+      <div class="rcell"><span class="rk">1</span><span class="fname">— computed at build —</span></div>
+      <div class="rcell"><span class="rk">3</span><span class="fname">— computed at build —</span></div>
+
+      <div class="rcell"><span class="rk">3</span><span class="fname">— computed at build —</span></div>
+      <div class="rcell"><span class="rk">4</span><span class="fname">— computed at build —</span></div>
+      <div class="rcell"><span class="rk">1</span><span class="fname">— computed at build —</span><span class="div">✕</span></div>
+
+      <div class="rcell"><span class="rk">4</span><span class="fname">— computed at build —</span></div>
+      <div class="rcell"><span class="rk">3</span><span class="fname">— computed at build —</span></div>
+      <div class="rcell"><span class="rk">5</span><span class="fname">— computed at build —</span></div>
+
+      <div class="rcell"><span class="rk">5</span><span class="fname">— computed at build —</span></div>
+      <div class="rcell"><span class="rk">5</span><span class="fname">— computed at build —</span></div>
+      <div class="rcell"><span class="rk">2</span><span class="fname">— computed at build —</span><span class="div">✕</span></div>
+    </div>
+    <div class="cap" style="margin-top:6px;">ranked only — never aggregated, never colored good or bad</div>
+  </div>
+
+  <!-- ================= z_footer_recon 24,648,1232,48 ================= -->
+  <div class="abs footer" style="left:24px; top:648px; width:1232px; height:48px;">
+    <div class="recon">
+      Listings per source 85,394 − Adult titles 1,358 = basis 84,036 <span class="ok">✓</span> · duplicate (title, date) pairs 1,697 (2.0%)<br>
+      duplicate IDs 101 · full schedule of definitions → · evidence over time →
+    </div>
+    <div class="btns">
+      <span class="btn">EVIDENCE OVER TIME →</span>
+      <span class="btn">METHOD &amp; REFUSALS →</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

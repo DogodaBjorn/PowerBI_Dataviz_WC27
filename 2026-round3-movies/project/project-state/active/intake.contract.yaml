@@ -1,0 +1,62 @@
+# Intake contract — filled at stage 0, one per project.
+
+contract: intake
+project: "wc-round-3"
+date: "2026-08-04"
+
+request:
+  raw: >
+    "set up a new folder from where we can start working on round 3 of the
+    data viz world championship. I have only a couple of days and limited
+    time so it's a stress test for the repo we built. [...] up to you to come
+    up with a good baseline setup that I can then use to start building the
+    story, adding the design and finally finishing the report."
+    Addendum 2026-08-04: "Do note very specifically that it's about the Using
+    data responsibly: For Round 3, we're focusing on one of the most important
+    skills a data professional can develop: Using data responsibly. The best
+    analysts don't just create beautiful visuals. They understand the
+    limitations of data, question assumptions, communicate uncertainty, and
+    avoid misleading conclusions. We need to include that and make that sing
+    through the report. Mark outliers, explain probability and why
+    correlation is not causation etc. etc. But other than that leave it to
+    the agents i suppose"
+  classification: "new-build"
+  requester: "contest entrant (toolkit owner)"
+  deadline: "2026-08-07 23:59 PT (= 2026-08-08 08:59 CEST) — hard, contest close"
+
+delivery_target: "pbip-file"   # submitted as pbix via Fabric Community Contests gallery
+
+sources:
+  - system: "Contest starter model (TMDB movies), converted to PBIP at project/pbip/"
+    access: "local; data embedded in starter (cache.abf); schema fully readable as TMDL"
+    known_issues: >
+      TMDB is community-maintained: Budget/Revenue widely zero-filled (the
+      starter's own Profit measure is misleading on those rows), Popularity is
+      an opaque internal score, Vote Average unstable at low Vote Count,
+      duplicate titles, Adult flag present, strong recency/language skew.
+      These limitations are not a risk to work around — they are the story.
+  - system: "Kaggle original (asaniczka TMDB dataset)"
+    access: "manual download only (no kaggle CLI); needed only if reshaping in Power Query"
+    known_issues: "same as above"
+  - system: "Optional external joins (IMDb, Wikipedia, Rotten Tomatoes, Box Office Mojo, TMDB API)"
+    access: "allowed by round rules; enhancement of the data itself is not"
+    known_issues: "join keys imperfect (title+year matching); only add if the story needs it"
+
+constraints:
+  - "Round theme is BINDING: 'Using data responsibly' — limitations, assumptions,
+     uncertainty, and non-misleading presentation must sing through the report
+     (mark outliers, communicate uncertainty/probability, correlation is not causation)"
+  - "Visible Key Takeaway statement on the landing page (mandatory element)"
+  - "Judging 10/10/10/10: Insightfulness, Visual Effectiveness, Creativity & Innovation,
+     Accessibility — a11y audit is a blocker, not polish"
+  - "One entry per person; submit via Contests gallery before deadline"
+  - "~3 days total: express lifecycle per MISSION file, gates still evidenced"
+
+out_of_scope:
+  - "UAT handoff and nl-deliverables (no client; audience = judging panel)"
+  - "Custom pbiviz visuals (time; deneb-studio covers bespoke marks)"
+  - "External data joins unless the chosen story requires one (decide at s1)"
+
+gate_g0:
+  user_confirmed: true
+  confirmation_note: "Confirmed 2026-08-04 in-session (AskUserQuestion): 'Confirmed, proceed'; story spine left open for s1 to propose fresh."

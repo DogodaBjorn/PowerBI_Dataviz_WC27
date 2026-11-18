@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>D3 · Front Page / Corrections Edition · 1280×720 comp</title>
+<style>
+  /* pbi-atelier D3 comp — reproducible ingredients only:
+     solid fills, 1px/4px rules, text, simple SVG. No radius, no shadow,
+     no gradient, no animation. All rects on the 8px grid (canvas coords). */
+  * { margin:0; padding:0; box-sizing:border-box; border-radius:0; }
+  html,body { height:100%; }
+  body {
+    background:#333333;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-family:"Segoe UI", Arial, sans-serif; color:#1A1A1A;
+  }
+  .comp-caption {
+    font-family:Consolas, "Courier New", monospace;
+    font-size:12px; color:#AAAAAA; margin-bottom:12px;
+  }
+  #canvas {
+    position:relative; width:1280px; height:720px; flex:0 0 auto;
+    background:#EFEDE6; overflow:hidden;
+  }
+  .abs { position:absolute; }
+  .ink   { background:#1A1A1A; }
+  .card  { background:#FFFFFF; }
+  .rev   { color:#F5F3EC; }
+  .mut   { color:#78716C; }
+  .good  { color:#1E7F4F; }
+  .bad   { color:#B3402E; }
+  .bahn {
+    font-family:"Bahnschrift SemiCondensed", Bahnschrift, "Arial Narrow", Arial, sans-serif;
+    font-stretch:semi-condensed; font-weight:700;
+  }
+  .mono { font-family:Consolas, "Courier New", monospace; }
+  .kicker { font-family:Consolas, "Courier New", monospace; font-size:10pt; letter-spacing:0.5px; }
+  .vrule { width:1px; background:#D8D4C8; }
+  .hrule { height:1px; background:#D8D4C8; }
+  /* strike-through retraction rules — slight overshoot past text ends */
+  .strike { position:relative; display:inline-block; white-space:nowrap; }
+  .strike::after {
+    content:""; position:absolute; height:4px; background:#B3402E;
+    left:-12px; right:-20px;
+  }
+  .strike.s44::after { top:28px; }              /* 44pt headline lines  */
+  .strike.s20::after { top:10px; left:-8px; right:-14px; }  /* 20pt headlines */
+  .strike.sfig::after { top:12px; left:-6px; right:-10px; } /* 20pt Consolas figure */
+  .btn {
+    position:absolute; height:28px; border:1px solid #1A1A1A;
+    font-family:Consolas, "Courier New", monospace; font-size:10pt; color:#1A1A1A;
+    line-height:26px; text-align:center; background:#EFEDE6;
+  }
+</style>
+</head>
+<body>
+
+<div class="comp-caption">D3 · Front Page / Corrections Edition · 1280×720 comp</div>
+
+<div id="canvas">
+
+  <!-- ============ 1. z_masthead 24,24,1232,64 ============ -->
+  <div class="abs ink" id="z_masthead" style="left:24px; top:24px; width:1232px; height:64px;">
+    <div class="abs bahn rev" style="left:24px; top:0; height:64px; line-height:64px; font-size:28pt;">THE CREDULOUS TIMES</div>
+    <div class="abs mono rev" style="right:24px; top:0; height:64px; line-height:64px; font-size:10pt;">CORRECTIONS EDITION · TMDB SNAPSHOT 2026-07-24 · BASIS 84,036 LISTINGS</div>
+  </div>
+
+  <!-- ============ 2. LEAD STORY (Lie 1) 24,104,736,376 ============ -->
+  <div class="abs ink" id="lie1_lead" style="left:24px; top:104px; width:736px; height:376px;">
+    <div class="abs kicker rev" style="left:24px; top:24px;">LIE Nº 1 — OUR FRONT PAGE, AS FIRST PRINTED</div>
+    <div class="abs bahn rev" style="left:24px; top:52px; font-size:44pt; line-height:66px;">
+      <span class="strike s44">MOVIES LOSE</span><br>
+      <span class="strike s44">MONEY*</span>
+    </div>
+    <!-- asterisk note, beside line 2 -->
+    <div class="abs rev" style="left:268px; top:156px; width:440px; font-size:10pt; line-height:14px;">*computed at build — headline follows the naive number's sign</div>
+  </div>
+
+  <!-- lead white inset card 48,328,688,128 -->
+  <div class="abs card" id="lie1_inset" style="left:48px; top:328px; width:688px; height:128px;">
+    <!-- left third: naive profit, struck -->
+    <div class="abs mut" style="left:16px; top:16px; width:184px; font-size:10pt; line-height:13px;">Profit, all listings (naive)</div>
+    <div class="abs mono" style="left:16px; top:34px; font-size:20pt; line-height:28px;"><span class="strike sfig">$ —,———,———</span></div>
+    <div class="abs mono bad" style="left:16px; top:72px; font-size:10pt; line-height:13px;">✕ WITHDRAWN</div>
+    <div class="abs vrule" style="left:216px; top:16px; height:96px;"></div>
+    <!-- center: the 87% monument, marker-yellow bar tight underneath -->
+    <div class="abs" style="left:232px; top:0; width:188px; height:128px; text-align:center;">
+      <div class="abs bahn" style="left:0; top:6px; width:188px; font-size:44pt; line-height:52px;">87%</div>
+      <div class="abs" style="left:42px; top:60px; width:104px; height:8px; background:#F2C230;"></div>
+      <div class="abs" style="left:0; top:74px; width:188px; font-size:10pt; line-height:13px;">of 85,394 listings have NO credible financials</div>
+    </div>
+    <div class="abs vrule" style="left:436px; top:16px; height:96px;"></div>
+    <!-- right third: credible share stacked bar -->
+    <div class="abs mono good" style="left:452px; top:12px; font-size:10pt; line-height:13px;">✓ 13.1% credible</div>
+    <svg class="abs" style="left:452px; top:32px;" width="200" height="24" viewBox="0 0 200 24">
+      <rect x="0" y="0" width="200" height="24" fill="#D8D4C8"/>
+      <rect x="0" y="0" width="26.2" height="24" fill="#1E7F4F"/>
+    </svg>
+    <div class="abs mut" style="left:452px; top:64px; width:220px; font-size:10pt; line-height:13px;">floor $10k · median vs mean at build · USD as recorded</div>
+  </div>
+
+  <!-- ============ 3. Lie 2 block 776,104,480,180 ============ -->
+  <div class="abs ink" id="lie2_block" style="left:776px; top:104px; width:480px; height:180px;">
+    <div class="abs kicker rev" style="left:16px; top:16px;">LIE Nº 2</div>
+    <div class="abs bahn rev" style="left:16px; top:36px; font-size:20pt; line-height:28px; letter-spacing:-0.2px;"><span class="strike s20">OBSCURE FILM BEATS THE GODFATHER</span></div>
+  </div>
+
+  <!-- lie 2 white inset 792,192,448,76 : dumbbell strip -->
+  <div class="abs card" id="lie2_inset" style="left:792px; top:192px; width:448px; height:76px;">
+    <svg class="abs" style="left:16px; top:4px;" width="416" height="40" viewBox="0 0 416 40">
+      <line x1="8" y1="27" x2="408" y2="27" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="8"   y1="23" x2="8"   y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="48"  y1="23" x2="48"  y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="88"  y1="23" x2="88"  y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="128" y1="23" x2="128" y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="168" y1="23" x2="168" y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="208" y1="23" x2="208" y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="248" y1="23" x2="248" y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="288" y1="23" x2="288" y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="328" y1="23" x2="328" y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="368" y1="23" x2="368" y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="408" y1="23" x2="408" y2="31" stroke="#D8D4C8" stroke-width="1"/>
+      <line x1="288.8" y1="27" x2="408" y2="27" stroke="#78716C" stroke-width="2"/>
+      <circle cx="408" cy="27" r="6" fill="#B3402E"/>
+      <circle cx="288.8" cy="27" r="6" fill="#1E7F4F"/>
+      <text x="288" y="14" fill="#1E7F4F" text-anchor="middle" font-family="Consolas, monospace" font-size="14">7.02 weighted ✓</text>
+      <text x="414" y="14" fill="#B3402E" text-anchor="end" font-family="Consolas, monospace" font-size="14">10.0 raw</text>
+    </svg>
+    <div class="abs mut" style="left:16px; top:46px; width:416px; font-size:10pt; line-height:12px;">Las mujeres deciden · 2 votes · m=100, C=6.96 · comparison verified at build</div>
+  </div>
+
+  <!-- ============ 4. Lie 3 block 776,300,480,180 ============ -->
+  <div class="abs ink" id="lie3_block" style="left:776px; top:300px; width:480px; height:180px;">
+    <div class="abs kicker rev" style="left:16px; top:16px;">LIE Nº 3</div>
+    <div class="abs bahn rev" style="left:16px; top:36px; font-size:20pt; line-height:28px;"><span class="strike s20">MOST POPULAR = BEST</span></div>
+  </div>
+
+  <!-- lie 3 white inset 792,388,448,76 : rank-vs-rank mini-columns -->
+  <div class="abs card" id="lie3_inset" style="left:792px; top:388px; width:448px; height:76px;">
+    <div class="abs mono" style="left:16px; top:5px; width:132px; font-size:10pt; line-height:12px; font-weight:700;">POP #1</div>
+    <div class="abs mono" style="left:16px; top:17px; width:132px; font-size:10pt; line-height:12px;">→ quality rank #—</div>
+    <div class="abs mono bad" style="left:16px; top:29px; width:132px; font-size:10pt; line-height:12px;">✕ MISMATCH</div>
+    <div class="abs mono" style="left:156px; top:5px; width:132px; font-size:10pt; line-height:12px; font-weight:700;">POP #2</div>
+    <div class="abs mono" style="left:156px; top:17px; width:132px; font-size:10pt; line-height:12px;">→ quality rank #—</div>
+    <div class="abs mono bad" style="left:156px; top:29px; width:132px; font-size:10pt; line-height:12px;">✕ MISMATCH</div>
+    <div class="abs mono" style="left:296px; top:5px; width:136px; font-size:10pt; line-height:12px; font-weight:700;">POP #3</div>
+    <div class="abs mono" style="left:296px; top:17px; width:136px; font-size:10pt; line-height:12px;">→ quality rank #—</div>
+    <div class="abs mono good" style="left:296px; top:29px; width:136px; font-size:10pt; line-height:12px;">✓ MATCH</div>
+    <div class="abs mut" style="left:16px; top:47px; width:416px; font-size:10pt; line-height:12px;">computed at build · † popularity formula not published — ranked only, never colored good/bad</div>
+  </div>
+
+  <!-- ============ 5. hero_takeaway CORRECTIONS band 24,496,1232,144 ============ -->
+  <div class="abs card" id="hero_takeaway" style="left:24px; top:496px; width:1232px; height:144px;">
+    <div class="abs" style="left:0; top:0; width:1232px; height:4px; background:#F2C230;"></div>
+    <div class="abs bahn" style="left:24px; top:12px; font-size:14pt; line-height:19px;">CORRECTIONS — READ RESPONSIBLY</div>
+    <div class="abs" style="left:24px; top:36px; width:1184px; font-size:14pt; line-height:18px; font-weight:700;">The data is not wrong — the reading is. 87% of 85,394 listings have no credible financials, the median listing has zero votes, and 'popularity' has no published formula. Every honest number here states what it excludes.</div>
+    <div class="abs mono good" style="left:24px; top:82px; font-size:10pt; line-height:13px;">✓ CORRECTED</div>
+    <div class="abs" style="left:24px; top:98px; width:384px; font-size:12pt; line-height:17px;">87% of the money story is missing. We claim only the 13% we can verify.</div>
+    <div class="abs mono good" style="left:424px; top:82px; font-size:10pt; line-height:13px;">✓ CORRECTED</div>
+    <div class="abs" style="left:424px; top:98px; width:384px; font-size:12pt; line-height:17px;">A 10.0 on 2 votes reads 7.02 once evidence is weighted (m=100).</div>
+    <div class="abs mono good" style="left:824px; top:82px; font-size:10pt; line-height:13px;">✓ CORRECTED</div>
+    <div class="abs" style="left:824px; top:98px; width:384px; font-size:12pt; line-height:17px;">A number nobody can define ranks nothing — shown ranked-only.</div>
+  </div>
+
+  <!-- ============ 6. z_footer 24,656,1232,40 ============ -->
+  <div class="abs" id="z_footer" style="left:24px; top:656px; width:1232px; height:40px;">
+    <div class="abs hrule" style="left:0; top:0; width:1232px;"></div>
+    <div class="abs mono mut" style="left:0; top:8px; width:976px; font-size:10pt; line-height:13px;">Adult titles excluded (1,358) · 'listings', not films — 1,697 duplicate (title, date) pairs (2.0%) · evidence over time → · method &amp; refusals →</div>
+    <div class="btn" style="left:1024px; top:6px; width:104px;">EVIDENCE →</div>
+    <div class="btn" style="left:1144px; top:6px; width:88px;">METHOD ⓘ</div>
+  </div>
+
+</div>
+
+</body>
+</html>

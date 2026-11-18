@@ -1,0 +1,41 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Facts
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Dimensions
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup 'Bridge Tables'
+
+	annotation PBI_QueryGroupOrder = 2
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["SourceRoot","Source","Schema","Movies","Production Company","Genres","Genre Bridge","Production Company Bridge","Keyword","Keyword Bridge","Date","Release Year"]
+
+annotation PBI_ProTooling = ["CopilotTooling","Copilot","CopilotMeasureDescriptions","DevMode"]
+
+ref table _Measures
+ref table Movies
+ref table 'Production Company'
+ref table Genres
+ref table 'Genre Bridge'
+ref table 'Production Company Bridge'
+ref table Keyword
+ref table 'Keyword Bridge'
+ref table Date
+ref table 'Release Year'
+ref table Counts
+ref table Parameters
+
+ref cultureInfo en-US
+

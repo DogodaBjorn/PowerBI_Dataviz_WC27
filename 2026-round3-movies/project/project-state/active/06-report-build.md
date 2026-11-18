@@ -1,0 +1,642 @@
+# 06 — Report build (stage 6)
+
+Detail lives in `project/deliverables/BUILD_LOG.md` (the `build-log` skill's file):
+what exists, every decision and assumption, every manual-Desktop step, and the
+validation record. This file is the stage's state + open questions.
+
+## Progress
+
+| Phase | Scope | Status |
+|---|---|---|
+| A | Display measures filled + 40 new measures; D7 theme installed and made active | done 2026-08-05 |
+| B1 | `p0-box-office` (42 visuals) · `p9-end-credits` (35 visuals) · pages registry | done 2026-08-05 |
+| B2a | `p1-act-i-profit` · `p2-act-ii-ratings` | done 2026-08-05 |
+| B2b | Act II ruling · `p3-act-iii-corrected-cut` · `tt-movie-poster` · 9 bookmarks | done 2026-08-05 |
+| **B2c** | **The alt-text layer — 10 measures + alt text on all 210 visuals** | **done 2026-08-05** |
+| **G6-fix** | **QA fix pass: 3 blockers + 12 majors from the 24/40 review** | **done 2026-08-05** |
+| **G6-a11y** | **Accessibility fix pass: the 10 findings of the a11y audit** | **done 2026-08-05** |
+| C | Desktop round-trip: refresh, render, work the manual checklist | not started |
+| **RB-1** | **Rebuild ckpt 1: model deltas (columns, 2 calc tables, 24 measures, 5 rewrites) + theme** | **done 2026-08-05** |
+| **RB-2** | **Rebuild ckpt 2: `p1-the-answer` — the new landing page, 13 visuals** | **done 2026-08-05** |
+| **RB-3** | **Rebuild ckpt 3: `p4-both` — the payoff page, 11 visuals (play axis + navigator)** | **done 2026-08-05** |
+| **RB-4** | **Rebuild ckpt 4: `p2-money` (12) + `p3-evidence` (10) — the two paper pages** | **done 2026-08-05** |
+| **RB-5** | **Rebuild ckpt 5: `p5-method` (8) + `tt-movie` (4); the old build deleted** | **done 2026-08-05** |
+
+**The report is structurally complete.** 222 visuals across six pages
+(p0 43 · p1 47 · p2 41 · p3 40 · p9 37 · tooltip 14) plus nine beat bookmarks —
+**5 visible pages + 1 tooltip page**, against a contest maximum of 5. The two
+contest-starter pages ("Read Me", "Tabular") were deleted in the fix pass.
+Model: **90 measures**, including the ten `06 Display\Alt text` narrations.
+Alt-text coverage: 89 content · 86 empty-decorative · 47 textboxes reading their own
+copy. **The waiting list is closed**, and after the a11y pass **no alt string defers
+the reader to something on screen** (was 11).
+
+All 222 `visual.json`, all six `page.json`, `pages.json`, `report.json`, the nine
+`*.bookmark.json` and `bookmarks.json` validate against their published schemas
+(`visualContainer/2.9.0` with remote sub-schemas resolved, `page/2.1.0`,
+`pagesMetadata/1.1.0`, `report/3.3.0`, `bookmark/2.1.0`, `bookmarksMetadata/1.0.0`).
+Binding cross-check: 53 bound properties, all resolve.
+
+## Validation record — the full sweep (2026-08-05, after the waiver/handoff pass)
+
+**Correction.** This file previously recorded only `validate_json` and
+`validate_tmdl`, and an earlier note claimed "all validators clean". That was wrong:
+the `validate-project` sweep has eight steps and step 7, `pbir_detect.py`, is
+**gate-blocking at G6/G7** and had never been run. It failed with 63 unwaived
+findings. The complete set, run in the sweep's own order:
+
+| # | Validator | Result | Note |
+|---|---|---|---|
+| 1 | `check_state.py` | **PASS** | `state OK: project 'wc-round-3' at stage 6 (s6_report_build, in_progress), updated 2026-08-05` |
+| 2 | `validate_json.py` | **PASS** | `260 file(s) checked, 0 with errors` |
+| 3 | `check_contrast.py` | **PASS** | `6 pair(s), 0 failure(s)` — accent 3.21:1 canvas/surface, good 9.02:1, bad 6.01:1 |
+| 4 | `validate_tmdl.py --strict` | **1 ERROR (expected)** | `15 file(s), 1 error(s), 0 warning(s) [strict]` — `expressions.tmdl:34`, the committed `SourceRoot` drive-letter value. This is the standing entrant waiver recorded at G4; it is the *only* strict error and no warnings remain |
+| 5 | `tmdl_inventory.py` | **PASS** | 10 tables, **90 measures**, 8 relationships, 1 shared expression — matches the blueprint plus the ten `06 Display\Alt text` narrations added at B2c |
+| 6 | Naming grep | **PASS** | all 222 visual folders carry a `design/naming-conventions.md` role prefix; no Desktop-style 32-hex ids anywhere in the report tree |
+| 7 | `pbir_detect.py` | **PASS *only if the entrant signs*** | `48 finding(s) across 1 report(s) — 0 unwaived, 48 waived -> PASS`. Was 63/63 unwaived → FAIL. See below |
+| 8 | `pbir validate` (CLI) | **not run** | the `pbir` CLI is not installed on this machine (`pbir: command not found`); the documented fallback, direct JSON editing plus schema validation, is what this build used throughout |
+
+### How `pbir_detect` went 63 → 48, and why 48 is not zero
+
+Every one of the 63 findings was inspected individually. **15 were fixed, 48 are
+argued in a DRAFT waiver file.**
+
+- **`ai-dash-emoji` 46 → 42.** The 46 hits were read one by one against their own
+  page's copy register. **Four were genuine AI writing tells** — a spaced em-dash
+  used as a rhetorical pivot between two independent clauses, in lowercase prose,
+  each with a dashless sibling string in the same register on the same page. Those
+  four were **rewritten, not waived**: `z_ticket3_tease`, `c_p2_note_twenty`,
+  `c_lb_more`, `c_tt_foot` (details in BUILD_LOG → *G6 waiver + handoff pass*). The
+  remaining 42 are contracted typography — screenplay slug lines, `SC.n —` beat
+  labels, `INSERT —` shot headings, act/section titles, glossary term–definition
+  rows, TMDB's mandated attribution wording, and the `✓` glyphs that
+  design-hard-rule 3 **requires** as the non-colour carriers. Rewriting those would
+  break the design contract and remove an accessibility carrier.
+- **`theme-color-drift` 11 → 0.** All 11 were **promoted, not waived**. The six
+  distinct chrome hexes are now named style presets in `theme.json`
+  (`ticketPerforation` `#9A9284`, `parameterChip` `#6E6960`, `spotlightSurface`
+  `#282331`, `posterPlate` `#C8C3B4`, `leaderboardRule` `#EBE7DC`,
+  `evidenceReference` `#8A8377`), re-validated at **0 errors** against
+  `reportThemeSchema-2.156.json`. A named preset only applies when a visual selects
+  it, so nothing renders differently — deliberate, this close to delivery.
+- **`grid-8px` 6 → 6, waived per page.** The layout was measured from the approved
+  HTML prototype, whose type sits on a ~19 px line rhythm. Measured over all 222
+  visuals / 888 coordinates: 38 % on the 8 px grid, 55 % on 4 px, 78 % on 2 px; 19 px
+  is the most common rect height after the 32 px button. The handoff *contracts*
+  those off-grid rects, so the build matches its contract — the handoff sentence
+  claiming "8 px grid throughout" was the error and has been corrected. Re-aligning
+  ~200 visuals two days before the deadline is the wrong trade.
+
+**The waiver file is a DRAFT.** `project/project-state/pbir-detect-waivers.yaml`
+carries 19 entries (13 `ai-dash-emoji` covering 42 findings, 6 `grid-8px`, one per
+page). Each glob was checked to match exactly its intended findings and nothing more.
+**A gate may be waived only by the user**: until the entrant signs these entries,
+**G6 stays HELD** even though the detector now prints PASS with the file in place.
+
+## G6 fix pass (2026-08-05) — what changed
+
+Fourteen of the fifteen findings are closed on disk; one (FIX-C) is closed **and**
+proved a schema question the build had left open. Full record in BUILD_LOG →
+*Stage 6 G6 fix pass*.
+
+- **The report-level Adult filter is expressible in PBIR, and is now written.**
+  `report/3.3.0` declares `filterConfig` → `filterConfiguration/1.3.0`; the
+  `Advanced`/`Comparison` shape was taken from a filter this report already carries,
+  and the boolean literal spelling from the schema's own documentation. Validated
+  against the live schema with remote `$ref`s resolved, plus a negative control that
+  proved the validator reaches inside the filter subtree.
+- **The mandated dataset attribution now names TMDB, Kaggle and ODC-By 1.0**, in one
+  identical string on p0 and p9 — written *before* the template pages were deleted,
+  so the credit was never absent from the entry.
+- The three act headers are measure-bound; the Key Takeaway has a kicker; both tables'
+  headers are silenced; the p3 beat rail is on the p1/p2 grid; the ticket perforation
+  is one frame plus one hairline; the p9 negative-revenue row exists and is bound.
+- Two extra defects were found and fixed during the pass: a stale Act II docstring on
+  `Movies (perfect ten)`, and `c_cr_count_dup_val` sitting one row below its label.
+
+## G6 accessibility pass (2026-08-05) — what changed
+
+All ten audit findings are closed on disk except the one that is a documented PBIR
+limit (the scatter winner colour), which is now closed *as an answer* rather than as a
+gap. Full record in BUILD_LOG → *Stage 6 G6 a11y pass*.
+
+- **The alt layer now speaks.** 29 strings rewritten; the deferral scan that found 11
+  offenders returns 0. p9's 12 value cards and the tooltip's 7 fold their label into
+  their own alt, so every stop is a self-contained sentence. Nothing volatile is typed —
+  the disclosed constants carry the meaning.
+- **The alt layer is also honest again.** Three strings described a Play axis and an
+  in-chart tick that do not exist on disk; they now describe what ships, on canvas
+  (`Label · No date`) as well as in the narration.
+- **A measured AA failure is fixed with recomputed numbers**: the p3 scrim at 80D and a
+  lighter reference line take the axis text from 4.21 to **5.75:1** and the C line from
+  2.12 to **3.56:1**.
+- **Beat state is announced** (WCAG 4.1.2) via 9 new current-variant buttons and 9
+  rewired bookmarks — required because `bookmark/2.1.0` cannot merge
+  `visualContainerObjects`, so alt text is not bookmark-switchable.
+- **`dataCategory: ImageUrl` moved from "unverifiable" to written**, on two Microsoft
+  sources.
+- `measures.dax` had drifted in **12** measures, not the 2 reported; all were refreshed
+  from the model and the file now names the model as authoritative.
+
+## Decisions recorded this stage
+
+- **The Act II ruling (2026-08-05, coordinator, design authority).** Act II no longer
+  names a film. The naive read is the aggregate — *n* listings score a perfect 10.0,
+  *n* of them on a single vote — and the corrected read is the aggregate too: a
+  perfect 10.0 on one vote weights to ≈ 6.99, barely above C = 6.96. Five measures
+  added, two rewritten in place, three Act II strings re-worded. Full record and the
+  one deviation (the leaderboard tie-break) in BUILD_LOG → *THE ACT II RULING*.
+- **The play axis is a manual Desktop step, not a silent drop** (see open question 1).
+- **Measure-driven colours are not bound** — the fx-field-value serialisation is
+  unverifiable; the honest carriers are words and glyphs (see open question 2).
+- **Both Deneb visuals ship as their contracted native fallbacks** — Deneb is not
+  registered in this report and an agent cannot register it.
+
+## Open questions
+
+1. **The play axis is not on disk — the contracted Act III animation is one Desktop
+   drag away.** No published source (theme schema, visualConfiguration,
+   Microsoft Learn, this repo's own Desktop-authored files, the contest `.pbix`)
+   names the scatter's play-axis role key, so per research-first none was invented.
+   `hero_premiere_scatter` ships complete except the Play well. **Entrant action:**
+   drag `'Release Year'[Year Label]` into Play, leave the head on the latest year,
+   save, and record the role key in BUILD_LOG.
+2. **`[Color · Scatter mark]` and `[Color · Rating verdict]` are unbound — and for the
+   scatter this is now an ANSWERED question, not an open one.** Microsoft's own
+   colour-strategy reference states that scatter silently ignores `dataPoint.fill`
+   `metadata` selectors and that per-point colour needs `scopeId` selectors, whose
+   payload is undocumented and which would have to encode a data-point identity that
+   does not exist until the model is refreshed. The winner is carried by
+   `c_winner_label`'s `✓` and its words, and the scatter's alt text now says plainly
+   that the plot does not colour the winner. Two `fx → Field value` bindings in Desktop
+   still close it if the entrant wants the colour.
+3. **Alt text is built; the attribution debt is OPEN.** The blocker was cleared at the
+   main-thread level (commit `f4b9420`) by crediting the influencing Fabric Community
+   post *by publication* in `CREDITS.md` and `contracts/source-register.yaml`, with
+   the byline recorded as an outstanding debt. **A human must still retrieve the
+   author's name.** Scope adopted: *dynamic alt text* only — the post's DAX
+   user-defined-function pattern is NOT used, and must not be until the name is
+   recorded. Implementation is plain measures on Power BI's own documented feature
+   (a11y practice credited to Meagan Longoria). All four M-003 carriers are now live
+   at SC.1.
+   **Remaining sub-item:** the alt strings on disk are **static**, because the
+   *value* of `general.altText` is typed as an open object and a measure binding there
+   would fail silently. They state the finding with the disclosed parameters and never
+   type a volatile count. Upgrading the ten data visuals to their `Alt · …` measures
+   via `fx → Field value` is one Desktop step each.
+4. **Six new unverified tokens** (scatter role keys · `visualLink.type = 'Bookmark'` ·
+   `explorationState.version` · the bookmark `objects.merge` payload · the `image`
+   visual's role key and `sourceField` · `VisualTopN` behaviour) join the five from
+   phase B1. Each fails visibly and each is a one-line fix; all are on the Desktop
+   checklist.
+5. ~~**Native table headers cannot be hidden**~~ — **closed in the G6 fix pass.**
+   `tableEx` still has no `columnHeaders.show`, so both tables now set the header
+   `fontColor` equal to the header `backColor` (`#FFFFFF` on p2, `#1D1A20` on p3):
+   the row keeps its semantics for assistive technology and prints nothing. The
+   **no per-column font** limit stands, and both may still need a `columnWidth` tune
+   in Desktop.
+6. **`Two-vote ten (illustration)` and `Godfather rating (reference)` are now unused**
+   by any visual after the Act II ruling. Retained, not deleted.
+7. **Nothing built at stage 6 has been rendered.** No measure has been executed and no
+   pixel seen; BUILD_LOG's Desktop checklists are the gate for that, and s7 still owns
+   the 85,394 / 84,036 / 84,510 snapshot reconciliation.
+8. **The report-level filter has never been seen attached.** It is schema-correct and
+   modelled on a filter this report already carries, but the End Credits cross-foot is
+   the trust anchor of the entry and it now depends on that filter actually binding in
+   Desktop. **First check after refresh:** the Filters pane shows a locked *Adult is
+   False* card, and `[Adult listings excluded]` prints a non-zero number.
+9. **The p3 act header must wrap to render fully.** `[Title · Lie 3]` measures ~963 px
+   against an 830 px box (the band `btn_home` leaves), so the card wraps to two lines
+   in 44 px. If Desktop clips instead of wrapping, raise the box to y 32 / h 48 —
+   never drop the type below the 10 pt floor.
+10. **The `pbir_detect` waivers are UNSIGNED — this is what holds G6.** 19 DRAFT
+    entries in `project/project-state/pbir-detect-waivers.yaml`. A gate may be waived
+    only by the user. **Entrant action:** read the 13 `ai-dash-emoji` and 6 `grid-8px`
+    entries, approve or strike any of them (striking one brings its findings back),
+    and record the decision in `status.yaml`'s s6 `gate_note`. `status.yaml` was
+    deliberately **not** touched by the build.
+11. **The copy deck and the disk still disagree in seven places the fix passes changed
+    and never wrote back.** Four were amended in this pass because they were the
+    strings being edited; the rest are listed here rather than silently rewritten,
+    because each is a factual claim only the entrant can rule on:
+    `z_ticket2_tease` (deck "In which 2 votes crown a champion" / disk "1 vote") ·
+    `c_p2_note_twovotes` (deck "NOTE: 2 votes." / disk "one vote is enough to score a
+    perfect 10.0.") · glossary `M-005 RAW RATING` (deck "any votes, even 2" / disk
+    "even 1") · `c_p1_note_budget` (deck "min $1, median $2,800" / disk "token
+    amounts, not blanks") · `c_p1_note_negrev` (deck "one listing books −$12 revenue"
+    / disk "revenue goes negative in this basis") · `c_waffle_cap` (deck carries the
+    counts "(13)"/"(87)", disk does not) · both TMDB attribution strings (deck carries
+    the short form, disk the long ODC-BY form written in the G6 fix pass — the disk
+    version is the better one). **Entrant action:** confirm the 1-vs-2-votes fact, then
+    reconcile the deck to disk in one pass.
+12. **`z_refusal_card_lit` and `z_adjustments_card_lit` disagree on disk.** The handoff
+    contracts `#282331` for both spotlight variants; `z_adjustments_card_lit` uses it,
+    `z_refusal_card_lit` uses `#2E2933`. One of the two is wrong and it is a design
+    call, not a build call — left as found, flagged here. `#282331` is now a theme
+    token (`shape.spotlightSurface`), so aligning the refusal card is a one-value edit
+    if the entrant wants the pair consistent.
+
+13. ~~**The shape-fill fallback is fixed; the `cardVisual` half of the same bug is
+    NOT.**~~ **RESOLVED 2026-08-05** — the entrant authored the reference card and
+    handed it back, and the correction was mechanical exactly as predicted. Full
+    evidence in BUILD_LOG under "G6 CORRECTNESS FIX: the cardVisual label/value
+    fallback", which also records the specimen verbatim. Answer to the three
+    questions the card was asked to settle: `label` hides via
+    `{"properties":{"show":false},"selector":{"id":"default"}}`; `value.fontColor`
+    is correct as written; and **yes, `value` needs the selector** — that missing
+    selector was the whole bug. All 46 cards fixed (p0 3, p1 11, p2 5, p3 8, p9 12,
+    tooltip 7); diff purely additive, 276 insertions / 0 deletions. Independently
+    corroborated by the published report theme schema 2.156, which declares a `$id`
+    property on `cardVisual.label` and `cardVisual.value` (= instance-scoped =
+    selector required). The specimen also revealed that a card's background fill
+    belongs in `cardCalloutArea.backgroundFillColor`, **not** in
+    `visualContainerObjects.background` — no change was needed here, because the
+    design contract specifies "background off" on every card (the `#FFFFFF` /
+    `#1D1A20` surfaces are drawn by separate `basicShape` rects) and all 46 already
+    carry `background.show = false` with no colour.
+14. **Property shapes still unverified — the list shortened on 2026-08-05.** All
+    222 visuals were swept against the published report theme schema 2.156 during
+    the cardVisual pass: **every property name we have written anywhere in this
+    report exists in that schema** (the single flag, `textbox.general.paragraphs`
+    69x, is a false positive — it is PBIR content, not a theme-styleable property,
+    and is byte-for-byte identical to Desktop's own authored textbox). So nothing
+    is *invented*; what stays unproven is whether an object binds in the position
+    we wrote it, which only Desktop shows. Two remain genuinely unverified:
+    `hundredPercentStackedBarChart` (`dn_ticket_waffle` — no Desktop-authored
+    example of this type exists anywhere in reach) and the **measure-bound**
+    `image` form on `img_tt_poster` (Desktop's three authored images all use the
+    static-resource `sourceFile.image.{name,url,scaling}` shape instead). The
+    schema sweep also *confirmed* the previous pass's inference on
+    `actionButton`: `fill`, `outline` and `text` all declare `$id`, so the
+    selector'd form applied there was right. Each fails visibly rather than
+    corruptly, and each is one line to fix once seen.
+15. **`z_ticket1/2/3_stub_rule` are styled but disabled.** Each carries
+    `outline.show = false` together with a `lineColor` and `weight`, so the ticket
+    perforation draws nothing. The structural correction was applied; the `false`
+    was deliberately preserved because changing it is a design call. **Entrant
+    action:** if the perforation is meant to be visible, flip those three to `true`.
+
+## REBUILD CHECKPOINT 1 — theme + report.json (2026-08-05, pbir-operator)
+
+Authority: the approved rebuild plan `i-told-you-i-giggly-castle.md`. **No page,
+visual or bookmark was touched.** The report tree is being rebuilt from
+checkpoint 2 onward; this checkpoint fixed only the two report-level artifacts
+that every future page inherits. The model half is logged in `04-model-build.md`.
+
+### `report.json` — the duplicate Adult filter is gone
+
+`filterConfig.filters` carried **two** `Movies[Adult] = FALSE` filters: the
+contracted `flt_report_adult` (named, `Advanced`, `isLockedInViewMode: true`) and
+a second `1dade010cb9e3d8665cb` (`Categorical`, **unlocked**, no display name) —
+a viewer could have switched adult listings back on through it, which would have
+silently invalidated every count in the report. The second is deleted.
+
+The survivor now also carries an **explicit `isHiddenInViewMode: false`**, so
+"visible in the filter pane" is a decision recorded on disk instead of an
+inherited default. Property verified optional-boolean against
+`filterConfiguration/1.3.0`.
+
+### `theme.json` — four additions, one deletion
+
+Both copies changed and kept content-identical: `project/deliverables/theme.json`
+(LF) and `…Report/StaticResources/RegisteredResources/D7-Seductive-Lies.json`
+(CRLF, as Desktop wrote it). Verified equal by parsed comparison, not by eye.
+
+1. **`visualStyles.cardVisual` added — this is the black-slab fix.** The theme's
+   global `"*" / "*"` rule sets `background.show: true` at `#1D1A20` for every
+   visual type, and there was no `cardVisual` block to override it. The new block
+   turns `background`, `border`, `dropShadow`, `visualHeader`, `title` and
+   `padding` off, hides the measure-name `label` (`$id: "default"`,
+   `show: false`) and styles `value` (`$id: "default"`, `fontColor #F2EFE6`,
+   `textWrap`). The grammar is the entrant's own Desktop-authored card specimen,
+   recorded verbatim in `BUILD_LOG.md` on 2026-08-05 — `label` and `value` are
+   instance-scoped and both declare `$id` in the published schema.
+   **`cardCalloutArea` was left out on purpose**: the handoff specifies cards as
+   transparent text overlays ("background off; border off"), and the earlier
+   analysis in this file already rejected painting it.
+   No `fontFamily`/`fontSize` at theme level either — those belong to the
+   `callout` text class and the per-card properties, which already carry the
+   design contract's typography.
+2. **`visualStyles.pageNavigator` added.** One navigator replaces ~16 per-page
+   nav buttons and one tab stop replaces five. `pages.showHiddenPages` and
+   `showTooltipPages` are **false** so the hidden tooltip page can never appear
+   in it; `layout.orientation: 2` (Horizontal); fill off. **The current page is
+   marked by outline weight 1 → 2 plus a brighter, bolded label — never colour
+   alone**, which is the accessibility hard rule, not a preference.
+   `shape` is written selectorless: unlike `actionButton`, `pageNavigator.shape`
+   declares no `$id` in the schema and no Desktop specimen exists, so the
+   conservative form was taken.
+3. **Legacy structural aliases added** — `foreground #F2EFE6`,
+   `foregroundNeutralSecondary #B5AFA0`, `foregroundNeutralTertiary #78716C`,
+   `backgroundLight #1D1A20`, `backgroundNeutral #2E2933`. Without them, any
+   visual default still reading the legacy names falls through to Fluent2's
+   **light** values on a night surface.
+4. **Fonts cut to the Mac-safe set: Georgia / Arial / Arial Black / Courier New.**
+   `Bahnschrift SemiCondensed` and `Consolas` are deleted from the design — both
+   are Windows-only, and the Service does not serve them, so a judge on a Mac
+   would see the whole tone collapse on a "pixel perfect" brief. The mapping
+   preserves the handoff's stated roles (line 102 — Bahnschrift = display and
+   chrome caps · Consolas = screenplay body and numerals · Georgia = verdicts and
+   editorial framing): `callout` → **Courier New**; `largeTitle` and `header` →
+   **Arial Black**; `title` and every label class → **Arial**. The 11 `Segoe UI`
+   families inside `visualStyles` (chart axes, table text, button text) went to
+   **Arial** in the same pass, because the plan's constraint is report-wide and
+   leaving Segoe UI on the axes would have missed the visible half of it.
+   **Georgia takes no textClass slot** — it stays a per-visual face, exactly as
+   the handoff already applies it.
+5. **`basicShape` pruned.** The valid visual name is `shape`; a scan of all 222
+   visuals finds **zero** `basicShape` visuals against 63 `shape`. Dead weight,
+   removed.
+
+### Validation
+
+`validate_json.py` 259 files / 0 errors. Both theme copies validate against
+`reportThemeSchema-2.156` (fetched this session) at **0 errors**, and the
+validator was proved to reach the new blocks by a **negative control**: 7
+deliberate faults injected, 6 caught (`cardVisual.value.fontSize` range,
+`pageNavigator` text/layout/outline enums, `foreground` type, unknown
+`textClasses` member). The one miss is an unknown property *name* inside
+`cardVisual.label`, because that item schema does not set
+`additionalProperties: false` — every property name written was separately
+checked against the schema's own property list. `pbir_detect.py` still PASSes
+(48 findings, 0 unwaived) — it scans the old pages, which are unchanged.
+
+The `pbir` CLI is **not installed** on this machine; direct JSON editing was used
+per `DEPENDENCIES.md`'s documented fallback.
+
+### Open questions
+
+- **Carried forward, unchanged:** G6's pbir_detect waivers still need the
+  entrant's signature, and `status.yaml` still reads `s6: in_progress / G6 HELD`.
+  Nothing in this checkpoint closes that gate — it is preparatory work for the
+  rebuild, not a G6 fix pass. `status.yaml` was deliberately **not** edited.
+- Its G6 note records "90 measures"; the model now has 114. That note is a
+  historical statement about the G6 state, so it was left alone rather than
+  rewritten — flagging it so nobody reads it as current inventory.
+- The old pages still bind `[Title · Lie 1/2/3]` and `[Title · Landing]`, whose
+  bodies now say something different from the act-titled chrome around them.
+  Expected mid-rebuild; resolves when the pages are rebuilt. **Not** a defect to
+  patch in pages that are about to be deleted.
+
+## REBUILD CHECKPOINT 2 — `p1-the-answer` (2026-08-05, pbir-operator)
+
+The rebuild's landing page: it asks the contest question and answers it. **13
+visuals, exactly the 13 the approved checkpoint lists** — nothing was added, per
+the entrant's binding rule that every element must have a function. Full build
+detail, the grammar, all measured contrast figures, the Deneb swap recipe and the
+Desktop checklist are in `project/deliverables/BUILD_LOG.md` under *REBUILD
+CHECKPOINT 2*.
+
+State, in brief:
+
+- **New:** `definition/pages/p1-the-answer/` — `page.json` (1280×720, night
+  `#171418`, displayName "THE ANSWER") + 13 `visual.json`.
+- **Changed:** `definition/pages/pages.json` only — `p1-the-answer` prepended to
+  `pageOrder` and made both `activePageName` and `landingPageName`. **No other
+  page, visual, bookmark, theme or model file was touched.** The six old pages
+  stay until their replacements exist.
+- **Bindings:** 4 measure-bound cards (`Title · Landing`, `Copy · Answer · units
+  read`, `Label · Method`, `Label · Caveats`) + 1 chart on the three `Share ·`
+  measures. The only literal numbers on canvas are the ordinals 1/2/3 and the
+  disclosed `$10,000` / `m = 100`.
+- **Accessibility:** 12 tab stops in the contracted order, `z_rule_answer` at
+  `tabOrder: -1` with empty alt, one alt string (on the chart only, no volatile
+  count), 10 pt type floor, visible outlines on all four buttons.
+- **Deneb:** still **not registered** in `report.json`, re-checked on disk. The unit
+  chart ships as the native `hundredPercentStackedBarChart` fallback under the same
+  id, rect, z and tab position, so the later swap is a single-file change.
+
+### Validation — checkpoint 2
+
+`validate_json.py` 273/0 · deep `visualContainer/2.9.0` on all 13 new visuals 0 real
+errors (5 sub-schemas resolved) · `page/2.1.0` 0 · `pagesMetadata/1.1.0` 0 ·
+`check_contrast.py` theme 8/0 plus 13 page pairs measured individually (all
+text ≥ 8.35:1, all non-text carriers ≥ 3.27:1) · `validate_tmdl.py --strict` 1 error
+(the standing SourceRoot waiver; no model file touched) · `check_state.py` OK ·
+**`pbir_detect.py` FAIL: 1 unwaived finding.**
+
+### Open questions — checkpoint 2
+
+- **`grid-8px` on `pages/p1-the-answer` is unwaived and stays unwaived.** 5 of 13
+  visuals are off the 8 px grid (`z_rule_answer` h 1 · `c_units_legend` h 20 ·
+  `c_units_read` y 580 · `c_nav_hint` y 572, h 20 · `btn_method` h 28) — **every one
+  of those coordinates is contracted in the approved checkpoint**, so they were not
+  changed unilaterally, and a waiver is the user's to sign, not the operator's.
+  Decide: sign a waiver, or authorise the four-number fix (h 20→24, h 28→24 or 32,
+  y 580→584, y 572→576).
+- **Theme defect, reported not fixed:** `visualStyles.actionButton.*.text[0]` writes
+  `"alignment"`, which `reportThemeSchema-2.156` does not define on that card — the
+  property is `horizontalAlignment`. Inert (that item schema does not set
+  `additionalProperties: false`, so it validates and does nothing). Both theme copies
+  must change together and `project/deliverables/theme.json` is outside this agent's
+  write scope. p1 is unaffected: its buttons write `horizontalAlignment` explicitly.
+- **No "KEY TAKEAWAY" kicker was built** (the old p0 had one). Not in the 13-visual
+  list, so it was not added. One textbox at `24,88,1232,16` if the designer wants a
+  judge to find the mandated element by name; costs one tab stop.
+- **Button text could not bind live.** No verified PBIR serialisation exists for an
+  fx-bound button label, so the three navigation buttons carry static text; the
+  "headline number" requirement is met with disclosed parameters only. To upgrade:
+  bind once in Desktop, capture the JSON, re-author.
+- **Four `visualLink` targets dangle by design** — `p2-money`, `p3-evidence`,
+  `p4-both`, `p5-method` do not exist yet. Written now so nothing needs rewiring.
+
+### Checkpoint 2 rulings — CLOSED 2026-08-05 (coordinator)
+
+All three of the open questions above were ruled on and closed in the same session:
+
+1. **Grid: snapped, not waived.** `c_units_legend` h 20→24 · `c_nav_hint` y 572→576
+   h 20→24 · `c_units_read` y 580→584 · `btn_method` h 28→32. Every edge relation and
+   text fit re-checked. `z_rule_answer` (1 px) stays and is waived as a hairline.
+   **`pbir_detect` is back to 0 unwaived.**
+2. **`c_takeaway_kicker` built** — `KEY TAKEAWAY`, `24,88,1232,16`, Arial 10 pt
+   `#B5AFA0`, `tabOrder` 150, empty alt. p1 is now **14 visuals / 13 tab stops**.
+3. **Theme defect fixed in both copies** — `actionButton.*.text[0]`
+   `"alignment"` → `"horizontalAlignment"`; both still 0 errors against
+   `reportThemeSchema-2.156` and content-identical.
+4. Two DRAFT hairline waivers added to `project-state/pbir-detect-waivers.yaml`
+   (`grid-p1-the-answer-hairline`, `grid-p4-both-hairline`). **Unsigned**, like every
+   other entry in that file — the entrant's signature still closes G6.
+
+## REBUILD CHECKPOINT 3 — `p4-both` (2026-08-05, pbir-operator)
+
+The payoff page: night surface, plum act tint as chrome only, 11 visuals. Full detail
+(the play-axis evidence, the `pageNavigator` verification table, every measured
+contrast figure, the Desktop checklist) is in `project/deliverables/BUILD_LOG.md`
+under *REBUILD CHECKPOINT 3*.
+
+State, in brief:
+
+- **New:** `definition/pages/p4-both/` — `page.json` (1280×720, night, displayName
+  "3 · BOTH") + 11 `visual.json`.
+- **Changed:** `pages.json` (p4 registered after p1) and `p1/dn_answer_units` (chart
+  container fill, for lock 9). The six old pages are otherwise untouched.
+- **Two core native visuals added:** the `pageNavigator` (one nav control replacing
+  every per-page button) and the play-axis `scatterChart` — the report's animation.
+  `tbl_refusal_ranks` is the third native data visual on the page.
+- **The Play axis is wired, on evidence:** the p3 hero already carries the `Play`
+  role, and that file is one of the nine Desktop re-serialised (height-before-width),
+  with Desktop having generated its own field filter for `Release Year.Year Label`.
+  Copied verbatim; only the rect, the fonts (Segoe UI → Arial), the x-axis title
+  (em-dash removed) and the alt string changed.
+- **Accessibility:** 10 tab stops in the contracted order, `z_p4_rule` at −1 with
+  empty alt, alt text on the scatter and the table only, 10 pt floor, table headers
+  ON for real column semantics, current-page marked by weight **and** boldness.
+
+### Validation — checkpoint 3
+
+`validate_json.py` 286/0 · deep `visualContainer/2.9.0` p1 14/14 and p4 11/11, 0 real
+errors · `page/2.1.0` 0 · `pagesMetadata/1.1.0` 0 · both theme copies 0 against
+`reportThemeSchema-2.156` · `check_contrast.py` theme 8/0 plus 16 p4 pairs measured
+individually · `validate_tmdl.py --strict` 1 error (standing SourceRoot waiver, no
+model file touched) · `check_state.py` OK · **`pbir_detect.py` PASS — 0 unwaived**
+(50 findings, all waived; the two rebuild pages contribute one hairline each).
+
+### Open questions — checkpoint 3
+
+- **The scatter's opening frame is undecided and cannot be settled from disk.** Power
+  BI starts a play axis at frame 1, here the earliest year with a qualifying listing —
+  a near-empty plot on open, which is the defect the rebuild exists to remove.
+  `scatterChart.currentFrameIndex.index` is in the published theme schema and is
+  almost certainly the lever, but the frame count is unknowable before a refresh and
+  no specimen sets it, so **nothing was guessed**. Desktop step, two recorded routes.
+- **Five p4 rects were snapped to the grid** (`c_scatter_population` h 22→24 ·
+  `hero_premiere_scatter` y 162→160 h 454→456 · `c_winner_label` h 76→80 · `c_refusal`
+  h 76→80 · `tbl_refusal_ranks` y 420→424 h 100→104), applying the checkpoint-2
+  ruling to a rect table that was written before it. Every alignment is preserved and
+  nothing moved more than 4 px. Revert in five numbers if the coordinator prefers the
+  literal table plus a waiver.
+- **`nav_pages` currently renders six buttons** because the four old visible pages are
+  still registered. Self-corrects at the deletion checkpoint.
+- ~~**Theme recommendation, not applied:** `pageNavigator.outline` default is
+  `#57534E`~~ — **RULED AND APPLIED 2026-08-05:** both theme copies now carry
+  `#6E6960` on `pageNavigator.outline` `$id default` (2.39:1 → 3.35:1), so theme and
+  visual agree. `tableAccent` and the `tableEx` gridline keep `#57534E`.
+
+## REBUILD CHECKPOINT 4 — `p2-money` + `p3-evidence` (2026-08-05, pbir-operator)
+
+The two paper pages, charts built first so the insight titles could be checked against
+real structure. Full detail — the paper-surface override, the four insight titles, the
+cross-filter matrix, the five measure edits and every measured contrast pair — is in
+`project/deliverables/BUILD_LOG.md` under *REBUILD CHECKPOINT 4*.
+
+State, in brief:
+
+- **New:** `definition/pages/p2-money/` (page.json + 12 visuals) and
+  `definition/pages/p3-evidence/` (page.json + 10 visuals), both 1280×720 paper
+  `#F5F2E9`, act tints on chrome only.
+- **Changed:** `pages.json` (final order `p1-the-answer` · `p2-money` · `p3-evidence` ·
+  `p4-both`, then the six old pages), the two theme copies (`pageNavigator.outline`),
+  three insight-title font sizes, and **five measure bodies** — names, lineageTags,
+  formatStrings and displayFolders untouched, 112 measures / 116 lineageTags before and
+  after.
+- **Four new native data visuals:** `clusteredColumnChart`, `lineChart`, `columnChart`
+  and the `tableEx` with posters and headers ON — plus `dn_rating_fall`
+  (`clusteredBarChart`) keeping its id for the later Deneb swap. The entry's core
+  native count is now comfortably past the contest's "at least three".
+- **Cross-filter is expressible in PBIR and is written**, no Desktop step:
+  `page.json → visualInteractions` (`{source, target, type}`, verified against
+  `page/2.1.0`). p3 has **exactly one** `DataFilter`
+  (`ch_vote_distribution → tbl_perfect_tens`) and 20 `NoFilter`; p2 has 16 `NoFilter`
+  and no cross-filter at all. The pair is labelled in the prose card above the table,
+  not with a new object.
+- **The black-slab defect is addressed at its cause:** every paper card writes
+  `cardCalloutArea {show, backgroundFillColor: #F5F2E9}` with the `{"id":"default"}`
+  selector, and every chart/table states its own `#FFFFFF` surface and `#D8D4C8` edge,
+  so nothing inherits the night theme's `#1D1A20` / `#171418` / cream tokens.
+
+### Validation — checkpoint 4
+
+`validate_json.py` 310/0 · deep `visualContainer/2.9.0` p1 14/14, p2 12/12, p3 10/10,
+p4 11/11, 0 real errors · `page/2.1.0` 0 (both new pages, `visualInteractions`
+included) · `pagesMetadata/1.1.0` 0 · both theme copies 0 · `validate_tmdl.py --strict`
+1 error (standing SourceRoot waiver) · `check_state.py` OK · **`pbir_detect.py` PASS —
+0 unwaived** (52 findings, all waived; each new page contributes one hairline finding).
+
+### Open questions — checkpoint 4
+
+- **Repetition on p3, flagged not fixed.** `[Copy · Act II · responsible read]`
+  (`c_p3_fall_prose`) and `[Copy · Act II · verdict`] (`c_verdict_evidence`) state the
+  same fact in nearly the same words. I removed the third instance (it was inside
+  `[Copy · Evidence · trap]`, whose function the spec reassigned) but did not rewrite
+  the verdict, because its copy was not in the brief. A one-line replacement is
+  proposed in BUILD_LOG for the coordinator's ruling.
+- **`kpi_profit_naive` has no adjacent MISREAD stamp** — the word now opens the prose
+  card 44 px beneath it. Hard rule 3 is satisfied (colour + strike + word); if the
+  stamp should sit on the number it is one textbox and one tab stop.
+- **Paper card edges are barely visible by contract:** `#FFFFFF` on `#F5F2E9` is
+  1.12:1 and the `#D8D4C8` hairline 1.32:1 — the old build's paper treatment, carried
+  over deliberately, recorded so it is a decision rather than a surprise.
+- **Two exclusion filters use a shape this repo has not shipped before** (`Not` +
+  `Comparison(0)`), verified against `semanticQuery/1.4.0`. First Desktop render is
+  the proof.
+
+## REBUILD CHECKPOINT 5 — method page, tooltip, and the deletion (2026-08-05)
+
+**The rebuild is complete.** Full detail in `project/deliverables/BUILD_LOG.md` under
+*REBUILD CHECKPOINT 5*.
+
+### The report as it now stands
+
+| page | type | name | visuals | tab stops |
+|---|---|---|---|---|
+| `p1-the-answer` | Page | THE ANSWER | 14 | 13 |
+| `p2-money` | Page | 1 · MONEY | 13 | 11 |
+| `p3-evidence` | Page | 2 · EVIDENCE | 10 | 9 |
+| `p4-both` | Page | 3 · BOTH | 11 | 10 |
+| `p5-method` | Page | METHOD | 8 | 8 |
+| `tt-movie` | Tooltip 320×420 | Movie tooltip | 4 | 4 |
+| | | **total** | **60** | |
+
+**5 visible pages + 1 hidden tooltip** — exactly the contest maximum. **222 → 60
+visuals. 9 → 0 bookmarks. 36 of 60 visuals (60%) carry a data binding**, against 23%
+before. Twelve alt strings, one per chart, table and image, none elsewhere. Whole-report
+audit: 0 unresolved bindings · 0 forbidden fonts · 0 colour drift · 0 type below 10 pt.
+
+### Closed this checkpoint
+
+- Both checkpoint-4 rulings: `Copy · Act II · verdict` rewritten to state the rule, and
+  `c_p2_misread` built directly above the struck number (tabOrder 250, empty alt).
+- `p5-method` (8 visuals, night, no act tint) with **two real tables, headers ON**, the
+  reframed glossary, the refusals list (now including **causation**) and the credits
+  block carrying the mandated TMDB/Kaggle/ODC-By attribution plus **Meagan Longoria**
+  and the alt-text blog post credited by publication with its byline named on canvas as
+  an open attribution debt.
+- `tt-movie` (4 visuals) bound from `tbl_perfect_tens` and `hero_premiere_scatter`.
+  `img_poster` uses **Microsoft's documented data-bound image shape** (`sourceType:
+  'imageData'` + `sourceField` as a **Measure expression**), which closes the
+  longest-standing unverified object in this repo — the old build wrote `sourceField`
+  as a literal string, which was wrong.
+- **The old build is gone:** 6 page folders (222 visuals), 9 bookmarks, `bookmarks.json`
+  and the `bookmarks/` folder, deleted file-by-file with `rm`/`rmdir`. **19 dead waiver
+  entries removed** from `pbir-detect-waivers.yaml` — a waiver for a deleted page is
+  debris, not a decision. Four hairline entries remain, one per rebuild page.
+- **Zero dangling references**, verified: 7 navigation/tooltip targets all resolve, and
+  a string scan of every remaining JSON for the 6 dead page ids and 9 bookmark names
+  returns nothing.
+
+### Validation — checkpoint 5
+
+`validate_json.py` 87/0 · deep `visualContainer/2.9.0` **60/60, 0 real errors** ·
+`page/2.1.0` 0 on all six · `pagesMetadata/1.1.0` 0 · **`pbir_detect.py` PASS — 60
+visuals, 4 findings, 0 unwaived** (and now 0 ai-dash-emoji, 0 colour drift, 0
+accent-lock, 0 radius, 0 text-fill-contrast across the whole report) ·
+`validate_tmdl.py --strict` 1 error (standing SourceRoot waiver) · `check_contrast.py`
+theme 8/0 plus every page pair measured · `check_state.py` OK.
+
+### Open questions — checkpoint 5
+
+- **`tbl_disclosed_params` will scroll.** Four columns in 400 px, two of them holding
+  sentences (`Derivation` ~110 characters). The counts table beside it needs only two
+  columns and has room to spare. The fix is a geometry swap, not a content change —
+  recorded rather than taken, because the rects are contracted.
+- **Unused measures survive the rebuild.** `Movies (no credible financials)` and a
+  handful of other display measures existed only for old-page visuals. Harmless at
+  rest, but they now fail the same "no nails" test everything else passed. **A model
+  tidy pass belongs at s7**, run as a consumer audit against the five new pages;
+  deleting measures mid-checkpoint would risk a binding nobody re-checked.
+- **`c_tt_verdict.label.text`** is the one unverified property on the tooltip
+  (schema-declared, never seen written by Desktop). Degrades gracefully: the verdict
+  renders, the footnote does not.
+- **G6 remains HELD** and `status.yaml` is unchanged: the gate is the entrant's, and it
+  now needs a fresh review of a report that shares no page with the one that was
+  reviewed. The four hairline waivers are still **unsigned drafts**.

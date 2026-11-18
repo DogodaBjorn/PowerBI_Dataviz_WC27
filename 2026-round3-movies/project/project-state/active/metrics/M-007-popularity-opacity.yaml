@@ -1,0 +1,24 @@
+contract: metric
+metric_id: "M-007"
+name: "Popularity (opaque — displayed under protest)"
+date: "2026-08-04"
+
+definition:
+  plain_language: "TMDB's internal popularity score, whose formula TMDB does not publish; Lie #3 is that an undefined number can rank quality. Used ONLY to show how its ranking diverges from evidence-weighted rating and revenue rankings."
+  formula_in_words: "The Popularity column as-is; plus rank-in-context for the divergence view. No derivation attempted — that would fabricate a definition."
+  grain: "movie"
+  filters: "report-wide Adult exclusion"
+  unit: "score (unitless, undefined scale)"
+  direction_is_good: "unknowable — that is the point; never encode it with a good/bad color"
+
+edge_cases:
+  - "Never aggregated (mean popularity is a mean of an undefined quantity)."
+  - "Axis/legend must carry the 'definition not published' marker wherever it appears (contracted at s5)."
+  - "Rank divergence view: same films ranked by Popularity vs M-006 vs Revenue — the visual argument; top-N size chosen at s5, films named."
+
+targets: { exists: false, source: "n/a" }
+owner: "entrant (definition steward)"
+synonyms: "TMDB popularity"
+conflicts_checked: true
+
+implementation: { measure_name: 'Popularity (as-is)', display_folder: '04 Lie 3 · Popularity', format_string: '0.0' }

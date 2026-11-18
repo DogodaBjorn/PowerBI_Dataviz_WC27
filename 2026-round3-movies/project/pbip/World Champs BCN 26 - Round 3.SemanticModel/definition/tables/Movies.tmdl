@@ -1,0 +1,286 @@
+table Movies
+	lineageTag: d4c664cd-e0ab-4a70-b0ce-f740be555e86
+
+	column 'Movie ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e271353a-ee1f-4f40-8970-43488ea4f0a1
+		summarizeBy: none
+		sourceColumn: Movie ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Title
+		dataType: string
+		lineageTag: e8527f82-7566-4fc6-a41b-3ac3bea43535
+		summarizeBy: none
+		sourceColumn: Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vote Average'
+		dataType: double
+		lineageTag: f2f73d8c-a443-40d9-8a09-8618ef00e9c5
+		summarizeBy: none
+		sourceColumn: Vote Average
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Vote Count'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7975a0dc-0e53-4e78-b64f-9a75e1208507
+		summarizeBy: none
+		sourceColumn: Vote Count
+
+		annotation SummarizationSetBy = User
+
+	column 'Release Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ff61ee22-f936-411d-a301-34049dfd981f
+		summarizeBy: none
+		sourceColumn: Release Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Revenue
+		dataType: int64
+		formatString: \$#,0;(\$#,0)
+		lineageTag: ca429a64-183e-4b3a-99de-78021d9c4608
+		summarizeBy: none
+		sourceColumn: Revenue
+
+		annotation SummarizationSetBy = User
+
+	column Runtime
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ad181c5-1620-41d5-bb40-cff4c146e1fc
+		summarizeBy: none
+		sourceColumn: Runtime
+
+		annotation SummarizationSetBy = User
+
+	column Budget
+		dataType: int64
+		formatString: \$#,0;(\$#,0)
+		lineageTag: 16ef44c2-5fe0-4669-9675-1a8a08d78b37
+		summarizeBy: none
+		sourceColumn: Budget
+
+		annotation SummarizationSetBy = User
+
+	column Popularity
+		dataType: double
+		lineageTag: 38345c78-56d4-46d9-88e0-6c0a96656a47
+		summarizeBy: none
+		sourceColumn: Popularity
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Status
+		dataType: string
+		lineageTag: edfd9145-c4e2-4240-a0b4-525b2f142562
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adult
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 771a9aca-b34c-4304-96cc-66f9bf02cd95
+		summarizeBy: none
+		sourceColumn: Adult
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Backdrop Path'
+		dataType: string
+		lineageTag: 6ebd403a-016d-461c-acb8-eb7184d2406a
+		summarizeBy: none
+		sourceColumn: Backdrop Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Homepage
+		dataType: string
+		lineageTag: 7e7273cb-5e7e-4272-ab79-ad9e9d2eb6b7
+		summarizeBy: none
+		sourceColumn: Homepage
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Original Language'
+		dataType: string
+		lineageTag: 68571118-53f6-4ecb-b9f4-dbfcdfeed850
+		summarizeBy: none
+		sourceColumn: Original Language
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Original Title'
+		dataType: string
+		lineageTag: d33a5bbd-9af7-48de-ab23-c1d7f7faf033
+		summarizeBy: none
+		sourceColumn: Original Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Poster Path'
+		dataType: string
+		lineageTag: 30e4cca1-b372-4758-a381-a6c557aee9dc
+		summarizeBy: none
+		sourceColumn: Poster Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tagline
+		dataType: string
+		lineageTag: 77b67f10-2552-4cf4-988f-16032a53a4ce
+		summarizeBy: none
+		sourceColumn: Tagline
+
+		annotation SummarizationSetBy = Automatic
+
+	/// FK to 'Release Year'; -1 = "No date on record" unknown member. Hidden — filter via the Release Year dimension.
+	column 'Release Year Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ba0ceee7-ae57-41d7-ba00-bbeab8113ad0
+		summarizeBy: none
+		sourceColumn: Release Year Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	/// TRUE when Release Date is after the disclosed snapshot anchor 2026-07-24; dateless rows are FALSE, not future.
+	column 'Is Future Release'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2f9f41a6-1583-485a-b93c-38f46963117f
+		summarizeBy: none
+		sourceColumn: Is Future Release
+
+		annotation SummarizationSetBy = User
+
+	/// Budget bracket, meaningful only above the disclosed $10,000 credibility floor; everything under the floor is labelled "Below floor" rather than binned as if it were known.
+	column 'Budget Band' =
+			SWITCH(
+				TRUE(),
+				Movies[Budget] < 10000, "Below floor",
+				Movies[Budget] < 100000, "$10k–100k",
+				Movies[Budget] < 1000000, "$100k–1M",
+				Movies[Budget] < 10000000, "$1M–10M",
+				Movies[Budget] < 50000000, "$10M–50M",
+				Movies[Budget] < 100000000, "$50M–100M",
+				"$100M+"
+			)
+		dataType: string
+		lineageTag: 0c9d56cd-7fe5-4139-9092-687a8462b157
+		summarizeBy: none
+		isDataTypeInferred
+		sortByColumn: 'Budget Band Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sort order for Budget Band — below-floor first, then ascending brackets. Hidden technical column.
+	column 'Budget Band Sort' =
+			SWITCH(
+				TRUE(),
+				Movies[Budget] < 10000, 1,
+				Movies[Budget] < 100000, 2,
+				Movies[Budget] < 1000000, 3,
+				Movies[Budget] < 10000000, 4,
+				Movies[Budget] < 50000000, 5,
+				Movies[Budget] < 100000000, 6,
+				7
+			)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: babe06d1-b92f-4856-bf6a-f96cf3b3c6f7
+		summarizeBy: none
+		isDataTypeInferred
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	/// Vote-count bracket — the evidence ladder as an axis: none, single digits, tens, hundreds, and the thousand-plus tail.
+	column 'Vote Band' =
+			SWITCH(
+				TRUE(),
+				Movies[Vote Count] = 0, "0",
+				Movies[Vote Count] < 10, "1–9",
+				Movies[Vote Count] < 100, "10–99",
+				Movies[Vote Count] < 1000, "100–999",
+				"1,000+"
+			)
+		dataType: string
+		lineageTag: 9f705101-3539-4e1c-a06b-36e80d996f43
+		summarizeBy: none
+		isDataTypeInferred
+		sortByColumn: 'Vote Band Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sort order for Vote Band — ascending evidence. Hidden technical column.
+	column 'Vote Band Sort' =
+			SWITCH(
+				TRUE(),
+				Movies[Vote Count] = 0, 1,
+				Movies[Vote Count] < 10, 2,
+				Movies[Vote Count] < 100, 3,
+				Movies[Vote Count] < 1000, 4,
+				5
+			)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a31332bb-08d1-49c7-a835-92b494782874
+		summarizeBy: none
+		isDataTypeInferred
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition Movies = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Source,
+				    #"Filtered Rows" = Table.SelectRows(Source, each [budget] > 0),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"id", "Movie ID"}, {"title", "Title"}, {"vote_average", "Vote Average"}, {"vote_count", "Vote Count"}, {"release_date", "Release Date"}, {"revenue", "Revenue"}, {"backdrop_path", "Backdrop Path"}, {"budget", "Budget"}, {"homepage", "Homepage"}, {"popularity", "Popularity"}, {"runtime", "Runtime"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Movie ID", "Title", "Vote Average", "Vote Count", "status", "Release Date", "Revenue", "Runtime", "adult", "Backdrop Path", "Budget", "Homepage", "original_language", "original_title", "Popularity", "poster_path", "tagline", "genres"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns",{{"genres", "genres"}, {"adult", "Adult"}, {"original_language", "Original Language"}, {"original_title", "Original Title"}, {"tagline", "Tagline"}, {"poster_path", "Poster Path"}, {"status", "Status"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{"genres"}),
+				    // Release Year Key: FK to the Release Year dimension; -1 = Kimball unknown member for dateless rows (blueprint §4).
+				    #"Added Release Year Key" = Table.AddColumn(#"Removed Columns", "Release Year Key", each if [Release Date] = null then -1 else Date.Year([Release Date]), Int64.Type),
+				    // Is Future Release: anchored to the dataset download date 2026-07-24 (disclosed snapshot anchor, never LocalNow); dateless rows -> false.
+				    #"Added Is Future Release" = Table.AddColumn(#"Added Release Year Key", "Is Future Release", each if [Release Date] = null then false else [Release Date] > #date(2026, 7, 24), type logical)
+				in
+				    #"Added Is Future Release"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

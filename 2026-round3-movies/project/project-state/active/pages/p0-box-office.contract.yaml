@@ -1,0 +1,26 @@
+contract: page-purpose
+page_id: "p0-box-office"
+page_name: "The Box Office"
+date: "2026-08-04"
+
+audience: "A1"
+question: "What is this report's one claim, and how do I enter its three acts?"
+archetype: "overview"
+
+three_second_message: "The data is not wrong — the reading is: a trilogy in three acts, three tickets, the takeaway on the marquee."
+three_minute_path: "Key Takeaway on the marquee with its scope; each ticket names its act and teaser; the billing block carries the full scope stamp (snapshot 2026-07-24, basis 84,036 = 85,394 − 1,358 Adult, floor $10,000, m=100, C=6.96, 1,697 duplicate (title,date) pairs, USD as recorded); END CREDITS button to the method page."
+
+hero: "hero_takeaway — the marquee tagline; it is the mandated Key Takeaway and the trilogy's thesis."
+supporting_visuals:
+  - id: "btn_ticket_act1 / btn_ticket_act2 / btn_ticket_act3"
+    intent: "navigation (nv) — the three entry objects ARE the nav; each carries its act's teaser stat (87% / 0 votes median / 'formula not published')"
+    metric_ids: ["M-002", "M-005", "M-007"]
+  - id: "html_ticket_tear (HTML Content, chrome-only)"
+    intent: "chrome — tear-on-entry effect; VERIFY at build; fallback pre-torn stub art on act headers"
+    metric_ids: []
+  - id: "z_billing"
+    intent: "editorial framing (S1) — scope stamp as billing block"
+    metric_ids: ["M-001", "M-002", "M-006"]
+
+interactions: "Ticket click → native button page navigation (tear plays as HTML Content chrome where verified; navigation never depends on it); btn_credits → p9; report-level Adult=FALSE filter visible and LOCKED; keyboard: tickets and buttons tabbable in reading order with visible focus outlines."
+leaves_out: "Any data visual (the cover sells the story, not the numbers); AI-generated poster art (real TMDB posters appear where they carry data); slicers."

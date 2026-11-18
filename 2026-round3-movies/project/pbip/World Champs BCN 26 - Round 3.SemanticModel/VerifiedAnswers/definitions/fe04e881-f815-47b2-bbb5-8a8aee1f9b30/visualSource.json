@@ -1,0 +1,86 @@
+{
+  "visualType": "tableEx",
+  "query": {
+    "queryState": {
+      "Values": {
+        "projections": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Minifigures"
+                  }
+                },
+                "Property": "Minifigure Name"
+              }
+            },
+            "queryRef": "minifigs.Minifigure Name",
+            "nativeQueryRef": "Minifigure Name"
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Minifigures"
+                  }
+                },
+                "Property": "img_url"
+              }
+            },
+            "queryRef": "Minifigures.img_url",
+            "nativeQueryRef": "img_url"
+          },
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Sets"
+              }
+            },
+            "queryRef": "_Measures.Sets",
+            "nativeQueryRef": "Sets"
+          }
+        ]
+      }
+    },
+    "sortDefinition": {
+      "sort": [
+        {
+          "field": {
+            "Measure": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "_Measures"
+                }
+              },
+              "Property": "Sets"
+            }
+          },
+          "direction": "Descending"
+        }
+      ]
+    }
+  },
+  "objects": {
+    "grid": [
+      {
+        "properties": {
+          "textSize": {
+            "expr": {
+              "Literal": {
+                "Value": "16D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualConfiguration/2.5.0/schema.json"
+}

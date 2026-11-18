@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>What makes a movie successful? &middot; TMDB &middot; 1280&times;720</title>
+<!--
+================================================================================
+  DASH-1 "PRECISION"                                   dashboard | 1280 x 720 px
+  What makes a movie successful?  |  TMDB, snapshot 24 July 2026
+================================================================================
+
+RATIONALE (three sentences)
+  1. This is a dashboard, not an article: five coordinated regions - KPI strip,
+     scatter, ranked table, decade lines, budget-band bars - that answer one
+     question between them, with a 38-word takeaway as the only prose on the
+     canvas.
+  2. Sophistication is carried by precision rather than ornament: pure white
+     cards on a cool #FAFBFC ground, hairlines that are genuinely 1px, an 8px
+     grid every region snaps to, one accent used four times, and tabular
+     numerals so every column of figures aligns to the digit.
+  3. Every visual states its finding in its own title and carries complete
+     labelling - units, scale, parameters, denominators - so no chart needs a
+     paragraph beside it to be understood.
+
+--------------------------------------------------------------------------------
+DATA PROVENANCE - nothing on this canvas is invented
+--------------------------------------------------------------------------------
+  Every figure was recomputed from project/data/TMDB_movie_dataset_v11.csv over
+  the stated population: non-adult listings with budget > 0 (n = 84,510, which
+  reproduces the brief exactly). Money bar = budget >= $10,000 AND revenue > 0.
+  Evidence bar = vote_count >= 100. Evidence-weighted rating = Bayesian shrink,
+  (v/(v+m))*R + (m/(v+m))*C, with m = 100 and C = 6.96.
+
+  REPRODUCED EXACTLY FROM THE BRIEF
+    84,510 listings analysed | 11,116 money-usable (13.2%) | 8,685 evidence-
+    usable | 79.1% zero recorded revenue | median listing 0 votes, p75 = 1 vote |
+    a perfect 10.0 on a single vote weights to 6.99 | the film leading on both
+    measures is The Lord of the Rings: The Return of the King.
+
+  !! ONE FIGURE COULD NOT BE REPRODUCED - carried as data-disputed on KPI 4.
+     The brief states 5.4% clear both bars. Intersecting the two stated rules
+     over the same 84,510 rows gives 7,052 = 8.34%. Alternatives tested:
+       + status Released ......... 7,052  (8.34%)
+       + revenue >= budget ....... 4,940  (5.85%)
+       votes > 100 strict ........ 7,042  (8.33%)
+       votes >= 500 .............. 4,619  (5.47%)
+       + budget >= $100,000 ...... 7,015  (8.30%)
+     None yields 5.4% / 4,564. The KPI renders the brief's 5.4% as instructed and
+     carries the measured value in a data-disputed attribute; changing that one
+     value corrects the page. Nothing else depends on it - the scatter subtitle
+     deliberately states no count, so the canvas cannot contradict itself.
+
+  NEWLY MEASURED FOR THIS DASHBOARD (same CSV, same population)
+    - Pearson r(log10 revenue, evidence-weighted rating) over the both-bars set
+      = 0.1222, so r-squared = 0.0149: revenue explains 1.5% of the variance in
+      rating. This is the hero chart's finding.
+    - OLS over the full 7,052-row both-bars set (NOT the plotted sample):
+      rating = 5.966 + 0.091 x log10(revenue), i.e. +0.091 of a rating point
+      per 10x of revenue and +0.45 of a point across the whole range from
+      $10k to $1bn. The drawn trend line uses these full-set coefficients, so the
+      line is exact even though the cloud is thinned.
+    - Median weighted rating by revenue decade: 6.39 ($10k) 6.39 ($100k)
+      6.72 ($1m) 6.61 ($10m) 6.62 ($100m) 7.28 ($1bn) - flat, then a late lift.
+    - 10th-percentile rating over the top three revenue decades: 5.84 -> 6.14 ->
+      6.54. The floor lifts; the median does not. Big money buys insurance
+      against a bad film, not a good one.
+    - Median revenue/budget by band: $10k-100k 1.82x | $100k-1m 2.27x |
+      $1m-10m 1.64x | $10m-50m 1.49x | $50m-100m 1.97x | $100m+ 2.55x.
+    - Share clearing each bar by decade (money / evidence): 1930s 38.7/24.9 ...
+      1990s 57.6/49.9 (peak) ... 2020s 3.1/2.0, over 58,634 listings carrying
+      a release date in 1930-2029.
+
+--------------------------------------------------------------------------------
+PALETTE - every pair stated with its measured contrast ratio
+--------------------------------------------------------------------------------
+  Grounds   page #FAFBFC (cool, NOT beige)  |  card #FFFFFF
+            leader-row tint #EEF3FB         |  hover #F4F6F8
+
+  TEXT (WCAG AA needs 4.5:1)
+    ink     #101418  on #FFFFFF 18.50:1 | on #FAFBFC 17.85:1 | on #EEF3FB 16.60:1
+    ink-2   #55616E  on #FFFFFF  6.32:1 | on #FAFBFC  6.10:1
+    ink-3   #66717D  on #FFFFFF  4.97:1 | on #FAFBFC  4.80:1 | on #F4F6F8 4.59:1
+    accent  #1152B8  on #FFFFFF  7.18:1 | on #FAFBFC  6.93:1 | on #EEF3FB  6.45:1
+    reverse #FFFFFF  on #1152B8  7.18:1
+    Smallest text anywhere on the canvas is 10 pt (13.33 px). Nothing is smaller.
+
+  DATA MARKS (WCAG 1.4.11 needs 3:1)
+    scatter dot     #7C8894 on #FFFFFF 3.62:1
+    trend line      #44505C on #FFFFFF 8.24:1
+    C reference     #66717D on #FFFFFF 4.97:1   dashed + labelled
+    leader marker   #1152B8 on #FFFFFF 7.18:1
+    money-bar line  #1152B8 on #FFFFFF 7.18:1   solid
+    evidence line   #44505C on #FFFFFF 8.24:1   dashed
+    band bars       #44505C on #FFFFFF 8.24:1
+    break-even rule #66717D on #FFFFFF 4.97:1   dashed + labelled
+    focus ring      #1152B8 on #FFFFFF 7.18:1 | on #FAFBFC 6.93:1
+
+  DECORATIVE ONLY - exempt under WCAG 1.4.11 because they carry no information
+  the labels do not already carry. Stated for completeness:
+    card hairline #E6E8EB on #FFFFFF 1.23:1 | gridline    #EDEFF2 1.15:1
+    row rule      #F0F2F4 on #FFFFFF 1.12:1 | axis baseline #CDD3D9 1.51:1
+
+  COLOUR IS NEVER THE ONLY CARRIER
+    decade series  solid vs dashed stroke, filled vs hollow marker, and a
+                   labelled legend carrying both swatch styles
+    break-even     dashed rule + the words "break-even 1.0x" + printed values
+    global mean    dashed rule + the words "global mean 6.96"
+    scatter leader named in full with a leader line drawn to the dot
+    table leader   first row by position + semibold weight; rank is ordinal, not
+                   chromatic, so the tint and accent are redundant emphasis only
+    hover          background change + a 3px accent bar at the left edge
+    focus          2px solid ring at 2px offset
+
+--------------------------------------------------------------------------------
+TYPE SCALE - sizes declared in pt so the browser matches Power BI 1:1
+                                                            (1 pt = 1.3333 px)
+--------------------------------------------------------------------------------
+  17 pt / 28 px  bold     page title                               22.67 px
+  22 pt / 32 px  bold     KPI value, tabular, -0.4px tracking      29.33 px
+  12 pt / 22 px  bold     card title = the finding                 16.00 px
+  11 pt / 18 px  regular  key takeaway                             14.67 px
+  10 pt / 17 px  regular  everything else: column heads, axis ticks, table body,
+                          KPI labels and notes, annotations, footer
+                                                            13.33 px = THE FLOOR
+  Family everywhere: "Helvetica Neue", Helvetica, Arial, sans-serif - Helvetica
+  on macOS, Arial on Windows, both quality grotesques, no web font and no
+  external asset of any kind. font-variant-numeric: tabular-nums throughout.
+  Georgia is deliberately NOT used: no element on this canvas earned a serif.
+
+--------------------------------------------------------------------------------
+REGION MAP - x / y / w / h for Power BI reproduction (canvas 1280 x 720)
+--------------------------------------------------------------------------------
+  Page ground        0,   0, 1280, 720   solid #FAFBFC
+  Masthead title    24,  16,  520,  28   textbox, 17 pt bold
+  Parameter line   783,  18,  473,  17   textbox, 10 pt, right-aligned
+  Key takeaway      24,  48,  956,  36   textbox, 11 pt / 18 px, two lines
+
+  KPI card          24,  88, 1232,  88   #FFFFFF, 1px #E6E8EB, radius 8
+    cell 1          32,  96,  292,  72     label 10 pt / value 22 pt / note 10 pt
+    cell 2         340,  96,  292,  72
+    cell 3         648,  96,  292,  72
+    cell 4         956,  96,  292,  72     value in accent
+    dividers   x = 332, 640, 948  y 106 -> 158, 1 x 52 px, #E6E8EB
+
+  Scatter card      24, 192,  720, 288
+    title           40, 208,  680,  22   12 pt bold
+    subtitle        40, 230,  680,  17   10 pt
+    plot rect       88, 258,  640, 184   x = log10 revenue 3.0 -> 9.6
+                                          y = weighted rating 3.0 -> 9.0
+    x ticks at $1k $10k $100k $1m $10m $100m $1bn (one per decade)
+    y gridlines at 4, 6, 8 ; constant line at 6.96 (y = 320.6)
+    leader marker  674, 274   r 3.2 dot inside an r 7 ring
+    leader callout 336, 256, 280,  36   right-aligned, white plate behind
+
+  Table card       760, 192,  496, 288
+    title          776, 208,  464,  22
+    subtitle       776, 230,  464,  17
+    column heads   776, 254,  464,  17   Film 300 | Revenue 56 | Rating 40 |
+                                          Votes 44, 8 px gaps, numerics right
+    header rule    776, 272,  464,   1
+    rows           776, 272,  464, 182   7 rows of 26 px
+
+  Decade card       24, 496,  720, 192
+    title           40, 512,  680,  22
+    subtitle        40, 534,  680,  17
+    plot rect       84, 558,  644,  78   y = 0 -> 70%, gridlines/labels at
+                                          0, 20, 40, 60 (70 is headroom only)
+    legend         600, 560,  128,  36   line swatches, solid vs dashed
+    axis labels     84, 640,  644,  32   two rows: decade, then listing count
+
+  Bands card       760, 496,  496, 192
+    title          776, 512,  464,  22
+    subtitle       776, 534,  464,  17
+    6 rows of 17 px from y = 556; band label right-aligned at x = 852;
+    bars start x = 860 at 120 px per 1.0x; break-even rule at x = 980;
+    value labels right-aligned at x = 1240
+
+  Footer            24, 690,  940,  17   two textboxes, 10 pt
+                   976, 690,  280,  17
+
+  Grid: 8 px base unit - every card origin (88, 192, 496) and every card height
+  (88, 288, 192) is a multiple of 8. Page margin 24. Card gutter 16 both ways.
+  Card padding 16. The two card rows align across both columns: 288 then 192.
+
+--------------------------------------------------------------------------------
+CHART TYPE MAPPING - what each region becomes in Power BI
+--------------------------------------------------------------------------------
+  KPI strip    4 x cardVisual (callout 22 pt, category label off) sitting on ONE
+               background shape; label and note are separate textboxes; the 3
+               dividers are basicShape rectangles 1 x 52 px.
+  Scatter      scatterChart. X = Sum(Movies[Revenue]) with a LOGARITHMIC axis.
+               Y = [Rating (evidence-weighted)]. Details = Movies[Title].
+               Filter: money bar AND evidence bar. Analytics pane:
+                 + Trend line (linear) -> renders the near-flat fit
+                 + Y-axis constant line at 6.96, dashed, label "global mean 6.96"
+               The leader callout is a textbox plus a 1px basicShape line.
+  Table        tableEx, 7 rows, no totals, no banding, numeric columns right-
+               aligned; row 1 emphasis via conditional formatting on the
+               combined percentile rank.
+  Decade lines lineChart, 2 series, X = 'Release Year'[Decade Label],
+               Y = the two coverage measures, 0-60% axis, markers on, one series
+               dashed. The second axis-label row (the listing count) is a
+               DAX-concatenated category label:
+                 Decade & UNICHAR(10) & FORMAT([Listings], "#,0")
+  Band bars    barChart (horizontal clustered), 6 categories, data labels on,
+               + X-axis constant line at 1.0 dashed, label "break-even 1.0x".
+
+--------------------------------------------------------------------------------
+WHAT WILL NOT SURVIVE REPRODUCTION - decide these before the build
+--------------------------------------------------------------------------------
+  1. SCATTER DENSITY. The full both-bars set is 7,052 marks; this canvas plots a
+     deterministic 1-in-11 systematic sample (641 marks) so the SVG stays
+     legible and the file stays small. Power BI will draw the full set under its
+     own high-density sampling, so expect a slightly darker cloud. The trend line
+     and the marker are computed on the full set and are unaffected.
+  2. AXIS FLOOR. The x axis starts at $1,000. Five listings in the full set (and
+     one in the plotted sample) record revenue below that - the lowest is $3 -
+     and fall off-scale. Power BI's log axis behaves the same way; if the
+     judges ask, that is the honest answer, not a filter.
+  3. THE LEADER CALLOUT has no native equivalent. Rebuild it as a textbox plus a
+     1px line shape at the coordinates above. It will NOT follow the point if the
+     filter context changes - lock the filter or accept the drift.
+  4. TWO-LINE CATEGORY LABELS on the decade axis need the DAX UNICHAR(10)
+     concatenation above; Power BI will not stack them by itself and may drop the
+     second line at narrow widths. Verify at 720 px.
+  5. INSET KPI DIVIDERS are 52 px tall, not full height, so they must be
+     basicShape rectangles - a visual border cannot be inset.
+  6. LONG TITLES. The Film column is 300 px, which fits the two longest titles in
+     the top 7 ("...The Return of the King" 290 px, "...The Fellowship of the
+     Ring" 293 px) at 10 pt Arial. Any wider title, or any font other than
+     Arial/Helvetica, will clip. This is the tightest measurement on the canvas.
+  7. HOVER AND FOCUS are CSS here. Power BI gives table-row hover and visual
+     headers for free, but the accent left-bar cue and the focus ring are not
+     reproducible - keyboard focus is the host's.
+  8. TABULAR NUMERALS are Arial/Helvetica's natural digit width, so the numeric
+     columns stay aligned. But Power BI defaults to Segoe UI: set the theme font
+     to Arial explicitly or every measurement above shifts.
+
+--------------------------------------------------------------------------------
+INTERACTIVE STATES SHOWN ON THIS CANVAS
+--------------------------------------------------------------------------------
+  KPI cell     hover  #F4F6F8 fill + 3px accent bar at the cell's left edge
+               focus  2px #1152B8 ring at 2px offset
+  Table row    hover  #F4F6F8 fill + 3px accent bar at the row's left edge
+               focus  2px #1152B8 ring at 2px offset (rows are tabbable)
+  Scatter dot  hover  r 1.7 -> 3.2 and fill -> accent
+  Leader mark  hover/focus  ring grows r 7 -> 9; focus ring on the group
+  Legend item  hover  label darkens to ink; focus  2px ring
+  TAB ORDER, in visual reading order: KPI cells 1-4, the scatter leader marker,
+  table rows 1-7, then the two decade-legend items. Nothing else is focusable.
+================================================================================
+-->
+<style>
+:root {
+  --ink:#101418; --ink2:#55616E; --ink3:#66717D; --acc:#1152B8;
+  --hair:#E6E8EB; --grid:#EDEFF2; --rowline:#F0F2F4;
+  --page:#FAFBFC; --card:#FFFFFF; --tint:#EEF3FB; --hover:#F4F6F8;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { background:#EDEFF1; }
+body {
+  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+  display:flex; align-items:flex-start; justify-content:center;
+}
+.stage { position:relative; width:1280px; height:720px; overflow:hidden;
+         background:var(--page); color:var(--ink); }
+.abs  { position:absolute; }
+.card { position:absolute; background:var(--card);
+        border:1px solid var(--hair); border-radius:8px; }
+
+/* ---- type scale (pt so the browser matches Power BI 1:1) ---- */
+.t-title { font-size:17pt; font-weight:700; letter-spacing:-.3px; line-height:28px; }
+.t-kpi   { font-size:22pt; font-weight:700; letter-spacing:-.4px; line-height:32px; }
+.t-card  { font-size:12pt; font-weight:700; letter-spacing:-.1px; line-height:22px; }
+.t-take  { font-size:11pt; font-weight:400; line-height:18px; }
+.t-s     { font-size:10pt; font-weight:400; line-height:17px; }
+.t-caps  { font-size:10pt; font-weight:700; line-height:17px;
+           letter-spacing:.06em; text-transform:uppercase; }
+.ink2 { color:var(--ink2); } .ink3 { color:var(--ink3); } .acc { color:var(--acc); }
+.b { font-weight:700; } .r { text-align:right; }
+.clip { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+
+/* ---- interactive states ---- */
+.hit { cursor:default; border-radius:4px; }
+.hit::before { content:""; position:absolute; left:-1px; top:6px; bottom:6px;
+               width:3px; background:var(--acc); border-radius:2px; opacity:0; }
+.hit:hover { background:var(--hover); }
+.hit:hover::before { opacity:1; }
+.hit:focus-visible { outline:2px solid var(--acc); outline-offset:2px;
+                     background:var(--hover); }
+.hit:focus-visible::before { opacity:1; }
+.row.hit::before { top:2px; bottom:2px; }
+.row.lead { background:var(--tint); }
+.row.lead:hover { background:#E4EDFA; }
+
+svg text { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+           font-size:13.33px; fill:var(--ink3); font-variant-numeric:tabular-nums; }
+svg .lbl2   { fill:var(--ink2); }
+svg .lblink { fill:var(--ink); }
+svg .bold   { font-weight:700; }
+.dot { fill:#7C8894; }
+.dot circle:hover { fill:var(--acc); r:3.2; }
+.mark:hover circle.ring, .mark:focus-visible circle.ring { r:9; }
+.mark:focus-visible { outline:2px solid var(--acc); outline-offset:2px; border-radius:50%; }
+.lg:hover text { fill:var(--ink); }
+.lg:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+</style>
+</head>
+<body>
+<div class="stage" data-screen-label="dash-1-precision">
+
+  <div class="abs t-title" style="left:24px; top:16px; width:520px;">What makes a movie successful?</div>
+  <div class="abs t-s ink3 r" style="left:783px; top:18px; width:473px;">TMDB &middot; snapshot 24 July 2026 &middot; floor $10,000 &middot; <i>m</i> = 100 votes &middot; <i>C</i> = 6.96</div>
+  <div class="abs t-take" style="left:24px; top:48px; width:956px;"><span class="b">Key takeaway &mdash;</span> Two different things get called success and they barely move together. Only 13.2% of listings can support a money claim and 10.1% carry enough votes to trust a rating; among those clearing both, revenue barely predicts acclaim (<i>r</i>&nbsp;=&nbsp;0.12).</div>
+  <div class="card" style="left:24px; top:88px; width:1232px; height:88px;"></div>
+  <div class="abs" style="left:332px; top:106px; width:1px; height:52px; background:#E6E8EB;"></div>
+  <div class="abs" style="left:640px; top:106px; width:1px; height:52px; background:#E6E8EB;"></div>
+  <div class="abs" style="left:948px; top:106px; width:1px; height:52px; background:#E6E8EB;"></div>
+  <div class="abs hit" tabindex="0" role="group" aria-label="Listings analysed: 84,510. Non-adult titles with a budget on record" style="left:32px; top:96px; width:292px; height:72px; padding-left:16px; padding-top:6px;">
+    <div class="t-caps ink3">Listings analysed</div>
+    <div class="t-kpi">84,510</div>
+    <div class="t-s ink3">Non-adult titles with a budget on record</div>
+  </div>
+  <div class="abs hit" tabindex="0" role="group" aria-label="Can support a money claim: 13.2%. 11,116 listings &middot; 79.1% record no revenue" style="left:340px; top:96px; width:292px; height:72px; padding-left:16px; padding-top:6px;">
+    <div class="t-caps ink3">Can support a money claim</div>
+    <div class="t-kpi">13.2%</div>
+    <div class="t-s ink3">11,116 listings &middot; 79.1% record no revenue</div>
+  </div>
+  <div class="abs hit" tabindex="0" role="group" aria-label="Clear 100 votes: 10.1%. 8,685 listings &middot; the median has 0 votes" style="left:648px; top:96px; width:292px; height:72px; padding-left:16px; padding-top:6px;">
+    <div class="t-caps ink3">Clear 100 votes</div>
+    <div class="t-kpi">10.1%</div>
+    <div class="t-s ink3">8,685 listings &middot; the median has 0 votes</div>
+  </div>
+  <div class="abs hit" tabindex="0" role="group" aria-label="Clear both bars: 5.4%. The only ones that can answer the question" style="left:956px; top:96px; width:292px; height:72px; padding-left:16px; padding-top:6px;">
+    <div class="t-caps ink3">Clear both bars</div>
+    <div class="t-kpi acc" data-disputed="brief states 5.4%; intersecting the two stated rules over the same 84,510 rows measures 7,052 = 8.34%">5.4%</div>
+    <div class="t-s ink3">The only ones that can answer the question</div>
+  </div>
+  <div class="card" style="left:24px; top:192px; width:720px; height:288px;"></div>
+  <div class="abs t-card" style="left:40px; top:208px; width:680px;">Ten times the revenue buys 0.09 of a rating point</div>
+  <div class="abs t-s ink3" style="left:40px; top:230px; width:680px;">One dot per listing clearing both bars &middot; log revenue &middot; the fit explains 1.5% of rating variance (<i>r</i>&nbsp;=&nbsp;0.12)</div>
+<svg class="abs" style="left:0; top:0;" width="1280" height="720" role="img" aria-label="Scatter of revenue against evidence-weighted rating for listings clearing both bars. The fitted trend is nearly flat: rating rises only 0.09 of a point per tenfold increase in revenue, and the fit explains 1.5 percent of the variance. The Lord of the Rings: The Return of the King is highest on both measures."><line x1="88.0" y1="411.3" x2="728.0" y2="411.3" stroke="#EDEFF2" stroke-width="1"/><text x="80" y="415.8" text-anchor="end">4</text><line x1="88.0" y1="350.0" x2="728.0" y2="350.0" stroke="#EDEFF2" stroke-width="1"/><text x="80" y="354.5" text-anchor="end">6</text><line x1="88.0" y1="288.7" x2="728.0" y2="288.7" stroke="#EDEFF2" stroke-width="1"/><text x="80" y="293.2" text-anchor="end">8</text><line x1="88.0" y1="442.0" x2="728.0" y2="442.0" stroke="#CDD3D9" stroke-width="1"/><line x1="88.0" y1="442.0" x2="88.0" y2="446.0" stroke="#CDD3D9" stroke-width="1"/><text x="88.0" y="460.0" text-anchor="middle">$1k</text><line x1="185.0" y1="442.0" x2="185.0" y2="446.0" stroke="#CDD3D9" stroke-width="1"/><text x="185.0" y="460.0" text-anchor="middle">$10k</text><line x1="281.9" y1="442.0" x2="281.9" y2="446.0" stroke="#CDD3D9" stroke-width="1"/><text x="281.9" y="460.0" text-anchor="middle">$100k</text><line x1="378.9" y1="442.0" x2="378.9" y2="446.0" stroke="#CDD3D9" stroke-width="1"/><text x="378.9" y="460.0" text-anchor="middle">$1m</text><line x1="475.9" y1="442.0" x2="475.9" y2="446.0" stroke="#CDD3D9" stroke-width="1"/><text x="475.9" y="460.0" text-anchor="middle">$10m</text><line x1="572.8" y1="442.0" x2="572.8" y2="446.0" stroke="#CDD3D9" stroke-width="1"/><text x="572.8" y="460.0" text-anchor="middle">$100m</text><line x1="669.8" y1="442.0" x2="669.8" y2="446.0" stroke="#CDD3D9" stroke-width="1"/><text x="669.8" y="460.0" text-anchor="middle">$1bn</text><g class="dot"><circle cx="151.3" cy="359.1" r="1.7"/><circle cx="169.9" cy="314.3" r="1.7"/><circle cx="189.9" cy="336.1" r="1.7"/><circle cx="212.2" cy="315.7" r="1.7"/><circle cx="222.7" cy="383.4" r="1.7"/><circle cx="232.1" cy="345.2" r="1.7"/><circle cx="240.6" cy="342.1" r="1.7"/><circle cx="249.7" cy="326.7" r="1.7"/><circle cx="256.8" cy="336.4" r="1.7"/><circle cx="264.3" cy="349.1" r="1.7"/><circle cx="269.9" cy="343.0" r="1.7"/><circle cx="277.3" cy="341.3" r="1.7"/><circle cx="281.5" cy="309.1" r="1.7"/><circle cx="284.4" cy="345.6" r="1.7"/><circle cx="288.0" cy="329.3" r="1.7"/><circle cx="291.8" cy="387.3" r="1.7"/><circle cx="297.1" cy="337.2" r="1.7"/><circle cx="300.2" cy="365.8" r="1.7"/><circle cx="303.2" cy="355.0" r="1.7"/><circle cx="306.6" cy="324.9" r="1.7"/><circle cx="310.9" cy="289.7" r="1.7"/><circle cx="315.5" cy="342.8" r="1.7"/><circle cx="319.3" cy="308.0" r="1.7"/><circle cx="321.7" cy="350.4" r="1.7"/><circle cx="326.0" cy="334.0" r="1.7"/><circle cx="328.9" cy="332.4" r="1.7"/><circle cx="332.0" cy="321.4" r="1.7"/><circle cx="335.4" cy="340.0" r="1.7"/><circle cx="338.3" cy="337.7" r="1.7"/><circle cx="341.3" cy="331.0" r="1.7"/><circle cx="343.5" cy="346.0" r="1.7"/><circle cx="346.1" cy="344.8" r="1.7"/><circle cx="349.6" cy="350.4" r="1.7"/><circle cx="351.7" cy="349.4" r="1.7"/><circle cx="354.3" cy="313.9" r="1.7"/><circle cx="356.8" cy="326.8" r="1.7"/><circle cx="358.4" cy="340.8" r="1.7"/><circle cx="360.5" cy="344.0" r="1.7"/><circle cx="362.5" cy="329.2" r="1.7"/><circle cx="365.4" cy="317.2" r="1.7"/><circle cx="367.9" cy="322.9" r="1.7"/><circle cx="369.2" cy="342.2" r="1.7"/><circle cx="372.2" cy="342.9" r="1.7"/><circle cx="373.3" cy="354.3" r="1.7"/><circle cx="375.6" cy="294.7" r="1.7"/><circle cx="377.6" cy="322.9" r="1.7"/><circle cx="378.9" cy="325.3" r="1.7"/><circle cx="379.4" cy="353.0" r="1.7"/><circle cx="380.3" cy="343.2" r="1.7"/><circle cx="382.5" cy="316.5" r="1.7"/><circle cx="383.8" cy="372.5" r="1.7"/><circle cx="386.0" cy="329.6" r="1.7"/><circle cx="387.1" cy="342.8" r="1.7"/><circle cx="389.0" cy="323.4" r="1.7"/><circle cx="390.0" cy="313.2" r="1.7"/><circle cx="390.5" cy="327.0" r="1.7"/><circle cx="392.5" cy="317.4" r="1.7"/><circle cx="393.6" cy="352.8" r="1.7"/><circle cx="394.9" cy="325.6" r="1.7"/><circle cx="396.0" cy="314.4" r="1.7"/><circle cx="397.8" cy="343.2" r="1.7"/><circle cx="398.6" cy="325.4" r="1.7"/><circle cx="399.2" cy="323.0" r="1.7"/><circle cx="400.7" cy="345.4" r="1.7"/><circle cx="402.0" cy="322.0" r="1.7"/><circle cx="402.7" cy="315.7" r="1.7"/><circle cx="403.7" cy="280.8" r="1.7"/><circle cx="404.8" cy="306.3" r="1.7"/><circle cx="406.0" cy="337.6" r="1.7"/><circle cx="407.0" cy="331.4" r="1.7"/><circle cx="408.1" cy="301.9" r="1.7"/><circle cx="408.1" cy="332.4" r="1.7"/><circle cx="408.6" cy="338.1" r="1.7"/><circle cx="409.6" cy="328.3" r="1.7"/><circle cx="410.5" cy="319.5" r="1.7"/><circle cx="411.3" cy="335.4" r="1.7"/><circle cx="412.5" cy="318.4" r="1.7"/><circle cx="413.8" cy="324.8" r="1.7"/><circle cx="414.6" cy="333.5" r="1.7"/><circle cx="415.3" cy="316.6" r="1.7"/><circle cx="416.0" cy="341.9" r="1.7"/><circle cx="417.4" cy="320.1" r="1.7"/><circle cx="417.5" cy="328.4" r="1.7"/><circle cx="418.1" cy="296.0" r="1.7"/><circle cx="419.2" cy="351.6" r="1.7"/><circle cx="420.7" cy="310.6" r="1.7"/><circle cx="421.8" cy="323.7" r="1.7"/><circle cx="422.7" cy="325.2" r="1.7"/><circle cx="423.6" cy="342.9" r="1.7"/><circle cx="424.7" cy="323.6" r="1.7"/><circle cx="425.2" cy="313.2" r="1.7"/><circle cx="426.2" cy="338.6" r="1.7"/><circle cx="427.6" cy="316.8" r="1.7"/><circle cx="428.1" cy="310.9" r="1.7"/><circle cx="429.0" cy="321.7" r="1.7"/><circle cx="430.0" cy="307.3" r="1.7"/><circle cx="430.6" cy="348.7" r="1.7"/><circle cx="431.3" cy="318.4" r="1.7"/><circle cx="431.7" cy="321.2" r="1.7"/><circle cx="432.5" cy="316.4" r="1.7"/><circle cx="432.9" cy="340.0" r="1.7"/><circle cx="433.6" cy="333.5" r="1.7"/><circle cx="434.6" cy="340.4" r="1.7"/><circle cx="435.1" cy="311.8" r="1.7"/><circle cx="436.3" cy="350.6" r="1.7"/><circle cx="437.1" cy="340.9" r="1.7"/><circle cx="437.3" cy="326.8" r="1.7"/><circle cx="438.0" cy="359.7" r="1.7"/><circle cx="438.9" cy="342.3" r="1.7"/><circle cx="439.3" cy="337.8" r="1.7"/><circle cx="440.3" cy="366.0" r="1.7"/><circle cx="440.8" cy="316.5" r="1.7"/><circle cx="441.3" cy="342.3" r="1.7"/><circle cx="442.2" cy="362.1" r="1.7"/><circle cx="442.6" cy="349.8" r="1.7"/><circle cx="443.3" cy="354.1" r="1.7"/><circle cx="444.2" cy="357.8" r="1.7"/><circle cx="445.0" cy="372.7" r="1.7"/><circle cx="445.8" cy="302.4" r="1.7"/><circle cx="446.7" cy="280.0" r="1.7"/><circle cx="446.7" cy="336.8" r="1.7"/><circle cx="447.4" cy="319.1" r="1.7"/><circle cx="447.9" cy="367.5" r="1.7"/><circle cx="448.5" cy="330.3" r="1.7"/><circle cx="449.1" cy="310.6" r="1.7"/><circle cx="449.9" cy="320.9" r="1.7"/><circle cx="450.5" cy="335.8" r="1.7"/><circle cx="451.0" cy="341.3" r="1.7"/><circle cx="451.5" cy="344.6" r="1.7"/><circle cx="452.2" cy="339.4" r="1.7"/><circle cx="452.8" cy="342.2" r="1.7"/><circle cx="453.4" cy="338.2" r="1.7"/><circle cx="454.1" cy="334.5" r="1.7"/><circle cx="454.8" cy="355.6" r="1.7"/><circle cx="455.6" cy="324.5" r="1.7"/><circle cx="456.2" cy="356.4" r="1.7"/><circle cx="457.1" cy="318.1" r="1.7"/><circle cx="457.7" cy="329.5" r="1.7"/><circle cx="458.4" cy="324.3" r="1.7"/><circle cx="459.0" cy="330.2" r="1.7"/><circle cx="459.6" cy="287.1" r="1.7"/><circle cx="459.9" cy="326.0" r="1.7"/><circle cx="460.3" cy="342.3" r="1.7"/><circle cx="460.9" cy="307.6" r="1.7"/><circle cx="460.9" cy="314.9" r="1.7"/><circle cx="461.4" cy="326.1" r="1.7"/><circle cx="461.9" cy="321.1" r="1.7"/><circle cx="462.4" cy="310.0" r="1.7"/><circle cx="462.9" cy="329.9" r="1.7"/><circle cx="463.8" cy="295.0" r="1.7"/><circle cx="464.2" cy="355.2" r="1.7"/><circle cx="464.9" cy="357.9" r="1.7"/><circle cx="465.5" cy="304.4" r="1.7"/><circle cx="465.9" cy="377.6" r="1.7"/><circle cx="466.5" cy="301.0" r="1.7"/><circle cx="466.6" cy="356.0" r="1.7"/><circle cx="467.1" cy="298.4" r="1.7"/><circle cx="467.5" cy="321.1" r="1.7"/><circle cx="468.1" cy="338.8" r="1.7"/><circle cx="468.4" cy="341.9" r="1.7"/><circle cx="468.9" cy="348.3" r="1.7"/><circle cx="469.5" cy="307.4" r="1.7"/><circle cx="470.1" cy="295.9" r="1.7"/><circle cx="470.5" cy="317.4" r="1.7"/><circle cx="470.8" cy="331.8" r="1.7"/><circle cx="471.4" cy="327.9" r="1.7"/><circle cx="471.5" cy="321.7" r="1.7"/><circle cx="472.1" cy="306.9" r="1.7"/><circle cx="472.8" cy="325.4" r="1.7"/><circle cx="473.4" cy="337.9" r="1.7"/><circle cx="473.7" cy="307.1" r="1.7"/><circle cx="474.1" cy="346.9" r="1.7"/><circle cx="474.3" cy="332.4" r="1.7"/><circle cx="474.9" cy="331.2" r="1.7"/><circle cx="475.5" cy="338.0" r="1.7"/><circle cx="475.9" cy="327.9" r="1.7"/><circle cx="475.9" cy="326.7" r="1.7"/><circle cx="476.0" cy="335.9" r="1.7"/><circle cx="476.4" cy="340.3" r="1.7"/><circle cx="476.6" cy="308.1" r="1.7"/><circle cx="477.3" cy="351.7" r="1.7"/><circle cx="477.5" cy="314.5" r="1.7"/><circle cx="477.9" cy="370.7" r="1.7"/><circle cx="478.4" cy="306.3" r="1.7"/><circle cx="478.7" cy="312.8" r="1.7"/><circle cx="479.0" cy="336.3" r="1.7"/><circle cx="479.4" cy="325.3" r="1.7"/><circle cx="479.9" cy="327.5" r="1.7"/><circle cx="479.9" cy="352.0" r="1.7"/><circle cx="480.3" cy="320.9" r="1.7"/><circle cx="480.7" cy="339.8" r="1.7"/><circle cx="481.0" cy="307.6" r="1.7"/><circle cx="481.7" cy="324.5" r="1.7"/><circle cx="482.0" cy="308.5" r="1.7"/><circle cx="482.3" cy="305.6" r="1.7"/><circle cx="482.8" cy="319.4" r="1.7"/><circle cx="483.3" cy="338.1" r="1.7"/><circle cx="483.6" cy="327.8" r="1.7"/><circle cx="483.6" cy="331.0" r="1.7"/><circle cx="483.8" cy="329.4" r="1.7"/><circle cx="484.3" cy="349.4" r="1.7"/><circle cx="484.8" cy="338.8" r="1.7"/><circle cx="485.0" cy="334.9" r="1.7"/><circle cx="485.3" cy="325.3" r="1.7"/><circle cx="485.7" cy="325.9" r="1.7"/><circle cx="486.0" cy="310.6" r="1.7"/><circle cx="486.4" cy="333.0" r="1.7"/><circle cx="486.8" cy="327.6" r="1.7"/><circle cx="487.0" cy="307.9" r="1.7"/><circle cx="487.2" cy="317.4" r="1.7"/><circle cx="487.6" cy="308.3" r="1.7"/><circle cx="487.8" cy="317.6" r="1.7"/><circle cx="488.2" cy="377.4" r="1.7"/><circle cx="488.5" cy="318.5" r="1.7"/><circle cx="488.9" cy="333.9" r="1.7"/><circle cx="489.3" cy="316.9" r="1.7"/><circle cx="489.9" cy="308.6" r="1.7"/><circle cx="490.2" cy="364.0" r="1.7"/><circle cx="490.5" cy="364.9" r="1.7"/><circle cx="490.9" cy="335.4" r="1.7"/><circle cx="491.2" cy="320.4" r="1.7"/><circle cx="491.5" cy="294.0" r="1.7"/><circle cx="491.9" cy="313.2" r="1.7"/><circle cx="492.1" cy="331.8" r="1.7"/><circle cx="492.3" cy="312.4" r="1.7"/><circle cx="492.6" cy="333.7" r="1.7"/><circle cx="492.8" cy="310.1" r="1.7"/><circle cx="493.1" cy="347.9" r="1.7"/><circle cx="493.5" cy="390.1" r="1.7"/><circle cx="493.8" cy="320.9" r="1.7"/><circle cx="494.1" cy="331.7" r="1.7"/><circle cx="494.5" cy="309.3" r="1.7"/><circle cx="495.1" cy="325.0" r="1.7"/><circle cx="495.5" cy="344.7" r="1.7"/><circle cx="495.7" cy="332.7" r="1.7"/><circle cx="496.0" cy="340.4" r="1.7"/><circle cx="496.2" cy="299.5" r="1.7"/><circle cx="496.6" cy="329.3" r="1.7"/><circle cx="497.0" cy="340.6" r="1.7"/><circle cx="497.4" cy="299.0" r="1.7"/><circle cx="497.7" cy="352.1" r="1.7"/><circle cx="498.0" cy="329.0" r="1.7"/><circle cx="498.2" cy="344.1" r="1.7"/><circle cx="498.6" cy="331.1" r="1.7"/><circle cx="498.9" cy="346.9" r="1.7"/><circle cx="499.3" cy="320.3" r="1.7"/><circle cx="499.5" cy="370.5" r="1.7"/><circle cx="499.8" cy="330.1" r="1.7"/><circle cx="500.2" cy="355.8" r="1.7"/><circle cx="500.5" cy="335.3" r="1.7"/><circle cx="500.7" cy="331.7" r="1.7"/><circle cx="501.1" cy="345.0" r="1.7"/><circle cx="501.5" cy="346.7" r="1.7"/><circle cx="501.9" cy="318.8" r="1.7"/><circle cx="502.1" cy="338.4" r="1.7"/><circle cx="502.3" cy="314.4" r="1.7"/><circle cx="502.6" cy="317.0" r="1.7"/><circle cx="502.9" cy="322.0" r="1.7"/><circle cx="503.2" cy="366.6" r="1.7"/><circle cx="503.5" cy="364.1" r="1.7"/><circle cx="503.8" cy="352.2" r="1.7"/><circle cx="504.2" cy="358.8" r="1.7"/><circle cx="504.6" cy="328.8" r="1.7"/><circle cx="504.8" cy="349.2" r="1.7"/><circle cx="505.1" cy="326.2" r="1.7"/><circle cx="505.3" cy="304.8" r="1.7"/><circle cx="505.6" cy="320.3" r="1.7"/><circle cx="505.9" cy="323.3" r="1.7"/><circle cx="506.2" cy="325.3" r="1.7"/><circle cx="506.4" cy="322.9" r="1.7"/><circle cx="507.0" cy="394.3" r="1.7"/><circle cx="507.2" cy="329.4" r="1.7"/><circle cx="507.3" cy="320.1" r="1.7"/><circle cx="507.7" cy="335.3" r="1.7"/><circle cx="508.1" cy="343.8" r="1.7"/><circle cx="508.3" cy="313.5" r="1.7"/><circle cx="508.6" cy="315.8" r="1.7"/><circle cx="509.0" cy="342.2" r="1.7"/><circle cx="509.4" cy="348.8" r="1.7"/><circle cx="509.7" cy="340.9" r="1.7"/><circle cx="510.0" cy="349.2" r="1.7"/><circle cx="510.5" cy="354.3" r="1.7"/><circle cx="510.8" cy="353.4" r="1.7"/><circle cx="511.0" cy="337.9" r="1.7"/><circle cx="511.5" cy="365.3" r="1.7"/><circle cx="511.8" cy="361.9" r="1.7"/><circle cx="512.0" cy="330.4" r="1.7"/><circle cx="512.4" cy="320.2" r="1.7"/><circle cx="512.7" cy="336.4" r="1.7"/><circle cx="513.0" cy="320.3" r="1.7"/><circle cx="513.5" cy="320.2" r="1.7"/><circle cx="514.0" cy="328.9" r="1.7"/><circle cx="514.3" cy="344.8" r="1.7"/><circle cx="514.5" cy="341.8" r="1.7"/><circle cx="514.5" cy="328.0" r="1.7"/><circle cx="514.9" cy="326.0" r="1.7"/><circle cx="515.1" cy="321.9" r="1.7"/><circle cx="515.5" cy="338.9" r="1.7"/><circle cx="515.8" cy="348.1" r="1.7"/><circle cx="516.1" cy="287.6" r="1.7"/><circle cx="516.4" cy="355.4" r="1.7"/><circle cx="516.9" cy="330.1" r="1.7"/><circle cx="517.2" cy="333.3" r="1.7"/><circle cx="517.5" cy="322.0" r="1.7"/><circle cx="517.8" cy="332.7" r="1.7"/><circle cx="518.0" cy="359.2" r="1.7"/><circle cx="518.3" cy="343.0" r="1.7"/><circle cx="518.7" cy="326.8" r="1.7"/><circle cx="519.1" cy="305.4" r="1.7"/><circle cx="519.5" cy="354.1" r="1.7"/><circle cx="519.8" cy="285.4" r="1.7"/><circle cx="520.2" cy="309.6" r="1.7"/><circle cx="520.6" cy="332.0" r="1.7"/><circle cx="520.9" cy="303.0" r="1.7"/><circle cx="521.1" cy="306.0" r="1.7"/><circle cx="521.4" cy="336.6" r="1.7"/><circle cx="521.7" cy="320.8" r="1.7"/><circle cx="522.0" cy="341.5" r="1.7"/><circle cx="522.1" cy="348.0" r="1.7"/><circle cx="522.3" cy="303.0" r="1.7"/><circle cx="522.6" cy="331.8" r="1.7"/><circle cx="522.9" cy="359.0" r="1.7"/><circle cx="523.2" cy="314.2" r="1.7"/><circle cx="523.4" cy="343.1" r="1.7"/><circle cx="523.7" cy="324.6" r="1.7"/><circle cx="524.0" cy="350.2" r="1.7"/><circle cx="524.3" cy="333.6" r="1.7"/><circle cx="524.4" cy="323.5" r="1.7"/><circle cx="524.8" cy="354.3" r="1.7"/><circle cx="525.1" cy="341.1" r="1.7"/><circle cx="525.4" cy="390.4" r="1.7"/><circle cx="525.7" cy="333.4" r="1.7"/><circle cx="526.1" cy="351.3" r="1.7"/><circle cx="526.4" cy="327.4" r="1.7"/><circle cx="526.7" cy="314.8" r="1.7"/><circle cx="527.0" cy="368.7" r="1.7"/><circle cx="527.2" cy="328.2" r="1.7"/><circle cx="527.4" cy="344.8" r="1.7"/><circle cx="527.7" cy="341.3" r="1.7"/><circle cx="528.1" cy="306.8" r="1.7"/><circle cx="528.2" cy="323.1" r="1.7"/><circle cx="528.4" cy="316.2" r="1.7"/><circle cx="528.6" cy="366.8" r="1.7"/><circle cx="529.0" cy="341.6" r="1.7"/><circle cx="529.3" cy="354.2" r="1.7"/><circle cx="529.7" cy="324.0" r="1.7"/><circle cx="530.0" cy="330.5" r="1.7"/><circle cx="530.3" cy="389.9" r="1.7"/><circle cx="530.7" cy="376.4" r="1.7"/><circle cx="531.1" cy="314.7" r="1.7"/><circle cx="531.5" cy="344.7" r="1.7"/><circle cx="531.8" cy="360.5" r="1.7"/><circle cx="532.1" cy="363.8" r="1.7"/><circle cx="532.3" cy="345.1" r="1.7"/><circle cx="532.6" cy="314.4" r="1.7"/><circle cx="532.8" cy="326.4" r="1.7"/><circle cx="533.1" cy="308.4" r="1.7"/><circle cx="533.3" cy="323.5" r="1.7"/><circle cx="533.5" cy="344.3" r="1.7"/><circle cx="533.9" cy="308.7" r="1.7"/><circle cx="534.3" cy="334.9" r="1.7"/><circle cx="534.5" cy="309.2" r="1.7"/><circle cx="534.8" cy="326.1" r="1.7"/><circle cx="535.0" cy="363.5" r="1.7"/><circle cx="535.3" cy="329.7" r="1.7"/><circle cx="535.4" cy="317.8" r="1.7"/><circle cx="535.7" cy="316.5" r="1.7"/><circle cx="535.9" cy="347.0" r="1.7"/><circle cx="536.2" cy="347.9" r="1.7"/><circle cx="536.5" cy="289.2" r="1.7"/><circle cx="536.7" cy="308.5" r="1.7"/><circle cx="537.1" cy="332.9" r="1.7"/><circle cx="537.3" cy="332.4" r="1.7"/><circle cx="537.5" cy="339.3" r="1.7"/><circle cx="537.8" cy="318.3" r="1.7"/><circle cx="538.2" cy="315.0" r="1.7"/><circle cx="538.6" cy="344.1" r="1.7"/><circle cx="539.0" cy="328.8" r="1.7"/><circle cx="539.1" cy="295.2" r="1.7"/><circle cx="539.5" cy="279.3" r="1.7"/><circle cx="539.8" cy="331.4" r="1.7"/><circle cx="540.2" cy="342.1" r="1.7"/><circle cx="540.4" cy="324.9" r="1.7"/><circle cx="540.7" cy="331.8" r="1.7"/><circle cx="541.1" cy="333.3" r="1.7"/><circle cx="541.3" cy="359.5" r="1.7"/><circle cx="541.4" cy="330.3" r="1.7"/><circle cx="541.9" cy="322.1" r="1.7"/><circle cx="542.1" cy="304.1" r="1.7"/><circle cx="542.3" cy="322.2" r="1.7"/><circle cx="542.6" cy="342.5" r="1.7"/><circle cx="542.8" cy="346.8" r="1.7"/><circle cx="543.0" cy="301.7" r="1.7"/><circle cx="543.4" cy="344.3" r="1.7"/><circle cx="543.6" cy="326.4" r="1.7"/><circle cx="543.7" cy="329.5" r="1.7"/><circle cx="544.0" cy="316.8" r="1.7"/><circle cx="544.3" cy="313.5" r="1.7"/><circle cx="544.5" cy="342.1" r="1.7"/><circle cx="544.9" cy="354.7" r="1.7"/><circle cx="545.2" cy="353.9" r="1.7"/><circle cx="545.5" cy="293.6" r="1.7"/><circle cx="545.7" cy="318.7" r="1.7"/><circle cx="546.3" cy="325.3" r="1.7"/><circle cx="546.5" cy="301.8" r="1.7"/><circle cx="546.9" cy="307.5" r="1.7"/><circle cx="547.4" cy="333.3" r="1.7"/><circle cx="547.7" cy="344.8" r="1.7"/><circle cx="547.8" cy="356.2" r="1.7"/><circle cx="548.1" cy="360.8" r="1.7"/><circle cx="548.5" cy="308.6" r="1.7"/><circle cx="548.9" cy="304.1" r="1.7"/><circle cx="549.2" cy="364.8" r="1.7"/><circle cx="549.5" cy="343.2" r="1.7"/><circle cx="549.8" cy="341.1" r="1.7"/><circle cx="550.1" cy="352.3" r="1.7"/><circle cx="550.6" cy="341.2" r="1.7"/><circle cx="551.0" cy="325.7" r="1.7"/><circle cx="551.3" cy="316.5" r="1.7"/><circle cx="551.5" cy="355.8" r="1.7"/><circle cx="551.8" cy="307.4" r="1.7"/><circle cx="552.0" cy="328.3" r="1.7"/><circle cx="552.3" cy="303.7" r="1.7"/><circle cx="552.5" cy="360.7" r="1.7"/><circle cx="552.8" cy="343.9" r="1.7"/><circle cx="553.3" cy="346.3" r="1.7"/><circle cx="553.7" cy="336.1" r="1.7"/><circle cx="553.9" cy="294.7" r="1.7"/><circle cx="554.3" cy="337.6" r="1.7"/><circle cx="554.6" cy="348.7" r="1.7"/><circle cx="554.8" cy="336.9" r="1.7"/><circle cx="555.1" cy="327.5" r="1.7"/><circle cx="555.2" cy="293.6" r="1.7"/><circle cx="555.5" cy="288.0" r="1.7"/><circle cx="556.0" cy="332.9" r="1.7"/><circle cx="556.2" cy="338.4" r="1.7"/><circle cx="556.5" cy="299.1" r="1.7"/><circle cx="556.8" cy="314.3" r="1.7"/><circle cx="557.0" cy="306.1" r="1.7"/><circle cx="557.5" cy="311.3" r="1.7"/><circle cx="557.7" cy="344.3" r="1.7"/><circle cx="557.9" cy="334.3" r="1.7"/><circle cx="558.2" cy="335.0" r="1.7"/><circle cx="558.6" cy="359.5" r="1.7"/><circle cx="558.8" cy="328.3" r="1.7"/><circle cx="559.2" cy="315.1" r="1.7"/><circle cx="559.5" cy="332.8" r="1.7"/><circle cx="560.1" cy="352.4" r="1.7"/><circle cx="560.3" cy="327.5" r="1.7"/><circle cx="560.7" cy="349.0" r="1.7"/><circle cx="561.0" cy="301.5" r="1.7"/><circle cx="561.3" cy="319.9" r="1.7"/><circle cx="561.5" cy="329.1" r="1.7"/><circle cx="561.7" cy="361.4" r="1.7"/><circle cx="562.0" cy="332.4" r="1.7"/><circle cx="562.3" cy="319.3" r="1.7"/><circle cx="562.6" cy="299.7" r="1.7"/><circle cx="562.8" cy="346.4" r="1.7"/><circle cx="563.2" cy="350.4" r="1.7"/><circle cx="563.5" cy="317.1" r="1.7"/><circle cx="563.8" cy="321.4" r="1.7"/><circle cx="564.3" cy="321.1" r="1.7"/><circle cx="564.6" cy="341.7" r="1.7"/><circle cx="565.0" cy="338.4" r="1.7"/><circle cx="565.2" cy="310.9" r="1.7"/><circle cx="565.7" cy="316.0" r="1.7"/><circle cx="565.9" cy="307.5" r="1.7"/><circle cx="566.2" cy="313.7" r="1.7"/><circle cx="566.6" cy="324.2" r="1.7"/><circle cx="566.8" cy="324.9" r="1.7"/><circle cx="567.1" cy="333.9" r="1.7"/><circle cx="567.4" cy="310.8" r="1.7"/><circle cx="567.7" cy="319.1" r="1.7"/><circle cx="568.2" cy="313.9" r="1.7"/><circle cx="568.6" cy="311.1" r="1.7"/><circle cx="568.8" cy="337.1" r="1.7"/><circle cx="569.1" cy="356.2" r="1.7"/><circle cx="569.5" cy="326.5" r="1.7"/><circle cx="569.9" cy="339.9" r="1.7"/><circle cx="570.2" cy="340.8" r="1.7"/><circle cx="570.7" cy="340.2" r="1.7"/><circle cx="570.9" cy="331.4" r="1.7"/><circle cx="571.2" cy="334.9" r="1.7"/><circle cx="571.5" cy="305.0" r="1.7"/><circle cx="571.8" cy="330.5" r="1.7"/><circle cx="572.2" cy="312.8" r="1.7"/><circle cx="572.5" cy="336.8" r="1.7"/><circle cx="572.9" cy="337.5" r="1.7"/><circle cx="573.1" cy="366.6" r="1.7"/><circle cx="573.4" cy="337.5" r="1.7"/><circle cx="573.8" cy="350.0" r="1.7"/><circle cx="574.0" cy="349.8" r="1.7"/><circle cx="574.2" cy="330.8" r="1.7"/><circle cx="574.6" cy="340.5" r="1.7"/><circle cx="574.9" cy="300.1" r="1.7"/><circle cx="575.3" cy="343.4" r="1.7"/><circle cx="575.8" cy="333.1" r="1.7"/><circle cx="576.1" cy="345.0" r="1.7"/><circle cx="576.5" cy="295.7" r="1.7"/><circle cx="576.8" cy="351.1" r="1.7"/><circle cx="577.3" cy="302.3" r="1.7"/><circle cx="577.8" cy="363.6" r="1.7"/><circle cx="578.1" cy="330.5" r="1.7"/><circle cx="578.4" cy="363.7" r="1.7"/><circle cx="578.8" cy="299.0" r="1.7"/><circle cx="579.1" cy="319.0" r="1.7"/><circle cx="579.5" cy="336.2" r="1.7"/><circle cx="579.8" cy="343.7" r="1.7"/><circle cx="580.1" cy="346.2" r="1.7"/><circle cx="580.4" cy="360.6" r="1.7"/><circle cx="580.6" cy="326.3" r="1.7"/><circle cx="581.1" cy="323.7" r="1.7"/><circle cx="581.4" cy="298.4" r="1.7"/><circle cx="581.7" cy="321.1" r="1.7"/><circle cx="582.2" cy="341.3" r="1.7"/><circle cx="582.5" cy="335.9" r="1.7"/><circle cx="583.0" cy="343.3" r="1.7"/><circle cx="583.2" cy="308.2" r="1.7"/><circle cx="583.6" cy="329.5" r="1.7"/><circle cx="584.1" cy="322.9" r="1.7"/><circle cx="584.4" cy="342.8" r="1.7"/><circle cx="584.8" cy="329.1" r="1.7"/><circle cx="585.2" cy="296.6" r="1.7"/><circle cx="585.7" cy="351.0" r="1.7"/><circle cx="586.1" cy="322.2" r="1.7"/><circle cx="586.3" cy="327.9" r="1.7"/><circle cx="587.0" cy="318.1" r="1.7"/><circle cx="587.3" cy="355.0" r="1.7"/><circle cx="587.6" cy="297.5" r="1.7"/><circle cx="588.3" cy="307.4" r="1.7"/><circle cx="588.9" cy="341.8" r="1.7"/><circle cx="589.3" cy="334.6" r="1.7"/><circle cx="589.7" cy="366.9" r="1.7"/><circle cx="589.9" cy="321.8" r="1.7"/><circle cx="590.4" cy="333.4" r="1.7"/><circle cx="590.6" cy="342.2" r="1.7"/><circle cx="591.0" cy="313.4" r="1.7"/><circle cx="591.5" cy="331.0" r="1.7"/><circle cx="591.9" cy="326.0" r="1.7"/><circle cx="592.4" cy="341.2" r="1.7"/><circle cx="592.6" cy="346.1" r="1.7"/><circle cx="592.8" cy="341.3" r="1.7"/><circle cx="593.1" cy="313.7" r="1.7"/><circle cx="593.5" cy="306.2" r="1.7"/><circle cx="593.8" cy="389.4" r="1.7"/><circle cx="594.5" cy="344.3" r="1.7"/><circle cx="594.9" cy="301.2" r="1.7"/><circle cx="595.3" cy="354.7" r="1.7"/><circle cx="595.6" cy="309.5" r="1.7"/><circle cx="595.9" cy="321.8" r="1.7"/><circle cx="596.3" cy="360.5" r="1.7"/><circle cx="596.8" cy="322.6" r="1.7"/><circle cx="597.0" cy="356.1" r="1.7"/><circle cx="597.3" cy="335.7" r="1.7"/><circle cx="597.7" cy="324.1" r="1.7"/><circle cx="598.1" cy="359.2" r="1.7"/><circle cx="598.5" cy="334.4" r="1.7"/><circle cx="599.0" cy="307.3" r="1.7"/><circle cx="599.4" cy="349.4" r="1.7"/><circle cx="600.0" cy="328.2" r="1.7"/><circle cx="600.7" cy="309.8" r="1.7"/><circle cx="601.3" cy="324.1" r="1.7"/><circle cx="601.8" cy="349.4" r="1.7"/><circle cx="602.5" cy="345.8" r="1.7"/><circle cx="602.8" cy="341.2" r="1.7"/><circle cx="603.3" cy="314.2" r="1.7"/><circle cx="603.9" cy="318.9" r="1.7"/><circle cx="604.5" cy="347.1" r="1.7"/><circle cx="604.9" cy="273.9" r="1.7"/><circle cx="605.2" cy="333.3" r="1.7"/><circle cx="605.4" cy="283.0" r="1.7"/><circle cx="605.9" cy="346.6" r="1.7"/><circle cx="606.5" cy="345.2" r="1.7"/><circle cx="607.0" cy="295.2" r="1.7"/><circle cx="607.5" cy="315.3" r="1.7"/><circle cx="608.2" cy="343.3" r="1.7"/><circle cx="608.8" cy="335.4" r="1.7"/><circle cx="609.2" cy="337.0" r="1.7"/><circle cx="609.9" cy="346.6" r="1.7"/><circle cx="610.6" cy="356.5" r="1.7"/><circle cx="610.8" cy="323.3" r="1.7"/><circle cx="611.5" cy="324.3" r="1.7"/><circle cx="611.9" cy="332.4" r="1.7"/><circle cx="612.6" cy="316.0" r="1.7"/><circle cx="613.3" cy="335.7" r="1.7"/><circle cx="613.8" cy="284.8" r="1.7"/><circle cx="614.7" cy="325.0" r="1.7"/><circle cx="615.4" cy="342.7" r="1.7"/><circle cx="616.0" cy="334.2" r="1.7"/><circle cx="617.2" cy="273.4" r="1.7"/><circle cx="617.5" cy="321.8" r="1.7"/><circle cx="618.4" cy="312.5" r="1.7"/><circle cx="619.0" cy="331.2" r="1.7"/><circle cx="619.4" cy="357.5" r="1.7"/><circle cx="620.1" cy="308.5" r="1.7"/><circle cx="620.7" cy="346.8" r="1.7"/><circle cx="621.4" cy="293.5" r="1.7"/><circle cx="622.1" cy="334.5" r="1.7"/><circle cx="622.8" cy="277.6" r="1.7"/><circle cx="623.5" cy="338.7" r="1.7"/><circle cx="624.6" cy="369.0" r="1.7"/><circle cx="625.3" cy="355.4" r="1.7"/><circle cx="625.8" cy="326.2" r="1.7"/><circle cx="626.3" cy="344.9" r="1.7"/><circle cx="627.1" cy="357.3" r="1.7"/><circle cx="627.6" cy="348.8" r="1.7"/><circle cx="628.1" cy="332.9" r="1.7"/><circle cx="628.9" cy="297.1" r="1.7"/><circle cx="629.5" cy="323.8" r="1.7"/><circle cx="630.5" cy="318.9" r="1.7"/><circle cx="631.6" cy="333.5" r="1.7"/><circle cx="632.4" cy="320.2" r="1.7"/><circle cx="633.2" cy="332.2" r="1.7"/><circle cx="634.3" cy="304.7" r="1.7"/><circle cx="635.5" cy="306.6" r="1.7"/><circle cx="636.8" cy="302.0" r="1.7"/><circle cx="637.8" cy="327.5" r="1.7"/><circle cx="638.6" cy="336.4" r="1.7"/><circle cx="639.6" cy="297.1" r="1.7"/><circle cx="641.0" cy="299.7" r="1.7"/><circle cx="642.8" cy="305.4" r="1.7"/><circle cx="643.8" cy="319.0" r="1.7"/><circle cx="645.4" cy="347.2" r="1.7"/><circle cx="647.3" cy="299.8" r="1.7"/><circle cx="648.7" cy="347.7" r="1.7"/><circle cx="650.0" cy="334.2" r="1.7"/><circle cx="652.0" cy="295.1" r="1.7"/><circle cx="654.2" cy="301.1" r="1.7"/><circle cx="655.5" cy="343.6" r="1.7"/><circle cx="657.6" cy="304.1" r="1.7"/><circle cx="659.0" cy="307.3" r="1.7"/><circle cx="660.2" cy="330.0" r="1.7"/><circle cx="662.3" cy="343.6" r="1.7"/><circle cx="664.1" cy="351.3" r="1.7"/><circle cx="666.5" cy="334.6" r="1.7"/><circle cx="668.0" cy="302.0" r="1.7"/><circle cx="671.0" cy="318.1" r="1.7"/><circle cx="674.0" cy="352.0" r="1.7"/><circle cx="679.0" cy="304.7" r="1.7"/><circle cx="686.6" cy="281.2" r="1.7"/><circle cx="715.0" cy="301.8" r="1.7"/></g><line x1="88.0" y1="320.6" x2="728.0" y2="320.6" stroke="#66717D" stroke-width="1" stroke-dasharray="4 3"/><rect x="608" y="301.6" width="122" height="16" fill="#FFFFFF"/><text x="728" y="313.6" text-anchor="end">global mean 6.96</text><path d="M 136.5 341.3 L 698.9 325.2" stroke="#44505C" stroke-width="2" fill="none"/><rect x="187.8" y="346.8" width="80" height="16" fill="#FFFFFF"/><text class="lbl2 bold" x="189.8" y="358.8">fitted trend</text><rect x="336" y="256" width="280" height="36" fill="#FFFFFF"/><text class="lblink bold" x="612" y="270" text-anchor="end">The Lord of the Rings: The Return of the King</text><text x="612" y="287" text-anchor="end">$1.12bn &#183; 8.47 rating &#183; 22,334 votes</text><line x1="616" y1="274.3" x2="667.0" y2="274.3" stroke="#1152B8" stroke-width="1"/><g class="mark" tabindex="0" role="img" aria-label="The Lord of the Rings: The Return of the King. 1.12 billion dollars of revenue, 8.47 weighted rating, 22,334 votes. Highest on both measures."><circle class="ring" cx="674.5" cy="274.3" r="7" fill="none" stroke="#1152B8" stroke-width="1.5"/><circle cx="674.5" cy="274.3" r="3.2" fill="#1152B8"/></g></svg>
+  <div class="card" style="left:760px; top:192px; width:496px; height:288px;"></div>
+  <div class="abs t-card" style="left:776px; top:208px; width:464px;">Only at the very top do both measures agree</div>
+  <div class="abs t-s ink3" style="left:776px; top:230px; width:464px;">Highest combined percentile of revenue and weighted rating</div>
+  <div class="abs t-s ink3" style="left:776.0px; top:254px; width:300px;">Film</div>
+  <div class="abs t-s ink3 r" style="left:1084.0px; top:254px; width:56px;">Revenue</div>
+  <div class="abs t-s ink3 r" style="left:1148.0px; top:254px; width:40px;">Rating</div>
+  <div class="abs t-s ink3 r" style="left:1196.0px; top:254px; width:44px;">Votes</div>
+  <div class="abs" style="left:776px; top:272px; width:464px; height:1px; background:#E6E8EB;"></div>
+  <div class="abs row hit lead" tabindex="0" role="row" aria-label="The Lord of the Rings: The Return of the King, $1.12bn, rating 8.47, 22,334 votes" style="left:774px; top:273px; width:468px; height:24px;">
+    <div class="abs t-s clip acc b" style="left:2px; top:3px; width:300px;">The Lord of the Rings: The Return of the King</div>
+    <div class="abs t-s r acc b" style="left:310px; top:3px; width:56px;">$1.12bn</div>
+    <div class="abs t-s r acc b" style="left:374px; top:3px; width:40px;">8.47</div>
+    <div class="abs t-s r acc b" style="left:422px; top:3px; width:44px;">22,334</div>
+  </div>
+  <div class="abs" style="left:776px; top:298px; width:464px; height:1px; background:#F0F2F4;"></div>
+  <div class="abs row hit" tabindex="0" role="row" aria-label="Avengers: Endgame, $2.80bn, rating 8.26, 23,857 votes" style="left:774px; top:299px; width:468px; height:24px;">
+    <div class="abs t-s clip " style="left:2px; top:3px; width:300px;">Avengers: Endgame</div>
+    <div class="abs t-s r " style="left:310px; top:3px; width:56px;">$2.80bn</div>
+    <div class="abs t-s r " style="left:374px; top:3px; width:40px;">8.26</div>
+    <div class="abs t-s r ink2" style="left:422px; top:3px; width:44px;">23,857</div>
+  </div>
+  <div class="abs" style="left:776px; top:324px; width:464px; height:1px; background:#F0F2F4;"></div>
+  <div class="abs row hit" tabindex="0" role="row" aria-label="The Dark Knight, $1.00bn, rating 8.51, 30,619 votes" style="left:774px; top:325px; width:468px; height:24px;">
+    <div class="abs t-s clip " style="left:2px; top:3px; width:300px;">The Dark Knight</div>
+    <div class="abs t-s r " style="left:310px; top:3px; width:56px;">$1.00bn</div>
+    <div class="abs t-s r " style="left:374px; top:3px; width:40px;">8.51</div>
+    <div class="abs t-s r ink2" style="left:422px; top:3px; width:44px;">30,619</div>
+  </div>
+  <div class="abs" style="left:776px; top:350px; width:464px; height:1px; background:#F0F2F4;"></div>
+  <div class="abs row hit" tabindex="0" role="row" aria-label="Avengers: Infinity War, $2.05bn, rating 8.25, 27,713 votes" style="left:774px; top:351px; width:468px; height:24px;">
+    <div class="abs t-s clip " style="left:2px; top:3px; width:300px;">Avengers: Infinity War</div>
+    <div class="abs t-s r " style="left:310px; top:3px; width:56px;">$2.05bn</div>
+    <div class="abs t-s r " style="left:374px; top:3px; width:40px;">8.25</div>
+    <div class="abs t-s r ink2" style="left:422px; top:3px; width:44px;">27,713</div>
+  </div>
+  <div class="abs" style="left:776px; top:376px; width:464px; height:1px; background:#F0F2F4;"></div>
+  <div class="abs row hit" tabindex="0" role="row" aria-label="Top Gun: Maverick, $1.49bn, rating 8.24, 7,546 votes" style="left:774px; top:377px; width:468px; height:24px;">
+    <div class="abs t-s clip " style="left:2px; top:3px; width:300px;">Top Gun: Maverick</div>
+    <div class="abs t-s r " style="left:310px; top:3px; width:56px;">$1.49bn</div>
+    <div class="abs t-s r " style="left:374px; top:3px; width:40px;">8.24</div>
+    <div class="abs t-s r ink2" style="left:422px; top:3px; width:44px;">7,546</div>
+  </div>
+  <div class="abs" style="left:776px; top:402px; width:464px; height:1px; background:#F0F2F4;"></div>
+  <div class="abs row hit" tabindex="0" role="row" aria-label="The Lord of the Rings: The Two Towers, $926m, rating 8.38, 20,274 votes" style="left:774px; top:403px; width:468px; height:24px;">
+    <div class="abs t-s clip " style="left:2px; top:3px; width:300px;">The Lord of the Rings: The Two Towers</div>
+    <div class="abs t-s r " style="left:310px; top:3px; width:56px;">$926m</div>
+    <div class="abs t-s r " style="left:374px; top:3px; width:40px;">8.38</div>
+    <div class="abs t-s r ink2" style="left:422px; top:3px; width:44px;">20,274</div>
+  </div>
+  <div class="abs" style="left:776px; top:428px; width:464px; height:1px; background:#F0F2F4;"></div>
+  <div class="abs row hit" tabindex="0" role="row" aria-label="The Lord of the Rings: The Fellowship of the Ring, $871m, rating 8.40, 23,323 votes" style="left:774px; top:429px; width:468px; height:24px;">
+    <div class="abs t-s clip " style="left:2px; top:3px; width:300px;">The Lord of the Rings: The Fellowship of the Ring</div>
+    <div class="abs t-s r " style="left:310px; top:3px; width:56px;">$871m</div>
+    <div class="abs t-s r " style="left:374px; top:3px; width:40px;">8.40</div>
+    <div class="abs t-s r ink2" style="left:422px; top:3px; width:44px;">23,323</div>
+  </div>
+  <div class="card" style="left:24px; top:496px; width:720px; height:192px;"></div>
+  <div class="abs t-card" style="left:40px; top:512px; width:680px;">Coverage peaked with the 1990s &mdash; the collapse since is archive, not industry</div>
+  <div class="abs t-s ink3" style="left:40px; top:534px; width:680px;">Share of each decade&rsquo;s listings clearing each bar &middot; peak 57.6% (1990s) &middot; 58,634 listings dated 1930&ndash;2029</div>
+<svg class="abs" style="left:0; top:0;" width="1280" height="720" role="img" aria-label="Two lines by decade. The share of listings clearing the money bar peaks at 57.6 percent in the 1990s and falls to 3.1 percent in the 2020s; the evidence bar peaks at 49.9 percent and falls to 2.0 percent. Over the same period the listing count rises from 297 in the 1930s to 27,731 in the 2020s."><line x1="84.0" y1="636.0" x2="728.0" y2="636.0" stroke="#CDD3D9" stroke-width="1"/><text x="76" y="640.5" text-anchor="end">0</text><line x1="84.0" y1="613.7" x2="728.0" y2="613.7" stroke="#EDEFF2" stroke-width="1"/><text x="76" y="618.2" text-anchor="end">20</text><line x1="84.0" y1="591.4" x2="728.0" y2="591.4" stroke="#EDEFF2" stroke-width="1"/><text x="76" y="595.9" text-anchor="end">40</text><line x1="84.0" y1="569.1" x2="728.0" y2="569.1" stroke="#EDEFF2" stroke-width="1"/><text x="76" y="573.6" text-anchor="end">60%</text><path d="M 116.2 608.3 L 180.6 596.8 L 245.0 595.6 L 309.4 593.4 L 373.8 592.9 L 438.2 581.1 L 502.6 580.4 L 567.0 602.2 L 631.4 616.5 L 695.8 633.8" stroke="#44505C" stroke-width="1.75" fill="none" stroke-dasharray="5 3"/><path d="M 116.2 592.9 L 180.6 573.4 L 245.0 575.7 L 309.4 585.2 L 373.8 591.3 L 438.2 573.5 L 502.6 571.8 L 567.0 596.6 L 631.4 613.3 L 695.8 632.5" stroke="#1152B8" stroke-width="1.75" fill="none"/><circle cx="116.2" cy="608.3" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><circle cx="180.6" cy="596.8" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><circle cx="245.0" cy="595.6" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><circle cx="309.4" cy="593.4" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><circle cx="373.8" cy="592.9" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><circle cx="438.2" cy="581.1" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><circle cx="502.6" cy="580.4" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><circle cx="567.0" cy="602.2" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><circle cx="631.4" cy="616.5" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><circle cx="695.8" cy="633.8" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><circle cx="116.2" cy="592.9" r="2.6" fill="#1152B8"/><circle cx="180.6" cy="573.4" r="2.6" fill="#1152B8"/><circle cx="245.0" cy="575.7" r="2.6" fill="#1152B8"/><circle cx="309.4" cy="585.2" r="2.6" fill="#1152B8"/><circle cx="373.8" cy="591.3" r="2.6" fill="#1152B8"/><circle cx="438.2" cy="573.5" r="2.6" fill="#1152B8"/><circle cx="502.6" cy="571.8" r="2.6" fill="#1152B8"/><circle cx="567.0" cy="596.6" r="2.6" fill="#1152B8"/><circle cx="631.4" cy="613.3" r="2.6" fill="#1152B8"/><circle cx="695.8" cy="632.5" r="2.6" fill="#1152B8"/><rect x="600" y="560" width="128" height="36" fill="#FFFFFF"/><g class="lg" tabindex="0" role="img" aria-label="Legend: solid accent line with filled markers is the money bar"><line x1="604" y1="570" x2="626" y2="570" stroke="#1152B8" stroke-width="1.75"/><circle cx="615" cy="570" r="2.6" fill="#1152B8"/><text class="lbl2" x="634" y="574.5">Money bar</text></g><g class="lg" tabindex="0" role="img" aria-label="Legend: dashed dark line with hollow markers is the evidence bar"><line x1="604" y1="587" x2="626" y2="587" stroke="#44505C" stroke-width="1.75" stroke-dasharray="5 3"/><circle cx="615" cy="587" r="2.6" fill="#FFFFFF" stroke="#44505C" stroke-width="1.5"/><text class="lbl2" x="634" y="591.5">Evidence bar</text></g><rect x="657.8" y="611.5" width="36" height="16" fill="#FFFFFF"/><text class="bold" x="691.8" y="623.5" text-anchor="end">3.1%</text><text class="lbl2" x="116.2" y="652" text-anchor="middle">1930s</text><text x="116.2" y="668" text-anchor="middle">297</text><text class="lbl2" x="180.6" y="652" text-anchor="middle">1940s</text><text x="180.6" y="668" text-anchor="middle">267</text><text class="lbl2" x="245.0" y="652" text-anchor="middle">1950s</text><text x="245.0" y="668" text-anchor="middle">377</text><text class="lbl2" x="309.4" y="652" text-anchor="middle">1960s</text><text x="309.4" y="668" text-anchor="middle">566</text><text class="lbl2" x="373.8" y="652" text-anchor="middle">1970s</text><text x="373.8" y="668" text-anchor="middle">857</text><text class="lbl2" x="438.2" y="652" text-anchor="middle">1980s</text><text x="438.2" y="668" text-anchor="middle">1,545</text><text class="lbl2" x="502.6" y="652" text-anchor="middle">1990s</text><text x="502.6" y="668" text-anchor="middle">2,478</text><text class="lbl2" x="567.0" y="652" text-anchor="middle">2000s</text><text x="567.0" y="668" text-anchor="middle">7,647</text><text class="lbl2" x="631.4" y="652" text-anchor="middle">2010s</text><text x="631.4" y="668" text-anchor="middle">16,869</text><text class="lbl2" x="695.8" y="652" text-anchor="middle">2020s</text><text class="lbl2 bold" x="695.8" y="668" text-anchor="middle">27,731</text></svg>
+  <div class="card" style="left:760px; top:496px; width:496px; height:192px;"></div>
+  <div class="abs t-card" style="left:776px; top:512px; width:464px;">Mid-budget films return least per dollar</div>
+  <div class="abs t-s ink3" style="left:776px; top:534px; width:464px;">Median revenue &divide; budget &middot; 11,116 listings with a money claim</div>
+<svg class="abs" style="left:0; top:0;" width="1280" height="720" role="img" aria-label="Median revenue divided by budget by budget band: 10 to 100 thousand returns 1.82 times, 100 thousand to 1 million 2.27 times, 1 to 10 million 1.64 times, 10 to 50 million 1.49 times, 50 to 100 million 1.97 times, 100 million and over 2.55 times. Break-even is 1.0 times."><line x1="980.0" y1="552.0" x2="980.0" y2="660" stroke="#66717D" stroke-width="1" stroke-dasharray="4 3"/><text class="lbl2" x="852" y="568.0" text-anchor="end">$10k&#8211;100k</text><rect x="860.0" y="560.0" width="218.2" height="9" fill="#44505C"/><text class="lblink bold" x="1240" y="568.0" text-anchor="end">1.82&#215;</text><text class="lbl2" x="852" y="585.0" text-anchor="end">$100k&#8211;1m</text><rect x="860.0" y="577.0" width="272.4" height="9" fill="#44505C"/><text class="lblink bold" x="1240" y="585.0" text-anchor="end">2.27&#215;</text><text class="lbl2" x="852" y="602.0" text-anchor="end">$1m&#8211;10m</text><rect x="860.0" y="594.0" width="197.2" height="9" fill="#44505C"/><text class="lblink bold" x="1240" y="602.0" text-anchor="end">1.64&#215;</text><text class="lbl2" x="852" y="619.0" text-anchor="end">$10m&#8211;50m</text><rect x="860.0" y="611.0" width="179.0" height="9" fill="#44505C"/><text class="lblink bold" x="1240" y="619.0" text-anchor="end">1.49&#215;</text><text class="lbl2" x="852" y="636.0" text-anchor="end">$50m&#8211;100m</text><rect x="860.0" y="628.0" width="236.5" height="9" fill="#44505C"/><text class="lblink bold" x="1240" y="636.0" text-anchor="end">1.97&#215;</text><text class="lbl2" x="852" y="653.0" text-anchor="end">$100m+</text><rect x="860.0" y="645.0" width="305.8" height="9" fill="#44505C"/><text class="lblink bold" x="1240" y="653.0" text-anchor="end">2.55&#215;</text><text x="980" y="674" text-anchor="middle">break-even 1.0&#215;</text></svg>
+  <div class="abs t-s ink3" style="left:24px; top:690px; width:940px;">TMDB &middot; population: non-adult listings with a budget on record &middot; ratings shrink toward the global mean until 100 votes are in</div>
+  <div class="abs t-s ink3 r" style="left:976px; top:690px; width:280px;">Snapshot 24 July 2026</div>
+</div>
+</body>
+</html>

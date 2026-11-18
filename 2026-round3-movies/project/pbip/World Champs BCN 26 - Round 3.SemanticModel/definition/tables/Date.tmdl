@@ -1,0 +1,112 @@
+table Date
+	lineageTag: 18508aed-a713-4be8-ae05-ac4e68c308b9
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 9f0a8bf9-80e2-40d9-90be-5620bbc79be9
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Week Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: fc3200ce-ab5f-4d2d-810d-f83f7f122516
+		summarizeBy: none
+		sourceColumn: Week Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4ba4d737-e2e5-45f2-afe8-5c4b2dd22745
+		summarizeBy: none
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: a81d02ef-bc25-4465-a882-a583de25655a
+		summarizeBy: none
+		sourceColumn: Month Name
+		sortByColumn: 'Month Number'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 2eac5572-5150-4f4b-9d47-39ae5d2a45ff
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    // Deterministic, data-anchored range (blueprint §4): verified min/max Release Date.
+				    // No DateTime.LocalNow() — the table must not drift between refreshes.
+				    StartDate = #date(1800, 1, 1),
+				    EndDate = #date(2099, 12, 31),
+				
+				    DateList = List.Dates(
+				        StartDate,
+				        Duration.Days(EndDate - StartDate) + 1,
+				        #duration(1, 0, 0, 0)
+				    ),
+				
+				    DateTable = Table.FromList(
+				        DateList,
+				        Splitter.SplitByNothing(),
+				        {"Date"}
+				    ),
+				
+				    AddedYear = Table.AddColumn(
+				        DateTable,
+				        "Year",
+				        each Date.Year([Date]),
+				        Int64.Type
+				    ),
+				
+				    AddedMonthNumber = Table.AddColumn(
+				        AddedYear,
+				        "Month Number",
+				        each Date.Month([Date]),
+				        Int64.Type
+				    ),
+				
+				    AddedMonthName = Table.AddColumn(
+				        AddedMonthNumber,
+				        "Month Name",
+				        each Date.MonthName([Date]),
+				        type text
+				    ),
+				
+				    AddedWeekNumber = Table.AddColumn(
+				        AddedMonthName,
+				        "Week Number",
+				        each Date.WeekOfYear([Date]),
+				        Int64.Type
+				    ),
+				
+				    #"Changed Type" = Table.TransformColumnTypes(AddedWeekNumber,{{"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

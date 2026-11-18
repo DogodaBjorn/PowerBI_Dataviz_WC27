@@ -1,0 +1,78 @@
+{
+  "filters": [
+    {
+      "name": "14d645ba8b0b2a7bc84b",
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "sets"
+            }
+          },
+          "Property": "Decade"
+        }
+      },
+      "type": "Categorical",
+      "filter": {
+        "Version": 2,
+        "From": [
+          {
+            "Name": "s",
+            "Entity": "sets"
+          }
+        ],
+        "Where": [
+          {
+            "Condition": {
+              "Not": {
+                "Expression": {
+                  "In": {
+                    "Expressions": [
+                      {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "s"
+                            }
+                          },
+                          "Property": "Decade"
+                        }
+                      }
+                    ],
+                    "Values": [
+                      [
+                        {
+                          "Literal": {
+                            "Value": "null"
+                          }
+                        }
+                      ]
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true,
+      "objects": {
+        "general": [
+          {
+            "properties": {
+              "isInvertedSelectionMode": {
+                "expr": {
+                  "Literal": {
+                    "Value": "true"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/filterConfiguration/1.3.0/schema.json"
+}

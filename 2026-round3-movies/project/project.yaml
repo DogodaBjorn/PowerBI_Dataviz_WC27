@@ -1,0 +1,17 @@
+# pbi-atelier project configuration (see GETTING-STARTED.md)
+name: wc-round-3
+client_alias: dataviz-world-champs
+language: en
+template_version: 0.3.1
+created: 2026-08-04
+brand_kit: none
+modules:
+  - px-prototype
+  - deneb-studio
+  - canvas-studio
+  - icon-studio
+  - nav-studio
+  - a11y-studio
+  - tooltip-studio
+  - imagery-studio
+  - brand-kit-studio

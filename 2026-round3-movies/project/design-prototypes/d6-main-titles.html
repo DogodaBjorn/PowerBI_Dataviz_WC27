@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>D6 · Main Titles · 1280×720 comp</title>
+<!--
+  D6 — "Main Titles / End Credits" design comp, two 1280×720 artboards, for 1:1 PBIR recreation.
+  The report as a picture's title sequence: three lies as the cast in dot-leader credit grammar,
+  Key Takeaway as the epigraph card. Movie-ness lives in the credit FORM (centered stacks, dot
+  leaders, tracked caps) — survives grayscale. Flat screen, NO cards; zones separated by thin
+  centered rules (1px solid #3A362E — dim solid, no opacity).
+
+  Rect table (x, y, w, h on canvas), identical on both artboards:
+    z_masthead        24,  24, 1232,  80
+    hero_takeaway    240, 120,  800,  88
+    sl_read_toggle   400, 224,  480,  40
+    band 1 credit     24, 280, 1232,  32   trap 232, 320, 360, 72   honest 608, 320, 440, 72
+    band 2 credit     24, 408, 1232,  32   trap 232, 448, 360, 72   honest 608, 448, 440, 72
+    band 3 credit     24, 536, 1232,  32   trap 232, 576, 360, 72   honest 608, 576, 440, 72
+    zone rules (1px × 384, centered at x=448) at y = 400, 528, 656
+    z_footer          24, 664, 1232,  32
+
+  Palette: canvas #171512 · ink #F4F1E8 · ink-2 #B5AFA0 · accent nitrate cyan #7FB4D9
+           good mint #4ECBA0 (always with ✓/▲ + word) · trap coral #E8705F (always with ✕/strike + word)
+           dim rule #3A362E · dimmed text (trailer honest zones) #6B6558 · dimmed chart fill #2A2721
+
+  CONTRAST NOTE: #B5AFA0 on #171512 = 8.3:1 (passes WCAG AA). The dim #6B6558 on #171512 ≈ 3.2:1,
+  below AA for body text — acceptable ONLY because the dimmed honest zones are deliberately
+  de-emphasized non-focus content in the naive/trailer state, and every dimmed element has a
+  full-contrast counterpart in the responsible/default state (artboard 1).
+
+  Power BI rebuild constraints honored: solid fills, 1px rules, text, simple inline SVG only.
+  No animation, transitions, gradients, blurs, shadows, blend modes, border-radius, rotation,
+  or external resources.
+-->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background:#333333; }
+  body {
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center;
+    padding:40px 0;
+  }
+  .caption {
+    width:1280px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:10pt; color:#A6A6A6;
+    margin:0 0 8px 0;
+  }
+  .caption.second { margin-top:40px; }
+  .board {
+    position:relative; width:1280px; height:720px;
+    background:#171512; overflow:hidden;
+  }
+  .abs { position:absolute; }
+
+  /* ---- type ---- */
+  .disp  { font-family:"Bahnschrift Light",Bahnschrift,"Segoe UI",sans-serif; font-weight:300; }
+  .body  { font-family:"Segoe UI",sans-serif; }
+  .serif { font-family:Georgia,serif; }
+  .mono  { font-family:Consolas,"Courier New",monospace; }
+  .it    { font-style:italic; }
+  .s10 { font-size:10pt; }
+  .s12 { font-size:12pt; }
+  .s14 { font-size:14pt; }
+  .s20 { font-size:20pt; }
+  .s36 { font-size:36pt; }
+
+  /* ---- ink ---- */
+  .ink   { color:#F4F1E8; }
+  .ink2  { color:#B5AFA0; }
+  .cyan  { color:#7FB4D9; }
+  .mint  { color:#4ECBA0; }
+  .coral { color:#E8705F; }
+
+  /* ---- zone rules (dim solid, no opacity) ---- */
+  .zrule { position:absolute; left:448px; width:384px; height:1px; background:#3A362E; }
+  .hrule { width:240px; height:1px; background:#3A362E; }
+
+  /* ---- masthead ---- */
+  .masthead {
+    left:24px; top:24px; width:1232px; height:80px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    text-align:center;
+  }
+  .mast-kick  { letter-spacing:.35em; padding-left:.35em; line-height:1; }
+  .mast-title { letter-spacing:.22em; padding-left:.22em; line-height:1; }
+  .mast-sub   { letter-spacing:.06em; padding-left:.06em; line-height:1; }
+
+  /* ---- hero epigraph ---- */
+  .hero {
+    left:240px; top:120px; width:800px; height:88px;
+    display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+    text-align:center;
+  }
+  .hero-text { line-height:1.3; }
+
+  /* ---- segmented read toggle ---- */
+  .toggle { left:400px; top:224px; width:480px; height:40px; display:flex; }
+  .seg {
+    flex:1; display:flex; align-items:center; justify-content:center;
+    font-family:"Bahnschrift Light",Bahnschrift,"Segoe UI",sans-serif; font-weight:300;
+    font-size:10pt; letter-spacing:.12em; padding-left:.12em;
+    border:1px solid #B5AFA0; color:#B5AFA0;
+  }
+  .seg.on {
+    border:0; border-bottom:3px solid #F4F1E8;
+    background:#7FB4D9; color:#171512;
+  }
+
+  /* ---- cast credit lines ---- */
+  .credit { left:24px; width:1232px; height:32px; display:flex; align-items:center; justify-content:center; }
+  .c-role { width:520px; flex:none; text-align:right; letter-spacing:.18em; line-height:1; }
+  .c-lead { flex:none; padding:0 14px; letter-spacing:.18em; white-space:pre; line-height:1; }
+  .c-as   { width:520px; flex:none; text-align:left; line-height:1; }
+  .cuttag { font-style:normal; letter-spacing:.08em; margin-left:10px; }
+  .trailer .cuttag { display:none; }
+
+  /* ---- coral strike (2px solid) ---- */
+  .strike { position:relative; display:inline-block; }
+  .strike::after {
+    content:""; position:absolute; left:-2px; right:-2px; top:50%; margin-top:-1px;
+    height:2px; background:#E8705F;
+  }
+  .trailer .strike::after { display:none; }
+
+  /* ---- trap zones (left-aligned inside) ---- */
+  .trap {
+    left:232px; width:360px; height:72px;
+    display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
+    text-align:left;
+  }
+  .trap-label   { line-height:1.3; }
+  .trap-caption { line-height:1.3; margin-top:3px; }
+  .trapval { color:#B5AFA0; line-height:1.1; margin-top:3px; }
+  .trailer .trapval { color:#F4F1E8; }
+  .naivetag {
+    display:none; font-style:normal; color:#B5AFA0; border:1px solid #B5AFA0;
+    padding:1px 6px; margin-left:10px; letter-spacing:.05em; vertical-align:3px;
+  }
+  .trailer .naivetag { display:inline-block; }
+
+  /* ---- honest zones ---- */
+  .honest {
+    left:608px; width:440px; height:72px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    text-align:center;
+  }
+  .bar-labels { width:400px; display:flex; justify-content:space-between; line-height:1.2; }
+  .rank-strip { line-height:1.4; text-align:left; }
+
+  /* ---- trailer state: honest zones dimmed ----
+       Every dimmed element below has a full-contrast counterpart on artboard 1. */
+  .trailer .honest, .trailer .honest * { color:#6B6558; }
+  .trailer .honest svg text { fill:#6B6558; }
+  .trailer .honest .sv-bar-accent { fill:#6B6558; }
+  .trailer .honest .sv-bar-rest   { fill:#2A2721; }
+  .trailer .honest .sv-hair { stroke:#2A2721; }
+  .trailer .honest .sv-conn { stroke:#6B6558; }
+  .trailer .honest .sv-dot-mint, .trailer .honest .sv-dot-coral { fill:#6B6558; }
+
+  /* ---- footer ---- */
+  .footer { left:24px; top:664px; width:1232px; height:32px; display:flex; align-items:center; gap:8px; }
+  .ftext { flex:1; text-align:center; white-space:nowrap; }
+  .fbtn { color:#7FB4D9; border:1px solid #7FB4D9; padding:3px 6px; white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<div class="caption">D6 · Main Titles · THE PICTURE (responsible, default)</div>
+<div class="board picture">
+
+  <!-- z_masthead 24,24,1232,80 -->
+  <div class="abs masthead">
+    <div class="disp s10 ink2 mast-kick">A DATA PICTURE</div>
+    <div class="disp s36 ink mast-title">THREE SEDUCTIVE LIES</div>
+    <div class="body s12 cyan mast-sub">THE PICTURE — corrected cut</div>
+  </div>
+
+  <!-- hero_takeaway 240,120,800,88 -->
+  <div class="abs hero">
+    <div class="hrule"></div>
+    <div class="serif it s14 ink hero-text">The data is not wrong — the reading is. 87% of 85,394 listings have no credible financials, the median listing has zero votes, and &lsquo;popularity&rsquo; has no published formula. Every honest number here states what it excludes.</div>
+    <div class="hrule"></div>
+  </div>
+
+  <!-- sl_read_toggle 400,224,480,40 -->
+  <div class="abs toggle">
+    <div class="seg">THE TRAILER (naive)</div>
+    <div class="seg on">THE PICTURE (responsible)</div>
+  </div>
+
+  <!-- ============ CAST BAND 1 — y 280 ============ -->
+  <div class="abs credit" style="top:280px;">
+    <div class="disp s14 ink c-role">THE ZERO-FILLED FINANCIALS</div>
+    <div class="disp s14 ink2 c-lead">. . . . . . . .</div>
+    <div class="serif it s14 ink2 c-as"><span class="strike">as &ldquo;The Industry Loses Money&rdquo;</span><span class="mono s10 coral cuttag">✕ CUT</span></div>
+  </div>
+  <div class="abs trap" style="top:320px;">
+    <div class="body s10 ink2 trap-label">Profit, all 85,394 listings (naive)</div>
+    <div class="mono s20 trapval"><span class="strike">$ —,———,———</span><span class="mono s10 naivetag">naive</span></div>
+    <div class="body s10 ink2 trap-caption">79.0% of revenues are zeros counted as money · computed at build</div>
+  </div>
+  <div class="abs honest" style="top:320px;">
+    <div class="bar-labels">
+      <span class="body s10 ink">13.1% credible ✓</span>
+      <span class="body s10 ink2">86.9% unknown</span>
+    </div>
+    <svg width="400" height="20" viewBox="0 0 400 20">
+      <rect class="sv-bar-accent" x="0" y="0" width="52.4" height="20" fill="#7FB4D9"/>
+      <rect class="sv-bar-rest" x="52.4" y="0" width="347.6" height="20" fill="#3A362E"/>
+    </svg>
+    <div class="body s10 ink2">median $ ——,——— · mean dragged by blockbusters · USD as recorded</div>
+  </div>
+
+  <div class="zrule" style="top:400px;"></div>
+
+  <!-- ============ CAST BAND 2 — y 408 ============ -->
+  <div class="abs credit" style="top:408px;">
+    <div class="disp s14 ink c-role">THE TWO-VOTE PERFECT TEN</div>
+    <div class="disp s14 ink2 c-lead">. . . . . . . .</div>
+    <div class="serif it s14 ink2 c-as"><span class="strike">as &ldquo;Better Than The Godfather&rdquo;</span><span class="mono s10 coral cuttag">✕ CUT</span></div>
+  </div>
+  <div class="abs trap" style="top:448px;">
+    <div class="mono s12 trapval">Las mujeres deciden — ★ <span class="strike">10.0</span> · 2 votes<span class="mono s10 naivetag">naive</span></div>
+    <div class="body s10 ink2 trap-caption">Logos 10.0 @ 3 votes · +18 more · Godfather weighted: computed at build</div>
+  </div>
+  <div class="abs honest" style="top:448px;">
+    <svg width="400" height="32" viewBox="0 0 400 32">
+      <text x="274" y="11" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="13.3" fill="#4ECBA0">7.02 weighted ✓</text>
+      <text x="390" y="11" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="13.3" fill="#E8705F">10.0 raw ✕</text>
+      <line class="sv-hair" x1="16" y1="21" x2="384" y2="21" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="16" y1="21" x2="16" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="89.6" y1="21" x2="89.6" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="163.2" y1="21" x2="163.2" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="236.8" y1="21" x2="236.8" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="310.4" y1="21" x2="310.4" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="384" y1="21" x2="384" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <text x="16" y="31.5" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="#B5AFA0">0</text>
+      <text x="200" y="31.5" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="#B5AFA0">5</text>
+      <text x="384" y="31.5" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="#B5AFA0">10</text>
+      <line class="sv-conn" x1="274.3" y1="21" x2="384" y2="21" stroke="#B5AFA0" stroke-width="2"/>
+      <circle class="sv-dot-mint" cx="274.3" cy="21" r="4.5" fill="#4ECBA0"/>
+      <circle class="sv-dot-coral" cx="384" cy="21" r="4.5" fill="#E8705F"/>
+    </svg>
+    <div class="body s10 ink2">median listing: 0 votes · 65.5% have none · m=100, C=6.96</div>
+  </div>
+
+  <div class="zrule" style="top:528px;"></div>
+
+  <!-- ============ CAST BAND 3 — y 536 ============ -->
+  <div class="abs credit" style="top:536px;">
+    <div class="disp s14 ink c-role">THE UNPUBLISHED FORMULA</div>
+    <div class="disp s14 ink2 c-lead">. . . . . . . .</div>
+    <div class="serif it s14 ink2 c-as"><span class="strike">as &ldquo;The People&rsquo;s Favorite&rdquo;</span><span class="mono s10 coral cuttag">✕ CUT</span></div>
+  </div>
+  <div class="abs trap" style="top:576px;">
+    <div class="mono s20 trapval"><span class="strike">———·— †</span><span class="mono s10 naivetag">naive</span></div>
+    <div class="body s10 ink2 trap-caption">† formula not published — TMDB does not define this number</div>
+  </div>
+  <div class="abs honest" style="top:576px;">
+    <div class="mono s10 ink rank-strip">POP #1 — at build — → quality #7 ✕<br>POP #2 → #2 ✓<br>POP #3 → #11 ✕</div>
+    <div class="body s10 ink2">ranked only — never colored good or bad</div>
+  </div>
+
+  <div class="zrule" style="top:656px;"></div>
+
+  <!-- z_footer 24,664,1232,32 -->
+  <div class="abs footer">
+    <div class="mono s10 ink2 ftext">TMDB SNAPSHOT 2026·07·24 · BASIS 84,036 (ADULT 1,358 EXCLUDED) · LISTINGS≠FILMS: 1,697 DUP PAIRS · END CREDITS: PAGE 3 · EVIDENCE: PAGE 2</div>
+    <div class="mono s10 fbtn">EVIDENCE →</div>
+    <div class="mono s10 fbtn">END CREDITS ⓘ</div>
+  </div>
+
+</div>
+
+<!-- ARTBOARD 2 — THE TRAILER (naive). Identical rects; differences only: masthead subtitle
+     (coral "NOW SHOWING" line), toggle selection flipped, coral strikes + "✕ CUT" tags hidden,
+     trap values full-dress #F4F1E8 with an outlined "naive" tag, honest zones dimmed.
+     Contrast: dim #6B6558 on #171512 ≈ 3.2:1 — below AA, acceptable ONLY because the dimmed
+     honest zones are deliberately de-emphasized non-focus content in this naive state and every
+     dimmed element has a full-contrast counterpart state on artboard 1 (the default view). -->
+<div class="caption second">D6 · Main Titles · THE TRAILER (naive)</div>
+<div class="board trailer">
+
+  <!-- z_masthead 24,24,1232,80 -->
+  <div class="abs masthead">
+    <div class="disp s10 ink2 mast-kick">A DATA PICTURE</div>
+    <div class="disp s36 ink mast-title">THREE SEDUCTIVE LIES</div>
+    <div class="body s12 coral mast-sub">NOW SHOWING: THE TRAILER — every number treats unknowns as facts</div>
+  </div>
+
+  <!-- hero_takeaway 240,120,800,88 -->
+  <div class="abs hero">
+    <div class="hrule"></div>
+    <div class="serif it s14 ink hero-text">The data is not wrong — the reading is. 87% of 85,394 listings have no credible financials, the median listing has zero votes, and &lsquo;popularity&rsquo; has no published formula. Every honest number here states what it excludes.</div>
+    <div class="hrule"></div>
+  </div>
+
+  <!-- sl_read_toggle 400,224,480,40 — selection flipped -->
+  <div class="abs toggle">
+    <div class="seg on">THE TRAILER (naive)</div>
+    <div class="seg">THE PICTURE (responsible)</div>
+  </div>
+
+  <!-- ============ CAST BAND 1 — y 280 ============ -->
+  <div class="abs credit" style="top:280px;">
+    <div class="disp s14 ink c-role">THE ZERO-FILLED FINANCIALS</div>
+    <div class="disp s14 ink2 c-lead">. . . . . . . .</div>
+    <div class="serif it s14 ink2 c-as"><span class="strike">as &ldquo;The Industry Loses Money&rdquo;</span><span class="mono s10 coral cuttag">✕ CUT</span></div>
+  </div>
+  <div class="abs trap" style="top:320px;">
+    <div class="body s10 ink2 trap-label">Profit, all 85,394 listings (naive)</div>
+    <div class="mono s20 trapval"><span class="strike">$ —,———,———</span><span class="mono s10 naivetag">naive</span></div>
+    <div class="body s10 ink2 trap-caption">79.0% of revenues are zeros counted as money · computed at build</div>
+  </div>
+  <div class="abs honest" style="top:320px;">
+    <div class="bar-labels">
+      <span class="body s10 ink">13.1% credible ✓</span>
+      <span class="body s10 ink2">86.9% unknown</span>
+    </div>
+    <svg width="400" height="20" viewBox="0 0 400 20">
+      <rect class="sv-bar-accent" x="0" y="0" width="52.4" height="20" fill="#7FB4D9"/>
+      <rect class="sv-bar-rest" x="52.4" y="0" width="347.6" height="20" fill="#3A362E"/>
+    </svg>
+    <div class="body s10 ink2">median $ ——,——— · mean dragged by blockbusters · USD as recorded</div>
+  </div>
+
+  <div class="zrule" style="top:400px;"></div>
+
+  <!-- ============ CAST BAND 2 — y 408 ============ -->
+  <div class="abs credit" style="top:408px;">
+    <div class="disp s14 ink c-role">THE TWO-VOTE PERFECT TEN</div>
+    <div class="disp s14 ink2 c-lead">. . . . . . . .</div>
+    <div class="serif it s14 ink2 c-as"><span class="strike">as &ldquo;Better Than The Godfather&rdquo;</span><span class="mono s10 coral cuttag">✕ CUT</span></div>
+  </div>
+  <div class="abs trap" style="top:448px;">
+    <div class="mono s12 trapval">Las mujeres deciden — ★ <span class="strike">10.0</span> · 2 votes<span class="mono s10 naivetag">naive</span></div>
+    <div class="body s10 ink2 trap-caption">Logos 10.0 @ 3 votes · +18 more · Godfather weighted: computed at build</div>
+  </div>
+  <div class="abs honest" style="top:448px;">
+    <svg width="400" height="32" viewBox="0 0 400 32">
+      <text x="274" y="11" text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="13.3" fill="#4ECBA0">7.02 weighted ✓</text>
+      <text x="390" y="11" text-anchor="end" font-family="Segoe UI,sans-serif" font-size="13.3" fill="#E8705F">10.0 raw ✕</text>
+      <line class="sv-hair" x1="16" y1="21" x2="384" y2="21" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="16" y1="21" x2="16" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="89.6" y1="21" x2="89.6" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="163.2" y1="21" x2="163.2" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="236.8" y1="21" x2="236.8" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="310.4" y1="21" x2="310.4" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <line class="sv-hair" x1="384" y1="21" x2="384" y2="24.5" stroke="#3A362E" stroke-width="1"/>
+      <text x="16" y="31.5" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="#B5AFA0">0</text>
+      <text x="200" y="31.5" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="#B5AFA0">5</text>
+      <text x="384" y="31.5" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="#B5AFA0">10</text>
+      <line class="sv-conn" x1="274.3" y1="21" x2="384" y2="21" stroke="#B5AFA0" stroke-width="2"/>
+      <circle class="sv-dot-mint" cx="274.3" cy="21" r="4.5" fill="#4ECBA0"/>
+      <circle class="sv-dot-coral" cx="384" cy="21" r="4.5" fill="#E8705F"/>
+    </svg>
+    <div class="body s10 ink2">median listing: 0 votes · 65.5% have none · m=100, C=6.96</div>
+  </div>
+
+  <div class="zrule" style="top:528px;"></div>
+
+  <!-- ============ CAST BAND 3 — y 536 ============ -->
+  <div class="abs credit" style="top:536px;">
+    <div class="disp s14 ink c-role">THE UNPUBLISHED FORMULA</div>
+    <div class="disp s14 ink2 c-lead">. . . . . . . .</div>
+    <div class="serif it s14 ink2 c-as"><span class="strike">as &ldquo;The People&rsquo;s Favorite&rdquo;</span><span class="mono s10 coral cuttag">✕ CUT</span></div>
+  </div>
+  <div class="abs trap" style="top:576px;">
+    <div class="mono s20 trapval"><span class="strike">———·— †</span><span class="mono s10 naivetag">naive</span></div>
+    <div class="body s10 ink2 trap-caption">† formula not published — TMDB does not define this number</div>
+  </div>
+  <div class="abs honest" style="top:576px;">
+    <div class="mono s10 ink rank-strip">POP #1 — at build — → quality #7 ✕<br>POP #2 → #2 ✓<br>POP #3 → #11 ✕</div>
+    <div class="body s10 ink2">ranked only — never colored good or bad</div>
+  </div>
+
+  <div class="zrule" style="top:656px;"></div>
+
+  <!-- z_footer 24,664,1232,32 -->
+  <div class="abs footer">
+    <div class="mono s10 ink2 ftext">TMDB SNAPSHOT 2026·07·24 · BASIS 84,036 (ADULT 1,358 EXCLUDED) · LISTINGS≠FILMS: 1,697 DUP PAIRS · END CREDITS: PAGE 3 · EVIDENCE: PAGE 2</div>
+    <div class="mono s10 fbtn">EVIDENCE →</div>
+    <div class="mono s10 fbtn">END CREDITS ⓘ</div>
+  </div>
+
+</div>
+
+</body>
+</html>

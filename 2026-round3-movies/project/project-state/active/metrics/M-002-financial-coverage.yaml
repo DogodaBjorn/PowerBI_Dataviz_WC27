@@ -1,0 +1,25 @@
+contract: metric
+metric_id: "M-002"
+name: "Financial coverage"
+date: "2026-08-04"
+
+definition:
+  plain_language: "The share of movies for which the dataset actually knows both a budget and a revenue."
+  formula_in_words: "Movies with Budget > 0 AND Revenue > 0, divided by all movies in context."
+  grain: "any"
+  filters: "inherits the report-wide Adult exclusion"
+  unit: "percentage"
+  direction_is_good: "context-dependent — it is the honesty denominator; the report SHOWS it rather than optimizes it"
+
+edge_cases:
+  - "Zero-as-'unknown' holds for REVENUE only (79.0% zeros). VERIFIED (Q2, 2026-08-04): Budget is NEVER 0 or blank — unknowns arrive as junk small values (min 1, median $2,800, 60.5% under $10k), so 'Budget > 0' alone is vacuously true. State the Revenue conflation on-canvas as Lie #1's mechanism."
+  - "Junk floor IS material — coverage uses a minimum-plausible floor: Budget >= $10,000 (proposed; robust: 13.1% at $10k vs 11.9% at $100k). Pending entrant confirmation at signature."
+  - "VERIFIED (Q2): coverage = 11,203 of 85,394 = 13.1% floored ($10k), 21.0% naive (B>0 AND R>0); table is 85k rows, not ~1M as the draft expected. 87% of listings lack credible financials — that is the shock number."
+  - "One row has negative Revenue (−12) — excluded by 'Revenue > 0'."
+
+targets: { exists: false, source: "n/a" }
+owner: "entrant (definition steward)"
+synonyms: "credible rows, known-financials share"
+conflicts_checked: true
+
+implementation: { measure_name: 'Financial coverage %', display_folder: '02 Lie 1 · Financials', format_string: '0.0%' }

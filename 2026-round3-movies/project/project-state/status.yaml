@@ -1,0 +1,38 @@
+# pbi-atelier project state — schema: lifecycle/status.schema.yaml
+project: wc-round-3
+template_version: 0.3.1
+current_stage: 6
+updated: 2026-08-05
+stages:
+  s0_intake:
+    status: passed
+    evidence: "project-state/active/00-intake.md"
+    gate_note: "G0 confirmed by entrant 2026-08-04 in-session (contract: active/intake.contract.yaml, commit 4f147b2); story spine left to s1."
+  s1_requirements:
+    status: passed
+    evidence: "project-state/active/01-requirements.md"
+    gate_note: "G1 closed 2026-08-04: entrant picked Angle 3 'Three seductive lies' in-session (contract: active/requirements.contract.yaml, commit 5032c37); Q2 profiling assigned to G2."
+  s2_metrics:
+    status: passed
+    evidence: "project-state/active/02-metrics.md"
+    gate_note: "G2 closed 2026-08-04: Q2 profiling via Modeling MCP (findings F1-F5); entrant signed the glossary in-session incl. $10k budget floor and m=100/C=6.96. Entrant's 'over time' seed carried to s3 (Date dim) and s5 (design candidate)."
+  s3_model_design:
+    status: passed
+    evidence: "project-state/active/03-model-blueprint.md"
+    gate_note: "G3 closed 2026-08-04: entrant accepted blueprint in-session incl. not-available list, snapshot anchor 2026-07-24, report-level Adult filter (contract: active/model-blueprint.contract.yaml, user_accepted: true)."
+  s4_model_build:
+    status: passed
+    evidence: "project-state/active/04-model-build.md"
+    gate_note: "G4 closed 2026-08-04: built per blueprint (33 measures, Release Year dim, SourceRoot, Date 1800-2099 marked, Profit (naive) + rebind); strict 0/0 at close. User set SourceRoot + refreshed same day. ENTRANT WAIVER (standing): committed SourceRoot drive-letter value = the expected 1 strict error at G6/G7 sweeps (see 04-model-build.md close-out). Verify Genres/Production Company loads at s6 entry."
+  s5_design:
+    status: passed
+    evidence: "project-state/active/05-design.md"
+    gate_note: "G5 closed 2026-08-05: D7 'The Seductive Lies: A Trilogy' (entrant-authored) approved with per-act film-stock tints (chrome-only lock-7 exception, WCAG-verified). Quartet complete in deliverables/ (handoff 149 ids, 56-row asset inventory nothing unmapped, theme validates 0 errors); layout.json 8 screens + @2x references captured. Rendered review added the reserved-red rule. Rounds 1+2 (D1-D6) rejected, retained as history."
+  s6_report_build:
+    status: in_progress
+    evidence: ""
+    gate_note: "G6 HELD 2026-08-05 (re-score 29/40, was 24/40). BUILT: 5 visible pages + tooltip, 222 visuals, 9 bookmarks, 90 measures. Two audits ran; two fix passes closed 3 fidelity blockers + 12 majors and all 10 a11y findings (template pages deleted — entry was shipping 7 vs a 5-page cap; Adult filter proved writable in PBIR; 29 deferring alt strings rewritten; scrim AA fixed; beat state now announced). CORRECTION TO AN EARLIER NOTE: 'all validators clean' was WRONG — pbir_detect (gate-blocking at G6) had never been run and FAILS with 63 unwaived findings (46 ai-dash-emoji, 6 grid-8px, 11 theme-color-drift). Validator truth: validate_json 260/0, validate_tmdl --strict 1 error (SourceRoot waiver), check_contrast 6/0, check_state OK, pbir_detect FAIL. G6 closes when the entrant signs the pbir_detect waivers (waivers are the user's) and the handoff records the scrim/reference-line amendments."
+  s7_delivery:
+    status: pending
+    evidence: ""
+    gate_note: ""

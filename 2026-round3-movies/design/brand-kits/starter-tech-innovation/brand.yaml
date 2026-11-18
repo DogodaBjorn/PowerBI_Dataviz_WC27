@@ -1,0 +1,70 @@
+# Starter kit "Tech Innovation" — no-brand candidate for bk-brand-kit's no-brand path.
+# Adapted from the theme-factory skill, theme "Tech Innovation" (Anthropic
+# skills repo, Apache-2.0); the theme's 4 colors expanded to full role tokens.
+# Dark kit: confirm the client wants a dark report before adopting.
+# Fonts: theme's DejaVu Sans mapped to Segoe UI; Consolas for figures.
+# WCAG adjustments: theme electric blue #0066FF is 2.97:1 on the surface —
+# brightened to #3D8BFF (4.3:1) as accent. Neon cyan #00FFFF passes but
+# glares; dimmed to #00C8C8 in the ramp. Ink softened off pure white.
+# Verified via
+# python scripts/check_contrast.py --kit design/brand-kits/starter-tech-innovation/brand.yaml
+# Best for: startups, software, AI/ML, digital transformation dashboards.
+
+kit: "starter-tech-innovation"
+version: 1
+date: "2026-08-04"
+
+identity:
+  organization_alias: "starter kit — no client"
+  personality: "bold, modern, high-contrast"
+
+color:
+  canvas: "#1E1E1E"
+  surface: "#2A2A2A"
+  ink: "#F2F5F7"
+  ink_secondary: "#AFBDC7"
+  hairline: "#3C3C3C"
+
+  accent: "#3D8BFF"
+  good: "#3DD68C"
+  bad: "#FF6B5E"
+  neutral_data: "#7E8A94"
+
+  categorical:
+    - "#3D8BFF"
+    - "#00C8C8"
+    - "#B78CFF"
+    - "#FFB84D"
+    - "#FF7AA8"
+    - "#7E8A94"
+
+  sequential: ["#BBDDFF", "#1F4E8C"]
+  diverging: ["#FF6B5E", "#7E8A94", "#3DD68C"]
+
+typography:
+  display: "Segoe UI Semibold, Segoe UI"
+  body: "Segoe UI, Arial"
+  numeric: "Consolas, Courier New"
+  scale_pt: [28, 20, 14, 12, 10]
+
+shape:
+  radius_px: 8
+  shadow: "none"
+  hairline_px: 1
+
+grid:
+  base_px: 8
+  page_margin_px: 24
+  gutter_px: 16
+
+assets:
+  logo: ""   # no logo bundled — add the client's when adopting this kit
+  usage: "chrome only, never on charts"
+
+voice:
+  title_style: "insight sentences"
+  number_format_notes: "locale-driven; nl-NL default (1.234,56) — confirm per client"
+
+forbidden:
+  - "no pure #FFFFFF text and no raw #00FFFF — both glare on dark surfaces"
+  - "one neon per page: accent leads, ramp colors support"

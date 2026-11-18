@@ -1,0 +1,83 @@
+# Requirements contract — filled at stage 1.
+
+contract: requirements
+project: "wc-round-3"
+date: "2026-08-04"
+
+audiences:
+  - id: A1
+    who: "Contest judging panel"
+    decisions: "Score the entry 0-10 on Insightfulness, Visual Effectiveness, Creativity & Innovation, Accessibility; decide the round winner"
+    cadence: "ad hoc (one read, minutes at most)"
+  - id: A2
+    who: "Fabric community readers (peers, recruiters, future clients)"
+    decisions: "Decide whether the entrant's craft is worth following/hiring"
+    cadence: "ad hoc"
+
+requirements:
+  - id: R1
+    audience: A1
+    question: "What is the report's one headline claim (Key Takeaway), and is it stated with honest scope and uncertainty?"
+    needs_history: "full dataset span"
+    latency: "static snapshot (contest data)"
+    priority: "must"
+  - id: R2
+    audience: A1
+    question: "Where does this dataset mislead the naive reader, and how does the responsible read differ?"
+    needs_history: "full span"
+    latency: "static"
+    priority: "must"
+  - id: R3
+    audience: A1
+    question: "How much of the data actually supports each claim (coverage), and which rows are excluded and why?"
+    needs_history: "full span"
+    latency: "static"
+    priority: "must"
+  - id: R4
+    audience: A1
+    question: "Which findings are uncertain, and how is that uncertainty shown (not just footnoted)?"
+    needs_history: "full span"
+    latency: "static"
+    priority: "must"
+  - id: R5
+    audience: A1
+    question: "Where are outliers, and are they labeled as such rather than silently driving the aggregates?"
+    needs_history: "full span"
+    latency: "static"
+    priority: "must"
+  - id: R6
+    audience: A1
+    question: "Where does the report show a correlation, and does it explicitly refuse the causal reading?"
+    needs_history: "full span"
+    latency: "static"
+    priority: "must"
+  - id: R7
+    audience: A2
+    question: "Does the report demonstrate craft (theme, layout, a11y) that transfers to client work?"
+    needs_history: "n/a"
+    latency: "static"
+    priority: "should"
+
+data_landscape:
+  - system: "Starter PBIP model (TMDB snapshot), project/pbip/"
+    owner: "contest organizers / TMDB community"
+    grain_available: "one row per movie (Movies); bridges to genre, keyword, production company; Date at day grain"
+    quality_notes: >
+      TO VERIFY by profiling (Modeling MCP next session, or Desktop):
+      share of rows with Budget=0 / Revenue=0 / both; Vote Count distribution
+      (median likely very low); Popularity definition (opaque by design);
+      duplicate Title+year pairs; Adult share; Original Language skew;
+      Release Date span and future-dated rows; Status values. Until verified,
+      every claim in the report stays hedged — which is the round's theme.
+
+open_questions:
+  - id: Q1
+    question: "Which story angle carries the entry (three candidates in 01-requirements.md)?"
+    blocking: false  # RESOLVED 2026-08-04: entrant picked Angle 3, 'Three seductive lies about the movies'
+  - id: Q2
+    question: "Profiling numbers for the quality_notes above (needed before s2 contracts lock)."
+    blocking: false   # blocks G2, not G1 — s2 writes contracts against verified numbers
+
+gate_g1:
+  all_requirements_traced: true
+  no_blocking_questions: true    # Q1 resolved in-session; Q2 assigned to G2

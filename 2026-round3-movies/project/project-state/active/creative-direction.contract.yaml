@@ -1,0 +1,136 @@
+# Creative-direction contract — filled at stage 5, one per project.
+contract: creative-direction
+project: "wc-round-3"
+date: "2026-08-04"
+
+directions:
+  # ══ ROUND 3 — CONVERGED (entrant-authored concept; CHOSEN) ══
+  - id: D7
+    name: "The Seductive Lies: A Trilogy"
+    concept: "The entrant's own frame: the report is a film trilogy. Buy a ticket at the box office (cover carries the Key Takeaway on the marquee), read each act as a screenplay page where the naive conclusion is drafted, noted by the script doctor, and corrected (three bookmark beats per act), attend the premiere where the corrected cut plays on a native play-axis scatter (best-selling AND best-rated by release year, with one adjustment refused: popularity), stay for the end credits where the whole method rolls."
+    visual_language: "Theatrical arc: night box office (#171418) → script paper (#F5F2E9) → night premiere and credits; Bahnschrift SemiCondensed marquee/tickets + Consolas screenplay + Georgia Italic verdicts; tickets, slugs, dot leaders and perforations carry the cinema in pure form — grayscale-proof. Per-act FILM-STOCK TINTS (entrant-approved 2026-08-05, documented exception to consistency lock 7 — see act_tints block). Two Deneb visuals (ticket-waffle, rating-fall dumbbell), one certified HTML Content tear (verify; pre-torn fallback), real TMDB posters via Poster Path where they carry data."
+    signature_moment: "Tearing your ticket, watching each lie get corrected scene by scene, and arriving at a premiere where the honest winners animate in by release year — then the credits roll the method."
+    risk: "Scope vs the deadline (9 bookmarks, 2 Deneb, HTML Content, play axis — ordered cut list contracted); trap-first act openings demand the M-003 equivalent marking on every SC.1; the interactivity surface is exactly where the 50% accessibility eligibility gate is lost if rushed."
+    design_read: "A marquee stating the takeaway over three tickets — you already know the thesis before you choose which lie to watch fall."
+    dials:
+      density: "balanced"
+      variance: "expressive"
+    comp: "project/design-prototypes/d7-trilogy.html"   # dynamic prototype, JS for flow simulation only, mechanism legend on every effect
+  # ══ ROUND 2 (cinema-as-artifact; ALL REJECTED — "Still not sold on any") ══
+  - id: D4
+    name: "The One-Sheet"
+    concept: "A landscape quad poster for a picture called 'Three Seductive Lies'. The lies are critics' pull-quotes with star ratings and naive attributions; the Key Takeaway is the tagline; the method and scope live where posters always put the truth — the billing block. The MPAA-style rating plate is the read-toggle: R (Read Responsibly, default) / N (Naive read)."
+    visual_language: "Aged poster paper (#F3EFE4), ink (#201D1A), one box-office red (#B3402E); flat single-sheet layout, no cards; Bahnschrift SemiCondensed billing caps + Georgia Italic quotes/tagline + Segoe UI; balanced density with expressive poster typography; billing block repeated as every page's footer chrome. Cinema carried by form: billing block, rating plate, star-quote grammar — survives grayscale."
+    signature_moment: "The rating plate that switches the cut, atop a billing block that is literally the method stamp."
+    risk: "The AI key-art slot is the one ingredient that can cheapen the sheet (duotone/no-text/entrant-picks constraints + typographic fallback contracted), and 320px of poster chrome raises the insight burden on the three honest visuals."
+    design_read: "A movie poster whose rave quotes have been stamped MISREAD — tagline first, quotes second, corrections third."
+    dials:
+      density: "balanced"
+      variance: "expressive"
+    comp: "project/design-prototypes/d4-one-sheet.html"
+  - id: D5
+    name: "The Contact Sheet"
+    concept: "An editor's light table: the three lies are frames 'as shot' on a sprocketed film strip; the honest reads are corrected prints beneath; a red china-marker pass X-es the rejects and circles what is true. The toggle is the pass itself: AS SHOT (naive) / EDITOR'S PASS (responsible, default). Edge-print codes carry the disclosure metadata."
+    visual_language: "Light-table canvas (#EDEBE6), film charcoal strip (#26231F) with reversed type, white prints, one grease-pencil red (#A63A28); Bahnschrift display + Consolas edge codes + Georgia Italic editor's notes; grease marks are native shapes (X + REJECT, circle + PRINT — shape and word carry meaning, never color). Sprockets and frames read as film in pure B/W."
+    signature_moment: "The grease-pencil editor's pass — toggling it X-es the three lies and circles the three truths; the default state already wears the markup, so the signature survives static export."
+    risk: "Two compression points (traps inside dark 376x216 frames, prints at 152px) press against the 10pt floor under a manual accessibility judge; strip chrome depends on one ca-canvas SVG asset (shape-built fallback contracted)."
+    design_read: "A marked-up contact sheet — you see instantly which frames the editor rejected and which prints made the cut."
+    dials:
+      density: "balanced"
+      variance: "expressive"
+    comp: "project/design-prototypes/d5-contact-sheet.html"
+  - id: D6
+    name: "Main Titles / End Credits"
+    concept: "The report as a picture's title sequence. The three lies are the cast — 'THE UNPUBLISHED FORMULA . . . as The People's Favorite' — in dot-leader credit grammar; the Key Takeaway is the epigraph card; the method page is a true end-credits roll (parameters, deleted scenes, source-data credit). Toggle: THE TRAILER (naive) / THE PICTURE (responsible, default)."
+    visual_language: "Warm-black screen (#171512), warm-white type (#F4F1E8), one nitrate-cyan accent (#7FB4D9); centered symmetric stacks, tracked Bahnschrift Light caps + Georgia epigraph + Consolas parameter credits; airy, strict, flat. Movie-ness lives in the credit form (dot leaders, centered stacks) and survives grayscale — the dark screen is earned by form, not carrying the theme alone (prior learning applied)."
+    signature_moment: "Cast credits that name each lie, resolved by an end-credits method roll — 'FINANCIAL FLOOR . . . $10,000 · m . . . 100 · C . . . 6.96 · SCENES DELETED: claims we refuse'."
+    risk: "Landing insight density: 72px evidence zones make p1 the most typographic page of the round; the analytical weight shifts to p2/p3, one click beyond a minutes-long judge; Lie 2's scatter is cut to a dumbbell (acknowledged deviation)."
+    design_read: "A title sequence where the cast list is the indictment — each lie credited by its real name, then cut from the picture."
+    dials:
+      density: "airy"
+      variance: "strict"
+    comp: "project/design-prototypes/d6-main-titles.html"
+  # ══ ROUND 1 — ALL REJECTED by entrant 2026-08-04: "don't look and feel movie related" (kept as history) ══
+  - id: D1
+    name: "The Projection Room"
+    concept: "A dark screening room. Each lie plays as a dimmed trailer — struck through, TRAP-tagged — and the house lights come up on the honest read beside it. Coverage becomes a 100-seat cinema with 13 seats lit; the report ends where the method panel turns the lights fully on."
+    visual_language: "Dark indigo canvas (#0F0F23) with spotlight gold accent (#CA8A04); Bahnschrift Light display + Georgia Italic takeaway + Segoe UI body + Consolas meta; balanced triptych of three 400px 'screens'; dim-trap vs gold-ruled lit-truth card states."
+    signature_moment: "The 100-seat house with 13 seats lit — 13.1% financial coverage you can feel — inside the dim/lit house-lights grammar."
+    risk: "Deneb dependency (seat map + rank slope) under a 3-day deadline, inside the contest's most crowded dark-cinema lane; fallback demotes the signature to a native stacked bar."
+    design_read: "A gold-lit takeaway over three dimmed, struck-through lies — the eye lands on the truth because it is literally the brightest thing in the room."
+    dials:
+      density: "balanced"
+      variance: "strict"
+    comp: "project/design-prototypes/d1-projection-room.html"
+  - id: D2
+    name: "The Working Papers"
+    concept: "An auditor's file on paper. Each lie is a schedule row — the claim, the figure struck in red pencil as UNVERIFIED, the figure agreed to source with a green tick — and the Key Takeaway is the signed opinion. Every page cross-foots its basis: 85,394 − 1,358 = 84,036 ✓."
+    visual_language: "Warm paper (#F7F5F0), archival blue accent (#1D4ED8), red-pencil/green tick semantics; Georgia display + Segoe UI body + Consolas mono numerals; airy horizontal schedule rows, 0px radius, 1px rules; audit tick-mark notation declared once, used everywhere."
+    signature_moment: "The cross-foot reconciliation strip on every page and the Key Takeaway framed as the auditor's signed opinion — responsibility as chrome, not caption."
+    risk: "Quietness: the most on-theme frame with the lowest Creativity ceiling — a minutes-long judge pass may file it as 'just a clean report'; text-heavy rows need ruthless copy discipline."
+    design_read: "A signed opinion and three ledger rows that each read claim → misstated → agreed-to-source, left to right, three times."
+    dials:
+      density: "airy"
+      variance: "strict"
+    comp: "project/design-prototypes/d2-working-papers.html"
+  - id: D3
+    name: "Front Page / Corrections Edition"
+    concept: "A tabloid front page that shouts each lie in headline type — 'MOVIES LOSE MONEY', 'OBSCURE FILM BEATS THE GODFATHER', 'MOST POPULAR = BEST' — each struck with a heavy rule, each retracted in a full-width CORRECTIONS band that carries the Key Takeaway. The reader watches the retraction happen."
+    visual_language: "Newsprint canvas (#EFEDE6), ink blocks (#1A1A1A) with reversed type, marker-yellow highlight (#F2C230, never text); Bahnschrift SemiCondensed Bold headlines + Segoe UI body; compact front-page hierarchy — one lead, two below the fold, corrections band; 4px strike rules."
+    signature_moment: "The struck 44pt lead headline with its yellow-barred correction — the retraction as the hero image of the report."
+    risk: "The trap is typeset larger than the truth: if the corrections band under-delivers, judges remember the lie; two compact 480×180 blocks flirt with the 10pt text floor (Accessibility is 25% of the score); Lie 2 trades the scatter for a two-point fall."
+    design_read: "A headline you instantly disbelieve because a red rule has already struck it — then the corrections column tells you what to believe instead."
+    dials:
+      density: "compact"
+      variance: "expressive"
+    comp: "project/design-prototypes/d3-front-page-corrections.html"
+
+design_intelligence:               # queried BEFORE any direction was drafted (s5 step 2)
+  queries: "search.py style domain: 'entertainment media dashboard' -> 'Vibrant & Block-based', 'Gen Z Chaos / Maximalism'; color domain: 'entertainment cinema' -> dark #0F0F23/#1E1B4B + spotlight gold #CA8A04 set; 'video streaming OTT' -> near-duplicate dark set; scripts/learnings.py search --type taste -> empty (first project, no prior learnings to apply)"
+  cited: "Theater/Cinema color hit USED in D1 with AA corrections (border #4338CA muted to #34305A; gold verified 6.4:1 canvas / 5.7:1 card). 'Vibrant & Block-based' TRANSLATED SELECTIVELY into D3 (blocks, duotone contrast; 48px gaps compressed to 16/24 for 1280 canvas; WCAG caution enforced — yellow demoted to non-text). 'Gen Z Chaos / Maximalism' OVERRULED — accessibility-hostile, anti-doctrine (hard rule 6). 'Video Streaming/OTT' OVERRULED as a near-duplicate of Theater/Cinema — a second dark direction would fail the divergence test. ADDENDUM (entrant-supplied, same day): contest judge intelligence from prior rounds — see 05-design.md 'Judge intelligence' — applied as critique input across all three directions. ROUND 2: Theater/Cinema color hit RE-SCOPED — palette alone rejected by the entrant (taste memory d1-projection-room); cinema now carried by artifact form (billing block, sprockets, credit grammar), each direction grayscale-tested. 'Vibrant & Block-based' no longer cited (its D3 translation rejected via the newspaper metaphor). Taste memory now non-empty: three rejection entries + toggle preference applied as 'Prior learning applied'."
+
+critique:
+  method: "each direction argued against design/design-doctrine.md, per audience; seven scored passes in 05-design.md"
+  notes: "D1 (52/70): strongest theme-fit and a genuinely felt signature (13 lit seats), disciplined triptych; fails if the two Deneb specs slip (signature demotes to a stacked bar) or if dark-genre familiarity dulls the Creativity read; dark theme demands the strictest small-text discipline of the three. D2 (54/70): the most honest embodiment of 'using data responsibly' — the audit frame makes disclosure the aesthetic; best reading path (row grammar) and best accessibility (all pairs >=4.6:1, all native, zero deadline risk); its failure mode is the Creativity ceiling — the signature is retold as an idea, not an image, and rows can drift toward wall-of-text. D3 (49/70): the most retellable single image (a front page correcting itself) at the lightest build cost, fully native; its failure modes are structural — the lie outweighs the truth typographically, Lie 2 loses the correlation view, and compact blocks put real film titles against the 10pt floor where 25% of the score lives."
+
+chosen: "D7"
+chosen_because: "Entrant-authored concept (verbatim in taste memory: trilogy-concept-entrant) — 'make the concept all around it being a movie on itself… remarkable, usable, accessible and most of all fun to engage with'; pending final ack of the 10-row decision table in 05-design.md."
+user_decided: true   # direction authored and chosen by the entrant; ack table outstanding before G5 closes
+# History: ROUND 1 (D1-D3) ALL REJECTED — "don't look and feel movie related".
+# ROUND 2 (D4-D6) ALL REJECTED — "Still not sold on any" (taste key round2-d4-d5-d6).
+# The round-2 toggle decision evolved into D7's three-beat bookmark structure
+# (SC.1 naive / SC.2 notes / SC.3 corrected) — native tween only, M-003 equivalent
+# marking on every naive beat.
+
+act_tints:                       # ENTRANT-APPROVED 2026-08-05 ("Give each act its own tint")
+  rationale: "Each act is 'shot on a different film stock'. The tint is IDENTITY/wayfinding chrome, never meaning — it tells you which act you are in, reinforcing the printed act number and title (never the sole carrier)."
+  lock_7_exception: "Consistency lock 7 (one accent per report) is EXCEEDED by entrant decision. The exception is bounded by the scope rule below; s6/G6 checks the scope rule, not lock 7, for these three hues. Contrast verified 2026-08-05 with the WCAG formula — all six variants pass AA for text (>=4.5:1) and non-text (>=3:1)."
+  scope_rule: "TINT TOUCHES CHROME ONLY — act numeral, ticket rule + serial, beat-rail current-state fill, page header rule, verdict rule. DATA NEVER WEARS THE TINT: traps stay trap-red + strike + word and honest stays good-green + check + word, identically on every page (hard rule 3 intact). Any tinted data mark is a G6 defect."
+  hue_budget: "Any single page carries at most: 1 act tint + trap red + good green + warm neutrals = 4 hue families (<= 6). p0 carries the three ticket tints and no data (4 families). p9 credits carry NO tint."
+  tokens:
+    act_i_ledger_indigo:   { paper: "#2E4A7D", night: "#7FA8DD", ratios: "7.84:1 on paper / 7.43:1 on night", meaning: "the money act, shot cold" }
+    act_ii_awards_brass:   { paper: "#8A6516", night: "#D9A441", ratios: "4.74:1 on paper / 8.12:1 on night", meaning: "the applause act, shot warm" }
+    act_iii_velvet_plum:   { paper: "#5B3E8E", night: "#B79BE8", ratios: "7.43:1 on paper / 7.71:1 on night", meaning: "the corrected cut, house curtain" }
+  unchanged_semantics:
+    trap:  { paper: "#B3402E", night: "#E8705F", ratios: "5.08:1 / 6.01:1" }
+    good:  { paper: "#2F6B4F", night: "#4ECBA0", ratios: "5.62:1 / 9.02:1" }
+  reserved_red_rule:             # ADDED 2026-08-05 after the rendered review caught three inversions
+    statement: "Trap-red is RESERVED. It may appear ONLY on trap exhibits and their strikes, the MISREAD / [naive cut] tags, the script-doctor NOTE marks, and the popularity refusal card. It must never carry chrome, navigation, or anything the report asserts is TRUE."
+    why: "If red means both 'this is a lie' and 'this is the answer', it encodes nothing — and consistency of direction encoding is precisely what the manual accessibility judge tests (hard rule 3)."
+    corrections_applied: "Rendered review 2026-08-05 caught three inversions in the approved prototype: (1) the Act I waffle's 13 VALID tickets were trap-red though they are the credible/honest subset -> good-green + '✓' in the legend; (2) the Act III winner ring — the trilogy's honest payoff — was coral -> good-green + a ✓ before the annotation; (3) navigation chrome (PRESS PLAY, ROLL CREDITS, END CREDITS, NEXT SCENE/ACT) used red -> act tint on act pages, neutral cream on p0/p9. G6 re-checks this rule."
+    legitimate_red_retained: "The Act II dumbbell's raw-10.0 dot (raw rating IS the trap); the weighted dot stays good-green with its ✓."
+  note: "Paper variants are required even for Act III because the p0 tickets have cream (#F5F2E9) bodies on the night cover."
+  build_rulings:                 # settled while applying tints to the prototype 2026-08-05
+    - "Header rule + verdict rule did not previously exist — created as 2px full-width tint rules (chrome ink only, no layout shift)."
+    - "Beat-rail underline detached from the chip (3px ::after, 5px below) so the marker still reads when fill and underline share one token; ● prefix and 'Scene N of 3' text still carry state without color."
+    - "--tint-on (text on a tint fill) is derived, not a token: cream #F5F2E9 on the dark paper variants (7.84:1 indigo, 4.74:1 brass); ink #211E1A on light plum-night (~7.4:1). No new hue."
+    - "Night variants for Acts I/II (#7FA8DD, #D9A441) are UNUSED in this build (both acts live on paper pages and their tickets use paper variants) — retained in the CSS header for any future night-mode act."
+    - "RULING: the torn-stub SVG in act headers takes the act tint, NOT trap-red — it is the torn ticket (scope item b), and leaving semantic red as pure chrome would weaken 'red means trap' everywhere else."
+
+fidelity_checklist:              # D7 — stage 6 is judged against these
+  - "Key Takeaway verbatim on the p0 marquee; three tickets are the only nav and each names its act + teaser stat"
+  - "Every SC.1 naive beat carries the M-003 equivalent marking (slug + 'naive cut' tag + beat rail 1/3); strikes and corrections land at SC.3"
+  - "Act III hero is the NATIVE play-axis scatter (population and parameters printed on-canvas; refusal card for popularity present; no-date chip visible)"
+  - "End-credits method page: cross-foot 85,394 − 1,358 = 84,036, glossary with TRAP/HONEST/OPAQUE tags, SCENES DELETED refusals, TMDB credit"
+  - "Per-act film-stock tints applied to CHROME ONLY per act_tints.scope_rule (no tinted data marks); ≤6 hues per page, 0px surfaces / 8px tickets-chips, and the full a11y package (tab orders, state alt text, focus outlines) as contracted"
+  - "Reserved-red rule holds report-wide (act_tints.reserved_red_rule): no red on chrome, navigation, or any mark the report asserts is true — the waffle's VALID tickets and the Act III winner ring read good-green with ✓"

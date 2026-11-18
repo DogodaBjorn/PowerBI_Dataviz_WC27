@@ -1,0 +1,23 @@
+contract: metric
+metric_id: "M-003"
+name: "Profit (naive)"
+date: "2026-08-04"
+
+definition:
+  plain_language: "THE TRAP, kept deliberately: total revenue minus total budget over ALL rows, treating unknown (0) as real money. Displayed only struck-through/annotated as Lie #1 — never as a finding."
+  formula_in_words: "Sum of Revenue minus sum of Budget, no filters (the starter's own Profit measure)."
+  grain: "any (but meaningless below coverage)"
+  filters: "NONE on purpose — the absence of filters is the lie"
+  unit: "currency (USD as-is; TMDB currency normalization is unverifiable — say so)"
+  direction_is_good: "n/a — this metric exists to be debunked"
+
+edge_cases:
+  - "Must NEVER appear without its trap marking (strike-through, 'naive' label, or equivalent contracted at s5)."
+  - "Zero-filled rows pull profit toward revenue-only for known-revenue films and toward 0 for unknown ones — direction of distortion stated on-canvas."
+
+targets: { exists: false, source: "n/a" }
+owner: "entrant (definition steward)"
+synonyms: "starter 'Profit' measure (same formula — rename in s4 to keep the trap explicit)"
+conflicts_checked: true
+
+implementation: { measure_name: 'Profit (naive)', display_folder: '02 Lie 1 · Financials\Trap — kept as exhibit', format_string: '\$#,0;(\$#,0)' }

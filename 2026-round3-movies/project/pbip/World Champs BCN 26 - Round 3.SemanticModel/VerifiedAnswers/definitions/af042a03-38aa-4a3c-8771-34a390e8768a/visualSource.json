@@ -1,0 +1,169 @@
+{
+  "visualType": "lineClusteredColumnComboChart",
+  "query": {
+    "queryState": {
+      "Category": {
+        "projections": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "sets"
+                  }
+                },
+                "Property": "Decade"
+              }
+            },
+            "queryRef": "sets.Decade",
+            "nativeQueryRef": "Decade",
+            "active": false
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "sets"
+                  }
+                },
+                "Property": "year"
+              }
+            },
+            "queryRef": "sets.year",
+            "nativeQueryRef": "year",
+            "active": true
+          }
+        ]
+      },
+      "Tooltips": {
+        "projections": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Average Parts per Set"
+              }
+            },
+            "queryRef": "_Measures.Parts per Set",
+            "nativeQueryRef": "Average Parts per Set"
+          }
+        ]
+      },
+      "Y": {
+        "projections": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Sets"
+              }
+            },
+            "queryRef": "_Measures.Sets",
+            "nativeQueryRef": "Sets"
+          }
+        ]
+      },
+      "Y2": {
+        "projections": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Average Parts per Set"
+              }
+            },
+            "queryRef": "_Measures.Parts per Set",
+            "nativeQueryRef": "Average Parts per Set"
+          }
+        ]
+      }
+    },
+    "sortDefinition": {
+      "sort": [
+        {
+          "field": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "sets"
+                }
+              },
+              "Property": "year"
+            }
+          },
+          "direction": "Ascending"
+        }
+      ]
+    }
+  },
+  "objects": {
+    "categoryAxis": [
+      {
+        "properties": {
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "14D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "valueAxis": [
+      {
+        "properties": {
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "14D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "16D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "subTitle": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualConfiguration/2.5.0/schema.json"
+}
