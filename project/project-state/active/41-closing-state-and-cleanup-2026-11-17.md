@@ -3,7 +3,7 @@
 **For:** Bjorn, and the agent that opens this project next.
 **Asked by Bjorn on 17 Nov:** "can you do a full on cleanup after all the work now that we have published the final
 version?"
-**State:** the entry is published and posted. Branch `rebuild-finalv3`, tag `round1-entry-2026-11-16`. `main` untouched.
+**State:** the entry is published and posted. Since 18 Nov the entry is `main` (one branch); the entered state is tag `round1-entry-2026-11-16`. Section 6 is the second cleanup, of 18 Nov; where it differs from sections 2 and 3, section 6 holds.
 
 ---
 
@@ -15,7 +15,7 @@ version?"
 | The model | `project/pbip/PillowKey.SemanticModel`, 341 measures, equal to the final copy's measure for measure |
 | The gallery post | title "The goodnight inn: Room to invest"; texts in `project/deliverables/final-room-to-invest/gallery/DESCRIPTION.md`; cover `gallery/cover-tile.png` |
 | The LinkedIn post | `project/deliverables/final-room-to-invest/linkedin/` (film, still, `POST.md`) |
-| The account of 16 Nov | docs 31 to 40 in this folder, one per round; evidence per round under `project/deliverables/final-room-to-invest/` |
+| The account of 16 Nov | docs 31 to 40, one per round, with the evidence per round: in `project/archive/round1/` since 18 Nov |
 
 The report is hand-finished. It is never regenerated; an edit goes through a script in `project/tools/final_edit/`
 (f4 to f10), after `save_diff.py` has read Bjorn's last save.
@@ -75,7 +75,44 @@ The report is hand-finished. It is never regenerated; an edit goes through a scr
   the theme needs a waiver he confirms.
 - When he asks for suggestions before building: a sketch, then wait.
 
+## 6 · The second cleanup (18 Nov 2026)
+
+**Asked by Bjorn on 18 Nov:** "I still need someone to fully clean up all the separate folders and work for the
+Dataviz WorldCup entry.. there's a whole lot of previous work that needs to be dropped". On the three choices put to
+him: drop all the git leftovers; merge into `main` and keep one branch; and for the old work inside the repository:
+"put everything together and archive old parts old steps".
+
+| What | Done |
+|---|---|
+| `E:\_throwaway_f5`, `E:\GoodnightInn-publish`, `-publish4`, `-publish6`, `E:\Goodnight Inn - The Wake-up Call` | to the Recycle Bin of E: (not open in Desktop, no `.pbix` in them; they can be put back from there) |
+| Scratch folders of 23 finished sessions of this project (7 to 15 Nov) | removed, 1.3 GB: throwaway copies, captures, gate runs. Folders of other projects and of running sessions were left |
+| Seven stashes | dropped (Desktop saves of 7 to 13 Nov, all of states before the rebuild) |
+| 21 branches on GitHub that were merged into `rebuild-finalv3` | deleted; their commits are in `main` |
+| The branch `ccr-f6fb2153-52yiq7` (6 Nov, the D4 "what-if" pitch and a page-count ruling, never merged) | deleted, locally and on GitHub; that one commit is gone |
+| `rebuild-finalv3` into `main` | merged; `main` kept the five documents Bjorn's own agent had put there. `rebuild-finalv3` deleted afterwards. The repository has one branch and one tag |
+| Old parts and old steps inside the repository | moved, not deleted, to `project/archive/round1/` under their old relative paths (about 940 files, 205 MB): round documents 00 to 40, the 40 render sets, the evidence per round of 16 Nov, the publish 7 packages, the pitch page, the Deneb spec, the D1-D3 sketches, the step prompts. `project/archive/round1/README.md` says what is where |
+
+**Left where it was, on purpose:** `project/tools/`, `project/design-prototypes/`, `project/analysis/` and `project/pbip/GoodnightInn-opzet.Report`
+(the scripts call each other and the checks read these); the gallery and LinkedIn material in
+`project/deliverables/final-room-to-invest/`; doc 32 (the jury assessment of the field, 17 Nov) beside this document.
+
+**Checked after the move**, on `project/pbip/GoodnightInn-final.Report`, against the same run before it:
+`save_diff.py` 0 differences with Bjorn's copy (341 measures both sides), `strip_check.py` 0, `compliance_check.py`
+all ok, `build_checks.py --static` all ok, `a11y_check.py` the same four (the orange dot, doc 37).
+
+**Still with Bjorn:**
+
+- `E:\Goodnight Inn - Room to Invest` stays: it is the copy he opens and published from, and the post can be edited
+  until the deadline.
+- The older reports in the Power BI service and their Publish to Web links ("GoodnightInn-opzet", "Goodnight Inn",
+  possibly "Goodnight Inn - The Wake-up Call"): live things, nothing goes off without his yes, and the link in the
+  gallery post must stay.
+- Section 4 is unchanged: the gate on the final publication waits for its link.
+- Left alone because they are of the 2026 contest, not of this entry: `E:\World Champs R2`, and in Downloads the
+  `World Champs BCN 26` files (three of them the same 51 MB file) and three `PowerBI_Setup_DatavizWC` zips.
+
 ## Log
 
 - 17 Nov: the 23:17 save taken in; tools saved; gallery folder ordered; merged local branches removed; tag set;
   temporary files removed; this document.
+- 18 Nov: the second cleanup (section 6): old copies on E: to the Recycle Bin, scratch folders removed, stashes and branches dropped, `rebuild-finalv3` merged into `main`, old parts and steps moved to `project/archive/round1/`.
