@@ -1,0 +1,38 @@
+# pbi-atelier project state — schema: lifecycle/status.schema.yaml
+project: hp-world-champs
+template_version: 0.3.1
+current_stage: 6
+updated: 2026-07-14
+stages:
+  s0_intake:
+    status: passed
+    evidence: "project-state/active/00-intake.md"
+    gate_note: "G0 confirmed in writing via requester-authored mission file + approved execution plan, 2026-07-12; see intake.contract.yaml gate_g0"
+  s1_requirements:
+    status: passed
+    evidence: "project-state/active/01-requirements.md"
+    gate_note: "G1: all requirements trace to judge/entrant decisions; 10 CSV schemas verified; 5 open questions, none blocking"
+  s2_metrics:
+    status: passed
+    evidence: "project-state/active/02-metrics.md"
+    gate_note: "G2: user signed glossary as written 2026-07-12 (9 contracts; gray-set, M-003 source, pseudo-color decisions explicit)"
+  s3_model_design:
+    status: passed
+    evidence: "project-state/active/03-model-blueprint.md"
+    gate_note: "G3: user accepted 2026-07-13; strict HP scope (root-246 subtree); starter audit verified 3 bidis; justified DimYear outrigger; zero bidirectional in design"
+  s4_model_build:
+    status: passed
+    evidence: "project-state/active/04-model-build.md"
+    gate_note: "G4: strict validators clean; inventory=blueprint (all diffs explained); E1-E10 re-derived (evidence-manifest.md); implementation blocks filled; Desktop follow-ups in BUILD_LOG"
+  s5_design:
+    status: passed
+    evidence: "../../design_handoff_powerbi/README.md"
+    gate_note: "G5 re-signed 2026-07-14: user rejected the rendered v1 ('this looks ridiculous') and its storybook uplift, and supplied a complete external design handoff (design_handoff_powerbi/ — HTML hi-fi prototypes as visual truth + per-page specs + theme + data model). That bundle IS the v2 design contract; user decisions: Georgia substitutes Crimson Pro (font not installable on judges' machines), clean-room rebuild as second-build. Prior 05-design.md kept for v1 history."
+  s6_report_build:
+    status: in_progress
+    evidence: "project-state/active/06-build.md"
+    gate_note: "G6 rework agent-side COMPLETE 2026-07-14: second-build built (7 pages, 206 visuals, all rects measured from layout.json; pbir validate 0 errors; strict TMDL clean; sorting-quiz-v2 packaged lint-clean; contrast 11/13 PASS with F-v2-1/F-v2-2 awaiting user decision). Gate closes on the user Desktop pass V1-V11 (BUILD_LOG) + the +-2px diff review against reference_screenshots."
+  s7_delivery:
+    status: pending
+    evidence: "project-state/active/07-delivery.md"
+    gate_note: "Reset 2026-07-14 by the v2 rebuild (was: agent-side complete for v1). G7 re-runs on the delivered v2 state; user Desktop verification + .pbix export + acceptance remain the closing conditions before the 2026-07-19 deadline."

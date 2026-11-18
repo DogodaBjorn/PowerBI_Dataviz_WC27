@@ -1,0 +1,91 @@
+/// One row per LEGO set (full universe — ranking needs all themes).
+table DimSets
+	lineageTag: 1217e7ac-d3a6-41bb-9b4e-91e8b7140a61
+
+	column set_num
+		dataType: string
+		isHidden
+		lineageTag: 0b199e4a-b2a8-42f8-a223-bd79fb861589
+		summarizeBy: none
+		sourceColumn: set_num
+
+	column 'Set Name'
+		dataType: string
+		lineageTag: 2ef07f0e-5278-45f2-9c47-77933b5f1d29
+		summarizeBy: none
+		sourceColumn: Set Name
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 3dff54d8-f01b-4e05-b0c1-4a2257d38a3c
+		summarizeBy: none
+		sourceColumn: year
+
+	column num_parts
+		dataType: int64
+		formatString: #,0
+		lineageTag: 0a798b6c-8036-4682-9b11-16e6be968b95
+		summarizeBy: none
+		sourceColumn: num_parts
+
+	column 'Root Theme'
+		dataType: string
+		lineageTag: eb99d767-a04a-4fcb-b0a7-f83f48d4182a
+		summarizeBy: none
+		sourceColumn: Root Theme
+
+	column 'Sub Theme'
+		dataType: string
+		lineageTag: 3bb7d082-e993-435d-9559-3de12f22c0ca
+		summarizeBy: none
+		sourceColumn: Sub Theme
+
+	column Era
+		dataType: string
+		lineageTag: e8855f28-bbf0-4d26-b15e-f61d3929e5d9
+		summarizeBy: none
+		sourceColumn: Era
+		sortByColumn: EraSort
+
+	column EraSort
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b4fd6812-16cf-471f-a62b-f1904ae7327b
+		summarizeBy: none
+		sourceColumn: EraSort
+
+	column img_url
+		dataType: string
+		isHidden
+		lineageTag: b64d2c58-2096-4d13-aa4a-422158fb97b8
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: img_url
+
+	partition DimSets = m
+		mode: import
+		source =
+				let
+				    // References only (RawSets + ThemesResolved) — direct file access here
+				    // plus a query reference trips the Formula.Firewall.
+				    Source = RawSets,
+				    Typed = Table.TransformColumnTypes(Source, {{"set_num", type text}, {"name", type text}, {"year", Int64.Type}, {"theme_id", Int64.Type}, {"num_parts", Int64.Type}, {"img_url", type text}}),
+				    MergedThemes = Table.NestedJoin(Typed, {"theme_id"}, ThemesResolved, {"id"}, "T", JoinKind.LeftOuter),
+				    Expanded = Table.ExpandTableColumn(MergedThemes, "T", {"Root Theme", "Sub Theme"}),
+				    WithEra = Table.AddColumn(Expanded, "Era", each
+				        if [Root Theme] <> "Harry Potter" then "n/a"
+				        else if [year] <= 2011 then "First marriage (2001–2011)"
+				        else if [year] >= 2018 then "Second marriage (2018– )"
+				        else "Hiatus", type text),
+				    WithEraSort = Table.AddColumn(WithEra, "EraSort", each
+				        if [Era] = "First marriage (2001–2011)" then 1
+				        else if [Era] = "Hiatus" then 2
+				        else if [Era] = "Second marriage (2018– )" then 3
+				        else 4, Int64.Type),
+				    Renamed = Table.RenameColumns(WithEraSort, {{"name", "Set Name"}}),
+				    Removed = Table.RemoveColumns(Renamed, {"theme_id"})
+				in
+				    Removed
+

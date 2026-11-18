@@ -1,0 +1,29 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Sets","SetColors","Colors","Minifigs","DimYear","QuizPool","_Measures","DataFolder","fnCsv","RawSets","RawInventoryParts","RawInventoryMinifigs","RawColors","RawMinifigs","ThemesResolved","V1Inventories","EraGuess","ThemeGreyscale","ThemeColors","LicensedThemeColours"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Sets
+ref table Colors
+ref table SetColors
+ref table Minifigs
+ref table DimYear
+ref table QuizPool
+ref table _Measures
+ref table EraGuess
+ref table SetGuess
+ref table ThemeGreyscale
+ref table ThemeColors
+ref table LicensedThemeColours
+
+ref cultureInfo en-US
+

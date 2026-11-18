@@ -1,0 +1,107 @@
+/// Folder containing the contest CSVs. Set once in Desktop (Transform data >
+/// Edit parameters). Ships as a placeholder on purpose: machine paths are a
+/// validator error in this repo; imported data travels inside the .pbix.
+expression DataFolder = "E:\PowerBI Set-up\hp-world-champs\project\source-data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 61884f16-6a5a-43d1-b2a0-3b7a9f4bc781
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigatie
+
+/// Reads one contest CSV: UTF-8, quote-aware (the starter's QuoteStyle.None
+/// mis-splits quoted set names containing commas), headers promoted.
+expression fnCsv =
+		(fileName as text, columnCount as number) =>
+		let
+		    root = if Text.EndsWith(DataFolder, "\") or Text.EndsWith(DataFolder, "/") then DataFolder else DataFolder & "\",
+		    Source = Csv.Document(File.Contents(root & fileName), [Delimiter = ",", Columns = columnCount, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+		    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true])
+		in
+		    Promoted
+	lineageTag: 506f740a-f35c-450d-b5ef-5a5281d4e4e5
+
+	annotation PBI_ResultType = Function
+
+/// Staging (not loaded): raw sets.csv. Exists so DimSets contains query
+/// REFERENCES only — a query that both reads a file and references another
+/// query trips the Formula.Firewall ("rebuild this data combination").
+expression RawSets = fnCsv("sets.csv", 6)
+	lineageTag: 96581304-6554-4825-9a9f-5ca318a17eec
+
+	annotation PBI_ResultType = Table
+
+/// Staging (not loaded): raw inventory_parts.csv (firewall split for FactPartsInSets).
+expression RawInventoryParts = fnCsv("inventory_parts.csv", 6)
+	lineageTag: 7b255e4f-e25b-4c30-9baa-2e895850e77b
+
+	annotation PBI_ResultType = Table
+
+/// Staging (not loaded): raw inventory_minifigs.csv (firewall split for FactMinifigsInSets).
+expression RawInventoryMinifigs = fnCsv("inventory_minifigs.csv", 3)
+	lineageTag: c7b041e5-11e6-4d06-88b0-9b3bc0032e53
+
+	annotation PBI_ResultType = Table
+
+/// Staging (not loaded): raw colors.csv (firewall split for DimColors).
+expression RawColors = fnCsv("colors.csv", 8)
+	lineageTag: d7812dd1-a56f-42c3-88ba-76093529d882
+
+	annotation PBI_ResultType = Table
+
+/// Staging (not loaded): raw minifigs.csv (firewall split for DimMinifigures).
+expression RawMinifigs = fnCsv("minifigs.csv", 4)
+	lineageTag: 2af7b032-767e-4e3e-a7c8-f3493bd69bfe
+
+	annotation PBI_ResultType = Table
+
+/// Staging (not loaded): raw parts.csv (firewall split for DimParts).
+expression RawParts = fnCsv("parts.csv", 4)
+	lineageTag: bf281e2b-5cd6-4c12-a547-08d5e31bce17
+
+	annotation PBI_ResultType = Table
+
+/// Staging (not loaded): raw part_categories.csv — DimParts joins two files;
+/// the firewall flags in-query combination of two source-reading step chains.
+expression RawPartCategories = fnCsv("part_categories.csv", 2)
+	lineageTag: 599c8a3b-3791-4b77-aa99-a57fddc64fed
+
+	annotation PBI_ResultType = Table
+
+/// Staging (not loaded): themes with Root Theme / Sub Theme resolved by
+/// walking parent_id to the topmost ancestor (494 rows, chains are short).
+expression ThemesResolved =
+		let
+		    Source = fnCsv("themes.csv", 3),
+		    Typed = Table.TransformColumnTypes(Source, {{"id", Int64.Type}, {"name", type text}, {"parent_id", Int64.Type}}),
+		    ids = List.Buffer(Typed[id]),
+		    names = List.Buffer(Typed[name]),
+		    parents = List.Buffer(Typed[parent_id]),
+		    chainOf = (tid as number) as list =>
+		        List.Generate(() => tid, (t) => t <> null, (t) => parents{List.PositionOf(ids, t)}),
+		    WithChain = Table.AddColumn(Typed, "chain", each chainOf([id]), type list),
+		    WithRoot = Table.AddColumn(WithChain, "Root Theme", each names{List.PositionOf(ids, List.Last([chain]))}, type text),
+		    WithSub = Table.AddColumn(WithRoot, "Sub Theme", each
+		        let c = [chain] in
+		        if List.Count(c) = 1 then null else names{List.PositionOf(ids, c{List.Count(c) - 2})}, type text),
+		    Slim = Table.RemoveColumns(WithSub, {"chain"})
+		in
+		    Slim
+	lineageTag: be717338-d1fe-4939-a50e-cdef20bff544
+
+	annotation PBI_ResultType = Table
+
+/// Staging (not loaded): version-1 inventories only — inventory_id -> set_num.
+/// The v1 filter lives here so both facts inherit it by construction (M-002).
+expression V1Inventories =
+		let
+		    Source = fnCsv("inventories.csv", 3),
+		    Typed = Table.TransformColumnTypes(Source, {{"id", Int64.Type}, {"version", Int64.Type}, {"set_num", type text}}),
+		    V1 = Table.SelectRows(Typed, each [version] = 1),
+		    Slim = Table.RemoveColumns(V1, {"version"}),
+		    Renamed = Table.RenameColumns(Slim, {{"id", "inventory_id"}})
+		in
+		    Renamed
+	lineageTag: f2a303a2-0be0-46aa-8721-e9d03f753d91
+
+	annotation PBI_ResultType = Table
+

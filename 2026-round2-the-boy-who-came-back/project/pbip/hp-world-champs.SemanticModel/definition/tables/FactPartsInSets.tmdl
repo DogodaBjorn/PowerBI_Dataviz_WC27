@@ -1,0 +1,51 @@
+/// GRAIN: one row = n copies of one part in one color in the version-1
+/// inventory of one set, spares excluded. Filters live HERE, not in DAX
+/// (M-002: the exclusions are the contract). img_url dropped (blueprint).
+table FactPartsInSets
+	lineageTag: e4f1163a-2c6a-46c5-89ed-6d5c25742796
+
+	column set_num
+		dataType: string
+		isHidden
+		lineageTag: 1eab57e2-1c72-4be9-a638-3810d8d8c547
+		summarizeBy: none
+		sourceColumn: set_num
+
+	column part_num
+		dataType: string
+		isHidden
+		lineageTag: 85f89d1c-bc7e-4a9e-a179-10b686668935
+		summarizeBy: none
+		sourceColumn: part_num
+
+	column color_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ec18d4d9-074f-4fdd-aff3-27ee8d90c5c2
+		summarizeBy: none
+		sourceColumn: color_id
+
+	column quantity
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 10b75cbb-1b59-4989-adc2-c7e731dff412
+		summarizeBy: sum
+		sourceColumn: quantity
+
+	partition FactPartsInSets = m
+		mode: import
+		source =
+				let
+				    // References only (RawInventoryParts + V1Inventories) — firewall rule.
+				    Source = RawInventoryParts,
+				    Typed = Table.TransformColumnTypes(Source, {{"inventory_id", Int64.Type}, {"part_num", type text}, {"color_id", Int64.Type}, {"quantity", Int64.Type}, {"is_spare", type logical}, {"img_url", type text}}),
+				    NoSpares = Table.SelectRows(Typed, each not [is_spare]),
+				    Slim = Table.RemoveColumns(NoSpares, {"is_spare", "img_url"}),
+				    V1 = Table.NestedJoin(Slim, {"inventory_id"}, V1Inventories, {"inventory_id"}, "inv", JoinKind.Inner),
+				    WithSet = Table.ExpandTableColumn(V1, "inv", {"set_num"}),
+				    Grouped = Table.Group(WithSet, {"set_num", "part_num", "color_id"}, {{"quantity", each List.Sum([quantity]), Int64.Type}})
+				in
+				    Grouped
+

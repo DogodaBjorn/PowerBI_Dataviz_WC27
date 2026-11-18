@@ -1,0 +1,77 @@
+/// SCENARIO LOGIC: 10 hand-curated Sorting Quiz rounds, carried over from
+/// the v1 evidence-verified pool (5 per era, 8 characters, two
+/// yellow-vs-flesh teaching pairs: Harry, Hermione). Deliberately
+/// DISCONNECTED — no relationships, outside the filter graph. era_set_label
+/// is the quiz's column-3 text ("era · set").
+table QuizPool
+	lineageTag: 0d290164-9ca7-4d28-809f-3f6f3ba35dff
+
+	column round_no
+		dataType: int64
+		formatString: 0
+		lineageTag: 301d54bf-9f1e-44fd-a474-8e8141b61f0e
+		summarizeBy: none
+		sourceColumn: round_no
+
+	column fig_num
+		dataType: string
+		lineageTag: e5caed4e-0f3a-4a05-92bf-e103c62e6e39
+		summarizeBy: none
+		sourceColumn: fig_num
+
+	column fig_img_url
+		dataType: string
+		lineageTag: 78781502-c43c-4b6e-9660-a587bd75a929
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: fig_img_url
+
+	column character_name
+		dataType: string
+		lineageTag: 2062b245-a0b1-4649-9a85-db4eabb90c22
+		summarizeBy: none
+		sourceColumn: character_name
+
+	column era
+		dataType: string
+		lineageTag: d5764ea7-8d4f-4ac0-9fb1-0a5715011c98
+		summarizeBy: none
+		sourceColumn: era
+
+	column era_set_label
+		dataType: string
+		lineageTag: 35dd256f-9b9e-4066-b67f-cb2236c91efb
+		summarizeBy: none
+		sourceColumn: era_set_label
+
+	column set_num
+		dataType: string
+		isHidden
+		lineageTag: 93738de5-90a3-48b3-858c-7b41925e5c21
+		summarizeBy: none
+		sourceColumn: set_num
+
+	partition QuizPool = m
+		mode: import
+		source =
+				let
+				    Source = #table(
+				        type table [round_no = Int64.Type, fig_num = text, fig_img_url = text, character_name = text, era = text, set_num = text, set_year = Int64.Type],
+				        {
+				            {1, "fig-000471", "https://cdn.rebrickable.com/media/sets/fig-000471.jpg", "Harry Potter", "First Build", "4701-1", 2001},
+				            {2, "fig-001818", "https://cdn.rebrickable.com/media/sets/fig-001818.jpg", "Harry Potter", "Second Build", "75954-1", 2018},
+				            {3, "fig-000593", "https://cdn.rebrickable.com/media/sets/fig-000593.jpg", "Hermione Granger", "First Build", "4723-1", 2001},
+				            {4, "fig-008935", "https://cdn.rebrickable.com/media/sets/fig-008935.jpg", "Hermione Granger", "Second Build", "75966-1", 2020},
+				            {5, "fig-000594", "https://cdn.rebrickable.com/media/sets/fig-000594.jpg", "Ron Weasley", "First Build", "4722-1", 2001},
+				            {6, "fig-006056", "https://cdn.rebrickable.com/media/sets/fig-006056.jpg", "Albus Dumbledore", "First Build", "4707-1", 2001},
+				            {7, "fig-006049", "https://cdn.rebrickable.com/media/sets/fig-006049.jpg", "Severus Snape", "First Build", "4709-1", 2001},
+				            {8, "fig-010514", "https://cdn.rebrickable.com/media/sets/fig-010514.jpg", "Draco Malfoy", "Second Build", "75978-1", 2020},
+				            {9, "fig-002136", "https://cdn.rebrickable.com/media/sets/fig-002136.jpg", "Voldemort", "Second Build", "75965-1", 2019},
+				            {10, "fig-013042", "https://cdn.rebrickable.com/media/sets/fig-013042.jpg", "Luna Lovegood", "Second Build", "76405-1", 2022}
+				        }),
+				    // Prototype col-3 format: "First Build · 2004"
+				    WithLabel = Table.AddColumn(Source, "era_set_label", each [era] & " · " & Text.From([set_year]), type text),
+				    Slim = Table.RemoveColumns(WithLabel, {"set_year"})
+				in
+				    Slim
+

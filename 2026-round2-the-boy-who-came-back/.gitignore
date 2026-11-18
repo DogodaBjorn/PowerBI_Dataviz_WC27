@@ -1,0 +1,30 @@
+# --- OS / editor noise ---
+Thumbs.db
+.DS_Store
+*.swp
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- Node (custom-visual-studio module) ---
+node_modules/
+dist/
+.tmp/
+
+# --- Power BI local state (never commit) ---
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+*.pbix
+
+# --- Project data (sample extracts stay local) ---
+project/data-samples/*
+!project/data-samples/.gitkeep
+# Contest source CSVs (136MB, public Rebrickable data — relocated from the
+# workspace root 2026-08-04; DataFolder parameters point here; never commit)
+project/source-data/
+
+# --- Claude Code local settings ---
+.claude/settings.local.json
