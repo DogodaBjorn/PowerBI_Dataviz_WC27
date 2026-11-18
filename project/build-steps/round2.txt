@@ -1,0 +1,17 @@
+Review round 2 · run the next step of doc 25
+Goodnight Inn, Power BI Dataviz World Champs 2027 · submission 17 Nov 2026
+Execute now; do not wait for a date or a schedule.
+
+1. Git: git fetch origin; git checkout rebuild-finalv3; git pull
+2. Read CLAUDE.md, then project/project-state/active/23-build-workplan-finalv3-2026-11-13.md section 1 (the rules,
+   binding here too) and its part "After the gate", then
+   project/project-state/active/25-action-plan-to-9-2026-11-15.md: the progress table (section 0), the decisions
+   (section 3), the copy sheet (section 5), your step (section 6) and the log so far (section 8).
+3. Take the first step of doc 25's table whose status is not "done".
+   - "doing": start where its log stops; do not redo finished work.
+   - "blocked": stop and tell me what the log says is needed from me.
+   - Step E stops at the publish (I publish), step F is mine.
+4. Do that one step only. The copy sheet is approved: build its lines as written; where a line does not fit, take
+   the fallback it names, record it, and never make the text smaller.
+5. Close out as rule 12 of doc 23: the log in doc 25 section 8, the progress row, commit, push, and five lines:
+   built · verified · deviations · what Bjorn must do · ready for the next step yes/no.

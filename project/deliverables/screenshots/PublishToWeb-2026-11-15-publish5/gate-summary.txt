@@ -1,0 +1,65 @@
+== the link
+  report 'Goodnight Inn', last published 2026-11-15T10:40:25.22 UTC, 7 pages
+== the mouse at 1920 px (hit_test.js: live visuals and their marks)
+  p1: hit_report: clear (3 live visuals, 54 marks)
+  p2_rec: hit_report: clear (7 live visuals, 6 marks)
+  p2_alts: hit_report: clear (7 live visuals, 461 marks)
+  p2_build: hit_report: clear (8 live visuals, 461 marks)
+== the mouse at 1366 px (hit_test.js: live visuals and their marks)
+  p1: hit_report: clear (3 live visuals, 54 marks)
+  p2_rec: hit_report: clear (7 live visuals, 6 marks)
+  p2_alts: hit_report: 1 live visual(s) lose 2% or more, 0 of 461 marks blind
+     sl_scenario              [1600, 111, 288, 32] loses 10.9% to outside (body) 11%
+  p2_build: hit_report: 1 live visual(s) lose 2% or more, 0 of 461 marks blind
+     sl_scenario              [1600, 111, 288, 32] loses 45.4% to outside (body) 45%
+== a click on a mark or a row: what changes on the page (the whole page, before and after)
+  alts_cmp_line        changed box (56, 218, 1875, 907), 294 pixels
+  alts_dot_a           changed box (56, 665, 1875, 685), 83 pixels
+  alts_grey            changed box None, 0 pixels
+  alts_waits_row       changed box (791, 0, 1865, 565), 86847 pixels
+  build_bar            changed box (1394, 476, 1669, 554), 1824 pixels
+  build_cmp            changed box (56, 218, 1875, 685), 170 pixels
+  build_moves_row      changed box (1006, 0, 1852, 600), 19499 pixels
+  p1_f1_area           changed box (680, 524, 1240, 544), 87 pixels
+  p1_f3_bar            changed box (1360, 436, 1840, 607), 8281 pixels
+  p1_f4_dot            changed box (655, 843, 1855, 991), 2941 pixels
+  p1_folio_row         changed box (655, 524, 1855, 863), 13506 pixels
+  rec_cum_line         changed box (792, 814, 1735, 834), 59 pixels
+  rec_hero_row         changed box (56, 224, 1056, 616), 47525 pixels
+  rec_ledger_row       changed box (56, 224, 1865, 591), 37381 pixels
+  rec_plan_bar         changed box (1111, 342, 1865, 362), 87 pixels
+== the band of a clicked visual: the line above it, before and after the click
+  the years under F2's chart       unchanged
+  F3's title                       unchanged
+  F4's title                       unchanged
+  the hero's column labels         unchanged
+  the lines above the ledger       unchanged
+  the plan bar                     unchanged
+  the plan chart's caption         unchanged
+  the head of What waits           unchanged
+  the head of Build                unchanged
+  the rules line above the bars    unchanged
+== nl and de against en (the page, pixel for pixel)
+  nl_p1.png: differs in (635, 159, 1226, 160), 0 pixels
+  nl_p2_rec_expected.png: differs in (635, 159, 1908, 736), 0 pixels
+  de_p2_rec_expected.png: differs in (635, 159, 1908, 736), 0 pixels
+  nl_p2_tt_glossary.png: differs in (868, 940, 869, 941), 0 pixels
+  de_p2_tt_glossary.png: differs in (868, 940, 869, 941), 0 pixels
+  nl_p2_tt_year_under_tag.png: differs in (1315, 940, 1316, 941), 0 pixels
+  (every pair not listed is equal)
+== Tab after Ctrl+Enter
+   None | Show screen reader tips (opens in new tab)
+   button | Skip to main content
+   region | Power BI Report
+   img | Goodnight Inn
+   group | Page 1 of 2, the wake-up call: the brand review
+   group | Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome
+   group | Goodnight Inn in 2025, against the three other Pillow & Key Group brands. For th
+== the keyboard walk in the published report (keys2: the whole list is in keys2_walk.txt)
+  page 1: 30 key presses, 30 different stops, 0 without a name
+  page 2, Recommended: 45 key presses, 29 different stops, 0 without a name
+  Recommended, inside the hero table (Enter, down, down, right, Esc): 5 key presses, 5 different stops, 0 without a name; reached after 24 Tab: ' The ten moves ranked by what each earns a year on its cost,'
+  page 2, What waits: 35 key presses, 18 different stops, 0 without a name
+  page 2, Build your own: 45 key presses, 24 different stops, 0 without a name
+  Build your own, inside the selector (Enter, down, Space, Space, Esc): 5 key presses, 3 different stops, 0 without a name; reached after 12 Tab: ' Moves: pick a move to add it to your plan or to take it out'
+== against PublishToWeb-2026-11-14 (page captures of the same view)

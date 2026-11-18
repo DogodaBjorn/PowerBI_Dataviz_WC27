@@ -1,0 +1,181 @@
+page 1
+    None | A | Show screen reader tips (opens in new tab)
+    button | SPAN | Skip to main content
+    region | DIV | Power BI Report
+    img | DIV | Goodnight Inn
+    group | DIV | Page 1 of 2, the wake-up call: the brand review
+    group | DIV | Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome is fading.
+    group | DIV | Goodnight Inn in 2025, against the three other Pillow & Key Group brands. For the Board: what is wrong, before
+    group | DIV | Goodnight Inn occupancy in 2025: 79.4%, best of 4, the others 64.7% to 72.9%.
+    group | DIV | Goodnight Inn operating margin after commissions in 2025: 33.7%, 2nd of 4, −2.8 pt since 2023.
+    group | DIV | Share of Goodnight Inn room revenue booked through online agencies in 2025: 50.0%, highest of 4, 33.0% in 2021
+    group | DIV | Guest quality: Goodnight Inn net promoter score in 2025: +3.3, still positive, but falling every year, last of
+    group | DIV | F1, the margin. After commissions, the margin fell 2.8 points since 2023
+    group | DIV | After commissions, Goodnight Inn's operating margin rose from 32.5% in 2021 to 36.5% in 2023 and fell back to 
+    group | DIV | Commissions took 1.0 of those points and running costs 1.8 (staff rose from 26.9% to 28.3% of revenue). Room r
+    group | DIV | On page 2: revenue management, and the kiosks for running costs.
+    group | DIV | F2, the middleman. Online agencies now book 50% of room revenue, up from 33%
+    group | DIV | Online agencies booked 50.0% of Goodnight Inn's room revenue in 2025, up from 33.0% in 2021. The other brands 
+    group | DIV | One Goodnight Inn room night in 2025. Via an online agency the guest pays $109.31, fees take $19.68, the inn k
+    group | DIV | Booked direct, the guest pays $2.25 more and we keep $17.47 more. Nothing rewards the guest for booking direct
+    group | DIV | On page 2: the booking app with member rates.
+    group | DIV | F3, the fading welcome. Hotels last renovated 10 years or more ago score NPS −4.9
+    group | DIV | Goodnight Inn's 2025 net promoter score by years since the last renovation: 5 years or less +6.8, 6 to 9 years
+    group | DIV | 44 of 50 hotels; 6 have no renovation date.
+    group | DIV | Since 2018 Goodnight Inn spent $1.0M per hotel on renovation; the other brands spent $5.9M to $7.9M. None has 
+    group | DIV | On page 2: the refresh waits for the 2028 gate, and why.
+    group | DIV | F4, where we are full. Our airports run fullest: five of the seven fullest hotels are airports
+    group | DIV | Toronto topped 90% in 17 of the last 24 months, Gatwick in 14, Montréal in 13; Kingston, the third extension o
+    group | DIV | Goodnight Inn occupancy in 2025 by location type: airport hotels 82.0%, city hotels 79.1%, highway hotels 77.5
+    group | DIV | On page 2: kiosks at the 20 busiest hotels; extensions decided at the 2028 gate.
+    group | DIV | The 7 fullest Goodnight Inn hotels in 2025, 5 of them airports: Toronto Pearson Airport 91.9%, London Gatwick 
+page 2, Recommended
+    img | DIV | Goodnight Inn
+    group | DIV | Page 2 of 2, room to invest: the investment strategy
+    link | DIV | Page navigation  Back to The Brand Review, page 1
+    group | DIV | Fix the middleman first: $9.4M now earns $3.5M a year by 2032.
+    group | DIV | The rest waits for one Board meeting in mid-2028. Expected case. NPV counts nothing after 2032, so we also sho
+    link | DIV | Bookmark  Recommended A, the current view: the recommendation, package A
+    link | DIV | Bookmark  What waits and why: show the moves that wait for the 2028 gate, and why
+    link | DIV | Bookmark  Build your own: show pick moves and compare your plan with A
+    group | DIV | Scenario: Low, Expected or High; every number on this page follows it
+    group | DIV | Two moves pass both tests; the kiosks earn 20.6% a year on cost but pay back after 2032
+    group | DIV | The ten moves ranked by what each earns a year on its cost, Expected case, with the finding each answers, its 
+    group | DIV | A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Not now: Energy and Boston exce
+    group | DIV | Our recommendation: package A. Booking app & member rates + Revenue management + Kiosks at the 20 busiest hote
+    group | DIV | Package A, Expected case: capex $9.4M, net present value through 2032 +⁠$3.3M, +⁠$3.5M a year by 2032, 37.5% a
+    group | DIV | Worst case (Low): −⁠$5.5M through 2032, and still +⁠$1.0M a year by 2032.
+The app carries it: +⁠$3.4M of the +
+    group | DIV | What package A changes for each finding by 2032, Expected case. F2 The middleman: half the rise undone; F1 The
+    group | DIV | 2025 brand plus A's full yearly effect, in 2025 dollars.
+    link | DIV | Bookmark  Think you can beat A Build your own: show the state where you pick moves and compare your plan with 
+    group | DIV | The $60M plan: $9.4M now, $41.9M at the 2028 gate, $8.7M not needed
+    group | DIV | Tranche 1 · package A
+$9.4M · 2027
+    group | DIV | Tranche 2 · Gatwick and Toronto +40 rooms
+$12.4M · 2028 gate
++⁠$1.7M a year once live · 13.8% a year on cost
+    group | DIV | Tranche 3 · the refresh
+$29.5M · 2028 gate
++⁠$2.3M a year once live · 7.9% a year on cost
+    group | DIV | Not needed · $8.7M
+stays with the group
+    group | DIV | How the $60M budget is planned: tranche 1, package A, $9.4M now; tranche 2, $12.4M, and tranche 3, $29.5M, wai
+    group | DIV | The 2028 gate, one Board meeting once all three moves are live. It releases tranche 2 if the first money worke
+    group | DIV | Package A, cumulative cash by year to 2032, not discounted, in the three cases. By 2032: Low −⁠$4.6M, Expected
+    group | DIV | Revenue management live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Cash positiv
+    group | DIV | Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Part
+    group | DIV | Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a
+    img | DIV | Goodnight Inn
+    group | DIV | Page 2 of 2, room to invest: the investment strategy
+    link | DIV | Page navigation  Back to The Brand Review, page 1
+    group | DIV | Fix the middleman first: $9.4M now earns $3.5M a year by 2032.
+    group | DIV | The rest waits for one Board meeting in mid-2028. Expected case. NPV counts nothing after 2032, so we also sho
+    link | DIV | Bookmark  Recommended A, the current view: the recommendation, package A
+    link | DIV | Bookmark  What waits and why: show the moves that wait for the 2028 gate, and why
+    link | DIV | Bookmark  Build your own: show pick moves and compare your plan with A
+    group | DIV | Scenario: Low, Expected or High; every number on this page follows it
+    group | DIV | Two moves pass both tests; the kiosks earn 20.6% a year on cost but pay back after 2032
+    group | DIV | The ten moves ranked by what each earns a year on its cost, Expected case, with the finding each answers, its 
+    group | DIV | A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Not now: Energy and Boston exce
+    group | DIV | Our recommendation: package A. Booking app & member rates + Revenue management + Kiosks at the 20 busiest hote
+    group | DIV | Package A, Expected case: capex $9.4M, net present value through 2032 +⁠$3.3M, +⁠$3.5M a year by 2032, 37.5% a
+    group | DIV | Worst case (Low): −⁠$5.5M through 2032, and still +⁠$1.0M a year by 2032.
+The app carries it: +⁠$3.4M of the +
+    group | DIV | What package A changes for each finding by 2032, Expected case. F2 The middleman: half the rise undone; F1 The
+Recommended, inside the hero table (Enter, down, down, right, Esc)
+    tabto ten moves ranked -> group | DIV | The ten moves ranked by what each earns a year on its cost, Expected case, with the finding each answers, its 
+    columnheader | DIV | Move
+    gridcell | DIV | Booking app & member rates
+    gridcell | DIV | Revenue management
+    gridcell | DIV | F1 · growth
+    group | DIV | The ten moves ranked by what each earns a year on its cost, Expected case, with the finding each answers, its 
+page 2, What waits
+    link | DIV | Bookmark  Recommended A: show the recommendation, package A
+    link | DIV | Bookmark  What waits and why, the current view: the moves that wait for the 2028 gate, and why
+    link | DIV | Bookmark  Build your own: show pick moves and compare your plan with A
+    group | DIV | Scenario: Low, Expected or High; every number on this page follows it
+    group | DIV | None of the 456 packages beats A through 2032
+    group | DIV | Only 6 pay back by 2032, all under $15M. Each dot is a package.
+    group | DIV | None of the 456 packages beats A through 2032 (Expected case). A, our recommendation: capex $9.4M, net present
+    group | DIV | All 456 packages the rules allow, each with its capex, its net present value through 2032 (Expected case), the
+    group | DIV | What waits, and why. One alternative and two tranches, each weighed against A.
+    group | DIV | Three options weighed against A, Expected case: B · Breakfast instead of kiosks; Tranche 2 · Airport extension
+    group | DIV | Cumulative cash, not discounted, $M: B ends within $1M of A by 2032; C (app, revenue management, refresh) is n
+    group | DIV | Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Part
+    group | DIV | Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a
+    img | DIV | Goodnight Inn
+    group | DIV | Page 2 of 2, room to invest: the investment strategy
+    link | DIV | Page navigation  Back to The Brand Review, page 1
+    group | DIV | Fix the middleman first: $9.4M now earns $3.5M a year by 2032.
+    group | DIV | The rest waits for one Board meeting in mid-2028. Expected case. NPV counts nothing after 2032, so we also sho
+    link | DIV | Bookmark  Recommended A: show the recommendation, package A
+    link | DIV | Bookmark  What waits and why, the current view: the moves that wait for the 2028 gate, and why
+    link | DIV | Bookmark  Build your own: show pick moves and compare your plan with A
+    group | DIV | Scenario: Low, Expected or High; every number on this page follows it
+    group | DIV | None of the 456 packages beats A through 2032
+    group | DIV | Only 6 pay back by 2032, all under $15M. Each dot is a package.
+    group | DIV | None of the 456 packages beats A through 2032 (Expected case). A, our recommendation: capex $9.4M, net present
+    group | DIV | All 456 packages the rules allow, each with its capex, its net present value through 2032 (Expected case), the
+    group | DIV | What waits, and why. One alternative and two tranches, each weighed against A.
+    group | DIV | Three options weighed against A, Expected case: B · Breakfast instead of kiosks; Tranche 2 · Airport extension
+    group | DIV | Cumulative cash, not discounted, $M: B ends within $1M of A by 2032; C (app, revenue management, refresh) is n
+    group | DIV | Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Part
+    group | DIV | Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a
+    img | DIV | Goodnight Inn
+    group | DIV | Page 2 of 2, room to invest: the investment strategy
+    link | DIV | Page navigation  Back to The Brand Review, page 1
+    group | DIV | Fix the middleman first: $9.4M now earns $3.5M a year by 2032.
+page 2, Build your own
+    link | DIV | Bookmark  What waits and why: show the moves that wait for the 2028 gate, and why
+    link | DIV | Bookmark  Build your own, the current view: pick moves and compare your plan with A
+    group | DIV | Scenario: Low, Expected or High; every number on this page follows it
+    group | DIV | None of the 456 packages beats A through 2032
+    group | DIV | Only 6 pay back by 2032, all under $15M. Each dot is a package.
+    group | DIV | None of the 456 packages beats A through 2032 (Expected case). A, our recommendation: capex $9.4M, net present
+    group | DIV | All 456 packages the rules allow, each with its capex, its net present value through 2032 (Expected case), the
+    group | DIV | Build your own. Click a move to add or remove it.
+    group | DIV | Moves: pick a move to add it to your plan or to take it out; the table beside it gives each move's numbers
+    group | DIV | The ten moves, Expected case, in the order of the list beside it, each with the finding it answers, its capex,
+    group | DIV | Picked: 3 moves, $9.4M of $60.0M
+    group | DIV | Your plan: 3 moves, live by Apr 2028
+    group | DIV | Your plan, Expected case: capex $9.4M, net present value through 2032 +⁠$3.3M, +⁠$3.5M a year by 2032, 37.5% a
+    img | DIV | Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
+    group | DIV | Net present value through 2032 of each picked move, Expected case, highest first: Booking app & rates +⁠$3.4M,
+    group | DIV | Your plan against A, cumulative cash, not discounted, $M (Expected case): yours ends level with A in 2032, cas
+    group | DIV | Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Part
+    group | DIV | Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a
+    img | DIV | Goodnight Inn
+    group | DIV | Page 2 of 2, room to invest: the investment strategy
+    link | DIV | Page navigation  Back to The Brand Review, page 1
+    group | DIV | Fix the middleman first: $9.4M now earns $3.5M a year by 2032.
+    group | DIV | The rest waits for one Board meeting in mid-2028. Expected case. NPV counts nothing after 2032, so we also sho
+    link | DIV | Bookmark  Recommended A: show the recommendation, package A
+    link | DIV | Bookmark  What waits and why: show the moves that wait for the 2028 gate, and why
+    link | DIV | Bookmark  Build your own, the current view: pick moves and compare your plan with A
+    group | DIV | Scenario: Low, Expected or High; every number on this page follows it
+    group | DIV | None of the 456 packages beats A through 2032
+    group | DIV | Only 6 pay back by 2032, all under $15M. Each dot is a package.
+    group | DIV | None of the 456 packages beats A through 2032 (Expected case). A, our recommendation: capex $9.4M, net present
+    group | DIV | All 456 packages the rules allow, each with its capex, its net present value through 2032 (Expected case), the
+    group | DIV | Build your own. Click a move to add or remove it.
+    group | DIV | Moves: pick a move to add it to your plan or to take it out; the table beside it gives each move's numbers
+    group | DIV | The ten moves, Expected case, in the order of the list beside it, each with the finding it answers, its capex,
+    group | DIV | Picked: 3 moves, $9.4M of $60.0M
+    group | DIV | Your plan: 3 moves, live by Apr 2028
+    group | DIV | Your plan, Expected case: capex $9.4M, net present value through 2032 +⁠$3.3M, +⁠$3.5M a year by 2032, 37.5% a
+    img | DIV | Within the rules: 3 moves, 2 growth, $9.4M of $60.0M.
+    group | DIV | Net present value through 2032 of each picked move, Expected case, highest first: Booking app & rates +⁠$3.4M,
+    group | DIV | Your plan against A, cumulative cash, not discounted, $M (Expected case): yours ends level with A in 2032, cas
+    group | DIV | Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Part
+    group | DIV | Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a
+    img | DIV | Goodnight Inn
+    group | DIV | Page 2 of 2, room to invest: the investment strategy
+    link | DIV | Page navigation  Back to The Brand Review, page 1
+Build your own, inside the selector (Enter, down, Space, Space, Esc)
+    tabto pick a move -> group | DIV | Moves: pick a move to add it to your plan or to take it out; the table beside it gives each move's numbers
+    button | DIV | Booking app & rates
+    button | DIV | Revenue management
+    button | DIV | Revenue management
+    button | DIV | Revenue management
+    group | DIV | Moves: pick a move to add it to your plan or to take it out; the table beside it gives each move's numbers

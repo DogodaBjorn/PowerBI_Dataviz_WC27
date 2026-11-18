@@ -1,0 +1,39 @@
+/// Row source of the moves table on the package tooltip (tt-package), disconnected: the ten Goodnight Inn moves by their short name, in the selector's order (BuildMove[Sort]: Expected NPV, high to low), and a Total row (ProjectID 'total'). The TT Row measures are blank for a move outside the hovered package, so the table lists the package's moves and their total.
+table TTMove
+	lineageTag: ab723228-b31f-54eb-8009-ec4cec0d4e15
+
+	column ProjectID
+		dataType: string
+		lineageTag: 74a059cb-7616-53cc-b0cf-31ccde1f9d40
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [ProjectID]
+
+	column Name
+		dataType: string
+		sortByColumn: Sort
+		lineageTag: 84a62047-bd56-52fe-a2c2-691f43b4e927
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Name]
+
+	column Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 59fe05b4-a65e-59d8-bb46-9b3b5787e080
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Sort]
+
+	partition TTMove = calculated
+		mode: import
+		source = ```
+				VAR Moves = SELECTCOLUMNS ( BuildMove, "ProjectID", BuildMove[ProjectID], "Name", BuildMove[Short Name], "Sort", BuildMove[Sort] )
+				RETURN
+				    UNION ( Moves, ROW ( "ProjectID", "total", "Name", "Total", "Sort", 99 ) )
+				```
+
+	annotation PBI_ResultType = Table

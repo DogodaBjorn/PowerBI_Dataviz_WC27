@@ -3,11 +3,11 @@
   "name": "hero_s_packages_build",
   "position": {
     "x": 56,
-    "y": 224,
-    "z": 30000,
-    "width": 672,
-    "height": 408,
-    "tabOrder": -5001
+    "y": 248,
+    "z": 45500,
+    "width": 682,
+    "height": 369,
+    "tabOrder": -45501
   },
   "visual": {
     "visualType": "scatterChart",
@@ -67,25 +67,6 @@
               "queryRef": "_Measures.Build NPV (sel)",
               "nativeQueryRef": "Build NPV (sel)",
               "displayName": "NPV through 2032"
-            }
-          ]
-        },
-        "Size": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Build Point Size"
-                }
-              },
-              "queryRef": "_Measures.Build Point Size",
-              "nativeQueryRef": "Build Point Size",
-              "displayName": "Marker size"
             }
           ]
         }
@@ -182,25 +163,15 @@
             },
             "start": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter X Start"
+                "Literal": {
+                  "Value": "5000000D"
                 }
               }
             },
             "end": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter X End"
+                "Literal": {
+                  "Value": "62000000D"
                 }
               }
             }
@@ -315,25 +286,15 @@
             },
             "start": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter Y Start"
+                "Literal": {
+                  "Value": "-60000000D"
                 }
               }
             },
             "end": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter Y End"
+                "Literal": {
+                  "Value": "20000000D"
                 }
               }
             }
@@ -347,8 +308,13 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Literal": {
-                      "Value": "'#E05A22'"
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Build Point Color"
                     }
                   }
                 }
@@ -372,7 +338,7 @@
             "bubbleSize": {
               "expr": {
                 "Literal": {
-                  "Value": "-20L"
+                  "Value": "2L"
                 }
               }
             },

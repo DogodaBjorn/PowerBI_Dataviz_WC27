@@ -1,4 +1,4 @@
-/// One row, 'Your plan': the category of the scatter layer that marks the plan being built (its X and Y are the Build Capex and Build NPV measures).
+/// One row, 'Your plan': the category of the scatter layer that marks the plan being built (its X and Y are the Build Capex and Build NPV measures). Name: 'You', the label above the dot.
 table BuildPoint
 	lineageTag: 9730eeee-a78c-5229-bb85-a192f99da0eb
 
@@ -10,10 +10,18 @@ table BuildPoint
 		isDataTypeInferred
 		sourceColumn: [Label]
 
+	column Name
+		dataType: string
+		lineageTag: b6ce7836-9dd7-5f90-b3e2-9ae945898110
+		summarizeBy: none
+		isNameInferred
+		isDataTypeInferred
+		sourceColumn: [Name]
+
 	partition BuildPoint = calculated
 		mode: import
 		source = ```
-				DATATABLE ( "Label", STRING, { { "Your plan" } } )
+				DATATABLE ( "Label", STRING, "Name", STRING, { { "Your plan", "You" } } )
 				```
 
 	annotation PBI_ResultType = Table

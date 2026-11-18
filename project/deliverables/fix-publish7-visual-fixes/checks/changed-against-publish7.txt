@@ -1,0 +1,43 @@
+What changed in the generated report against publish 7's build (a86e4ef), 15 Nov 2026
+
+16 files under project/pbip differ, all of them visuals of page 2 (p2-investment-strategy). Per visual, every changed line:
+
+c_build_head
+    "width": 1072  ->  "width": 560
+c_you_nums
+    "y": 302  ->  "y": 238
+c_you_nums_l1
+    "y": 330  ->  "y": 266
+c_you_nums_l2
+    "y": 321  ->  "y": 257
+c_you_nums_l3
+    "y": 330  ->  "y": 266
+c_you_nums_l4
+    "y": 330  ->  "y": 266
+c_you_nums_v2
+    "y": 302  ->  "y": 238
+c_you_nums_v3
+    "y": 302  ->  "y": 238
+c_you_nums_v4
+    "y": 302  ->  "y": 238
+c_you_range
+    "y": 382  ->  "y": 318
+c_you_rules
+    "y": 408  ->  "y": 344
+c_you_title
+    "y": 256  ->  "y": 192
+c_you_title_alarm
+    "y": 256  ->  "y": 192
+ch_build_bars
+    "y": 462  ->  "y": 392
+    "height": 157  ->  "height": 234
+    categoryAxis.innerPadding: "Value": "40L"  ->  "Value": "50L"   (the bar is half its row, was 60 %)
+    categoryAxis.outerPadding: "Value": "0L"  ->  "Value": "25L"    (a quarter row of padding at both ends, was none)
+tag_plan_cum
+    "x": 872  ->  "x": 1260
+z_tile_you
+    "y": 248  ->  "y": 184
+    "height": 392  ->  "height": 456
+
+Lines that are neither a position, a size nor the bar chart's two row paddings: 0
+The model (project/pbip/PillowKey.SemanticModel) does not differ. Bookmarks, pages, report.json and the theme do not differ.

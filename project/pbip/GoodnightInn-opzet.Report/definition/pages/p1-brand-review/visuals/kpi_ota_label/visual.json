@@ -3,7 +3,7 @@
   "name": "kpi_ota_label",
   "position": {
     "x": 984,
-    "y": 176,
+    "y": 156,
     "z": 19000,
     "width": 416,
     "height": 24,
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Room revenue booked through online agencies",
+                    "value": "Room revenue through online agencies",
                     "textStyle": {
                       "fontFamily": "'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif",
                       "fontSize": "16px",

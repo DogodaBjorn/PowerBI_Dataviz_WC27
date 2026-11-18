@@ -38,7 +38,11 @@ if len(sys.argv) > 2:
     # report pages only (tooltip pages have their own banner); a card's state (round 4) does not move the first row
     _tops = {min(c["y"] for c in p["cards"]) for p in _layout["pages"] if p.get("cards") and not p.get("tooltip")}
     assert len(_tops) == 1, f"pages start their first card row at different heights: {_tops}"
-    HORIZON = _tops.pop() + 64
+    # Final round (16 Nov, doc 31): the first card row went up 20 px (y 148) and the banner stayed where it was, so the
+    # cards hang 84 px into it, not 64. A page background with Fit is placed by its host: the banner ends about 16 px
+    # higher in a full-screen browser, about 25 px in a 1366 px window and 14 to 40 px in Desktop (measured on publish 7
+    # and in rounds 8 and 9), so 84 px keeps the overlap visible everywhere.
+    HORIZON = _tops.pop() + 84
 rng = np.random.default_rng(7)
 yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
 

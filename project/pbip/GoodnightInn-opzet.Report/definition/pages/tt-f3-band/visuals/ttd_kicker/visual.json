@@ -7,7 +7,7 @@
     "z": 1000,
     "width": 448,
     "height": 24,
-    "tabOrder": -1609
+    "tabOrder": -1605
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "F3  ·  THE FADING WELCOME",
+                    "value": "III  ·  THE FADING WELCOME",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",

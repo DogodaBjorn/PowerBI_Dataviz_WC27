@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "ch_f3_age",
   "position": {
-    "x": 1304,
-    "y": 392,
-    "z": 34000,
+    "x": 1310,
+    "y": 372,
+    "z": 35001,
     "width": 560,
-    "height": 272,
-    "tabOrder": 520
+    "height": 261,
+    "tabOrder": 9480
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -42,11 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "NPS 2025 (signed)"
+                  "Property": "NPS 2025 (label-safe)"
                 }
               },
-              "queryRef": "_Measures.NPS 2025 (signed)",
-              "nativeQueryRef": "NPS 2025 (signed)",
+              "queryRef": "_Measures.NPS 2025 (label-safe)",
+              "nativeQueryRef": "NPS 2025 (label-safe)",
               "displayName": "NPS 2025"
             }
           ]
@@ -120,6 +120,20 @@
                   "Value": "false"
                 }
               }
+            },
+            "innerPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "54L"
+                }
+              }
+            },
+            "outerPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "27L"
+                }
+              }
             }
           }
         }
@@ -170,6 +184,20 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Literal": {
+                  "Value": "-8.11D"
+                }
+              }
+            },
+            "end": {
+              "expr": {
+                "Literal": {
+                  "Value": "10.3D"
                 }
               }
             }

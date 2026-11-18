@@ -25,13 +25,6 @@ table BookingChannels
 		summarizeBy: none
 		sourceColumn: Channel
 
-	column Bookings
-		dataType: int64
-		formatString: 0
-		lineageTag: f8d28548-3e6b-5f9c-a46e-13267f1178d2
-		summarizeBy: none
-		sourceColumn: Bookings
-
 	column RoomNights
 		dataType: int64
 		formatString: 0
@@ -62,7 +55,8 @@ table BookingChannels
 				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
 				    Sheet = Source{[Item="BookingChannels",Kind="Sheet"]}[Data],
 				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
-				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"Channel", type text}, {"Bookings", Int64.Type}, {"RoomNights", Int64.Type}, {"RoomRevenue", Int64.Type}, {"DistributionCost", Int64.Type}})
+				    Selected = Table.SelectColumns(Promoted, {"HotelID", "Month", "Channel", "RoomNights", "RoomRevenue", "DistributionCost"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"HotelID", type text}, {"Month", type date}, {"Channel", type text}, {"RoomNights", Int64.Type}, {"RoomRevenue", Int64.Type}, {"DistributionCost", Int64.Type}})
 				in
 				    Typed
 

@@ -3,11 +3,11 @@
   "name": "hero_s_packages_named",
   "position": {
     "x": 56,
-    "y": 224,
-    "z": 29000,
-    "width": 672,
-    "height": 408,
-    "tabOrder": 15000
+    "y": 248,
+    "z": 46000,
+    "width": 682,
+    "height": 369,
+    "tabOrder": 9470
   },
   "visual": {
     "visualType": "scatterChart",
@@ -182,25 +182,15 @@
             },
             "start": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter X Start"
+                "Literal": {
+                  "Value": "5000000D"
                 }
               }
             },
             "end": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter X End"
+                "Literal": {
+                  "Value": "62000000D"
                 }
               }
             }
@@ -315,25 +305,15 @@
             },
             "start": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter Y Start"
+                "Literal": {
+                  "Value": "-60000000D"
                 }
               }
             },
             "end": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter Y End"
+                "Literal": {
+                  "Value": "20000000D"
                 }
               }
             }
@@ -417,64 +397,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
                   "Value": "false"
-                }
-              }
-            },
-            "enableBackground": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "backgroundColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#12233D'"
-                    }
-                  }
-                }
-              }
-            },
-            "backgroundTransparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
                 }
               }
             }
@@ -645,7 +568,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_named_10",
+        "name": "flt_named_11",
         "field": {
           "Column": {
             "Expression": {

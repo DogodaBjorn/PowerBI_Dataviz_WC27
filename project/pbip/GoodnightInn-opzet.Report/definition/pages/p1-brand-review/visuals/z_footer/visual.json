@@ -3,11 +3,11 @@
   "name": "z_footer",
   "position": {
     "x": 32,
-    "y": 1032,
+    "y": 1028,
     "z": 40000,
-    "width": 1856,
-    "height": 48,
-    "tabOrder": 9000
+    "width": 1320,
+    "height": 28,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "textbox",

@@ -40,20 +40,6 @@ table MonthlyPerformance
 		summarizeBy: none
 		sourceColumn: RoomRevenue
 
-	column FoodBeverageRevenue
-		dataType: int64
-		formatString: 0
-		lineageTag: 49c23332-e724-5c04-8a32-1c365b68ba83
-		summarizeBy: none
-		sourceColumn: FoodBeverageRevenue
-
-	column OtherRevenue
-		dataType: int64
-		formatString: 0
-		lineageTag: c1c42b0f-e75a-5997-bd97-fd524343e46b
-		summarizeBy: none
-		sourceColumn: OtherRevenue
-
 	column TotalRevenue
 		dataType: int64
 		formatString: 0
@@ -67,34 +53,6 @@ table MonthlyPerformance
 		lineageTag: f9fcae94-e7fd-55a9-bd4c-0832ba641714
 		summarizeBy: none
 		sourceColumn: StaffCost
-
-	column EnergyCost
-		dataType: int64
-		formatString: 0
-		lineageTag: f4c00eae-8635-55ed-a92d-b8ec27e209c9
-		summarizeBy: none
-		sourceColumn: EnergyCost
-
-	column MaintenanceCost
-		dataType: int64
-		formatString: 0
-		lineageTag: bdb4d0b1-d352-564f-99a8-1e82252fab43
-		summarizeBy: none
-		sourceColumn: MaintenanceCost
-
-	column FoodBeverageCost
-		dataType: int64
-		formatString: 0
-		lineageTag: ec27358a-0dfb-562f-8a7d-2f4bcba01f0e
-		summarizeBy: none
-		sourceColumn: FoodBeverageCost
-
-	column OtherOperatingCost
-		dataType: int64
-		formatString: 0
-		lineageTag: d0f18f04-e788-58d8-bd08-fd3b6f2d503b
-		summarizeBy: none
-		sourceColumn: OtherOperatingCost
 
 	column TotalOperatingExpenses
 		dataType: int64
@@ -112,7 +70,8 @@ table MonthlyPerformance
 				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
 				    Sheet = Source{[Item="MonthlyPerformance",Kind="Sheet"]}[Data],
 				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
-				    Typed = Table.TransformColumnTypes(Promoted, {{"HotelID", type text}, {"Month", type date}, {"RoomsAvailable", Int64.Type}, {"RoomsSold", Int64.Type}, {"RoomRevenue", Int64.Type}, {"FoodBeverageRevenue", Int64.Type}, {"OtherRevenue", Int64.Type}, {"TotalRevenue", Int64.Type}, {"StaffCost", Int64.Type}, {"EnergyCost", Int64.Type}, {"MaintenanceCost", Int64.Type}, {"FoodBeverageCost", Int64.Type}, {"OtherOperatingCost", Int64.Type}, {"TotalOperatingExpenses", Int64.Type}})
+				    Selected = Table.SelectColumns(Promoted, {"HotelID", "Month", "RoomsAvailable", "RoomsSold", "RoomRevenue", "TotalRevenue", "StaffCost", "TotalOperatingExpenses"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"HotelID", type text}, {"Month", type date}, {"RoomsAvailable", Int64.Type}, {"RoomsSold", Int64.Type}, {"RoomRevenue", Int64.Type}, {"TotalRevenue", Int64.Type}, {"StaffCost", Int64.Type}, {"TotalOperatingExpenses", Int64.Type}})
 				in
 				    Typed
 

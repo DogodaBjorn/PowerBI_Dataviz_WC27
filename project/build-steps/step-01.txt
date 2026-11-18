@@ -1,0 +1,10 @@
+Build step 1 of 12 · Branch and the five small spikes
+Goodnight Inn, Power BI Dataviz World Champs 2027 · submission 17 Nov 2026
+Execute this step now; do not wait for a date or a schedule.
+
+1. Git: git fetch origin; git checkout -b rebuild-finalv3 origin/claude/laughing-mendel-ruw64g; git push -u origin rebuild-finalv3
+2. Read CLAUDE.md, then project/project-state/active/23-build-workplan-finalv3-2026-11-13.md: section 1 (rules, binding),
+   the progress table and "Step 1". Read only the sources step 1 lists.
+3. Do step 1 only. Stop when its "Done when" holds, or at a blocker you cannot solve within the rules.
+4. Tell me exactly when you need me in Desktop (S-5, S-6) and what to click.
+5. Close-out per rule 12: log, progress row, commit, push, five-line report.

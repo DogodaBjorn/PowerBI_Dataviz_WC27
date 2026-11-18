@@ -3,11 +3,11 @@
   "name": "kpi_nps",
   "position": {
     "x": 1448,
-    "y": 200,
+    "y": 180,
     "z": 20000,
     "width": 416,
     "height": 48,
-    "tabOrder": 231
+    "tabOrder": 9769
   },
   "visual": {
     "visualType": "cardVisual",

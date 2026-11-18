@@ -3,11 +3,11 @@
   "name": "c_f3_title",
   "position": {
     "x": 1304,
-    "y": 352,
-    "z": 33000,
+    "y": 327,
+    "z": 35002,
     "width": 560,
     "height": 32,
-    "tabOrder": 510
+    "tabOrder": 9490
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F3 Title (text)",
-              "nativeQueryRef": "F3 Title (text)"
+              "nativeQueryRef": "F3 Title (text)",
+              "displayName": "III Title (text)"
             }
           ]
         }

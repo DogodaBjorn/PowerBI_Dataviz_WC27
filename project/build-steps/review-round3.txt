@@ -1,0 +1,85 @@
+Review round 3 · a fresh baseline, then the reassessment
+Goodnight Inn, Power BI Dataviz World Champs 2027 · submission 17 Nov 2026
+For any one of the five reviewers: jury, investor, UI/UX, clarity for a newcomer, dataviz and storytelling.
+
+YOUR ROLE
+You are the reviewer you were on 13 and 14 Nov. If Bjorn typed a role after this prompt, that is yours. If you do not
+know your role, ask him once, then go on. Your earlier reviews are the two files in project/project-state/active/
+whose names carry your role: 19-*-2026-11-13.md (your first review) and 24-*-v2-2026-11-14.md (your second).
+
+WHAT IS ASKED
+Two things, in this order, and the order matters.
+  Part 1  Do your original assignment again, from zero, on the report as it is published today. Not a check of
+          whether your feedback was processed: the same question you were first asked, answered as if you met this
+          entry for the first time.
+  Part 2  Only then: reassess your earlier findings against this version, and against what the build team says it did.
+Part 1 is written and saved before you open anything that belongs to part 2. A reviewer who first reads what was
+fixed sees a fixed report; we want to know what a fresh reader sees.
+
+SET-UP
+1. git fetch origin; git checkout rebuild-finalv3; git pull. Everything you need is on that branch.
+2. Read CLAUDE.md, only the first section ("project context": the contest's rules).
+3. Open your own 19-*.md and read ONLY its top: your role, your question or lens, your scope, and the part that says
+   how you score or what you look for. Stop before your findings. That top is your assignment for part 1.
+
+THE VERSION
+The sixth publish, 15 Nov 2026 12:37 UTC, the version that will be submitted. Your evidence:
+  project/deliverables/screenshots/Committee-walkthrough-2026-11-15/   read its README first: 23 views in the order a
+      judge clicks, zoom/ for small text, texts/ for every visible text and every alt text
+  project/deliverables/screenshots/PublishToWeb-2026-11-15-publish6/   mouse, keyboard and language facts
+  project/analysis/output/ and project/data/                           if your role checks numbers against the data
+[Bjorn: paste the Publish to Web link on this line if the reviewer can open a browser, or delete the line.]
+The captures are the published report, not Desktop renders and not a comp. What they cannot show is listed in the
+walkthrough's README; do not guess at what you cannot see, name it as not seen.
+
+PART 1 · THE BASELINE (do not open before it is saved: your own findings in doc 19, your doc 24, any other reviewer's
+file, doc 25, doc 23's logs, the earlier walkthrough of 14 Nov)
+- Apply your original method in full: every criterion, every page, every view, every tooltip your role covers. If
+  your first review scored, score again on the same scale, criterion by criterion, with the reason for each score.
+- Write findings the way you did before: where (the capture's file name), what you see, why it matters for your
+  role, how serious. Give them fresh IDs in your own family with a 3 in front of the number (J3-01, INV3-01, UX3-01,
+  CL3-01, DS3-01). Do not reuse old IDs here.
+- Say what is good as plainly as what is not. Do not be kinder because a team worked on it for days, and do not look
+  for trouble to have something to report. A view that is right gets one line that says so.
+- If your role has a verdict (would the jury place it, would the committee invest, can a newcomer follow it, is it
+  ready), give it, on this version alone.
+- Save the file now, with part 1 complete, before you go on.
+
+PART 2 · THE REASSESSMENT (now open your doc 19 in full, your doc 24, and
+project/project-state/active/25-action-plan-to-9-2026-11-15.md: sections 3, 5 and 7, and the logs in section 8)
+- One table, one row for every finding of your second review and every finding of your first that was still open
+  then: ID, what it was, status now (resolved, improved, open, worse, or left on purpose), and the capture that shows
+  it. A status needs evidence from this version; "the log says so" is not evidence.
+- For everything left on purpose (doc 25: the decisions of section 3, the "not doing" list of section 7, the
+  deviations in the logs): say whether the reason holds from your seat. A decision does not stand against a finding
+  that is genuine and valid; if you would still press it, say so and say why.
+- Lay part 1 beside your earlier findings: which fresh findings are old ones under a new ID, which are new, and which
+  old findings you no longer see. Where your fresh eye and your earlier self disagree, say which you stand by.
+- Look for what the fixes broke or added: a new seam, a new term, more to read, a number that no longer agrees
+  between two places.
+- Check three claims of the build team that matter for your role against the captures, and say whether they hold.
+
+PART 3 · WHERE IT STANDS
+- Your score or verdict for the three versions side by side: 13 Nov, 14 Nov, today. One line on what moved it.
+- Has it reached the bar your second review set for a 9 (or for your role's "ready")? If not, the shortest list of
+  what stands between: at most five items, most valuable first, each marked C (words or colour), M (model and report
+  work) or L (layout).
+- The submission is on 17 Nov. For each of those items: worth one more publish, or leave it. Be strict: every
+  publish is a risk, and "leave it" is a good answer.
+- Anything that belongs in the submission's description or cover image rather than in the report.
+
+RULES
+- You review; you change nothing. No edits to the generators, project/pbip, the comp, the slot maps, or any document
+  but your own. You do not publish and you do not open Power BI Desktop on the project.
+- One file: project/project-state/active/26-<the name of your doc 24 without "24-" and without "-v2-2026-11-14">-v3-2026-11-15.md
+  (the jury's becomes 26-jury-review-v3-2026-11-15.md). Top of the file: role, the version reviewed, the evidence
+  used, and one line that says part 1 was written before part 2 was opened.
+- Every statement about the report names its capture or its text file. Numbers you quote are read from texts/, not
+  estimated from a picture.
+- Plain English, short sentences, no filler. Tables for the status list and the scores, prose for the reasoning.
+- Delivery: if you work in a clone of your own, commit that one file on rebuild-finalv3 and push it; never push to
+  main, never open a pull request. If you work in the shared folder on Bjorn's machine, leave the file uncommitted and
+  say so.
+- End your reply to Bjorn with five lines: your score or verdict on 13 Nov, 14 Nov and today · the three findings
+  that matter most now · what you would still fix before the 17th, or "nothing" · anything you could not see · the
+  file's path.

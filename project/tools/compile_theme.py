@@ -87,13 +87,47 @@ theme = {
                           "fontColor": fill(c["ink_secondary"])}],
             # kept visible: the header carries "show as a table" and focus mode,
             # accessibility features the contest scores
+            # Build step 12 (published report, 14 Nov): the header is a strip of 20 screen px ABOVE the visual
+            # (31 page px in a 1366 px window). With an opaque fill it painted over whatever stands there as
+            # soon as the visual was hovered or clicked: the years under F2's chart above the folio table, the
+            # line above the ledger, "Click a move to add or remove it." above the moves table. So the strip
+            # has no fill; its two icons keep their colour.
             "visualHeader": [{"show": True, "foreground": fill(c["ink_secondary"]),
-                              "background": fill(c["surface"]), "transparency": 0}],
+                              "background": fill(c["surface"]), "transparency": 100}],
             "visualTooltip": [{"fontFamily": body, "fontSize": caption,
                                "background": fill(c["surface"]),
                                "titleFontColor": fill(c["ink_secondary"]),
                                "valueFontColor": fill(c["ink"])}],
         }},
+        # P-2, one control language (doc 21 section 3; FinalV3 build step 5): the state model of the light surface set
+        # once, here. A control that sets nothing gets the secondary look (white, 1 px Dusk outline, Night text) and the
+        # Seam hover; a visual sets only its size, its shape, its text and, for a primary or a masthead control, its fill.
+        # Checked against reportThemeSchema-2.159 (visual-actionButton fill / text / outline with $id default, hover,
+        # selected; actionStates-advancedSlicerVisual for outline and value). The slicer's fill states are not in the
+        # theme schema (fillCustom carries no $id), so button_slicer() keeps them per visual. No shape here: a theme
+        # shape would turn P2's tabs into pills (they are 8 px rectangles, the large size).
+        "actionButton": {"*": {
+            "fill": [{"$id": "default", "show": True, "fillColor": fill(c["surface"]), "transparency": 0},
+                     {"$id": "hover", "fillColor": fill(c["hairline"]), "transparency": 0},
+                     {"$id": "selected", "fillColor": fill(c["hairline"]), "transparency": 0}],
+            "text": [{"$id": "default", "show": True, "fontFamily": body, "fontSize": body_pt, "fontColor": fill(c["ink"]), "bold": False},
+                     {"$id": "hover", "fontColor": fill(c["ink"])},
+                     {"$id": "selected", "fontColor": fill(c["ink"])}],
+            "outline": [{"$id": "default", "show": True, "lineColor": fill(c["ink_secondary"]), "weight": 1}],
+        }},
+        "advancedSlicerVisual": {"*": {
+            "outline": [{"$id": "default", "show": True, "lineColor": fill(c["ink_secondary"]), "weight": 1},
+                        {"$id": "selection:selected", "lineColor": fill(c["ink"])}],
+            "value": [{"$id": "default", "fontFamily": body, "fontSize": body_pt, "fontColor": fill(c["ink"])},
+                      {"$id": "selection:selected", "fontColor": fill(c["surface"])}],
+        }},
+        # FinalV3 build step 7: a data label that asks for a background (the end labels of the cumulative charts, doc 22
+        # section 3) gets the card's white, opaque. Set here because Microsoft's CLI validator reads a fill named
+        # backgroundColor inside a visual's labels as a misplaced "color" (PBIR_FORMATTING_PROP_NESTED); the shape itself
+        # is the theme schema's (reportThemeSchema-2.159, visual-lineChart labels: backgroundColor, backgroundTransparency).
+        "lineChart": {"*": {"labels": [{"backgroundColor": fill(c["surface"]), "backgroundTransparency": 0}]}},
+        # build step 9: the same for a scatter's category label with a background (the plan's name "You" in the proof chart)
+        "scatterChart": {"*": {"categoryLabels": [{"backgroundColor": fill(c["surface"]), "backgroundTransparency": 0}]}},
         "page": {"*": {
             "background": [{"color": fill(c["canvas"]), "transparency": 0}],
             "outspace": [{"color": fill(c["canvas"]), "transparency": 0}],

@@ -1,0 +1,8 @@
+Resume build step <N> of 12 · <title>
+Goodnight Inn, Power BI Dataviz World Champs 2027 · submission 17 Nov 2026
+
+1. Git: git fetch origin; git checkout rebuild-finalv3; git pull
+2. Read CLAUDE.md, then project/project-state/active/23-build-workplan-finalv3-2026-11-13.md: section 1 (rules, binding),
+   the progress table, "Step <N>" and its log so far. Start where the log stops; do not redo finished work.
+3. Do the rest of step <N> only. Stop when its "Done when" holds, or at a blocker you cannot solve within the rules.
+4. Close-out per rule 12: log, progress row, commit, push, five-line report.

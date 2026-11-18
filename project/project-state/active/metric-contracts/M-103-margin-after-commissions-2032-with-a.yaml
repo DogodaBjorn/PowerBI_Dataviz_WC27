@@ -1,0 +1,46 @@
+# Metric contract (invariant 4), filled at build step 3 of doc 23 on 2026-11-13.
+# Source of the definition: doc 20 (E11, R-P2-5), doc 21 section 10.2, analysis/50_storytelling_checks.py section 6.
+
+contract: metric
+metric_id: "M-103"
+name: "Operating margin after commissions: 2032 with A"
+date: "2026-11-13"
+
+definition:
+  plain_language: >
+    The share of revenue Goodnight Inn would keep after operating costs and channel commissions if package A
+    worked at full effect on the 2025 business.
+  formula_in_words: >
+    Goodnight Inn's 2025 total revenue minus operating expenses minus distribution cost, plus the organisers'
+    annual operating-profit impact of the moves of package A in the scenario in view; divided by 2025 total
+    revenue plus the organisers' annual revenue impact of the same moves.
+  grain: "The brand, one scenario. One value per scenario; it does not move with dates or hotels."
+  filters: "Goodnight Inn; calendar 2025 as the base; package A (Package[Preset] = A); scenario from the toggle."
+  unit: "percentage"
+  direction_is_good: "up"
+
+edge_cases:
+  - >
+    Scenario logic, labelled as such (invariant 5): the 2025 brand plus A at full yearly effect, in 2025 dollars.
+    It is not a forecast of 2032: the do-nothing drift of costs and commissions after 2025 is not in it.
+  - >
+    The organisers' profit impact is already net of the moves' running costs (E12: the revenue management system
+    reconciles to the dollar), so no running cost is subtracted again.
+  - "2025 value 33.73 %; with A: Low 34.12 %, Expected 35.09 %, High 36.10 % (E11)."
+  - >
+    The ledger's status words compare the gain with the fall since 2023 (36.45 % to 33.73 %, 2.72 points
+    unrounded; the canvas says 2.8, the difference of the two shown values, decision N-2).
+
+targets:
+  exists: false
+  source: "No target. The comparison base on the ledger is the 2023 value, the last year before the fall."
+
+owner: "Bjorn (analyst and author of the entry)"
+synonyms: "GOP margin after distribution; margin after commissions. Not the GOP margin before commissions (44.4 % in 2025)."
+conflicts_checked: true         # same construction as [GOP Margin after Distribution %]; the 2032 value adds A's impacts to numerator and denominator
+
+implementation:
+  measure_name: "Margin after 2032 with A (sel); base: KPI Margin after GI; status share: Margin Fall Recovered % (sel)"
+  display_folder: "15 Storytelling rebuild"
+  format_string: "0.0%"
+  verified: "project/tools/number_checks.py against the workbook (E11) and the build spec, Low / Expected / High, 13 Nov 2026"

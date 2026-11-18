@@ -3,10 +3,10 @@
   "name": "z_card_tt_moves",
   "position": {
     "x": 16,
-    "y": 312,
+    "y": 304,
     "z": 101,
     "width": 448,
-    "height": 224,
+    "height": 296,
     "tabOrder": -1501
   },
   "visual": {

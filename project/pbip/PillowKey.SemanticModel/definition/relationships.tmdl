@@ -2,14 +2,6 @@ relationship 9e33e881-6458-5438-84c2-f75fb33651e2
 	fromColumn: Hotels.Brand
 	toColumn: Brands.Brand
 
-relationship f7ef5375-0fc5-5f25-ae4d-acf48cd59039
-	fromColumn: Hotels.Region
-	toColumn: Region.Region
-
-relationship 4bcab7aa-738a-5a22-9c1c-c7d8977cc08a
-	fromColumn: FinanceAssumptions.Region
-	toColumn: Region.Region
-
 relationship b46480e5-6d16-5ef9-86ba-1e3766e77add
 	fromColumn: InvestmentScenarios.ProjectID
 	toColumn: InvestmentProjects.ProjectID
@@ -32,14 +24,6 @@ relationship e1981573-24a4-5c2d-ad74-5d61f6dd53b0
 
 relationship 507180f1-18f2-5e43-a907-90084ddf5500
 	fromColumn: MonthlyPerformance.Month
-	toColumn: Date.Date
-
-relationship b872d52e-f612-5f97-8dad-f1a752a17e40
-	fromColumn: GuestSegments.HotelID
-	toColumn: Hotels.HotelID
-
-relationship 23d52b2b-be3d-5c15-b4fc-5047d869cadb
-	fromColumn: GuestSegments.Month
 	toColumn: Date.Date
 
 relationship e25bdc4c-1dcb-53e4-9cba-b689a7163974
@@ -73,10 +57,6 @@ relationship ada3ec6f-bfea-50e5-9f88-cc14112244d8
 relationship c73cc1dd-3f4a-5232-8d88-ca60fe0e158b
 	fromColumn: ProjectCashflow.Month
 	toColumn: Date.Date
-
-relationship b9f6263e-77c4-5a90-b54a-22c8eb9cd232
-	fromColumn: HotelOutlook.HotelID
-	toColumn: Hotels.HotelID
 
 relationship 92f81aca-2ad5-5c1b-a360-2468742b133d
 	fromColumn: PackageProject.PackageID

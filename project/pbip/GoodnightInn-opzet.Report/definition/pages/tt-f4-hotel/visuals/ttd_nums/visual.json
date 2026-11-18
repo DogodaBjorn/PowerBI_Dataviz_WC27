@@ -7,7 +7,7 @@
     "z": 1002,
     "width": 416,
     "height": 56,
-    "tabOrder": 110
+    "tabOrder": 9890
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Occupancy % 2025"
+                  "Property": "TT Occupancy 2025 (text)"
                 }
               },
-              "queryRef": "_Measures.Occupancy % 2025",
-              "nativeQueryRef": "Occupancy % 2025"
+              "queryRef": "_Measures.TT Occupancy 2025 (text)",
+              "nativeQueryRef": "TT Occupancy 2025 (text)"
             },
             {
               "field": {
@@ -37,11 +37,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "ADR 2025"
+                  "Property": "TT ADR 2025 (text)"
                 }
               },
-              "queryRef": "_Measures.ADR 2025",
-              "nativeQueryRef": "ADR 2025"
+              "queryRef": "_Measures.TT ADR 2025 (text)",
+              "nativeQueryRef": "TT ADR 2025 (text)"
             },
             {
               "field": {
@@ -51,11 +51,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "RevPAR 2025"
+                  "Property": "TT RevPAR 2025 (text)"
                 }
               },
-              "queryRef": "_Measures.RevPAR 2025",
-              "nativeQueryRef": "RevPAR 2025"
+              "queryRef": "_Measures.TT RevPAR 2025 (text)",
+              "nativeQueryRef": "TT RevPAR 2025 (text)"
             }
           ]
         }
@@ -294,7 +294,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Occupancy % 2025"
+            "metadata": "_Measures.TT Occupancy 2025 (text)"
           }
         },
         {
@@ -308,7 +308,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.ADR 2025"
+            "metadata": "_Measures.TT ADR 2025 (text)"
           }
         },
         {
@@ -322,7 +322,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.RevPAR 2025"
+            "metadata": "_Measures.TT RevPAR 2025 (text)"
           }
         }
       ],

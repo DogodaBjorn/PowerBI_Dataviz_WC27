@@ -1,0 +1,12 @@
+Build FinalV3 · run the next step
+Goodnight Inn, Power BI Dataviz World Champs 2027 · submission 17 Nov 2026
+Execute now; do not wait for a date or a schedule.
+
+1. Git: git fetch origin. If branch rebuild-finalv3 exists: git checkout rebuild-finalv3; git pull.
+   If it does not exist yet, the next step is step 1 (it creates the branch).
+2. Read the progress table in project/project-state/active/23-build-workplan-finalv3-2026-11-13.md (section 0).
+3. Take the first step whose status is not "done".
+   - Status "doing": follow project/build-steps/resume.txt for that step.
+   - Status "blocked": stop and tell me what the step's log says is needed from me.
+   - Otherwise: open project/build-steps/step-NN.txt for that step and execute it exactly.
+4. Do that one step only, then close out as rule 12 of doc 23 says. If all twelve are done, tell me so.

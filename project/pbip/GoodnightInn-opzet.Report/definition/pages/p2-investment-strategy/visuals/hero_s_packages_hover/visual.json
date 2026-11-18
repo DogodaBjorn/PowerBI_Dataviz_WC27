@@ -3,11 +3,11 @@
   "name": "hero_s_packages_hover",
   "position": {
     "x": 56,
-    "y": 224,
-    "z": 34000,
-    "width": 672,
-    "height": 408,
-    "tabOrder": -4001
+    "y": 248,
+    "z": 48000,
+    "width": 682,
+    "height": 369,
+    "tabOrder": -48001
   },
   "visual": {
     "visualType": "scatterChart",
@@ -162,25 +162,15 @@
             },
             "start": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter X Start"
+                "Literal": {
+                  "Value": "5000000D"
                 }
               }
             },
             "end": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter X End"
+                "Literal": {
+                  "Value": "62000000D"
                 }
               }
             }
@@ -295,25 +285,15 @@
             },
             "start": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter Y Start"
+                "Literal": {
+                  "Value": "-60000000D"
                 }
               }
             },
             "end": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter Y End"
+                "Literal": {
+                  "Value": "20000000D"
                 }
               }
             }
@@ -357,7 +337,7 @@
             "bubbleSize": {
               "expr": {
                 "Literal": {
-                  "Value": "0L"
+                  "Value": "-15L"
                 }
               }
             },

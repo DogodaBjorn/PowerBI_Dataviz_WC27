@@ -3,11 +3,11 @@
   "name": "c_f1_title",
   "position": {
     "x": 56,
-    "y": 352,
+    "y": 327,
     "z": 24000,
     "width": 560,
     "height": 32,
-    "tabOrder": 310
+    "tabOrder": 9690
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F1 Title (text)",
-              "nativeQueryRef": "F1 Title (text)"
+              "nativeQueryRef": "F1 Title (text)",
+              "displayName": "I Title (text)"
             }
           ]
         }

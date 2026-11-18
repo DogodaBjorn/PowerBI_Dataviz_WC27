@@ -1,0 +1,2037 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "p1-brand-review",
+  "displayName": "The Wake-up Call",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#12233D'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          },
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'canvas-night.jpg'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "canvas-night.jpg"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#12233D'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "ch_f1_margin",
+      "target": "z_card_card_kpi",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "z_card_card_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "z_card_card_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "z_card_card_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "z_card_card_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "z_eyebrow",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "z_headline",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_subtitle",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_occ_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_occ",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_occ_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_margin_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_margin_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_ota_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_ota_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_nps_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_nps",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "kpi_nps_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f1_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f1_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lbl_f1_before",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lbl_f1_band",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f1_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lnk_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f2_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f2_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "ch_f2_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "tbl_f2_folio",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f2_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lnk_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f3_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f3_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "ch_f3_age",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f3_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lnk_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lnk_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_rows_lab_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_rows",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_rows_lab_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_rows_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_rows_lab_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_rows_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "ch_f4_avg",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "ch_f4_dots",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lbl_f4_kingston",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lbl_f4_orlando",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lbl_f4_kuala_lumpur",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lbl_f4_kansas_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lbl_f4_phoenix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lbl_f4_gatwick_montreal",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "lbl_f4_toronto",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "z_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "btn_next",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "chip_def",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "tag_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "tag_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "z_card_card_kpi",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "z_card_card_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "z_card_card_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "z_card_card_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "z_card_card_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "z_eyebrow",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "z_headline",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_subtitle",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_occ_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_occ",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_occ_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_margin_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_margin_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_ota_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_ota_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_nps_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_nps",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "kpi_nps_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f1_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f1_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "ch_f1_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lbl_f1_before",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lbl_f1_band",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f1_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lnk_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f2_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f2_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "tbl_f2_folio",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f2_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lnk_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f3_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f3_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "ch_f3_age",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f3_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lnk_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lnk_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_rows_lab_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_rows",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_rows_lab_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_rows_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_rows_lab_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_rows_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "ch_f4_avg",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "ch_f4_dots",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lbl_f4_kingston",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lbl_f4_orlando",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lbl_f4_kuala_lumpur",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lbl_f4_kansas_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lbl_f4_phoenix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lbl_f4_gatwick_montreal",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "lbl_f4_toronto",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "z_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "btn_next",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "chip_def",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "tag_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "tag_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "z_card_card_kpi",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "z_card_card_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "z_card_card_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "z_card_card_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "z_card_card_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "z_eyebrow",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "z_headline",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_subtitle",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_occ_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_occ",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_occ_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_margin_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_margin_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_ota_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_ota_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_nps_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_nps",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "kpi_nps_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f1_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f1_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "ch_f1_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lbl_f1_before",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lbl_f1_band",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f1_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lnk_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f2_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f2_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "ch_f2_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f2_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lnk_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f3_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f3_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "ch_f3_age",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f3_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lnk_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lnk_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_rows_lab_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_rows",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_rows_lab_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_rows_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_rows_lab_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_rows_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "ch_f4_avg",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "ch_f4_dots",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lbl_f4_kingston",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lbl_f4_orlando",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lbl_f4_kuala_lumpur",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lbl_f4_kansas_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lbl_f4_phoenix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lbl_f4_gatwick_montreal",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "lbl_f4_toronto",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "z_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "btn_next",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "chip_def",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "tag_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "tag_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "z_card_card_kpi",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "z_card_card_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "z_card_card_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "z_card_card_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "z_card_card_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "z_eyebrow",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "z_headline",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_subtitle",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_occ_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_occ",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_occ_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_margin_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_margin_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_ota_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_ota_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_nps_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_nps",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "kpi_nps_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f1_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f1_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "ch_f1_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lbl_f1_before",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lbl_f1_band",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f1_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lnk_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f2_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f2_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "ch_f2_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "tbl_f2_folio",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f2_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lnk_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f3_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f3_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f3_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lnk_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lnk_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_rows_lab_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_rows",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_rows_lab_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_rows_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_rows_lab_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_rows_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "ch_f4_avg",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "ch_f4_dots",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lbl_f4_kingston",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lbl_f4_orlando",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lbl_f4_kuala_lumpur",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lbl_f4_kansas_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lbl_f4_phoenix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lbl_f4_gatwick_montreal",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "lbl_f4_toronto",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "z_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "btn_next",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "chip_def",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "tag_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "tag_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "z_card_card_kpi",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "z_card_card_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "z_card_card_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "z_card_card_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "z_card_card_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "z_eyebrow",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "z_headline",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_subtitle",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_occ_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_occ",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_occ_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_margin_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_margin_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_ota_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_ota_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_nps_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_nps",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "kpi_nps_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f1_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f1_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "ch_f1_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lbl_f1_before",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lbl_f1_band",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f1_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lnk_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f2_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f2_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "ch_f2_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "tbl_f2_folio",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f2_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lnk_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f3_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f3_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "ch_f3_age",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f3_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lnk_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lnk_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_rows_lab_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_rows",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_rows_lab_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_rows_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_rows_lab_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_rows_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "ch_f4_dots",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lbl_f4_kingston",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lbl_f4_orlando",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lbl_f4_kuala_lumpur",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lbl_f4_kansas_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lbl_f4_phoenix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lbl_f4_gatwick_montreal",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "lbl_f4_toronto",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "z_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "btn_next",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "chip_def",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "tag_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "tag_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "z_card_card_kpi",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "z_card_card_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "z_card_card_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "z_card_card_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "z_card_card_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "z_logo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "z_eyebrow",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "z_headline",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_subtitle",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_occ_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_occ",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_occ_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_margin_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_margin_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_ota_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_ota_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_nps_label",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_nps",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "kpi_nps_ctx",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f1_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f1_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "ch_f1_margin",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lbl_f1_before",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lbl_f1_band",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f1_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lnk_f1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f2_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f2_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "ch_f2_ota",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "tbl_f2_folio",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f2_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lnk_f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f3_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f3_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "ch_f3_age",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f3_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lnk_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_kicker",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lnk_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_rows_lab_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_rows",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_rows_lab_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_rows_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_rows_lab_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_rows_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "ch_f4_avg",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lbl_f4_kingston",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lbl_f4_orlando",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lbl_f4_kuala_lumpur",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lbl_f4_kansas_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lbl_f4_phoenix",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lbl_f4_gatwick_montreal",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "lbl_f4_toronto",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "z_footer",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "btn_next",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "chip_def",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "tag_f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "tag_f4",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_rows_mark_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_rows_mark_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f1_margin",
+      "target": "c_f4_rows_mark_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_rows_mark_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_rows_mark_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f2_ota",
+      "target": "c_f4_rows_mark_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_rows_mark_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_rows_mark_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f3_age",
+      "target": "c_f4_rows_mark_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_rows_mark_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_rows_mark_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_avg",
+      "target": "c_f4_rows_mark_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_rows_mark_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_rows_mark_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ch_f4_dots",
+      "target": "c_f4_rows_mark_highway",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_rows_mark_airport",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_rows_mark_city",
+      "type": "NoFilter"
+    },
+    {
+      "source": "tbl_f2_folio",
+      "target": "c_f4_rows_mark_highway",
+      "type": "NoFilter"
+    }
+  ]
+}

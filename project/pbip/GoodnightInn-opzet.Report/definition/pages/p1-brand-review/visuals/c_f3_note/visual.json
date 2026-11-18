@@ -3,11 +3,11 @@
   "name": "c_f3_note",
   "position": {
     "x": 1304,
-    "y": 672,
+    "y": 649,
     "z": 35000,
     "width": 560,
-    "height": 96,
-    "tabOrder": 530
+    "height": 64,
+    "tabOrder": 9470
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F3 Note (text)",
-              "nativeQueryRef": "F3 Note (text)"
+              "nativeQueryRef": "F3 Note (text)",
+              "displayName": "III Note (text)"
             }
           ]
         }

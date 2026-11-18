@@ -29,6 +29,7 @@ the crosscheck output reproduces identically from either source. Run scripts wit
 | `40_package_matrix.py <data> <outdir> [--annual]` | parquet | the P2 package matrix: 456 valid Goodnight Inn packages, NPV / run-rate per scenario, presets A/B/C per lens, sensitivity (`output/packages.txt`, `packages.csv`, `project_economics.csv`, `project_yearly.csv`); monthly discounting by default (04-p2-build-method) |
 | `41_opzet_facts.py <data> <packages.csv> <project_economics.csv> <json>` | parquet + 40's output | the facts behind the opzet comp: four-brand comparison and ranks, geography, refresh ages, P2 projects (`output/opzet_facts.txt`, `design-prototypes/opzet-data.json`) |
 | `17_crosscheck_dutch_review.py <data>` | parquet | verification of the Dutch data review of 4 Nov 2026: margins after distribution, per-hotel trends, comfort vs renovation age, complaint momentum, renovation spend per brand, sister event study, NPV conventions (`output/crosscheck.txt`) |
+| `50_storytelling_checks.py <PillowKey_Dataset.xlsx>` | workbook | the facts behind doc 20: kiosk hotels vs occupancy rank, check-in complaints by group, ADR growth, months at 90 %+, margin split since 2023, the 2032 ledger, running-cost netting, yield per move (`output/storytelling_checks.txt`) |
 | `tools/extract_mht.py` | the saved blog page | the contest brief as text and its links (`project/contest/`) |
 
 Modelling choices baked into the quick economics (to be decided properly in the

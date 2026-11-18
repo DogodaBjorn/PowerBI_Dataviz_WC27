@@ -1,0 +1,7 @@
+compliance_check (R-X-2, files only): 5 checks, 0 failed
+
+  ok    two visible pages, the rest hidden tooltip pages: visible: The Wake-up Call, Room to Invest; hidden tooltip pages: tt-package, tt-f3-band, tt-f4-hotel, tt-year, tt-glossary
+  ok    four or more built-in visual types on the two pages, no custom visual: area: stackedAreaChart x1; bar: barChart x1, clusteredBarChart x1; column: clusteredColumnChart x1; line: lineChart x4; scatter: scatterChart x8; table: tableEx x5
+  ok    built-in fonts only: arial (67 files), helvetica (67 files), sans-serif (67 files), segoe ui (56 files), segoe ui semibold (18 files), wf_segoe-ui_normal (55 files), wf_segoe-ui_semibold (17 files)
+  ok    embedded images only: 7 registered images in the report (canvas-night.jpg, canvas-tt-tt-f3-band.jpg, canvas-tt-tt-f4-hotel.jpg, canvas-tt-tt-glossary.jpg, canvas-tt-tt-package.jpg, canvas-tt-tt-year.jpg, gi-lockup-reversed@2x.png); web addresses in the report: 0; in the model: 0
+  ok    provided data only: 13 tables read the organisers' workbook through the DataFile parameter; 12 tables are calculated in the model: BuildBar, BuildMove, BuildPoint (typed labels or decision data), Finding (typed labels or decision data), FolioLine (typed labels or decision data), MoveDecision (typed labels or decision data), Package, PackageProject, PlanSelector (typed labels or decision data), ProjectCashflow, TTMove, WaitOption (typed labels or decision data)

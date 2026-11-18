@@ -32,7 +32,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 REPORT = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "project" / "pbip" / "GoodnightInn-opzet.Report"
 MEASURES_TMDL = ROOT / "project" / "pbip" / "PillowKey.SemanticModel" / "definition" / "tables" / "_Measures.tmdl"
-LAYOUT = json.loads((ROOT / "project" / "design-prototypes" / "opzet-layout.json").read_text(encoding="utf-8"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from slot_map import load_layout  # noqa: E402  (build step 5: P1 from v10, P2 from v9 until step 6)
+LAYOUT = load_layout()
+# 16 Nov (doc 32): the cards and tiles are where the REPORT has their frames (z_card_<id>, z_tile_<id>), not where the slot map
+# put them: the hand-finished report (GoodnightInn-final.Report) has frames Bjorn resized in Desktop, and a visual he moved
+# to the foot of a taller card must still count as inside it. For the generator's own report the two are the same.
+for _p in LAYOUT["pages"]:
+    for _kind, _pre in (("cards", "z_card_"), ("tiles", "z_tile_")):
+        for _c in _p.get(_kind, []):
+            _f = REPORT / "definition" / "pages" / _p["name"] / "visuals" / f"{_pre}{_c['id']}" / "visual.json"
+            if _f.exists():
+                _pos = json.loads(_f.read_text(encoding="utf-8-sig"))["position"]
+                _c.update(x=_pos["x"], y=_pos["y"], w=_pos["width"], h=_pos["height"])
 CANVAS = ROOT / "project" / "deliverables" / "backgrounds" / "canvas-night.jpg"
 SURFACE = "#FFFFFF"
 # what a tile paints under its visuals (opzet_report.TILE_KIND): glow and outline are white, tint is Ice, night is Night
@@ -51,6 +63,9 @@ TEXT_PROPS = {"labels": ["color"], "categoryAxis": ["labelColor", "titleColor"],
 
 fails, notes = [], []
 SVG_FONT = re.compile(r"font-size='(\d+(?:\.\d+)?)'")
+
+
+TAB_FALLING = True  # the same switch as opzet_report.TAB_FALLING: the first stop of the Tab key has the highest tabOrder
 
 
 def fail(where, msg):
@@ -375,6 +390,12 @@ for pname in pages_meta["pageOrder"]:
                                 fail(where, f"text {ic} on its own fill {fc}: {ratio(ic, fc):.2f}:1 (needs {3.0 if big else 4.5}:1)")
                         continue
                     for c in colours(pr.get(k)):
+                        if obj == "categoryLabels" and literal(pr.get("enableBackground")) == "true" and colours(pr.get("backgroundColor")):
+                            # build step 9: a category label on a background of its own (the plan's name "You" on white)
+                            for bg in colours(pr.get("backgroundColor")):
+                                if ratio(c, bg) < (3.0 if big else 4.5):
+                                    fail(where, f"label {c} on its own background {bg}: {ratio(c, bg):.2f}:1")
+                            continue
                         (on_marks if obj == "categoryLabels" else texts).append((c, big))
         if vtype not in ("actionButton", "advancedSlicerVisual", "image") and bgs:
             for c, big in texts:
@@ -453,7 +474,8 @@ for pname in pages_meta["pageOrder"]:
                 # a tile is a sub-card (round 4: B and C side by side): a visual inside one is placed by the tile's
                 # rectangle against visuals outside it, so a tile is read whole before the next tile or row
                 tile = tile_of(pl, p["x"], p["y"], p["width"], p["height"], st)
-                seq.append((t, grp, p["y"], p["y"] + p["height"], p["x"], p["x"] + p["width"], v["name"], tile))
+                # build step 10: Tab runs from the highest tabOrder to the lowest (opzet_report.TAB_FALLING, measured in Desktop)
+                seq.append((-t if TAB_FALLING else t, grp, p["y"], p["y"] + p["height"], p["x"], p["x"] + p["width"], v["name"], tile))
             seq.sort(key=lambda e: e[:2])
             for a, b2 in zip(seq, seq[1:]):
                 if b2[1] < a[1]:

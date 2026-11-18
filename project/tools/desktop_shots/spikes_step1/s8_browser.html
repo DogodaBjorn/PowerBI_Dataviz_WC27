@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>S-8 glyph check</title>
+<style>
+  body { margin: 24px; background: #fff; color: #12233D; font-size: 16px; }
+  .row { display: flex; gap: 16px; align-items: center; margin-bottom: 16px; }
+  .tag { display: inline-flex; align-items: center; justify-content: center; width: 144px; height: 28px;
+         border: 1px solid #E3DFD3; border-radius: 14px; box-sizing: border-box; }
+  .i { color: #E05A22; }
+  .big { font-size: 40px; }
+  .segoe { font-family: 'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif; }
+  .nosegoe { font-family: wf_segoe-ui_normal, helvetica, arial, sans-serif; }
+  .generic { font-family: sans-serif; }
+  code { font-size: 13px; color: #4B5466; }
+</style>
+</head>
+<body>
+  <div class="row segoe"><span class="tag"><span class="i">ⓘ</span>&nbsp;Hover a bar</span>
+    <span class="tag">ⓘ Definitions</span><span class="big"><span class="i">ⓘ</span> ⓘ Hover a bar</span>
+    <code>'Segoe UI', wf_segoe-ui_normal, helvetica, arial, sans-serif</code></div>
+  <div class="row nosegoe"><span class="tag"><span class="i">ⓘ</span>&nbsp;Hover a bar</span>
+    <span class="tag">ⓘ Definitions</span><span class="big"><span class="i">ⓘ</span> ⓘ Hover a bar</span>
+    <code>without Segoe UI: wf_segoe-ui_normal, helvetica, arial, sans-serif</code></div>
+  <div class="row generic"><span class="tag"><span class="i">ⓘ</span>&nbsp;Hover a bar</span>
+    <span class="tag">ⓘ Definitions</span><span class="big"><span class="i">ⓘ</span> ⓘ Hover a bar</span>
+    <code>sans-serif</code></div>
+</body>
+</html>

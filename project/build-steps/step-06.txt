@@ -1,0 +1,11 @@
+Build step 6 of 12 · Page 2 frame and the decision card
+Goodnight Inn, Power BI Dataviz World Champs 2027 · submission 17 Nov 2026
+Execute this step now; do not wait for a date or a schedule.
+
+1. Git: git fetch origin; git checkout rebuild-finalv3; git pull
+2. Read CLAUDE.md, then project/project-state/active/23-build-workplan-finalv3-2026-11-13.md: section 1 (rules, binding),
+   the progress table, the logs of steps 4 and 5, and "Step 6". Read only the sources step 6 lists, and open the comp
+   (#rec) in all three scenarios.
+3. If step 5 is not done in the progress table, stop and tell me.
+4. Do step 6 only. Stop when its "Done when" holds, or at a blocker you cannot solve within the rules.
+5. Close-out per rule 12: log, progress row, commit, push, five-line report.

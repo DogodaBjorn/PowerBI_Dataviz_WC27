@@ -1,0 +1,178 @@
+  1 img                        13  Goodnight Inn
+  2 button                     74  Paginanavigatie Back to The Brand Review, page 1. CTRL+klik hier om volgen
+  3 Tekstvak                   52  Page 2 of 2, room to invest: the investment strategy
+  4 button                     99  Bladwijzer Recommended A, the current view: the recommendation, package A. CTRL+klik hier om volgen
+  5 button                    108  Bladwijzer What waits and why: show the moves that wait for the 2028 gate, and why. CTRL+klik hier om volgen
+  6 button                     97  Bladwijzer Build your own: show pick moves and compare your plan with A. CTRL+klik hier om volgen
+  7 Kaart                      62  Fix the middleman first: $9.4M now earns $3.5M a year by 2032.
+  8 Kaart                     226  The other $50.6M waits for one Board decision in mid-2028. Expected case. NPV through 2032 at 8% in 2025 dollars is the contest's rule and counts nothing after 2032, so we also show what each move earns a year once it is live.
+  9 Tekstvak                    0  (no name: decorative)
+ 10 Knopslicer                 69  Scenario: Low, Expected or High; every number on this page follows it
+          rij 'Low Expected High'
+            item 'Low' selected=False
+              schakelknop 'Low' toggle=Off
+            item 'Expected' selected=False
+              schakelknop 'Expected' toggle=On
+            item 'High' selected=False
+              schakelknop 'High' toggle=Off
+ 11 Tekstvak                    0  (no name: decorative)
+ 12 Tekstvak                    0  (no name: decorative)
+ 13 Kaart                      87  Two moves pass both tests; the kiosks earn 20.6% a year on cost but pay back after 2032
+ 14 img                        10  Afbeelding
+ 15 Tekstvak                  113  Our recommendation: package A. Booking app & member rates + Revenue management + Kiosks at the 20 busiest hotels.
+ 16 Tekstvak                    0  (no name: decorative)
+ 17 Tekstvak                    0  (no name: decorative)
+ 18 Kaart                     122  Package A, Expected case: capex $9.4M, net present value through 2032 +$3.3M, +$3.5M a year by 2032, 37.5% a year on cost.
+ 19 Tabelvisualisatie         271  The ten moves ranked by what each earns a year on its cost, Expected case, with the finding each answers, its status and its NPV through 2032. First: Booking app & member rates, 47.0% a year on cost, NPV +$3.4M. The two marked lines are our 8% cost of money and NPV zero.
+          rij 'Rijselectie Move Answers Status A year on cost ​ NPV through 2032 ​​'
+            kolomkoptekst 'Rijselectie'
+            kolomkoptekst 'Move'
+            kolomkoptekst 'Answers'
+            kolomkoptekst 'Status'
+            kolomkoptekst 'A year on cost'
+            kolomkoptekst '​'
+            kolomkoptekst 'NPV through 2032'
+            kolomkoptekst '​​'
+          rij 'Rij selecteren Booking app & member rates F2 · growth A Aanvullende voorwaardelijke opmaak 47.0% +$3.4M Aanvullende voorwaardelijke opmaak'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Booking app & member rates' selected=False
+            item 'F2 · growth' selected=False
+            item 'A Aanvullende voorwaardelijke opmaak' selected=False
+            item '47.0%' selected=False
+            item '+$3.4M Aanvullende voorwaardelijke opmaak' selected=False
+          rij 'Rij selecteren Revenue management F1 · growth A Aanvullende voorwaardelijke opmaak 32.0% +$0.5M Aanvullende voorwaardelijke opmaak'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Revenue management' selected=False
+            item 'F1 · growth' selected=False
+            item 'A Aanvullende voorwaardelijke opmaak' selected=False
+            item '32.0%' selected=False
+            item '+$0.5M Aanvullende voorwaardelijke opmaak' selected=False
+          rij 'Rij selecteren Kiosks at the 20 busiest hotels F4 A Aanvullende voorwaardelijke opmaak 20.6% −$0.6M Aanvullende voorwaardelijke opmaak'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Kiosks at the 20 busiest hotels' selected=False
+            item 'F4' selected=False
+            item 'A Aanvullende voorwaardelijke opmaak' selected=False
+            item '20.6%' selected=False
+            item '−$0.6M Aanvullende voorwaardelijke opmaak' selected=False
+          rij 'Rij selecteren Breakfast upgrade F3 · growth not now Aanvullende voorwaardelijke opmaak 19.8% −$1.1M Aanvullende voorwaardelijke opmaak'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Breakfast upgrade' selected=False
+            item 'F3 · growth' selected=False
+            item 'not now Aanvullende voorwaardelijke opmaak' selected=False
+            item '19.8%' selected=False
+            item '−$1.1M Aanvullende voorwaardelijke opmaak' selected=False
+          rij 'Rij selecteren Gatwick +40 rooms F4 · growth 2028 gate Aanvullende voorwaardelijke opmaak 15.8% −$3.5M Aanvullende voorwaardelijke opmaak'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Gatwick +40 rooms' selected=False
+            item 'F4 · growth' selected=False
+            item '2028 gate Aanvullende voorwaardelijke opmaak' selected=False
+            item '15.8%' selected=False
+            item '−$3.5M Aanvullende voorwaardelijke opmaak' selected=False
+          rij 'Rij selecteren Energy programme F1 not now Aanvullende voorwaardelijke opmaak 11.8% −$12.2M Aanvullende voorwaardelijke opmaak'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Energy programme' selected=False
+            item 'F1' selected=False
+            item 'not now Aanvullende voorwaardelijke opmaak' selected=False
+            item '11.8%' selected=False
+            item '−$12.2M Aanvullende voorwaardelijke opmaak' selected=False
+          rij 'Rij selecteren Toronto +40 rooms F4 · growth 2028 gate Aanvullende voorwaardelijke opmaak 11.5% −$3.7M Aanvullende voorwaardelijke opmaak'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Toronto +40 rooms' selected=False
+            item 'F4 · growth' selected=False
+            item '2028 gate Aanvullende voorwaardelijke opmaak' selected=False
+            item '11.5%' selected=False
+            item '−$3.7M Aanvullende voorwaardelijke opmaak' selected=False
+          rij 'Rij selecteren Kingston +40 rooms F4 · growth not now Aanvullende voorwaardelijke opmaak 8.2% −$3.9M Aanvullende voorwaardelijke opmaak'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Kingston +40 rooms' selected=False
+            item 'F4 · growth' selected=False
+            item 'not now Aanvullende voorwaardelijke opmaak' selected=False
+            item '8.2%' selected=False
+            item '−$3.9M Aanvullende voorwaardelijke opmaak' selected=False
+          rij 'Rij selecteren Boston new hotel F4 · growth not now Aanvullende voorwaardelijke opmaak 8.1% −$18.3M Aanvullende voorwaardelijke opmaak'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Boston new hotel' selected=False
+            item 'F4 · growth' selected=False
+            item 'not now Aanvullende voorwaardelijke opmaak' selected=False
+            item '8.1%' selected=False
+            item '−$18.3M Aanvullende voorwaardelijke opmaak' selected=False
+          rij 'Rij selecteren Refresh, 10 oldest hotels F3 2028 gate Aanvullende voorwaardelijke opmaak 7.9% −$27.3M Aanvullende voorwaardelijke opmaak'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Refresh, 10 oldest hotels' selected=False
+            item 'F3' selected=False
+            item '2028 gate Aanvullende voorwaardelijke opmaak' selected=False
+            item '7.9%' selected=False
+            item '−$27.3M Aanvullende voorwaardelijke opmaak' selected=False
+ 20 Kaart                     173  Worst case (Low): −$5.5M through 2032, and still +$1.0M a year by 2032. The app carries it: +$3.4M of the +$3.3M. Every year without it leaves about $2.4M with the agencies.
+ 21 Kaart                       0  (no name: decorative)
+ 22 Tabelvisualisatie         316  What package A changes for each finding by 2032, Expected case. F2 The middleman: half the rise since 2021 undone; F1 The margin: half the fall since 2023 recovered; F4 Where we are full: rooms decided at the 2028 gate; F3 The fading welcome: deferred to the 2028 gate. The table gives what we track and both values.
+          rij 'Rijselectie Finding What we track 2025 2032 with A Status'
+            kolomkoptekst 'Rijselectie'
+            kolomkoptekst 'Finding'
+            kolomkoptekst 'What we track'
+            kolomkoptekst '2025'
+            kolomkoptekst '2032 with A'
+            kolomkoptekst 'Status'
+          rij 'Rij selecteren F2 The middleman distribution cost, % of room revenue booking app with member rates 11.3% 10.1% half the rise since 2021 undone'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'F2 The middleman' selected=False
+            item 'distribution cost, % of room revenue booking app with member rates' selected=False
+            item '11.3%' selected=False
+            item '10.1%' selected=False
+            item 'half the rise since 2021 undone' selected=False
+          rij 'Rij selecteren F1 The margin operating margin after commissions app + revenue management + kiosks 33.7% 35.1% half the fall since 2023 recovered'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'F1 The margin' selected=False
+            item 'operating margin after commissions app + revenue management + kiosks' selected=False
+            item '33.7%' selected=False
+            item '35.1%' selected=False
+            item 'half the fall since 2023 recovered' selected=False
+          rij 'Rij selecteren F4 Where we are full self check-in hotels · rooms added kiosks live Apr 2028; guest score +0.25 there (dataset units) 0 of 20 · 0 20 of 20 · 0 rooms decided at the 2028 gate'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'F4 Where we are full' selected=False
+            item 'self check-in hotels · rooms added kiosks live Apr 2028; guest score +0.25 there (dataset units)' selected=False
+            item '0 of 20 · 0' selected=False
+            item '20 of 20 · 0' selected=False
+            item 'rooms decided at the 2028 gate' selected=False
+          rij 'Rij selecteren F3 The fading welcome refresh of the 10 oldest hotels why: see What waits, and why not started not started deferred to the 2028 gate'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'F3 The fading welcome' selected=False
+            item 'refresh of the 10 oldest hotels why: see What waits, and why' selected=False
+            item 'not started' selected=False
+            item 'not started' selected=False
+            item 'deferred to the 2028 gate' selected=False
+ 23 button                    138  Bladwijzer Think you can beat A Build your own: show the state where you pick moves and compare your plan with A. CTRL+klik hier om volgen
+ 24 Tekstvak                  119  A year on cost = what a move adds to operating profit in 2032 ÷ what it costs. Late moves are still ramping up in 2032.
+ 25 Tekstvak                   56  2025 brand plus A's full yearly effect, in 2025 dollars.
+ 26 Tekstvak                    0  (no name: decorative)
+ 27 Kaart                      47  The $60M plan: $9.4M now, two decisions in 2028
+ 28 Tekstvak                    0  (no name: decorative)
+ 29 Kaart                      34  Tranche 1 · package A $9.4M · 2027
+ 30 Kaart                     107  Tranche 2 · Gatwick and Toronto +40 rooms $12.4M · 2028 gate +$1.7M a year once live · 13.8% a year on cost
+ 31 Kaart                      88  Tranche 3 · the refresh $29.5M · 2028 gate +$2.3M a year once live · 7.9% a year on cost
+ 32 Kaart                      18  Not needed · $8.7M
+ 33 Kaart                       0  (no name: decorative)
+ 34 Kaart                       0  (no name: decorative)
+ 35 Kaart                       0  (no name: decorative)
+ 36 Kaart                       0  (no name: decorative)
+ 37 Kaart                       0  (no name: decorative)
+ 38 Gestapeld staafdiagram    151  How the $60M budget is planned: tranche 1, package A, $9.4M now; tranche 2, $12.4M, and tranche 3, $29.5M, wait for the 2028 gate; $8.7M is not needed.
+ 39 Kaart                     328  The 2028 gate, once all three moves are live: the Board releases tranche 2 if distribution cost has fallen at least 0.6 points (the app's Low case) and Gatwick and Toronto still topped 90% in 6 of the last 12 months. The refresh comes back to the same meeting with a case that looks beyond 2032. A decision rule, not a forecast.
+ 40 Lijndiagram               219  Package A, cumulative net impact by year to 2032 in the three cases. By 2032: Low −$4.6M, Expected +$6.8M, High +$19.2M. In the Expected case A is cash positive from 2031. The Board decides on the rest at the 2028 gate.
+ 41 Kaart                     112  RMS live Jul 2027 · App live Oct 2027 · Kiosks live Apr 2028 (they need the app) · Cash positive 2031 (Expected)
+ 42 Kaart                     134  Source: Pillow & Key Group dataset and finance parameters (8% discount rate, 2025 dollars, horizon 2032). Parts are rounded to add up.
+ 43 Kaart                     227  Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a move adds in a full year. A year on cost: that profit over capex. Tranche: a part of the budget, one Board decision.

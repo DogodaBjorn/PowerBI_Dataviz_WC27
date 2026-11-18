@@ -16,37 +16,33 @@ queryGroup Dimensions
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["DataFile","Date","Region","Scenario","Brands","Hotels","Renovations","MonthlyPerformance","GuestSegments","BookingChannels","GuestExperience","GuestComplaints","InvestmentProjects","InvestmentProjectProperties","InvestmentScenarios","FinanceAssumptions","FinanceParameters","_Measures"]
+annotation PBI_QueryOrder = ["DataFile","Date","Scenario","Brands","Hotels","Renovations","MonthlyPerformance","BookingChannels","GuestExperience","GuestComplaints","InvestmentProjects","InvestmentProjectProperties","InvestmentScenarios","FinanceParameters","_Measures"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table Date
-ref table Region
 ref table Scenario
 ref table Brands
 ref table Hotels
 ref table Renovations
 ref table MonthlyPerformance
-ref table GuestSegments
 ref table BookingChannels
 ref table GuestExperience
 ref table GuestComplaints
 ref table InvestmentProjects
 ref table InvestmentProjectProperties
 ref table InvestmentScenarios
-ref table FinanceAssumptions
 ref table FinanceParameters
 ref table _Measures
 ref table ProjectCashflow
-ref table HotelOutlook
-ref table Timeline
-ref table PlanYear
-ref table BridgeStep
 ref table FolioLine
-ref table KpiLine
 ref table Package
 ref table PackageProject
 ref table PlanSelector
-ref table ScatterView
 ref table BuildMove
+ref table BuildBar
+ref table TTMove
 ref table BuildPoint
+ref table MoveDecision
+ref table Finding
+ref table WaitOption

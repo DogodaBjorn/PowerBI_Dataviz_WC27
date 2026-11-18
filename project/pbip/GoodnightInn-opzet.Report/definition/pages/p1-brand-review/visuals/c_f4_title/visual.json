@@ -3,11 +3,11 @@
   "name": "c_f4_title",
   "position": {
     "x": 56,
-    "y": 856,
-    "z": 37000,
-    "width": 1808,
+    "y": 815,
+    "z": 40613,
+    "width": 1640,
     "height": 32,
-    "tabOrder": 610
+    "tabOrder": 9390
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F4 Title (text)",
-              "nativeQueryRef": "F4 Title (text)"
+              "nativeQueryRef": "F4 Title (text)",
+              "displayName": "IV Title (text)"
             }
           ]
         }

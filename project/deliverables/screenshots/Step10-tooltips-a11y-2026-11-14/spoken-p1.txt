@@ -1,0 +1,85 @@
+  1 img                        13  Goodnight Inn
+  2 Tekstvak                   47  Page 1 of 2, the wake-up call: the brand review
+  3 Kaart                      91  Full rooms, a slipping margin: Goodnight Inn pays the middleman, and its welcome is fading.
+  4 Kaart                     136  Goodnight Inn in 2025, against the three other Pillow & Key Group brands. For the Board: what is wrong, before page 2 says what to fund.
+  5 Tekstvak                    0  (no name: decorative)
+  6 Tekstvak                    0  (no name: decorative)
+  7 Tekstvak                    0  (no name: decorative)
+  8 Tekstvak                    0  (no name: decorative)
+  9 Tekstvak                    0  (no name: decorative)
+ 10 Kaart                      77  Goodnight Inn occupancy in 2025: 79.4%, best of 4, the others 64.7% to 72.9%.
+ 11 Kaart                      94  Goodnight Inn operating margin after commissions in 2025: 33.7%, 2nd of 4, −2.8 pt since 2023.
+ 12 Kaart                     111  Share of Goodnight Inn room revenue booked through online agencies in 2025: 50.0%, highest of 4, 33.0% in 2021.
+ 13 Kaart                     159  Guest quality: Goodnight Inn net promoter score in 2025: +3.3, still positive, but falling every year, last of 4, from +8.5 in 2021; the others +14.7 to +31.9.
+ 14 Kaart                       0  (no name: decorative)
+ 15 Kaart                       0  (no name: decorative)
+ 16 Kaart                       0  (no name: decorative)
+ 17 Kaart                       0  (no name: decorative)
+ 18 Tekstvak                    0  (no name: decorative)
+ 19 Tekstvak                    0  (no name: decorative)
+ 20 Tekstvak                    0  (no name: decorative)
+ 21 Tekstvak                    0  (no name: decorative)
+ 22 Tekstvak                    0  (no name: decorative)
+ 23 Tekstvak                    0  (no name: decorative)
+ 24 Tekstvak                    0  (no name: decorative)
+ 25 Kaart                      72  F1, the margin. After commissions, the margin fell 2.8 points since 2023
+ 26 Kaart                      76  F2, the middleman. Online agencies now book 50% of room revenue, up from 33%
+ 27 Kaart                      81  F3, the fading welcome. Hotels last renovated 10 years or more ago score NPS −4.9
+ 28 Gestapeld vlakdiagram     195  After commissions, Goodnight Inn's operating margin rose from 32.5% in 2021 to 36.5% in 2023 and fell back to 33.7% in 2025. The gap to the margin before commissions grew from 8.4 to 10.6 points.
+ 29 Gegroepeerd kolomdiagram  250  Goodnight Inn's 2025 net promoter score by years since the last renovation: 5 years or less +6.8, 6 to 9 years +3.8, 10 years or more −4.9. Hovering a bar shows that band's occupancy, revenue per room, its NPS since 2021 and its weakest guest scores.
+ 30 Lijndiagram               176  Online agencies booked 50.0% of Goodnight Inn's room revenue in 2025, up from 33.0% in 2021. The other brands in 2025: Maison d'Or 23.2%, P&K Select 24.2%, Pebble & Pine 35.9%.
+ 31 Tabelvisualisatie         181  One Goodnight Inn room night in 2025. Via an online agency the guest pays $109.31, fees take $19.68, the inn keeps $89.63. Booked direct: $111.56, fees $4.46, the inn keeps $107.10.
+          rij 'Rijselectie One room night, 2025 Via an online agency Direct, web and app'
+            kolomkoptekst 'Rijselectie'
+            kolomkoptekst 'One room night, 2025'
+            kolomkoptekst 'Via an online agency'
+            kolomkoptekst 'Direct, web and app'
+          rij 'Rij selecteren The guest pays $109.31 $111.56'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'The guest pays' selected=False
+            item '$109.31' selected=False
+            item '$111.56' selected=False
+          rij 'Rij selecteren Commission and fees −$19.68 −$4.46'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Commission and fees' selected=False
+            item '−$19.68' selected=False
+            item '−$4.46' selected=False
+          rij 'Rij selecteren Goodnight Inn keeps $89.63 $107.10'
+            item 'Rij selecteren' selected=False
+              selectievakje 'Rij selecteren' toggle=Off
+            item 'Goodnight Inn keeps' selected=False
+            item '$89.63' selected=False
+            item '$107.10' selected=False
+ 32 Kaart                      43  44 of 50 hotels; 6 have no renovation date.
+ 33 Kaart                     221  Since 2018 Goodnight Inn spent $1.0M per hotel on renovation; the other brands spent $5.9M to $7.9M. None has started since 2020. Older hotels lose guest loyalty before they lose rooms: an association, not proof of cause.
+ 34 Kaart                     188  Commissions took 1.0 of those points and running costs 1.8 (staff rose from 26.9% to 28.3% of revenue). Room rates rose 2.7%, in line with the other brands, so no price premium absorbs it.
+ 35 Kaart                     201  Booked direct, the guest pays $2.25 more and we keep $17.47 more. Nothing rewards the guest for booking direct; member rates change that. At the 2021 channel mix, 2025 commissions would be $4.8M lower.
+ 36 Tekstvak                   44  → Page 2: revenue management and the kiosks.
+ 37 Tekstvak                   44  → Page 2: the booking app with member rates.
+ 38 Tekstvak                   55  → Page 2: the refresh waits for the 2028 gate, and why.
+ 39 Tekstvak                    0  (no name: decorative)
+ 40 Tekstvak                    0  (no name: decorative)
+ 41 Tekstvak                    0  (no name: decorative)
+ 42 Kaart                     102  F4, where we are full. Our airports run full: Toronto topped 90% occupancy in 17 of the last 24 months
+ 43 Spreidingsdiagram           0  (no name: decorative)
+ 44 Spreidingsdiagram         241  The 7 fullest Goodnight Inn hotels in 2025, 5 of them airports: Toronto Pearson Airport 91.9%, London Gatwick Airport 90.4%, Montréal-Trudeau Airport 90.2%, Phoenix Airport 88.5%, Kansas City 87.4%, Kuala Lumpur 86.5%, Orlando Airport 85.2%.
+ 45 Kaart                      83  Gatwick did in 14, Montréal in 13; Kingston, the third extension on offer, in none.
+ 46 Tekstvak                    0  (no name: decorative)
+ 47 Kaart                     112  Goodnight Inn occupancy in 2025 by location type: airport hotels 82.0%, city hotels 79.1%, highway hotels 77.5%.
+ 48 Tekstvak                    0  (no name: decorative)
+ 49 Tekstvak                    0  (no name: decorative)
+ 50 Tekstvak                    0  (no name: decorative)
+ 51 Tekstvak                    0  (no name: decorative)
+ 52 Tekstvak                    0  (no name: decorative)
+ 53 Kaart                       0  (no name: decorative)
+ 54 Tekstvak                    0  (no name: decorative)
+ 55 Kaart                      79  → Page 2: kiosks at the 20 busiest hotels; extensions decided at the 2028 gate.
+ 56 Tekstvak                    0  (no name: decorative)
+ 57 Tekstvak                    0  (no name: decorative)
+ 58 Kaart                       0  (no name: decorative)
+ 59 Tekstvak                    0  (no name: decorative)
+ 60 Tekstvak                  109  Source: Pillow & Key Group dataset. Guest scores weighted by survey responses; 2021 is a depressed base year.
+ 61 button                    100  Paginanavigatie Next what we fund and why: page 2, The Investment Strategy. CTRL+klik hier om volgen
+ 62 Kaart                     227  Definitions. NPV: net present value through 2032. Pays back: NPV of zero or more. A year by 2032: the profit a move adds in a full year. A year on cost: that profit over capex. Tranche: a part of the budget, one Board decision.

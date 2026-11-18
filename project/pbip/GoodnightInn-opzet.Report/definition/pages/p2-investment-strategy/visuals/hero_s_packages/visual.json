@@ -3,11 +3,11 @@
   "name": "hero_s_packages",
   "position": {
     "x": 56,
-    "y": 224,
-    "z": 26000,
-    "width": 672,
-    "height": 408,
-    "tabOrder": 16000
+    "y": 248,
+    "z": 45000,
+    "width": 682,
+    "height": 369,
+    "tabOrder": 9460
   },
   "visual": {
     "visualType": "scatterChart",
@@ -71,6 +71,36 @@
         },
         "Tooltips": {
           "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "TT Capex (text)"
+                }
+              },
+              "queryRef": "_Measures.TT Capex (text)",
+              "nativeQueryRef": "TT Capex (text)",
+              "displayName": "Capex, exact"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "TT NPV (text)"
+                }
+              },
+              "queryRef": "_Measures.TT NPV (text)",
+              "nativeQueryRef": "TT NPV (text)",
+              "displayName": "NPV through 2032, exact"
+            },
             {
               "field": {
                 "Measure": {
@@ -226,25 +256,15 @@
             },
             "start": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter X Start"
+                "Literal": {
+                  "Value": "5000000D"
                 }
               }
             },
             "end": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter X End"
+                "Literal": {
+                  "Value": "62000000D"
                 }
               }
             }
@@ -359,25 +379,15 @@
             },
             "start": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter Y Start"
+                "Literal": {
+                  "Value": "-60000000D"
                 }
               }
             },
             "end": {
               "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Scatter Y End"
+                "Literal": {
+                  "Value": "20000000D"
                 }
               }
             }
@@ -421,7 +431,7 @@
             "bubbleSize": {
               "expr": {
                 "Literal": {
-                  "Value": "0L"
+                  "Value": "-15L"
                 }
               }
             },
@@ -490,7 +500,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#8E897D'"
+                      "Value": "'#4B5466'"
                     }
                   }
                 }
@@ -759,7 +769,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "flt_cloud_9",
+        "name": "flt_cloud_10",
         "field": {
           "Column": {
             "Expression": {

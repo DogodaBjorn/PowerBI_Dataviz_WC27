@@ -1,0 +1,613 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "P2 Recommended: A",
+  "name": "bm_p2_rec",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "z_card_hero",
+      "z_card_decision",
+      "z_card_scatter_s",
+      "z_card_panel_w",
+      "z_tile_you",
+      "tab_rec_on",
+      "tab_rec_off",
+      "tab_alts_on",
+      "tab_alts_off",
+      "tab_build_on",
+      "tab_build_off",
+      "c_hero_title",
+      "lbl_hero_8",
+      "lbl_hero_0",
+      "tbl_hero",
+      "c_hero_caption",
+      "img_rec_chip",
+      "c_rec_head",
+      "c_rec_nums",
+      "c_rec_lines_2",
+      "tbl_ledger",
+      "btn_build_invite",
+      "c_plan_title",
+      "tag_plan_cum",
+      "c_plan_t1",
+      "c_plan_t1_2",
+      "c_plan_t2",
+      "c_plan_t2_2",
+      "c_plan_t2_3",
+      "c_plan_t3",
+      "c_plan_t3_2",
+      "c_plan_t3_3",
+      "c_plan_t4",
+      "c_plan_t4_2",
+      "ch_plan_bar",
+      "c_plan_gate",
+      "ch_plan_cum_cap",
+      "ch_plan_cum",
+      "ch_plan_cum_t1",
+      "ch_plan_cum_t2",
+      "ch_plan_cum_e1",
+      "ch_plan_cum_s1",
+      "ch_plan_cum_e2",
+      "ch_plan_cum_s2",
+      "ch_plan_cum_e3",
+      "ch_plan_cum_s3",
+      "c_plan_milestones",
+      "c_scatter_title_s",
+      "tag_scatter_s",
+      "c_scatter_sub",
+      "hero_s_packages",
+      "hero_s_packages_build",
+      "hero_s_packages_named",
+      "hero_s_packages_letters",
+      "hero_s_packages_you",
+      "hero_s_packages_hover",
+      "c_waits_head",
+      "tbl_waits",
+      "ch_cmp_alts",
+      "tag_cmp_alts",
+      "c_build_head",
+      "sl_moves",
+      "tbl_moves",
+      "c_you_title_alarm",
+      "c_you_title",
+      "c_you_nums",
+      "c_you_nums_l1",
+      "c_you_nums_v2",
+      "c_you_nums_l2",
+      "c_you_nums_v3",
+      "c_you_nums_l3",
+      "c_you_nums_v4",
+      "c_you_nums_l4",
+      "c_you_range",
+      "c_you_rules",
+      "ch_build_bars",
+      "ch_cmp_build",
+      "tag_cmp_build",
+      "cover_hero_yield",
+      "cover_hero_npv"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "p2-investment-strategy",
+    "sections": {
+      "p2-investment-strategy": {
+        "visualContainers": {
+          "z_card_hero": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "z_card_decision": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "z_card_scatter_s": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "z_card_panel_w": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "z_tile_you": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tab_rec_on": {
+            "singleVisual": {
+              "visualType": "actionButton"
+            }
+          },
+          "tab_rec_off": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tab_alts_on": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tab_alts_off": {
+            "singleVisual": {
+              "visualType": "actionButton"
+            }
+          },
+          "tab_build_on": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tab_build_off": {
+            "singleVisual": {
+              "visualType": "actionButton"
+            }
+          },
+          "c_hero_title": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "lbl_hero_8": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "lbl_hero_0": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "tbl_hero": {
+            "singleVisual": {
+              "visualType": "tableEx"
+            }
+          },
+          "c_hero_caption": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "img_rec_chip": {
+            "singleVisual": {
+              "visualType": "image"
+            }
+          },
+          "c_rec_head": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "c_rec_nums": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_rec_lines_2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "tbl_ledger": {
+            "singleVisual": {
+              "visualType": "tableEx"
+            }
+          },
+          "btn_build_invite": {
+            "singleVisual": {
+              "visualType": "actionButton"
+            }
+          },
+          "c_plan_title": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "tag_plan_cum": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "c_plan_t1": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_t1_2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_t2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_t2_2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_t2_3": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_t3": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_t3_2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_t3_3": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_t4": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_t4_2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "ch_plan_bar": {
+            "singleVisual": {
+              "visualType": "barChart"
+            }
+          },
+          "c_plan_gate": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "ch_plan_cum_cap": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "ch_plan_cum": {
+            "singleVisual": {
+              "visualType": "lineChart"
+            }
+          },
+          "ch_plan_cum_t1": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "ch_plan_cum_t2": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "ch_plan_cum_e1": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "ch_plan_cum_s1": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "ch_plan_cum_e2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "ch_plan_cum_s2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "ch_plan_cum_e3": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "ch_plan_cum_s3": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_plan_milestones": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_scatter_title_s": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tag_scatter_s": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_scatter_sub": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "hero_s_packages": {
+            "singleVisual": {
+              "visualType": "scatterChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "hero_s_packages_build": {
+            "singleVisual": {
+              "visualType": "scatterChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "hero_s_packages_named": {
+            "singleVisual": {
+              "visualType": "scatterChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "hero_s_packages_letters": {
+            "singleVisual": {
+              "visualType": "scatterChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "hero_s_packages_you": {
+            "singleVisual": {
+              "visualType": "scatterChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "hero_s_packages_hover": {
+            "singleVisual": {
+              "visualType": "scatterChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_waits_head": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tbl_waits": {
+            "singleVisual": {
+              "visualType": "tableEx",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_cmp_alts": {
+            "singleVisual": {
+              "visualType": "lineChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tag_cmp_alts": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_build_head": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "sl_moves": {
+            "singleVisual": {
+              "visualType": "advancedSlicerVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tbl_moves": {
+            "singleVisual": {
+              "visualType": "tableEx",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_title_alarm": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_title": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_nums": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_nums_l1": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_nums_v2": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_nums_l2": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_nums_v3": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_nums_l3": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_nums_v4": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_nums_l4": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_range": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_you_rules": {
+            "singleVisual": {
+              "visualType": "shape",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_build_bars": {
+            "singleVisual": {
+              "visualType": "clusteredBarChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_cmp_build": {
+            "singleVisual": {
+              "visualType": "lineChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tag_cmp_build": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "cover_hero_yield": {
+            "singleVisual": {
+              "visualType": "shape"
+            }
+          },
+          "cover_hero_npv": {
+            "singleVisual": {
+              "visualType": "shape"
+            }
+          }
+        }
+      }
+    }
+  }
+}

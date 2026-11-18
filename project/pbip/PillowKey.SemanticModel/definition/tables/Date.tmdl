@@ -20,12 +20,6 @@ table Date
 		summarizeBy: none
 		sourceColumn: Year
 
-	column Quarter
-		dataType: string
-		lineageTag: 85fe1491-b5e2-55aa-93a8-db48667c5463
-		summarizeBy: none
-		sourceColumn: Quarter
-
 	column MonthNumber
 		dataType: int64
 		formatString: 0
@@ -39,18 +33,6 @@ table Date
 		summarizeBy: none
 		sourceColumn: Month
 		sortByColumn: MonthNumber
-
-	column YearMonth
-		dataType: string
-		lineageTag: de3b3a9b-cf98-543a-bf22-ff542edbdf87
-		summarizeBy: none
-		sourceColumn: YearMonth
-
-	column Period
-		dataType: string
-		lineageTag: 353f87a5-f834-5738-a36d-c7248d0538af
-		summarizeBy: none
-		sourceColumn: Period
 
 	/// First letter of the month name, for narrow month axes (the F4 hotel tooltip).
 	column 'Month Letter' = LEFT ( 'Date'[Month], 1 )
@@ -68,7 +50,8 @@ table Date
 				    Source = Excel.Workbook(Web.Contents(DataFile), null, true),
 				    Sheet = Source{[Item="Date",Kind="Sheet"]}[Data],
 				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
-				    Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"Year", Int64.Type}, {"Quarter", type text}, {"MonthNumber", Int64.Type}, {"Month", type text}, {"YearMonth", type text}, {"Period", type text}})
+				    Selected = Table.SelectColumns(Promoted, {"Date", "Year", "MonthNumber", "Month"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"Date", type date}, {"Year", Int64.Type}, {"MonthNumber", Int64.Type}, {"Month", type text}})
 				in
 				    Typed
 

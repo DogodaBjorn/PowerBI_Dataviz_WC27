@@ -3,11 +3,11 @@
   "name": "c_f2_note",
   "position": {
     "x": 680,
-    "y": 688,
+    "y": 649,
     "z": 31000,
     "width": 560,
-    "height": 88,
-    "tabOrder": 440
+    "height": 64,
+    "tabOrder": 9560
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "_Measures.F2 Note (text)",
-              "nativeQueryRef": "F2 Note (text)"
+              "nativeQueryRef": "F2 Note (text)",
+              "displayName": "II Note (text)"
             }
           ]
         }

@@ -5,66 +5,86 @@
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
-      "z_card_card_scatter",
-      "z_card_card_panel",
-      "z_card_card_scatter_s",
-      "z_card_card_panel_w",
-      "z_card_card_compare",
-      "z_tile_rec",
-      "z_tile_guide",
-      "z_tile_b",
-      "z_tile_c",
+      "z_card_hero",
+      "z_card_decision",
+      "z_card_scatter_s",
+      "z_card_panel_w",
       "z_tile_you",
-      "c_scatter_title",
-      "sl_view",
-      "c_guide_kicker",
-      "c_guide_legend",
-      "c_guide",
-      "hero_packages",
-      "hero_packages_named",
-      "hero_packages_hover",
-      "c_scatter_title_s",
-      "hero_s_packages",
-      "hero_s_packages_named",
-      "hero_s_packages_build",
-      "hero_s_packages_hover",
-      "c_alts_title",
-      "c_alts_intro",
-      "c_build_title",
-      "c_build_intro",
       "tab_rec_on",
       "tab_rec_off",
       "tab_alts_on",
       "tab_alts_off",
       "tab_build_on",
       "tab_build_off",
+      "c_hero_title",
+      "lbl_hero_8",
+      "lbl_hero_0",
+      "tbl_hero",
+      "c_hero_caption",
       "img_rec_chip",
-      "c_rec_title",
-      "c_rec_mix",
+      "c_rec_head",
       "c_rec_nums",
-      "c_rec_note",
-      "ch_rec_waterfall",
-      "ch_rec_cumulative",
-      "c_uncertainty",
-      "img_b_chip",
-      "c_b_title",
-      "c_b_nums",
-      "c_b_why",
-      "c_b_whynot",
-      "c_b_payback",
-      "img_c_chip",
-      "c_c_title",
-      "c_c_nums",
-      "c_c_why",
-      "c_c_whynot",
-      "c_c_payback",
+      "c_rec_lines",
+      "c_rec_lines_2",
+      "tbl_ledger",
+      "c_ledger_caption",
+      "btn_build_invite",
+      "c_plan_title",
+      "tag_plan_cum",
+      "c_plan_t1",
+      "c_plan_t1_2",
+      "c_plan_t2",
+      "c_plan_t2_2",
+      "c_plan_t2_3",
+      "c_plan_t3",
+      "c_plan_t3_2",
+      "c_plan_t3_3",
+      "c_plan_t4",
+      "c_plan_t4_2",
+      "ch_plan_bar",
+      "c_plan_gate",
+      "ch_plan_cum_cap",
+      "ch_plan_cum",
+      "ch_plan_cum_t1",
+      "ch_plan_cum_t2",
+      "ch_plan_cum_e1",
+      "ch_plan_cum_s1",
+      "ch_plan_cum_e2",
+      "ch_plan_cum_s2",
+      "ch_plan_cum_e3",
+      "ch_plan_cum_s3",
+      "c_plan_milestones",
+      "c_scatter_title_s",
+      "tag_scatter_s",
+      "c_scatter_sub",
+      "hero_s_packages",
+      "hero_s_packages_build",
+      "hero_s_packages_named",
+      "hero_s_packages_letters",
+      "hero_s_packages_you",
+      "hero_s_packages_hover",
+      "c_waits_head",
+      "tbl_waits",
       "ch_cmp_alts",
-      "dn_build_selector",
+      "tag_cmp_alts",
+      "c_build_head",
+      "sl_moves",
+      "tbl_moves",
+      "c_you_title_alarm",
       "c_you_title",
       "c_you_nums",
+      "c_you_nums_l1",
+      "c_you_nums_v2",
+      "c_you_nums_l2",
+      "c_you_nums_v3",
+      "c_you_nums_l3",
+      "c_you_nums_v4",
+      "c_you_nums_l4",
+      "c_you_range",
       "c_you_rules",
-      "ch_build_waterfall",
-      "ch_cmp_build"
+      "ch_build_bars",
+      "ch_cmp_build",
+      "tag_cmp_build"
     ],
     "suppressActiveSection": true,
     "suppressData": true
@@ -75,7 +95,7 @@
     "sections": {
       "p2-investment-strategy": {
         "visualContainers": {
-          "z_card_card_scatter": {
+          "z_card_hero": {
             "singleVisual": {
               "visualType": "textbox",
               "display": {
@@ -83,7 +103,7 @@
               }
             }
           },
-          "z_card_card_panel": {
+          "z_card_decision": {
             "singleVisual": {
               "visualType": "textbox",
               "display": {
@@ -91,169 +111,17 @@
               }
             }
           },
-          "z_card_card_scatter_s": {
+          "z_card_scatter_s": {
             "singleVisual": {
               "visualType": "textbox"
             }
           },
-          "z_card_card_panel_w": {
+          "z_card_panel_w": {
             "singleVisual": {
               "visualType": "textbox"
-            }
-          },
-          "z_card_card_compare": {
-            "singleVisual": {
-              "visualType": "textbox"
-            }
-          },
-          "z_tile_rec": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "z_tile_guide": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "z_tile_b": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "z_tile_c": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
             }
           },
           "z_tile_you": {
-            "singleVisual": {
-              "visualType": "textbox"
-            }
-          },
-          "c_scatter_title": {
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "sl_view": {
-            "singleVisual": {
-              "visualType": "advancedSlicerVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_guide_kicker": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_guide_legend": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_guide": {
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "hero_packages": {
-            "singleVisual": {
-              "visualType": "scatterChart",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "hero_packages_named": {
-            "singleVisual": {
-              "visualType": "scatterChart",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "hero_packages_hover": {
-            "singleVisual": {
-              "visualType": "scatterChart",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_scatter_title_s": {
-            "singleVisual": {
-              "visualType": "cardVisual"
-            }
-          },
-          "hero_s_packages": {
-            "singleVisual": {
-              "visualType": "scatterChart"
-            }
-          },
-          "hero_s_packages_named": {
-            "singleVisual": {
-              "visualType": "scatterChart"
-            }
-          },
-          "hero_s_packages_build": {
-            "singleVisual": {
-              "visualType": "scatterChart"
-            }
-          },
-          "hero_s_packages_hover": {
-            "singleVisual": {
-              "visualType": "scatterChart"
-            }
-          },
-          "c_alts_title": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_alts_intro": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_build_title": {
-            "singleVisual": {
-              "visualType": "textbox"
-            }
-          },
-          "c_build_intro": {
             "singleVisual": {
               "visualType": "textbox"
             }
@@ -297,6 +165,46 @@
               }
             }
           },
+          "c_hero_title": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "lbl_hero_8": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "lbl_hero_0": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tbl_hero": {
+            "singleVisual": {
+              "visualType": "tableEx",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_hero_caption": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
           "img_rec_chip": {
             "singleVisual": {
               "visualType": "image",
@@ -305,17 +213,9 @@
               }
             }
           },
-          "c_rec_title": {
+          "c_rec_head": {
             "singleVisual": {
               "visualType": "textbox",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_rec_mix": {
-            "singleVisual": {
-              "visualType": "cardVisual",
               "display": {
                 "mode": "hidden"
               }
@@ -329,7 +229,7 @@
               }
             }
           },
-          "c_rec_note": {
+          "c_rec_lines": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -337,15 +237,159 @@
               }
             }
           },
-          "ch_rec_waterfall": {
+          "c_rec_lines_2": {
             "singleVisual": {
-              "visualType": "waterfallChart",
+              "visualType": "cardVisual",
               "display": {
                 "mode": "hidden"
               }
             }
           },
-          "ch_rec_cumulative": {
+          "tbl_ledger": {
+            "singleVisual": {
+              "visualType": "tableEx",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_ledger_caption": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "btn_build_invite": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_title": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "tag_plan_cum": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_t1": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_t1_2": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_t2": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_t2_2": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_t2_3": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_t3": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_t3_2": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_t3_3": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_t4": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_t4_2": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_bar": {
+            "singleVisual": {
+              "visualType": "barChart",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_plan_gate": {
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_cum_cap": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_cum": {
             "singleVisual": {
               "visualType": "lineChart",
               "display": {
@@ -353,7 +397,23 @@
               }
             }
           },
-          "c_uncertainty": {
+          "ch_plan_cum_t1": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_cum_t2": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "ch_plan_cum_e1": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -361,15 +421,7 @@
               }
             }
           },
-          "img_b_chip": {
-            "singleVisual": {
-              "visualType": "image",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_b_title": {
+          "ch_plan_cum_s1": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -377,7 +429,7 @@
               }
             }
           },
-          "c_b_nums": {
+          "ch_plan_cum_e2": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -385,7 +437,7 @@
               }
             }
           },
-          "c_b_why": {
+          "ch_plan_cum_s2": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -393,7 +445,7 @@
               }
             }
           },
-          "c_b_whynot": {
+          "ch_plan_cum_e3": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -401,7 +453,7 @@
               }
             }
           },
-          "c_b_payback": {
+          "ch_plan_cum_s3": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -409,15 +461,7 @@
               }
             }
           },
-          "img_c_chip": {
-            "singleVisual": {
-              "visualType": "image",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_c_title": {
+          "c_plan_milestones": {
             "singleVisual": {
               "visualType": "cardVisual",
               "display": {
@@ -425,33 +469,62 @@
               }
             }
           },
-          "c_c_nums": {
+          "c_scatter_title_s": {
             "singleVisual": {
-              "visualType": "cardVisual",
+              "visualType": "cardVisual"
+            }
+          },
+          "tag_scatter_s": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "c_scatter_sub": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "hero_s_packages": {
+            "singleVisual": {
+              "visualType": "scatterChart"
+            }
+          },
+          "hero_s_packages_build": {
+            "singleVisual": {
+              "visualType": "scatterChart"
+            }
+          },
+          "hero_s_packages_named": {
+            "singleVisual": {
+              "visualType": "scatterChart"
+            }
+          },
+          "hero_s_packages_letters": {
+            "singleVisual": {
+              "visualType": "scatterChart"
+            }
+          },
+          "hero_s_packages_you": {
+            "singleVisual": {
+              "visualType": "scatterChart"
+            }
+          },
+          "hero_s_packages_hover": {
+            "singleVisual": {
+              "visualType": "scatterChart"
+            }
+          },
+          "c_waits_head": {
+            "singleVisual": {
+              "visualType": "textbox",
               "display": {
                 "mode": "hidden"
               }
             }
           },
-          "c_c_why": {
+          "tbl_waits": {
             "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_c_whynot": {
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "c_c_payback": {
-            "singleVisual": {
-              "visualType": "cardVisual",
+              "visualType": "tableEx",
               "display": {
                 "mode": "hidden"
               }
@@ -465,9 +538,32 @@
               }
             }
           },
-          "dn_build_selector": {
+          "tag_cmp_alts": {
             "singleVisual": {
-              "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A"
+              "visualType": "textbox",
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c_build_head": {
+            "singleVisual": {
+              "visualType": "textbox"
+            }
+          },
+          "sl_moves": {
+            "singleVisual": {
+              "visualType": "advancedSlicerVisual"
+            }
+          },
+          "tbl_moves": {
+            "singleVisual": {
+              "visualType": "tableEx"
+            }
+          },
+          "c_you_title_alarm": {
+            "singleVisual": {
+              "visualType": "cardVisual"
             }
           },
           "c_you_title": {
@@ -480,19 +576,64 @@
               "visualType": "cardVisual"
             }
           },
-          "c_you_rules": {
+          "c_you_nums_l1": {
             "singleVisual": {
               "visualType": "cardVisual"
             }
           },
-          "ch_build_waterfall": {
+          "c_you_nums_v2": {
             "singleVisual": {
-              "visualType": "waterfallChart"
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_l2": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_v3": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_l3": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_v4": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_nums_l4": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_range": {
+            "singleVisual": {
+              "visualType": "cardVisual"
+            }
+          },
+          "c_you_rules": {
+            "singleVisual": {
+              "visualType": "shape"
+            }
+          },
+          "ch_build_bars": {
+            "singleVisual": {
+              "visualType": "clusteredBarChart"
             }
           },
           "ch_cmp_build": {
             "singleVisual": {
               "visualType": "lineChart"
+            }
+          },
+          "tag_cmp_build": {
+            "singleVisual": {
+              "visualType": "textbox"
             }
           }
         }

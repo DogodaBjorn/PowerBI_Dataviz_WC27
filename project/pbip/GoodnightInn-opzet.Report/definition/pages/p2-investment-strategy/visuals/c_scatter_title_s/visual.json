@@ -3,11 +3,11 @@
   "name": "c_scatter_title_s",
   "position": {
     "x": 56,
-    "y": 184,
-    "z": 21000,
-    "width": 672,
-    "height": 32,
-    "tabOrder": 10000
+    "y": 153,
+    "z": 46001,
+    "width": 520,
+    "height": 72,
+    "tabOrder": 9490
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Scatter Title Short (text)"
+                  "Property": "Proof Title (text)"
                 }
               },
-              "queryRef": "_Measures.Scatter Title Short (text)",
-              "nativeQueryRef": "Scatter Title Short (text)"
+              "queryRef": "_Measures.Proof Title (text)",
+              "nativeQueryRef": "Proof Title (text)"
             }
           ]
         }
@@ -372,7 +372,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Scatter Title Short (text)"
+                  "Property": "Proof Title (text)"
                 }
               }
             }

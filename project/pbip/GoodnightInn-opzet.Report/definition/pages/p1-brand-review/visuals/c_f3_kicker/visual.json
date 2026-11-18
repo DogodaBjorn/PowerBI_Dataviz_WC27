@@ -3,9 +3,9 @@
   "name": "c_f3_kicker",
   "position": {
     "x": 1304,
-    "y": 328,
+    "y": 308,
     "z": 32000,
-    "width": 560,
+    "width": 400,
     "height": 24,
     "tabOrder": -16001
   },
@@ -19,15 +19,15 @@
               {
                 "textRuns": [
                   {
-                    "value": "F3",
+                    "value": "III",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
-                      "color": "#A63F0E"
+                      "color": "#12233D"
                     }
                   },
                   {
-                    "value": "  ·  THE FADING WELCOME",
+                    "value": " · THE FADING WELCOME",
                     "textStyle": {
                       "fontFamily": "'Segoe UI Semibold', wf_segoe-ui_semibold, helvetica, arial, sans-serif",
                       "fontSize": "16px",
