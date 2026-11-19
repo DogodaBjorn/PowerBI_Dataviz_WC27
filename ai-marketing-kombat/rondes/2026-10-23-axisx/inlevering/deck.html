@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>AxisX The Founding 500</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+@page { size: 1280px 720px; margin: 0; }
+:root { --paper:#faf6f1; --ink:#2b1d2e; --plum:#7a3e6d; --rose:#c8705a; --soft:#f3e9ee; --line:#e3d5dc; --muted:#6b5a66; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif; color:var(--ink); background:var(--paper); }
+.s { width:1280px; height:720px; padding:64px 88px 48px; position:relative; page-break-after:always; overflow:hidden; background:var(--paper); }
+.s:last-child { page-break-after:auto; }
+h1, h2, .big, .quote, .step b { font-family:"Playfair Display",Georgia,serif; }
+.k { color:var(--rose); font-weight:600; letter-spacing:.14em; text-transform:uppercase; font-size:13px; }
+h1 { font-size:46px; font-weight:600; margin:12px 0 26px; line-height:1.12; max-width:1050px; }
+h2 { font-size:22px; font-weight:600; margin:0 0 8px; color:var(--plum); }
+p, li { font-size:20px; line-height:1.5; margin:0 0 8px; }
+.lead { font-size:24px; max-width:960px; }
+.path { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:28px; }
+.step { background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px 24px; min-height:190px; box-shadow:0 2px 10px rgba(43,29,46,.05); }
+.step b { display:block; font-size:24px; color:var(--plum); margin-bottom:8px; }
+.step p { font-size:18px; }
+.num { font-family:"Playfair Display",Georgia,serif; color:var(--rose); font-size:16px; letter-spacing:.1em; }
+.funnel { display:flex; gap:14px; margin-top:20px; align-items:stretch; }
+.dot { flex:1; background:#fff; border:1px solid var(--line); border-radius:16px; padding:12px 12px; text-align:center; }
+.dot .big { font-size:27px; color:var(--plum); display:block; margin-bottom:6px; }
+.dot p { font-size:15px; margin:0; }
+.arrow { align-self:center; color:var(--rose); font-size:28px; }
+.tiles { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; margin-top:30px; }
+.tile { background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px 16px; min-height:200px; }
+.tile .big { font-size:24px; color:var(--plum); display:block; line-height:1.15; margin-bottom:10px; }
+.tile p { font-size:15px; }
+.stairs { display:flex; align-items:flex-end; gap:26px; margin-top:26px; height:300px; position:relative; }
+.stair { flex:1; background:#fff; border:1px solid var(--line); border-radius:14px 14px 0 0; padding:16px; }
+.stair .big { font-size:26px; color:var(--plum); display:block; }
+.stair p { font-size:15px; }
+.bel { position:absolute; left:0; right:0; top:12px; border-top:2px dashed var(--rose); }
+.bel span { position:absolute; right:0; top:-26px; color:var(--rose); font-size:14px; letter-spacing:.08em; text-transform:uppercase; }
+.money { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:28px; }
+.card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:26px 30px; }
+.card .big { font-size:54px; color:var(--plum); display:block; line-height:1; }
+.card .sub { font-size:18px; color:var(--muted); margin-bottom:14px; }
+.quote { font-size:26px; font-style:italic; color:var(--plum); }
+.strip { margin-top:28px; padding:14px 18px; background:var(--soft); border-radius:12px; font-size:15px; color:var(--muted); }
+.src { position:absolute; bottom:16px; left:88px; right:88px; font-size:11px; color:var(--muted); line-height:1.35; }
+.src a { color:var(--muted); }
+.n { position:absolute; top:24px; right:44px; font-size:12px; color:var(--muted); }
+.sysrow { display:flex; flex-wrap:wrap; gap:28px; margin-top:14px; align-items:center; }
+.syscard { flex:0 1 460px; background:#fff; border:1px solid var(--line); border-left:5px solid var(--rose); border-radius:12px; padding:12px 18px 8px; box-shadow:0 2px 10px rgba(43,29,46,.05); }
+.sc-head { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--rose); font-weight:600; margin-bottom:6px; }
+.sc-row { display:flex; gap:14px; font-size:15px; padding:3px 0; border-top:1px solid var(--line); }
+.sc-row span { font-family:"Playfair Display",Georgia,serif; color:var(--plum); font-weight:600; min-width:60px; }
+.sysnote { flex:1 1 320px; font-size:16px; line-height:1.5; }
+.blank { border-bottom:2px solid var(--plum); width:60%; margin:80px auto 0; height:60px; }
+.dark { background:var(--ink); color:#f3e9ee; border-radius:16px; padding:22px 26px; }
+.dark h2 { color:#e9b8a6; } .dark p, .dark li { color:#f3e9ee; font-size:18px; }
+
+.s:nth-of-type(7) .card p{font-size:15.5px;line-height:1.4} .s:nth-of-type(7) .card{padding:20px 24px} .s:nth-of-type(7) .money{margin-top:18px} .s:nth-of-type(7) .lead{margin-top:14px!important;font-size:21px}
+</style></head><body>
+
+<section class="s"><div class="n">1/8</div>
+<div class="k">The Founding 500 · how we get there</div>
+<h1>Not ads. Not avatars. The founder asks, and AI does her research.</h1>
+<div class="path">
+<div class="step"><span class="num">01</span><b>Communities</b><p>Women 39+ already talk about perimenopause in forums, groups and newsletters. AI reads those conversations at theme level: what women ask, which words they use, and what each community allows.</p></div>
+<div class="step"><span class="num">02</span><b>The founder asks</b><p>She writes to the people who lead those communities, in her own words, asking for help: "10 places held for your group." We pick them by their public role in the group. Every message is written and sent by hand.</p></div>
+<div class="step"><span class="num">03</span><b>Founders Circle</b><p>500 women who recognise what is happening and want to build the app they wish existed. Free in beta, a founding price at launch, three invites each.</p></div>
+</div>
+<div class="strip"><b>The brief:</b> 500 women onboarded, 60% open the app on day 7, $5,000 without paid media; a separate $50,000 scale test. <b>What the brief does not ask for:</b> big numbers, women who do not yet recognise perimenopause, paying users now, or a plan B that is simply plan A times ten. Details: appendix §1 and §2.</div>
+<div class="src">Why communities: women learn about menopause from family (61%) and friends (59%) at least as often as from doctors (51%): <a href="https://news.gallup.com/poll/714596/women-enter-menopause-without-clear-information.aspx">Gallup-Pivotal 2026</a>. Why no influencers: 15% of women trust influencers for health information, against 86% for healthcare providers: <a href="https://www.kff.org/health-information-trust/kff-womens-health-survey-explores-how-women-navigate-contraceptive-information/">KFF 2026</a>.</div>
+</section>
+
+<section class="s"><div class="n">2/8</div>
+<div class="k">What the Founding 500 experience · the front</div>
+<h1>Her story in. Her system out. One page for her doctor on day 14.</h1>
+<div class="funnel">
+<div class="dot"><span class="big">Her story</span><p>"Tell it like you'd tell a friend: what's changed lately?" Four open questions, no tick boxes.</p></div><div class="arrow">→</div>
+<div class="dot"><span class="big">Her system</span><p>A preview of her daily plan, built from her own words: what to track, two habits, one reminder. No score, no diagnosis.</p></div><div class="arrow">→</div>
+<div class="dot"><span class="big">Her place</span><p>"Founding member #137 of 500." Free during the beta. Her founding price is locked in for launch.</p></div><div class="arrow">→</div>
+<div class="dot"><span class="big">Her page</span><p>Day 14: one page she can hand to her doctor. The first moment the app proves its use.</p></div><div class="arrow">→</div>
+<div class="dot"><span class="big">Her invites</span><p>Three invites for women like her. When her feedback changes the app, she hears it: "you shaped this".</p></div>
+</div>
+<div class="sysrow">
+<div class="syscard"><div class="sc-head">AxisX · member card · Founding member #137</div>
+<div class="sc-row"><span>07:00</span>Take her tablet, one hour before breakfast</div>
+<div class="sc-row"><span>12:00</span>Protein with lunch</div>
+<div class="sc-row"><span>17:00</span>One question: how do I feel today?</div>
+<div class="sc-row"><span>Day 14</span>Her one page for the doctor</div>
+</div>
+<div class="sysnote"><b>This is "her system".</b> The app builds this card from her own story: what to track, two habits, one reminder, and the day her doctor page is ready. Every founding member gets one, in the same layout. It is the one picture we use in every video and every page, so the app is recognisable before its name is.</div>
+</div>
+<div class="src">The full page texts, the opening videos and the member card are in appendix §3. Every page states: this is a beta, iPhone only, and the app does not diagnose or replace a doctor.</div>
+</section>
+
+<section class="s"><div class="n">3/8</div>
+<div class="k">What the Founding 500 experience · the engine</div>
+<h1>She tells her story. AI listens for intent. People decide.</h1>
+<div class="path">
+<div class="step"><span class="num">01</span><b>AI labels her words</b><p>AI reads her answers for six things: does she recognise perimenopause, what has she already tried, does the method suit her, how committed is she, how urgent is it, what is her life situation. It judges what she says, never how well she writes. A person reviews every unclear case.</p></div>
+<div class="step"><span class="num">02</span><b>Two groups</b><p>Signal group (about 85%): women whose answers show those signals. Contrast group (about 15%): women of the same age without them, picked at random. The contrast group shows what happens when we select less strictly.</p></div>
+<div class="step"><span class="num">03</span><b>One ID, four events</b><p>Her email address ties the quiz, the invite and the app login together. We count four moments: onboarding done, app opened, feedback given, doctor page created. "Opened the app on day 7" means the same thing for every woman and every source.</p></div>
+</div>
+<div class="strip"><b>Trust rules:</b> separate consent for health data, her raw answers deleted after analysis, no health-related data to any ad platform, no woman rejected by a machine alone, a weekly check that the AI treats every group the same. Appendix §4.</div>
+<div class="src">GDPR art. 9 and 22: <a href="https://gdpr-info.eu/art-9-gdpr/">gdpr-info.eu</a> · Perimenopause needs no test to be recognised, so no woman is excluded for lacking a diagnosis: <a href="https://www.nice.org.uk/guidance/ng23">NICE NG23</a> · Apple's TestFlight sends beta invites by email, so each tester stays linked to her quiz: <a href="https://developer.apple.com/help/app-store-connect/test-a-beta-version/invite-external-testers">developer.apple.com</a>.</div>
+</section>
+
+<section class="s"><div class="n">4/8</div>
+<div class="k">What the funnel teaches us for plan B</div>
+<h1>Every visit is tagged. Five numbers come out.</h1>
+<div class="tiles">
+<div class="tile"><span class="big">Visitors per woman</span><p>How many visitors it takes to onboard one woman, per step and per source. We expect about 10 to 1. In plan B this number turns the price of a click into the price of a woman.</p></div>
+<div class="tile"><span class="big">Signal vs contrast</span><p>Day-7 opens, feedback and day-14 pages, for both groups. The gap shows how much drops off when we select less strictly. That is what paid traffic will look like.</p></div>
+<div class="tile"><span class="big">Intent profile</span><p>Which answers and earlier actions predict a day-7 open. From then on we can judge the quality of any channel on day 0, before retention data exists.</p></div>
+<div class="tile"><span class="big">Founding price yes</span><p>The share of women who say yes to the founding price. No payment yet. The first measure of willingness to pay.</p></div>
+<div class="tile"><span class="big">Winning video</span><p>The opening video (hook) that brings in women who still open the app on day 7, not the one with the most clicks. It becomes the first paid ad.</p></div>
+</div>
+<p class="lead" style="margin-top:28px">The score the brief asks for: 500 onboarded, 60% open the app on day 7. The numbers we steer on along the way: feedback in week 1, the day-14 page, the founding-price yes.</p>
+<div class="src">Measurement plan, definitions and stop rules: appendix §5. All targets are assumptions until measured. Each community gets its own invite code, so every number can be read per source. 500 onboarded and 300 active on day 7 are goals, not results.</div>
+</section>
+
+<section class="s"><div class="n">5/8</div>
+<div class="k">Building plan B · the $50,000 scale test</div>
+<h1>Scale only what costs less than a subscription earns back.</h1>
+<div class="stairs">
+<div class="bel"><span>Break-even: what a subscription earns back</span></div>
+<div class="stair" style="height:150px"><span class="big">Stage 1 · $12k</span><p>Try four channels: Meta UK and US, paid newsletters and creators, Google Search, Reddit. Learn what one onboarded woman costs in each.</p></div>
+<div class="stair" style="height:210px"><span class="big">Stage 2 · $15k</span><p>Triple the daily budget on the best two channels. Watch two things: what a day-7 active woman costs, and what share of applicants show the signals.</p></div>
+<div class="stair" style="height:270px"><span class="big">Stage 3 · $18k</span><p>Push the best channel to ten times plan A's weekly pace. Find the point where cost starts to climb, and why: the audience runs out, the video wears out, or people see it too often.</p></div>
+</div>
+<p class="lead" style="margin-top:22px">$5k stays in reserve for a holdout test (a group that sees no ads, to prove the ads work) and for new videos. Next stage only if the cost per day-7 active woman and the signal share stay within 25% of stage 1. Up 50% or more: we stop.</p>
+<div class="src">Starting assumption: Meta charges about $20.70 per 1,000 views for health and wellness ads (<a href="https://influee.co/gb/blog/facebook-ads-benchmarks">Triple Whale via Influee</a>). Plan A's real numbers replace it. Stages, channels and rules: appendix §6.</div>
+</section>
+
+<section class="s"><div class="n">6/8</div>
+<div class="k">Building plan B · the ceiling and the honest line</div>
+<h1>What a subscription earns back decides how far paid can go.</h1>
+<div class="money">
+<div class="card"><h2>The ceiling</h2><p>The limit is not how many women exist. $50k comes nowhere near exhausting the US; in the Nordics it does. The real limit is the slice of women who recognise perimenopause and want help, and how fast the videos wear out.</p><p><b>Early warning:</b> if a channel's share of signal-group applicants drops, it is running out of the right women. We see that within days; day-7 data takes a week.</p></div>
+<div class="dark"><h2>The honest sum</h2><p>One paying member brings in £85 a year after Apple's cut. On public benchmarks, 2.9% to 6.2% of downloads become payers. At about $23 per onboarded woman, paid ads do not earn themselves back in year 1.</p><p>The $50k does not buy growth. It buys two answers: do women selected on intent become payers two to four times as often as the benchmark, and at what spend does the cost per woman start to climb?</p></div>
+</div>
+<div class="src">Conversion benchmarks: <a href="https://www.revenuecat.com/state-of-subscription-apps">RevenueCat 2026</a> · Populations and iOS share: <a href="https://www.nomisweb.co.uk/datasets/pestsyoala">ONS</a>, <a href="https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/national/asrh/nc-est2024-agesex-res.csv">US Census</a>, <a href="https://ec.europa.eu/eurostat/databrowser/view/demo_pjangroup/default/table">Eurostat</a>, <a href="https://gs.statcounter.com/os-market-share/mobile">StatCounter</a> · Health ad restrictions: <a href="https://www.facebook.com/business/help/511197658391698">Meta</a>, <a href="https://support.google.com/adspolicy/answer/16701855?hl=en">Google</a> · Apple keeps 15%: <a href="https://developer.apple.com/app-store/small-business-program/">Small Business Program</a> · Worked sums: appendix §6 and §7.</div>
+</section>
+
+<section class="s"><div class="n">7/8</div>
+<div class="k">The money</div>
+<h1>Ten dollars a woman to learn. Twenty-three to find out if it scales.</h1>
+<div class="money">
+<div class="card"><span class="big">$5,000</span><div class="sub">Plan A · $3,700 to build before the first invite, $1,300 to run</div><p><b>Build:</b> funnel and analytics $1,200 · AI community research $500 · videos and member cards with real women $1,500 · community space $500. <b>Run:</b> AI previews and classification $400 · partner reports $200 · reserve $700. <b>AI stack:</b> Claude for research, previews and classification; Runway for captions, cuts and card rendering; no AI-generated people. $10 a woman is the average, not the price: an extra woman costs cents in tokens. The founder's hours (about 40) are not in the $5,000.</p></div>
+<div class="card"><span class="big">$50,000</span><div class="sub">Plan B · about $23 per onboarded woman, ~1,900 women, 3 stages</div><p>$12k to try four channels, $15k to triple the best two, $18k to push the best one to ten times plan A's pace, $5k for the holdout test and new videos. Starts only once plan A has delivered its five numbers (slide 4).</p></div>
+</div>
+<p class="lead" style="margin-top:26px">The number that links plan A to plan B is not a cost. It is the share of women who say yes to the founding price. That share decides whether $23 a woman can ever earn itself back.</p>
+<div class="src">Line items, funnel maths and both models: appendix §2, §6 and §8. Exchange rate used, £1 = $1.32: <a href="https://www.currency-converter.org.uk/converter/GBP/USD/1">currency-converter.org.uk</a> · Benchmarks: <a href="https://adapty.io/blog/markdown/what-is-web-to-app-and-how-does-it-work.md">Adapty</a>, <a href="https://www.revenuecat.com/state-of-subscription-apps">RevenueCat</a>.</div>
+</section>
+
+<section class="s"><div class="n">8/8</div>
+<div class="k">To the founder</div>
+<h1 style="margin-top:120px;text-align:center;max-width:none">We only need your story to start the story.</h1>
+<div class="blank"></div>
+<div class="src" style="text-align:center">Every opening in this plan starts with a real woman. The first one is you. We left this line blank on purpose.</div>
+</section>
+
+</body></html>
