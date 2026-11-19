@@ -1,2 +1,5 @@
 __pycache__/
 *-kpis.csv
+
+# Codex MCP config with the Web2Wave API key: on this machine only
+.codex/config.toml
