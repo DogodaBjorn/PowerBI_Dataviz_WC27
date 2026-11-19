@@ -1,7 +1,7 @@
 """Compare the Desktop measure values (DAX via the Modeling MCP, 7 Nov) with packages.csv from the offline analysis."""
 import csv
 
-CSV = r"E:\PowerBI_Dataviz_WC27\2027-round1-goodnight-inn\project\analysis\output\packages.csv"
+CSV = r"E:\Contests\powerbi-dataviz-world-champs\2027-round1-goodnight-inn\project\analysis\output\packages.csv"
 rows = {r["PackageID"]: r for r in csv.DictReader(open(CSV, encoding="utf-8"))}
 
 # (focus package, scenario): capex, NPV(sel), cum2032 low/exp/high, rooms added, hotels rated  -- from the DAX run

@@ -2,6 +2,8 @@
 
 Werkplaats en kennisbank van Bjorn voor performance marketing, analytics en AI in marketing. Eerste gebruik: AI Marketing Kombat Season 1 (track Performance & Analytics). Ook bruikbaar voor klantwerk.
 
+Sinds 19 nov 2026 de map `ai-marketing-kombat/` in de repository `contests` (`E:\Contests\ai-marketing-kombat`, tot dan `E:\PerformanceOps`). Deze map is de projectroot en de werkmap van een sessie; alle paden hier zijn relatief aan deze map.
+
 ## Taal en vorm
 - Antwoord altijd in het Nederlands. Inleverstukken (tabellen, briefs, pitch) in het Engels, tenzij Bjorn anders vraagt.
 - Snelheid gaat voor perfectie: eerst het antwoord, dan de onderbouwing.
@@ -16,7 +18,7 @@ Werkplaats en kennisbank van Bjorn voor performance marketing, analytics en AI i
 - `knowledge/luxury/`: luxe-marketing en de Fabergé-primer (finale).
 - `knowledge/ai-marketing/`: AI-toepassingen per funnelfase, AI-labels en risico's.
 - `lessons/`: wat we leerden per ronde. Lees `lessons/ronde-1-indrive.md` voor elke nieuwe ronde.
-- `rondes/<ronde>/`: werkmap per ronde (brief, data, concepten, inlevering, `ai-fouten.md`).
+- `rondes/<ronde>/`: werkmap per ronde (brief, data, concepten, inlevering, `ai-fouten.md`). `rondes/2026-10-21-indrive/` = ronde 1 (was de repository `indrive-kombat`), met een eigen `CLAUDE.md` met de merkregels van die case; `rondes/2026-10-23-axisx/` = ronde 2.
 - `scripts/`: rekenhulpen zonder externe packages (alleen Python-standaardbibliotheek).
 
 ## Skills (in `.agents/skills/`, the source; Claude Code loads the copies in `.claude/skills/`)

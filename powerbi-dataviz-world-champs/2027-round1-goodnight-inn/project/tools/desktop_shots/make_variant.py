@@ -12,7 +12,7 @@ import shutil
 import sys
 from pathlib import Path
 
-PBIP = Path(r"E:\PowerBI_Dataviz_WC27\2027-round1-goodnight-inn\project\pbip")
+PBIP = Path(r"E:\Contests\powerbi-dataviz-world-champs\2027-round1-goodnight-inn\project\pbip")
 NAME, REV = "GoodnightInn-opzet", "GoodnightInn-opzet-review"
 P2 = "p2-investment-strategy"
 LABELS = {"A": "A · Our recommendation", "B": "B · Breakfast instead of kiosks", "C": "C · Why not renovate? For comparison"}

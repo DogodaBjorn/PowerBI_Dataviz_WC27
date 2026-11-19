@@ -1,6 +1,6 @@
 # Lessen uit ronde 1 (inDrive Nigeria, 21 okt 2026, 60 minuten)
 
-Bron: werkmap `E:\InDrive Kombat` (hand-in-stage1.md, brief-laatste-check.md, loudbox-bevindingen.md) en het sessieverloop.
+Bron: werkmap `rondes/2026-10-21-indrive/` (tot 19 nov 2026 `E:\InDrive Kombat`; hand-in-stage1.md, brief-laatste-check.md, loudbox-bevindingen.md) en het sessieverloop.
 
 ## Wat werkte
 1. **Zelf doorrekenen leverde de sterkste inzichten.** CPI, IPM, eerste ritten en ritratio per creative berekend. Daaruit: "goedkope installs voorspellen geen rijders" (CTR vs ritratio r = -0,02) en "zonder NG-01 is de blended CPA $5,75 in plaats van $3,82" (concentratiecheck).

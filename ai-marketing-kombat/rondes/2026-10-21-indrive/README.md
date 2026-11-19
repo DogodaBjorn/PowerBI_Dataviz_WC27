@@ -3,14 +3,18 @@
 Werkmap van Bjorn (DoGoDa) voor ronde 1 van AI Marketing Kombat Season 1, track Performance &
 Analytics. De case: inDrive Nigeria, 150.000 nieuwe passagiers in Q4 2026 tegen maximaal $4,00
 CPA eerste rit, budget $600k. Hier staan de brief, de aangeleverde data, de doorrekening en de
-ingeleverde stukken. De herbruikbare kennis en skills staan niet hier maar in
-[PerformanceOps](https://github.com/DogodaBjorn/PerformanceOps).
+ingeleverde stukken. De herbruikbare kennis en skills staan niet hier maar twee niveaus hoger, in
+`ai-marketing-kombat/` (was PerformanceOps).
+
+> **Sinds 19 nov 2026 is dit de map `ai-marketing-kombat/rondes/2026-10-21-indrive/` van de repository
+> `contests`** (`E:\Contests`). Hij kwam uit de repository `indrive-kombat` (`E:\InDrive Kombat`), met zijn
+> geschiedenis. Werk aan Kombat start in `ai-marketing-kombat/`; de `CLAUDE.md` hier geldt voor deze case.
 
 ## Status (2026-11-01)
 
 Stage 1 ingeleverd op 21 oktober 2026 (`hand-in-stage1.md`, `stage-1-solution-filled-brief-v3.xlsx`).
 Deel 2 van ronde 1 was op 23 oktober. Deze map verandert alleen nog als de organisatie een
-case-update stuurt. Lessen uit deze ronde: `PerformanceOps/lessons/ronde-1-indrive.md`.
+case-update stuurt. Lessen uit deze ronde: `../../lessons/ronde-1-indrive.md`.
 
 ## Wat staat waar
 

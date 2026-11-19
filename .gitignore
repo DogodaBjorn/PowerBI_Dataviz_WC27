@@ -1,5 +1,5 @@
-# One repository, one folder per contest entry. Each entry folder keeps its own
-# .gitignore for what is particular to it; this file holds what goes for all.
+# Contests: one repository, one folder per contest. Each project folder keeps its
+# own .gitignore for what is particular to it; this file holds what goes for all.
 
 # --- OS / editor noise ---
 Thumbs.db

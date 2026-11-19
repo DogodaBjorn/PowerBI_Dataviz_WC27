@@ -7,7 +7,7 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 RAW, OUT = HERE / "raw2x", HERE / "review" / "detail"
 OUT.mkdir(parents=True, exist_ok=True)
-COMP = Path(r"E:\PowerBI_Dataviz_WC27\2027-round1-goodnight-inn\project\design-prototypes\reference_screenshots")
+COMP = Path(r"E:\Contests\powerbi-dataviz-world-champs\2027-round1-goodnight-inn\project\design-prototypes\reference_screenshots")
 (HERE / "review" / "comp").mkdir(exist_ok=True)
 for f in COMP.glob("*.png"):
     shutil.copyfile(f, HERE / "review" / "comp" / f.name)

@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-d = Path(r"E:\PowerBI_Dataviz_WC27\2027-round1-goodnight-inn\project\pbip\GoodnightInn-opzet.Report\definition\pages\p2-investment-strategy\visuals")
+d = Path(r"E:\Contests\powerbi-dataviz-world-champs\2027-round1-goodnight-inn\project\pbip\GoodnightInn-opzet.Report\definition\pages\p2-investment-strategy\visuals")
 
 
 def walk(o, ms, cs):
@@ -22,4 +22,4 @@ for v in sorted(d.iterdir()):
     walk(json.loads((v / "visual.json").read_text(encoding="utf-8")), ms, cs)
     if ms or cs:
         print(v.name, "| M:", sorted(ms), "| C:", sorted(cs))
-print(open(r"E:\PowerBI_Dataviz_WC27\2027-round1-goodnight-inn\project\analysis\output\packages.csv", encoding="utf-8").readline())
+print(open(r"E:\Contests\powerbi-dataviz-world-champs\2027-round1-goodnight-inn\project\analysis\output\packages.csv", encoding="utf-8").readline())

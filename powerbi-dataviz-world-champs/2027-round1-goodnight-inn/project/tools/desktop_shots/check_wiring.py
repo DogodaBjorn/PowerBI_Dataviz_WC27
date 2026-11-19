@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 
-D = Path(r"E:\PowerBI_Dataviz_WC27\2027-round1-goodnight-inn\project\pbip\GoodnightInn-opzet.Report\definition")
+D = Path(r"E:\Contests\powerbi-dataviz-world-champs\2027-round1-goodnight-inn\project\pbip\GoodnightInn-opzet.Report\definition")
 P2 = D / "pages" / "p2-investment-strategy" / "visuals"
 rd = lambda p: json.loads(p.read_text(encoding="utf-8"))
 vis = {p.name: rd(p / "visual.json") for p in P2.iterdir()}

@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 
-d = Path(r"E:\PowerBI_Dataviz_WC27\2027-round1-goodnight-inn\project\deliverables\screenshots\2026-11-07-desktop")
+d = Path(r"E:\Contests\powerbi-dataviz-world-champs\2027-round1-goodnight-inn\project\deliverables\screenshots\2026-11-07-desktop")
 readme = d / "README.md"
 t = readme.read_text(encoding="utf-8")
 pngs = {p.stem: p.name for p in d.glob("*.png")}
